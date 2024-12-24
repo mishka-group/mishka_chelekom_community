@@ -4,6 +4,12 @@ When you create a **Template**, it means your project includes multiple componen
 and you design a complete page. For example, an admin panel section displaying the latest sales.
 In the community edition, Templates have the broadest scope and significance.
 
+### How to install a Templates
+
+```elixir
+mix mishka.ui.add template_some_template_name
+```
+
 ## How Can I Contribute?
 
 1. Clone the project.

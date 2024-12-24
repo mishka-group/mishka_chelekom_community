@@ -4,6 +4,12 @@ In the community project, the concept of **Presets** refers to using multiple co
 to create another component. For example, a combobox with search functionality and a
 history of previous user searches, designed to be reusable in other projects.
 
+### How to install a Preset
+
+```elixir
+mix mishka.ui.add preset_some_preset_name
+```
+
 ## How Can I Contribute?
 
 1. Clone the project.
