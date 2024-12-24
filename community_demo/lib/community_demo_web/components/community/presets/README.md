@@ -1,14 +1,8 @@
-## Components
+## Presets
 
-In the community edition, when creating a component, ensure it is fully isolatable or has
-minimal dependencies, and can be reused in other projects.
-If a component is not already available in the Core project, you can contribute by adding it.
-
-### How to install a Component
-
-```elixir
-mix mishka.ui.add component_some_component_name
-```
+In the community project, the concept of **Presets** refers to using multiple components
+to create another component. For example, a combobox with search functionality and a
+history of previous user searches, designed to be reusable in other projects.
 
 ## How Can I Contribute?
 

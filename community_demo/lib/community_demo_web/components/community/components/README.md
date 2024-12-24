@@ -1,14 +1,8 @@
 ## Components
 
-In the community edition, when creating a component, ensure it is fully isolatable or has
+In the community edition, when creating a **Component**, ensure it is fully isolatable or has
 minimal dependencies, and can be reused in other projects.
 If a component is not already available in the Core project, you can contribute by adding it.
-
-### How to install a Component
-
-```elixir
-mix mishka.ui.add component_some_component_name
-```
 
 ## How Can I Contribute?
 
