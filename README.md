@@ -23,6 +23,19 @@ All components submitted by developers are:
 1. Reviewed by the Mishka team.
 2. Upon approval, converted into JSON files for CLI compatibility.
 
+## How Can I Contribute?
+
+1. Clone the project.
+2. Start the `community_demo` project, which is a basic Phoenix project,
+by running the command: `mix setup`
+3. Based on your requirements, add components in the
+`community_demo/lib/community_demo_web/components/community` directory according to
+the type of project you want to contribute to.
+4. Respect copyright laws; avoid submitting commercial or copyrighted designs.
+5. If you use free designs, include the author and link (especially if sourced from Figma) in
+your pull request.
+6. Finally, submit a pull request. We'll get back to you as soon as possible!
+
 ## Project Goal
 
 The primary goal of this project is to support a wide variety of components and
