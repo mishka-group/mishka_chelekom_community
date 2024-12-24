@@ -14,7 +14,7 @@ No additional installations are needed! Simply:
 ```elixir
 {:mishka_chelekom, "~> 0.0.2", only: :dev}
 ```
-2. Run the following CLI task: `mix mishka.ui.add component_sidebar_plus`
+2. Run the following CLI task: `mix mishka.ui.add component_some_component_name`
 
 ## Submission and Review Process
 
