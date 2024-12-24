@@ -1,8 +1,8 @@
-## Templates
+## Components
 
-When you create a **Template**, it means your project includes multiple components or presets,
-and you design a complete page. For example, an admin panel section displaying the latest sales.
-In the community edition, Templates have the broadest scope and significance.
+In the community edition, when creating a **Component**, ensure it is fully isolatable or has
+minimal dependencies, and can be reused in other projects.
+If a component is not already available in the Core project, you can contribute by adding it.
 
 ## How Can I Contribute?
 
