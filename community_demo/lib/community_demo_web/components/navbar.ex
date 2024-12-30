@@ -15,22 +15,7 @@ defmodule CommunityDemoWeb.Components.Navbar do
   """
   use Phoenix.Component
 
-  @colors [
-    "natural",
-    "white",
-    "primary",
-    "secondary",
-    "dark",
-    "success",
-    "warning",
-    "danger",
-    "info",
-    "silver",
-    "misc",
-    "dawn"
-  ]
-
-  @variants ["default", "shadow", "bordered", "gradient"]
+  @variants ["default", "shadow", "bordered", "gradient", "base"]
 
   @doc """
   Renders a customizable navigation bar (`navbar` component) that can include links,
@@ -117,8 +102,8 @@ defmodule CommunityDemoWeb.Components.Navbar do
     required: true,
     doc: "A unique identifier is used to manage state and interaction"
 
-  attr :variant, :string, values: @variants, default: "default", doc: "Determines the style"
-  attr :color, :string, values: @colors, default: "natural", doc: "Determines color theme"
+  attr :variant, :string, values: @variants, default: "base", doc: "Determines the style"
+  attr :color, :string, default: "base", doc: "Determines color theme"
   attr :border, :string, default: "extra_small", doc: "Determines border style"
   attr :text_position, :string, default: nil, doc: "Determines the element' text position"
   attr :rounded, :string, default: nil, doc: "Determines the border radius"
@@ -146,9 +131,15 @@ defmodule CommunityDemoWeb.Components.Navbar do
     doc:
       "Global attributes can define defaults which are merged with attributes provided by the caller"
 
-  slot :start_content, required: false, doc: ""
+  slot :start_content,
+    required: false,
+    doc: "Content to be rendered at the start (start side based on rtl or ltr) of the navbar."
+
   slot :inner_block, required: false, doc: "Inner block that renders HEEx content"
-  slot :end_content, required: false, doc: ""
+
+  slot :end_content,
+    required: false,
+    doc: "Content to be rendered at the end (end side based on rtl or ltr) of the navbar."
 
   slot :list, required: false do
     attr :class, :string, doc: "Custom CSS class for additional styling"
@@ -306,6 +297,13 @@ defmodule CommunityDemoWeb.Components.Navbar do
 
   defp rounded_size(params) when is_binary(params), do: params
   defp rounded_size(_), do: nil
+
+  defp color_variant("base", "base") do
+    [
+      "bg-white text-[#09090b] border-[#e4e4e7] shadow-sm",
+      "dark:bg-[#18181B] dark:text-[#FAFAFA] dark:border-[#27272a]"
+    ]
+  end
 
   defp color_variant("default", "white") do
     [
@@ -603,7 +601,7 @@ defmodule CommunityDemoWeb.Components.Navbar do
 
   defp color_variant(params, _) when is_binary(params), do: params
 
-  defp color_variant(_, _), do: color_variant("default", "natural")
+  defp color_variant(_, _), do: color_variant("base", "base")
 
   attr :name, :string, required: true, doc: "Specifies the name of the element"
   attr :class, :any, default: nil, doc: "Custom CSS class for additional styling"

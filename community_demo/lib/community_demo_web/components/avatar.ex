@@ -22,20 +22,6 @@ defmodule CommunityDemoWeb.Components.Avatar do
   use Phoenix.Component
 
   @sizes ["extra_small", "small", "medium", "large", "extra_large"]
-  @colors [
-    "natural",
-    "white",
-    "dark",
-    "primary",
-    "secondary",
-    "success",
-    "warning",
-    "danger",
-    "info",
-    "silver",
-    "misc",
-    "dawn"
-  ]
 
   @doc """
   The `avatar` component is used to display user avatars with various customization options,
@@ -68,10 +54,7 @@ defmodule CommunityDemoWeb.Components.Avatar do
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
   attr :src, :string, default: nil, doc: "Media link"
 
-  attr :color, :string,
-    values: @colors ++ ["transparent"],
-    default: "transparent",
-    doc: "Determines color theme"
+  attr :color, :string, default: "transparent", doc: "Determines color theme"
 
   attr :size, :string,
     default: "small",
@@ -250,6 +233,10 @@ defmodule CommunityDemoWeb.Components.Avatar do
     nil
   end
 
+  defp image_color("base") do
+    "border-[#e4e4e7] dark:border-[#27272a]"
+  end
+
   defp image_color("white") do
     "border-white"
   end
@@ -299,6 +286,13 @@ defmodule CommunityDemoWeb.Components.Avatar do
   end
 
   defp image_color(params), do: params
+
+  defp color_class("base") do
+    [
+      "bg-white text-[#09090b] border-[#e4e4e7]",
+      "dark:bg-[#18181B] dark:text-[#FAFAFA] dark:border-[#27272a]"
+    ]
+  end
 
   defp color_class("white") do
     ["bg-white text-black border-[#DDDDDD]"]
@@ -378,7 +372,7 @@ defmodule CommunityDemoWeb.Components.Avatar do
     ]
   end
 
-  defp color_class(_), do: color_class("natural")
+  defp color_class(_), do: color_class("base")
 
   defp border_class("extra_small"), do: "border-avatar border"
   defp border_class("small"), do: "border-avatar border-2"

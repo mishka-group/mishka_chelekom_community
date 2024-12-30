@@ -22,20 +22,6 @@ defmodule CommunityDemoWeb.Components.Keyboard do
   use Phoenix.Component
 
   @sizes ["extra_small", "small", "medium", "large", "extra_large"]
-  @colors [
-    "natural",
-    "white",
-    "primary",
-    "secondary",
-    "dark",
-    "success",
-    "warning",
-    "danger",
-    "info",
-    "silver",
-    "misc",
-    "dawn"
-  ]
 
   @variants [
     "default",
@@ -43,7 +29,8 @@ defmodule CommunityDemoWeb.Components.Keyboard do
     "transparent",
     "shadow",
     "bordered",
-    "gradient"
+    "gradient",
+    "base"
   ]
 
   @doc """
@@ -65,8 +52,8 @@ defmodule CommunityDemoWeb.Components.Keyboard do
     default: nil,
     doc: "A unique identifier is used to manage state and interaction"
 
-  attr :variant, :string, values: @variants, default: "default", doc: "Determines the style"
-  attr :color, :string, values: @colors, default: "natural", doc: "Determines color theme"
+  attr :variant, :string, values: @variants, default: "base", doc: "Determines the style"
+  attr :color, :string, default: "base", doc: "Determines color theme"
   attr :border, :string, default: "extra_small", doc: "Determines border style"
 
   attr :size, :string,
@@ -157,6 +144,13 @@ defmodule CommunityDemoWeb.Components.Keyboard do
   defp rounded_size("full"), do: "rounded-full"
 
   defp rounded_size("none"), do: "rounded-none"
+
+  defp color_variant("base", "base") do
+    [
+      "bg-white text-[#09090b] border-[#e4e4e7] shadow-sm",
+      "dark:bg-[#18181B] dark:text-[#FAFAFA] dark:border-[#27272a]"
+    ]
+  end
 
   defp color_variant("default", "white") do
     [
@@ -574,5 +568,5 @@ defmodule CommunityDemoWeb.Components.Keyboard do
 
   defp color_variant(params, _) when is_binary(params), do: params
 
-  defp color_variant(_, _), do: color_variant("default", "natural")
+  defp color_variant(_, _), do: color_variant("base", "base")
 end

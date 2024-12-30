@@ -13,22 +13,6 @@ defmodule CommunityDemoWeb.Components.Typography do
   """
   use Phoenix.Component
 
-  @colors [
-    "primary",
-    "white",
-    "natural",
-    "secondary",
-    "dark",
-    "success",
-    "warning",
-    "danger",
-    "info",
-    "silver",
-    "misc",
-    "dawn",
-    "inherit"
-  ]
-
   @doc """
   The `h1` component renders a large header text with customizable size, color, and other styling options.
   It is used to display primary headings in your layout.
@@ -46,7 +30,7 @@ defmodule CommunityDemoWeb.Components.Typography do
     default: nil,
     doc: "A unique identifier is used to manage state and interaction"
 
-  attr :color, :string, values: @colors, default: "inherit", doc: "Determines color theme"
+  attr :color, :string, default: "inherit", doc: "Determines color theme"
 
   attr :size, :string,
     default: "quadruple_large",
@@ -100,7 +84,7 @@ defmodule CommunityDemoWeb.Components.Typography do
     default: nil,
     doc: "A unique identifier is used to manage state and interaction"
 
-  attr :color, :string, values: @colors, default: "inherit", doc: "Determines color theme"
+  attr :color, :string, default: "inherit", doc: "Determines color theme"
 
   attr :size, :string,
     default: "triple_large",
@@ -154,7 +138,7 @@ defmodule CommunityDemoWeb.Components.Typography do
     default: nil,
     doc: "A unique identifier is used to manage state and interaction"
 
-  attr :color, :string, values: @colors, default: "inherit", doc: "Determines color theme"
+  attr :color, :string, default: "inherit", doc: "Determines color theme"
 
   attr :size, :string,
     default: "double_large",
@@ -207,7 +191,7 @@ defmodule CommunityDemoWeb.Components.Typography do
     default: nil,
     doc: "A unique identifier is used to manage state and interaction"
 
-  attr :color, :string, values: @colors, default: "inherit", doc: "Determines color theme"
+  attr :color, :string, default: "inherit", doc: "Determines color theme"
 
   attr :size, :string,
     default: "extra_large",
@@ -261,7 +245,7 @@ defmodule CommunityDemoWeb.Components.Typography do
     default: nil,
     doc: "A unique identifier is used to manage state and interaction"
 
-  attr :color, :string, values: @colors, default: "inherit", doc: "Determines color theme"
+  attr :color, :string, default: "inherit", doc: "Determines color theme"
 
   attr :size, :string,
     default: "large",
@@ -314,7 +298,7 @@ defmodule CommunityDemoWeb.Components.Typography do
     default: nil,
     doc: "A unique identifier is used to manage state and interaction"
 
-  attr :color, :string, values: @colors, default: "inherit", doc: "Determines color theme"
+  attr :color, :string, default: "inherit", doc: "Determines color theme"
 
   attr :size, :string,
     default: "medium",
@@ -369,7 +353,7 @@ defmodule CommunityDemoWeb.Components.Typography do
     default: nil,
     doc: "A unique identifier is used to manage state and interaction"
 
-  attr :color, :string, values: @colors, default: "inherit", doc: "Determines color theme"
+  attr :color, :string, default: "inherit", doc: "Determines color theme"
 
   attr :size, :string,
     default: "medium",
@@ -425,7 +409,7 @@ defmodule CommunityDemoWeb.Components.Typography do
     default: nil,
     doc: "A unique identifier is used to manage state and interaction"
 
-  attr :color, :string, values: @colors, default: "inherit", doc: "Determines color theme"
+  attr :color, :string, default: "inherit", doc: "Determines color theme"
 
   attr :size, :string,
     default: "medium",
@@ -485,7 +469,7 @@ defmodule CommunityDemoWeb.Components.Typography do
     default: nil,
     doc: "A unique identifier is used to manage state and interaction"
 
-  attr :color, :string, values: @colors, default: "inherit", doc: "Determines color theme"
+  attr :color, :string, default: "inherit", doc: "Determines color theme"
 
   attr :size, :string,
     default: "medium",
@@ -541,7 +525,7 @@ defmodule CommunityDemoWeb.Components.Typography do
     default: nil,
     doc: "A unique identifier is used to manage state and interaction"
 
-  attr :color, :string, values: @colors, default: "inherit", doc: "Determines color theme"
+  attr :color, :string, default: "inherit", doc: "Determines color theme"
 
   attr :size, :string,
     default: "medium",
@@ -595,7 +579,7 @@ defmodule CommunityDemoWeb.Components.Typography do
     default: nil,
     doc: "A unique identifier is used to manage state and interaction"
 
-  attr :color, :string, values: @colors, default: "inherit", doc: "Determines color theme"
+  attr :color, :string, default: "inherit", doc: "Determines color theme"
 
   attr :size, :string,
     default: "medium",
@@ -653,7 +637,7 @@ defmodule CommunityDemoWeb.Components.Typography do
     default: nil,
     doc: "A unique identifier is used to manage state and interaction"
 
-  attr :color, :string, values: @colors, default: "inherit", doc: "Determines color theme"
+  attr :color, :string, default: "inherit", doc: "Determines color theme"
 
   attr :size, :string,
     default: "medium",
@@ -720,7 +704,7 @@ defmodule CommunityDemoWeb.Components.Typography do
     default: nil,
     doc: "A unique identifier is used to manage state and interaction"
 
-  attr :color, :string, values: @colors, default: "inherit", doc: "Determines color theme"
+  attr :color, :string, default: "inherit", doc: "Determines color theme"
 
   attr :size, :string,
     default: "medium",
@@ -782,7 +766,7 @@ defmodule CommunityDemoWeb.Components.Typography do
     default: nil,
     doc: "A unique identifier is used to manage state and interaction"
 
-  attr :color, :string, values: @colors, default: "inherit", doc: "Determines color theme"
+  attr :color, :string, default: "inherit", doc: "Determines color theme"
 
   attr :size, :string,
     default: "medium",
@@ -838,7 +822,7 @@ defmodule CommunityDemoWeb.Components.Typography do
     default: nil,
     doc: "A unique identifier is used to manage state and interaction"
 
-  attr :color, :string, values: @colors, default: "inherit", doc: "Determines color theme"
+  attr :color, :string, default: "inherit", doc: "Determines color theme"
 
   attr :size, :string,
     default: "medium",
@@ -891,7 +875,7 @@ defmodule CommunityDemoWeb.Components.Typography do
     default: nil,
     doc: "A unique identifier is used to manage state and interaction"
 
-  attr :color, :string, values: @colors, default: "inherit", doc: "Determines color theme"
+  attr :color, :string, default: "inherit", doc: "Determines color theme"
 
   attr :size, :string,
     default: "medium",
@@ -946,7 +930,7 @@ defmodule CommunityDemoWeb.Components.Typography do
     default: nil,
     doc: "A unique identifier is used to manage state and interaction"
 
-  attr :color, :string, values: @colors, default: "inherit", doc: "Determines color theme"
+  attr :color, :string, default: "inherit", doc: "Determines color theme"
 
   attr :size, :string,
     default: "medium",
@@ -997,7 +981,7 @@ defmodule CommunityDemoWeb.Components.Typography do
     default: nil,
     doc: "A unique identifier is used to manage state and interaction"
 
-  attr :color, :string, values: @colors, default: "inherit", doc: "Determines color theme"
+  attr :color, :string, default: "inherit", doc: "Determines color theme"
 
   attr :size, :string,
     default: "medium",
@@ -1049,7 +1033,7 @@ defmodule CommunityDemoWeb.Components.Typography do
     default: nil,
     doc: "A unique identifier is used to manage state and interaction"
 
-  attr :color, :string, values: @colors, default: "inherit", doc: "Determines color theme"
+  attr :color, :string, default: "inherit", doc: "Determines color theme"
 
   attr :size, :string,
     default: "medium",
@@ -1104,7 +1088,7 @@ defmodule CommunityDemoWeb.Components.Typography do
     default: nil,
     doc: "A unique identifier is used to manage state and interaction"
 
-  attr :color, :string, values: @colors, default: "inherit", doc: "Determines color theme"
+  attr :color, :string, default: "inherit", doc: "Determines color theme"
 
   attr :size, :string,
     default: "medium",
@@ -1156,7 +1140,7 @@ defmodule CommunityDemoWeb.Components.Typography do
     default: nil,
     doc: "A unique identifier is used to manage state and interaction"
 
-  attr :color, :string, values: @colors, default: "inherit", doc: "Determines color theme"
+  attr :color, :string, default: "inherit", doc: "Determines color theme"
 
   attr :size, :string,
     default: "medium",
@@ -1192,6 +1176,8 @@ defmodule CommunityDemoWeb.Components.Typography do
     """
   end
 
+  defp color("base"), do: "text-[#09090b] dark:text-[#FAFAFA]"
+
   defp color("white"), do: "text-white"
 
   defp color("natural"), do: "text-[#4B4B4B] dark:text-[#DDDDDD]"
@@ -1218,7 +1204,9 @@ defmodule CommunityDemoWeb.Components.Typography do
 
   defp color("inherit"), do: "text-inherit"
 
-  defp color(params), do: params
+  defp color(params) when is_binary(params), do: params
+
+  defp color(_), do: color("inherit")
 
   defp size_class("extra_small"), do: "text-xs"
 

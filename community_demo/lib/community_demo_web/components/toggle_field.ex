@@ -13,21 +13,6 @@ defmodule CommunityDemoWeb.Components.ToggleField do
   use Phoenix.Component
   alias Phoenix.HTML.Form
 
-  @colors [
-    "white",
-    "natural",
-    "primary",
-    "secondary",
-    "dark",
-    "success",
-    "warning",
-    "danger",
-    "info",
-    "silver",
-    "misc",
-    "dawn"
-  ]
-
   @doc """
   The `toggle_field` component is a customizable toggle switch input, often used for binary on/off
   choices like enabling or disabling a feature.
@@ -50,7 +35,7 @@ defmodule CommunityDemoWeb.Components.ToggleField do
     doc: "A unique identifier is used to manage state and interaction"
 
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
-  attr :color, :string, values: @colors, default: "natural", doc: "Determines color theme"
+  attr :color, :string, default: "primary", doc: "Determines color theme"
   attr :rounded, :string, default: "full", doc: "Determines border radius"
   attr :description, :string, default: nil, doc: "Determines a short description"
   attr :border, :string, default: "extra_small", doc: "Determines border style"
@@ -131,7 +116,7 @@ defmodule CommunityDemoWeb.Components.ToggleField do
           ]}>
           </div>
           <div class={[
-            "bg-[#e6e6e6] transition-all ease-in-out duration-500 toggle-field-base",
+            "bg-[#F4F4F4] dark:bg-[#4B4B4B] transition-all ease-in-out duration-500 toggle-field-base",
             color_class(@color)
           ]}>
           </div>
@@ -232,6 +217,12 @@ defmodule CommunityDemoWeb.Components.ToggleField do
 
   defp size_class(_), do: size_class("medium")
 
+  defp color_class("base") do
+    [
+      "peer-checked:bg-[#e4e4e7] dark:peer-checked:bg-[#27272a]"
+    ]
+  end
+
   defp color_class("white") do
     [
       "peer-checked:bg-white"
@@ -303,6 +294,10 @@ defmodule CommunityDemoWeb.Components.ToggleField do
       "peer-checked:bg-[#282828]"
     ]
   end
+
+  defp color_class(params) when is_binary(params), do: params
+
+  defp color_class(_), do: color_class("primary")
 
   defp translate_error({msg, opts}) do
     # When using gettext, we typically pass the strings we want

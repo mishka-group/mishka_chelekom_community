@@ -21,22 +21,7 @@ defmodule CommunityDemoWeb.Components.MegaMenu do
   use Phoenix.Component
   alias Phoenix.LiveView.JS
 
-  @colors [
-    "natural",
-    "white",
-    "primary",
-    "secondary",
-    "dark",
-    "success",
-    "warning",
-    "danger",
-    "info",
-    "silver",
-    "misc",
-    "dawn"
-  ]
-
-  @variants ["default", "outline", "shadow", "bordered"]
+  @variants ["default", "outline", "shadow", "bordered", "gradient", "base"]
 
   @doc """
   Renders a customizable `mega_menu` component that can display various sections of content.
@@ -137,8 +122,8 @@ defmodule CommunityDemoWeb.Components.MegaMenu do
     default: false,
     doc: "Determines if the element can be activated on click"
 
-  attr :variant, :string, values: @variants, default: "shadow", doc: "Determines the style"
-  attr :color, :string, values: @colors, default: "natural", doc: "Determines color theme"
+  attr :variant, :string, values: @variants, default: "base", doc: "Determines the style"
+  attr :color, :string, default: "base", doc: "Determines color theme"
   attr :rounded, :string, default: nil, doc: "Determines the border radius"
 
   attr :size, :string,
@@ -333,6 +318,13 @@ defmodule CommunityDemoWeb.Components.MegaMenu do
   defp space_class(params) when is_binary(params), do: params
 
   defp space_class(_), do: space_class("none")
+
+  defp color_variant("base", "base") do
+    [
+      "[&>.mega-menu-content]:bg-white text-[#09090b] [&>.mega-menu-content]:border-[#e4e4e7] [&>.mega-menu-content]:shadow-sm",
+      "dark:[&>.mega-menu-content]:bg-[#18181B] dark:text-[#FAFAFA] dark:[&>.mega-menu-content]:border-[#27272a]"
+    ]
+  end
 
   defp color_variant("default", "white") do
     [
@@ -690,7 +682,7 @@ defmodule CommunityDemoWeb.Components.MegaMenu do
 
   defp color_variant(params, _) when is_binary(params), do: params
 
-  defp color_variant(_, _), do: color_variant("default", "natural")
+  defp color_variant(_, _), do: color_variant("base", "base")
 
   attr :name, :string, required: true, doc: "Specifies the name of the element"
   attr :class, :any, default: nil, doc: "Custom CSS class for additional styling"

@@ -31,20 +31,6 @@ defmodule CommunityDemoWeb.Components.Banner do
   use Gettext, backend: CommunityDemoWeb.Gettext
 
   @sizes ["extra_small", "small", "medium", "large", "extra_large"]
-  @colors [
-    "natural",
-    "white",
-    "dark",
-    "primary",
-    "secondary",
-    "success",
-    "warning",
-    "danger",
-    "info",
-    "silver",
-    "misc",
-    "dawn"
-  ]
 
   @variants [
     "default",
@@ -52,7 +38,8 @@ defmodule CommunityDemoWeb.Components.Banner do
     "transparent",
     "shadow",
     "bordered",
-    "gradient"
+    "gradient",
+    "base"
   ]
 
   @positions ["top_left", "top_right", "bottom_left", "bottom_right", "center", "full"]
@@ -103,8 +90,8 @@ defmodule CommunityDemoWeb.Components.Banner do
     doc:
       "Determines the overall size of the elements, including padding, font size, and other items"
 
-  attr :variant, :string, values: @variants, default: "default", doc: "Determines the style"
-  attr :color, :string, values: @colors, default: "natural", doc: "Determines color theme"
+  attr :variant, :string, values: @variants, default: "base", doc: "Determines the style"
+  attr :color, :string, default: "base", doc: "Determines color theme"
   attr :border, :string, default: "extra_small", doc: "Determines border style"
 
   attr :border_position, :string,
@@ -387,6 +374,13 @@ defmodule CommunityDemoWeb.Components.Banner do
 
   defp border_class(params, _, _) when is_binary(params), do: params
   defp border_class(_, _, _), do: border_class("extra_small", "top", nil)
+
+  defp color_variant("base", "base") do
+    [
+      "bg-white text-[#09090b] border-[#e4e4e7] shadow-sm",
+      "dark:bg-[#18181B] dark:text-[#FAFAFA] dark:border-[#27272a]"
+    ]
+  end
 
   defp color_variant("default", "white") do
     ["bg-white text-black"]
@@ -766,7 +760,7 @@ defmodule CommunityDemoWeb.Components.Banner do
 
   defp color_variant(params, _) when is_binary(params), do: params
 
-  defp color_variant(_, _), do: color_variant("default", "natural")
+  defp color_variant(_, _), do: color_variant("base", "base")
 
   ## JS Commands
   @doc """

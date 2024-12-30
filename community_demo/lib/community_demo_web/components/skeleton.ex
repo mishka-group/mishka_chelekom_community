@@ -27,22 +27,6 @@ defmodule CommunityDemoWeb.Components.Skeleton do
 
   @sizes ["extra_small", "small", "medium", "large", "extra_large"]
 
-  @colors [
-    "natural",
-    "white",
-    "primary",
-    "secondary",
-    "dark",
-    "success",
-    "warning",
-    "danger",
-    "info",
-    "misc",
-    "dawn",
-    "silver",
-    "none"
-  ]
-
   @doc """
   Renders a `skeleton` loader component to indicate loading state in your application.
   The skeleton component provides customizable options such as size, color, and rounded corners.
@@ -67,7 +51,7 @@ defmodule CommunityDemoWeb.Components.Skeleton do
     doc: "A unique identifier is used to manage state and interaction"
 
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
-  attr :color, :string, values: @colors, default: "none", doc: "Determines color theme"
+  attr :color, :string, default: "base", doc: "Determines color theme"
   attr :height, :string, default: "extra_small", doc: "Determines the element width"
   attr :width, :string, default: "full", doc: "Determines the element width"
 
@@ -133,6 +117,8 @@ defmodule CommunityDemoWeb.Components.Skeleton do
   defp width_class(params) when is_binary(params), do: params
   defp width_class(_), do: width_class("full")
 
+  defp color_class("base"), do: "bg-[#e4e4e7] dark:bg-[#27272a]"
+
   defp color_class("white"), do: "bg-white"
 
   defp color_class("natural"), do: "bg-[#4B4B4B] dark:bg-[#DDDDDD]"
@@ -157,5 +143,7 @@ defmodule CommunityDemoWeb.Components.Skeleton do
 
   defp color_class("dark"), do: "bg-[#282828]"
 
-  defp color_class("none"), do: nil
+  defp color_class(params) when is_binary(params), do: params
+
+  defp color_class(_), do: color_class("base")
 end

@@ -22,22 +22,8 @@ defmodule CommunityDemoWeb.Components.Table do
     "transparent",
     "hoverable",
     "stripped",
-    "separated"
-  ]
-
-  @colors [
-    "natural",
-    "white",
-    "primary",
-    "secondary",
-    "dark",
-    "success",
-    "warning",
-    "danger",
-    "info",
-    "misc",
-    "dawn",
-    "silver"
+    "separated",
+    "base"
   ]
 
   @doc """
@@ -96,11 +82,11 @@ defmodule CommunityDemoWeb.Components.Table do
     doc: "A unique identifier is used to manage state and interaction"
 
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
-  attr :variant, :string, values: @variants, default: "default", doc: "Determines the style"
+  attr :variant, :string, values: @variants, default: "base", doc: "Determines the style"
   attr :rounded, :string, default: nil, doc: "Determines the border radius"
   attr :padding, :string, default: "small", doc: "Determines padding for items"
   attr :text_size, :string, default: "small", doc: "Determines text size"
-  attr :color, :string, values: @colors, default: "natural", doc: "Determines color theme"
+  attr :color, :string, default: "base", doc: "Determines color theme"
   attr :border, :string, default: nil, doc: "Determines border style"
   attr :header_border, :string, default: nil, doc: "Sets the border style for the table header"
   attr :rows_border, :string, default: nil, doc: "Sets the border style for rows in the table"
@@ -513,6 +499,15 @@ defmodule CommunityDemoWeb.Components.Table do
   defp padding_size(params) when is_binary(params), do: params
 
   defp padding_size(_), do: padding_size("small")
+
+  defp color_variant("base", "base") do
+    [
+      "[&_table]:bg-white dark:[&_table]:bg-[#18181B] [&_table]:text-[#09090b] dark:[&_table]:text-[#FAFAFA]",
+      "border-[#e4e4e7] dark:border-[#27272a]",
+      "[&_*]:divide-[#e4e4e7] [&_td]:border-[#e4e4e7] [&_th]:border-[#e4e4e7]",
+      "dark:[&_*]:divide-[#27272a] dark:[&_td]:border-[#27272a] dark:[&_th]:border-[#27272a]"
+    ]
+  end
 
   defp color_variant("bordered", "white") do
     "[&_table]:bg-white text-[#3E3E3E] border-[#DADADA] [&_*]:divide-[#DADADA] [&_td]:border-[#DADADA] [&_th]:border-[#DADADA]"

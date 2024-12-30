@@ -20,28 +20,14 @@ defmodule CommunityDemoWeb.Components.Jumbotron do
   """
   use Phoenix.Component
 
-  @colors [
-    "natural",
-    "white",
-    "primary",
-    "secondary",
-    "dark",
-    "success",
-    "warning",
-    "danger",
-    "info",
-    "silver",
-    "misc",
-    "dawn"
-  ]
-
   @variants [
     "default",
     "outline",
     "transparent",
     "shadow",
     "bordered",
-    "gradient"
+    "gradient",
+    "base"
   ]
 
   @doc """
@@ -106,9 +92,9 @@ defmodule CommunityDemoWeb.Components.Jumbotron do
     default: nil,
     doc: "A unique identifier is used to manage state and interaction"
 
-  attr :variant, :string, values: @variants, default: "default", doc: "Determines the style"
-  attr :color, :string, values: @colors, default: "natural", doc: "Determines color theme"
-  attr :border_size, :string, default: "none", doc: ""
+  attr :variant, :string, values: @variants, default: "base", doc: "Determines the style"
+  attr :color, :string, default: "base", doc: "Determines color theme"
+  attr :border_size, :string, default: "extra_small", doc: ""
   attr :border_position, :string, default: "bottom", doc: ""
   attr :space, :string, default: nil, doc: "Space between items"
 
@@ -151,37 +137,25 @@ defmodule CommunityDemoWeb.Components.Jumbotron do
   defp border_class("none", _, _), do: nil
 
   defp border_class("extra_small", "top", _), do: "border-t"
-
   defp border_class("small", "top", _), do: "border-t-2"
-
   defp border_class("medium", "top", _), do: "border-t-[3px]"
-
   defp border_class("large", "top", _), do: "border-t-4"
-
   defp border_class("extra_large", "top", _), do: "border-t-[5px]"
 
   defp border_class("extra_small", "bottom", _), do: "border-b"
-
   defp border_class("small", "bottom", _), do: "border-b-2"
-
   defp border_class("medium", "bottom", _), do: "border-b-[3px]"
-
   defp border_class("large", "bottom", _), do: "border-b-4"
-
   defp border_class("extra_large", "bottom", _), do: "border-b-[5px]"
 
   defp border_class("extra_small", "vertical", _), do: "border-y"
-
   defp border_class("small", "vertical", _), do: "border-y-2"
-
   defp border_class("medium", "vertical", _), do: "border-y-[3px]"
-
   defp border_class("large", "vertical", _), do: "border-y-4"
-
   defp border_class("extra_large", "vertical", _), do: "border-y-[5px]"
 
   defp border_class(params, _, _) when is_binary(params), do: params
-  defp border_class(_, _, _), do: border_class("none", nil, nil)
+  defp border_class(_, _, _), do: border_class("extra_small", "bottom", nil)
 
   defp padding_size("extra_small"), do: "p-1"
 
@@ -217,6 +191,13 @@ defmodule CommunityDemoWeb.Components.Jumbotron do
 
   defp space_class(params) when is_binary(params), do: params
   defp space_class(_), do: nil
+
+  defp color_variant("base", "base") do
+    [
+      "bg-white text-[#09090b] border-[#e4e4e7] shadow-sm",
+      "dark:bg-[#18181B] dark:text-[#FAFAFA] dark:border-[#27272a]"
+    ]
+  end
 
   defp color_variant("default", "white") do
     [
@@ -634,5 +615,5 @@ defmodule CommunityDemoWeb.Components.Jumbotron do
 
   defp color_variant(params, _) when is_binary(params), do: params
 
-  defp color_variant(_, _), do: color_variant("default", "natural")
+  defp color_variant(_, _), do: color_variant("base", "base")
 end

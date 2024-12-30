@@ -20,20 +20,6 @@ defmodule CommunityDemoWeb.Components.Pagination do
   alias Phoenix.LiveView.JS
 
   @sizes ["extra_small", "small", "medium", "large", "extra_large"]
-  @colors [
-    "natural",
-    "primary",
-    "secondary",
-    "success",
-    "warning",
-    "danger",
-    "info",
-    "silver",
-    "misc",
-    "dawn",
-    "dark",
-    "white"
-  ]
 
   @variants [
     "default",
@@ -43,7 +29,8 @@ defmodule CommunityDemoWeb.Components.Pagination do
     "shadow",
     "gradient",
     "inverted",
-    "bordered"
+    "bordered",
+    "base"
   ]
 
   @doc """
@@ -94,7 +81,7 @@ defmodule CommunityDemoWeb.Components.Pagination do
       "Determines the overall size of the elements, including padding, font size, and other items"
 
   attr :space, :string, default: "small", doc: "Space between items"
-  attr :color, :string, values: @colors, default: "natural", doc: "Determines color theme"
+  attr :color, :string, default: "base", doc: "Determines color theme"
 
   attr :rounded, :string,
     values: @sizes ++ ["full", "none"],
@@ -106,7 +93,7 @@ defmodule CommunityDemoWeb.Components.Pagination do
     default: "extra_small",
     doc: "Determines the border radius"
 
-  attr :variant, :string, values: @variants, default: "default", doc: "Determines the style"
+  attr :variant, :string, values: @variants, default: "base", doc: "Determines the style"
 
   attr :separator, :string,
     default: "hero-ellipsis-horizontal",
@@ -370,6 +357,20 @@ defmodule CommunityDemoWeb.Components.Pagination do
     ["[&.grouped-pagination]:border border-transparent"]
   end
 
+  defp border_class("base") do
+    [
+      "[&.grouped-pagination]:border [&.grouped-pagination_.pagination-button]:border-r",
+      "[&.grouped-pagination_.pagination-control:not(:last-child)]:border-r",
+      "[&.grouped-pagination_.pagination-seperator]:border-r",
+      "border-[#e4e4e7] [&.grouped-pagination_.pagination-button]:border-[#e4e4e7]",
+      "[&.grouped-pagination_.pagination-control:not(:last-child)]:border-[#e4e4e7]",
+      "[&.grouped-pagination_.pagination-seperator]:border-[#e4e4e7]",
+      "dark:border-[#27272a] dark:[&.grouped-pagination_.pagination-button]:border-[#27272a]",
+      "dark:[&.grouped-pagination_.pagination-control:not(:last-child)]:border-[#27272a]",
+      "dark:[&.grouped-pagination_.pagination-seperator]:border-[#27272a]"
+    ]
+  end
+
   defp border_class("natural") do
     [
       "[&.grouped-pagination]:border [&.grouped-pagination_.pagination-button]:border-r",
@@ -492,6 +493,10 @@ defmodule CommunityDemoWeb.Components.Pagination do
     ]
   end
 
+  defp border_class(params) when is_binary(params), do: params
+
+  defp border_class(_), do: border_class("base")
+
   defp rounded_size("extra_small"),
     do:
       "[&.grouped-pagination]:rounded-sm [&:not(.grouped-pagination)_.pagination-button]:rounded-sm"
@@ -580,6 +585,15 @@ defmodule CommunityDemoWeb.Components.Pagination do
   end
 
   defp size_class(params) when is_binary(params), do: params
+
+  defp color_variant("base", "base") do
+    [
+      "bg-white dark:bg-[#18181B] [&_.pagination-button]:border-[#e4e4e7] [&_.pagination-button]:text-[#09090b]",
+      "dark:[&_.pagination-button]:border-[#27272a] dark:[&_.pagination-button]:text-[#FAFAFA]",
+      "hover:[&_.pagination-button]:bg-[#F8F9FA] dark:hover:[&_.pagination-button]:bg-[#242424]",
+      "[&_.pagination-button.active-pagination-button]:bg-[#F8F9FA] dark:[&_.pagination-button.active-pagination-button]:bg-[#242424]"
+    ]
+  end
 
   defp color_variant("default", "white") do
     [
@@ -1486,6 +1500,10 @@ defmodule CommunityDemoWeb.Components.Pagination do
       "[&_.pagination-button.active-pagination-button]:bg-gradient-to-bl"
     ]
   end
+
+  defp color_variant(params, _) when is_binary(params), do: params
+
+  defp color_variant(_, _), do: color_variant("base", "base")
 
   defp default_classes() do
     [

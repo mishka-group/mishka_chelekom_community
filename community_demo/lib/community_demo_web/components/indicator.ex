@@ -19,21 +19,6 @@ defmodule CommunityDemoWeb.Components.Indicator do
 
   @sizes ["extra_small", "small", "medium", "large", "extra_large"]
 
-  @colors [
-    "natural",
-    "white",
-    "primary",
-    "secondary",
-    "dark",
-    "success",
-    "warning",
-    "danger",
-    "info",
-    "silver",
-    "misc",
-    "dawn"
-  ]
-
   @indicator_positions [
     "top_left",
     "top_center",
@@ -71,7 +56,7 @@ defmodule CommunityDemoWeb.Components.Indicator do
       "Determines the overall size of the elements, including padding, font size, and other items"
 
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
-  attr :color, :string, values: @colors, default: "primary", doc: "Determines color theme"
+  attr :color, :string, default: "base", doc: "Determines color theme"
 
   attr :rest, :global,
     include: ["pinging"] ++ @indicator_positions,
@@ -235,6 +220,8 @@ defmodule CommunityDemoWeb.Components.Indicator do
   defp indicator_size(params) when is_binary(params), do: params
   defp indicator_size(nil), do: nil
 
+  defp color_class("base"), do: "bg-[#e4e4e7] dark:bg-[#27272a]"
+
   defp color_class("white"), do: "bg-white"
 
   defp color_class("natural"), do: "bg-[#4B4B4B] dark:bg-[#DDDDDD]"
@@ -258,6 +245,10 @@ defmodule CommunityDemoWeb.Components.Indicator do
   defp color_class("silver"), do: "bg-[#868686] dark:bg-[#A6A6A6]"
 
   defp color_class("dark"), do: "bg-[#282828]"
+
+  defp color_class(params) when is_binary(params), do: params
+
+  defp color_class(_), do: color_class("base")
 
   defp drop_rest(rest) do
     all_rest =

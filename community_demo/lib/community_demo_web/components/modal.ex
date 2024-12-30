@@ -30,26 +30,13 @@ defmodule CommunityDemoWeb.Components.Modal do
     "triple_large",
     "quadruple_large"
   ]
-  @colors [
-    "white",
-    "natural",
-    "primary",
-    "secondary",
-    "dark",
-    "success",
-    "warning",
-    "danger",
-    "info",
-    "silver",
-    "misc",
-    "dawn"
-  ]
 
   @variants [
     "default",
     "shadow",
     "bordered",
-    "gradient"
+    "gradient",
+    "base"
   ]
 
   @doc """
@@ -84,8 +71,8 @@ defmodule CommunityDemoWeb.Components.Modal do
     doc: "A unique identifier is used to manage state and interaction"
 
   attr :title, :string, default: nil, doc: "Specifies the title of the element"
-  attr :variant, :string, values: @variants, default: "default", doc: "Determines the style"
-  attr :color, :string, values: @colors, default: "white", doc: "Determines color theme"
+  attr :variant, :string, values: @variants, default: "base", doc: "Determines the style"
+  attr :color, :string, default: "base", doc: "Determines color theme"
   attr :rounded, :string, values: @sizes, default: "small", doc: "Determines the border radius"
   attr :border, :string, default: "extra_small", doc: "Determines border style"
 
@@ -114,7 +101,11 @@ defmodule CommunityDemoWeb.Components.Modal do
       data-cancel={JS.exec(@on_cancel, "phx-remove")}
       class="relative z-50 hidden"
     >
-      <div id={"#{@id}-bg"} class="bg-zinc-50/90 fixed inset-0 transition-opacity" aria-hidden="true" />
+      <div
+        id={"#{@id}-bg"}
+        class="bg-zinc-50/90 dark:bg-zinc-600/90 fixed inset-0 transition-opacity"
+        aria-hidden="true"
+      />
       <div
         class="fixed inset-0 overflow-y-auto"
         aria-labelledby={"#{@id}-title"}
@@ -230,6 +221,13 @@ defmodule CommunityDemoWeb.Components.Modal do
   defp size_class(params) when is_binary(params), do: params
 
   defp size_class(_), do: size_class("extra_large")
+
+  defp color_variant("base", "base") do
+    [
+      "bg-white text-[#09090b] border-[#e4e4e7] shadow-sm",
+      "dark:bg-[#18181B] dark:text-[#FAFAFA] dark:border-[#27272a]"
+    ]
+  end
 
   defp color_variant("default", "white") do
     [
@@ -527,7 +525,7 @@ defmodule CommunityDemoWeb.Components.Modal do
 
   defp color_variant(params, _) when is_binary(params), do: params
 
-  defp color_variant(_, _), do: color_variant("default", "natural")
+  defp color_variant(_, _), do: color_variant("base", "base")
 
   attr :name, :string, required: true, doc: "Specifies the name of the element"
   attr :class, :any, default: nil, doc: "Custom CSS class for additional styling"

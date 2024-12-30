@@ -20,22 +20,7 @@ defmodule CommunityDemoWeb.Components.Drawer do
   alias Phoenix.LiveView.JS
   use Gettext, backend: CommunityDemoWeb.Gettext
 
-  @colors [
-    "natural",
-    "white",
-    "dark",
-    "primary",
-    "secondary",
-    "success",
-    "warning",
-    "danger",
-    "info",
-    "silver",
-    "misc",
-    "dawn"
-  ]
-
-  @variants ["default", "outline", "transparent", "bordered", "gradient"]
+  @variants ["default", "outline", "transparent", "bordered", "gradient", "base"]
 
   @doc """
   A `drawer` component for displaying content in a sliding panel. It can be positioned on the left or
@@ -63,8 +48,8 @@ defmodule CommunityDemoWeb.Components.Drawer do
 
   attr :title, :string, default: nil, doc: "Specifies the title of the element"
   attr :title_class, :string, default: nil, doc: "Determines custom class for the title"
-  attr :variant, :string, values: @variants, default: "default", doc: "Determines the style"
-  attr :color, :string, values: @colors, default: "natural", doc: "Determines color theme"
+  attr :variant, :string, values: @variants, default: "base", doc: "Determines the style"
+  attr :color, :string, default: "base", doc: "Determines color theme"
 
   attr :size, :string,
     default: "large",
@@ -242,6 +227,13 @@ defmodule CommunityDemoWeb.Components.Drawer do
   defp size_class("large", "bottom"), do: "min-h-44"
 
   defp size_class("extra_large", "bottom"), do: "min-h-48"
+
+  defp color_variant("base", "base") do
+    [
+      "bg-white text-[#09090b] border-[#e4e4e7]",
+      "dark:bg-[#18181B] dark:text-[#FAFAFA] dark:border-[#27272a]"
+    ]
+  end
 
   defp color_variant("default", "white") do
     [
@@ -619,7 +611,7 @@ defmodule CommunityDemoWeb.Components.Drawer do
 
   defp color_variant(params, _) when is_binary(params), do: params
 
-  defp color_variant(_, _), do: color_variant("default", "natural")
+  defp color_variant(_, _), do: color_variant("base", "base")
 
   @doc """
   Shows the drawer component by modifying its CSS classes to transition it into view.

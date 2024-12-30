@@ -35,7 +35,8 @@ defmodule CommunityDemoWeb.Components.Alert do
     "outline",
     "shadow",
     "bordered",
-    "gradient"
+    "gradient",
+    "base"
   ]
 
   @positions [
@@ -46,6 +47,7 @@ defmodule CommunityDemoWeb.Components.Alert do
   ]
 
   @kind_typs [
+    :base,
     :white,
     :dark,
     :info,
@@ -89,7 +91,7 @@ defmodule CommunityDemoWeb.Components.Alert do
     doc:
       "Global attributes can define defaults which are merged with attributes provided by the caller"
 
-  attr :variant, :string, values: @variants, default: "default", doc: "Determines the style"
+  attr :variant, :string, values: @variants, default: "base", doc: "Determines the style"
 
   attr :position, :string,
     values: @positions ++ [nil],
@@ -381,6 +383,13 @@ defmodule CommunityDemoWeb.Components.Alert do
   defp border_class("extra_large", _), do: "border-[5px]"
   defp border_class(params, _) when is_binary(params), do: params
   defp border_class(_, _), do: border_class("extra_small", nil)
+
+  defp color_variant("base", :base) do
+    [
+      "bg-white text-[#09090b] border-[#e4e4e7] shadow-sm",
+      "dark:bg-[#18181B] dark:text-[#FAFAFA] dark:border-[#27272a]"
+    ]
+  end
 
   defp color_variant("default", :white) do
     ["bg-white text-black"]
@@ -720,7 +729,7 @@ defmodule CommunityDemoWeb.Components.Alert do
 
   defp color_variant(params, _) when is_binary(params), do: params
 
-  defp color_variant(_, _), do: color_variant("default", "natural")
+  defp color_variant(_, _), do: color_variant("base", "base")
 
   ## JS Commands
 

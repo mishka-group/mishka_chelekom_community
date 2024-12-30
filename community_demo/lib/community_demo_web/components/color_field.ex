@@ -14,20 +14,6 @@ defmodule CommunityDemoWeb.Components.ColorField do
 
   use Phoenix.Component
 
-  @colors [
-    "white",
-    "primary",
-    "secondary",
-    "dark",
-    "success",
-    "warning",
-    "danger",
-    "info",
-    "light",
-    "misc",
-    "dawn"
-  ]
-
   @doc """
   The `color_field` component is used to create a customizable color input field with various
   options such as `size`, `color`, and `rounded`.
@@ -66,7 +52,7 @@ defmodule CommunityDemoWeb.Components.ColorField do
     doc: "A unique identifier is used to manage state and interaction"
 
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
-  attr :color, :string, values: @colors, default: "white", doc: "Determines color theme"
+  attr :color, :string, default: "natural", doc: "Determines color theme"
   attr :border, :string, default: "extra_small", doc: "Determines border style"
   attr :rounded, :string, default: "small", doc: "Determines the border radius"
   attr :description, :string, default: nil, doc: "Determines a short description"
@@ -240,71 +226,98 @@ defmodule CommunityDemoWeb.Components.ColorField do
 
   defp border_class(_), do: border_class("extra_small")
 
+  defp color_class("base") do
+    [
+      "[&_.color-field-wrapper_.color-input]:border-[#e4e4e7]",
+      "dark:[&_.color-field-wrapper_.color-input]:border-[#27272a]"
+    ]
+  end
+
   defp color_class("white") do
     [
       "[&_.color-field-wrapper_.color-input]:border-[#DADADA]"
     ]
   end
 
+  defp color_class("natural") do
+    [
+      "[&_.color-field-wrapper_.color-input]:border-[#4B4B4B]",
+      "dark:[&_.color-field-wrapper_.color-input]:border-[#DDDDDD]"
+    ]
+  end
+
   defp color_class("primary") do
     [
-      "[&_.color-field-wrapper_.color-input]:border-[#2441de]"
+      "[&_.color-field-wrapper_.color-input]:border-[#007F8C]",
+      "dark:[&_.color-field-wrapper_.color-input]:border-[#01B8CA]"
     ]
   end
 
   defp color_class("secondary") do
     [
-      "[&_.color-field-wrapper_.color-input]:border-[#877C7C]"
+      "[&_.color-field-wrapper_.color-input]:border-[#266EF1]",
+      "dark:[&_.color-field-wrapper_.color-input]:border-[#6DAAFB]"
     ]
   end
 
   defp color_class("success") do
     [
-      "[&_.color-field-wrapper_.color-input]:border-[#6EE7B7]"
+      "[&_.color-field-wrapper_.color-input]:border-[#0E8345]",
+      "dark:[&_.color-field-wrapper_.color-input]:border-[#06C167]"
     ]
   end
 
   defp color_class("warning") do
     [
-      "[&_.color-field-wrapper_.color-input]:border-[#FF8B08]"
+      "[&_.color-field-wrapper_.color-input]:border-[#CA8D01]",
+      "dark:[&_.color-field-wrapper_.color-input]:border-[#FDC034]"
     ]
   end
 
   defp color_class("danger") do
     [
-      "[&_.color-field-wrapper_.color-input]:border-[#E73B3B]"
+      "[&_.color-field-wrapper_.color-input]:border-[#DE1135]",
+      "dark:[&_.color-field-wrapper_.color-input]:border-[#FC7F79]"
     ]
   end
 
   defp color_class("info") do
     [
-      "[&_.color-field-wrapper_.color-input]:border-[#004FC4]"
+      "[&_.color-field-wrapper_.color-input]:border-[#0B84BA]",
+      "dark:[&_.color-field-wrapper_.color-input]:border-[#3EB7ED]"
     ]
   end
 
   defp color_class("misc") do
     [
-      "[&_.color-field-wrapper_.color-input]:border-[#52059C]"
+      "[&_.color-field-wrapper_.color-input]:border-[#8750C5]",
+      "dark:[&_.color-field-wrapper_.color-input]:border-[#BA83F9]"
     ]
   end
 
   defp color_class("dawn") do
     [
-      "[&_.color-field-wrapper_.color-input]:border-[#4D4137]"
+      "[&_.color-field-wrapper_.color-input]:border-[#A86438]",
+      "dark:[&_.color-field-wrapper_.color-input]:border-[#DB976B]"
     ]
   end
 
-  defp color_class("light") do
+  defp color_class("silver") do
     [
-      "[&_.color-field-wrapper_.color-input]:border-[#707483]"
+      "[&_.color-field-wrapper_.color-input]:border-[#868686]",
+      "dark:[&_.color-field-wrapper_.color-input]:border-[#A6A6A6]"
     ]
   end
 
   defp color_class("dark") do
     [
-      "[&_.color-field-wrapper_.color-input]:border-[#050404]"
+      "[&_.color-field-wrapper_.color-input]:border-[#282828]"
     ]
   end
+
+  defp color_class(params) when is_binary(params), do: params
+
+  defp color_class(_), do: color_class("natural")
 
   defp translate_error({msg, opts}) do
     # When using gettext, we typically pass the strings we want

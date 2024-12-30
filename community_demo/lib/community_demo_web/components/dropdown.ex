@@ -11,27 +11,13 @@ defmodule CommunityDemoWeb.Components.Dropdown do
   use Phoenix.Component
   alias Phoenix.LiveView.JS
 
-  @colors [
-    "natural",
-    "white",
-    "dark",
-    "primary",
-    "secondary",
-    "success",
-    "warning",
-    "danger",
-    "info",
-    "silver",
-    "misc",
-    "dawn"
-  ]
-
   @variants [
     "default",
     "outline",
     "bordered",
     "shadow",
-    "gradient"
+    "gradient",
+    "base"
   ]
 
   @doc """
@@ -94,8 +80,8 @@ defmodule CommunityDemoWeb.Components.Dropdown do
     default: false,
     doc: "Controls whether the dropdown is disabled on mobile devices"
 
-  attr :variant, :string, values: @variants, default: "default", doc: "Determines the style"
-  attr :color, :string, values: @colors, default: "natural", doc: "Determines color theme"
+  attr :variant, :string, values: @variants, default: "base", doc: "Determines the style"
+  attr :color, :string, default: "base", doc: "Determines color theme"
   attr :rounded, :string, default: nil, doc: "Determines the border radius"
   attr :content_width, :string, default: "extra_large", doc: "Determines the element width"
 
@@ -257,8 +243,8 @@ defmodule CommunityDemoWeb.Components.Dropdown do
     default: nil,
     doc: "A unique identifier is used to manage state and interaction"
 
-  attr :variant, :string, values: @variants, default: "default", doc: "Determines the style"
-  attr :color, :string, values: @colors, default: "natural", doc: "Determines color theme"
+  attr :variant, :string, values: @variants, default: "base", doc: "Determines the style"
+  attr :color, :string, default: "base", doc: "Determines color theme"
   attr :rounded, :string, default: nil, doc: "Determines the border radius"
 
   attr :size, :string,
@@ -476,6 +462,13 @@ defmodule CommunityDemoWeb.Components.Dropdown do
 
   defp space_class(params) when is_binary(params), do: params
   defp space_class(_), do: nil
+
+  defp color_variant("base", "base") do
+    [
+      "bg-white text-[#09090b] border-[#e4e4e7] shadow-sm",
+      "dark:bg-[#18181B] dark:text-[#FAFAFA] dark:border-[#27272a]"
+    ]
+  end
 
   defp color_variant("default", "white") do
     [
@@ -833,5 +826,5 @@ defmodule CommunityDemoWeb.Components.Dropdown do
 
   defp color_variant(params, _) when is_binary(params), do: params
 
-  defp color_variant(_, _), do: color_variant("default", "natural")
+  defp color_variant(_, _), do: color_variant("base", "base")
 end

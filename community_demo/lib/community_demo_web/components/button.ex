@@ -26,6 +26,7 @@ defmodule CommunityDemoWeb.Components.Button do
 
   @sizes ["extra_small", "small", "medium", "large", "extra_large"]
   @variants [
+    "base",
     "default",
     "outline",
     "transparent",
@@ -36,22 +37,6 @@ defmodule CommunityDemoWeb.Components.Button do
     "default_gradient",
     "outline_gradient",
     "inverted_gradient"
-  ]
-
-  @colors [
-    "natural",
-    "white",
-    "dark",
-    "primary",
-    "secondary",
-    "success",
-    "warning",
-    "danger",
-    "info",
-    "silver",
-    "misc",
-    "dawn",
-    "transparent"
   ]
 
   @indicator_positions [
@@ -110,7 +95,7 @@ defmodule CommunityDemoWeb.Components.Button do
     default: "horizontal",
     doc: "Defines the layout orientation of the component"
 
-  attr :color, :string, values: @colors, default: "natural", doc: "Determines color theme"
+  attr :color, :string, default: "base", doc: "Determines color theme"
 
   attr :rounded, :string,
     values: @sizes ++ ["full", "none"],
@@ -164,14 +149,14 @@ defmodule CommunityDemoWeb.Components.Button do
     default: nil,
     doc: "A unique identifier is used to manage state and interaction"
 
-  attr :variant, :string, values: @variants, default: "default", doc: "Determines the style"
+  attr :variant, :string, values: @variants, default: "base", doc: "Determines the style"
 
   attr :type, :string,
     values: ["button", "submit", "reset", nil],
     default: nil,
     doc: "Specifies the type of the element"
 
-  attr :color, :string, default: "natural", doc: "Determines color theme"
+  attr :color, :string, default: "base", doc: "Determines color theme"
   attr :rounded, :string, default: "large", doc: "Determines the border radius"
   attr :border, :string, default: "extra_small", doc: "Determines border style"
 
@@ -283,8 +268,8 @@ defmodule CommunityDemoWeb.Components.Button do
     default: nil,
     doc: "A unique identifier is used to manage state and interaction"
 
-  attr :variant, :string, values: @variants, default: "default", doc: "Determines the style"
-  attr :color, :string, default: "natural", doc: "Determines color theme"
+  attr :variant, :string, values: @variants, default: "base", doc: "Determines the style"
+  attr :color, :string, default: "base", doc: "Determines color theme"
   attr :rounded, :string, default: "large", doc: "Determines the border radius"
   attr :value, :string, default: "", doc: "Value of input"
   attr :border, :string, default: "extra_small", doc: "Determines border style"
@@ -370,8 +355,8 @@ defmodule CommunityDemoWeb.Components.Button do
 
   attr :patch, :string, doc: "Specifies the path for navigation using a LiveView patch"
   attr :href, :string, doc: "Sets the URL for an external link"
-  attr :variant, :string, values: @variants, default: "default", doc: "Determines the style"
-  attr :color, :string, values: @colors, default: "natural", doc: "Determines color theme"
+  attr :variant, :string, values: @variants, default: "base", doc: "Determines the style"
+  attr :color, :string, default: "base", doc: "Determines color theme"
   attr :rounded, :string, values: @sizes ++ ["full", "none"], default: "large", doc: ""
   attr :border, :string, default: "extra_small", doc: "Determines border style"
 
@@ -681,6 +666,17 @@ defmodule CommunityDemoWeb.Components.Button do
   defp border_size("extra_large", _), do: "border-[5px]"
   defp border_size(params, _) when is_binary(params), do: params
   defp border_size(_, _), do: border_size("extra_small", nil)
+
+  defp color_variant("base", "base") do
+    [
+      "bg-white text-[#09090b] border-[#e4e4e7] hover:bg-[#F8F9FA]",
+      "dark:bg-[#18181B] dark:text-[#FAFAFA] dark:border-[#27272a] dark:hover:bg-[#242424]",
+      "[&>.indicator]:bg-[#e4e4e7] dark:[&>.indicator]:bg-[#27272a]",
+      "disabled:bg-[#f1f3f5] disabled:text-[#adb5bd] dark:disabled:bg-[#2e2e2e] dark:disabled:text-[#696969]",
+      "disabled:border-[#dee2e6] dark:disabled:border-[#424242]",
+      "shadow-sm"
+    ]
+  end
 
   defp color_variant("default", "white") do
     ["bg-white text-black"]
@@ -1791,7 +1787,11 @@ defmodule CommunityDemoWeb.Components.Button do
 
   defp color_variant(params, _) when is_binary(params), do: params
 
-  defp color_variant(_, _), do: color_variant("default", "natural")
+  defp color_variant(_, _), do: color_variant("base", "base")
+
+  defp border_class("base") do
+    "border-[#e4e4e7] dark:border-[#27272a]"
+  end
 
   defp border_class("natural") do
     "border-black dark:border-white"
@@ -1839,7 +1839,7 @@ defmodule CommunityDemoWeb.Components.Button do
 
   defp border_class(params) when is_binary(params), do: params
 
-  defp border_class(_), do: border_class("natural")
+  defp border_class(_), do: border_class("base")
 
   defp rounded_size("extra_small"), do: "rounded-sm [&.gradient-button:before]:rounded-[1px]"
 

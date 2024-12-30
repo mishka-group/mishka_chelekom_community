@@ -27,35 +27,22 @@ defmodule CommunityDemoWeb.Components.Card do
 
   use Phoenix.Component
 
-  @sizes [
-    "extra_small",
-    "small",
-    "medium",
-    "large",
-    "extra_large"
-  ]
-  @colors [
-    "natural",
-    "primary",
-    "secondary",
-    "success",
-    "warning",
-    "danger",
-    "info",
-    "silver",
-    "misc",
-    "dark",
-    "white",
-    "dawn"
-  ]
-
   @variants [
+    "base",
     "default",
     "outline",
     "transparent",
     "shadow",
     "bordered",
     "gradient"
+  ]
+
+  @sizes [
+    "extra_small",
+    "small",
+    "medium",
+    "large",
+    "extra_large"
   ]
 
   @positions [
@@ -120,8 +107,8 @@ defmodule CommunityDemoWeb.Components.Card do
     default: nil,
     doc: "A unique identifier is used to manage state and interaction"
 
-  attr :variant, :string, values: @variants, default: "default", doc: "Determines the style"
-  attr :color, :string, values: @colors, default: "natural", doc: "Determines color theme"
+  attr :variant, :string, values: @variants, default: "base", doc: "Determines the style"
+  attr :color, :string, default: "base", doc: "Determines color theme"
   attr :border, :string, default: "extra_small", doc: "Determines border style"
   attr :rounded, :string, default: nil, doc: "Determines the border radius"
   attr :space, :string, default: nil, doc: "Space between items"
@@ -495,6 +482,13 @@ defmodule CommunityDemoWeb.Components.Card do
 
   defp space_class(params) when is_binary(params), do: params
   defp space_class(_), do: nil
+
+  defp color_variant("base", "base") do
+    [
+      "[&:not(:has(.overlay))]:bg-white text-[#09090b] border-[#e4e4e7] shadow-sm",
+      "dark:[&:not(:has(.overlay))]:bg-[#18181B] dark:text-[#FAFAFA] dark:border-[#27272a]"
+    ]
+  end
 
   defp color_variant("default", "white") do
     [
@@ -912,7 +906,7 @@ defmodule CommunityDemoWeb.Components.Card do
 
   defp color_variant(params, _) when is_binary(params), do: params
 
-  defp color_variant(_, _), do: color_variant("default", "natural")
+  defp color_variant(_, _), do: color_variant("base", "base")
 
   attr :name, :string, required: true, doc: "Specifies the name of the element"
   attr :class, :any, default: nil, doc: "Custom CSS class for additional styling"

@@ -16,22 +16,7 @@ defmodule CommunityDemoWeb.Components.NativeSelect do
 
   use Phoenix.Component
 
-  @variants ["default", "shadow", "bordered", "native"]
-
-  @colors [
-    "natural",
-    "white",
-    "primary",
-    "secondary",
-    "dark",
-    "success",
-    "warning",
-    "danger",
-    "info",
-    "silver",
-    "misc",
-    "dawn"
-  ]
+  @variants ["default", "shadow", "bordered", "native", "base"]
 
   @doc """
   Renders a customizable `native_select` input component with options for single or multiple selections.
@@ -75,10 +60,10 @@ defmodule CommunityDemoWeb.Components.NativeSelect do
     doc: "A unique identifier is used to manage state and interaction"
 
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
-  attr :color, :string, values: @colors, default: "natural", doc: "Determines color theme"
+  attr :color, :string, default: "base", doc: "Determines color theme"
   attr :border, :string, default: "extra_small", doc: "Determines border style"
   attr :rounded, :string, default: "small", doc: "Determines the border radius"
-  attr :variant, :string, values: @variants, default: "native", doc: "Determines the style"
+  attr :variant, :string, values: @variants, default: "base", doc: "Determines the style"
   attr :description, :string, default: nil, doc: "Determines a short description"
   attr :space, :string, default: "medium", doc: "Space between items"
   attr :min_height, :string, default: nil, doc: "Determines min height style"
@@ -324,6 +309,17 @@ defmodule CommunityDemoWeb.Components.NativeSelect do
   defp space_class(params) when is_binary(params), do: params
 
   defp space_class(_), do: space_class("medium")
+
+  defp color_variant("base", "base") do
+    [
+      "text-[#09090b] dark:text-[#FAFAFA] [&_.select-field:not(:has(.select-field-error))]:border-[#e4e4e7] shadow-sm",
+      "[&_.select-field:not(:has(.select-field-error))]:bg-white",
+      "dark:[&_.select-field:not(:has(.select-field-error))]:bg-[#18181B]",
+      "dark:[&_.select-field:not(:has(.select-field-error))]:border-[#27272a]",
+      "[&_.select-field.select-field-error]:bg-rose-700 [&_.select-field.select-field-error]:border-rose-700",
+      "focus-within:[&_.select-field]:ring-[#F8F9FA] dark:focus-within:[&_.select-field]:ring-[#242424]"
+    ]
+  end
 
   defp color_variant("default", "white") do
     [
@@ -684,6 +680,10 @@ defmodule CommunityDemoWeb.Components.NativeSelect do
       "dark:[&_.select-field]:shadow-none"
     ]
   end
+
+  defp color_variant(params, _) when is_binary(params), do: params
+
+  defp color_variant(_, _), do: color_variant("base", "base")
 
   defp translate_error({msg, opts}) do
     # When using gettext, we typically pass the strings we want

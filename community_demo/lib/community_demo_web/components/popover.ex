@@ -18,26 +18,12 @@ defmodule CommunityDemoWeb.Components.Popover do
   use Phoenix.Component
   alias Phoenix.LiveView.JS
 
-  @colors [
-    "natural",
-    "primary",
-    "secondary",
-    "success",
-    "warning",
-    "danger",
-    "info",
-    "silver",
-    "misc",
-    "dark",
-    "white",
-    "dawn"
-  ]
-
   @variants [
     "default",
     "shadow",
     "bordered",
-    "gradient"
+    "gradient",
+    "base"
   ]
 
   @doc """
@@ -105,8 +91,8 @@ defmodule CommunityDemoWeb.Components.Popover do
     doc: "Determines if the element can be activated on click"
 
   attr :position, :string, default: "top", doc: "Determines the element position"
-  attr :variant, :string, values: @variants, default: "shadow", doc: "Determines the style"
-  attr :color, :string, values: @colors, default: "natural", doc: "Determines color theme"
+  attr :variant, :string, values: @variants, default: "base", doc: "Determines the style"
+  attr :color, :string, default: "base", doc: "Determines color theme"
   attr :rounded, :string, default: nil, doc: "Determines the border radius"
   attr :show_arrow, :boolean, default: true, doc: "Show or hide arrow of popover"
   attr :border, :string, default: "extra_small", doc: "Determines border style"
@@ -187,7 +173,7 @@ defmodule CommunityDemoWeb.Components.Popover do
       >
         {render_slot(content)}
         <span
-          :if={@show_arrow && @variant != "bordered"}
+          :if={@show_arrow && @variant != "bordered" && @variant != "base"}
           class={["block absolute size-[8px] bg-inherit rotate-45 popover-arrow"]}
         >
         </span>
@@ -240,7 +226,7 @@ defmodule CommunityDemoWeb.Components.Popover do
       >
         {render_slot(content)}
         <span
-          :if={@show_arrow && @variant != "bordered"}
+          :if={@show_arrow && @variant != "bordered" && @variant != "base"}
           class={["block absolute size-[8px] bg-inherit rotate-45 popover-arrow"]}
         >
         </span>
@@ -361,8 +347,8 @@ defmodule CommunityDemoWeb.Components.Popover do
 
   attr :inline, :boolean, default: false, doc: "Determines whether this element is inline"
   attr :position, :string, default: "top", doc: "Determines the element position"
-  attr :variant, :string, values: @variants, default: "shadow", doc: "Determines the style"
-  attr :color, :string, values: @colors, default: "natural", doc: "Determines color theme"
+  attr :variant, :string, values: @variants, default: "base", doc: "Determines the style"
+  attr :color, :string, default: "base", doc: "Determines color theme"
   attr :rounded, :string, default: nil, doc: "Determines the border radius"
   attr :show_arrow, :boolean, default: true, doc: "Show or hide arrow of popover"
   attr :border, :string, default: "extra_small", doc: "Determines border style"
@@ -413,7 +399,7 @@ defmodule CommunityDemoWeb.Components.Popover do
     >
       {render_slot(@inner_block)}
       <span
-        :if={@show_arrow && @variant != "bordered"}
+        :if={@show_arrow && @variant != "bordered" && @variant != "base"}
         class={["block absolute size-[8px] bg-inherit rotate-45 popover-arrow"]}
       >
       </span>
@@ -445,7 +431,7 @@ defmodule CommunityDemoWeb.Components.Popover do
     >
       {render_slot(@inner_block)}
       <span
-        :if={@show_arrow && @variant != "bordered"}
+        :if={@show_arrow && @variant != "bordered" && @variant != "base"}
         class={["block absolute size-[8px] bg-inherit rotate-45 popover-arrow"]}
       >
       </span>
@@ -585,6 +571,13 @@ defmodule CommunityDemoWeb.Components.Popover do
 
   defp space_class(params) when is_binary(params), do: params
   defp space_class(_), do: nil
+
+  defp color_variant("base", "base") do
+    [
+      "bg-white text-[#09090b] border-[#e4e4e7] shadow-sm",
+      "dark:bg-[#18181B] dark:text-[#FAFAFA] dark:border-[#27272a]"
+    ]
+  end
 
   defp color_variant("default", "white") do
     ["bg-white text-black"]
@@ -878,5 +871,5 @@ defmodule CommunityDemoWeb.Components.Popover do
 
   defp color_variant(params, _) when is_binary(params), do: params
 
-  defp color_variant(_, _), do: color_variant("default", "natural")
+  defp color_variant(_, _), do: color_variant("base", "base")
 end

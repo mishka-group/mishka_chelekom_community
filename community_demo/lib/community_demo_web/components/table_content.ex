@@ -59,8 +59,8 @@ defmodule CommunityDemoWeb.Components.TableContent do
 
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
   attr :title, :string, default: nil, doc: "Specifies the title of the element"
-  attr :color, :string, default: "natural", doc: "Determines color theme"
-  attr :variant, :string, default: "default", doc: "Determines the style"
+  attr :color, :string, default: "base", doc: "Determines color theme"
+  attr :variant, :string, default: "base", doc: "Determines the style"
   attr :space, :string, default: nil, doc: "Space between items"
   attr :animated, :boolean, default: false, doc: "Determines whether element's icon has animation"
   attr :padding, :string, default: nil, doc: "Determines padding for items"
@@ -357,6 +357,13 @@ defmodule CommunityDemoWeb.Components.TableContent do
   defp rounded_size(params) when is_binary(params), do: params
 
   defp rounded_size(_), do: rounded_size("none")
+
+  defp color_variant("base", "base") do
+    [
+      "bg-white text-[#09090b] border-[#e4e4e7]",
+      "dark:bg-[#18181B] dark:text-[#FAFAFA] dark:border-[#27272a]"
+    ]
+  end
 
   defp color_variant("default", "white") do
     [
@@ -734,7 +741,7 @@ defmodule CommunityDemoWeb.Components.TableContent do
 
   defp color_variant(params, _) when is_binary(params), do: params
 
-  defp color_variant(_, _), do: color_variant("default", "natural")
+  defp color_variant(_, _), do: color_variant("base", "base")
 
   attr :name, :string, required: true, doc: "Specifies the name of the element"
   attr :class, :any, default: nil, doc: "Custom CSS class for additional styling"

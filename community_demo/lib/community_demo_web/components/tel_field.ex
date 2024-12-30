@@ -22,22 +22,7 @@ defmodule CommunityDemoWeb.Components.TelField do
   """
   use Phoenix.Component
 
-  @variants ["outline", "default", "shadow", "bordered", "transparent"]
-
-  @colors [
-    "natural",
-    "white",
-    "primary",
-    "secondary",
-    "dark",
-    "success",
-    "warning",
-    "danger",
-    "info",
-    "misc",
-    "dawn",
-    "silver"
-  ]
+  @variants ["outline", "default", "shadow", "bordered", "transparent", "base"]
 
   @doc """
   The `tel_field` component is a customizable telephone input field with support for various
@@ -80,10 +65,10 @@ defmodule CommunityDemoWeb.Components.TelField do
     doc: "A unique identifier is used to manage state and interaction"
 
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
-  attr :color, :string, values: @colors, default: "natural", doc: "Determines color theme"
+  attr :color, :string, default: "base", doc: "Determines color theme"
   attr :border, :string, default: "extra_small", doc: "Determines border style"
   attr :rounded, :string, default: "small", doc: "Determines the border radius"
-  attr :variant, :string, values: @variants, default: "outline", doc: "Determines the style"
+  attr :variant, :string, values: @variants, default: "base", doc: "Determines the style"
   attr :description, :string, default: nil, doc: "Determines a short description"
   attr :space, :string, default: "medium", doc: "Space between items"
 
@@ -299,23 +284,23 @@ defmodule CommunityDemoWeb.Components.TelField do
   end
 
   defp size_class("extra_small") do
-    "[&_.tel-field-wrapper_input]:h-7 [&_.tel-field-wrapper_.password-field-icon]:size-3"
+    "[&_.tel-field-wrapper_input]:h-7 [&_.tel-field-wrapper_.tel-field-icon]:size-3"
   end
 
   defp size_class("small") do
-    "[&_.tel-field-wrapper_input]:h-8 [&_.tel-field-wrapper_.password-field-icon]:size-3.5"
+    "[&_.tel-field-wrapper_input]:h-8 [&_.tel-field-wrapper_.tel-field-icon]:size-3.5"
   end
 
   defp size_class("medium") do
-    "[&_.tel-field-wrapper_input]:h-9 [&_.tel-field-wrapper_.password-field-icon]:size-4"
+    "[&_.tel-field-wrapper_input]:h-9 [&_.tel-field-wrapper_.tel-field-icon]:size-4"
   end
 
   defp size_class("large") do
-    "[&_.tel-field-wrapper_input]:h-10 [&_.tel-field-wrapper_.password-field-icon]:size-5"
+    "[&_.tel-field-wrapper_input]:h-10 [&_.tel-field-wrapper_.tel-field-icon]:size-5"
   end
 
   defp size_class("extra_large") do
-    "[&_.tel-field-wrapper_input]:h-11 [&_.tel-field-wrapper_.password-field-icon]:size-6"
+    "[&_.tel-field-wrapper_input]:h-11 [&_.tel-field-wrapper_.tel-field-icon]:size-6"
   end
 
   defp size_class(_), do: size_class("medium")
@@ -359,6 +344,20 @@ defmodule CommunityDemoWeb.Components.TelField do
   defp space_class(params) when is_binary(params), do: params
 
   defp space_class(_), do: space_class("medium")
+
+  defp color_variant("base", "base", floating) do
+    [
+      "[&_.tel-field-wrapper:not(:has(.tel-field-error))]:bg-white",
+      "dark:[&_.tel-field-wrapper:not(:has(.tel-field-error))]:bg-[#18181B]",
+      "text-[#09090b] dark:text-[#FAFAFA] [&_.tel-field-wrapper:not(:has(.tel-field-error))]:border-[#e4e4e7]",
+      "dark:[&_.tel-field-wrapper:not(:has(.tel-field-error))]:border-[#27272a]",
+      "[&_.tel-field-wrapper.tel-field-error]:border-rose-700",
+      "[&_.tel-field-wrapper>input]:placeholder:text-[#09090b] dark:[&_.tel-field-wrapper>input]:placeholder:text-[#FAFAFA]",
+      "focus-within:[&_.tel-field-wrapper]:ring-[#e4e4e7] dark:focus-within:[&_.tel-field-wrapper]:ring-[#e4e4e7]",
+      floating == "outer" &&
+        "[&_.tel-field-wrapper_.floating-label]:bg-white dark:[&_.tel-field-wrapper_.floating-label]:bg-[#27272a]"
+    ]
+  end
 
   defp color_variant("outline", "natural", floating) do
     [
@@ -1026,7 +1025,7 @@ defmodule CommunityDemoWeb.Components.TelField do
 
   defp color_variant(params, _, _) when is_binary(params), do: params
 
-  defp color_variant(_, _, _), do: color_variant("outline", "natural", "none")
+  defp color_variant(_, _, _), do: color_variant("base", "base", "none")
 
   defp translate_error({msg, opts}) do
     # When using gettext, we typically pass the strings we want

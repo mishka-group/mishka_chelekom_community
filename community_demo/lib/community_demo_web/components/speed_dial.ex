@@ -31,26 +31,12 @@ defmodule CommunityDemoWeb.Components.SpeedDial do
   use Gettext, backend: CommunityDemoWeb.Gettext
   alias Phoenix.LiveView.JS
 
-  @colors [
-    "natural",
-    "primary",
-    "secondary",
-    "success",
-    "warning",
-    "danger",
-    "info",
-    "silver",
-    "misc",
-    "dark",
-    "white",
-    "dawn"
-  ]
-
   @variants [
     "default",
     "shadow",
     "bordered",
-    "gradient"
+    "gradient",
+    "base"
   ]
 
   @doc """
@@ -86,8 +72,8 @@ defmodule CommunityDemoWeb.Components.SpeedDial do
     doc:
       "Determines the overall size of the elements, including padding, font size, and other items"
 
-  attr :color, :string, values: @colors, default: "natural", doc: "Determines color theme"
-  attr :variant, :string, values: @variants, default: "default", doc: "Determines the style"
+  attr :color, :string, default: "base", doc: "Determines color theme"
+  attr :variant, :string, values: @variants, default: "base", doc: "Determines the style"
   attr :space, :string, default: "extra_small", doc: "Space between items"
   attr :width, :string, default: "fit", doc: "Determines the element width"
   attr :border, :string, default: "extra_small", doc: "Determines border style"
@@ -470,6 +456,13 @@ defmodule CommunityDemoWeb.Components.SpeedDial do
   defp action_position("large", "bottom-end"), do: "bottom-8 end-8"
   defp action_position("extra_large", "bottom-end"), do: "bottom-9 end-9"
 
+  defp color_variant("base", "base") do
+    [
+      "bg-white text-[#09090b] border-[#e4e4e7] shadow-sm",
+      "dark:bg-[#18181B] dark:text-[#FAFAFA] dark:border-[#27272a]"
+    ]
+  end
+
   defp color_variant("default", "white") do
     ["bg-white text-black"]
   end
@@ -762,7 +755,7 @@ defmodule CommunityDemoWeb.Components.SpeedDial do
 
   defp color_variant(params, _) when is_binary(params), do: params
 
-  defp color_variant(_, _), do: color_variant("default", "natural")
+  defp color_variant(_, _), do: color_variant("base", "base")
 
   attr :name, :string, required: true, doc: "Specifies the name of the element"
   attr :class, :any, default: nil, doc: "Custom CSS class for additional styling"

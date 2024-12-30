@@ -82,7 +82,7 @@ defmodule CommunityDemoWeb.Components.Carousel do
     doc: "A unique identifier is used to manage state and interaction"
 
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
-  attr :overlay, :string, default: "natural", doc: "Determines an overlay"
+  attr :overlay, :string, default: "base", doc: "Determines an overlay"
 
   attr :size, :string,
     default: "large",
@@ -399,6 +399,13 @@ defmodule CommunityDemoWeb.Components.Carousel do
   end
 
   defp text_position(_), do: text_position("center")
+
+  defp color_class("base") do
+    [
+      "[&_.carousel-overlay]:bg-white/30 text-[#09090b] hover:[&_.carousel-controls]:bg-[#e4e4e7]/5",
+      "dark:[&_.carousel-overlay]:bg-[#18181B]/30 dark:text-[#FAFAFA] dark:hover:[&_.carousel-controls]:bg-[#27272a]/5"
+    ]
+  end
 
   defp color_class("natural") do
     [

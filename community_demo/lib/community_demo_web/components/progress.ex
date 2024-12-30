@@ -19,22 +19,7 @@ defmodule CommunityDemoWeb.Components.Progress do
   alias Phoenix.LiveView.JS
   import Phoenix.LiveView.Utils, only: [random_id: 0]
 
-  @colors [
-    "natural",
-    "white",
-    "primary",
-    "secondary",
-    "dark",
-    "success",
-    "warning",
-    "danger",
-    "info",
-    "silver",
-    "misc",
-    "dawn"
-  ]
-
-  @variants ["default", "gradient"]
+  @variants ["default", "gradient", "base"]
 
   @doc """
   Renders a `progress` bar component that visually represents the completion status of a task.
@@ -84,8 +69,8 @@ defmodule CommunityDemoWeb.Components.Progress do
     default: "horizontal",
     doc: "Defines the layout orientation of the component"
 
-  attr :color, :string, values: @colors, default: "natural", doc: "Determines color theme"
-  attr :variant, :string, values: @variants, default: "default", doc: "Determines the style"
+  attr :color, :string, default: "base", doc: "Determines color theme"
+  attr :variant, :string, values: @variants, default: "base", doc: "Determines the style"
 
   attr :size, :string,
     default: "small",
@@ -105,7 +90,7 @@ defmodule CommunityDemoWeb.Components.Progress do
     ~H"""
     <div
       class={[
-        "bg-[#F3F3F3] dark:bg-[#868686] rounded-full overflow-hidden",
+        "bg-[#F4F4F4] dark:bg-[#868686] rounded-full overflow-hidden",
         @variation == "vertical" && "flex items-end",
         size_class(@size, @variation)
       ]}
@@ -154,9 +139,9 @@ defmodule CommunityDemoWeb.Components.Progress do
     default: "horizontal",
     doc: "Defines the layout orientation of the component"
 
-  attr :color, :string, values: @colors, default: "white", doc: "Determines color theme"
+  attr :color, :string, default: "base", doc: "Determines color theme"
   attr :rounded, :string, default: "none", doc: "Determines the border radius"
-  attr :variant, :string, values: @variants, default: "default", doc: "Determines the style"
+  attr :variant, :string, values: @variants, default: "base", doc: "Determines the style"
   attr :csp_nonce, :string, default: nil, doc: "csp nonce"
 
   attr :rest, :global,
@@ -259,6 +244,12 @@ defmodule CommunityDemoWeb.Components.Progress do
   defp size_class(params, _) when is_binary(params), do: params
 
   defp size_class(_, _), do: size_class("small", "horizontal")
+
+  defp color_variant("base", "base") do
+    [
+      "text-[#09090b] bg-[#e4e4e7] dark:text-[#FAFAFA] dark:bg-[#27272a]"
+    ]
+  end
 
   defp color_variant("default", "white") do
     [
@@ -431,4 +422,8 @@ defmodule CommunityDemoWeb.Components.Progress do
       "dark:[&.progress-vertical]:to-[#BBBBBB] dark:[&.progress-vertical]:via-[#BBBBBB] dark:[&.progress-vertical]:from-[#e9ecef]"
     ]
   end
+
+  defp color_variant(params, _) when is_binary(params), do: params
+
+  defp color_variant(_, _), do: color_variant("base", "base")
 end

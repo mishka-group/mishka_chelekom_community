@@ -18,21 +18,7 @@ defmodule CommunityDemoWeb.Components.Badge do
   alias Phoenix.LiveView.JS
 
   @sizes ["extra_small", "small", "medium", "large", "extra_large"]
-  @variants ["default", "outline", "transparent", "shadow", "bordered", "gradient"]
-  @colors [
-    "natural",
-    "white",
-    "dark",
-    "primary",
-    "secondary",
-    "success",
-    "warning",
-    "danger",
-    "info",
-    "silver",
-    "misc",
-    "dawn"
-  ]
+  @variants ["default", "outline", "transparent", "shadow", "bordered", "gradient", "base"]
 
   @icon_positions [
     "right_icon",
@@ -77,7 +63,7 @@ defmodule CommunityDemoWeb.Components.Badge do
     default: nil,
     doc: "A unique identifier is used to manage state and interaction"
 
-  attr :variant, :string, values: @variants, default: "default", doc: "Determines the style"
+  attr :variant, :string, values: @variants, default: "base", doc: "Determines the style"
 
   attr :size, :string,
     default: "extra_small",
@@ -89,7 +75,7 @@ defmodule CommunityDemoWeb.Components.Badge do
     default: "small",
     doc: "Determines the border radius"
 
-  attr :color, :string, values: @colors, default: "natural", doc: "Determines color theme"
+  attr :color, :string, default: "base", doc: "Determines color theme"
   attr :border, :string, default: "extra_small", doc: "Determines border style"
 
   attr :font_weight, :string,
@@ -301,6 +287,13 @@ defmodule CommunityDemoWeb.Components.Badge do
 
   defp badge_position(params) when is_binary(params), do: params
   defp badge_position(_), do: nil
+
+  defp color_variant("base", "base") do
+    [
+      "bg-white text-[#09090b] border-[#e4e4e7] shadow-sm [&>.indicator]:bg-[#e4e4e7]",
+      "dark:bg-[#18181B] dark:text-[#FAFAFA] dark:border-[#27272a] dark:[&>.indicator]:bg-[#27272a]"
+    ]
+  end
 
   defp color_variant("default", "white") do
     ["bg-white text-black [&>.indicator]:bg-black"]
@@ -790,7 +783,7 @@ defmodule CommunityDemoWeb.Components.Badge do
 
   defp color_variant(params, _) when is_binary(params), do: params
 
-  defp color_variant(_, _), do: color_variant("default", "natural")
+  defp color_variant(_, _), do: color_variant("base", "base")
 
   defp rounded_size("extra_small"), do: "rounded-sm"
 

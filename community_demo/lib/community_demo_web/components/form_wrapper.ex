@@ -161,6 +161,13 @@ defmodule CommunityDemoWeb.Components.FormWrapper do
   defp space_class(params) when is_binary(params), do: params
   defp space_class(_), do: nil
 
+  defp color_variant("base", "base") do
+    [
+      "bg-white text-[#09090b] border-[#e4e4e7] shadow-sm",
+      "dark:bg-[#18181B] dark:text-[#FAFAFA] dark:border-[#27272a]"
+    ]
+  end
+
   defp color_variant("default", "white") do
     [
       "bg-white text-black"

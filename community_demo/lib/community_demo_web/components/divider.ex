@@ -15,21 +15,6 @@ defmodule CommunityDemoWeb.Components.Divider do
   """
   use Phoenix.Component
 
-  @colors [
-    "natural",
-    "white",
-    "dark",
-    "primary",
-    "secondary",
-    "success",
-    "warning",
-    "danger",
-    "info",
-    "misc",
-    "dawn",
-    "silver"
-  ]
-
   @doc """
   The `divider` component is used to visually separate content with either a horizontal or
   vertical line. It supports different line styles (like dashed, dotted, or solid) and can
@@ -60,7 +45,7 @@ defmodule CommunityDemoWeb.Components.Divider do
     default: "solid",
     doc: "Determines type of element"
 
-  attr :color, :string, values: @colors, default: "silver", doc: "Determines color theme"
+  attr :color, :string, default: "base", doc: "Determines color theme"
 
   attr :size, :string,
     default: "extra_small",
@@ -217,7 +202,7 @@ defmodule CommunityDemoWeb.Components.Divider do
     default: "solid",
     doc: "Specifies the type of the element"
 
-  attr :color, :string, values: @colors, default: "silver", doc: "Determines color theme"
+  attr :color, :string, default: "base", doc: "Determines color theme"
 
   attr :size, :string,
     default: "extra_small",
@@ -458,6 +443,16 @@ defmodule CommunityDemoWeb.Components.Divider do
 
   defp margin_class("none", :vertical) do
     ["mx-0"]
+  end
+
+  defp color_class("base") do
+    [
+      "text-[#09090b] border-[#e4e4e7] dark:text-[#27272a] dark:border-[#27272a]",
+      "has-[.divider-content.devider-middle]:before:border-[#e4e4e7] has-[.divider-content.devider-middle]:after:border-[#e4e4e7]",
+      "has-[.divider-content.devider-right]:before:border-[#e4e4e7] has-[.divider-content.devider-left]:after:border-[#e4e4e7]",
+      "dark:has-[.divider-content.devider-middle]:before:border-[#27272a] dark:has-[.divider-content.devider-middle]:after:border-[#27272a]",
+      "dark:has-[.divider-content.devider-right]:before:border-[#27272a] dark:has-[.divider-content.devider-left]:after:border-[#27272a]"
+    ]
   end
 
   defp color_class("white") do

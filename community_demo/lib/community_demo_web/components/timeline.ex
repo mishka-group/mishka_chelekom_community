@@ -27,21 +27,6 @@ defmodule CommunityDemoWeb.Components.Timeline do
 
   use Phoenix.Component
 
-  @colors [
-    "natural",
-    "white",
-    "primary",
-    "secondary",
-    "dark",
-    "success",
-    "warning",
-    "danger",
-    "info",
-    "misc",
-    "dawn",
-    "silver"
-  ]
-
   @doc """
   The `timeline` component provides a structured layout to display a sequence of events or actions,
   either horizontally or vertically.
@@ -107,7 +92,7 @@ defmodule CommunityDemoWeb.Components.Timeline do
     default: nil,
     doc: "A unique identifier is used to manage state and interaction"
 
-  attr :color, :string, values: @colors, default: "natural", doc: "Determines color theme"
+  attr :color, :string, default: "base", doc: "Determines color theme"
   attr :hide_last_line, :boolean, default: false, doc: ""
   attr :gapped_sections, :boolean, default: false, doc: ""
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
@@ -415,6 +400,15 @@ defmodule CommunityDemoWeb.Components.Timeline do
 
   defp bullet_size(_), do: bullet_size("extra_small")
 
+  defp color_class("base") do
+    [
+      "[&_.timeline-bullet]:bg-[#e4e4e7] [&_.timeline-bullet]:text-[#e4e4e7] [&_.timeline-vertical-line]:after:border-[#e4e4e7]",
+      "[&_.timeline-horizontal-line]:border-[#e4e4e7]",
+      "dark:[&_.timeline-bullet]:bg-[#27272a] dark:[&_.timeline-bullet]:text-[#FAFAFA] dark:[&_.timeline-vertical-line]:after:border-[#27272a]",
+      "dark:[&_.timeline-horizontal-line]:border-[#27272a]"
+    ]
+  end
+
   defp color_class("white") do
     [
       "[&_.timeline-bullet]:bg-white [&_.timeline-bullet]:text-[#DADADA] [&_.timeline-vertical-line]:after:border-white",
@@ -520,6 +514,8 @@ defmodule CommunityDemoWeb.Components.Timeline do
   end
 
   defp color_class(params) when is_binary(params), do: params
+
+  defp color_class(_), do: color_class("base")
 
   attr :name, :string, required: true, doc: "Specifies the name of the element"
   attr :class, :any, default: nil, doc: "Custom CSS class for additional styling"

@@ -16,21 +16,6 @@ defmodule CommunityDemoWeb.Components.Video do
   use Phoenix.Component
   use Gettext, backend: CommunityDemoWeb.Gettext
 
-  @colors [
-    "white",
-    "natrual",
-    "primary",
-    "secondary",
-    "dark",
-    "success",
-    "warning",
-    "danger",
-    "info",
-    "silver",
-    "misc",
-    "dawn"
-  ]
-
   # https://stackoverflow.com/questions/15268604/html5-track-captions-not-showing/15268843#15268843
   # https://www.w3schools.com/tags/tag_video.asp
 
@@ -97,7 +82,6 @@ defmodule CommunityDemoWeb.Components.Video do
   attr :caption_size, :string, default: "extra_small", doc: "Determines the video caption size"
 
   attr :caption_bakcground, :string,
-    values: @colors,
     default: "dark",
     doc: "Determines the video caption bakcground"
 
@@ -206,6 +190,9 @@ defmodule CommunityDemoWeb.Components.Video do
   defp caption_size("quadruple_large"), do: "[&::cue]:text-4xl"
   defp caption_size(params) when is_binary(params), do: params
   defp caption_size(_), do: caption_size("extra_small")
+
+  defp caption_bakcground("base"),
+    do: "[&::cue]:bg-[linear-gradient(#fff,#fff)] [&::cue]:text-[#09090b]"
 
   defp caption_bakcground("white"),
     do: "[&::cue]:bg-[linear-gradient(#fff,#fff)] [&::cue]:text-[#282828]"

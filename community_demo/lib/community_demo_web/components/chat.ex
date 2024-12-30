@@ -9,28 +9,14 @@ defmodule CommunityDemoWeb.Components.Chat do
   """
   use Phoenix.Component
 
-  @colors [
-    "white",
-    "natural",
-    "primary",
-    "secondary",
-    "dark",
-    "success",
-    "warning",
-    "danger",
-    "info",
-    "silver",
-    "misc",
-    "dawn"
-  ]
-
   @variants [
     "default",
     "outline",
     "transparent",
     "shadow",
     "gradient",
-    "bordered"
+    "bordered",
+    "base"
   ]
 
   @doc """
@@ -86,8 +72,8 @@ defmodule CommunityDemoWeb.Components.Chat do
     doc: "A unique identifier is used to manage state and interaction"
 
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
-  attr :variant, :string, values: @variants, default: "default", doc: "Determines the style"
-  attr :color, :string, values: @colors, default: "natural", doc: "Determines color theme"
+  attr :variant, :string, values: @variants, default: "base", doc: "Determines the style"
+  attr :color, :string, default: "base", doc: "Determines color theme"
   attr :border, :string, default: "extra_small", doc: "Determines border style"
   attr :rounded, :string, default: "extra_large", doc: "Determines the border radius"
 
@@ -325,6 +311,15 @@ defmodule CommunityDemoWeb.Components.Chat do
   defp size_class("extra_large"), do: "text-xl [&>.chat-section-bubble]:max-w-[20rem]"
 
   defp size_class(_), do: size_class("medium")
+
+  defp color_variant("base", "base") do
+    [
+      "[&>.chat-section-bubble]:bg-white [&>.chat-section-bubble]:text-[#09090b]",
+      "[&>.chat-section-bubble]:border-[#e4e4e7] [&>.chat-section-bubble]:shadow-sm",
+      "dark:[&>.chat-section-bubble]:bg-[#18181B] dark:[&>.chat-section-bubble]:text-[#FAFAFA]",
+      "dark:[&>.chat-section-bubble]:border-[#27272a]"
+    ]
+  end
 
   defp color_variant("default", "white") do
     [
@@ -782,5 +777,5 @@ defmodule CommunityDemoWeb.Components.Chat do
 
   defp color_variant(params, _) when is_binary(params), do: params
 
-  defp color_variant(_, _), do: color_variant("default", "natural")
+  defp color_variant(_, _), do: color_variant("base", "base")
 end

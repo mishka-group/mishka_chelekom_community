@@ -335,6 +335,17 @@ defmodule CommunityDemoWeb.Components.RadioField do
   defp variation_gap(params) when is_binary(params), do: params
   defp variation_gap(_), do: variation_gap("medium")
 
+  defp color_class("base") do
+    [
+      "text-[#09090b] dark:text-[#FAFAFA]",
+      "checked:[&_.radio-field-wrapper_.radio-input]:text-[#e4e4e7]",
+      "dark:checked:[&_.radio-field-wrapper_.radio-input]:text-[#27272a]",
+      "[&_.radio-field-wrapper_.radio-input]:border-[#F8F9FA]",
+      "dark:[&_.radio-field-wrapper_.radio-input]:border-[#242424]",
+      "focus-within:[&_.radio-field-wrapper_.radio-input]:ring-[#F8F9FA] dark:focus-within:[&_.radio-field-wrapper_.radio-input]:ring-[#242424]"
+    ]
+  end
+
   defp color_class("white") do
     [
       "[&_.radio-field-wrapper_.radio-input]:text-white text-[#DDDDDD]",
@@ -460,6 +471,10 @@ defmodule CommunityDemoWeb.Components.RadioField do
       "focus-within:[&_.radio-field-wrapper_.radio-input]:ring-[#282828]"
     ]
   end
+
+  defp color_class(params) when is_binary(params), do: params
+
+  defp color_class(_), do: color_class("primary")
 
   defp translate_error({msg, opts}) do
     # When using gettext, we typically pass the strings we want

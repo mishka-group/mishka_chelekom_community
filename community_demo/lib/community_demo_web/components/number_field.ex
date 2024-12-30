@@ -13,22 +13,7 @@ defmodule CommunityDemoWeb.Components.NumberField do
 
   use Phoenix.Component
 
-  @variants ["outline", "default", "shadow", "bordered", "transparent"]
-
-  @colors [
-    "natural",
-    "white",
-    "primary",
-    "secondary",
-    "dark",
-    "success",
-    "warning",
-    "danger",
-    "info",
-    "misc",
-    "dawn",
-    "silver"
-  ]
+  @variants ["outline", "default", "shadow", "bordered", "transparent", "base"]
 
   @doc """
   Renders a customizable `number_input` field with various options such as labels, descriptions,
@@ -70,10 +55,10 @@ defmodule CommunityDemoWeb.Components.NumberField do
     doc: "A unique identifier is used to manage state and interaction"
 
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
-  attr :color, :string, values: @colors, default: "natural", doc: "Determines color theme"
+  attr :color, :string, default: "base", doc: "Determines color theme"
   attr :border, :string, default: "extra_small", doc: "Determines border style"
   attr :rounded, :string, default: "small", doc: "Determines the border radius"
-  attr :variant, :string, values: @variants, default: "outline", doc: "Determines the style"
+  attr :variant, :string, values: @variants, default: "base", doc: "Determines the style"
   attr :description, :string, default: nil, doc: "Determines a short description"
   attr :space, :string, default: "medium", doc: "Space between items"
 
@@ -358,6 +343,20 @@ defmodule CommunityDemoWeb.Components.NumberField do
   defp space_class(params) when is_binary(params), do: params
 
   defp space_class(_), do: space_class("medium")
+
+  defp color_variant("base", "base", floating) do
+    [
+      "[&_.number-field-wrapper:not(:has(.number-field-error))]:bg-white",
+      "dark:[&_.number-field-wrapper:not(:has(.number-field-error))]:bg-[#18181B]",
+      "text-[#09090b] dark:text-[#FAFAFA] [&_.number-field-wrapper:not(:has(.number-field-error))]:border-[#e4e4e7]",
+      "dark:[&_.number-field-wrapper:not(:has(.number-field-error))]:border-[#27272a]",
+      "[&_.number-field-wrapper.number-field-error]:border-rose-700",
+      "[&_.number-field-wrapper>input]:placeholder:text-[#09090b] dark:[&_.number-field-wrapper>input]:placeholder:text-[#FAFAFA]",
+      "focus-within:[&_.number-field-wrapper]:ring-[#e4e4e7] dark:focus-within:[&_.number-field-wrapper]:ring-[#e4e4e7]",
+      floating == "outer" &&
+        "[&_.number-field-wrapper_.floating-label]:bg-white dark:[&_.number-field-wrapper_.floating-label]:bg-[#27272a]"
+    ]
+  end
 
   defp color_variant("outline", "natural", floating) do
     [
@@ -1025,7 +1024,7 @@ defmodule CommunityDemoWeb.Components.NumberField do
 
   defp color_variant(params, _, _) when is_binary(params), do: params
 
-  defp color_variant(_, _, _), do: color_variant("outline", "natural", "none")
+  defp color_variant(_, _, _), do: color_variant("base", "base", "none")
 
   defp translate_error({msg, opts}) do
     # When using gettext, we typically pass the strings we want

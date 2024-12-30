@@ -16,19 +16,6 @@ defmodule CommunityDemoWeb.Components.DeviceMockup do
   use Phoenix.Component
   import CommunityDemoWeb.Components.Image, only: [image: 1]
 
-  @colors [
-    "natural",
-    "primary",
-    "secondary",
-    "success",
-    "warning",
-    "danger",
-    "info",
-    "misc",
-    "dawn",
-    "silver"
-  ]
-
   @doc """
   The `device_mockup` component renders a responsive device mockup for various devices like
   `iphone`, `android`, `ipad`, `laptop`, and `imac`.
@@ -123,7 +110,7 @@ defmodule CommunityDemoWeb.Components.DeviceMockup do
     doc: "A unique identifier is used to manage state and interaction"
 
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
-  attr :color, :string, values: @colors, default: "silver", doc: "Determines color theme"
+  attr :color, :string, default: "base", doc: "Determines color theme"
   attr :alt, :string, default: nil, doc: "Media link description"
   attr :type, :string, default: "iphone", doc: "android watch laptop iphone ipad imac"
   attr :image, :string, default: nil, doc: "Image displayed alongside of an item"
@@ -269,6 +256,13 @@ defmodule CommunityDemoWeb.Components.DeviceMockup do
       </div>
     </div>
     """
+  end
+
+  defp color_class("base") do
+    [
+      "[&_.mock-base]:bg-[#f1f3f5] [&_.mock-darker-base]:bg-[#dee2e6] [&_.mock-base]:border-[#e4e4e7]",
+      "dark:[&_.mock-base]:bg-[#2e2e2e] dark:[&_.mock-darker-base]:bg-[#424242] dark:[&_.mock-base]:border-[#27272a]"
+    ]
   end
 
   defp color_class("natural") do

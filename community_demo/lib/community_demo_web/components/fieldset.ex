@@ -15,22 +15,7 @@ defmodule CommunityDemoWeb.Components.Fieldset do
   """
   use Phoenix.Component
 
-  @variants ["default", "outline", "bordered", "shadow", "transparent", "gradient"]
-
-  @colors [
-    "natural",
-    "white",
-    "primary",
-    "secondary",
-    "dark",
-    "success",
-    "warning",
-    "danger",
-    "info",
-    "misc",
-    "dawn",
-    "silver"
-  ]
+  @variants ["default", "outline", "bordered", "shadow", "transparent", "gradient", "base"]
 
   @doc """
   Renders a `fieldset` component that groups related form elements visually and semantically.
@@ -71,11 +56,11 @@ defmodule CommunityDemoWeb.Components.Fieldset do
     doc: "A unique identifier is used to manage state and interaction"
 
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
-  attr :color, :string, values: @colors, default: "natural", doc: "Determines color theme"
+  attr :color, :string, default: "base", doc: "Determines color theme"
   attr :border, :string, default: "extra_small", doc: "Determines border style"
   attr :rounded, :string, default: "small", doc: "Determines the border radius"
   attr :padding, :string, default: "small", doc: "Determines padding for items"
-  attr :variant, :string, values: @variants, default: "outline", doc: "Determines the style"
+  attr :variant, :string, values: @variants, default: "base", doc: "Determines the style"
   attr :space, :string, default: "medium", doc: "Space between items"
 
   attr :size, :string,
@@ -109,7 +94,7 @@ defmodule CommunityDemoWeb.Components.Fieldset do
       @class
     ]}>
       <fieldset class="fieldset-field">
-        <legend :if={@legend} for={@id}>{@legend}</legend>
+        <legend :if={@legend} class="fieldset-legend" for={@id}>{@legend}</legend>
 
         <div :for={{control, index} <- Enum.with_index(@control, 1)} id={"#{@id}-control-#{index}"}>
           {render_slot(control)}
@@ -218,6 +203,13 @@ defmodule CommunityDemoWeb.Components.Fieldset do
   defp space_class(params) when is_binary(params), do: params
 
   defp space_class(_), do: space_class("medium")
+
+  defp color_variant("base", "base") do
+    [
+      "text-[#09090b] [&_.fieldset-field]:border-[#e4e4e7] [&_.fieldset-field]:bg-white shadow-sm",
+      "dark:text-[#FAFAFA] dark:[&_.fieldset-field]:border-[#27272a] dark:[&_.fieldset-field]:bg-[#18181B]"
+    ]
+  end
 
   defp color_variant("default", "white") do
     [
@@ -635,7 +627,7 @@ defmodule CommunityDemoWeb.Components.Fieldset do
 
   defp color_variant(params, _) when is_binary(params), do: params
 
-  defp color_variant(_, _), do: color_variant("default", "natural")
+  defp color_variant(_, _), do: color_variant("base", "base")
 
   attr :name, :string, required: true, doc: "Specifies the name of the element"
   attr :class, :any, default: nil, doc: "Custom CSS class for additional styling"

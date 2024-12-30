@@ -16,18 +16,7 @@ defmodule CommunityDemoWeb.Components.Stepper do
 
   use Phoenix.Component
 
-  @colors [
-    "natural",
-    "primary",
-    "secondary",
-    "success",
-    "warning",
-    "danger",
-    "info",
-    "silver",
-    "misc",
-    "dawn"
-  ]
+  @variants ["default", "gradient", "base"]
 
   @doc """
   Renders a customizable `stepper` component that visually represents a multi-step process.
@@ -55,7 +44,7 @@ defmodule CommunityDemoWeb.Components.Stepper do
       "Determines the overall size of the elements, including padding, font size, and other items"
 
   attr :margin, :string, default: "medium", doc: "Determines the element margin"
-  attr :color, :string, values: @colors, default: "natural", doc: "Determines color theme"
+  attr :color, :string, default: "base", doc: "Determines color theme"
   attr :space, :string, default: nil, doc: "Space between items"
   attr :border, :string, default: "extra_small", doc: "Determines border style"
 
@@ -65,7 +54,7 @@ defmodule CommunityDemoWeb.Components.Stepper do
 
   attr :max_width, :string, default: nil, doc: "Determines the style of element max width"
   attr :seperator_size, :string, default: "extra_small", doc: "Determines the seperator size"
-  attr :variant, :string, default: "default", doc: "Determines the style"
+  attr :variant, :string, values: @variants, default: "base", doc: "Determines the style"
   attr :vertical, :boolean, default: false, doc: "Determines whether element is vertical"
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
   attr :col_step, :boolean, default: false, doc: "Custom CSS class for additional styling"
@@ -160,7 +149,6 @@ defmodule CommunityDemoWeb.Components.Stepper do
     default: "none"
 
   attr :icon, :string, default: nil, doc: "Icon displayed alongside of an item"
-  attr :color, :string, default: "white"
   attr :title, :string, default: nil, doc: "Specifies the title of the element"
   attr :description, :string, default: nil, doc: "Determines a short description"
   attr :step_number, :integer, default: 1
@@ -317,7 +305,7 @@ defmodule CommunityDemoWeb.Components.Stepper do
     ~H"""
     <svg
       aria-hidden="true"
-      class="stepper-icon stepper-loading-icon text-gray-200 animate-spin"
+      class="stepper-icon stepper-loading-icon text-gray-200 dark:text-gray-400 animate-spin"
       stroke="currentColor"
       viewBox="0 0 100 101"
       fill="none"
@@ -565,6 +553,29 @@ defmodule CommunityDemoWeb.Components.Stepper do
 
   # colors
   # stepper-loading-step, stepper-current-step, stepper-completed-step, stepper-canceled-step
+
+  defp color_variant("base", "base") do
+    [
+      "[&_.stepper-step]:bg-white [&_.stepper-step]:text-[#09090b] [&_.stepper-loading-icon]:fill-[#2563EB]",
+      "[&_.stepper-step]:border-[#e4e4e7] [&_.stepper-current-step_.stepper-step]:border-[#2563EB]",
+      "[&_.stepper-current-step_.stepper-step]:text-[#2563EB]",
+      "[&_.stepper-completed-step_.stepper-step]:bg-[#14B8A6] [&_.stepper-completed-step_.stepper-step]:border-[#14B8A6]",
+      "[&_.stepper-completed-step_.stepper-step]:text-white",
+      "dark:[&_.stepper-step]:bg-[#18181B] dark:[&_.stepper-step]:text-[#FAFAFA] dark:[&_.stepper-step]:border-[#27272a]",
+      "dark:[&_.stepper-current-step_.stepper-step]:text-[#1971C2]",
+      "dark:[&_.stepper-current-step_.stepper-step]:border-[#1971C2]",
+      "dark:[&_.stepper-completed-step_.stepper-step]:bg-[#099268] dark:[&_.stepper-completed-step_.stepper-step]:border-[#099268]",
+      "dark:[&_.stepper-completed-step_.stepper-step]:text-white",
+      "[&_.stepper-canceled-step_.stepper-step]:bg-[#FA5252] [&_.stepper-canceled-step_.stepper-step]:border-[#FA5252]",
+      "[&_.stepper-canceled-step_.stepper-step]:text-white",
+      "dark:[&_.stepper-canceled-step_.stepper-step]:bg-[#E03131] dark:[&_.stepper-canceled-step_.stepper-step]:border-[#E03131]",
+      "dark:[&_.stepper-canceled-step_.stepper-step]:text-white",
+      "[&_.stepper-seperator]:border-[#e4e4e7] dark:[&_.stepper-seperator]:border-[#27272a]",
+      "[&_.stepper-completed-step+.stepper-seperator]:border-[#14B8A6] dark:[&_.stepper-completed-step+.stepper-seperator]:border-[#099268]",
+      "[&.vertical-stepper_.stepper-completed-step_.stepper-seperator]:border-[#14B8A6]",
+      "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-seperator]:border-[#099268]"
+    ]
+  end
 
   defp color_variant("natural", "default") do
     [
@@ -958,7 +969,7 @@ defmodule CommunityDemoWeb.Components.Stepper do
 
   defp color_variant(params, _) when is_binary(params), do: params
 
-  defp color_variant(_, _), do: color_variant("natural", "default")
+  defp color_variant(_, _), do: color_variant("base", "base")
 
   attr :name, :string, required: true, doc: "Specifies the name of the element"
   attr :class, :any, default: nil, doc: "Custom CSS class for additional styling"
