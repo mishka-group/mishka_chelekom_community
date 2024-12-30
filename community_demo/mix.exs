@@ -58,7 +58,9 @@ defmodule CommunityDemo.MixProject do
       {:jason, "~> 1.2"},
       {:dns_cluster, "~> 0.1.1"},
       {:bandit, "~> 1.5"},
-      {:mishka_chelekom, "~> 0.0.2-beta.3", only: :dev}
+      # {:mishka_chelekom, "~> 0.0.2-beta.3", only: :dev},
+      {:mishka_chelekom,
+       github: "mishka-group/mishka_chelekom", branch: "delete-no-pattern-fn", only: :dev}
     ]
   end
 

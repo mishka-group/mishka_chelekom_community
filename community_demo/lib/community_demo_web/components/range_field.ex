@@ -222,12 +222,10 @@ defmodule CommunityDemoWeb.Components.RangeField do
   defp value_position("two-thirds"), do: "start-2/3 -translate-x-1/2 rtl:translate-x-1/2"
   defp value_position("one-thirds"), do: "start-1/3 -translate-x-1/2 rtl:translate-x-1/2"
   defp value_position(params) when is_binary(params), do: params
-  defp value_position(_), do: value_position("start")
 
   defp width_class("half"), do: "[&_.range-field]:w-1/2"
   defp width_class("full"), do: "[&_.range-field]:w-full"
   defp width_class(params) when is_binary(params), do: params
-  defp width_class(_), do: width_class("full")
 
   defp size_class("extra_small") do
     [
@@ -265,8 +263,6 @@ defmodule CommunityDemoWeb.Components.RangeField do
   end
 
   defp size_class(params) when is_binary(params), do: params
-
-  defp size_class(_), do: size_class("extra_small")
 
   defp color_class("default", "base") do
     ["accent-[#27272a] dark:accent-[#e4e4e7]"]
@@ -425,8 +421,6 @@ defmodule CommunityDemoWeb.Components.RangeField do
   end
 
   defp color_class(params, _) when is_binary(params), do: params
-
-  defp color_class(_, _), do: color_class("default", "primary")
 
   defp translate_error({msg, opts}) do
     # When using gettext, we typically pass the strings we want

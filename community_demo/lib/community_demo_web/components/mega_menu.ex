@@ -231,7 +231,6 @@ defmodule CommunityDemoWeb.Components.MegaMenu do
   defp top_gap("large"), do: "[&>.mega-menu-content]:mt-4"
   defp top_gap("extra_large"), do: "[&>.mega-menu-content]:mt-5"
   defp top_gap(params) when is_binary(params), do: params
-  defp top_gap(_), do: top_gap("extra_small")
 
   defp width_size("full"), do: "[&>.mega-menu-content]:w-ful"
 
@@ -240,7 +239,6 @@ defmodule CommunityDemoWeb.Components.MegaMenu do
       "[&>.mega-menu-content]:w-full md:[&>.mega-menu-content]:w-1/2 md:[&>.mega-menu-content]:mx-auto"
 
   defp width_size(params) when is_binary(params), do: params
-  defp width_size(_), do: width_size("full")
 
   defp border_class(_, variant) when variant in ["default", "shadow", "gradient"],
     do: nil
@@ -255,7 +253,6 @@ defmodule CommunityDemoWeb.Components.MegaMenu do
     do: "[&>.mega-menu-content]:[&>.mega-menu-content]:border-[5px]"
 
   defp border_class(params, _) when is_binary(params), do: params
-  defp border_class(_, _), do: border_class("extra_small", nil)
 
   defp rounded_size("extra_small"), do: "[&>.mega-menu-content]:rounded-sm"
 
@@ -285,8 +282,6 @@ defmodule CommunityDemoWeb.Components.MegaMenu do
 
   defp size_class(params) when is_binary(params), do: params
 
-  defp size_class(_), do: size_class("medium")
-
   defp padding_size("extra_small"), do: "[&>.mega-menu-content]:p-2"
 
   defp padding_size("small"), do: "[&>.mega-menu-content]:p-3"
@@ -301,8 +296,6 @@ defmodule CommunityDemoWeb.Components.MegaMenu do
 
   defp padding_size(params) when is_binary(params), do: params
 
-  defp padding_size(_), do: padding_size("extra_small")
-
   defp space_class("none"), do: "[&>.mega-menu-content]:space-y-0"
 
   defp space_class("extra_small"), do: "[&>.mega-menu-content]:space-y-2"
@@ -316,8 +309,6 @@ defmodule CommunityDemoWeb.Components.MegaMenu do
   defp space_class("extra_large"), do: "[&>.mega-menu-content]:space-y-6"
 
   defp space_class(params) when is_binary(params), do: params
-
-  defp space_class(_), do: space_class("none")
 
   defp color_variant("base", "base") do
     [
@@ -681,8 +672,6 @@ defmodule CommunityDemoWeb.Components.MegaMenu do
   end
 
   defp color_variant(params, _) when is_binary(params), do: params
-
-  defp color_variant(_, _), do: color_variant("base", "base")
 
   attr :name, :string, required: true, doc: "Specifies the name of the element"
   attr :class, :any, default: nil, doc: "Custom CSS class for additional styling"

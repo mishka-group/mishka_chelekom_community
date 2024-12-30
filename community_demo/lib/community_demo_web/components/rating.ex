@@ -97,7 +97,6 @@ defmodule CommunityDemoWeb.Components.Rating do
   defp gap_class("large"), do: "gap-2.5"
   defp gap_class("extra_large"), do: "gap-3"
   defp gap_class(params) when is_binary(params), do: params
-  defp gap_class(_), do: gap_class("small")
 
   defp size_class("extra_small"), do: "[&_.rating-icon]:size-4"
 
@@ -116,8 +115,6 @@ defmodule CommunityDemoWeb.Components.Rating do
   defp size_class("quadruple_large"), do: "[&_.rating-icon]:size-11"
 
   defp size_class(params) when is_binary(params), do: params
-
-  defp size_class(_), do: size_class("small")
 
   defp color_class("base") do
     [
@@ -222,8 +219,6 @@ defmodule CommunityDemoWeb.Components.Rating do
   end
 
   defp color_class(params) when is_binary(params), do: params
-
-  defp color_class(_), do: color_class("base")
 
   attr :name, :string, required: true, doc: "Specifies the name of the element"
   attr :class, :any, default: nil, doc: "Custom CSS class for additional styling"

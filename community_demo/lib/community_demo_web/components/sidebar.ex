@@ -163,7 +163,6 @@ defmodule CommunityDemoWeb.Components.Sidebar do
   defp position_class("start"), do: "top-0 start-0"
   defp position_class("end"), do: "top-0 end-0"
   defp position_class(params) when is_binary(params), do: params
-  defp position_class(_), do: position_class("start")
 
   defp border_class(_, _, variant)
        when variant in ["default", "shadow", "transparent", "gradient"],
@@ -183,7 +182,6 @@ defmodule CommunityDemoWeb.Components.Sidebar do
   defp border_class("extra_large", "end", _), do: "border-s-[5px]"
 
   defp border_class(params, _, _) when is_binary(params), do: params
-  defp border_class(_, _, _), do: border_class("extra_small", "start", nil)
 
   defp size_class("extra_small"), do: "w-60"
 
@@ -196,8 +194,6 @@ defmodule CommunityDemoWeb.Components.Sidebar do
   defp size_class("extra_large"), do: "w-96"
 
   defp size_class(params) when is_binary(params), do: params
-
-  defp size_class(_), do: size_class("large")
 
   defp color_variant("base", "base") do
     [
@@ -581,8 +577,6 @@ defmodule CommunityDemoWeb.Components.Sidebar do
   end
 
   defp color_variant(params, _) when is_binary(params), do: params
-
-  defp color_variant(_, _), do: color_variant("base", "base")
 
   attr :name, :string, required: true, doc: "Specifies the name of the element"
   attr :class, :any, default: nil, doc: "Custom CSS class for additional styling"

@@ -390,8 +390,6 @@ defmodule CommunityDemoWeb.Components.Dropdown do
 
   defp border_class(params, _) when is_binary(params), do: params
 
-  defp border_class(_, _), do: border_class("extra_small", nil)
-
   defp rounded_size("extra_small"), do: "rounded-sm"
 
   defp rounded_size("small"), do: "rounded"
@@ -406,8 +404,6 @@ defmodule CommunityDemoWeb.Components.Dropdown do
 
   defp rounded_size(params) when is_binary(params), do: params
 
-  defp rounded_size(_), do: rounded_size("small")
-
   defp size_class("extra_small"), do: "text-[12px]"
 
   defp size_class("small"), do: "text-[13px]"
@@ -419,8 +415,6 @@ defmodule CommunityDemoWeb.Components.Dropdown do
   defp size_class("extra_large"), do: "text-[16px]"
 
   defp size_class(params) when is_binary(params), do: params
-
-  defp size_class(_), do: size_class("medium")
 
   defp padding_size("extra_small"), do: "p-2"
 
@@ -436,8 +430,6 @@ defmodule CommunityDemoWeb.Components.Dropdown do
 
   defp padding_size(params) when is_binary(params), do: params
 
-  defp padding_size(_), do: padding_size("extra_small")
-
   defp width_class("extra_small"), do: "min-w-48"
   defp width_class("small"), do: "min-w-52"
   defp width_class("medium"), do: "min-w-56"
@@ -448,7 +440,6 @@ defmodule CommunityDemoWeb.Components.Dropdown do
   defp width_class("quadruple_large"), do: "min-w-96"
   defp width_class("full"), do: "w-full"
   defp width_class(params) when is_binary(params), do: params
-  defp width_class(_), do: width_class("extra_large")
 
   defp space_class("extra_small"), do: "space-y-2"
 
@@ -461,7 +452,6 @@ defmodule CommunityDemoWeb.Components.Dropdown do
   defp space_class("extra_large"), do: "space-y-6"
 
   defp space_class(params) when is_binary(params), do: params
-  defp space_class(_), do: nil
 
   defp color_variant("base", "base") do
     [
@@ -825,6 +815,4 @@ defmodule CommunityDemoWeb.Components.Dropdown do
   end
 
   defp color_variant(params, _) when is_binary(params), do: params
-
-  defp color_variant(_, _), do: color_variant("base", "base")
 end

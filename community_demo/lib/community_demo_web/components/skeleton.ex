@@ -100,13 +100,14 @@ defmodule CommunityDemoWeb.Components.Skeleton do
 
   defp rounded_size("none"), do: "rounded-none"
 
+  defp rounded_size(params) when is_binary(params), do: params
+
   defp height_class("extra_small"), do: "h-1"
   defp height_class("small"), do: "h-2"
   defp height_class("medium"), do: "h-3"
   defp height_class("large"), do: "h-4"
   defp height_class("extra_large"), do: "h-5"
   defp height_class(params) when is_binary(params), do: params
-  defp height_class(_), do: height_class("extra_small")
 
   defp width_class("extra_small"), do: "w-60"
   defp width_class("small"), do: "w-64"
@@ -115,7 +116,6 @@ defmodule CommunityDemoWeb.Components.Skeleton do
   defp width_class("extra_large"), do: "w-96"
   defp width_class("full"), do: "w-full"
   defp width_class(params) when is_binary(params), do: params
-  defp width_class(_), do: width_class("full")
 
   defp color_class("base"), do: "bg-[#e4e4e7] dark:bg-[#27272a]"
 
@@ -144,6 +144,4 @@ defmodule CommunityDemoWeb.Components.Skeleton do
   defp color_class("dark"), do: "bg-[#282828]"
 
   defp color_class(params) when is_binary(params), do: params
-
-  defp color_class(_), do: color_class("base")
 end

@@ -396,8 +396,6 @@ defmodule CommunityDemoWeb.Components.Menu do
 
   defp padding_size(params) when is_binary(params), do: params
 
-  defp padding_size(_), do: padding_size("extra_small")
-
   defp space_class("none"), do: nil
 
   defp space_class("extra_small"), do: "space-y-2"
@@ -411,5 +409,4 @@ defmodule CommunityDemoWeb.Components.Menu do
   defp space_class("extra_large"), do: "space-y-6"
 
   defp space_class(params) when is_binary(params), do: params
-  defp space_class(_), do: space_class("small")
 end

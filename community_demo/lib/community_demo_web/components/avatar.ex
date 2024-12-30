@@ -372,7 +372,7 @@ defmodule CommunityDemoWeb.Components.Avatar do
     ]
   end
 
-  defp color_class(_), do: color_class("base")
+  defp color_class(params) when is_binary(params), do: params
 
   defp border_class("extra_small"), do: "border-avatar border"
   defp border_class("small"), do: "border-avatar border-2"
@@ -381,7 +381,6 @@ defmodule CommunityDemoWeb.Components.Avatar do
   defp border_class("extra_large"), do: "border-avatar border-[5px]"
   defp border_class("none"), do: "border-0"
   defp border_class(params) when is_binary(params), do: params
-  defp border_class(_), do: border_class("none")
 
   defp rounded_size("extra_small"), do: "rounded-sm"
 
@@ -398,7 +397,6 @@ defmodule CommunityDemoWeb.Components.Avatar do
   defp rounded_size("none"), do: "rounded-none"
 
   defp rounded_size(params) when is_binary(params), do: params
-  defp rounded_size(_), do: rounded_size("medium")
 
   defp size_class("extra_small"), do: "size-8 text-xs"
 
@@ -560,7 +558,6 @@ defmodule CommunityDemoWeb.Components.Avatar do
   end
 
   defp size_class(params, :text) when is_binary(params), do: params
-  defp size_class(_, :text), do: size_class("small", :text)
 
   defp shadow_class("extra_small"), do: "shadow-sm"
   defp shadow_class("small"), do: "shadow"
@@ -569,7 +566,6 @@ defmodule CommunityDemoWeb.Components.Avatar do
   defp shadow_class("extra_large"), do: "shadow-xl"
   defp shadow_class("none"), do: "shadow-none"
   defp shadow_class(params) when is_binary(params), do: params
-  defp shadow_class(_), do: shadow_class("none")
 
   defp space_class("extra_small"), do: "-space-x-2"
 
@@ -584,7 +580,6 @@ defmodule CommunityDemoWeb.Components.Avatar do
   defp space_class("none"), do: "space-x-0"
 
   defp space_class(params) when is_binary(params), do: params
-  defp space_class(_), do: space_class("medium")
 
   defp default_classes() do
     [

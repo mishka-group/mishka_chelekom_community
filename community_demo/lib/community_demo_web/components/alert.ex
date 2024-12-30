@@ -344,7 +344,6 @@ defmodule CommunityDemoWeb.Components.Alert do
   defp width_class("extra_large"), do: "w-96"
   defp width_class("full"), do: "w-full"
   defp width_class(params) when is_binary(params), do: params
-  defp width_class(_), do: width_class("full")
 
   defp content_size("extra_small"), do: "text-[12px] [&_.aler-icon]:size-3.5"
 
@@ -358,14 +357,11 @@ defmodule CommunityDemoWeb.Components.Alert do
 
   defp content_size(params) when is_binary(params), do: params
 
-  defp content_size(_), do: content_size("medium")
-
   defp position_class("top_left"), do: "fixed top-2 left-0 ml-2"
   defp position_class("top_right"), do: "fixed top-2 right-0 mr-2"
   defp position_class("bottom_left"), do: "fixed bottom-2 left-0 ml-2"
   defp position_class("bottom_right"), do: "fixed bottom-2 right-0 mr-2"
   defp position_class(params) when is_binary(params), do: params
-  defp position_class(nil), do: nil
 
   defp border_class(_, variant)
        when variant in [
@@ -382,7 +378,6 @@ defmodule CommunityDemoWeb.Components.Alert do
   defp border_class("large", _), do: "border-4"
   defp border_class("extra_large", _), do: "border-[5px]"
   defp border_class(params, _) when is_binary(params), do: params
-  defp border_class(_, _), do: border_class("extra_small", nil)
 
   defp color_variant("base", :base) do
     [
@@ -728,8 +723,6 @@ defmodule CommunityDemoWeb.Components.Alert do
   end
 
   defp color_variant(params, _) when is_binary(params), do: params
-
-  defp color_variant(_, _), do: color_variant("base", "base")
 
   ## JS Commands
 

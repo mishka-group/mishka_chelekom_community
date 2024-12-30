@@ -396,7 +396,7 @@ defmodule CommunityDemoWeb.Components.List do
     "justify-center"
   end
 
-  defp content_position(_), do: content_position("start")
+  defp content_position(params) when is_binary(params), do: params
 
   defp rounded_size("extra_small"),
     do: "[&:not(.list-items-gap)]:rounded-sm [&.list-items-gap>li]:rounded-sm"
@@ -432,7 +432,6 @@ defmodule CommunityDemoWeb.Components.List do
   defp variant_space("extra_large", _), do: "list-items-gap space-y-6"
 
   defp variant_space(params, _) when is_binary(params), do: params
-  defp variant_space(_, _), do: nil
 
   defp list_space("extra_small"), do: "space-y-2"
 
@@ -445,7 +444,6 @@ defmodule CommunityDemoWeb.Components.List do
   defp list_space("extra_large"), do: "space-y-6"
 
   defp list_space(params) when is_binary(params), do: params
-  defp list_space(_), do: nil
 
   defp width_class("extra_small"), do: "w-60"
   defp width_class("small"), do: "w-64"
@@ -454,7 +452,6 @@ defmodule CommunityDemoWeb.Components.List do
   defp width_class("extra_large"), do: "w-96"
   defp width_class("full"), do: "w-full"
   defp width_class(params) when is_binary(params), do: params
-  defp width_class(_), do: width_class("full")
 
   defp size_class("extra_small"), do: "text-xs [&_.list-item-icon]:size-4"
 
@@ -467,8 +464,6 @@ defmodule CommunityDemoWeb.Components.List do
   defp size_class("extra_large"), do: "text-xl [&_.list-item-icon]:size-8"
 
   defp size_class(params) when is_binary(params), do: params
-
-  defp size_class(_), do: size_class("medium")
 
   defp padding_size("extra_small"), do: "p-1"
 
@@ -483,8 +478,6 @@ defmodule CommunityDemoWeb.Components.List do
   defp padding_size("none"), do: "p-0"
 
   defp padding_size(params) when is_binary(params), do: params
-
-  defp padding_size(_), do: padding_size("none")
 
   defp border_class(_, variant) when variant in ["default", "shadow", "transparent", "gradient"],
     do: nil
@@ -568,8 +561,6 @@ defmodule CommunityDemoWeb.Components.List do
   defp border_class("extra_large", "base_separated"), do: "[&>li]:border-[5px]"
 
   defp border_class(params, _) when is_binary(params), do: params
-
-  defp border_class(_, _), do: border_class(nil, "transparent")
 
   defp color_variant("base", "base", hoverable) do
     [
@@ -1289,8 +1280,6 @@ defmodule CommunityDemoWeb.Components.List do
   end
 
   defp color_variant(params, _, _) when is_binary(params), do: params
-
-  defp color_variant(_, _, _), do: color_variant("transparent", "natural", false)
 
   attr :name, :string, required: true, doc: "Specifies the name of the element"
   attr :class, :any, default: nil, doc: "Custom CSS class for additional styling"

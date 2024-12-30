@@ -289,7 +289,6 @@ defmodule CommunityDemoWeb.Components.SpeedDial do
   defp width_class("quadruple_large"), do: "[&_.speed-dial-content]:w-96"
   defp width_class("fit"), do: "[&_.speed-dial-content]:w-fit"
   defp width_class(params) when is_binary(params), do: params
-  defp width_class(_), do: width_class("fit")
 
   defp space_class("extra_small", "top"), do: "[&_.speed-dial-content]:space-y-2"
 
@@ -333,8 +332,6 @@ defmodule CommunityDemoWeb.Components.SpeedDial do
 
   defp space_class(_, params) when is_binary(params), do: params
 
-  defp space_class(_, _), do: space_class("extra_small", "bottom")
-
   defp padding_class("none"), do: "[&_.speed-dial-content]:p-0"
 
   defp padding_class("extra_small"), do: "[&_.speed-dial-content]:p-1"
@@ -349,8 +346,6 @@ defmodule CommunityDemoWeb.Components.SpeedDial do
 
   defp padding_class(params) when is_binary(params), do: params
 
-  defp padding_class(_), do: padding_class("extra_small")
-
   defp rounded_size("extra_small"), do: "[&_.speed-dial-base]:rounded-sm"
 
   defp rounded_size("small"), do: "[&_.speed-dial-base]:rounded"
@@ -362,7 +357,8 @@ defmodule CommunityDemoWeb.Components.SpeedDial do
   defp rounded_size("extra_large"), do: "[&_.speed-dial-base]:rounded-xl"
 
   defp rounded_size("full"), do: "[&_.speed-dial-base]:rounded-full"
-  defp rounded_size(_), do: rounded_size("full")
+
+  defp rounded_size(params) when is_binary(params), do: params
 
   defp size_class("extra_small") do
     [
@@ -414,8 +410,6 @@ defmodule CommunityDemoWeb.Components.SpeedDial do
 
   defp size_class(params) when is_binary(params), do: params
 
-  defp size_class(_), do: size_class("extra_large")
-
   defp border_class(_, variant) when variant in ["default", "shadow", "gradient"],
     do: nil
 
@@ -426,7 +420,6 @@ defmodule CommunityDemoWeb.Components.SpeedDial do
   defp border_class("large", _), do: "[&_.speed-dial-base]:border-4"
   defp border_class("extra_large", _), do: "[&_.speed-dial-base]:border-[5px]"
   defp border_class(params, _) when is_binary(params), do: params
-  defp border_class(_, _), do: border_class("extra_small", nil)
 
   defp action_position("none", "top-start"), do: "top-0 start-0"
   defp action_position("extra_small", "top-start"), do: "top-1 start-4"
@@ -455,6 +448,7 @@ defmodule CommunityDemoWeb.Components.SpeedDial do
   defp action_position("medium", "bottom-end"), do: "bottom-6 end-6"
   defp action_position("large", "bottom-end"), do: "bottom-8 end-8"
   defp action_position("extra_large", "bottom-end"), do: "bottom-9 end-9"
+  defp action_position(params, _) when is_binary(params), do: params
 
   defp color_variant("base", "base") do
     [
@@ -754,8 +748,6 @@ defmodule CommunityDemoWeb.Components.SpeedDial do
   end
 
   defp color_variant(params, _) when is_binary(params), do: params
-
-  defp color_variant(_, _), do: color_variant("base", "base")
 
   attr :name, :string, required: true, doc: "Specifies the name of the element"
   attr :class, :any, default: nil, doc: "Custom CSS class for additional styling"

@@ -139,8 +139,6 @@ defmodule CommunityDemoWeb.Components.Tooltip do
 
   defp rounded_size(params) when is_binary(params), do: params
 
-  defp rounded_size(_), do: rounded_size("small")
-
   defp position_class("top") do
     [
       "bottom-full left-1/2 -translate-x-1/2 -translate-y-[4px]",
@@ -181,8 +179,6 @@ defmodule CommunityDemoWeb.Components.Tooltip do
 
   defp border_class(params) when is_binary(params), do: params
 
-  defp border_class(_), do: border_class("extra_small")
-
   defp size_class("extra_small"), do: "text-xs max-w-40"
 
   defp size_class("small"), do: "text-sm max-w-44"
@@ -194,8 +190,6 @@ defmodule CommunityDemoWeb.Components.Tooltip do
   defp size_class("extra_large"), do: "text-xl max-w-32"
 
   defp size_class(params) when is_binary(params), do: params
-
-  defp size_class(_), do: size_class("medium")
 
   defp text_position("left"), do: "text-left"
   defp text_position("right"), do: "text-right"
@@ -215,7 +209,6 @@ defmodule CommunityDemoWeb.Components.Tooltip do
   defp width_class("quadruple_large"), do: "min-w-56"
   defp width_class("fit"), do: "min-w-fit"
   defp width_class(params) when is_binary(params), do: params
-  defp width_class(_), do: width_class("fit")
 
   defp padding_size("extra_small"), do: "p-1"
 
@@ -231,8 +224,6 @@ defmodule CommunityDemoWeb.Components.Tooltip do
 
   defp padding_size(params) when is_binary(params), do: params
 
-  defp padding_size(_), do: padding_size("small")
-
   defp space_class("extra_small"), do: "space-y-2"
 
   defp space_class("small"), do: "space-y-3"
@@ -244,7 +235,6 @@ defmodule CommunityDemoWeb.Components.Tooltip do
   defp space_class("extra_large"), do: "space-y-6"
 
   defp space_class(params) when is_binary(params), do: params
-  defp space_class(_), do: nil
 
   defp color_variant("base", "base") do
     [
@@ -544,6 +534,4 @@ defmodule CommunityDemoWeb.Components.Tooltip do
   end
 
   defp color_variant(params, _) when is_binary(params), do: params
-
-  defp color_variant(_, _), do: color_variant("base", "base")
 end

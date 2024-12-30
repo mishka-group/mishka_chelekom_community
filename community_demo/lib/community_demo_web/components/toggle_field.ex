@@ -181,7 +181,6 @@ defmodule CommunityDemoWeb.Components.ToggleField do
     do: "[&_.toggle-field-base]:rounded-full [&_.toggle-field-circle]:rounded-full"
 
   defp rounded_size(params) when is_binary(params), do: params
-  defp rounded_size(_), do: rounded_size("full")
 
   defp size_class("extra_small") do
     [
@@ -214,8 +213,6 @@ defmodule CommunityDemoWeb.Components.ToggleField do
   end
 
   defp size_class(params) when is_binary(params), do: params
-
-  defp size_class(_), do: size_class("medium")
 
   defp color_class("base") do
     [
@@ -296,8 +293,6 @@ defmodule CommunityDemoWeb.Components.ToggleField do
   end
 
   defp color_class(params) when is_binary(params), do: params
-
-  defp color_class(_), do: color_class("primary")
 
   defp translate_error({msg, opts}) do
     # When using gettext, we typically pass the strings we want

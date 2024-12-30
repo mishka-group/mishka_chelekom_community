@@ -1206,8 +1206,6 @@ defmodule CommunityDemoWeb.Components.Typography do
 
   defp color(params) when is_binary(params), do: params
 
-  defp color(_), do: color("inherit")
-
   defp size_class("extra_small"), do: "text-xs"
 
   defp size_class("small"), do: "text-sm"
@@ -1225,6 +1223,4 @@ defmodule CommunityDemoWeb.Components.Typography do
   defp size_class("quadruple_large"), do: "text-4xl"
 
   defp size_class(params) when is_binary(params), do: params
-
-  defp size_class(_), do: size_class("medium")
 end

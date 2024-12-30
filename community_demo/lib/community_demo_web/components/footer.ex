@@ -149,7 +149,7 @@ defmodule CommunityDemoWeb.Components.Footer do
   defp text_position("left"), do: "text-left"
   defp text_position("right"), do: "text-right"
   defp text_position("center"), do: "text-center"
-  defp text_position(_), do: nil
+  defp text_position(params) when is_binary(params), do: params
 
   defp space_class("extra_small"), do: "space-y-2"
 
@@ -162,7 +162,6 @@ defmodule CommunityDemoWeb.Components.Footer do
   defp space_class("extra_large"), do: "space-y-6"
 
   defp space_class(params) when is_binary(params), do: params
-  defp space_class(_), do: nil
 
   defp maximum_width("extra_small"), do: "[&>div]:max-w-3xl	[&>div]:mx-auto"
   defp maximum_width("small"), do: "[&>div]:max-w-4xl [&>div]:mx-auto"
@@ -170,7 +169,6 @@ defmodule CommunityDemoWeb.Components.Footer do
   defp maximum_width("large"), do: "[&>div]:max-w-6xl [&>div]:mx-auto"
   defp maximum_width("extra_large"), do: "[&>div]:max-w-7xl [&>div]:mx-auto"
   defp maximum_width(params) when is_binary(params), do: params
-  defp maximum_width(_), do: nil
 
   defp padding_size("extra_small"), do: "p-1"
 
@@ -185,8 +183,6 @@ defmodule CommunityDemoWeb.Components.Footer do
   defp padding_size("none"), do: "p-0"
 
   defp padding_size(params) when is_binary(params), do: params
-
-  defp padding_size(_), do: padding_size("none")
 
   defp border_class(_, variant) when variant in ["default", "shadow", "transparent", "gradient"],
     do: nil
@@ -205,8 +201,6 @@ defmodule CommunityDemoWeb.Components.Footer do
 
   defp border_class(params, _) when is_binary(params), do: params
 
-  defp border_class(_, _), do: border_class("extra_small", nil)
-
   defp rounded_size("extra_small"), do: "rounded-t-sm"
 
   defp rounded_size("small"), do: "rounded-t"
@@ -218,7 +212,6 @@ defmodule CommunityDemoWeb.Components.Footer do
   defp rounded_size("extra_large"), do: "rounded-t-xl"
 
   defp rounded_size(params) when is_binary(params), do: params
-  defp rounded_size(_), do: "rounded-t-none"
 
   defp color_variant("base", "base") do
     [
@@ -642,6 +635,4 @@ defmodule CommunityDemoWeb.Components.Footer do
   end
 
   defp color_variant(params, _) when is_binary(params), do: params
-
-  defp color_variant(_, _), do: color_variant("base", "base")
 end

@@ -170,7 +170,6 @@ defmodule CommunityDemoWeb.Components.Modal do
   defp border_size("large", _), do: "border-4"
   defp border_size("extra_large", _), do: "border-[5px]"
   defp border_size(params, _) when is_binary(params), do: params
-  defp border_size(_, _), do: border_size("extra_small", nil)
 
   defp rounded_size("extra_small"), do: "rounded-sm"
 
@@ -198,8 +197,6 @@ defmodule CommunityDemoWeb.Components.Modal do
 
   defp padding_size(params) when is_binary(params), do: params
 
-  defp padding_size(_), do: padding_size("small")
-
   defp size_class("extra_small"), do: "mx-auto max-w-xs"
 
   defp size_class("small"), do: "mx-auto max-w-sm"
@@ -219,8 +216,6 @@ defmodule CommunityDemoWeb.Components.Modal do
   defp size_class("screen"), do: "w-full h-screen overflow-y-scroll"
 
   defp size_class(params) when is_binary(params), do: params
-
-  defp size_class(_), do: size_class("extra_large")
 
   defp color_variant("base", "base") do
     [
@@ -524,8 +519,6 @@ defmodule CommunityDemoWeb.Components.Modal do
   end
 
   defp color_variant(params, _) when is_binary(params), do: params
-
-  defp color_variant(_, _), do: color_variant("base", "base")
 
   attr :name, :string, required: true, doc: "Specifies the name of the element"
   attr :class, :any, default: nil, doc: "Custom CSS class for additional styling"

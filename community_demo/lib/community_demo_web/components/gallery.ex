@@ -141,7 +141,7 @@ defmodule CommunityDemoWeb.Components.Gallery do
 
   defp rounded_size("full"), do: "rounded-full"
 
-  defp rounded_size("none"), do: "rounded-none"
+  defp rounded_size(params) when is_binary(params), do: params
 
   defp shadow_class("extra_small"), do: "shadow-sm"
   defp shadow_class("small"), do: "shadow"
@@ -150,7 +150,6 @@ defmodule CommunityDemoWeb.Components.Gallery do
   defp shadow_class("extra_large"), do: "shadow-xl"
   defp shadow_class("none"), do: "shadow-none"
   defp shadow_class(params) when is_binary(params), do: params
-  defp shadow_class(_), do: shadow_class("none")
 
   defp animation("scale-down", "extra_small"), do: "hover:[&_.gallery-media-img]:scale-[0.99]"
   defp animation("scale-down", "small"), do: "hover:[&_.gallery-media-img]:scale-[0.97]"
@@ -206,7 +205,6 @@ defmodule CommunityDemoWeb.Components.Gallery do
   end
 
   defp animation(params, _) when is_binary(params), do: params
-  defp animation(_, _), do: nil
 
   defp grid_cols("one"), do: "grid-cols-1"
   defp grid_cols("two"), do: "grid-cols-2"
@@ -221,7 +219,6 @@ defmodule CommunityDemoWeb.Components.Gallery do
   defp grid_cols("eleven"), do: "grid-cols-2 md:grid-cols-11"
   defp grid_cols("twelve"), do: "grid-cols-2 md:grid-cols-12"
   defp grid_cols(params) when is_binary(params), do: params
-  defp grid_cols(_), do: nil
 
   defp column_class("one"), do: "columns-1"
   defp column_class("two"), do: "columns-2"
@@ -236,7 +233,6 @@ defmodule CommunityDemoWeb.Components.Gallery do
   defp column_class("eleven"), do: "columns-2 md:columns-11"
   defp column_class("twelve"), do: "columns-2 md:columns-12"
   defp column_class(params) when is_binary(params), do: params
-  defp column_class(_), do: column_class("one")
 
   defp grid_gap("extra_small"), do: "gap-1 [&.gallery-masonry_.gallery-media]:mb-1"
   defp grid_gap("small"), do: "gap-2 [&.gallery-masonry_.gallery-media]:mb-2"
@@ -247,5 +243,4 @@ defmodule CommunityDemoWeb.Components.Gallery do
   defp grid_gap("triple_large"), do: "gap-7 [&.gallery-masonry_.gallery-media]:mb-7"
   defp grid_gap("quadruple_large"), do: "gap-8 [&.gallery-masonry_.gallery-media]:mb-8"
   defp grid_gap(params) when is_binary(params), do: params
-  defp grid_gap(_), do: nil
 end

@@ -454,8 +454,6 @@ defmodule CommunityDemoWeb.Components.Popover do
 
   defp border_class(params) when is_binary(params), do: params
 
-  defp border_class(_), do: border_class("extra_small")
-
   defp rounded_size("extra_small"), do: "rounded-sm"
 
   defp rounded_size("small"), do: "rounded"
@@ -469,8 +467,6 @@ defmodule CommunityDemoWeb.Components.Popover do
   defp rounded_size("none"), do: "rounded-none"
 
   defp rounded_size(params) when is_binary(params), do: params
-
-  defp rounded_size(_), do: rounded_size("small")
 
   defp position_class("top") do
     [
@@ -512,15 +508,13 @@ defmodule CommunityDemoWeb.Components.Popover do
 
   defp size_class(params) when is_binary(params), do: params
 
-  defp size_class(_), do: size_class("medium")
-
   defp text_position("left"), do: "text-left"
   defp text_position("right"), do: "text-right"
   defp text_position("center"), do: "text-center"
   defp text_position("justify"), do: "text-justify"
   defp text_position("start"), do: "text-start"
   defp text_position("end"), do: "text-end"
-  defp text_position(_), do: text_position("start")
+  defp text_position(params) when is_binary(params), do: params
 
   defp width_class("extra_small"), do: "min-w-48"
   defp width_class("small"), do: "min-w-52"
@@ -531,7 +525,6 @@ defmodule CommunityDemoWeb.Components.Popover do
   defp width_class("triple_large"), do: "min-w-80"
   defp width_class("quadruple_large"), do: "min-w-96"
   defp width_class(params) when is_binary(params), do: params
-  defp width_class(_), do: width_class("extra_large")
 
   defp wrapper_padding("extra_small") do
     "[&:has(.popover-section)>.popover-section]:p-1 [&:not(:has(.popover-section))]:p-1"
@@ -557,8 +550,6 @@ defmodule CommunityDemoWeb.Components.Popover do
 
   defp wrapper_padding(params) when is_binary(params), do: params
 
-  defp wrapper_padding(_), do: wrapper_padding("none")
-
   defp space_class("extra_small"), do: "space-y-2"
 
   defp space_class("small"), do: "space-y-3"
@@ -570,7 +561,6 @@ defmodule CommunityDemoWeb.Components.Popover do
   defp space_class("extra_large"), do: "space-y-6"
 
   defp space_class(params) when is_binary(params), do: params
-  defp space_class(_), do: nil
 
   defp color_variant("base", "base") do
     [
@@ -870,6 +860,4 @@ defmodule CommunityDemoWeb.Components.Popover do
   end
 
   defp color_variant(params, _) when is_binary(params), do: params
-
-  defp color_variant(_, _), do: color_variant("base", "base")
 end

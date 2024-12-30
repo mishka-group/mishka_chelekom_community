@@ -286,7 +286,6 @@ defmodule CommunityDemoWeb.Components.Badge do
     do: "translate-y-1/2 translate-x-1/2 left-auto bottom-0 right-0"
 
   defp badge_position(params) when is_binary(params), do: params
-  defp badge_position(_), do: nil
 
   defp color_variant("base", "base") do
     [
@@ -783,8 +782,6 @@ defmodule CommunityDemoWeb.Components.Badge do
 
   defp color_variant(params, _) when is_binary(params), do: params
 
-  defp color_variant(_, _), do: color_variant("base", "base")
-
   defp rounded_size("extra_small"), do: "rounded-sm"
 
   defp rounded_size("small"), do: "rounded"
@@ -809,7 +806,6 @@ defmodule CommunityDemoWeb.Components.Badge do
   defp border_size("large", _), do: "border-4"
   defp border_size("extra_large", _), do: "border-[5px]"
   defp border_size(params, _) when is_binary(params), do: params
-  defp border_size(_, _), do: border_size("extra_small", nil)
 
   defp indicator_size("extra_small"), do: "!size-2"
   defp indicator_size("small"), do: "!size-2.5"
@@ -817,7 +813,6 @@ defmodule CommunityDemoWeb.Components.Badge do
   defp indicator_size("large"), do: "!size-3.5"
   defp indicator_size("extra_large"), do: "!size-4"
   defp indicator_size(params) when is_binary(params), do: params
-  defp indicator_size(nil), do: nil
 
   defp size_class("extra_small", circle) do
     [
@@ -860,8 +855,6 @@ defmodule CommunityDemoWeb.Components.Badge do
   end
 
   defp size_class(params, _circle) when is_binary(params), do: [params]
-
-  defp size_class(_, _circle), do: size_class("extra_small", nil)
 
   defp icon_position(nil, _), do: false
   defp icon_position(_icon, %{left_icon: true}), do: "left"

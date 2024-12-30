@@ -232,8 +232,6 @@ defmodule CommunityDemoWeb.Components.Banner do
 
   defp dismiss_size(params) when is_binary(params), do: params
 
-  defp dismiss_size(_), do: dismiss_size("small")
-
   defp padding_size("extra_small"), do: "p-2"
 
   defp padding_size("small"), do: "p-3"
@@ -247,8 +245,6 @@ defmodule CommunityDemoWeb.Components.Banner do
   defp padding_size("none"), do: "p-0"
 
   defp padding_size(params) when is_binary(params), do: params
-
-  defp padding_size(_), do: padding_size("extra_small")
 
   defp vertical_position("none", "top"), do: "top-0"
   defp vertical_position("extra_small", "top"), do: "top-1"
@@ -265,7 +261,6 @@ defmodule CommunityDemoWeb.Components.Banner do
   defp vertical_position("extra_large", "bottom"), do: "bottom-5"
 
   defp vertical_position(params, _) when is_binary(params), do: params
-  defp vertical_position(_, _), do: vertical_position("none", "top")
 
   defp position_class("none", "top_left"), do: "left-0 ml-0"
   defp position_class("extra_small", "top_left"), do: "left-1 ml-1"
@@ -299,7 +294,6 @@ defmodule CommunityDemoWeb.Components.Banner do
   defp position_class(_, "full"), do: "inset-x-0"
 
   defp position_class(params, _) when is_binary(params), do: params
-  defp position_class(_, _), do: position_class(nil, "full")
 
   defp rounded_size("extra_small", "top"), do: "rounded-b-sm"
 
@@ -347,8 +341,6 @@ defmodule CommunityDemoWeb.Components.Banner do
 
   defp space_class(params) when is_binary(params), do: params
 
-  defp space_class(_), do: space_class("extra_small")
-
   defp border_class(_, _, variant)
        when variant in ["default", "shadow", "transparent", "gradient"],
        do: nil
@@ -373,7 +365,6 @@ defmodule CommunityDemoWeb.Components.Banner do
   defp border_class("extra_large", "full", _), do: "border-[5px]"
 
   defp border_class(params, _, _) when is_binary(params), do: params
-  defp border_class(_, _, _), do: border_class("extra_small", "top", nil)
 
   defp color_variant("base", "base") do
     [
@@ -759,8 +750,6 @@ defmodule CommunityDemoWeb.Components.Banner do
   end
 
   defp color_variant(params, _) when is_binary(params), do: params
-
-  defp color_variant(_, _), do: color_variant("base", "base")
 
   ## JS Commands
   @doc """

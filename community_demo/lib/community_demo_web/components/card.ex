@@ -385,8 +385,6 @@ defmodule CommunityDemoWeb.Components.Card do
 
   defp border_class(params, _) when is_binary(params), do: params
 
-  defp border_class(_, _), do: border_class("extra_small", nil)
-
   defp rounded_size("extra_small"), do: "rounded-sm"
 
   defp rounded_size("small"), do: "rounded"
@@ -412,8 +410,6 @@ defmodule CommunityDemoWeb.Components.Card do
 
   defp size_class(params) when is_binary(params), do: params
 
-  defp size_class(_), do: size_class("large")
-
   defp content_position("start") do
     "justify-start"
   end
@@ -434,7 +430,7 @@ defmodule CommunityDemoWeb.Components.Card do
     "justify-around"
   end
 
-  defp content_position(_), do: content_position("start")
+  defp content_position(params) when is_binary(params), do: params
 
   defp wrapper_padding("extra_small"),
     do: "[&:has(.card-section)>.card-section]:p-1 [&:not(:has(.card-section))]:p-1"
@@ -455,8 +451,6 @@ defmodule CommunityDemoWeb.Components.Card do
 
   defp wrapper_padding(params) when is_binary(params), do: params
 
-  defp wrapper_padding(_), do: wrapper_padding("none")
-
   defp padding_size("extra_small"), do: "p-1"
 
   defp padding_size("small"), do: "p-2"
@@ -468,7 +462,6 @@ defmodule CommunityDemoWeb.Components.Card do
   defp padding_size("extra_large"), do: "p-5"
 
   defp padding_size(params) when is_binary(params), do: params
-  defp padding_size(_), do: nil
 
   defp space_class("extra_small"), do: "space-y-2"
 
@@ -481,7 +474,6 @@ defmodule CommunityDemoWeb.Components.Card do
   defp space_class("extra_large"), do: "space-y-6"
 
   defp space_class(params) when is_binary(params), do: params
-  defp space_class(_), do: nil
 
   defp color_variant("base", "base") do
     [
@@ -905,8 +897,6 @@ defmodule CommunityDemoWeb.Components.Card do
   end
 
   defp color_variant(params, _) when is_binary(params), do: params
-
-  defp color_variant(_, _), do: color_variant("base", "base")
 
   attr :name, :string, required: true, doc: "Specifies the name of the element"
   attr :class, :any, default: nil, doc: "Custom CSS class for additional styling"

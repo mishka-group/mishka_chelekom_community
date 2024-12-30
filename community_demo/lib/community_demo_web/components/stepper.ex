@@ -438,7 +438,6 @@ defmodule CommunityDemoWeb.Components.Stepper do
   end
 
   defp seperator_margin(params) when is_binary(params), do: params
-  defp seperator_margin(_), do: seperator_margin("medium")
 
   defp border_class("extra_small") do
     [
@@ -476,7 +475,6 @@ defmodule CommunityDemoWeb.Components.Stepper do
   end
 
   defp border_class(params) when is_binary(params), do: params
-  defp border_class(_), do: border_class("extra_small")
 
   defp space_class("extra_small"), do: "space-y-1"
 
@@ -489,7 +487,6 @@ defmodule CommunityDemoWeb.Components.Stepper do
   defp space_class("extra_large"), do: "space-y-5"
 
   defp space_class(params) when is_binary(params), do: params
-  defp space_class(_), do: nil
 
   defp wrapper_width("extra_small"), do: "max-w-1/4"
   defp wrapper_width("small"), do: "max-w-2/4"
@@ -497,7 +494,6 @@ defmodule CommunityDemoWeb.Components.Stepper do
   defp wrapper_width("large"), do: "max-w-11/12"
   defp wrapper_width("extra_large"), do: "max-"
   defp wrapper_width(params) when is_binary(params), do: params
-  defp wrapper_width(_), do: nil
 
   defp size_class("extra_small") do
     [
@@ -541,15 +537,12 @@ defmodule CommunityDemoWeb.Components.Stepper do
 
   defp size_class(params) when is_binary(params), do: params
 
-  defp size_class(_), do: size_class("medium")
-
   defp seperator_size("extra_small"), do: "[&_.stepper-seperator]:h-px"
   defp seperator_size("small"), do: "[&_.stepper-seperator]:h-0.5"
   defp seperator_size("medium"), do: "[&_.stepper-seperator]:h-1"
   defp seperator_size("large"), do: "[&_.stepper-seperator]:h-1.5"
   defp seperator_size("extra_large"), do: "[&_.stepper-seperator]:h-2"
   defp seperator_size(params) when is_binary(params), do: params
-  defp seperator_size(_), do: seperator_size("extra_small")
 
   # colors
   # stepper-loading-step, stepper-current-step, stepper-completed-step, stepper-canceled-step
@@ -968,8 +961,6 @@ defmodule CommunityDemoWeb.Components.Stepper do
   end
 
   defp color_variant(params, _) when is_binary(params), do: params
-
-  defp color_variant(_, _), do: color_variant("base", "base")
 
   attr :name, :string, required: true, doc: "Specifies the name of the element"
   attr :class, :any, default: nil, doc: "Custom CSS class for additional styling"

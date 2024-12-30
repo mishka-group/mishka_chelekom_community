@@ -320,7 +320,6 @@ defmodule CommunityDemoWeb.Components.Timeline do
     do: (horizontal? && "border-dotted") || "after:border-dotted"
 
   defp line_style(params, _) when is_binary(params), do: params
-  defp line_style(_, _), do: line_style("solid", false)
 
   defp line_size("extra_small", horizontal?),
     do: (horizontal? && "border-t-[0.031rem]") || "after:border-s-[0.031rem]"
@@ -338,7 +337,6 @@ defmodule CommunityDemoWeb.Components.Timeline do
     do: (horizontal? && "border-t-[0.188rem]") || "after:border-s-[0.188rem]"
 
   defp line_size(params, _) when is_binary(params), do: params
-  defp line_size(_, _), do: line_size("extra_small", false)
 
   defp bullet_size("extra_small") do
     [
@@ -397,8 +395,6 @@ defmodule CommunityDemoWeb.Components.Timeline do
   end
 
   defp bullet_size(params) when is_binary(params), do: params
-
-  defp bullet_size(_), do: bullet_size("extra_small")
 
   defp color_class("base") do
     [
@@ -514,8 +510,6 @@ defmodule CommunityDemoWeb.Components.Timeline do
   end
 
   defp color_class(params) when is_binary(params), do: params
-
-  defp color_class(_), do: color_class("base")
 
   attr :name, :string, required: true, doc: "Specifies the name of the element"
   attr :class, :any, default: nil, doc: "Custom CSS class for additional styling"

@@ -295,8 +295,6 @@ defmodule CommunityDemoWeb.Components.TableContent do
 
   defp size_class(params) when is_binary(params), do: params
 
-  defp size_class(_), do: size_class("small")
-
   defp space_size("extra_small"), do: "space-y-1"
 
   defp space_size("small"), do: "space-y-2"
@@ -308,7 +306,6 @@ defmodule CommunityDemoWeb.Components.TableContent do
   defp space_size("extra_large"), do: "space-y-5"
 
   defp space_size(params) when is_binary(params), do: params
-  defp space_size(_), do: nil
 
   defp border_class(_, variant)
        when variant in ["default", "shadow", "transparent", "gradient"],
@@ -321,7 +318,6 @@ defmodule CommunityDemoWeb.Components.TableContent do
   defp border_class("large", _), do: "border-4"
   defp border_class("extra_large", _), do: "border-[5px]"
   defp border_class(params, _) when is_binary(params), do: params
-  defp border_class(_, _), do: border_class("extra_small", nil)
 
   defp padding_size("extra_small"), do: "p-5"
 
@@ -340,7 +336,6 @@ defmodule CommunityDemoWeb.Components.TableContent do
   defp padding_size("quadruple_large"), do: "p-16"
 
   defp padding_size(params) when is_binary(params), do: params
-  defp padding_size(_), do: nil
 
   defp rounded_size("extra_small"), do: "rounded-sm"
 
@@ -355,8 +350,6 @@ defmodule CommunityDemoWeb.Components.TableContent do
   defp rounded_size("none"), do: "rounded-none"
 
   defp rounded_size(params) when is_binary(params), do: params
-
-  defp rounded_size(_), do: rounded_size("none")
 
   defp color_variant("base", "base") do
     [
@@ -740,8 +733,6 @@ defmodule CommunityDemoWeb.Components.TableContent do
   end
 
   defp color_variant(params, _) when is_binary(params), do: params
-
-  defp color_variant(_, _), do: color_variant("base", "base")
 
   attr :name, :string, required: true, doc: "Specifies the name of the element"
   attr :class, :any, default: nil, doc: "Custom CSS class for additional styling"

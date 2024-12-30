@@ -229,12 +229,12 @@ defmodule CommunityDemoWeb.Components.Navbar do
     "[&_.nav-wrapper]:justify-around"
   end
 
-  defp content_position(_), do: content_position("between")
+  defp content_position(params) when is_binary(params), do: params
 
   defp text_position("left"), do: "text-left"
   defp text_position("right"), do: "text-right"
   defp text_position("center"), do: "text-center"
-  defp text_position(_), do: nil
+  defp text_position(params) when is_binary(params), do: params
 
   defp space_class("extra_small"), do: "space-y-2"
 
@@ -247,7 +247,6 @@ defmodule CommunityDemoWeb.Components.Navbar do
   defp space_class("extra_large"), do: "space-y-6"
 
   defp space_class(params) when is_binary(params), do: params
-  defp space_class(_), do: nil
 
   defp maximum_width("extra_small"), do: "[&_.nav-wrapper]:max-w-3xl	[&_.nav-wrapper]:mx-auto"
   defp maximum_width("small"), do: "[&_.nav-wrapper]:max-w-4xl [&_.nav-wrapper]:mx-auto"
@@ -255,7 +254,6 @@ defmodule CommunityDemoWeb.Components.Navbar do
   defp maximum_width("large"), do: "[&_.nav-wrapper]:max-w-6xl [&_.nav-wrapper]:mx-auto"
   defp maximum_width("extra_large"), do: "[&_.nav-wrapper]:max-w-7xl [&_.nav-wrapper]:mx-auto"
   defp maximum_width(params) when is_binary(params), do: params
-  defp maximum_width(_), do: nil
 
   defp padding_size("extra_small"), do: "p-1"
 
@@ -271,8 +269,6 @@ defmodule CommunityDemoWeb.Components.Navbar do
 
   defp padding_size(params) when is_binary(params), do: params
 
-  defp padding_size(_), do: padding_size("none")
-
   defp border_class(_, variant) when variant in ["default", "shadow", "gradient"],
     do: nil
 
@@ -283,7 +279,6 @@ defmodule CommunityDemoWeb.Components.Navbar do
   defp border_class("large", _), do: "border-b-4"
   defp border_class("extra_large", _), do: "border-b-[5px]"
   defp border_class(params, _) when is_binary(params), do: params
-  defp border_class(_, _), do: border_class("extra_small", nil)
 
   defp rounded_size("extra_small"), do: "rounded-b-sm"
 
@@ -296,7 +291,6 @@ defmodule CommunityDemoWeb.Components.Navbar do
   defp rounded_size("extra_large"), do: "rounded-b-xl"
 
   defp rounded_size(params) when is_binary(params), do: params
-  defp rounded_size(_), do: nil
 
   defp color_variant("base", "base") do
     [
@@ -600,8 +594,6 @@ defmodule CommunityDemoWeb.Components.Navbar do
   end
 
   defp color_variant(params, _) when is_binary(params), do: params
-
-  defp color_variant(_, _), do: color_variant("base", "base")
 
   attr :name, :string, required: true, doc: "Specifies the name of the element"
   attr :class, :any, default: nil, doc: "Custom CSS class for additional styling"

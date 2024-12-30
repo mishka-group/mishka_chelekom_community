@@ -134,8 +134,6 @@ defmodule CommunityDemoWeb.Components.Overlay do
 
   defp color_class(params) when is_binary(params), do: params
 
-  defp color_class(_), do: color_class("base")
-
   defp opacity_class("transparent") do
     "bg-opacity-10"
   end
@@ -177,7 +175,6 @@ defmodule CommunityDemoWeb.Components.Overlay do
   end
 
   defp opacity_class(params) when is_binary(params), do: params
-  defp opacity_class(_), do: nil
 
   defp backdrop_class("extra_small") do
     "backdrop-backdrop-[1px]"
@@ -200,5 +197,4 @@ defmodule CommunityDemoWeb.Components.Overlay do
   end
 
   defp backdrop_class(params) when is_binary(params), do: params
-  defp backdrop_class(_), do: nil
 end

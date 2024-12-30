@@ -141,7 +141,7 @@ defmodule CommunityDemoWeb.Components.Fieldset do
 
   defp size_class("extra_large"), do: "text-xl"
 
-  defp size_class(_), do: size_class("medium")
+  defp size_class(params) when is_binary(params), do: params
 
   defp rounded_size("extra_small"), do: "[&_.fieldset-field]:rounded-sm"
 
@@ -174,8 +174,6 @@ defmodule CommunityDemoWeb.Components.Fieldset do
 
   defp border_class(params, _) when is_binary(params), do: params
 
-  defp border_class(_, _), do: border_class("extra_small", nil)
-
   defp padding_class("extra_small"), do: "[&_.fieldset-field]:p-2"
 
   defp padding_class("small"), do: "[&_.fieldset-field]:p-3"
@@ -188,8 +186,6 @@ defmodule CommunityDemoWeb.Components.Fieldset do
 
   defp padding_class(params) when is_binary(params), do: params
 
-  defp padding_class(_), do: padding_class("medium")
-
   defp space_class("extra_small"), do: "space-y-1"
 
   defp space_class("small"), do: "space-y-1.5"
@@ -201,8 +197,6 @@ defmodule CommunityDemoWeb.Components.Fieldset do
   defp space_class("extra_large"), do: "space-y-3"
 
   defp space_class(params) when is_binary(params), do: params
-
-  defp space_class(_), do: space_class("medium")
 
   defp color_variant("base", "base") do
     [
@@ -626,8 +620,6 @@ defmodule CommunityDemoWeb.Components.Fieldset do
   end
 
   defp color_variant(params, _) when is_binary(params), do: params
-
-  defp color_variant(_, _), do: color_variant("base", "base")
 
   attr :name, :string, required: true, doc: "Specifies the name of the element"
   attr :class, :any, default: nil, doc: "Custom CSS class for additional styling"

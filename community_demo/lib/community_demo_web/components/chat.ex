@@ -253,7 +253,7 @@ defmodule CommunityDemoWeb.Components.Chat do
     ]
   end
 
-  defp rounded_size(_, _), do: rounded_size("extra_large", "normal")
+  defp rounded_size(params, _) when is_binary(params), do: params
 
   defp space_class("extra_small"), do: "[&>.chat-section-bubble]:space-y-2"
 
@@ -279,8 +279,6 @@ defmodule CommunityDemoWeb.Components.Chat do
 
   defp padding_size(params) when is_binary(params), do: params
 
-  defp padding_size(_), do: padding_size("small")
-
   defp border_class(_, variant) when variant in ["default", "shadow", "transparent", "gradient"],
     do: nil
 
@@ -298,8 +296,6 @@ defmodule CommunityDemoWeb.Components.Chat do
 
   defp border_class(params, _) when is_binary(params), do: params
 
-  defp border_class(_, _), do: border_class("extra_small", nil)
-
   defp size_class("extra_small"), do: "text-xs [&>.chat-section-bubble]:max-w-[12rem]"
 
   defp size_class("small"), do: "text-sm [&>.chat-section-bubble]:max-w-[14rem]"
@@ -310,7 +306,7 @@ defmodule CommunityDemoWeb.Components.Chat do
 
   defp size_class("extra_large"), do: "text-xl [&>.chat-section-bubble]:max-w-[20rem]"
 
-  defp size_class(_), do: size_class("medium")
+  defp size_class(params) when is_binary(params), do: params
 
   defp color_variant("base", "base") do
     [
@@ -776,6 +772,4 @@ defmodule CommunityDemoWeb.Components.Chat do
   end
 
   defp color_variant(params, _) when is_binary(params), do: params
-
-  defp color_variant(_, _), do: color_variant("base", "base")
 end

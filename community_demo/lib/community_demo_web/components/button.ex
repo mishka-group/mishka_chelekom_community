@@ -665,7 +665,6 @@ defmodule CommunityDemoWeb.Components.Button do
   defp border_size("large", _), do: "border-4"
   defp border_size("extra_large", _), do: "border-[5px]"
   defp border_size(params, _) when is_binary(params), do: params
-  defp border_size(_, _), do: border_size("extra_small", nil)
 
   defp color_variant("base", "base") do
     [
@@ -1787,8 +1786,6 @@ defmodule CommunityDemoWeb.Components.Button do
 
   defp color_variant(params, _) when is_binary(params), do: params
 
-  defp color_variant(_, _), do: color_variant("base", "base")
-
   defp border_class("base") do
     "border-[#e4e4e7] dark:border-[#27272a]"
   end
@@ -1838,8 +1835,6 @@ defmodule CommunityDemoWeb.Components.Button do
   end
 
   defp border_class(params) when is_binary(params), do: params
-
-  defp border_class(_), do: border_class("base")
 
   defp rounded_size("extra_small"), do: "rounded-sm [&.gradient-button:before]:rounded-[1px]"
 
@@ -1897,8 +1892,6 @@ defmodule CommunityDemoWeb.Components.Button do
 
   defp size_class(params, _circle) when is_binary(params), do: [params]
 
-  defp size_class(_, _circle), do: size_class("large", nil)
-
   defp icon_position(nil, _), do: false
   defp icon_position(_icon, %{left_icon: true}), do: "left"
   defp icon_position(_icon, %{right_icon: true}), do: "right"
@@ -1918,7 +1911,6 @@ defmodule CommunityDemoWeb.Components.Button do
   defp indicator_size("large"), do: "!size-3.5"
   defp indicator_size("extra_large"), do: "!size-4"
   defp indicator_size(params) when is_binary(params), do: params
-  defp indicator_size(nil), do: nil
 
   defp content_position("start") do
     "justify-start"
@@ -1940,7 +1932,7 @@ defmodule CommunityDemoWeb.Components.Button do
     "justify-around"
   end
 
-  defp content_position(_), do: content_position("start")
+  defp content_position(params) when is_binary(params), do: params
 
   defp default_classes(:grouped) do
     [

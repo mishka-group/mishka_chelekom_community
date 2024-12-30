@@ -508,7 +508,6 @@ defmodule CommunityDemoWeb.Components.Accordion do
   defp space_class("extra_large", _), do: "accordion-item-gap space-y-6"
 
   defp space_class(params, _) when is_binary(params), do: params
-  defp space_class(_, _), do: nil
 
   defp menu_rounded("extra_small"), do: "[&_.accordion-summary]:rounded-sm"
 
@@ -523,7 +522,6 @@ defmodule CommunityDemoWeb.Components.Accordion do
   defp menu_rounded("full"), do: "[&_.accordion-summary]:rounded-full"
 
   defp menu_rounded(params) when is_binary(params), do: params
-  defp menu_rounded(_), do: nil
 
   defp media_size("extra_small"), do: "[&>.accordion-item-wrapper_.accordion-title-media]:size-12"
 
@@ -536,7 +534,6 @@ defmodule CommunityDemoWeb.Components.Accordion do
   defp media_size("extra_large"), do: "[&>.accordion-item-wrapper_.accordion-title-media]:size-24"
 
   defp media_size(params) when is_binary(params), do: params
-  defp media_size(_), do: media_size("small")
 
   defp size_class("extra_small") do
     [
@@ -569,7 +566,6 @@ defmodule CommunityDemoWeb.Components.Accordion do
   end
 
   defp size_class(params) when is_binary(params), do: params
-  defp size_class(_), do: nil
 
   defp rounded_size("extra_small") do
     [
@@ -660,7 +656,6 @@ defmodule CommunityDemoWeb.Components.Accordion do
 
   defp padding_size("zero"), do: "[&>.accordion-item-wrapper>.accordion-summary]:p-0"
   defp padding_size(params) when is_binary(params), do: params
-  defp padding_size(_), do: padding_size("small")
 
   defp border_class(_, variant) when variant in ["default", "shadow", "transparent", "gradient"],
     do: nil
@@ -882,8 +877,6 @@ defmodule CommunityDemoWeb.Components.Accordion do
   end
 
   defp border_class(params, _) when is_binary(params), do: params
-
-  defp border_class(_, _), do: border_class("none", "base")
 
   defp color_variant("base", "base") do
     [
@@ -1735,8 +1728,6 @@ defmodule CommunityDemoWeb.Components.Accordion do
 
   defp color_variant(params, _) when is_binary(params), do: params
 
-  defp color_variant(_, _), do: color_variant("base", "base")
-
   defp item_color("base", "base") do
     [
       "group-open:bg-white group-open:text-[#09090b] dark:group-open:bg-[#18181B] dark:group-open:text-[#FAFAFA]"
@@ -2094,8 +2085,6 @@ defmodule CommunityDemoWeb.Components.Accordion do
   end
 
   defp item_color(params, _) when is_binary(params), do: params
-
-  defp item_color(_, _), do: item_color("base", "base")
 
   defp chevron_position(%{left_chevron: true}), do: "left"
   defp chevron_position(%{right_chevron: true}), do: "right"

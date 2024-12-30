@@ -218,7 +218,6 @@ defmodule CommunityDemoWeb.Components.Indicator do
   defp indicator_size("extra_large"), do: "!size-4"
 
   defp indicator_size(params) when is_binary(params), do: params
-  defp indicator_size(nil), do: nil
 
   defp color_class("base"), do: "bg-[#e4e4e7] dark:bg-[#27272a]"
 
@@ -247,8 +246,6 @@ defmodule CommunityDemoWeb.Components.Indicator do
   defp color_class("dark"), do: "bg-[#282828]"
 
   defp color_class(params) when is_binary(params), do: params
-
-  defp color_class(_), do: color_class("base")
 
   defp drop_rest(rest) do
     all_rest =

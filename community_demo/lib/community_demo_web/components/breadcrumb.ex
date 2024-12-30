@@ -219,7 +219,6 @@ defmodule CommunityDemoWeb.Components.Breadcrumb do
   end
 
   defp color_class(params) when is_binary(params), do: params
-  defp color_class(_), do: color_class("base")
 
   defp size_class("extra_small") do
     "text-xs gap-1.5 [&>li]:gap-1.5 [&>li>.separator-icon]:size-3 [&>li>.breadcrumb-icon]:size-4"
@@ -242,8 +241,6 @@ defmodule CommunityDemoWeb.Components.Breadcrumb do
   end
 
   defp size_class(params) when is_binary(params), do: params
-
-  defp size_class(_), do: size_class("small")
 
   defp default_classes() do
     [

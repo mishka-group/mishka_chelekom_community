@@ -270,7 +270,7 @@ defmodule CommunityDemoWeb.Components.Spinner do
 
   defp size_class("default", "quadruple_large"), do: "size-10 border-[6px]"
 
-  defp size_class(_, _), do: size_class("default", "small")
+  defp size_class(params, _) when is_binary(params), do: params
 
   defp color_class("base") do
     [
@@ -358,6 +358,4 @@ defmodule CommunityDemoWeb.Components.Spinner do
   end
 
   defp color_class(params) when is_binary(params), do: params
-
-  defp color_class(_), do: color_class("base")
 end

@@ -373,19 +373,13 @@ defmodule CommunityDemoWeb.Components.Divider do
 
   defp size_class(params, :icon) when is_binary(params), do: params
 
-  defp size_class(_, :icon), do: size_class("extra_small", :icon)
-
   defp size_class(params, _) when is_binary(params), do: [params]
-
-  defp size_class(_, _), do: size_class("extra_small", :horizontal)
 
   defp width_class("full"), do: "w-full"
 
   defp width_class("half"), do: "w-1/2"
 
   defp width_class(params) when is_binary(params), do: params
-
-  defp width_class(_), do: width_class("full")
 
   defp height_class("full"), do: "h-screen"
 
@@ -394,8 +388,6 @@ defmodule CommunityDemoWeb.Components.Divider do
   defp height_class("half"), do: "h-1/2"
 
   defp height_class(params) when is_binary(params), do: params
-
-  defp height_class(_), do: height_class("auto")
 
   defp margin_class("extra_small", :horizontal) do
     ["my-2"]

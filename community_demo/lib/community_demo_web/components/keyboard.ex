@@ -115,8 +115,6 @@ defmodule CommunityDemoWeb.Components.Keyboard do
 
   defp border_class(params, _) when is_binary(params), do: params
 
-  defp border_class(_, _), do: border_class("extra_small", nil)
-
   defp size_class("extra_small"), do: "text-xs"
 
   defp size_class("small"), do: "text-sm"
@@ -128,8 +126,6 @@ defmodule CommunityDemoWeb.Components.Keyboard do
   defp size_class("extra_large"), do: "text-xl"
 
   defp size_class(params) when is_binary(params), do: params
-
-  defp size_class(_), do: size_class("small")
 
   defp rounded_size("extra_small"), do: "rounded-sm"
 
@@ -143,7 +139,7 @@ defmodule CommunityDemoWeb.Components.Keyboard do
 
   defp rounded_size("full"), do: "rounded-full"
 
-  defp rounded_size("none"), do: "rounded-none"
+  defp rounded_size(params) when is_binary(params), do: params
 
   defp color_variant("base", "base") do
     [
@@ -567,6 +563,4 @@ defmodule CommunityDemoWeb.Components.Keyboard do
   end
 
   defp color_variant(params, _) when is_binary(params), do: params
-
-  defp color_variant(_, _), do: color_variant("base", "base")
 end

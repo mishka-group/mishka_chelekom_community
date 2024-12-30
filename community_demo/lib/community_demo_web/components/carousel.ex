@@ -345,8 +345,6 @@ defmodule CommunityDemoWeb.Components.Carousel do
 
   defp size_class(params) when is_binary(params), do: params
 
-  defp size_class(_), do: size_class("medium")
-
   defp padding_size("extra_small"),
     do: "[&_.description-wrapper]:p-2.5 md:[&_.description-wrapper]:p-6"
 
@@ -361,8 +359,6 @@ defmodule CommunityDemoWeb.Components.Carousel do
     do: "[&_.description-wrapper]:p-5 md:[&_.description-wrapper]:p-10"
 
   defp padding_size(params) when is_binary(params), do: params
-
-  defp padding_size(_), do: padding_size("medium")
 
   defp content_position("start") do
     "justify-start"
@@ -398,7 +394,7 @@ defmodule CommunityDemoWeb.Components.Carousel do
     "[&_.description-wrapper]:text-center"
   end
 
-  defp text_position(_), do: text_position("center")
+  defp text_position(params) when is_binary(params), do: params
 
   defp color_class("base") do
     [

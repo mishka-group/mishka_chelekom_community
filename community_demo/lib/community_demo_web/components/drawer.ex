@@ -127,13 +127,13 @@ defmodule CommunityDemoWeb.Components.Drawer do
   defp translate_position("right"), do: "translate-x-full"
   defp translate_position("bottom"), do: "translate-y-full"
   defp translate_position("top"), do: "-translate-y-full"
+  defp translate_position(params) when is_binary(params), do: params
 
   defp position_class("left"), do: "top-0 left-0 h-screen"
   defp position_class("right"), do: "top-0 right-0 h-screen"
   defp position_class("top"), do: "top-0 inset-x-0 w-full"
   defp position_class("bottom"), do: "bottom-0 inset-x-0 w-full"
   defp position_class(params) when is_binary(params), do: params
-  defp position_class(_), do: position_class("left")
 
   defp border_class(_, _, variant)
        when variant in [
@@ -186,8 +186,6 @@ defmodule CommunityDemoWeb.Components.Drawer do
 
   defp border_class(params, _, _) when is_binary(params), do: params
 
-  defp border_class(_, _, _), do: border_class("extra_small", "left", nil)
-
   defp size_class("extra_small", "left"), do: "w-60"
 
   defp size_class("small", "left"), do: "w-64"
@@ -227,6 +225,8 @@ defmodule CommunityDemoWeb.Components.Drawer do
   defp size_class("large", "bottom"), do: "min-h-44"
 
   defp size_class("extra_large", "bottom"), do: "min-h-48"
+
+  defp size_class(params, _) when is_binary(params), do: params
 
   defp color_variant("base", "base") do
     [
@@ -610,8 +610,6 @@ defmodule CommunityDemoWeb.Components.Drawer do
   end
 
   defp color_variant(params, _) when is_binary(params), do: params
-
-  defp color_variant(_, _), do: color_variant("base", "base")
 
   @doc """
   Shows the drawer component by modifying its CSS classes to transition it into view.

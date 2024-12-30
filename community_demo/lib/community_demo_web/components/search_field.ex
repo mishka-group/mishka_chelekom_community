@@ -315,7 +315,7 @@ defmodule CommunityDemoWeb.Components.SearchField do
     "[&_.search-field-wrapper_input]:h-12 [&_.search-field-wrapper_.search-field-icon]:size-7"
   end
 
-  defp size_class(_), do: size_class("medium")
+  defp size_class(params) when is_binary(params), do: params
 
   defp rounded_size("extra_small"), do: "[&_.search-field-wrapper]:rounded-sm"
 
@@ -341,7 +341,6 @@ defmodule CommunityDemoWeb.Components.SearchField do
   defp border_class("large", _), do: "[&_.search-field-wrapper]:border-4"
   defp border_class("extra_large", _), do: "[&_.search-field-wrapper]:border-[5px]"
   defp border_class(params, _) when is_binary(params), do: params
-  defp border_class(_, _), do: border_class("extra_small", nil)
 
   defp space_class("extra_small"), do: "space-y-1"
 
@@ -354,8 +353,6 @@ defmodule CommunityDemoWeb.Components.SearchField do
   defp space_class("extra_large"), do: "space-y-3"
 
   defp space_class(params) when is_binary(params), do: params
-
-  defp space_class(_), do: space_class("medium")
 
   defp color_variant("base", "base", floating) do
     [
@@ -1036,8 +1033,6 @@ defmodule CommunityDemoWeb.Components.SearchField do
   end
 
   defp color_variant(params, _, _) when is_binary(params), do: params
-
-  defp color_variant(_, _, _), do: color_variant("base", "base", "none")
 
   defp translate_error({msg, opts}) do
     # When using gettext, we typically pass the strings we want

@@ -340,7 +340,6 @@ defmodule CommunityDemoWeb.Components.Table do
   defp rounded_size("extra_large", _), do: "rounded-xl"
 
   defp rounded_size(params, _) when is_binary(params), do: [params]
-  defp rounded_size(_, _), do: nil
 
   defp text_size("extra_small"), do: "text-xs"
   defp text_size("small"), do: "text-sm"
@@ -348,7 +347,6 @@ defmodule CommunityDemoWeb.Components.Table do
   defp text_size("large"), do: "text-lg"
   defp text_size("extra_large"), do: "text-xl"
   defp text_size(params) when is_binary(params), do: [params]
-  defp text_size(_), do: text_size("small")
 
   defp text_position("left"), do: "[&_table]:text-left [&_table_thead]:text-left"
   defp text_position("right"), do: "[&_table]:text-right [&_table_thead]:text-right"
@@ -356,7 +354,7 @@ defmodule CommunityDemoWeb.Components.Table do
   defp text_position("justify"), do: "[&_table]:text-justify [&_table_thead]:text-justify"
   defp text_position("start"), do: "[&_table]:text-start [&_table_thead]:text-start"
   defp text_position("end"), do: "[&_table]:text-end [&_table_thead]:text-end"
-  defp text_position(_), do: text_position("start")
+  defp text_position(params) when is_binary(params), do: params
 
   defp border_class(_, variant)
        when variant in ["default", "shadow", "transparent", "stripped", "hoverable", "separated"],
@@ -368,7 +366,6 @@ defmodule CommunityDemoWeb.Components.Table do
   defp border_class("large", _), do: "border-4"
   defp border_class("extra_large", _), do: "border-[5px]"
   defp border_class(params, _) when is_binary(params), do: [params]
-  defp border_class(_, _), do: nil
 
   defp cols_border(_, variant)
        when variant in ["default", "shadow", "transparent", "stripped", "hoverable", "separated"],
@@ -415,7 +412,6 @@ defmodule CommunityDemoWeb.Components.Table do
   end
 
   defp cols_border(params, _) when is_binary(params), do: [params]
-  defp cols_border(_, _), do: nil
 
   defp rows_border(_, variant)
        when variant in ["default", "shadow", "transparent", "stripped", "hoverable", "separated"],
@@ -427,7 +423,6 @@ defmodule CommunityDemoWeb.Components.Table do
   defp rows_border("large", _), do: "[&_table_tbody]:divide-y-4"
   defp rows_border("extra_large", _), do: "[&_table_tbody]:divide-y-[5px]"
   defp rows_border(params, _) when is_binary(params), do: [params]
-  defp rows_border(_, _), do: nil
 
   defp header_border(_, variant)
        when variant in ["default", "shadow", "transparent", "stripped", "hoverable", "separated"],
@@ -439,7 +434,6 @@ defmodule CommunityDemoWeb.Components.Table do
   defp header_border("large", _), do: "[&_table]:divide-y-4"
   defp header_border("extra_large", _), do: "[&_table]:divide-y-[5px]"
   defp header_border(params, _) when is_binary(params), do: [params]
-  defp header_border(_, _), do: nil
 
   defp rows_space(_, variant)
        when variant in [
@@ -459,7 +453,6 @@ defmodule CommunityDemoWeb.Components.Table do
   defp rows_space("large", _), do: "[&_table]:border-spacing-y-3"
   defp rows_space("extra_large", _), do: "[&_table]:border-spacing-y-4"
   defp rows_space(params, _) when is_binary(params), do: [params]
-  defp rows_space(_, _), do: rows_space("medium", nil)
 
   defp padding_size("extra_small") do
     [
@@ -497,8 +490,6 @@ defmodule CommunityDemoWeb.Components.Table do
   end
 
   defp padding_size(params) when is_binary(params), do: params
-
-  defp padding_size(_), do: padding_size("small")
 
   defp color_variant("base", "base") do
     [
@@ -1077,7 +1068,7 @@ defmodule CommunityDemoWeb.Components.Table do
     "[&_table_tr]:bg-[#282828] [&_table]:text-white"
   end
 
-  defp color_variant(_, _), do: nil
+  defp color_variant(params, _) when is_binary(params), do: params
 
   attr :name, :string, required: true, doc: "Specifies the name of the element"
   attr :class, :any, default: nil, doc: "Custom CSS class for additional styling"

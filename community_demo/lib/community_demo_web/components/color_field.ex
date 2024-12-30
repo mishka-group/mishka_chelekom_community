@@ -196,8 +196,6 @@ defmodule CommunityDemoWeb.Components.ColorField do
 
   defp size_class(params) when is_binary(params), do: params
 
-  defp size_class(_), do: size_class("medium")
-
   defp rounded_size("extra_small"), do: "[&_.color-field-wrapper_.color-input]:rounded-sm"
 
   defp rounded_size("small"), do: "[&_.color-field-wrapper_.color-input]:rounded"
@@ -223,8 +221,6 @@ defmodule CommunityDemoWeb.Components.ColorField do
   defp border_class("extra_large"), do: "[&_.color-field-wrapper_.color-input]:border-[5px]"
 
   defp border_class(params) when is_binary(params), do: params
-
-  defp border_class(_), do: border_class("extra_small")
 
   defp color_class("base") do
     [
@@ -316,8 +312,6 @@ defmodule CommunityDemoWeb.Components.ColorField do
   end
 
   defp color_class(params) when is_binary(params), do: params
-
-  defp color_class(_), do: color_class("natural")
 
   defp translate_error({msg, opts}) do
     # When using gettext, we typically pass the strings we want

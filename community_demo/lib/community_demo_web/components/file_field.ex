@@ -345,8 +345,6 @@ defmodule CommunityDemoWeb.Components.FileField do
 
   defp border_class(params, _) when is_binary(params), do: params
 
-  defp border_class(_, _), do: border_class("extra_small", nil)
-
   defp size_class("extra_small"), do: "[&_.dropzone-wrapper]:h-52"
 
   defp size_class("small"), do: "[&_.dropzone-wrapper]:h-56"
@@ -358,8 +356,6 @@ defmodule CommunityDemoWeb.Components.FileField do
   defp size_class("extra_large"), do: "[&_.dropzone-wrapper]:h-72"
 
   defp size_class(params) when is_binary(params), do: params
-
-  defp size_class(_), do: size_class("extra_small")
 
   defp rounded_size("extra_small"),
     do: "[&_.file-field]:rounded-sm [&_.dropzone-wrapper]:rounded-sm"
@@ -375,8 +371,6 @@ defmodule CommunityDemoWeb.Components.FileField do
 
   defp rounded_size(params) when is_binary(params), do: params
 
-  defp rounded_size(_), do: rounded_size("small")
-
   defp space_class("extra_small"), do: "space-y-1"
 
   defp space_class("small"), do: "space-y-1.5"
@@ -388,8 +382,6 @@ defmodule CommunityDemoWeb.Components.FileField do
   defp space_class("extra_large"), do: "space-y-3"
 
   defp space_class(params) when is_binary(params), do: params
-
-  defp space_class(_), do: space_class("medium")
 
   defp color_class("base") do
     [
@@ -480,8 +472,6 @@ defmodule CommunityDemoWeb.Components.FileField do
   end
 
   defp color_class(params) when is_binary(params), do: params
-
-  defp color_class(_), do: color_class("base")
 
   defp color_variant("base", "base") do
     [
@@ -915,8 +905,6 @@ defmodule CommunityDemoWeb.Components.FileField do
   end
 
   defp color_variant(params, _) when is_binary(params), do: params
-
-  defp color_variant(_, _), do: color_variant("base", "base")
 
   defp translate_error({msg, opts}) do
     # When using gettext, we typically pass the strings we want

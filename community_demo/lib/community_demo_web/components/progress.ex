@@ -243,8 +243,6 @@ defmodule CommunityDemoWeb.Components.Progress do
 
   defp size_class(params, _) when is_binary(params), do: params
 
-  defp size_class(_, _), do: size_class("small", "horizontal")
-
   defp color_variant("base", "base") do
     [
       "text-[#09090b] bg-[#e4e4e7] dark:text-[#FAFAFA] dark:bg-[#27272a]"
@@ -424,6 +422,4 @@ defmodule CommunityDemoWeb.Components.Progress do
   end
 
   defp color_variant(params, _) when is_binary(params), do: params
-
-  defp color_variant(_, _), do: color_variant("base", "base")
 end

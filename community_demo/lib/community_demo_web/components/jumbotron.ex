@@ -155,7 +155,6 @@ defmodule CommunityDemoWeb.Components.Jumbotron do
   defp border_class("extra_large", "vertical", _), do: "border-y-[5px]"
 
   defp border_class(params, _, _) when is_binary(params), do: params
-  defp border_class(_, _, _), do: border_class("extra_small", "bottom", nil)
 
   defp padding_size("extra_small"), do: "p-1"
 
@@ -177,8 +176,6 @@ defmodule CommunityDemoWeb.Components.Jumbotron do
 
   defp padding_size(params) when is_binary(params), do: params
 
-  defp padding_size(_), do: padding_size("none")
-
   defp space_class("extra_small"), do: "space-y-2"
 
   defp space_class("small"), do: "space-y-3"
@@ -190,7 +187,6 @@ defmodule CommunityDemoWeb.Components.Jumbotron do
   defp space_class("extra_large"), do: "space-y-6"
 
   defp space_class(params) when is_binary(params), do: params
-  defp space_class(_), do: nil
 
   defp color_variant("base", "base") do
     [
@@ -614,6 +610,4 @@ defmodule CommunityDemoWeb.Components.Jumbotron do
   end
 
   defp color_variant(params, _) when is_binary(params), do: params
-
-  defp color_variant(_, _), do: color_variant("base", "base")
 end

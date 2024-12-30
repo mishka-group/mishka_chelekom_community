@@ -323,7 +323,6 @@ defmodule CommunityDemoWeb.Components.Pagination do
   defp space_class("large"), do: "gap-5"
   defp space_class("extra_large"), do: "gap-6"
   defp space_class(params) when is_binary(params), do: params
-  defp space_class(_), do: space_class("small")
 
   defp border_size(_, variant)
        when variant in [
@@ -350,8 +349,6 @@ defmodule CommunityDemoWeb.Components.Pagination do
     do: "[&:not(.grouped-pagination)_.pagination-button]:border-[5px]"
 
   defp border_size(params, _) when is_binary(params), do: params
-
-  defp border_size(_, _), do: border_size("extra_small", nil)
 
   defp border_class("transparent") do
     ["[&.grouped-pagination]:border border-transparent"]
@@ -494,8 +491,6 @@ defmodule CommunityDemoWeb.Components.Pagination do
   end
 
   defp border_class(params) when is_binary(params), do: params
-
-  defp border_class(_), do: border_class("base")
 
   defp rounded_size("extra_small"),
     do:
@@ -1502,8 +1497,6 @@ defmodule CommunityDemoWeb.Components.Pagination do
   end
 
   defp color_variant(params, _) when is_binary(params), do: params
-
-  defp color_variant(_, _), do: color_variant("base", "base")
 
   defp default_classes() do
     [

@@ -224,7 +224,7 @@ defmodule CommunityDemoWeb.Components.Blockquote do
     "justify-center"
   end
 
-  defp caption_position(_), do: caption_position("right")
+  defp caption_position(params) when is_binary(params), do: params
 
   defp space_class("extra_small"), do: "space-y-2"
 
@@ -285,7 +285,6 @@ defmodule CommunityDemoWeb.Components.Blockquote do
   end
 
   defp border_class(params, _, _) when is_binary(params), do: [params]
-  defp border_class(nil, _, _), do: nil
 
   defp rounded_size("extra_small"), do: "rounded-sm"
 
@@ -315,8 +314,6 @@ defmodule CommunityDemoWeb.Components.Blockquote do
 
   defp padding_size(params) when is_binary(params), do: params
 
-  defp padding_size(_), do: padding_size("small")
-
   defp size_class("extra_small"), do: "text-[12px] [&>.quote-icon]:size-7"
 
   defp size_class("small"), do: "text-[13px] [&>.quote-icon]:size-8"
@@ -328,8 +325,6 @@ defmodule CommunityDemoWeb.Components.Blockquote do
   defp size_class("extra_large"), do: "text-[16px] [&>.quote-icon]:size-12"
 
   defp size_class(params) when is_binary(params), do: params
-
-  defp size_class(_), do: size_class("medium")
 
   defp color_variant("base", "base") do
     [
@@ -745,8 +740,6 @@ defmodule CommunityDemoWeb.Components.Blockquote do
   end
 
   defp color_variant(params, _) when is_binary(params), do: params
-
-  defp color_variant(_, _), do: color_variant("base", "base")
 
   defp border_position(%{hide_border: true}), do: "none"
   defp border_position(%{left_border: true}), do: "left"

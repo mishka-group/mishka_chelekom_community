@@ -327,8 +327,6 @@ defmodule CommunityDemoWeb.Components.Tabs do
 
   defp padding_size(params) when is_binary(params), do: params
 
-  defp padding_size(_), do: padding_size("small")
-
   defp size_class("extra_small"), do: "text-xs [&_.tab-icon]:size-4"
 
   defp size_class("small"), do: "text-sm [&_.tab-icon]:size-5"
@@ -341,15 +339,12 @@ defmodule CommunityDemoWeb.Components.Tabs do
 
   defp size_class(params) when is_binary(params), do: params
 
-  defp size_class(_), do: size_class("medium")
-
   defp gap_size("extra_small"), do: "[&_.tab-trigger-list]:gap-1"
   defp gap_size("small"), do: "[&_.tab-trigger-list]:gap-2"
   defp gap_size("medium"), do: "[&_.tab-trigger-list]:gap-3"
   defp gap_size("large"), do: "[&_.tab-trigger-list]:gap-4"
   defp gap_size("extra_large"), do: "[&_.tab-trigger-list]:gap-5"
   defp gap_size(params) when is_binary(params), do: params
-  defp gap_size(_), do: nil
 
   defp border_class("none"), do: "border-0"
   defp border_class("extra_small"), do: "border"
@@ -367,7 +362,6 @@ defmodule CommunityDemoWeb.Components.Tabs do
   defp tab_border("large", true), do: "[&_.tab-trigger]:border-e-4"
   defp tab_border("extra_large", true), do: "[&_.tab-trigger]:border-e-[5px]"
   defp tab_border(params, true) when is_binary(params), do: [params]
-  defp tab_border(_, true), do: tab_border("extra_small", true)
 
   defp tab_border("none", false) do
     [
@@ -406,7 +400,6 @@ defmodule CommunityDemoWeb.Components.Tabs do
   end
 
   defp tab_border(params, false) when is_binary(params), do: [params]
-  defp tab_border(_, false), do: tab_border("extra_small", false)
 
   defp rounded_size(_, "default"), do: "rounded-none"
 
@@ -425,8 +418,6 @@ defmodule CommunityDemoWeb.Components.Tabs do
   defp rounded_size("full", "pills"), do: "[&_.tab-trigger]:rounded-full"
 
   defp rounded_size(params, _) when is_binary(params), do: [params]
-
-  defp rounded_size(_, _), do: rounded_size(nil, "default")
 
   defp color_variant("base", "base") do
     [
@@ -621,8 +612,6 @@ defmodule CommunityDemoWeb.Components.Tabs do
   end
 
   defp color_variant(params, _) when is_binary(params), do: params
-
-  defp color_variant(_, _), do: color_variant("base", "base")
 
   @doc """
   Sets a specific tab as active by adding `active-tab` and `active-tab-panel` CSS classes to the
