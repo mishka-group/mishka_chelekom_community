@@ -371,9 +371,7 @@ defmodule CommunityDemoWeb.Components.Divider do
 
   defp size_class("extra_large", :icon), do: "[&>*]:size-9"
 
-  defp size_class(params, :icon) when is_binary(params), do: params
-
-  defp size_class(params, _) when is_binary(params), do: [params]
+  defp size_class(params, _) when is_binary(params), do: params
 
   defp width_class("full"), do: "w-full"
 
@@ -436,6 +434,8 @@ defmodule CommunityDemoWeb.Components.Divider do
   defp margin_class("none", :vertical) do
     ["mx-0"]
   end
+
+  defp margin_class(params, _) when is_binary(params), do: params
 
   defp color_class("base") do
     [

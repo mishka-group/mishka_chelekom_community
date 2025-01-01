@@ -18,7 +18,6 @@ defmodule CommunityDemoWeb.Components.PasswordField do
   alias Phoenix.LiveView.JS
   import Phoenix.LiveView.Utils, only: [random_id: 0]
 
-  @variants ["outline", "default", "shadow", "bordered", "transparent", "base"]
   @doc """
   Renders a customizable `password_field` with options for size, color, label, and validation errors.
 
@@ -60,7 +59,7 @@ defmodule CommunityDemoWeb.Components.PasswordField do
   attr :color, :string, default: "base", doc: "Determines color theme"
   attr :border, :string, default: "extra_small", doc: "Determines border style"
   attr :rounded, :string, default: "small", doc: "Determines the border radius"
-  attr :variant, :string, values: @variants, default: "base", doc: "Determines the style"
+  attr :variant, :string, default: "base", doc: "Determines the style"
   attr :description, :string, default: nil, doc: "Determines a short description"
   attr :space, :string, default: "medium", doc: "Space between items"
 
@@ -336,7 +335,9 @@ defmodule CommunityDemoWeb.Components.PasswordField do
 
   defp rounded_size("full"), do: "[&_.password-field-wrapper]:rounded-full"
 
-  defp rounded_size(_), do: "[&_.password-field-wrapper]:rounded-none"
+  defp rounded_size("none"), do: nil
+
+  defp rounded_size(params) when is_binary(params), do: params
 
   defp border_class(_, variant) when variant in ["default", "shadow", "transparent"],
     do: nil
@@ -348,6 +349,8 @@ defmodule CommunityDemoWeb.Components.PasswordField do
   defp border_class("large", _), do: "[&_.password-field-wrapper]:border-4"
   defp border_class("extra_large", _), do: "[&_.password-field-wrapper]:border-[5px]"
   defp border_class(params, _) when is_binary(params), do: params
+
+  defp space_class("none"), do: nil
 
   defp space_class("extra_small"), do: "space-y-1"
 

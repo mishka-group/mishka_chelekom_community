@@ -18,14 +18,6 @@ defmodule CommunityDemoWeb.Components.Popover do
   use Phoenix.Component
   alias Phoenix.LiveView.JS
 
-  @variants [
-    "default",
-    "shadow",
-    "bordered",
-    "gradient",
-    "base"
-  ]
-
   @doc """
   Renders a customizable `popover` component that can display additional information when an element is
   hovered or clicked.
@@ -91,18 +83,18 @@ defmodule CommunityDemoWeb.Components.Popover do
     doc: "Determines if the element can be activated on click"
 
   attr :position, :string, default: "top", doc: "Determines the element position"
-  attr :variant, :string, values: @variants, default: "base", doc: "Determines the style"
+  attr :variant, :string, default: "base", doc: "Determines the style"
   attr :color, :string, default: "base", doc: "Determines color theme"
-  attr :rounded, :string, default: nil, doc: "Determines the border radius"
+  attr :rounded, :string, default: "", doc: "Determines the border radius"
   attr :show_arrow, :boolean, default: true, doc: "Show or hide arrow of popover"
   attr :border, :string, default: "extra_small", doc: "Determines border style"
 
   attr :size, :string,
-    default: nil,
+    default: "",
     doc:
       "Determines the overall size of the elements, including padding, font size, and other items"
 
-  attr :space, :string, default: nil, doc: "Space between items"
+  attr :space, :string, default: "", doc: "Space between items"
   attr :width, :string, default: "extra_large", doc: "Determines the element width"
   attr :text_position, :string, default: "start", doc: "Determines the element' text position"
 
@@ -110,7 +102,7 @@ defmodule CommunityDemoWeb.Components.Popover do
     default: "font-normal",
     doc: "Determines custom class for the font weight"
 
-  attr :padding, :string, default: "none", doc: "Determines padding for items"
+  attr :padding, :string, default: "", doc: "Determines padding for items"
 
   attr :rest, :global,
     doc:
@@ -347,18 +339,18 @@ defmodule CommunityDemoWeb.Components.Popover do
 
   attr :inline, :boolean, default: false, doc: "Determines whether this element is inline"
   attr :position, :string, default: "top", doc: "Determines the element position"
-  attr :variant, :string, values: @variants, default: "base", doc: "Determines the style"
+  attr :variant, :string, default: "base", doc: "Determines the style"
   attr :color, :string, default: "base", doc: "Determines color theme"
-  attr :rounded, :string, default: nil, doc: "Determines the border radius"
+  attr :rounded, :string, default: "", doc: "Determines the border radius"
   attr :show_arrow, :boolean, default: true, doc: "Show or hide arrow of popover"
   attr :border, :string, default: "extra_small", doc: "Determines border style"
 
   attr :size, :string,
-    default: nil,
+    default: "",
     doc:
       "Determines the overall size of the elements, including padding, font size, and other items"
 
-  attr :space, :string, default: nil, doc: "Space between items"
+  attr :space, :string, default: "", doc: "Space between items"
   attr :width, :string, default: "extra_large", doc: "Determines the element width"
   attr :text_position, :string, default: "start", doc: "Determines the element' text position"
 
@@ -366,7 +358,7 @@ defmodule CommunityDemoWeb.Components.Popover do
     default: "font-normal",
     doc: "Determines custom class for the font weight"
 
-  attr :padding, :string, default: "none", doc: "Determines padding for items"
+  attr :padding, :string, default: "", doc: "Determines padding for items"
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
 
   attr :rest, :global,
@@ -452,6 +444,8 @@ defmodule CommunityDemoWeb.Components.Popover do
 
   defp border_class("extra_large"), do: "border-[5px]"
 
+  defp border_class("none"), do: nil
+
   defp border_class(params) when is_binary(params), do: params
 
   defp rounded_size("extra_small"), do: "rounded-sm"
@@ -463,8 +457,6 @@ defmodule CommunityDemoWeb.Components.Popover do
   defp rounded_size("large"), do: "rounded-lg"
 
   defp rounded_size("extra_large"), do: "rounded-xl"
-
-  defp rounded_size("none"), do: "rounded-none"
 
   defp rounded_size(params) when is_binary(params), do: params
 
@@ -545,8 +537,6 @@ defmodule CommunityDemoWeb.Components.Popover do
   defp wrapper_padding("extra_large") do
     "[&:has(.popover-section)>.popover-section]:p-5 [&:not(:has(.popover-section))]:p-5"
   end
-
-  defp wrapper_padding("none"), do: nil
 
   defp wrapper_padding(params) when is_binary(params), do: params
 

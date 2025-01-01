@@ -29,40 +29,6 @@ defmodule CommunityDemoWeb.Components.Alert do
   use Gettext, backend: CommunityDemoWeb.Gettext
   alias Phoenix.LiveView.JS
 
-  @sizes ["extra_small", "small", "medium", "large", "extra_large"]
-  @variants [
-    "default",
-    "outline",
-    "shadow",
-    "bordered",
-    "gradient",
-    "base"
-  ]
-
-  @positions [
-    "top_left",
-    "top_right",
-    "bottom_left",
-    "bottom_right"
-  ]
-
-  @kind_typs [
-    :base,
-    :white,
-    :dark,
-    :info,
-    :danger,
-    :success,
-    :natural,
-    :primary,
-    :secondary,
-    :misc,
-    :warning,
-    :silver,
-    :dawn,
-    :error
-  ]
-
   @doc type: :component
   @doc """
   The `flash` component is used to display flash messages with various styling options.
@@ -82,42 +48,29 @@ defmodule CommunityDemoWeb.Components.Alert do
   <.flash kind={:info} phx-mounted={show("#flash")}>Welcome Back!</.flash>
   ```
   """
-  attr :id, :string, doc: "A unique identifier is used to manage state and interaction"
+  attr :id, :string,
+    default: nil,
+    doc: "A unique identifier is used to manage state and interaction"
+
   attr :flash, :map, default: %{}, doc: "the map of flash messages to display"
-  attr :title, :string, default: nil, doc: "Specifies the title of the element"
-  attr :kind, :atom, values: @kind_typs, doc: "used for styling and flash lookup"
+  attr :title, :string, default: "", doc: "Specifies the title of the element"
+  attr :kind, :atom, default: :base, doc: "used for styling and flash lookup"
 
   attr :rest, :global,
     doc:
       "Global attributes can define defaults which are merged with attributes provided by the caller"
 
-  attr :variant, :string, values: @variants, default: "base", doc: "Determines the style"
-
-  attr :position, :string,
-    values: @positions ++ [nil],
-    default: nil,
-    doc: "Determines the element position"
-
-  attr :width, :string,
-    values: @sizes ++ ["full"],
-    default: "full",
-    doc: "Determines the element width"
-
-  attr :border, :string,
-    values: @sizes,
-    default: "extra_small",
-    doc: "Determines the element border width"
+  attr :variant, :string, default: "base", doc: "Determines the style"
+  attr :position, :string, default: "", doc: "Determines the element position"
+  attr :width, :string, default: "full", doc: "Determines the element width"
+  attr :border, :string, default: "extra_small", doc: "Determines the element border width"
 
   attr :size, :string,
-    values: @sizes,
     default: "medium",
     doc:
       "Determines the overall size of the elements, including padding, font size, and other items"
 
-  attr :rounded, :string,
-    values: @sizes ++ ["full", "none"],
-    default: "small",
-    doc: "Determines the border radius"
+  attr :rounded, :string, default: "small", doc: "Determines the border radius"
 
   attr :font_weight, :string,
     default: "font-normal",
@@ -246,35 +199,19 @@ defmodule CommunityDemoWeb.Components.Alert do
     default: nil,
     doc: "A unique identifier is used to manage state and interaction"
 
-  attr :title, :string, default: nil, doc: "Specifies the title of the element"
-  attr :kind, :atom, values: @kind_typs, doc: "used for styling and flash lookup"
-  attr :variant, :string, values: @variants, default: "default", doc: "Determines the style"
-
-  attr :position, :string,
-    values: @positions ++ [nil],
-    default: nil,
-    doc: "Determines the element position"
-
-  attr :width, :string,
-    values: @sizes ++ ["full"],
-    default: "full",
-    doc: "Determines the element width"
-
-  attr :border, :string,
-    values: @sizes,
-    default: "extra_small",
-    doc: "Determines the element border width"
+  attr :title, :string, default: "", doc: "Specifies the title of the element"
+  attr :kind, :atom, default: :base, doc: "used for styling and flash lookup"
+  attr :variant, :string, default: "default", doc: "Determines the style"
+  attr :position, :string, default: "", doc: "Determines the element position"
+  attr :width, :string, default: "full", doc: "Determines the element width"
+  attr :border, :string, default: "extra_small", doc: "Determines the element border width"
 
   attr :size, :string,
-    values: @sizes,
     default: "medium",
     doc:
       "Determines the overall size of the elements, including padding, font size, and other items"
 
-  attr :rounded, :string,
-    values: @sizes ++ ["full", "none"],
-    default: "small",
-    doc: "Determines the border radius"
+  attr :rounded, :string, default: "small", doc: "Determines the border radius"
 
   attr :font_weight, :string,
     default: "font-normal",
@@ -335,7 +272,9 @@ defmodule CommunityDemoWeb.Components.Alert do
 
   defp rounded_size("full"), do: "rounded-full"
 
-  defp rounded_size("none"), do: "rounded-none"
+  defp rounded_size("none"), do: nil
+
+  defp rounded_size(params) when is_binary(params), do: params
 
   defp width_class("extra_small"), do: "w-60"
   defp width_class("small"), do: "w-64"

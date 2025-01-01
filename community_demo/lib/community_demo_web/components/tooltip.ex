@@ -17,14 +17,6 @@ defmodule CommunityDemoWeb.Components.Tooltip do
   """
   use Phoenix.Component
 
-  @variants [
-    "default",
-    "shadow",
-    "bordered",
-    "gradient",
-    "base"
-  ]
-
   @doc """
   The `tooltip` component is used to display additional information when users hover over an element.
 
@@ -61,18 +53,18 @@ defmodule CommunityDemoWeb.Components.Tooltip do
     doc: "A unique identifier is used to manage state and interaction"
 
   attr :position, :string, default: "top", doc: "Determines the element position"
-  attr :variant, :string, values: @variants, default: "base", doc: "Determines the style"
+  attr :variant, :string, default: "base", doc: "Determines the style"
   attr :color, :string, default: "base", doc: "Determines color theme"
-  attr :rounded, :string, default: nil, doc: "Determines the border radius"
+  attr :rounded, :string, default: "", doc: "Determines the border radius"
   attr :border, :string, default: "extra_small", doc: "Determines border style"
   attr :show_arrow, :boolean, default: true, doc: "Show or hide arrow of popover"
 
   attr :size, :string,
-    default: nil,
+    default: "",
     doc:
       "Determines the overall size of the elements, including padding, font size, and other items"
 
-  attr :space, :string, default: nil, doc: "Space between items"
+  attr :space, :string, default: "", doc: "Space between items"
 
   attr :font_weight, :string,
     default: "font-normal",
@@ -135,8 +127,6 @@ defmodule CommunityDemoWeb.Components.Tooltip do
 
   defp rounded_size("extra_large"), do: "rounded-xl"
 
-  defp rounded_size("none"), do: "rounded-none"
-
   defp rounded_size(params) when is_binary(params), do: params
 
   defp position_class("top") do
@@ -176,6 +166,8 @@ defmodule CommunityDemoWeb.Components.Tooltip do
   defp border_class("large"), do: "border-4"
 
   defp border_class("extra_large"), do: "border-[5px]"
+
+  defp border_class("none"), do: nil
 
   defp border_class(params) when is_binary(params), do: params
 

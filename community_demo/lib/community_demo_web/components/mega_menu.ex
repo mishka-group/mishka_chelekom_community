@@ -21,8 +21,6 @@ defmodule CommunityDemoWeb.Components.MegaMenu do
   use Phoenix.Component
   alias Phoenix.LiveView.JS
 
-  @variants ["default", "outline", "shadow", "bordered", "gradient", "base"]
-
   @doc """
   Renders a customizable `mega_menu` component that can display various sections of content.
   It includes slots for defining a trigger element, such as a button, and inner content blocks.
@@ -122,23 +120,23 @@ defmodule CommunityDemoWeb.Components.MegaMenu do
     default: false,
     doc: "Determines if the element can be activated on click"
 
-  attr :variant, :string, values: @variants, default: "base", doc: "Determines the style"
+  attr :variant, :string, default: "base", doc: "Determines the style"
   attr :color, :string, default: "base", doc: "Determines color theme"
-  attr :rounded, :string, default: nil, doc: "Determines the border radius"
+  attr :rounded, :string, default: "", doc: "Determines the border radius"
 
   attr :size, :string,
-    default: nil,
+    default: "",
     doc:
       "Determines the overall size of the elements, including padding, font size, and other items"
 
-  attr :space, :string, default: nil, doc: "Space between items"
+  attr :space, :string, default: "", doc: "Space between items"
   attr :width, :string, default: "full", doc: "Determines the element width"
 
   attr :font_weight, :string,
     default: "font-normal",
     doc: "Determines custom class for the font weight"
 
-  attr :padding, :string, default: "none", doc: "Determines padding for items"
+  attr :padding, :string, default: "", doc: "Determines padding for items"
   attr :icon, :string, default: nil, doc: "Icon displayed alongside of an item"
   attr :icon_class, :string, default: nil, doc: "Determines custom class for the icon"
   attr :title, :string, default: nil, doc: "Specifies the title of the element"
@@ -264,11 +262,7 @@ defmodule CommunityDemoWeb.Components.MegaMenu do
 
   defp rounded_size("extra_large"), do: "[&>.mega-menu-content]:rounded-xl"
 
-  defp rounded_size("none"), do: "[&>.mega-menu-content]:rounded-none"
-
   defp rounded_size(params) when is_binary(params), do: params
-
-  defp rounded_size(_), do: rounded_size("small")
 
   defp size_class("extra_small"), do: "text-xs"
 
@@ -292,11 +286,7 @@ defmodule CommunityDemoWeb.Components.MegaMenu do
 
   defp padding_size("extra_large"), do: "[&>.mega-menu-content]:p-6"
 
-  defp padding_size("none"), do: "[&>.mega-menu-content]:p-0"
-
   defp padding_size(params) when is_binary(params), do: params
-
-  defp space_class("none"), do: "[&>.mega-menu-content]:space-y-0"
 
   defp space_class("extra_small"), do: "[&>.mega-menu-content]:space-y-2"
 

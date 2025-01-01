@@ -24,21 +24,6 @@ defmodule CommunityDemoWeb.Components.Button do
 
   use Phoenix.Component
 
-  @sizes ["extra_small", "small", "medium", "large", "extra_large"]
-  @variants [
-    "base",
-    "default",
-    "outline",
-    "transparent",
-    "subtle",
-    "shadow",
-    "inverted",
-    "bordered",
-    "default_gradient",
-    "outline_gradient",
-    "inverted_gradient"
-  ]
-
   @indicator_positions [
     "indicator",
     "right_indicator",
@@ -96,12 +81,7 @@ defmodule CommunityDemoWeb.Components.Button do
     doc: "Defines the layout orientation of the component"
 
   attr :color, :string, default: "base", doc: "Determines color theme"
-
-  attr :rounded, :string,
-    values: @sizes ++ ["full", "none"],
-    default: "small",
-    doc: "Determines the border radius"
-
+  attr :rounded, :string, default: "small", doc: "Determines the border radius"
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
 
   attr :rest, :global,
@@ -149,9 +129,9 @@ defmodule CommunityDemoWeb.Components.Button do
     default: nil,
     doc: "A unique identifier is used to manage state and interaction"
 
-  attr :variant, :string, values: @variants, default: "base", doc: "Determines the style"
+  attr :variant, :string, default: "base", doc: "Determines the style"
 
-  attr :type, :string,
+  attr :type, :any,
     values: ["button", "submit", "reset", nil],
     default: nil,
     doc: "Specifies the type of the element"
@@ -186,7 +166,10 @@ defmodule CommunityDemoWeb.Components.Button do
     default: nil,
     doc: "Custom CSS class for styling the indicator element"
 
-  attr :indicator_size, :string, default: nil, doc: "Defines the size of the indicator element"
+  attr :indicator_size, :string,
+    default: "extra_small",
+    doc: "Defines the size of the indicator element"
+
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
 
   attr :rest, :global,
@@ -268,7 +251,7 @@ defmodule CommunityDemoWeb.Components.Button do
     default: nil,
     doc: "A unique identifier is used to manage state and interaction"
 
-  attr :variant, :string, values: @variants, default: "base", doc: "Determines the style"
+  attr :variant, :string, default: "base", doc: "Determines the style"
   attr :color, :string, default: "base", doc: "Determines color theme"
   attr :rounded, :string, default: "large", doc: "Determines the border radius"
   attr :value, :string, default: "", doc: "Value of input"
@@ -355,9 +338,9 @@ defmodule CommunityDemoWeb.Components.Button do
 
   attr :patch, :string, doc: "Specifies the path for navigation using a LiveView patch"
   attr :href, :string, doc: "Sets the URL for an external link"
-  attr :variant, :string, values: @variants, default: "base", doc: "Determines the style"
+  attr :variant, :string, default: "base", doc: "Determines the style"
   attr :color, :string, default: "base", doc: "Determines color theme"
-  attr :rounded, :string, values: @sizes ++ ["full", "none"], default: "large", doc: ""
+  attr :rounded, :string, default: "large", doc: ""
   attr :border, :string, default: "extra_small", doc: "Determines border style"
 
   attr :size, :string,
@@ -384,7 +367,9 @@ defmodule CommunityDemoWeb.Components.Button do
     default: nil,
     doc: "Custom CSS class for styling the indicator element"
 
-  attr :indicator_size, :string, default: nil, doc: "Defines the size of the indicator element"
+  attr :indicator_size, :string,
+    default: "extra_small",
+    doc: "Defines the size of the indicator element"
 
   attr :rest, :global,
     include:
@@ -1849,6 +1834,8 @@ defmodule CommunityDemoWeb.Components.Button do
   defp rounded_size("full"), do: "rounded-full [&.gradient-button:before]:rounded-full"
 
   defp rounded_size("none"), do: nil
+
+  defp rounded_size(params) when is_binary(params), do: params
 
   defp size_class("extra_small", circle) do
     [

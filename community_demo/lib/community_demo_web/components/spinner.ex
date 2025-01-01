@@ -16,17 +16,6 @@ defmodule CommunityDemoWeb.Components.Spinner do
 
   use Phoenix.Component
 
-  @sizes [
-    "extra_small",
-    "small",
-    "medium",
-    "large",
-    "extra_large",
-    "double_large",
-    "triple_large",
-    "quadruple_large"
-  ]
-
   @spinner_types [
     "default",
     "dots",
@@ -58,7 +47,6 @@ defmodule CommunityDemoWeb.Components.Spinner do
   attr :color, :string, default: "base", doc: "Determines color theme"
 
   attr :size, :string,
-    values: @sizes,
     default: "small",
     doc:
       "Determines the overall size of the elements, including padding, font size, and other items"
@@ -270,7 +258,7 @@ defmodule CommunityDemoWeb.Components.Spinner do
 
   defp size_class("default", "quadruple_large"), do: "size-10 border-[6px]"
 
-  defp size_class(params, _) when is_binary(params), do: params
+  defp size_class(_, params) when is_binary(params), do: params
 
   defp color_class("base") do
     [

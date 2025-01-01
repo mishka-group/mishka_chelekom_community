@@ -16,16 +16,6 @@ defmodule CommunityDemoWeb.Components.Footer do
 
   use Phoenix.Component
 
-  @variants [
-    "default",
-    "outline",
-    "transparent",
-    "shadow",
-    "bordered",
-    "gradient",
-    "base"
-  ]
-
   @doc """
   Renders a customizable `footer` component with different sections and styling options, allowing
   for the inclusion of text, links, and other content.
@@ -66,19 +56,19 @@ defmodule CommunityDemoWeb.Components.Footer do
     default: nil,
     doc: "A unique identifier is used to manage state and interaction"
 
-  attr :variant, :string, values: @variants, default: "base", doc: "Determines the style"
+  attr :variant, :string, default: "base", doc: "Determines the style"
   attr :color, :string, default: "base", doc: "Determines color theme"
   attr :border, :string, default: "extra_small", doc: "Determines border style"
-  attr :text_position, :string, default: nil, doc: "Determines the element' text position"
-  attr :rounded, :string, default: nil, doc: "Determines the border radius"
-  attr :max_width, :string, default: nil, doc: "Determines the style of element max width"
-  attr :space, :string, default: nil, doc: "Space between items"
+  attr :text_position, :string, default: "", doc: "Determines the element' text position"
+  attr :rounded, :string, default: "", doc: "Determines the border radius"
+  attr :max_width, :string, default: "", doc: "Determines the style of element max width"
+  attr :space, :string, default: "", doc: "Space between items"
 
   attr :font_weight, :string,
     default: "font-normal",
     doc: "Determines custom class for the font weight"
 
-  attr :padding, :string, default: "none", doc: "Determines padding for items"
+  attr :padding, :string, default: "", doc: "Determines padding for items"
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
 
   attr :rest, :global,
@@ -127,9 +117,9 @@ defmodule CommunityDemoWeb.Components.Footer do
     default: "font-normal",
     doc: "Determines custom class for the font weight"
 
-  attr :text_position, :string, default: nil, doc: "Determines the element' text position"
-  attr :space, :string, default: nil, doc: "Space between items"
-  attr :padding, :string, default: "none", doc: "Determines padding for items"
+  attr :text_position, :string, default: "", doc: "Determines the element' text position"
+  attr :space, :string, default: "", doc: "Space between items"
+  attr :padding, :string, default: "", doc: "Determines padding for items"
   slot :inner_block, required: false, doc: "Inner block that renders HEEx content"
 
   def footer_section(assigns) do
@@ -180,25 +170,17 @@ defmodule CommunityDemoWeb.Components.Footer do
 
   defp padding_size("extra_large"), do: "p-5"
 
-  defp padding_size("none"), do: "p-0"
-
   defp padding_size(params) when is_binary(params), do: params
 
   defp border_class(_, variant) when variant in ["default", "shadow", "transparent", "gradient"],
     do: nil
 
   defp border_class("none", _), do: "border-t-0"
-
   defp border_class("extra_small", _), do: "border-t"
-
   defp border_class("small", _), do: "border-t-2"
-
   defp border_class("medium", _), do: "border-t-[3px]"
-
   defp border_class("large", _), do: "border-t-4"
-
   defp border_class("extra_large", _), do: "border-t-[5px]"
-
   defp border_class(params, _) when is_binary(params), do: params
 
   defp rounded_size("extra_small"), do: "rounded-t-sm"

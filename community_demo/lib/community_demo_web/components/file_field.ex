@@ -23,8 +23,6 @@ defmodule CommunityDemoWeb.Components.FileField do
   import CommunityDemoWeb.Components.Progress, only: [progress: 1]
   import CommunityDemoWeb.Components.Spinner, only: [spinner: 1]
 
-  @variants ["default", "outline", "bordered", "shadow", "gradient", "transparent", "base"]
-
   @doc """
   Renders a `file_input` field with customizable styles, labels, and live upload capabilities.
 
@@ -45,7 +43,7 @@ defmodule CommunityDemoWeb.Components.FileField do
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
   attr :label_class, :string, default: nil, doc: "Custom CSS class for the label styling"
   attr :color, :string, default: "base", doc: "Determines color theme"
-  attr :variant, :string, values: @variants, default: "base", doc: "Determines the style"
+  attr :variant, :string, default: "base", doc: "Determines the style"
   attr :border, :string, default: "extra_small", doc: "Determines border style"
   attr :rounded, :string, default: "small", doc: "Determines the border radius"
   attr :live, :boolean, default: false, doc: "Specifies whether this upload is live or input file"
@@ -242,9 +240,9 @@ defmodule CommunityDemoWeb.Components.FileField do
               <div
                 :if={!entry.done?}
                 role="status"
-                class="absolute top-1 left-1 bottom-1 right-1 bg-black/25 flex justify-center items-center"
+                class="absolute inset-0 bg-black/25 flex justify-center items-center"
               >
-                <.spinner color="silver" />
+                <.spinner color="base" />
               </div>
             </div>
             <%= for err <- upload_errors(@upload_error, entry) do %>
@@ -332,17 +330,11 @@ defmodule CommunityDemoWeb.Components.FileField do
     do: nil
 
   defp border_class("none", _), do: nil
-
   defp border_class("extra_small", _), do: "[&_.dropzone-wrapper]:border"
-
   defp border_class("small", _), do: "[&_.dropzone-wrapper]:border-2"
-
   defp border_class("medium", _), do: "[&_.dropzone-wrapper]:border-[3px]"
-
   defp border_class("large", _), do: "[&_.dropzone-wrapper]:border-4"
-
   defp border_class("extra_large", _), do: "[&_.dropzone-wrapper]:border-[5px]"
-
   defp border_class(params, _) when is_binary(params), do: params
 
   defp size_class("extra_small"), do: "[&_.dropzone-wrapper]:h-52"
@@ -357,6 +349,8 @@ defmodule CommunityDemoWeb.Components.FileField do
 
   defp size_class(params) when is_binary(params), do: params
 
+  defp rounded_size("none"), do: nil
+
   defp rounded_size("extra_small"),
     do: "[&_.file-field]:rounded-sm [&_.dropzone-wrapper]:rounded-sm"
 
@@ -370,6 +364,8 @@ defmodule CommunityDemoWeb.Components.FileField do
     do: "[&_.file-field]:rounded-xl [&_.dropzone-wrapper]:rounded-xl"
 
   defp rounded_size(params) when is_binary(params), do: params
+
+  defp space_class("none"), do: nil
 
   defp space_class("extra_small"), do: "space-y-1"
 

@@ -31,14 +31,6 @@ defmodule CommunityDemoWeb.Components.SpeedDial do
   use Gettext, backend: CommunityDemoWeb.Gettext
   alias Phoenix.LiveView.JS
 
-  @variants [
-    "default",
-    "shadow",
-    "bordered",
-    "gradient",
-    "base"
-  ]
-
   @doc """
   Renders a customizable `speed_dial` component that provides quick access to multiple actions.
   The speed dial can be configured with various styles, sizes, and colors.
@@ -73,7 +65,7 @@ defmodule CommunityDemoWeb.Components.SpeedDial do
       "Determines the overall size of the elements, including padding, font size, and other items"
 
   attr :color, :string, default: "base", doc: "Determines color theme"
-  attr :variant, :string, values: @variants, default: "base", doc: "Determines the style"
+  attr :variant, :string, default: "base", doc: "Determines the style"
   attr :space, :string, default: "extra_small", doc: "Space between items"
   attr :width, :string, default: "fit", doc: "Determines the element width"
   attr :border, :string, default: "extra_small", doc: "Determines border style"
@@ -330,7 +322,7 @@ defmodule CommunityDemoWeb.Components.SpeedDial do
 
   defp space_class("extra_large", "right"), do: "[&_.speed-dial-content]:space-x-6"
 
-  defp space_class(_, params) when is_binary(params), do: params
+  defp space_class(params, _) when is_binary(params), do: params
 
   defp padding_class("none"), do: "[&_.speed-dial-content]:p-0"
 
@@ -345,6 +337,8 @@ defmodule CommunityDemoWeb.Components.SpeedDial do
   defp padding_class("extra_large"), do: "[&_.speed-dial-content]:p-3"
 
   defp padding_class(params) when is_binary(params), do: params
+
+  defp rounded_size("none"), do: nil
 
   defp rounded_size("extra_small"), do: "[&_.speed-dial-base]:rounded-sm"
 

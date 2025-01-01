@@ -9,19 +9,6 @@ defmodule CommunityDemoWeb.Components.Image do
 
   use Phoenix.Component
 
-  @sizes ["extra_small", "small", "medium", "large", "extra_large", nil]
-  @filters [
-    "blur",
-    "brightness",
-    "hue",
-    "contrast",
-    "saturation",
-    "grayscale",
-    "invert",
-    "sepia",
-    nil
-  ]
-
   @doc """
   Renders an `image` component with various customization options such as border `radius`, `shadow`,
   and `loading` behavior.
@@ -47,14 +34,14 @@ defmodule CommunityDemoWeb.Components.Image do
   attr :alt, :string, default: nil, doc: "Media link description"
   attr :srcset, :string, default: nil, doc: "Allows you to specify a list of different images"
 
-  attr :loading, :string,
+  attr :loading, :any,
     values: ["eager", "lazy", nil],
     default: nil,
     doc: "eager: is default, lazy"
 
   attr :referrerpolicy, :string, default: nil, doc: ""
 
-  attr :fetchpriority, :string,
+  attr :fetchpriority, :any,
     values: ["high", "low", "auto", nil],
     default: nil,
     doc: "high, low, auto is default"
@@ -69,20 +56,16 @@ defmodule CommunityDemoWeb.Components.Image do
 
   attr :ismap, :string, default: nil, doc: "Make the image act as a server-side image map"
 
-  attr :filter, :string, values: @filters, default: nil, doc: "Utilities for applying filters"
-
-  attr :filter_size, :string,
-    values: @sizes,
-    default: nil,
-    doc: "Utilities for applying filters sizes"
+  attr :filter, :string, default: "", doc: "Utilities for applying filters"
+  attr :filter_size, :string, default: "", doc: "Utilities for applying filters sizes"
 
   attr :decoding, :string,
     default: nil,
     doc:
       "Refers to the process of converting encoded or encrypted data back into its original format"
 
-  attr :rounded, :string, default: nil, doc: "Determines the border radius"
-  attr :shadow, :string, default: nil, doc: "Determines shadow style"
+  attr :rounded, :string, default: "", doc: "Determines the border radius"
+  attr :shadow, :string, default: "", doc: "Determines shadow style"
   attr :class, :any, default: nil, doc: "Custom CSS class for additional styling"
 
   attr :rest, :global,

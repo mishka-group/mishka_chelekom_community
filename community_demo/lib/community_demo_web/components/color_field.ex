@@ -206,20 +206,16 @@ defmodule CommunityDemoWeb.Components.ColorField do
 
   defp rounded_size("extra_large"), do: "[&_.color-field-wrapper_.color-input]:rounded-xl"
 
+  defp rounded_size("none"), do: nil
+
   defp rounded_size(params) when is_binary(params), do: params
-  defp rounded_size(_), do: "[&_.color-field-wrapper_.color-input]:rounded-none"
+
   defp border_class("none"), do: "[&_.color-field-wrapper_.color-input]:border-0"
-
   defp border_class("extra_small"), do: "[&_.color-field-wrapper_.color-input]:border"
-
   defp border_class("small"), do: "[&_.color-field-wrapper_.color-input]:border-2"
-
   defp border_class("medium"), do: "[&_.color-field-wrapper_.color-input]:border-[3px]"
-
   defp border_class("large"), do: "[&_.color-field-wrapper_.color-input]:border-4"
-
   defp border_class("extra_large"), do: "[&_.color-field-wrapper_.color-input]:border-[5px]"
-
   defp border_class(params) when is_binary(params), do: params
 
   defp color_class("base") do

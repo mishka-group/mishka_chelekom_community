@@ -15,8 +15,6 @@ defmodule CommunityDemoWeb.Components.Breadcrumb do
   """
   use Phoenix.Component
 
-  @sizes ["extra_small", "small", "medium", "large", "extra_large"]
-
   @doc """
   The `breadcrumb` component is used to display a navigational path with customizable
   attributes such as `color`, `size`, and `separator`.
@@ -63,7 +61,6 @@ defmodule CommunityDemoWeb.Components.Breadcrumb do
   attr :color, :string, default: "base", doc: "Determines color theme"
 
   attr :size, :string,
-    values: @sizes,
     default: "small",
     doc:
       "Determines the overall size of the elements, including padding, font size, and other items"

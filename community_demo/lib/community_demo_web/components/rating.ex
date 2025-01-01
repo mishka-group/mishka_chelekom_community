@@ -96,6 +96,7 @@ defmodule CommunityDemoWeb.Components.Rating do
   defp gap_class("medium"), do: "gap-2"
   defp gap_class("large"), do: "gap-2.5"
   defp gap_class("extra_large"), do: "gap-3"
+  defp gap_class("none"), do: nil
   defp gap_class(params) when is_binary(params), do: params
 
   defp size_class("extra_small"), do: "[&_.rating-icon]:size-4"

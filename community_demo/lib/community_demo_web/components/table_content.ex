@@ -61,10 +61,10 @@ defmodule CommunityDemoWeb.Components.TableContent do
   attr :title, :string, default: nil, doc: "Specifies the title of the element"
   attr :color, :string, default: "base", doc: "Determines color theme"
   attr :variant, :string, default: "base", doc: "Determines the style"
-  attr :space, :string, default: nil, doc: "Space between items"
+  attr :space, :string, default: "", doc: "Space between items"
   attr :animated, :boolean, default: false, doc: "Determines whether element's icon has animation"
-  attr :padding, :string, default: nil, doc: "Determines padding for items"
-  attr :rounded, :string, default: nil, doc: "Determines the border radius"
+  attr :padding, :string, default: "", doc: "Determines padding for items"
+  attr :rounded, :string, default: "", doc: "Determines the border radius"
   attr :border, :string, default: "extra_small", doc: "Determines border style"
 
   attr :size, :string,
@@ -346,8 +346,6 @@ defmodule CommunityDemoWeb.Components.TableContent do
   defp rounded_size("large"), do: "rounded-lg"
 
   defp rounded_size("extra_large"), do: "rounded-xl"
-
-  defp rounded_size("none"), do: "rounded-none"
 
   defp rounded_size(params) when is_binary(params), do: params
 

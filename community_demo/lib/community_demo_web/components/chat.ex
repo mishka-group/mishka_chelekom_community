@@ -9,16 +9,6 @@ defmodule CommunityDemoWeb.Components.Chat do
   """
   use Phoenix.Component
 
-  @variants [
-    "default",
-    "outline",
-    "transparent",
-    "shadow",
-    "gradient",
-    "bordered",
-    "base"
-  ]
-
   @doc """
   The `chat` component is used to create a chat message container with customizable attributes such
   as `variant`, `color`, and `position`.
@@ -72,7 +62,7 @@ defmodule CommunityDemoWeb.Components.Chat do
     doc: "A unique identifier is used to manage state and interaction"
 
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
-  attr :variant, :string, values: @variants, default: "base", doc: "Determines the style"
+  attr :variant, :string, default: "base", doc: "Determines the style"
   attr :color, :string, default: "base", doc: "Determines color theme"
   attr :border, :string, default: "extra_small", doc: "Determines border style"
   attr :rounded, :string, default: "extra_large", doc: "Determines the border radius"
@@ -253,6 +243,8 @@ defmodule CommunityDemoWeb.Components.Chat do
     ]
   end
 
+  defp rounded_size("none", _), do: nil
+
   defp rounded_size(params, _) when is_binary(params), do: params
 
   defp space_class("extra_small"), do: "[&>.chat-section-bubble]:space-y-2"
@@ -264,6 +256,8 @@ defmodule CommunityDemoWeb.Components.Chat do
   defp space_class("large"), do: "[&>.chat-section-bubble]:space-y-5"
 
   defp space_class("extra_large"), do: "[&>.chat-section-bubble]:space-y-6"
+
+  defp space_class("none"), do: nil
 
   defp space_class(params) when is_binary(params), do: params
 
@@ -283,17 +277,11 @@ defmodule CommunityDemoWeb.Components.Chat do
     do: nil
 
   defp border_class("extra_small", _), do: "[&>.chat-section-bubble]:border"
-
   defp border_class("small", _), do: "[&>.chat-section-bubble]:border-2"
-
   defp border_class("medium", _), do: "[&>.chat-section-bubble]:border-[3px]"
-
   defp border_class("large", _), do: "[&>.chat-section-bubble]:border-4"
-
   defp border_class("extra_large", _), do: "[&>.chat-section-bubble]:border-[5px]"
-
   defp border_class("none", _), do: "[&>.chat-section-bubble]:border-0"
-
   defp border_class(params, _) when is_binary(params), do: params
 
   defp size_class("extra_small"), do: "text-xs [&>.chat-section-bubble]:max-w-[12rem]"

@@ -20,25 +20,6 @@ defmodule CommunityDemoWeb.Components.Modal do
   use Gettext, backend: CommunityDemoWeb.Gettext
   alias Phoenix.LiveView.JS
 
-  @sizes [
-    "extra_small",
-    "small",
-    "medium",
-    "large",
-    "extra_large",
-    "double_large",
-    "triple_large",
-    "quadruple_large"
-  ]
-
-  @variants [
-    "default",
-    "shadow",
-    "bordered",
-    "gradient",
-    "base"
-  ]
-
   @doc """
   Renders a customizable `modal` component that displays overlay content with optional title and inner content.
   It can be controlled with the `show` attribute and includes actions for closing the modal.
@@ -71,18 +52,13 @@ defmodule CommunityDemoWeb.Components.Modal do
     doc: "A unique identifier is used to manage state and interaction"
 
   attr :title, :string, default: nil, doc: "Specifies the title of the element"
-  attr :variant, :string, values: @variants, default: "base", doc: "Determines the style"
+  attr :variant, :string, default: "base", doc: "Determines the style"
   attr :color, :string, default: "base", doc: "Determines color theme"
-  attr :rounded, :string, values: @sizes, default: "small", doc: "Determines the border radius"
+  attr :rounded, :string, default: "small", doc: "Determines the border radius"
   attr :border, :string, default: "extra_small", doc: "Determines border style"
-
-  attr :padding, :string,
-    values: @sizes ++ ["none"],
-    default: "medium",
-    doc: "Determines padding for items"
+  attr :padding, :string, default: "medium", doc: "Determines padding for items"
 
   attr :size, :string,
-    values: @sizes ++ ["screen"],
     default: "extra_large",
     doc:
       "Determines the overall size of the elements, including padding, font size, and other items"
@@ -181,7 +157,9 @@ defmodule CommunityDemoWeb.Components.Modal do
 
   defp rounded_size("extra_large"), do: "rounded-xl"
 
-  defp rounded_size(_), do: nil
+  defp rounded_size("none"), do: nil
+
+  defp rounded_size(params) when is_binary(params), do: params
 
   defp padding_size("extra_small"), do: "p-2"
 

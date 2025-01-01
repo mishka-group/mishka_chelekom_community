@@ -30,18 +30,6 @@ defmodule CommunityDemoWeb.Components.Banner do
   alias Phoenix.LiveView.JS
   use Gettext, backend: CommunityDemoWeb.Gettext
 
-  @sizes ["extra_small", "small", "medium", "large", "extra_large"]
-
-  @variants [
-    "default",
-    "outline",
-    "transparent",
-    "shadow",
-    "bordered",
-    "gradient",
-    "base"
-  ]
-
   @positions ["top_left", "top_right", "bottom_left", "bottom_right", "center", "full"]
 
   @doc """
@@ -90,7 +78,7 @@ defmodule CommunityDemoWeb.Components.Banner do
     doc:
       "Determines the overall size of the elements, including padding, font size, and other items"
 
-  attr :variant, :string, values: @variants, default: "base", doc: "Determines the style"
+  attr :variant, :string, default: "base", doc: "Determines the style"
   attr :color, :string, default: "base", doc: "Determines color theme"
   attr :border, :string, default: "extra_small", doc: "Determines border style"
 
@@ -99,20 +87,14 @@ defmodule CommunityDemoWeb.Components.Banner do
     default: "top",
     doc: ""
 
-  attr :rounded, :string,
-    values: @sizes ++ ["none"],
-    default: "none",
-    doc: "Determines the border radius"
+  attr :rounded, :string, default: "none", doc: "Determines the border radius"
 
   attr :rounded_position, :string,
     values: ["top", "bottom", "all", "none"],
     default: "none",
     doc: ""
 
-  attr :space, :string,
-    values: @sizes ++ ["none"],
-    default: "extra_small",
-    doc: "Space between items"
+  attr :space, :string, default: "extra_small", doc: "Space between items"
 
   attr :vertical_position, :string, values: ["top", "bottom"], default: "top", doc: ""
   attr :vertical_size, :string, default: "none", doc: "Specifies the vertical size of the element"
@@ -120,7 +102,6 @@ defmodule CommunityDemoWeb.Components.Banner do
   attr :hide_dismiss, :boolean, default: false, doc: "Show or hide dismiss classes"
 
   attr :dismiss_size, :string,
-    values: @sizes,
     default: "small",
     doc: "Add custom classes to control dismiss sizes"
 
@@ -130,7 +111,6 @@ defmodule CommunityDemoWeb.Components.Banner do
     doc: "Determines the element position"
 
   attr :position_size, :string,
-    values: @sizes ++ ["none"],
     default: "none",
     doc: "Determines the size for positioning the element"
 
@@ -138,10 +118,7 @@ defmodule CommunityDemoWeb.Components.Banner do
     default: "font-normal",
     doc: "Determines custom class for the font weight"
 
-  attr :padding, :string,
-    values: @sizes ++ ["none"],
-    default: "extra_small",
-    doc: "Determines padding for items"
+  attr :padding, :string, default: "extra_small", doc: "Determines padding for items"
 
   attr :class, :string, default: "", doc: "Custom CSS class for additional styling"
 
@@ -192,7 +169,6 @@ defmodule CommunityDemoWeb.Components.Banner do
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
 
   attr :dismiss_size, :string,
-    values: @sizes,
     default: "small",
     doc: "Add custom classes to control dismiss sizes"
 
@@ -326,6 +302,8 @@ defmodule CommunityDemoWeb.Components.Banner do
   defp rounded_size("extra_large", "all"), do: "rounded-xl"
 
   defp rounded_size("none", _), do: nil
+
+  defp rounded_size(params, _) when is_binary(params), do: params
 
   defp space_class("none"), do: nil
 

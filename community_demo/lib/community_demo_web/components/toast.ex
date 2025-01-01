@@ -20,15 +20,6 @@ defmodule CommunityDemoWeb.Components.Toast do
   alias Phoenix.LiveView.JS
   use Gettext, backend: CommunityDemoWeb.Gettext
 
-  @variants [
-    "default",
-    "outline",
-    "shadow",
-    "bordered",
-    "gradient",
-    "base"
-  ]
-
   @doc """
   The `toast` component displays temporary notifications or messages, usually at the top
   or bottom of the screen.
@@ -73,7 +64,7 @@ defmodule CommunityDemoWeb.Components.Toast do
     doc: "A unique identifier is used to manage state and interaction"
 
   attr :fixed, :boolean, default: true, doc: "Determines whether the element is fixed"
-  attr :variant, :string, values: @variants, default: "base", doc: "Determines the style"
+  attr :variant, :string, default: "base", doc: "Determines the style"
   attr :color, :string, default: "base", doc: "Determines color theme"
   attr :border, :string, default: "extra_small", doc: "Determines border style"
   attr :rounded, :string, default: "medium", doc: "Determines the border radius"
@@ -366,6 +357,8 @@ defmodule CommunityDemoWeb.Components.Toast do
   defp rounded_size("extra_large"), do: "rounded-xl"
 
   defp rounded_size("none"), do: "rounded-none"
+
+  defp rounded_size(params) when is_binary(params), do: params
 
   defp space_class("none"), do: nil
 

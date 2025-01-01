@@ -352,24 +352,22 @@ defmodule CommunityDemoWeb.Components.DateTimeField do
 
   defp rounded_size("full"), do: "[&_.date-time-field-wrapper]:rounded-full"
 
-  defp rounded_size(_), do: "[&_.date-time-field-wrapper]:rounded-none"
+  defp rounded_size("none"), do: nil
+
+  defp rounded_size(params) when is_binary(params), do: params
 
   defp border_class(_, variant) when variant in ["default", "shadow", "transparent"],
     do: nil
 
   defp border_class("none", _), do: "[&_.date-time-field-wrapper]:border-0"
-
   defp border_class("extra_small", _), do: "[&_.date-time-field-wrapper]:border"
-
   defp border_class("small", _), do: "[&_.date-time-field-wrapper]:border-2"
-
   defp border_class("medium", _), do: "[&_.date-time-field-wrapper]:border-[3px]"
-
   defp border_class("large", _), do: "[&_.date-time-field-wrapper]:border-4"
-
   defp border_class("extra_large", _), do: "[&_.date-time-field-wrapper]:border-[5px]"
-
   defp border_class(params, _) when is_binary(params), do: params
+
+  defp space_class("none"), do: nil
 
   defp space_class("extra_small"), do: "space-y-1"
 

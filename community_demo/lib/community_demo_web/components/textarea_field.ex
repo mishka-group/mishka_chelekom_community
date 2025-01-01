@@ -24,8 +24,6 @@ defmodule CommunityDemoWeb.Components.TextareaField do
 
   use Phoenix.Component
 
-  @variants ["outline", "default", "shadow", "bordered", "transparent", "base"]
-
   @doc """
   The `textarea_field` component provides a customizable text area input with various styling options,
   including floating labels, error messages, and resizing control.
@@ -63,7 +61,7 @@ defmodule CommunityDemoWeb.Components.TextareaField do
   attr :color, :string, default: "base", doc: "Determines color theme"
   attr :border, :string, default: "extra_small", doc: "Determines border style"
   attr :rounded, :string, default: "small", doc: "Determines the border radius"
-  attr :variant, :string, values: @variants, default: "base", doc: "Determines the style"
+  attr :variant, :string, default: "base", doc: "Determines the style"
   attr :description, :string, default: nil, doc: "Determines a short description"
   attr :space, :string, default: "medium", doc: "Space between items"
 
@@ -276,7 +274,9 @@ defmodule CommunityDemoWeb.Components.TextareaField do
 
   defp rounded_size("full"), do: "[&_.textarea-field-wrapper]:rounded-full"
 
-  defp rounded_size(_), do: "[&_.textarea-field-wrapper]:rounded-none"
+  defp rounded_size("none"), do: nil
+
+  defp rounded_size(params) when is_binary(params), do: params
 
   defp border_class(_, variant) when variant in ["default", "shadow", "transparent"],
     do: nil
@@ -288,6 +288,8 @@ defmodule CommunityDemoWeb.Components.TextareaField do
   defp border_class("large", _), do: "[&_.textarea-field-wrapper]:border-4"
   defp border_class("extra_large", _), do: "[&_.textarea-field-wrapper]:border-[5px]"
   defp border_class(params, _) when is_binary(params), do: params
+
+  defp space_class("none"), do: nil
 
   defp space_class("extra_small"), do: "space-y-1"
 

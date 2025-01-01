@@ -20,8 +20,6 @@ defmodule CommunityDemoWeb.Components.Drawer do
   alias Phoenix.LiveView.JS
   use Gettext, backend: CommunityDemoWeb.Gettext
 
-  @variants ["default", "outline", "transparent", "bordered", "gradient", "base"]
-
   @doc """
   A `drawer` component for displaying content in a sliding panel. It can be positioned on the left or
   right side of the viewport and controlled using custom JavaScript actions.
@@ -48,7 +46,7 @@ defmodule CommunityDemoWeb.Components.Drawer do
 
   attr :title, :string, default: nil, doc: "Specifies the title of the element"
   attr :title_class, :string, default: nil, doc: "Determines custom class for the title"
-  attr :variant, :string, values: @variants, default: "base", doc: "Determines the style"
+  attr :variant, :string, default: "base", doc: "Determines the style"
   attr :color, :string, default: "base", doc: "Determines color theme"
 
   attr :size, :string,
@@ -57,7 +55,6 @@ defmodule CommunityDemoWeb.Components.Drawer do
       "Determines the overall size of the elements, including padding, font size, and other items"
 
   attr :border, :string, default: "extra_small", doc: "Determines border style"
-  attr :rounded, :string, default: nil, doc: "Determines the border radius"
   attr :position, :string, default: "left", doc: "Determines the element position"
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
   attr :on_hide, JS, default: %JS{}, doc: "Custom JS module for on_hide action"
@@ -145,43 +142,27 @@ defmodule CommunityDemoWeb.Components.Drawer do
        do: nil
 
   defp border_class("extra_small", "left", _), do: "border-r"
-
   defp border_class("small", "left", _), do: "border-r-2"
-
   defp border_class("medium", "left", _), do: "border-r-[3px]"
-
   defp border_class("large", "left", _), do: "border-r-4"
-
   defp border_class("extra_large", "left", _), do: "border-r-[5px]"
 
   defp border_class("extra_small", "right", _), do: "border-l"
-
   defp border_class("small", "right", _), do: "border-l-2"
-
   defp border_class("medium", "right", _), do: "border-l-[3px]"
-
   defp border_class("large", "right", _), do: "border-l-4"
-
   defp border_class("extra_large", "right", _), do: "border-l-[5px]"
 
   defp border_class("extra_small", "top", _), do: "border-b"
-
   defp border_class("small", "top", _), do: "border-b-2"
-
   defp border_class("medium", "top", _), do: "border-b-[3px]"
-
   defp border_class("large", "top", _), do: "border-b-4"
-
   defp border_class("extra_large", "top", _), do: "border-b-[5px]"
 
   defp border_class("extra_small", "bottom", _), do: "border-t"
-
   defp border_class("small", "bottom", _), do: "border-t-2"
-
   defp border_class("medium", "bottom", _), do: "border-t-[3px]"
-
   defp border_class("large", "bottom", _), do: "border-t-4"
-
   defp border_class("extra_large", "bottom", _), do: "border-t-[5px]"
 
   defp border_class(params, _, _) when is_binary(params), do: params

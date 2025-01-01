@@ -19,8 +19,6 @@ defmodule CommunityDemoWeb.Components.Progress do
   alias Phoenix.LiveView.JS
   import Phoenix.LiveView.Utils, only: [random_id: 0]
 
-  @variants ["default", "gradient", "base"]
-
   @doc """
   Renders a `progress` bar component that visually represents the completion status of a task.
 
@@ -70,7 +68,7 @@ defmodule CommunityDemoWeb.Components.Progress do
     doc: "Defines the layout orientation of the component"
 
   attr :color, :string, default: "base", doc: "Determines color theme"
-  attr :variant, :string, values: @variants, default: "base", doc: "Determines the style"
+  attr :variant, :string, default: "base", doc: "Determines the style"
 
   attr :size, :string,
     default: "small",
@@ -140,8 +138,8 @@ defmodule CommunityDemoWeb.Components.Progress do
     doc: "Defines the layout orientation of the component"
 
   attr :color, :string, default: "base", doc: "Determines color theme"
-  attr :rounded, :string, default: "none", doc: "Determines the border radius"
-  attr :variant, :string, values: @variants, default: "base", doc: "Determines the style"
+  attr :rounded, :string, default: "", doc: "Determines the border radius"
+  attr :variant, :string, default: "base", doc: "Determines the style"
   attr :csp_nonce, :string, default: nil, doc: "csp nonce"
 
   attr :rest, :global,
@@ -207,7 +205,7 @@ defmodule CommunityDemoWeb.Components.Progress do
 
   defp rounded_size("full"), do: "rounded-full"
 
-  defp rounded_size(_), do: "rounded-none"
+  defp rounded_size(params) when is_binary(params), do: params
 
   defp size_class("extra_small", "horizontal"), do: "text-xs h-1.5 [&>*]:h-1.5"
 

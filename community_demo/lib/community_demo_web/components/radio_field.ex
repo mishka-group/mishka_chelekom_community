@@ -220,7 +220,7 @@ defmodule CommunityDemoWeb.Components.RadioField do
           color_class(@color),
           border_class(@border),
           size_class(@size),
-          space_class(radio[:space]),
+          space_class(radio[:space] || "small"),
           @ring && "[&_.radio-field-wrapper_input]:focus-within:ring-1",
           @reverse && "[&_.radio-field-wrapper]:flex-row-reverse"
         ]}
@@ -318,6 +318,8 @@ defmodule CommunityDemoWeb.Components.RadioField do
   defp space_class("large"), do: "[&_.radio-field-wrapper]:gap-2.5"
 
   defp space_class("extra_large"), do: "[&_.radio-field-wrapper]:gap-3"
+
+  defp space_class("none"), do: nil
 
   defp space_class(params) when is_binary(params), do: params
 

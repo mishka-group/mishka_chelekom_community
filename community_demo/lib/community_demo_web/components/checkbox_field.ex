@@ -228,7 +228,7 @@ defmodule CommunityDemoWeb.Components.CheckboxField do
           rounded_size(@rounded),
           border_class(@border),
           size_class(@size),
-          space_class(checkbox[:space]),
+          space_class(checkbox[:space] || "small"),
           @ring && "[&_.checkbox-field-wrapper_input]:focus-within:ring-1",
           @reverse && "[&_.checkbox-field-wrapper]:flex-row-reverse"
         ]}
@@ -325,21 +325,19 @@ defmodule CommunityDemoWeb.Components.CheckboxField do
 
   defp rounded_size("full"), do: "[&_.checkbox-field-wrapper_.checkbox-input]:rounded-full"
 
-  defp rounded_size(_), do: "[&_.checkbox-field-wrapper_.checkbox-input]:rounded-none"
+  defp rounded_size("none"), do: "[&_.checkbox-field-wrapper_.checkbox-input]:rounded-none"
+
+  defp rounded_size(params) when is_binary(params), do: params
 
   defp border_class("none"), do: "[&_.checkbox-field-wrapper_.checkbox-input]:border-0"
-
   defp border_class("extra_small"), do: "[&_.checkbox-field-wrapper_.checkbox-input]:border"
-
   defp border_class("small"), do: "[&_.checkbox-field-wrapper_.checkbox-input]:border-2"
-
   defp border_class("medium"), do: "[&_.checkbox-field-wrapper_.checkbox-input]:border-[3px]"
-
   defp border_class("large"), do: "[&_.checkbox-field-wrapper_.checkbox-input]:border-4"
-
   defp border_class("extra_large"), do: "[&_.checkbox-field-wrapper_.checkbox-input]:border-[5px]"
-
   defp border_class(params) when is_binary(params), do: params
+
+  defp space_class("none"), do: nil
 
   defp space_class("extra_small"), do: "[&_.checkbox-field-wrapper]:gap-1"
 

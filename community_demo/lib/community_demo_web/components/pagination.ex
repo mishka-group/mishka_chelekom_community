@@ -19,20 +19,6 @@ defmodule CommunityDemoWeb.Components.Pagination do
   use Phoenix.Component
   alias Phoenix.LiveView.JS
 
-  @sizes ["extra_small", "small", "medium", "large", "extra_large"]
-
-  @variants [
-    "default",
-    "outline",
-    "transparent",
-    "subtle",
-    "shadow",
-    "gradient",
-    "inverted",
-    "bordered",
-    "base"
-  ]
-
   @doc """
   Renders a `pagination` component that allows users to navigate through pages.
 
@@ -82,18 +68,10 @@ defmodule CommunityDemoWeb.Components.Pagination do
 
   attr :space, :string, default: "small", doc: "Space between items"
   attr :color, :string, default: "base", doc: "Determines color theme"
+  attr :rounded, :string, default: "small", doc: "Determines the border radius"
+  attr :border, :string, default: "extra_small", doc: "Determines the border radius"
 
-  attr :rounded, :string,
-    values: @sizes ++ ["full", "none"],
-    default: "small",
-    doc: "Determines the border radius"
-
-  attr :border, :string,
-    values: @sizes,
-    default: "extra_small",
-    doc: "Determines the border radius"
-
-  attr :variant, :string, values: @variants, default: "base", doc: "Determines the style"
+  attr :variant, :string, default: "base", doc: "Determines the style"
 
   attr :separator, :string,
     default: "hero-ellipsis-horizontal",
@@ -322,6 +300,7 @@ defmodule CommunityDemoWeb.Components.Pagination do
   defp space_class("medium"), do: "gap-4"
   defp space_class("large"), do: "gap-5"
   defp space_class("extra_large"), do: "gap-6"
+  defp space_class("none"), do: nil
   defp space_class(params) when is_binary(params), do: params
 
   defp border_size(_, variant)

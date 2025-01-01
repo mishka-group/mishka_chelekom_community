@@ -11,15 +11,6 @@ defmodule CommunityDemoWeb.Components.Dropdown do
   use Phoenix.Component
   alias Phoenix.LiveView.JS
 
-  @variants [
-    "default",
-    "outline",
-    "bordered",
-    "shadow",
-    "gradient",
-    "base"
-  ]
-
   @doc """
   A `dropdown` component that displays a list of options or content when triggered.
   It can be activated by a click or hover, and positioned in various directions relative to its parent.
@@ -80,17 +71,17 @@ defmodule CommunityDemoWeb.Components.Dropdown do
     default: false,
     doc: "Controls whether the dropdown is disabled on mobile devices"
 
-  attr :variant, :string, values: @variants, default: "base", doc: "Determines the style"
+  attr :variant, :string, default: "base", doc: "Determines the style"
   attr :color, :string, default: "base", doc: "Determines color theme"
-  attr :rounded, :string, default: nil, doc: "Determines the border radius"
+  attr :rounded, :string, default: "", doc: "Determines the border radius"
   attr :content_width, :string, default: "extra_large", doc: "Determines the element width"
 
   attr :size, :string,
-    default: nil,
+    default: "",
     doc:
       "Determines the overall size of the elements, including padding, font size, and other items"
 
-  attr :space, :string, default: nil, doc: "Space between items"
+  attr :space, :string, default: "", doc: "Space between items"
 
   attr :font_weight, :string,
     default: "font-normal",
@@ -243,16 +234,16 @@ defmodule CommunityDemoWeb.Components.Dropdown do
     default: nil,
     doc: "A unique identifier is used to manage state and interaction"
 
-  attr :variant, :string, values: @variants, default: "base", doc: "Determines the style"
+  attr :variant, :string, default: "base", doc: "Determines the style"
   attr :color, :string, default: "base", doc: "Determines color theme"
-  attr :rounded, :string, default: nil, doc: "Determines the border radius"
+  attr :rounded, :string, default: "", doc: "Determines the border radius"
 
   attr :size, :string,
-    default: nil,
+    default: "",
     doc:
       "Determines the overall size of the elements, including padding, font size, and other items"
 
-  attr :space, :string, default: nil, doc: "Space between items"
+  attr :space, :string, default: "", doc: "Space between items"
   attr :width, :string, default: "extra_large", doc: "Determines the element width"
 
   attr :font_weight, :string,
@@ -377,17 +368,11 @@ defmodule CommunityDemoWeb.Components.Dropdown do
   defp border_class(_, variant) when variant in ["default", "shadow"], do: nil
 
   defp border_class("none", _), do: nil
-
   defp border_class("extra_small", _), do: "border"
-
   defp border_class("small", _), do: "border-2"
-
   defp border_class("medium", _), do: "border-[3px]"
-
   defp border_class("large", _), do: "border-4"
-
   defp border_class("extra_large", _), do: "border-[5px]"
-
   defp border_class(params, _) when is_binary(params), do: params
 
   defp rounded_size("extra_small"), do: "rounded-sm"
@@ -400,7 +385,7 @@ defmodule CommunityDemoWeb.Components.Dropdown do
 
   defp rounded_size("extra_large"), do: "rounded-xl"
 
-  defp rounded_size("none"), do: "rounded-none"
+  defp rounded_size("none"), do: nil
 
   defp rounded_size(params) when is_binary(params), do: params
 

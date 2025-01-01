@@ -253,7 +253,7 @@ defmodule CommunityDemoWeb.Components.Carousel do
   attr :wrapper_class, :string, default: nil, doc: "Determines custom class for the wrapper"
 
   attr :content_position, :string,
-    default: nil,
+    default: "",
     doc: "Determines the alignment of the element's content"
 
   attr :index, :integer, required: true, doc: "Determines item index"
@@ -380,7 +380,7 @@ defmodule CommunityDemoWeb.Components.Carousel do
     "justify-around"
   end
 
-  defp content_position(_), do: content_position("center")
+  defp content_position(params) when is_binary(params), do: params
 
   defp text_position("start") do
     "[&_.description-wrapper]:text-start"
@@ -480,6 +480,8 @@ defmodule CommunityDemoWeb.Components.Carousel do
   defp color_class("dark") do
     "[&_.carousel-overlay]:bg-[#282828]/30 text-white hover:[&_.carousel-controls]:bg-[#282828]/5"
   end
+
+  defp color_class(params) when is_binary(params), do: params
 
   @doc """
   Sets the specified slide as active and enables the navigation controls in the carousel.

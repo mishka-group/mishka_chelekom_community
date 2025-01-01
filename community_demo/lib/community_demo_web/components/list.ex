@@ -22,21 +22,6 @@ defmodule CommunityDemoWeb.Components.List do
 
   use Phoenix.Component
 
-  @sizes ["extra_small", "small", "medium", "large", "extra_large"]
-
-  @variants [
-    "default",
-    "bordered",
-    "outline",
-    "shadow",
-    "gradient",
-    "outline_separated",
-    "bordered_separated",
-    "transparent",
-    "base",
-    "base_separated"
-  ]
-
   @doc """
   Renders a `list` component that supports both ordered and unordered lists with customizable styles,
   sizes, and colors.
@@ -68,10 +53,10 @@ defmodule CommunityDemoWeb.Components.List do
     doc:
       "Determines the overall size of the elements, including padding, font size, and other items"
 
-  attr :space, :string, values: @sizes ++ [nil], default: nil, doc: "Space between items"
-  attr :border, :string, values: @sizes, default: "extra_small", doc: "Border size"
+  attr :space, :string, default: "", doc: "Space between items"
+  attr :border, :string, default: "extra_small", doc: "Border size"
   attr :color, :string, default: "natural", doc: "Determines color theme"
-  attr :variant, :string, values: @variants, default: "transparent", doc: "Determines the style"
+  attr :variant, :string, default: "transparent", doc: "Determines the style"
   attr :hoverable, :boolean, default: false, doc: "active hover style"
   attr :style, :string, default: "list-none", doc: ""
   slot :item, validate_attrs: false, doc: "Specifies item slot of a list"
@@ -133,7 +118,7 @@ defmodule CommunityDemoWeb.Components.List do
     doc: "Determines custom class for the icon"
 
   attr :content_class, :string, default: nil, doc: "Determines custom class for the content"
-  attr :padding, :string, default: "none", doc: "Determines padding for items"
+  attr :padding, :string, default: "", doc: "Determines padding for items"
 
   attr :position, :string,
     values: ["start", "end", "center"],
@@ -193,7 +178,7 @@ defmodule CommunityDemoWeb.Components.List do
     doc: "A unique identifier is used to manage state and interaction"
 
   attr :color, :string, default: "natural", doc: "Determines color theme"
-  attr :variant, :string, values: @variants, default: "transparent", doc: "Determines the style"
+  attr :variant, :string, default: "transparent", doc: "Determines the style"
 
   attr :size, :string,
     default: "medium",
@@ -201,9 +186,9 @@ defmodule CommunityDemoWeb.Components.List do
       "Determines the overall size of the elements, including padding, font size, and other items"
 
   attr :width, :string, default: "full", doc: "Determines the element width"
-  attr :border, :string, values: @sizes, default: "extra_small", doc: "Border size"
+  attr :border, :string, default: "extra_small", doc: "Border size"
   attr :style, :string, default: "list-none", doc: "Determines the element style"
-  attr :space, :string, values: @sizes ++ [nil], default: nil, doc: "Space between items"
+  attr :space, :string, default: "", doc: "Space between items"
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
   attr :hoverable, :boolean, default: false, doc: "active hover style"
 
@@ -260,7 +245,7 @@ defmodule CommunityDemoWeb.Components.List do
     doc: "A unique identifier is used to manage state and interaction"
 
   attr :color, :string, default: "natural", doc: "Determines color theme"
-  attr :variant, :string, values: @variants, default: "transparent", doc: "Determines the style"
+  attr :variant, :string, default: "transparent", doc: "Determines the style"
 
   attr :size, :string,
     default: "medium",
@@ -268,9 +253,9 @@ defmodule CommunityDemoWeb.Components.List do
       "Determines the overall size of the elements, including padding, font size, and other items"
 
   attr :width, :string, default: "full", doc: "Determines the element width"
-  attr :border, :string, values: @sizes, default: "extra_small", doc: "Border size"
+  attr :border, :string, default: "extra_small", doc: "Border size"
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
-  attr :space, :string, values: @sizes ++ [nil], default: nil, doc: "Space between items"
+  attr :space, :string, default: "", doc: "Space between items"
   attr :hoverable, :boolean, default: false, doc: "active hover style"
 
   attr :font_weight, :string,
@@ -322,7 +307,7 @@ defmodule CommunityDemoWeb.Components.List do
     default: nil,
     doc: "A unique identifier is used to manage state and interaction"
 
-  attr :variant, :string, values: @variants, default: "transparent", doc: "Determines the style"
+  attr :variant, :string, default: "transparent", doc: "Determines the style"
   attr :color, :string, default: "natural", doc: "Determines color theme"
 
   attr :size, :string,
@@ -331,27 +316,16 @@ defmodule CommunityDemoWeb.Components.List do
       "Determines the overall size of the elements, including padding, font size, and other items"
 
   attr :width, :string, default: "full", doc: "Determines the element width"
-  attr :space, :string, values: @sizes ++ [nil], default: "small", doc: "Space between items"
+  attr :space, :string, default: "small", doc: "Space between items"
   attr :hoverable, :boolean, default: false, doc: "active hover style"
-
-  attr :rounded, :string,
-    values: @sizes ++ ["full", "none"],
-    default: "small",
-    doc: "Determines the border radius"
-
-  attr :border, :string,
-    values: @sizes ++ [nil],
-    default: "extra_small",
-    doc: "Determines border style"
+  attr :rounded, :string, default: "small", doc: "Determines the border radius"
+  attr :border, :string, default: "extra_small", doc: "Determines border style"
 
   attr :font_weight, :string,
     default: "font-normal",
     doc: "Determines custom class for the font weight"
 
-  attr :padding, :string,
-    values: @sizes ++ ["none"],
-    default: "none",
-    doc: "Determines padding for items"
+  attr :padding, :string, default: "", doc: "Determines padding for items"
 
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
 
@@ -474,8 +448,6 @@ defmodule CommunityDemoWeb.Components.List do
   defp padding_size("large"), do: "p-4"
 
   defp padding_size("extra_large"), do: "p-5"
-
-  defp padding_size("none"), do: "p-0"
 
   defp padding_size(params) when is_binary(params), do: params
 

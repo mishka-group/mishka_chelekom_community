@@ -16,8 +16,6 @@ defmodule CommunityDemoWeb.Components.NativeSelect do
 
   use Phoenix.Component
 
-  @variants ["default", "shadow", "bordered", "native", "base"]
-
   @doc """
   Renders a customizable `native_select` input component with options for single or multiple selections.
   Supports validation and various styling options.
@@ -63,7 +61,7 @@ defmodule CommunityDemoWeb.Components.NativeSelect do
   attr :color, :string, default: "base", doc: "Determines color theme"
   attr :border, :string, default: "extra_small", doc: "Determines border style"
   attr :rounded, :string, default: "small", doc: "Determines the border radius"
-  attr :variant, :string, values: @variants, default: "base", doc: "Determines the style"
+  attr :variant, :string, default: "base", doc: "Determines the style"
   attr :description, :string, default: nil, doc: "Determines a short description"
   attr :space, :string, default: "medium", doc: "Space between items"
   attr :min_height, :string, default: nil, doc: "Determines min height style"
@@ -277,7 +275,9 @@ defmodule CommunityDemoWeb.Components.NativeSelect do
 
   defp rounded_size("full"), do: "[&_.select-field]:rounded-full"
 
-  defp rounded_size(_), do: "[&_.select-field]:rounded-none"
+  defp rounded_size("none"), do: nil
+
+  defp rounded_size(params) when is_binary(params), do: params
 
   defp border_class(_, variant)
        when variant in [
@@ -294,6 +294,8 @@ defmodule CommunityDemoWeb.Components.NativeSelect do
   defp border_class("large", _), do: "[&_.select-field]:border-4"
   defp border_class("extra_large", _), do: "[&_.select-field]:border-[5px]"
   defp border_class(params, _) when is_binary(params), do: params
+
+  defp space_class("none"), do: nil
 
   defp space_class("extra_small"), do: "space-y-1"
 

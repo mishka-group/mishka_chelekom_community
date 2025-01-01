@@ -24,22 +24,6 @@ defmodule CommunityDemoWeb.Components.Accordion do
 
   alias Phoenix.LiveView.JS
 
-  @sizes ["extra_small", "small", "medium", "large", "extra_large"]
-
-  @variants [
-    "default",
-    "bordered",
-    "outline",
-    "shadow",
-    "gradient",
-    "menu",
-    "outline_separated",
-    "bordered_separated",
-    "transparent",
-    "base",
-    "base_separated"
-  ]
-
   @doc """
   The `accordion` component provides a collapsible structure with various styling options,
   ideal for organizing content into expandable panels. It supports customizable attributes such
@@ -75,8 +59,8 @@ defmodule CommunityDemoWeb.Components.Accordion do
     doc: "A unique identifier is used to manage state and interaction"
 
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
-  attr :variant, :string, values: @variants, default: "base", doc: "Determines the style"
-  attr :space, :string, values: @sizes, default: "small", doc: "Space between items"
+  attr :variant, :string, default: "base", doc: "Determines the style"
+  attr :space, :string, default: "small", doc: "Space between items"
   attr :color, :string, default: "base", doc: "Determines color theme"
   attr :border, :string, default: "extra_small", doc: "Determines border style"
   attr :padding, :string, default: "small", doc: "Determines padding for items"
@@ -86,13 +70,10 @@ defmodule CommunityDemoWeb.Components.Accordion do
     default: "hero-chevron-right",
     doc: "Determines the icon for the chevron"
 
-  attr :media_size, :string,
-    values: @sizes,
-    default: "small",
-    doc: "Determines size of the media elements"
+  attr :media_size, :string, default: "small", doc: "Determines size of the media elements"
 
   attr :size, :string,
-    default: nil,
+    default: "",
     doc:
       "Determines the overall size of the elements, including padding, font size, and other items"
 
@@ -124,6 +105,7 @@ defmodule CommunityDemoWeb.Components.Accordion do
   def accordion(assigns) do
     ~H"""
     <div
+      id={@id}
       class={[
         "overflow-hidden w-full h-fit",
         @variant == "menu" && menu_rounded(@rounded),
@@ -237,25 +219,16 @@ defmodule CommunityDemoWeb.Components.Accordion do
 
   attr :name, :string, default: nil, doc: "Specifies the name of the element"
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
-  attr :variant, :string, values: @variants, default: "base", doc: "Determines the style"
-  attr :space, :string, values: @sizes, default: "small", doc: "Space between items"
+  attr :variant, :string, default: "base", doc: "Determines the style"
+  attr :space, :string, default: "small", doc: "Space between items"
   attr :color, :string, default: "base", doc: "Determines color theme"
   attr :border, :string, default: "extra_small", doc: "Determines border style"
 
-  attr :padding, :string,
-    values: @sizes ++ ["none"],
-    default: "small",
-    doc: "Determines padding for items"
+  attr :padding, :string, default: "small", doc: "Determines padding for items"
 
-  attr :rounded, :string,
-    values: @sizes ++ ["full", "none"],
-    default: "none",
-    doc: "Determines the border radius"
+  attr :rounded, :string, default: "none", doc: "Determines the border radius"
 
-  attr :media_size, :string,
-    values: @sizes,
-    default: "small",
-    doc: "Determines size of the media elements"
+  attr :media_size, :string, default: "small", doc: "Determines size of the media elements"
 
   attr :chevron_icon, :string,
     default: "hero-chevron-right",
@@ -506,6 +479,8 @@ defmodule CommunityDemoWeb.Components.Accordion do
   defp space_class("large", _), do: "accordion-item-gap space-y-5"
 
   defp space_class("extra_large", _), do: "accordion-item-gap space-y-6"
+
+  defp space_class("none", _), do: nil
 
   defp space_class(params, _) when is_binary(params), do: params
 
@@ -1188,7 +1163,7 @@ defmodule CommunityDemoWeb.Components.Accordion do
     [
       "text-[#282828] border-[#282828] bg-[#F3F3F3]",
       "dark:text-[#E8E8E8] dark:border-[#E8E8E8] dark:bg-[#4B4B4B]",
-      "hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#E8E8E8] dark:hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#5E5E5]",
+      "hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#E8E8E8] dark:hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#5E5E5E]",
       "[&>.accordion-item-wrapper:not(:last-child)>.accordion-summary]:border-[#282828]",
       "[&>.accordion-item-wrapper:not(:last-child)>.accordion-content-wrapper.active]:border-[#282828]",
       "dark:[&>.accordion-item-wrapper:not(:last-child)>.accordion-summary]:border-[#E8E8E8]",

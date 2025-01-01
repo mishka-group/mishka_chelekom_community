@@ -24,18 +24,6 @@ defmodule CommunityDemoWeb.Components.Blockquote do
 
   use Phoenix.Component
 
-  @sizes ["extra_small", "small", "medium", "large", "extra_large"]
-
-  @variants [
-    "default",
-    "outline",
-    "transparent",
-    "shadow",
-    "bordered",
-    "gradient",
-    "base"
-  ]
-
   @doc """
   The `blockquote` component is used to display stylized quotations with customizable attributes
   such as `variant`, `color`, and `padding`. It supports optional captions and icons to
@@ -96,34 +84,23 @@ defmodule CommunityDemoWeb.Components.Blockquote do
     default: nil,
     doc: "A unique identifier is used to manage state and interaction"
 
-  attr :variant, :string, values: @variants, default: "base", doc: "Determines the style"
+  attr :variant, :string, default: "base", doc: "Determines the style"
   attr :color, :string, default: "base", doc: "Determines color theme"
-
-  attr :border, :string,
-    values: @sizes ++ [nil],
-    default: "medium",
-    doc: "Determines border style"
-
-  attr :rounded, :string,
-    values: @sizes ++ ["full", "none"],
-    default: "small",
-    doc: "Determines the border radius"
+  attr :border, :string, default: "medium", doc: "Determines border style"
+  attr :rounded, :string, default: "small", doc: "Determines the border radius"
 
   attr :size, :string,
     default: "medium",
     doc:
       "Determines the overall size of the elements, including padding, font size, and other items"
 
-  attr :space, :string, values: @sizes, default: "small", doc: "Space between items"
+  attr :space, :string, default: "small", doc: "Space between items"
 
   attr :font_weight, :string,
     default: "font-normal",
     doc: "Determines custom class for the font weight"
 
-  attr :padding, :string,
-    values: @sizes ++ ["none"],
-    default: "small",
-    doc: "Determines padding for items"
+  attr :padding, :string, default: "small", doc: "Determines padding for items"
 
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
   attr :icon, :string, default: "hero-quote", doc: "Icon displayed alongside of an item"
@@ -169,7 +146,7 @@ defmodule CommunityDemoWeb.Components.Blockquote do
         :for={caption <- @caption}
         class={[
           "flex items-center space-x-3 rtl:space-x-reverse",
-          caption_position(caption[:position])
+          !is_nil(caption[:position]) && caption_position(caption[:position])
         ]}
       >
         <img
@@ -236,6 +213,8 @@ defmodule CommunityDemoWeb.Components.Blockquote do
 
   defp space_class("extra_large"), do: "space-y-6"
 
+  defp space_class("none"), do: nil
+
   defp space_class(params) when is_binary(params), do: params
 
   defp border_class(_, _, variant)
@@ -298,7 +277,9 @@ defmodule CommunityDemoWeb.Components.Blockquote do
 
   defp rounded_size("full"), do: "rounded-full"
 
-  defp rounded_size(nil), do: "rounded-none"
+  defp rounded_size("none"), do: nil
+
+  defp rounded_size(params) when is_binary(params), do: params
 
   defp padding_size("extra_small"), do: "p-1"
 

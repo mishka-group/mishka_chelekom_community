@@ -21,18 +21,6 @@ defmodule CommunityDemoWeb.Components.Keyboard do
   """
   use Phoenix.Component
 
-  @sizes ["extra_small", "small", "medium", "large", "extra_large"]
-
-  @variants [
-    "default",
-    "outline",
-    "transparent",
-    "shadow",
-    "bordered",
-    "gradient",
-    "base"
-  ]
-
   @doc """
   Renders a `keyboard` component, typically used to represent key presses or shortcuts in UI documentation.
   It supports various styles, colors, and border radius options.
@@ -52,7 +40,7 @@ defmodule CommunityDemoWeb.Components.Keyboard do
     default: nil,
     doc: "A unique identifier is used to manage state and interaction"
 
-  attr :variant, :string, values: @variants, default: "base", doc: "Determines the style"
+  attr :variant, :string, default: "base", doc: "Determines the style"
   attr :color, :string, default: "base", doc: "Determines color theme"
   attr :border, :string, default: "extra_small", doc: "Determines border style"
 
@@ -61,10 +49,7 @@ defmodule CommunityDemoWeb.Components.Keyboard do
     doc:
       "Determines the overall size of the elements, including padding, font size, and other items"
 
-  attr :rounded, :string,
-    values: @sizes ++ ["full", "none"],
-    default: "small",
-    doc: "Determines the border radius"
+  attr :rounded, :string, default: "small", doc: "Determines the border radius"
 
   attr :font_weight, :string,
     default: "font-normal",
@@ -138,6 +123,8 @@ defmodule CommunityDemoWeb.Components.Keyboard do
   defp rounded_size("extra_large"), do: "rounded-xl"
 
   defp rounded_size("full"), do: "rounded-full"
+
+  defp rounded_size("none"), do: nil
 
   defp rounded_size(params) when is_binary(params), do: params
 
