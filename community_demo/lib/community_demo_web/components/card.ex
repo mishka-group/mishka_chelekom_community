@@ -228,14 +228,12 @@ defmodule CommunityDemoWeb.Components.Card do
 
   def card_media(assigns) do
     ~H"""
-    <div id={@id} class="card-media">
+    <div id={@id} class={["card-media w-full overflow-hidden", rounded_size(@rounded), @class]}>
       <img
         src={@src}
         alt={@alt}
         class={[
-          "max-w-full",
-          rounded_size(@rounded),
-          @class
+          "max-w-full"
         ]}
       />
     </div>

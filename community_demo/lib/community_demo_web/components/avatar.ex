@@ -210,7 +210,7 @@ defmodule CommunityDemoWeb.Components.Avatar do
     <div
       id={@id}
       class={[
-        "flex items-center",
+        "flex items-center rtl:space-x-reverse",
         space_class(@space),
         @class
       ]}
