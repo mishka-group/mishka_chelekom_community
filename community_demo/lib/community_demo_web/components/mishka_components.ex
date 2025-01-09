@@ -33,7 +33,6 @@ defmodule CommunityDemoWeb.Components.MishkaComponents do
         only: [checkbox_field: 1, group_checkbox: 1, checkbox_check: 3]
 
       import CommunityDemoWeb.Components.ColorField, only: [color_field: 1]
-      import CommunityDemoWeb.Components.Combobox, only: [combobox: 1]
       import CommunityDemoWeb.Components.DateTimeField, only: [date_time_field: 1]
       import CommunityDemoWeb.Components.DeviceMockup, only: [device_mockup: 1]
       import CommunityDemoWeb.Components.Divider, only: [divider: 1, hr: 1]
