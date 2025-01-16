@@ -4,7 +4,7 @@ defmodule CommunityDemoWeb.HomeLive do
   def mount(_params, _session, socket) do
     socket =
       socket
-      |> assign(page_title: "Hire Mishka Software group")
+      |> assign(page_title: "Home")
 
     {:ok, socket}
   end
@@ -18,7 +18,7 @@ defmodule CommunityDemoWeb.HomeLive do
         </h4>
         <div class={["grid gap-5 sm:grid-cols-2 lg:grid-cols-4"]}>
           <.link
-            navigate={~p"/chelekom/docs/card"}
+            navigate={~p"/"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -115,7 +115,7 @@ defmodule CommunityDemoWeb.HomeLive do
             </div>
           </.link>
           <.link
-            navigate={~p"/chelekom/docs/carousel"}
+            navigate={~p"/"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -163,7 +163,7 @@ defmodule CommunityDemoWeb.HomeLive do
             </div>
           </.link>
           <.link
-            navigate={~p"/chelekom/docs/forms"}
+            navigate={~p"/"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -232,7 +232,7 @@ defmodule CommunityDemoWeb.HomeLive do
             </div>
           </.link>
           <.link
-            navigate={~p"/chelekom/docs/chat"}
+            navigate={~p"/"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -278,7 +278,7 @@ defmodule CommunityDemoWeb.HomeLive do
             </div>
           </.link>
           <.link
-            navigate={~p"/chelekom/docs/menu"}
+            navigate={~p"/"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -352,7 +352,7 @@ defmodule CommunityDemoWeb.HomeLive do
             </div>
           </.link>
           <.link
-            navigate={~p"/chelekom/docs/navbar"}
+            navigate={~p"/"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -393,7 +393,7 @@ defmodule CommunityDemoWeb.HomeLive do
             </div>
           </.link>
           <.link
-            navigate={~p"/chelekom/docs/drawer"}
+            navigate={~p"/"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -493,7 +493,7 @@ defmodule CommunityDemoWeb.HomeLive do
             </div>
           </.link>
           <.link
-            navigate={~p"/chelekom/docs/modal"}
+            navigate={~p"/"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -560,7 +560,7 @@ defmodule CommunityDemoWeb.HomeLive do
             </div>
           </.link>
           <.link
-            navigate={~p"/chelekom/docs/table"}
+            navigate={~p"/"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -664,7 +664,7 @@ defmodule CommunityDemoWeb.HomeLive do
             </div>
           </.link>
           <.link
-            navigate={~p"/chelekom/docs/tabs"}
+            navigate={~p"/"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -701,7 +701,7 @@ defmodule CommunityDemoWeb.HomeLive do
             </div>
           </.link>
           <.link
-            navigate={~p"/chelekom/docs/toast"}
+            navigate={~p"/"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -870,7 +870,7 @@ defmodule CommunityDemoWeb.HomeLive do
             </div>
           </.link>
           <.link
-            navigate={~p"/chelekom/docs/timeline"}
+            navigate={~p"/"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -934,7 +934,7 @@ defmodule CommunityDemoWeb.HomeLive do
             </div>
           </.link>
           <.link
-            navigate={~p"/chelekom/docs/stepper"}
+            navigate={~p"/"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -1164,7 +1164,7 @@ defmodule CommunityDemoWeb.HomeLive do
             </div>
           </.link>
           <.link
-            navigate={~p"/chelekom/docs/accordion"}
+            navigate={~p"/"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -1241,7 +1241,7 @@ defmodule CommunityDemoWeb.HomeLive do
             </div>
           </.link>
           <.link
-            navigate={~p"/chelekom/docs/alert"}
+            navigate={~p"/"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -1294,7 +1294,7 @@ defmodule CommunityDemoWeb.HomeLive do
             </div>
           </.link>
           <.link
-            navigate={~p"/chelekom/docs/avatar"}
+            navigate={~p"/"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -1421,7 +1421,7 @@ defmodule CommunityDemoWeb.HomeLive do
             </div>
           </.link>
           <.link
-            navigate={~p"/chelekom/docs/video"}
+            navigate={~p"/"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -1465,7 +1465,7 @@ defmodule CommunityDemoWeb.HomeLive do
             </div>
           </.link>
           <.link
-            navigate={~p"/chelekom/docs/skeleton"}
+            navigate={~p"/"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -1536,7 +1536,7 @@ defmodule CommunityDemoWeb.HomeLive do
             </div>
           </.link>
           <.link
-            navigate={~p"/chelekom/docs/rating"}
+            navigate={~p"/"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -1707,7 +1707,7 @@ defmodule CommunityDemoWeb.HomeLive do
             </div>
           </.link>
           <.link
-            navigate={~p"/chelekom/docs/gallery"}
+            navigate={~p"/"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -1910,7 +1910,7 @@ defmodule CommunityDemoWeb.HomeLive do
             </div>
           </.link>
           <.link
-            navigate={~p"/chelekom/docs/button"}
+            navigate={~p"/"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -1995,7 +1995,7 @@ defmodule CommunityDemoWeb.HomeLive do
             </div>
           </.link>
           <.link
-            navigate={~p"/chelekom/docs/badge"}
+            navigate={~p"/"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -2049,7 +2049,7 @@ defmodule CommunityDemoWeb.HomeLive do
             </div>
           </.link>
           <.link
-            navigate={~p"/chelekom/docs/dropdown"}
+            navigate={~p"/"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -2113,7 +2113,7 @@ defmodule CommunityDemoWeb.HomeLive do
             </div>
           </.link>
           <.link
-            navigate={~p"/chelekom/docs/jumbotron"}
+            navigate={~p"/"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -2140,7 +2140,7 @@ defmodule CommunityDemoWeb.HomeLive do
             </div>
           </.link>
           <.link
-            navigate={~p"/chelekom/docs/breadcrumb"}
+            navigate={~p"/"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -2208,7 +2208,7 @@ defmodule CommunityDemoWeb.HomeLive do
             </div>
           </.link>
           <.link
-            navigate={~p"/chelekom/docs/pagination"}
+            navigate={~p"/"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -2384,7 +2384,7 @@ defmodule CommunityDemoWeb.HomeLive do
             </div>
           </.link>
           <.link
-            navigate={~p"/chelekom/docs/tooltip"}
+            navigate={~p"/"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -2411,7 +2411,7 @@ defmodule CommunityDemoWeb.HomeLive do
             </div>
           </.link>
           <.link
-            navigate={~p"/chelekom/docs/popover"}
+            navigate={~p"/"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -2444,7 +2444,7 @@ defmodule CommunityDemoWeb.HomeLive do
             </div>
           </.link>
           <.link
-            navigate={~p"/chelekom/docs/progress"}
+            navigate={~p"/"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -2485,7 +2485,7 @@ defmodule CommunityDemoWeb.HomeLive do
             </div>
           </.link>
           <.link
-            navigate={~p"/chelekom/docs/spinner"}
+            navigate={~p"/"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -2604,7 +2604,7 @@ defmodule CommunityDemoWeb.HomeLive do
             </div>
           </.link>
           <.link
-            navigate={~p"/chelekom/docs/banner"}
+            navigate={~p"/"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -2651,7 +2651,7 @@ defmodule CommunityDemoWeb.HomeLive do
             </div>
           </.link>
           <.link
-            navigate={~p"/chelekom/docs/blockquote"}
+            navigate={~p"/"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -2716,7 +2716,7 @@ defmodule CommunityDemoWeb.HomeLive do
             </div>
           </.link>
           <.link
-            navigate={~p"/chelekom/docs/divider"}
+            navigate={~p"/"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -2751,7 +2751,7 @@ defmodule CommunityDemoWeb.HomeLive do
             </div>
           </.link>
           <.link
-            navigate={~p"/chelekom/docs/mega-menu"}
+            navigate={~p"/-menu"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -2795,7 +2795,7 @@ defmodule CommunityDemoWeb.HomeLive do
             </div>
           </.link>
           <.link
-            navigate={~p"/chelekom/docs/footer"}
+            navigate={~p"/"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -2845,7 +2845,7 @@ defmodule CommunityDemoWeb.HomeLive do
             </div>
           </.link>
           <.link
-            navigate={~p"/chelekom/docs/typography"}
+            navigate={~p"/"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -2947,7 +2947,7 @@ defmodule CommunityDemoWeb.HomeLive do
             </div>
           </.link>
           <.link
-            navigate={~p"/chelekom/docs/list"}
+            navigate={~p"/"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -2994,7 +2994,7 @@ defmodule CommunityDemoWeb.HomeLive do
             </div>
           </.link>
           <.link
-            navigate={~p"/chelekom/docs/overlay"}
+            navigate={~p"/"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -3024,7 +3024,7 @@ defmodule CommunityDemoWeb.HomeLive do
             </div>
           </.link>
           <.link
-            navigate={~p"/chelekom/docs/indicator"}
+            navigate={~p"/"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -3072,7 +3072,7 @@ defmodule CommunityDemoWeb.HomeLive do
             </div>
           </.link>
           <.link
-            navigate={~p"/chelekom/docs/image"}
+            navigate={~p"/"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -3107,7 +3107,7 @@ defmodule CommunityDemoWeb.HomeLive do
             </div>
           </.link>
           <.link
-            navigate={~p"/chelekom/docs/keyboard"}
+            navigate={~p"/"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -3133,7 +3133,7 @@ defmodule CommunityDemoWeb.HomeLive do
             </div>
           </.link>
           <.link
-            navigate={~p"/chelekom/docs/speed-dial"}
+            navigate={~p"/-dial"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -3226,7 +3226,7 @@ defmodule CommunityDemoWeb.HomeLive do
             </div>
           </.link>
           <.link
-            navigate={~p"/chelekom/docs/device-mockup"}
+            navigate={~p"/-mockup"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -3265,7 +3265,7 @@ defmodule CommunityDemoWeb.HomeLive do
             </div>
           </.link>
           <.link
-            navigate={~p"/chelekom/docs/table-content"}
+            navigate={~p"/-content"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -3337,7 +3337,7 @@ defmodule CommunityDemoWeb.HomeLive do
             </div>
           </.link>
           <.link
-            navigate={~p"/chelekom/docs/sidebar"}
+            navigate={~p"/"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">

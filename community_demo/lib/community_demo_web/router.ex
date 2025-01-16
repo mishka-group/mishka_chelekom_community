@@ -18,6 +18,7 @@ defmodule CommunityDemoWeb.Router do
     pipe_through :browser
 
     live "/", HomeLive
+    live "/cards", CardsLive
   end
 
   # Other scopes may use custom stacks.
