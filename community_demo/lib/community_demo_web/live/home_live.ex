@@ -2751,7 +2751,7 @@ defmodule CommunityDemoWeb.HomeLive do
             </div>
           </.link>
           <.link
-            navigate={~p"/-menu"}
+            navigate={~p"/"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -3133,7 +3133,7 @@ defmodule CommunityDemoWeb.HomeLive do
             </div>
           </.link>
           <.link
-            navigate={~p"/-dial"}
+            navigate={~p"/"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -3226,7 +3226,7 @@ defmodule CommunityDemoWeb.HomeLive do
             </div>
           </.link>
           <.link
-            navigate={~p"/-mockup"}
+            navigate={~p"/"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -3265,7 +3265,7 @@ defmodule CommunityDemoWeb.HomeLive do
             </div>
           </.link>
           <.link
-            navigate={~p"/-content"}
+            navigate={~p"/"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
