@@ -1,8 +1,7 @@
-<div class="max-w-6xl mx-auto">
-
+<div class="max-w-6xl mx-auto px-10">
      <!-- start card 1 -->
     <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 my-10">
-    <div class="overflow-hidden rounded-lg bg-white dark:bg-[#1F2A37] shadow-sm duration-300">
+    <div class="overflow-hidden rounded-lg bg-white dark:bg-[#1F2A37] shadow-sm duration-300" id="community-card-1">
         <img src={~p"/images/image-01.jpg"} alt="" class="w-full" />
             <div class="p-8 text-center sm:p-9 md:p-7 xl:p-9">
                 <h3>
@@ -19,13 +18,13 @@
 
                 <.link
                 href="/"
-                class="inline-block rounded-full border border-[#98A2AB] px-7 py-2 hover:bg-blue-500 transition hover:text-white"
+                class="inline-block rounded-full border border-[#98A2AB] text-[#98A2AB] px-7 py-2 hover:border-blue-500 transition hover:text-blue-500"
                 >
                 View Details
                 </.link>
             </div>
         </div>
-        <div class="overflow-hidden rounded-lg bg-white dark:bg-[#1F2A37] shadow-sm duration-300">
+        <div class="overflow-hidden rounded-lg bg-white dark:bg-[#1F2A37] shadow-sm duration-300" id="community-card-2">
         <img src={~p"/images/image-02.jpg"} alt="" class="w-full" />
         <div class="p-8 text-center sm:p-9 md:p-7 xl:p-9">
         <h3>
@@ -42,13 +41,13 @@
 
             <.link
             href="/"
-            class="inline-block rounded-full border border-[#98A2AB] px-7 py-2 hover:bg-blue-500 transition hover:text-white"
+            class="inline-block rounded-full border border-[#98A2AB] text-[#98A2AB] px-7 py-2 hover:border-blue-500 transition hover:text-blue-500"
             >
             View Details
             </.link>
         </div>
         </div>
-        <div class="overflow-hidden rounded-lg bg-white dark:bg-[#1F2A37] shadow-sm duration-300">
+        <div class="overflow-hidden rounded-lg bg-white dark:bg-[#1F2A37] shadow-sm duration-300" id="community-card-3">
         <img src={~p"/images/image-03.jpg"} alt="" class="w-full" />
         <div class="p-8 text-center sm:p-9 md:p-7 xl:p-9">
         <h3>
@@ -65,7 +64,7 @@
 
             <.link
             href="/"
-            class="inline-block rounded-full border border-[#98A2AB] px-7 py-2 hover:bg-blue-500 transition hover:text-white"
+            class="inline-block rounded-full border border-[#98A2AB] text-[#98A2AB] px-7 py-2 hover:border-blue-500 transition hover:text-blue-500"
             >
             View Details
             </.link>
@@ -78,755 +77,724 @@
       <div
         class="grid md:grid-cols-2 gap-5 mb-10"
       >
-        <div
-          class="overflow-hidden rounded-lg bg-gray-200 dark:bg-[#1F2A37] shadow-sm duration-300 flex gap-2"
-        >
-          <div class="w-2/3 md:w-2/6 shrink-0">
-          <img class="h-full w-full object-cover" src={~p"/images/card02.jpg"} />
-        </div>
-          <div class="p-4 flex flex-col justify-between items-start">
-            <h3 class="text-[#111928] dark:text-white text-xl font-bold mb-3">
-              Creative Website Temes & Templates in 2024
-            </h3>
-            <p class="text-[#637381] dark:text-gray-300 text-[16px] mb-5">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-            </p>
-            <button
-              class="text-[15px] rounded-full border border-blue-500 text-blue-500 px-7 py-2 hover:bg-blue-500 transition hover:text-white"
-            >
-              View Details
-            </button>
-          </div>
+       <div class="flex gap-2 overflow-hidden rounded-lg bg-gray-200 shadow-sm duration-300 dark:bg-[#1F2A37]" id="community-card-4">
+            <div class="w-1/3 shrink-0 md:w-2/6">
+                <img class="h-full w-full object-cover" src={~p"/images/card02.jpg"} />
+            </div>
+            <div class="flex flex-col items-start justify-between p-4">
+                <h3 class="mb-3 text-xl font-bold text-[#111928] dark:text-white">Creative Website Temes & Templates in 2024</h3>
+                <p class="mb-5 text-[16px] text-[#637381] dark:text-gray-300">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                <button class="rounded-full border border-blue-500 px-7 py-2 text-[15px] text-blue-500 transition hover:bg-blue-500 hover:text-white">View Details</button>
+            </div>
         </div>
 
-        <div
-          class="overflow-hidden rounded-lg bg-gray-200 dark:bg-[#1F2A37] shadow-sm duration-300 flex gap-2"
-        >
-        <div class="w-2/3 md:w-2/6 shrink-0">
-          <img class="h-full w-full object-cover" src={~p"/images/card02.jpg"} />
+
+        <div class="flex gap-2 overflow-hidden rounded-lg bg-gray-200 shadow-sm duration-300 dark:bg-[#1F2A37]" id="community-card-5">
+            <div class="w-1/3 shrink-0 md:w-2/6">
+                <img class="h-full w-full object-cover" src={~p"/images/card02.jpg"} />
+            </div>
+
+            <div class="flex flex-col items-start justify-between p-4">
+                <h3 class="mb-3 text-xl font-bold text-[#111928] dark:text-white">Androin App Development Cours With In 30 Day</h3>
+                <p class="mb-5 text-[16px] text-[#637381] dark:text-gray-300">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                <button class="rounded-full border border-blue-500 px-7 py-2 text-[15px] text-blue-500 transition hover:bg-blue-500 hover:text-white">View Details</button>
+            </div>
         </div>
 
-          <div class="p-4 flex flex-col justify-between items-start">
-            <h3 class="text-[#111928] dark:text-white text-xl font-bold mb-3">
-              Androin App Development Cours With In 30 Day
-            </h3>
-            <p class="text-[#637381] dark:text-gray-300 text-[16px] mb-5">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-            </p>
-            <button
-              class="text-[15px] rounded-full border border-blue-500 text-blue-500 px-7 py-2 hover:bg-blue-500 transition hover:text-white"
-            >
-              View Details
-            </button>
-          </div>
+        <div class="flex gap-2 overflow-hidden rounded-lg bg-gray-200 shadow-sm duration-300 dark:bg-[#1F2A37]" id="community-card-6">
+            <div class="w-1/3 shrink-0 md:w-2/6">
+                <img class="h-full w-full object-cover" src={~p"/images/card02.jpg"} />
+            </div>
+            <div class="flex flex-col items-start justify-between p-4">
+                <h3 class="mb-3 text-xl font-bold text-[#111928] dark:text-white">Top 20+ Graphic Design Online Courses</h3>
+                <p class="mb-5 text-[16px] text-[#637381] dark:text-gray-300">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                <button class="rounded-full border border-blue-500 px-7 py-2 text-[15px] text-blue-500 transition hover:bg-blue-500 hover:text-white">View Details</button>
+            </div>
         </div>
 
-        <div
-          class="overflow-hidden rounded-lg bg-gray-200 dark:bg-[#1F2A37] shadow-sm duration-300 flex gap-2"
-        >
-          <div class="w-2/3 md:w-2/6 shrink-0">
-          <img class="h-full w-full object-cover" src={~p"/images/card02.jpg"} />
+
+        <div class="flex gap-2 overflow-hidden rounded-lg bg-gray-200 shadow-sm duration-300 dark:bg-[#1F2A37]">
+        <div class="w-1/3 shrink-0 md:w-2/6">
+            <img class="h-full w-full object-cover" src={~p"/images/card02.jpg"} />
         </div>
-          <div class="p-4 flex flex-col justify-between items-start">
-            <h3 class="text-[#111928] dark:text-white text-xl font-bold mb-3">
-              Top 20+ Graphic Design Online Courses
-            </h3>
-            <p class="text-[#637381] dark:text-gray-300 text-[16px] mb-5">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-            </p>
-            <button
-              class="text-[15px] rounded-full border border-blue-500 text-blue-500 px-7 py-2 hover:bg-blue-500 transition hover:text-white"
-            >
-              View Details
-            </button>
-          </div>
+        <div class="flex flex-col items-start justify-between p-4">
+            <h3 class="mb-3 text-xl font-bold text-[#111928] dark:text-white">Best Web Design Courses Online In 2024</h3>
+            <p class="mb-5 text-[16px] text-[#637381] dark:text-gray-300">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+            <button class="rounded-full border border-blue-500 px-7 py-2 text-[15px] text-blue-500 transition hover:bg-blue-500 hover:text-white">View Details</button>
+        </div>
         </div>
 
-        <div
-          class="overflow-hidden rounded-lg bg-gray-200 dark:bg-[#1F2A37] shadow-sm duration-300 flex gap-2"
-        >
-          <div class="w-2/3 md:w-2/6 shrink-0">
-          <img class="h-full w-full object-cover" src={~p"/images/card02.jpg"} />
-        </div>
-          <div class="p-4 flex flex-col justify-between items-start">
-            <h3 class="text-[#111928] dark:text-white text-xl font-bold mb-3">
-              Best Web Design Courses Online In 2024
-            </h3>
-            <p class="text-[#637381] dark:text-gray-300 text-[16px] mb-5">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-            </p>
-            <button
-              class="text-[15px] rounded-full border border-blue-500 text-blue-500 px-7 py-2 hover:bg-blue-500 transition hover:text-white"
-            >
-              View Details
-            </button>
-          </div>
-        </div>
       </div>
     <!-- end card 2 -->
 
     <!-- start card 3 -->
-    <div class="bg-[#f3f4f6]">
       <div
-        class="grid grid-cols-3 gap-10 p-48 max-[1100px]:grid-cols-1 max-[1100px]:p-5"
+        class="grid md:grid-cols-2 lg:grid-cols-3 gap-5 mb-10"
       >
-        <div class="bg-white rounded-xl overflow-hidden border shadow-xl">
-          <img src="./img/card03-1.jpg" />
-          <div class="p-10">
-            <div>
-              <h3 class="text-[#111928] dark:text-white text-3xl font-bold mb-3">
-                Top Graphic Design Courses Online
-              </h3>
-              <p class="text-[#637381] dark:text-gray-300 text-2xl mb-6">
-                Lorem ipsum dolor sit amet, consec adipiscingelit. In pretium
-                venenatis sed finibus orci imperdiet et.
-              </p>
-            </div>
-            <div class="flex justify-between items-center border-t pt-5">
-              <div class="flex gap-x-5 items-center">
-                <img class="rounded-full w-16 h-16" src="./img/card03-4.jpg" />
-                <div>
-                  <h6 class="text-[#111928] dark:text-white text-xl font-bold mb-1">
-                    By Samuyl Joshi
-                  </h6>
-                  <p class="text-[#637381] dark:text-gray-300">Graphics Designer</p>
-                </div>
-              </div>
-              <div class="text-end">
-                <h6 class="text-[#111928] dark:text-white text-xl font-bold mb-1">Date</h6>
-                <p class="text-[#637381] dark:text-gray-300">15 April, 2024</p>
-              </div>
+      <.card rounded="large" id="community-card-7">
+        <.card_media
+          src={~p"/images/card-3.jpg"}
+          alt="Community card"
+        />
+        <.card_content padding="medium">
+         <h3 class="text-[#111928] dark:text-white text-[24px] font-bold mb-3">
+            Top Graphic Design Courses Online
+          </h3>
+          <p class="text-[13px]">
+            Lorem ipsum dolor sit amet, consec adipiscingelit. In pretium venenatis sed finibus orci imperdiet et.
+          </p>
+        </.card_content>
+        <.card_footer padding="medium" class="flex justify-between items-center border-t dark:border-gray-800 pt-5 lg:mx-2">
+          <div class="flex gap-3 items-center">
+            <.avatar size="large" rounded="full" src={~p"/images/avatar.jpg"} />
+            <div class="space-y-1">
+              <h6 class="text-[15px] font-semibold">
+                By Samuyl Joshi
+              </h6>
+              <div class="text-[#637381] text-[13px] dark:text-gray-300">Graphics Designer</div>
             </div>
           </div>
-        </div>
-
-        <div class="bg-white rounded-xl overflow-hidden border shadow-xl">
-          <img src="./img/card03-2.jpg" />
-          <div class="p-10">
-            <div>
-              <h3 class="text-[#111928] dark:text-white text-3xl font-bold mb-3">
-                Best Web Design Courses Online In 2024
-              </h3>
-              <p class="text-[#637381] dark:text-gray-300 text-2xl mb-6">
-                Lorem ipsum dolor sit amet, consec adipiscingelit. In pretium
-                venenatis sed finibus orci imperdiet et.
-              </p>
-            </div>
-            <div class="flex justify-between items-center border-t pt-5">
-              <div class="flex gap-x-5 items-center">
-                <img class="rounded-full w-16 h-16" src="./img/card03-5.jpg" />
-                <div>
-                  <h6 class="text-[#111928] dark:text-white text-xl font-bold mb-1">
-                    By Devid Millar
-                  </h6>
-                  <p class="text-[#637381] dark:text-gray-300">Graphics Designer</p>
-                </div>
-              </div>
-              <div class="text-end">
-                <h6 class="text-[#111928] dark:text-white text-xl font-bold mb-1">Date</h6>
-                <p class="text-[#637381] dark:text-gray-300">25 March, 2024</p>
-              </div>
+          <div class="text-end space-y-1">
+            <h6 class="text-[15px] font-bold">Date</h6>
+            <div class="text-[#637381] text-[13px] dark:text-gray-300">15 April, 2024</div>
+          </div>
+        </.card_footer>
+      </.card>
+      <.card rounded="large" id="community-card-8">
+        <.card_media
+          src={~p"/images/card-3.jpg"}
+          alt="Community card"
+        />
+        <.card_content padding="medium">
+         <h3 class="text-[#111928] dark:text-white text-[24px] font-bold mb-3">
+            Best Web Design Courses Online In 2024
+          </h3>
+          <p class="text-[13px]">
+            Lorem ipsum dolor sit amet, consec adipiscingelit. In pretium venenatis sed finibus orci imperdiet et.
+          </p>
+        </.card_content>
+        <.card_footer padding="medium" class="flex justify-between items-center border-t dark:border-gray-800 pt-5 lg:mx-2">
+          <div class="flex gap-3 items-center">
+            <.avatar size="large" rounded="full" src={~p"/images/avatar.jpg"} />
+            <div class="space-y-1">
+              <h6 class="text-[15px] font-semibold">
+                By Devid Millar
+              </h6>
+              <div class="text-[#637381] text-[13px] dark:text-gray-300">Graphics Designer</div>
             </div>
           </div>
-        </div>
-
-        <div class="bg-white rounded-xl overflow-hidden border shadow-xl">
-          <img src="./img/card03-3.jpg" />
-          <div class="p-10">
-            <div>
-              <h3 class="text-[#111928] dark:text-white text-3xl font-bold mb-3">
-                Androin App Development Courses With In 30 days
-              </h3>
-              <p class="text-[#637381] dark:text-gray-300 text-2xl mb-6">
-                Lorem ipsum dolor sit amet, consec adipiscingelit. In pretium
-                venenatis sed finibus orci imperdiet et.
-              </p>
-            </div>
-            <div class="flex justify-between items-center border-t pt-5">
-              <div class="flex gap-x-5 items-center">
-                <img class="rounded-full w-16 h-16" src="./img/card03-6.jpg" />
-                <div>
-                  <h6 class="text-[#111928] dark:text-white text-xl font-bold mb-1">
-                    By Rulius Hurry
-                  </h6>
-                  <p class="text-[#637381] dark:text-gray-300">Graphics Designer</p>
-                </div>
-              </div>
-              <div class="text-end">
-                <h6 class="text-[#111928] dark:text-white text-xl font-bold mb-1">Date</h6>
-                <p class="text-[#637381] dark:text-gray-300">15 Dec, 2024</p>
-              </div>
+          <div class="text-end space-y-1">
+            <h6 class="text-[15px] font-bold">Date</h6>
+            <div class="text-[#637381] text-[13px] dark:text-gray-300">15 April, 2024</div>
+          </div>
+        </.card_footer>
+      </.card>
+      <.card rounded="large" id="community-card-9">
+        <.card_media
+          src={~p"/images/card-3.jpg"}
+          alt="Community card"
+        />
+        <.card_content padding="medium">
+         <h3 class="text-[#111928] dark:text-white text-[24px] font-bold mb-3">
+            Androin App Development Courses With In 30 days
+          </h3>
+          <p class="text-[13px]">
+            Lorem ipsum dolor sit amet, consec adipiscingelit. In pretium venenatis sed finibus orci imperdiet et.
+          </p>
+        </.card_content>
+        <.card_footer padding="medium" class="flex justify-between items-center border-t dark:border-gray-800 pt-5 lg:mx-2">
+          <div class="flex gap-3 items-center">
+            <.avatar size="large" rounded="full" src={~p"/images/avatar.jpg"} />
+            <div class="space-y-1">
+              <h6 class="text-[15px] font-semibold">
+                By Rulius Hurry
+              </h6>
+              <div class="text-[#637381] text-[13px] dark:text-gray-300">Graphics Designer</div>
             </div>
           </div>
-        </div>
+          <div class="text-end space-y-1">
+            <h6 class="text-[15px] font-bold">Date</h6>
+            <div class="text-[#637381] text-[13px] dark:text-gray-300">15 April, 2024</div>
+          </div>
+        </.card_footer>
+      </.card>
       </div>
-    </div>
     <!-- end card 3 -->
 
     <!-- start card 4 -->
-    <div class="bg-white p-48 max-[1100px]:p-5">
-      <div class="grid grid-cols-3 gap-10 max-[1100px]:grid-cols-1">
-        <div class="border">
-          <div
-            class="grid grid-cols-2 border-t-[4px] border-[#3758f9] p-5 shadow-xl"
-          >
-            <div>
-              <h3 class="text-[#3758f9] font-bold">Startup Template</h3>
-              <h3 class="text-[#111928] dark:text-white text-xl font-bold mb-3">
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5 mb-10">
+
+        <.card rounded="none" padding="medium" id="community-card-10" class="border-t-4 !border-t-[#3758f9] shadow-xl">
+          <.card_content class="grid grid-cols-2">
+            <div class="space-y-2">
+              <h3 class="text-[#3758f9] text-[14px] font-bold">Startup Template</h3>
+              <h3 class="text-[#111928] dark:text-gray-400 text-[13px] font-bold">
                 Play - Free Html App & SaaS Landin Page Template
               </h3>
-              <p class="text-[#637381] dark:text-gray-300">
+              <p class="text-[#637381] dark:text-gray-300 text-[12px]">
                 Play is free startup, sass, app landing page template.
               </p>
             </div>
-            <div class="flex justify-end">
-              <img src="./img/card04-1.png" />
-            </div>
-          </div>
-        </div>
-
-        <div class="border">
-          <div
-            class="grid grid-cols-2 border-t-[4px] border-[#3758f9] p-5 shadow-xl"
-          >
-            <div>
-              <h3 class="text-[#3758f9] font-bold">Startup Template</h3>
-              <h3 class="text-[#111928] dark:text-white text-xl font-bold mb-3">
-                EventGrids - Web Template for Event, Seminar & Conferance
+            <.card_media
+              src={~p"/images/card04-1.png"}
+              alt="Community card"
+              class="[&>img]:w-full"
+            />
+          </.card_content>
+        </.card>
+        <.card rounded="none" padding="medium" id="community-card-11" class="border-t-4 !border-t-[#3758f9] shadow-xl">
+          <.card_content class="grid grid-cols-2">
+            <div class="space-y-2">
+              <h3 class="text-[#3758f9] text-[14px] font-bold">Startup Template</h3>
+              <h3 class="text-[#111928] dark:text-gray-400 text-[13px] font-bold">
+                Play - Free Html App & SaaS Landin Page Template
               </h3>
-              <p class="text-[#637381] dark:text-gray-300">
+              <p class="text-[#637381] dark:text-gray-300 text-[12px]">
                 Play is free startup, sass, app landing page template.
               </p>
             </div>
-            <div class="flex justify-end">
-              <img src="./img/card04-2.png" />
-            </div>
-          </div>
-        </div>
-
-        <div class="border">
-          <div
-            class="grid grid-cols-2 border-t-[4px] border-[#3758f9] p-5 shadow-xl"
-          >
-            <div>
-              <h3 class="text-[#3758f9] font-bold">Startup Template</h3>
-              <h3 class="text-[#111928] dark:text-white text-xl font-bold mb-3">
-                Xpeedo - Bootstrap 5 HTML Landing Page Template
+            <.card_media
+              src={~p"/images/card04-2.png"}
+              alt="Community card"
+              class="[&>img]:w-full"
+            />
+          </.card_content>
+        </.card>
+        <.card rounded="none" padding="medium" id="community-card-12" class="border-t-4 !border-t-[#3758f9] shadow-xl">
+          <.card_content class="grid grid-cols-2">
+            <div class="space-y-2">
+              <h3 class="text-[#3758f9] text-[14px] font-bold">Startup Template</h3>
+              <h3 class="text-[#111928] dark:text-gray-400 text-[13px] font-bold">
+                Play - Free Html App & SaaS Landin Page Template
               </h3>
-              <p class="text-[#637381] dark:text-gray-300">
+              <p class="text-[#637381] dark:text-gray-300 text-[12px]">
                 Play is free startup, sass, app landing page template.
               </p>
             </div>
-            <div class="flex justify-end">
-              <img src="./img/card04-3.png" />
-            </div>
-          </div>
-        </div>
+            <.card_media
+              src={~p"/images/card04-3.png"}
+              alt="Community card"
+              class="[&>img]:w-full"
+            />
+          </.card_content>
+        </.card>
       </div>
-    </div>
     <!-- end card 4 -->
 
     <!-- start card 5 -->
-    <div class="bg-white p-48 max-[1100px]:p-5">
-      <div class="grid grid-cols-3 gap-10 max-[1100px]:grid-cols-1">
-        <div class="rounded-xl overflow-hidden border shadow-xl">
-          <img src="./img/card05-1.jpg" />
-          <div class="p-8">
-            <h3 class="text-[#111928] dark:text-white text-3xl font-bold mb-3">Mountain</h3>
-            <p class="text-[#637381] dark:text-gray-300 mb-5 text-xl">
-              Lorem ipsum dolor sit amet, vehicula ero felis loreum fitiona
-              fringilla scelerisque. Interdum et malesuada fames ac ante ipsum
-              primis fausibus.
-            </p>
-            <div class="flex justify-start bg-[#f3f4f6] p-3 gap-3 rounded-md">
-              <span class="text-[#637381] dark:text-gray-300 text-xl">#mountain</span>
-              <span class="text-[#637381] dark:text-gray-300 text-xl">#hill</span>
-              <span class="text-[#4563f9] text-xl">#rock</span>
-            </div>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5 mb-10">
+      <.card rounded="large" border="none" id="community-card-13" class="shadow-xl">
+        <.card_media
+          src={~p"/images/card05-1.jpg"}
+          alt="Community card"
+        />
+        <.card_content padding="medium">
+         <h3 class="text-[#111928] dark:text-white text-[18px] font-bold mb-3">Mountain</h3>
+          <p class="text-[#637381] dark:text-gray-300 mb-5 text-[12px]">
+            Lorem ipsum dolor sit amet, vehicula ero felis loreum fitiona
+            fringilla scelerisque. Interdum et malesuada fames ac ante ipsum
+            primis fausibus.
+          </p>
+          <div class="flex items-center bg-[#f3f4f6] dark:bg-[#26262b] p-3 gap-3 rounded">
+            <span class="text-[#637381] dark:text-gray-300 text-xl">#mountain</span>
+            <span class="text-[#637381] dark:text-gray-300 text-xl">#hill</span>
+            <span class="text-[#4563f9] dark:text-indigo-400 text-xl">#rock</span>
           </div>
-        </div>
-
-        <div class="rounded-xl overflow-hidden border shadow-xl">
-          <img src="./img/card05-2.jpg" />
-          <div class="p-8">
-            <h3 class="text-[#111928] dark:text-white text-3xl font-bold mb-3">Sea Beach</h3>
-            <p class="text-[#637381] dark:text-gray-300 mb-5 text-xl">
-              Lorem ipsum dolor sit amet, vehicula ero felis loreum fitiona
-              fringilla scelerisque. Interdum et malesuada fames ac ante ipsum
-              primis fausibus.
-            </p>
-            <div class="flex justify-start bg-[#f3f4f6] p-3 gap-3 rounded-md">
-              <span class="text-[#637381] dark:text-gray-300 text-xl">#sea-beach</span>
-              <span class="text-[#637381] dark:text-gray-300 text-xl">#sea</span>
-              <span class="text-[#4563f9] text-xl">#nature</span>
-            </div>
+        </.card_content>
+      </.card>
+      <.card rounded="large" border="none" id="community-card-14" class="shadow-xl">
+        <.card_media
+          src={~p"/images/card05-1.jpg"}
+          alt="Community card"
+        />
+        <.card_content padding="medium">
+         <h3 class="text-[#111928] dark:text-white text-[18px] font-bold mb-3">Ice Land</h3>
+          <p class="text-[#637381] dark:text-gray-300 mb-5 text-[12px]">
+            Lorem ipsum dolor sit amet, vehicula ero felis loreum fitiona
+            fringilla scelerisque. Interdum et malesuada fames ac ante ipsum
+            primis fausibus.
+          </p>
+          <div class="flex items-center bg-[#f3f4f6] dark:bg-[#26262b] p-3 gap-3 rounded">
+            <span class="text-[#637381] dark:text-gray-300 text-xl">#ice-land</span>
+            <span class="text-[#4563f9] dark:text-indigo-400 text-xl">#ice</span>
           </div>
-        </div>
-
-        <div class="rounded-xl overflow-hidden border shadow-xl">
-          <img src="./img/card05-3.jpg" />
-          <div class="p-8">
-            <h3 class="text-[#111928] dark:text-white text-3xl font-bold mb-3">Ice Land</h3>
-            <p class="text-[#637381] dark:text-gray-300 mb-5 text-xl">
-              Lorem ipsum dolor sit amet, vehicula ero felis loreum fitiona
-              fringilla scelerisque. Interdum et malesuada fames ac ante ipsum
-              primis fausibus.
-            </p>
-            <div class="flex justify-start bg-[#f3f4f6] p-3 gap-3 rounded-md">
-              <span class="text-[#637381] dark:text-gray-300 text-xl">#ice-land</span>
-              <span class="text-[#4563f9] text-xl">#ice</span>
-            </div>
+        </.card_content>
+      </.card>
+      <.card rounded="large" border="none" id="community-card-15" class="shadow-xl">
+        <.card_media
+          src={~p"/images/card05-1.jpg"}
+          alt="Community card"
+        />
+        <.card_content padding="medium">
+         <h3 class="text-[#111928] dark:text-white text-[18px] font-bold mb-3">Sea Beach</h3>
+          <p class="text-[#637381] dark:text-gray-300 mb-5 text-[12px]">
+            Lorem ipsum dolor sit amet, vehicula ero felis loreum fitiona
+            fringilla scelerisque. Interdum et malesuada fames ac ante ipsum
+            primis fausibus.
+          </p>
+          <div class="flex items-center bg-[#f3f4f6] dark:bg-[#26262b] p-3 gap-3 rounded">
+            <span class="text-[#637381] dark:text-gray-300 text-xl">#sea-beach</span>
+            <span class="text-[#4563f9] dark:text-indigo-400 text-xl">#sea</span>
           </div>
-        </div>
+        </.card_content>
+      </.card>
       </div>
-    </div>
     <!-- end card 5 -->
 
     <!-- start card 6 -->
-    <div class="bg-white p-48 grid grid-cols-1 gap-y-10 max-[1100px]:p-5">
-      <div
-        class="grid grid-cols-7 border shadow-xl rounded-xl overflow-hidden mx-56 max-[1100px]:grid-cols-1 max-[1100px]:m-0"
-      >
-        <div class="col-span-3">
-          <img src="./img/card06-1.jpg" />
-        </div>
-        <div class="col-span-4 p-14 max-[1100px]:p-8">
-          <div class="flex gap-x-5 items-center mb-10">
-            <img class="w-12 h-12 rounded-full" src="./img/card06-3.jpg" />
+    <div class="mb-10 space-y-10 md:px-10 lg:max-w-3xl lg:mx-auto">
+     <.card rounded="large" class="grid grid-cols-7" id="community-card-16">
+        <.card_media
+          src={~p"/images/card05-1.jpg"}
+          alt="Mishka chelekom card example"
+          class="col-span-3 relative [&>img]:size-full [&>img]:absolute [&>img]:top-0 [&>img]:start-0 [&>img]:object-cover"
+        />
+        <.card_content padding="large" class="col-span-4 space-y-5">
+          <div class="flex gap-5 items-center">
+            <.avatar src={~p"/images/avatar.jpg"} rounded="full" size="medium" />
             <div>
-              <h6 class="text-[#111928] dark:text-white text-xl font-bold mb-1">
+              <h6 class="text-[#111928] dark:text-white text-[14px] font-bold mb-1">
                 Naimur Rahman
               </h6>
-              <p class="text-[#637381] dark:text-gray-300">Content Writer</p>
+              <p class="text-[#637381] dark:text-gray-300 text-[13px]">Content Writer</p>
             </div>
           </div>
-          <h3 class="text-[#111928] dark:text-white text-3xl font-bold mb-3">Mountain</h3>
-          <p class="text-[#637381] dark:text-gray-300 text-2xl font-semibold">
+          <h3 class="text-[#111928] dark:text-white text-[18px] font-bold mb-3">Mountain</h3>
+          <p class="text-[#637381] dark:text-gray-300 text-[13px] font-semibold">
             Lorem ipsum dolor sit amet, vehicula ero felis loreum fitiona
             fringilla scelerisque. Interdum et malesuada fames ac ante ipsum
             primis fausibus.
           </p>
-        </div>
-      </div>
+        </.card_content>
+      </.card>
 
-      <div
-        class="grid grid-cols-7 border shadow-xl rounded-xl overflow-hidden mx-56 max-[1100px]:grid-cols-1 max-[1100px]:m-0"
-      >
-        <div class="col-span-3">
-          <img src="./img/card06-2.jpg" />
-        </div>
-        <div class="col-span-4 p-14 max-[1100px]:p-8">
-          <div class="flex gap-x-5 items-center mb-10">
-            <img class="w-12 h-12 rounded-full" src="./img/card06-4.jpg" />
+     <.card rounded="large" class="grid grid-cols-7" id="community-card-17">
+        <.card_media
+          src={~p"/images/card05-1.jpg"}
+          alt="Mishka chelekom card example"
+          class="col-span-3 relative [&>img]:size-full [&>img]:absolute [&>img]:top-0 [&>img]:start-0 [&>img]:object-cover"
+        />
+        <.card_content padding="large" class="col-span-4 space-y-5">
+          <div class="flex gap-5 items-center">
+            <.avatar src={~p"/images/avatar.jpg"} rounded="full" size="medium" />
             <div>
-              <h6 class="text-[#111928] dark:text-white text-xl font-bold mb-1">
+              <h6 class="text-[#111928] dark:text-white text-[14px] font-bold mb-1">
                 Musharof Chy
               </h6>
-              <p class="text-[#637381] dark:text-gray-300">Web Developer</p>
+              <p class="text-[#637381] dark:text-gray-300 text-[13px]">Web Developer</p>
             </div>
           </div>
-          <h3 class="text-[#111928] dark:text-white text-3xl font-bold mb-3">Mea Beach</h3>
-          <p class="text-[#637381] dark:text-gray-300 text-2xl font-semibold">
+          <h3 class="text-[#111928] dark:text-white text-[18px] font-bold mb-3">Mea Beach</h3>
+          <p class="text-[#637381] dark:text-gray-300 text-[13px] font-semibold">
             Lorem ipsum dolor sit amet, vehicula ero felis loreum fitiona
             fringilla scelerisque. Interdum et malesuada fames ac ante ipsum
             primis fausibus.
           </p>
-        </div>
-      </div>
+        </.card_content>
+      </.card>
     </div>
     <!-- end card 6 -->
 
     <!-- start card 7 -->
-    <div class="p-48 max-[1100px]:p-5">
-      <div class="grid grid-cols-3 gap-10 max-[1100px]:grid-cols-1">
-        <div class="border rounded-xl p-10 shadow-xl">
-          <h3 class="text-[#111928] dark:text-white text-3xl font-bold mb-3">
-            Ready For SaaS Websites Crafted By TailGreads
-          </h3>
-          <p class="text-[#637381] dark:text-gray-300 mb-5 text-xl">
-            Lorem ipsum dolor sit amet, vehiculaum elo felis loreum fitiona
-            fringilla goes scelerisque interdum et.
-          </p>
-          <a href="#" class="flex items-center gap-x-1 cursor-pointer">
-            <p class="text-[#395af9]">Learn more</p>
-            <img class="w-7 mt-1" src="./img/arrow-r-b.png" />
-          </a>
-        </div>
-
-        <div class="border rounded-xl p-10 shadow-xl">
-          <h3 class="text-[#111928] dark:text-white text-3xl font-bold mb-3">
-            Ready For SaaS Websites Crafted By TailGreads
-          </h3>
-          <p class="text-[#637381] dark:text-gray-300 mb-5 text-xl">
-            Lorem ipsum dolor sit amet, vehiculaum elo felis loreum fitiona
-            fringilla goes scelerisque interdum et.
-          </p>
-          <a href="#" class="flex items-center gap-x-1 cursor-pointer">
-            <p class="text-[#395af9]">Learn more</p>
-            <img class="w-7 mt-1" src="./img/arrow-r-b.png" />
-          </a>
-        </div>
-
-        <div class="border rounded-xl p-10 shadow-xl">
-          <h3 class="text-[#111928] dark:text-white text-3xl font-bold mb-3">
-            Ready For SaaS Websites Crafted By TailGreads
-          </h3>
-          <p class="text-[#637381] dark:text-gray-300 mb-5 text-xl">
-            Lorem ipsum dolor sit amet, vehiculaum elo felis loreum fitiona
-            fringilla goes scelerisque interdum et.
-          </p>
-          <a href="#" class="flex items-center gap-x-1 cursor-pointer">
-            <p class="text-[#395af9]">Learn more</p>
-            <img class="w-7 mt-1" src="./img/arrow-r-b.png" />
-          </a>
-        </div>
+      <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-5 mb-10">
+        <.card rounded="large" class="shadow-md" id="community-card-18">
+          <.card_content padding="large" space="medium">
+            <h3 class="text-[18px] font-bold mb-3">
+              Ready For SaaS Websites Crafted By TailGreads
+            </h3>
+            <p class="text-[#637381] dark:text-gray-300 mb-5 text-[14px]">
+              Lorem ipsum dolor sit amet, vehiculaum elo felis loreum fitiona
+              fringilla goes scelerisque interdum et.
+            </p>
+            <.link navigate="/" class="inline-flex items-center leading-5 text-[#395af9] hover:text-indigo-500 transition-all duration-150 gap-1">
+              <span>Learn more</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4"><path d="M18 8L22 12L18 16"/><path d="M2 12H22"/></svg>
+            </.link>
+          </.card_content>
+        </.card>
+        <.card rounded="large" class="shadow-md" id="community-card-19">
+          <.card_content padding="large" space="medium">
+            <h3 class="text-[18px] font-bold mb-3">
+              Ready For SaaS Websites Crafted By TailGreads
+            </h3>
+            <p class="text-[#637381] dark:text-gray-300 mb-5 text-[14px]">
+              Lorem ipsum dolor sit amet, vehiculaum elo felis loreum fitiona
+              fringilla goes scelerisque interdum et.
+            </p>
+            <.link navigate="/" class="inline-flex items-center leading-5 text-[#395af9] hover:text-indigo-500 transition-all duration-150 gap-1">
+              <span>Learn more</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4"><path d="M18 8L22 12L18 16"/><path d="M2 12H22"/></svg>
+            </.link>
+          </.card_content>
+        </.card>
+        <.card rounded="large" class="shadow-md" id="community-card-20">
+          <.card_content padding="large" space="medium">
+            <h3 class="text-[18px] font-bold mb-3">
+              Ready For SaaS Websites Crafted By TailGreads
+            </h3>
+            <p class="text-[#637381] dark:text-gray-300 mb-5 text-[14px]">
+              Lorem ipsum dolor sit amet, vehiculaum elo felis loreum fitiona
+              fringilla goes scelerisque interdum et.
+            </p>
+            <.link navigate="/" class="inline-flex items-center leading-5 text-[#395af9] hover:text-indigo-500 transition-all duration-150 gap-1">
+              <span>Learn more</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4"><path d="M18 8L22 12L18 16"/><path d="M2 12H22"/></svg>
+            </.link>
+          </.card_content>
+        </.card>
       </div>
-    </div>
     <!-- end card 7 -->
 
     <!-- start card 8 -->
-    <div class="p-48 max-[1100px]:p-5">
-      <dvi class="grid grid-cols-3 gap-10 max-[1100px]:grid-cols-1">
-        <div class="border rounded-xl p-10 shadow-xl">
-          <h3 class="text-[#111928] dark:text-white text-3xl font-bold mb-3">
-            Ready For SaaS Websites Crafted By TailGreads
-          </h3>
-          <p class="text-[#637381] dark:text-gray-300 mb-5 text-xl">
-            Lorem ipsum dolor sit amet, vehiculaum elo felis loreum fitiona
-            fringilla goes scelerisque interdum et.
-          </p>
-          <button class="bg-[#395af9] text-white py-2 px-3 rounded-lg">
+      <div class="grid lg:grid-cols-3 gap-5 mb-10">
+        <.card rounded="large" class="shadow-md" id="community-card-21">
+          <.card_content padding="large" space="large">
+            <h3 class="text-[18px] font-bold">
+              Ready For SaaS Websites Crafted By TailGreads
+            </h3>
+            <p class="text-[#637381] dark:text-gray-300 text-[14px]">
+              Lorem ipsum dolor sit amet, vehiculaum elo felis loreum fitiona
+              fringilla goes scelerisque interdum et.
+            </p>
+          <.link navigate="/" class="inline-block bg-[#395af9] text-white hover:bg-indigo-500 transition-all duration-100 py-2 px-3 rounded-lg">
             Learn More
-          </button>
-        </div>
-
-        <div class="border rounded-xl p-10 shadow-xl">
-          <h3 class="text-[#111928] dark:text-white text-3xl font-bold mb-3">
-            Ready For SaaS Websites Crafted By TailGreads
-          </h3>
-          <p class="text-[#637381] dark:text-gray-300 mb-5 text-xl">
-            Lorem ipsum dolor sit amet, vehiculaum elo felis loreum fitiona
-            fringilla goes scelerisque interdum et.
-          </p>
-          <button class="bg-[#395af9] text-white py-2 px-3 rounded-lg">
+          </.link>
+          </.card_content>
+        </.card>
+        <.card rounded="large" class="shadow-md" id="community-card-22">
+          <.card_content padding="large" space="large">
+            <h3 class="text-[18px] font-bold">
+              Ready For SaaS Websites Crafted By TailGreads
+            </h3>
+            <p class="text-[#637381] dark:text-gray-300 text-[14px]">
+              Lorem ipsum dolor sit amet, vehiculaum elo felis loreum fitiona
+              fringilla goes scelerisque interdum et.
+            </p>
+          <.link navigate="/" class="inline-block bg-[#395af9] text-white hover:bg-indigo-500 transition-all duration-100 py-2 px-3 rounded-lg">
             Learn More
-          </button>
-        </div>
-
-        <div class="border rounded-xl p-10 shadow-xl">
-          <h3 class="text-[#111928] dark:text-white text-3xl font-bold mb-3">
-            Ready For SaaS Websites Crafted By TailGreads
-          </h3>
-          <p class="text-[#637381] dark:text-gray-300 mb-5 text-xl">
-            Lorem ipsum dolor sit amet, vehiculaum elo felis loreum fitiona
-            fringilla goes scelerisque interdum et.
-          </p>
-          <button class="bg-[#395af9] text-white py-2 px-3 rounded-lg">
+          </.link>
+          </.card_content>
+        </.card>
+        <.card rounded="large" class="shadow-md" id="community-card-23">
+          <.card_content padding="large" space="large">
+            <h3 class="text-[18px] font-bold">
+              Ready For SaaS Websites Crafted By TailGreads
+            </h3>
+            <p class="text-[#637381] dark:text-gray-300 text-[14px]">
+              Lorem ipsum dolor sit amet, vehiculaum elo felis loreum fitiona
+              fringilla goes scelerisque interdum et.
+            </p>
+           <.link navigate="/" class="inline-block bg-[#395af9] text-white hover:bg-indigo-500 transition-all duration-100 py-2 px-3 rounded-lg">
             Learn More
-          </button>
-        </div>
-      </dvi>
-    </div>
+          </.link>
+          </.card_content>
+        </.card>
+      </div>
     <!-- end card 8 -->
 
     <!-- start card 9 -->
-    <div class="p-48 max-[1100px]:p-5 shadow-xl">
-      <div class="grid grid-cols-3 gap-10 max-[1100px]:grid-cols-1">
-        <div class="border rounded-xl p-10 shadow-xl">
-          <h3 class="text-[#111928] dark:text-white text-3xl font-bold mb-3">
-            Ready For SaaS Websites Crafted By TailGreads
-          </h3>
-          <p class="text-[#637381] dark:text-gray-300 mb-5 text-xl">
-            Lorem ipsum dolor sit amet, vehiculaum elo felis loreum fitiona
-            fringilla goes scelerisque interdum et.
-          </p>
-          <div class="flex gap-x-5 items-center">
-            <img class="w-12 h-12 rounded-full" src="./img/card06-3.jpg" />
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5 mb-10">
+         <.card rounded="large" class="shadow-md" id="community-card-24">
+          <.card_content padding="large" space="large">
+            <h3 class="text-[18px] font-bold">
+              Ready For SaaS Websites Crafted By TailGreads
+            </h3>
+            <p class="text-[#637381] dark:text-gray-300 text-[14px]">
+              Lorem ipsum dolor sit amet, vehiculaum elo felis loreum fitiona
+              fringilla goes scelerisque interdum et.
+            </p>
+           <div class="flex gap-5 items-center">
+            <.avatar src={~p"/images/avatar.jpg"} rounded="full" size="medium" />
             <div>
-              <h6 class="text-[#111928] dark:text-white text-xl font-bold mb-1">
+              <h6 class="text-[#111928] dark:text-white text-[14px] font-bold mb-1">
                 Naimur Rahman
               </h6>
-              <p class="text-[#637381] dark:text-gray-300">Content Writer</p>
+              <p class="text-[#637381] dark:text-gray-300 text-[13px]">Content Writer</p>
             </div>
           </div>
-        </div>
-
-        <div class="border rounded-xl p-10 shadow-xl">
-          <h3 class="text-[#111928] dark:text-white text-3xl font-bold mb-3">
-            Ready For SaaS Websites Crafted By TailGreads
-          </h3>
-          <p class="text-[#637381] dark:text-gray-300 mb-5 text-xl">
-            Lorem ipsum dolor sit amet, vehiculaum elo felis loreum fitiona
-            fringilla goes scelerisque interdum et.
-          </p>
-          <div class="flex gap-x-5 items-center">
-            <img class="w-12 h-12 rounded-full" src="./img/card06-4.jpg" />
+          </.card_content>
+        </.card>
+         <.card rounded="large" class="shadow-md" id="community-card-25">
+          <.card_content padding="large" space="large">
+            <h3 class="text-[18px] font-bold">
+              Ready For SaaS Websites Crafted By TailGreads
+            </h3>
+            <p class="text-[#637381] dark:text-gray-300 text-[14px]">
+              Lorem ipsum dolor sit amet, vehiculaum elo felis loreum fitiona
+              fringilla goes scelerisque interdum et.
+            </p>
+           <div class="flex gap-5 items-center">
+            <.avatar src={~p"/images/avatar.jpg"} rounded="full" size="medium" />
             <div>
-              <h6 class="text-[#111928] dark:text-white text-xl font-bold mb-1">
+              <h6 class="text-[#111928] dark:text-white text-[14px] font-bold mb-1">
                 Musharof Chy
               </h6>
-              <p class="text-[#637381] dark:text-gray-300">Web Developer</p>
+              <p class="text-[#637381] dark:text-gray-300 text-[13px]">Web Developer</p>
             </div>
           </div>
-        </div>
-
-        <div class="border rounded-xl p-10 shadow-xl">
-          <h3 class="text-[#111928] dark:text-white text-3xl font-bold mb-3">
-            Ready For SaaS Websites Crafted By TailGreads
-          </h3>
-          <p class="text-[#637381] dark:text-gray-300 mb-5 text-xl">
-            Lorem ipsum dolor sit amet, vehiculaum elo felis loreum fitiona
-            fringilla goes scelerisque interdum et.
-          </p>
-          <div class="flex gap-x-5 items-center">
-            <img class="w-12 h-12 rounded-full" src="./img/card09-1.jpg" />
+          </.card_content>
+        </.card>
+         <.card rounded="large" class="shadow-md" id="community-card-26">
+          <.card_content padding="large" space="large">
+            <h3 class="text-[18px] font-bold">
+              Ready For SaaS Websites Crafted By TailGreads
+            </h3>
+            <p class="text-[#637381] dark:text-gray-300 text-[14px]">
+              Lorem ipsum dolor sit amet, vehiculaum elo felis loreum fitiona
+              fringilla goes scelerisque interdum et.
+            </p>
+           <div class="flex gap-5 items-center">
+            <.avatar src={~p"/images/avatar.jpg"} rounded="full" size="medium" />
             <div>
-              <h6 class="text-[#111928] dark:text-white text-xl font-bold mb-1">
+              <h6 class="text-[#111928] dark:text-white text-[14px] font-bold mb-1">
                 Shafiq Hammad
               </h6>
-              <p class="text-[#637381] dark:text-gray-300">Front-End Developer</p>
+              <p class="text-[#637381] dark:text-gray-300 text-[13px]">Front-End Developer</p>
             </div>
           </div>
-        </div>
+          </.card_content>
+        </.card>
       </div>
-    </div>
     <!-- end card 9 -->
 
     <!-- start card 10 -->
-    <div class="bg-[#f8fafc] p-48 max-[1100px]:p-52">
-      <div class="grid grid-cols-3 gap-10 max-[1100px]:grid-cols-1">
-        <div class="rounded-lg border p-5 shadow-xl">
-          <div class="flex gap-x-5 items-center p-5">
-            <img class="w-12 h-12 rounded-full" src="./img/card09-1.jpg" />
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+       <.card rounded="large" class="shadow-md" id="community-card-27">
+          <.card_content padding="large" space="large">
+           <div class="flex gap-5 items-center">
+            <.avatar src={~p"/images/avatar.jpg"} rounded="full" size="medium" />
             <div>
-              <h6 class="text-[#111928] dark:text-white text-xl font-bold mb-1">
-                Shafiq Hammad
-              </h6>
-              <p class="text-[#637381] dark:text-gray-300">Front-End Developer</p>
-            </div>
-          </div>
-          <img class="rounded-lg" src="./img/card10-1.jpg" />
-          <div class="p-5">
-            <h3 class="text-[#111928] dark:text-white text-3xl font-bold mb-3">
-              Card Title Here
-            </h3>
-            <p class="text-[#637381] dark:text-gray-300 text-xl">
-              Lorem ipsum dolor sit amet, vehiculaum elo felis loreum fitiona
-              fringilla goes scelerisque interdum et.
-            </p>
-          </div>
-        </div>
-
-        <div class="rounded-lg border p-5 shadow-xl">
-          <div class="flex gap-x-5 items-center p-5">
-            <img class="w-12 h-12 rounded-full" src="./img/card06-4.jpg" />
-            <div>
-              <h6 class="text-[#111928] dark:text-white text-xl font-bold mb-1">
-                Musharof Chy
-              </h6>
-              <p class="text-[#637381] dark:text-gray-300">Web Developer</p>
-            </div>
-          </div>
-          <img class="rounded-lg" src="./img/card10-2.jpg" />
-          <div class="p-5">
-            <h3 class="text-[#111928] dark:text-white text-3xl font-bold mb-3">
-              Card Title Here
-            </h3>
-            <p class="text-[#637381] dark:text-gray-300 text-xl">
-              Lorem ipsum dolor sit amet, vehiculaum elo felis loreum fitiona
-              fringilla goes scelerisque interdum et.
-            </p>
-          </div>
-        </div>
-
-        <div class="rounded-lg border p-5 shadow-xl">
-          <div class="flex gap-x-5 items-center p-5">
-            <img class="w-12 h-12 rounded-full" src="./img/card06-3.jpg" />
-            <div>
-              <h6 class="text-[#111928] dark:text-white text-xl font-bold mb-1">
+              <h6 class="text-[#111928] dark:text-white text-[14px] font-bold mb-1">
                 Naimur Rahman
               </h6>
-              <p class="text-[#637381] dark:text-gray-300">Content Writer</p>
+              <p class="text-[#637381] dark:text-gray-300 text-[13px]">Content Writer</p>
             </div>
           </div>
-          <img class="rounded-lg" src="./img/card10-3.jpg" />
-          <div class="p-5">
-            <h3 class="text-[#111928] dark:text-white text-3xl font-bold mb-3">
-              Card Title Here
-            </h3>
-            <p class="text-[#637381] dark:text-gray-300 text-xl">
-              Lorem ipsum dolor sit amet, vehiculaum elo felis loreum fitiona
-              fringilla goes scelerisque interdum et.
-            </p>
+          <.card_media
+            src={~p"/images/card05-1.jpg"}
+            alt="Community card"
+            rounded="medium"
+          />
+          <h3 class="text-[18px] font-bold">
+            Ready For SaaS Websites Crafted By TailGreads
+          </h3>
+          <p class="text-[#637381] dark:text-gray-300 text-[14px]">
+            Lorem ipsum dolor sit amet, vehiculaum elo felis loreum fitiona
+            fringilla goes scelerisque interdum et.
+          </p>
+          </.card_content>
+        </.card>
+
+       <.card rounded="large" class="shadow-md" id="community-card-28">
+          <.card_content padding="large" space="large">
+           <div class="flex gap-5 items-center">
+            <.avatar src={~p"/images/avatar.jpg"} rounded="full" size="medium" />
+            <div>
+              <h6 class="text-[#111928] dark:text-white text-[14px] font-bold mb-1">
+                Naimur Rahman
+              </h6>
+              <p class="text-[#637381] dark:text-gray-300 text-[13px]">Content Writer</p>
+            </div>
           </div>
-        </div>
+          <.card_media
+            src={~p"/images/card05-1.jpg"}
+            alt="Community card"
+            rounded="medium"
+          />
+          <h3 class="text-[18px] font-bold">
+            Ready For SaaS Websites Crafted By TailGreads
+          </h3>
+          <p class="text-[#637381] dark:text-gray-300 text-[14px]">
+            Lorem ipsum dolor sit amet, vehiculaum elo felis loreum fitiona
+            fringilla goes scelerisque interdum et.
+          </p>
+          </.card_content>
+        </.card>
+
+       <.card rounded="large" class="shadow-md" id="community-card-29">
+          <.card_content padding="large" space="large">
+           <div class="flex gap-5 items-center">
+            <.avatar src={~p"/images/avatar.jpg"} rounded="full" size="medium" />
+            <div>
+              <h6 class="text-[#111928] dark:text-white text-[14px] font-bold mb-1">
+                Naimur Rahman
+              </h6>
+              <p class="text-[#637381] dark:text-gray-300 text-[13px]">Content Writer</p>
+            </div>
+          </div>
+          <.card_media
+            src={~p"/images/card05-1.jpg"}
+            alt="Community card"
+            rounded="medium"
+          />
+          <h3 class="text-[18px] font-bold">
+            Ready For SaaS Websites Crafted By TailGreads
+          </h3>
+          <p class="text-[#637381] dark:text-gray-300 text-[14px]">
+            Lorem ipsum dolor sit amet, vehiculaum elo felis loreum fitiona
+            fringilla goes scelerisque interdum et.
+          </p>
+          </.card_content>
+        </.card>
+
       </div>
-    </div>
     <!-- end card 10 -->
 
     <!-- start card 11 -->
-    <div class="bg-[#f8fafc] p-48 max-[1100px]:p-52">
-      <div class="grid grid-cols-3 gap-10 max-[1100px]:grid-cols-1">
-        <div class="rounded-lg border p-5 shadow-xl">
-          <img class="rounded-lg" src="./img/card11-1.jpg" />
-          <div class="p-5">
-            <h3 class="text-[#111928] dark:text-white text-3xl font-bold mb-3">
-              Card Title Here
-            </h3>
-            <p class="text-[#637381] dark:text-gray-300 text-xl">
-              Lorem ipsum dolor sit amet, vehiculaum elo felis loreum fitiona
-              fringilla goes scelerisque interdum et.
-            </p>
-          </div>
-        </div>
-
-        <div class="rounded-lg border p-5 shadow-xl">
-          <img class="rounded-lg" src="./img/card11-2.jpg" />
-          <div class="p-5">
-            <h3 class="text-[#111928] dark:text-white text-3xl font-bold mb-3">
-              Card Title Here
-            </h3>
-            <p class="text-[#637381] dark:text-gray-300 text-xl">
-              Lorem ipsum dolor sit amet, vehiculaum elo felis loreum fitiona
-              fringilla goes scelerisque interdum et.
-            </p>
-          </div>
-        </div>
-
-        <div class="rounded-lg border p-5 shadow-xl">
-          <img class="rounded-lg" src="./img/card11-3.jpg" />
-          <div class="p-5">
-            <h3 class="text-[#111928] dark:text-white text-3xl font-bold mb-3">
-              Card Title Here
-            </h3>
-            <p class="text-[#637381] dark:text-gray-300 text-xl">
-              Lorem ipsum dolor sit amet, vehiculaum elo felis loreum fitiona
-              fringilla goes scelerisque interdum et.
-            </p>
-          </div>
-        </div>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5 mb-10">
+       <.card rounded="large" class="shadow-md" id="community-card-30">
+          <.card_content padding="large" space="large">
+          <.card_media
+            src={~p"/images/card-3.jpg"}
+            alt="Community card"
+            rounded="medium"
+          />
+          <h3 class="text-[18px] font-bold">
+            Ready For SaaS Websites Crafted By TailGreads
+          </h3>
+          <p class="text-[#637381] dark:text-gray-300 text-[14px]">
+            Lorem ipsum dolor sit amet, vehiculaum elo felis loreum fitiona
+            fringilla goes scelerisque interdum et.
+          </p>
+          </.card_content>
+        </.card>
+       <.card rounded="large" class="shadow-md" id="community-card-31">
+          <.card_content padding="large" space="large">
+          <.card_media
+            src={~p"/images/card-3.jpg"}
+            alt="Community card"
+            rounded="medium"
+          />
+          <h3 class="text-[18px] font-bold">
+            Ready For SaaS Websites Crafted By TailGreads
+          </h3>
+          <p class="text-[#637381] dark:text-gray-300 text-[14px]">
+            Lorem ipsum dolor sit amet, vehiculaum elo felis loreum fitiona
+            fringilla goes scelerisque interdum et.
+          </p>
+          </.card_content>
+        </.card>
+       <.card rounded="large" class="shadow-md" id="community-card-32">
+          <.card_content padding="large" space="large">
+          <.card_media
+            src={~p"/images/card-3.jpg"}
+            alt="Community card"
+            rounded="medium"
+          />
+          <h3 class="text-[18px] font-bold">
+            Ready For SaaS Websites Crafted By TailGreads
+          </h3>
+          <p class="text-[#637381] dark:text-gray-300 text-[14px]">
+            Lorem ipsum dolor sit amet, vehiculaum elo felis loreum fitiona
+            fringilla goes scelerisque interdum et.
+          </p>
+          </.card_content>
+        </.card>
       </div>
-    </div>
     <!-- end card 11 -->
 
     <!-- start card 12 -->
-    <div class="bg-[#f8fafc] p-48 max-[1100px]:p-5">
-      <div class="grid grid-cols-3 gap-10 max-[1100px]:grid-cols-1">
-        <div class="border shadow-md">
-          <div class="p-5 border-b">
-            <h3 class="text-[#111928] dark:text-white text-3xl font-bold">Card Title Here</h3>
-          </div>
-          <div class="p-5">
-            <p class="text-[#637381] dark:text-gray-300 text-xl">
-              Lorem ipsum dolor sit amet, vehiculaum elo felis loreum fitiona
-              fringilla goes scelerisque interdum et.
-            </p>
-          </div>
-        </div>
-
-        <div class="border shadow-md">
-          <div class="p-5 border-b">
-            <h3 class="text-[#111928] dark:text-white text-3xl font-bold">Card Title Here</h3>
-          </div>
-          <div class="p-5">
-            <p class="text-[#637381] dark:text-gray-300 text-xl">
-              Lorem ipsum dolor sit amet, vehiculaum elo felis loreum fitiona
-              fringilla goes scelerisque interdum et.
-            </p>
-          </div>
-        </div>
-
-        <div class="border shadow-md">
-          <div class="p-5 border-b">
-            <h3 class="text-[#111928] dark:text-white text-3xl font-bold">Card Title Here</h3>
-          </div>
-          <div class="p-5">
-            <p class="text-[#637381] dark:text-gray-300 text-xl">
-              Lorem ipsum dolor sit amet, vehiculaum elo felis loreum fitiona
-              fringilla goes scelerisque interdum et.
-            </p>
-          </div>
-        </div>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5 mb-10">
+        <.card rounded="extra_small" class="shadow-md" id="community-card-33">
+          <.card_title padding="large" title="Card title" class="border-b dark:border-[#36363d]" />
+          <.card_content padding="large" space="large">
+          <p class="text-[#637381] dark:text-gray-300 text-[14px]">
+            Lorem ipsum dolor sit amet, vehiculaum elo felis loreum fitiona
+            fringilla goes scelerisque interdum et.
+          </p>
+          </.card_content>
+        </.card>
+        <.card rounded="extra_small" class="shadow-md" id="community-card-34">
+          <.card_title padding="large" title="Card title" class="border-b dark:border-[#36363d]" />
+          <.card_content padding="large" space="large">
+          <p class="text-[#637381] dark:text-gray-300 text-[14px]">
+            Lorem ipsum dolor sit amet, vehiculaum elo felis loreum fitiona
+            fringilla goes scelerisque interdum et.
+          </p>
+          </.card_content>
+        </.card>
+        <.card rounded="extra_small" class="shadow-md" id="community-card-35">
+          <.card_title padding="large" title="Card title" class="border-b dark:border-[#36363d]" />
+          <.card_content padding="large" space="large">
+          <p class="text-[#637381] dark:text-gray-300 text-[14px]">
+            Lorem ipsum dolor sit amet, vehiculaum elo felis loreum fitiona
+            fringilla goes scelerisque interdum et.
+          </p>
+          </.card_content>
+        </.card>
       </div>
-    </div>
     <!-- end card 12 -->
 
     <!-- start card 13 -->
-    <div class="bg-[#f8fafc] p-48 max-[1100px]:p-5">
-      <div class="grid grid-cols-3 gap-10 max-[1100px]:grid-cols-1">
-        <div class="bg-white border rounded-lg shadow-xl p-5 relative">
-          <div class="flex items-start">
-            <img class="w-12 h-12 rounded-full" src="./img/card09-1.jpg" />
-            <div class="px-5">
-              <h3 class="text-[#111928] dark:text-white text-3xl font-bold mb-5">
-                Card Title Here
-              </h3>
-              <p class="text-[#637381] dark:text-gray-300 text-xl mb-5">
-                Lorem ipsum dolor sit amet, vehiculaum elo felis loreum fitiona
-                fringilla goes scelerisque interdum et.
-              </p>
-              <a href="#" class="flex items-center gap-x-1 cursor-pointer mb-2">
-                <p class="text-[#637381] dark:text-gray-300 font-semibold text-xl">Learn more</p>
-                <img class="w-7 mt-1" src="./img/arrow-r-g.png" />
-              </a>
-            </div>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5 mb-10">
+         <.card rounded="large" padding="large" class="shadow-md" id="community-card-36">
+          <.card_content class="flex gap-5 items-start">
+            <.avatar class="shrink-0" src={~p"/images/avatar.jpg"} rounded="full" size="medium" />
+           <div class="space-y-2 flex-1">
+            <h3 class="text-[18px] font-bold">
+              Ready For SaaS Websites Crafted By TailGreads
+            </h3>
+            <p class="text-[#637381] dark:text-gray-300 text-[14px]">
+              Lorem ipsum dolor sit amet, vehiculaum elo felis loreum fitiona
+              fringilla goes scelerisque interdum et.
+            </p>
+            <.link navigate="/" class="inline-flex items-center leading-5 text-[#91939b] hover:text-[#565860] dark:text-[#dedfe4] dark:hover:text-[#bcbec4] transition-all duration-150 gap-1">
+              <span>Learn more</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4"><path d="M18 8L22 12L18 16"/><path d="M2 12H22"/></svg>
+            </.link>
           </div>
-          <button class="absolute top-0 right-0 mt-2 mr-2">
-            <img class="w-6" src="./img/edit-ic.png" />
-          </button>
-        </div>
-
-        <div class="bg-white border rounded-lg shadow-xl p-5 relative">
-          <div class="flex items-start">
-            <img class="w-12 h-12 rounded-full" src="./img/card09-1.jpg" />
-            <div class="px-5">
-              <h3 class="text-[#111928] dark:text-white text-3xl font-bold mb-5">
-                Card Title Here
-              </h3>
-              <p class="text-[#637381] dark:text-gray-300 text-xl mb-5">
-                Lorem ipsum dolor sit amet, vehiculaum elo felis loreum fitiona
-                fringilla goes scelerisque interdum et.
-              </p>
-              <a href="#" class="flex items-center gap-x-1 cursor-pointer mb-2">
-                <p class="text-[#637381] dark:text-gray-300 font-semibold text-xl">Learn more</p>
-                <img class="w-7 mt-1" src="./img/arrow-r-g.png" />
-              </a>
-            </div>
+          <.link navigate="/" class="text-gray-500 inline-block mt-1.5">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4"><path d="M21 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h6"/><path d="m21 3-9 9"/><path d="M15 3h6v6"/></svg>
+          </.link>
+          </.card_content>
+        </.card>
+         <.card rounded="large" padding="large" class="shadow-md" id="community-card-37">
+          <.card_content class="flex gap-5 items-start">
+            <.avatar class="shrink-0" src={~p"/images/avatar.jpg"} rounded="full" size="medium" />
+           <div class="space-y-2 flex-1">
+            <h3 class="text-[18px] font-bold">
+              Ready For SaaS Websites Crafted By TailGreads
+            </h3>
+            <p class="text-[#637381] dark:text-gray-300 text-[14px]">
+              Lorem ipsum dolor sit amet, vehiculaum elo felis loreum fitiona
+              fringilla goes scelerisque interdum et.
+            </p>
+            <.link navigate="/" class="inline-flex items-center leading-5 text-[#91939b] hover:text-[#565860] dark:text-[#dedfe4] dark:hover:text-[#bcbec4] transition-all duration-150 gap-1">
+              <span>Learn more</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4"><path d="M18 8L22 12L18 16"/><path d="M2 12H22"/></svg>
+            </.link>
           </div>
-          <button class="absolute top-0 right-0 mt-2 mr-2">
-            <img class="w-6" src="./img/edit-ic.png" />
-          </button>
-        </div>
-
-        <div class="bg-white border rounded-lg shadow-xl p-5 relative">
-          <div class="flex items-start">
-            <img class="w-12 h-12 rounded-full" src="./img/card09-1.jpg" />
-            <div class="px-5">
-              <h3 class="text-[#111928] dark:text-white text-3xl font-bold mb-5">
-                Card Title Here
-              </h3>
-              <p class="text-[#637381] dark:text-gray-300 text-xl mb-5">
-                Lorem ipsum dolor sit amet, vehiculaum elo felis loreum fitiona
-                fringilla goes scelerisque interdum et.
-              </p>
-              <a href="#" class="flex items-center gap-x-1 cursor-pointer mb-2">
-                <p class="text-[#637381] dark:text-gray-300 font-semibold text-xl">Learn more</p>
-                <img class="w-7 mt-1" src="./img/arrow-r-g.png" />
-              </a>
-            </div>
+          <.link navigate="/" class="text-gray-500 inline-block mt-1.5">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4"><path d="M21 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h6"/><path d="m21 3-9 9"/><path d="M15 3h6v6"/></svg>
+          </.link>
+          </.card_content>
+        </.card>
+         <.card rounded="large" padding="large" class="shadow-md" id="community-card-38">
+          <.card_content class="flex gap-5 items-start">
+            <.avatar class="shrink-0" src={~p"/images/avatar.jpg"} rounded="full" size="medium" />
+           <div class="space-y-2 flex-1">
+            <h3 class="text-[18px] font-bold">
+              Ready For SaaS Websites Crafted By TailGreads
+            </h3>
+            <p class="text-[#637381] dark:text-gray-300 text-[14px]">
+              Lorem ipsum dolor sit amet, vehiculaum elo felis loreum fitiona
+              fringilla goes scelerisque interdum et.
+            </p>
+            <.link navigate="/" class="inline-flex items-center leading-5 text-[#91939b] hover:text-[#565860] dark:text-[#dedfe4] dark:hover:text-[#bcbec4] transition-all duration-150 gap-1">
+              <span>Learn more</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4"><path d="M18 8L22 12L18 16"/><path d="M2 12H22"/></svg>
+            </.link>
           </div>
-          <button class="absolute top-0 right-0 mt-2 mr-2">
-            <img class="w-6" src="./img/edit-ic.png" />
-          </button>
-        </div>
+          <.link navigate="/" class="text-gray-500 inline-block mt-1.5">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4"><path d="M21 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h6"/><path d="m21 3-9 9"/><path d="M15 3h6v6"/></svg>
+          </.link>
+          </.card_content>
+        </.card>
       </div>
-    </div>
     <!-- end card 13 -->
 
     <!-- start card 14 -->
-    <div class="bg-[#f3f4f6]">
-      <div class="p-48 max-[1100px]:px-5">
-        <div class="">
+        <div class="p-9 border dark:border-[#2b363d] mb-10 rounded">
           <h1 class="text-[#111928] dark:text-white text-6xl font-bold mt-10">
             Featured Products
           </h1>
@@ -838,13 +806,14 @@
           </p>
 
           <div
-            class="grid grid-cols-3 gap-x-5 mt-10 max-[1100px]:grid-cols-1 max-[1100px]:gap-y-5"
+            class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mt-10"
           >
-            <div
-              class="bg-white border border-[#e2e7ec] rounded-2xl overflow-hidden relative"
-            >
-              <img class="w-[100%]" src="./img/aw7.jpg" />
-              <div class="py-5 px-7">
+           <.card rounded="large" class="shadow-md relative" id="community-card-39">
+              <.card_media
+              src={~p"/images/card-3.jpg"}
+              alt="Community card"
+            />
+          <.card_content padding="large">
                 <h3 class="text-[#111928] dark:text-white text-2xl font-bold">
                   Apple Watch Series 7
                 </h3>
@@ -856,15 +825,35 @@
                   <span class="text-[#657583] text-xl font-semibold line-through">$120.00</span>
                   <span class="text-[#111928] dark:text-white text-xl font-semibold">$60.00</span>
                 </div>
-              </div>
+          </.card_content>
               <span class="absolute top-0 left-0 mt-3 ml-3 bg-[#13c296] px-3 py-2 rounded-[10px] text-white">New</span>
-            </div>
+        </.card>
+           <.card rounded="large" class="shadow-md relative" id="community-card-40">
+              <.card_media
+              src={~p"/images/card-3.jpg"}
+              alt="Community card"
+            />
+          <.card_content padding="large">
+                <h3 class="text-[#111928] dark:text-white text-2xl font-bold">
+                  Apple Watch Series 7
+                </h3>
+                <p class="text-[#808d99] text-xl font-semibold mt-5">
+                  Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aut
+                  libero voluptates illum.
+                </p>
+                <div class="flex mt-5 gap-x-3 pb-3">
+                  <span class="text-[#657583] text-xl font-semibold line-through">$120.00</span>
+                  <span class="text-[#111928] dark:text-white text-xl font-semibold">$60.00</span>
+                </div>
+          </.card_content>
+        </.card>
 
-            <div
-              class="bg-white border border-[#e2e7ec] rounded-2xl overflow-hidden"
-            >
-              <img class="w-[100%]" src="./img/i13pm.jpg" />
-              <div class="py-5 px-7">
+           <.card rounded="large" class="shadow-md relative" id="community-card-41">
+              <.card_media
+              src={~p"/images/card-3.jpg"}
+              alt="Community card"
+            />
+          <.card_content padding="large">
                 <h3 class="text-[#111928] dark:text-white text-2xl font-bold">
                   Iphone 13 Pro Max
                 </h3>
@@ -872,41 +861,18 @@
                   Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aut
                   libero voluptates illum.
                 </p>
-                <div class="flex mt-5 gap-x-3 pb-3">
-                  <span class="text-[#111928] dark:text-white text-xl font-semibold">$889.00</span>
-                </div>
-              </div>
-            </div>
-
-            <div
-              class="bg-white border border-[#e2e7ec] rounded-2xl overflow-hidden relative"
-            >
-              <img
-                class="w-[100%]"
-                src="./img/apple-macbook-m1-sq-1610121786.jpg"
-              />
-              <div class="py-5 px-7">
-                <h3 class="text-[#111928] dark:text-white text-2xl font-bold">
-                  AMacbook Pro 13" M1 2020
-                </h3>
-                <p class="text-[#808d99] text-xl font-semibold mt-5">
-                  Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aut
-                  libero voluptates illum.
-                </p>
-                <div class="flex mt-5 gap-x-3 pb-3">
+                 <div class="flex mt-5 gap-x-3 pb-3">
                   <span class="text-[#111928] dark:text-white text-xl font-semibold">
                     $1459.00
                   </span>
                 </div>
-              </div>
-              <span class="absolute top-0 left-0 mt-3 ml-3 bg-[#e10e0e] px-3 py-2 rounded-[10px] text-white">
+          </.card_content>
+          <span class="absolute top-0 left-0 mt-3 ml-3 bg-[#e10e0e] px-3 py-2 rounded-[10px] text-white">
                 Hot
               </span>
-            </div>
-          </div>
+        </.card>
         </div>
-      </div>
-    </div>
     <!-- end card 14 -->
 
+</div>
 </div>
