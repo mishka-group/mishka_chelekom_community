@@ -283,7 +283,7 @@
 
     <!-- start card 5 -->
       <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5 mb-10">
-      <.card rounded="large" id="community-card-13" class="shadow-xl">
+      <.card rounded="large" border="none" id="community-card-13" class="shadow-xl">
         <.card_media
           src={~p"/images/card05-1.jpg"}
           alt="Community card"
@@ -302,7 +302,7 @@
           </div>
         </.card_content>
       </.card>
-      <.card rounded="large" id="community-card-14" class="shadow-xl">
+      <.card rounded="large" border="none" id="community-card-14" class="shadow-xl">
         <.card_media
           src={~p"/images/card05-1.jpg"}
           alt="Community card"
@@ -320,7 +320,7 @@
           </div>
         </.card_content>
       </.card>
-      <.card rounded="large" id="community-card-15" class="shadow-xl">
+      <.card rounded="large" border="none" id="community-card-15" class="shadow-xl">
         <.card_media
           src={~p"/images/card05-1.jpg"}
           alt="Community card"
@@ -342,150 +342,154 @@
     <!-- end card 5 -->
 
     <!-- start card 6 -->
-    <div class="bg-white p-48 grid grid-cols-1 gap-y-10 max-[1100px]:p-5">
-      <div
-        class="grid grid-cols-7 border shadow-xl rounded-xl overflow-hidden mx-56 max-[1100px]:grid-cols-1 max-[1100px]:m-0"
-      >
-        <div class="col-span-3">
-          <img src="./img/card06-1.jpg" />
-        </div>
-        <div class="col-span-4 p-14 max-[1100px]:p-8">
-          <div class="flex gap-x-5 items-center mb-10">
-            <img class="w-12 h-12 rounded-full" src="./img/card06-3.jpg" />
+    <div class="mb-10 space-y-10 md:px-10 lg:max-w-3xl lg:mx-auto">
+     <.card rounded="large" class="grid grid-cols-7">
+        <.card_media
+          src={~p"/images/card05-1.jpg"}
+          alt="Mishka chelekom card example"
+          class="col-span-3 relative [&>img]:size-full [&>img]:absolute [&>img]:top-0 [&>img]:start-0 [&>img]:object-cover"
+        />
+        <.card_content padding="large" class="col-span-4 space-y-5">
+          <div class="flex gap-5 items-center">
+            <.avatar src={~p"/images/avatar.jpg"} rounded="full" size="medium" />
             <div>
-              <h6 class="text-[#111928] dark:text-white text-xl font-bold mb-1">
+              <h6 class="text-[#111928] dark:text-white text-[14px] font-bold mb-1">
                 Naimur Rahman
               </h6>
-              <p class="text-[#637381] dark:text-gray-300">Content Writer</p>
+              <p class="text-[#637381] dark:text-gray-300 text-[13px]">Content Writer</p>
             </div>
           </div>
-          <h3 class="text-[#111928] dark:text-white text-3xl font-bold mb-3">Mountain</h3>
-          <p class="text-[#637381] dark:text-gray-300 text-2xl font-semibold">
+          <h3 class="text-[#111928] dark:text-white text-[18px] font-bold mb-3">Mountain</h3>
+          <p class="text-[#637381] dark:text-gray-300 text-[13px] font-semibold">
             Lorem ipsum dolor sit amet, vehicula ero felis loreum fitiona
             fringilla scelerisque. Interdum et malesuada fames ac ante ipsum
             primis fausibus.
           </p>
-        </div>
-      </div>
+        </.card_content>
+      </.card>
 
-      <div
-        class="grid grid-cols-7 border shadow-xl rounded-xl overflow-hidden mx-56 max-[1100px]:grid-cols-1 max-[1100px]:m-0"
-      >
-        <div class="col-span-3">
-          <img src="./img/card06-2.jpg" />
-        </div>
-        <div class="col-span-4 p-14 max-[1100px]:p-8">
-          <div class="flex gap-x-5 items-center mb-10">
-            <img class="w-12 h-12 rounded-full" src="./img/card06-4.jpg" />
+     <.card rounded="large" class="grid grid-cols-7">
+        <.card_media
+          src={~p"/images/card05-1.jpg"}
+          alt="Mishka chelekom card example"
+          class="col-span-3 relative [&>img]:size-full [&>img]:absolute [&>img]:top-0 [&>img]:start-0 [&>img]:object-cover"
+        />
+        <.card_content padding="large" class="col-span-4 space-y-5">
+          <div class="flex gap-5 items-center">
+            <.avatar src={~p"/images/avatar.jpg"} rounded="full" size="medium" />
             <div>
-              <h6 class="text-[#111928] dark:text-white text-xl font-bold mb-1">
+              <h6 class="text-[#111928] dark:text-white text-[14px] font-bold mb-1">
                 Musharof Chy
               </h6>
-              <p class="text-[#637381] dark:text-gray-300">Web Developer</p>
+              <p class="text-[#637381] dark:text-gray-300 text-[13px]">Web Developer</p>
             </div>
           </div>
-          <h3 class="text-[#111928] dark:text-white text-3xl font-bold mb-3">Mea Beach</h3>
-          <p class="text-[#637381] dark:text-gray-300 text-2xl font-semibold">
+          <h3 class="text-[#111928] dark:text-white text-[18px] font-bold mb-3">Mea Beach</h3>
+          <p class="text-[#637381] dark:text-gray-300 text-[13px] font-semibold">
             Lorem ipsum dolor sit amet, vehicula ero felis loreum fitiona
             fringilla scelerisque. Interdum et malesuada fames ac ante ipsum
             primis fausibus.
           </p>
-        </div>
-      </div>
+        </.card_content>
+      </.card>
     </div>
     <!-- end card 6 -->
 
     <!-- start card 7 -->
-    <div class="p-48 max-[1100px]:p-5">
-      <div class="grid grid-cols-3 gap-10 max-[1100px]:grid-cols-1">
-        <div class="border rounded-xl p-10 shadow-xl">
-          <h3 class="text-[#111928] dark:text-white text-3xl font-bold mb-3">
-            Ready For SaaS Websites Crafted By TailGreads
-          </h3>
-          <p class="text-[#637381] dark:text-gray-300 mb-5 text-xl">
-            Lorem ipsum dolor sit amet, vehiculaum elo felis loreum fitiona
-            fringilla goes scelerisque interdum et.
-          </p>
-          <a href="#" class="flex items-center gap-x-1 cursor-pointer">
-            <p class="text-[#395af9]">Learn more</p>
-            <img class="w-7 mt-1" src="./img/arrow-r-b.png" />
-          </a>
-        </div>
-
-        <div class="border rounded-xl p-10 shadow-xl">
-          <h3 class="text-[#111928] dark:text-white text-3xl font-bold mb-3">
-            Ready For SaaS Websites Crafted By TailGreads
-          </h3>
-          <p class="text-[#637381] dark:text-gray-300 mb-5 text-xl">
-            Lorem ipsum dolor sit amet, vehiculaum elo felis loreum fitiona
-            fringilla goes scelerisque interdum et.
-          </p>
-          <a href="#" class="flex items-center gap-x-1 cursor-pointer">
-            <p class="text-[#395af9]">Learn more</p>
-            <img class="w-7 mt-1" src="./img/arrow-r-b.png" />
-          </a>
-        </div>
-
-        <div class="border rounded-xl p-10 shadow-xl">
-          <h3 class="text-[#111928] dark:text-white text-3xl font-bold mb-3">
-            Ready For SaaS Websites Crafted By TailGreads
-          </h3>
-          <p class="text-[#637381] dark:text-gray-300 mb-5 text-xl">
-            Lorem ipsum dolor sit amet, vehiculaum elo felis loreum fitiona
-            fringilla goes scelerisque interdum et.
-          </p>
-          <a href="#" class="flex items-center gap-x-1 cursor-pointer">
-            <p class="text-[#395af9]">Learn more</p>
-            <img class="w-7 mt-1" src="./img/arrow-r-b.png" />
-          </a>
-        </div>
+      <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-5 mb-10">
+        <.card rounded="large" class="shadow-md">
+          <.card_content padding="large" space="medium">
+            <h3 class="text-[18px] font-bold mb-3">
+              Ready For SaaS Websites Crafted By TailGreads
+            </h3>
+            <p class="text-[#637381] dark:text-gray-300 mb-5 text-[14px]">
+              Lorem ipsum dolor sit amet, vehiculaum elo felis loreum fitiona
+              fringilla goes scelerisque interdum et.
+            </p>
+            <.link navigate="/" class="inline-flex items-center leading-5 text-[#395af9] hover:text-indigo-500 transition-all duration-150 gap-1">
+              <span>Learn more</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4"><path d="M18 8L22 12L18 16"/><path d="M2 12H22"/></svg>
+            </.link>
+          </.card_content>
+        </.card>
+        <.card rounded="large" class="shadow-md">
+          <.card_content padding="large" space="medium">
+            <h3 class="text-[18px] font-bold mb-3">
+              Ready For SaaS Websites Crafted By TailGreads
+            </h3>
+            <p class="text-[#637381] dark:text-gray-300 mb-5 text-[14px]">
+              Lorem ipsum dolor sit amet, vehiculaum elo felis loreum fitiona
+              fringilla goes scelerisque interdum et.
+            </p>
+            <.link navigate="/" class="inline-flex items-center leading-5 text-[#395af9] hover:text-indigo-500 transition-all duration-150 gap-1">
+              <span>Learn more</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4"><path d="M18 8L22 12L18 16"/><path d="M2 12H22"/></svg>
+            </.link>
+          </.card_content>
+        </.card>
+        <.card rounded="large" class="shadow-md">
+          <.card_content padding="large" space="medium">
+            <h3 class="text-[18px] font-bold mb-3">
+              Ready For SaaS Websites Crafted By TailGreads
+            </h3>
+            <p class="text-[#637381] dark:text-gray-300 mb-5 text-[14px]">
+              Lorem ipsum dolor sit amet, vehiculaum elo felis loreum fitiona
+              fringilla goes scelerisque interdum et.
+            </p>
+            <.link navigate="/" class="inline-flex items-center leading-5 text-[#395af9] hover:text-indigo-500 transition-all duration-150 gap-1">
+              <span>Learn more</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4"><path d="M18 8L22 12L18 16"/><path d="M2 12H22"/></svg>
+            </.link>
+          </.card_content>
+        </.card>
       </div>
-    </div>
     <!-- end card 7 -->
 
     <!-- start card 8 -->
-    <div class="p-48 max-[1100px]:p-5">
-      <dvi class="grid grid-cols-3 gap-10 max-[1100px]:grid-cols-1">
-        <div class="border rounded-xl p-10 shadow-xl">
-          <h3 class="text-[#111928] dark:text-white text-3xl font-bold mb-3">
-            Ready For SaaS Websites Crafted By TailGreads
-          </h3>
-          <p class="text-[#637381] dark:text-gray-300 mb-5 text-xl">
-            Lorem ipsum dolor sit amet, vehiculaum elo felis loreum fitiona
-            fringilla goes scelerisque interdum et.
-          </p>
-          <button class="bg-[#395af9] text-white py-2 px-3 rounded-lg">
+      <div class="grid lg:grid-cols-3 gap-5 mb-10">
+        <.card rounded="large" class="shadow-md">
+          <.card_content padding="large" space="large">
+            <h3 class="text-[18px] font-bold">
+              Ready For SaaS Websites Crafted By TailGreads
+            </h3>
+            <p class="text-[#637381] dark:text-gray-300 text-[14px]">
+              Lorem ipsum dolor sit amet, vehiculaum elo felis loreum fitiona
+              fringilla goes scelerisque interdum et.
+            </p>
+          <.link navigate="/" class="inline-block bg-[#395af9] text-white hover:bg-indigo-500 transition-all duration-100 py-2 px-3 rounded-lg">
             Learn More
-          </button>
-        </div>
-
-        <div class="border rounded-xl p-10 shadow-xl">
-          <h3 class="text-[#111928] dark:text-white text-3xl font-bold mb-3">
-            Ready For SaaS Websites Crafted By TailGreads
-          </h3>
-          <p class="text-[#637381] dark:text-gray-300 mb-5 text-xl">
-            Lorem ipsum dolor sit amet, vehiculaum elo felis loreum fitiona
-            fringilla goes scelerisque interdum et.
-          </p>
-          <button class="bg-[#395af9] text-white py-2 px-3 rounded-lg">
+          </.link>
+          </.card_content>
+        </.card>
+        <.card rounded="large" class="shadow-md">
+          <.card_content padding="large" space="large">
+            <h3 class="text-[18px] font-bold">
+              Ready For SaaS Websites Crafted By TailGreads
+            </h3>
+            <p class="text-[#637381] dark:text-gray-300 text-[14px]">
+              Lorem ipsum dolor sit amet, vehiculaum elo felis loreum fitiona
+              fringilla goes scelerisque interdum et.
+            </p>
+          <.link navigate="/" class="inline-block bg-[#395af9] text-white hover:bg-indigo-500 transition-all duration-100 py-2 px-3 rounded-lg">
             Learn More
-          </button>
-        </div>
-
-        <div class="border rounded-xl p-10 shadow-xl">
-          <h3 class="text-[#111928] dark:text-white text-3xl font-bold mb-3">
-            Ready For SaaS Websites Crafted By TailGreads
-          </h3>
-          <p class="text-[#637381] dark:text-gray-300 mb-5 text-xl">
-            Lorem ipsum dolor sit amet, vehiculaum elo felis loreum fitiona
-            fringilla goes scelerisque interdum et.
-          </p>
-          <button class="bg-[#395af9] text-white py-2 px-3 rounded-lg">
+          </.link>
+          </.card_content>
+        </.card>
+        <.card rounded="large" class="shadow-md">
+          <.card_content padding="large" space="large">
+            <h3 class="text-[18px] font-bold">
+              Ready For SaaS Websites Crafted By TailGreads
+            </h3>
+            <p class="text-[#637381] dark:text-gray-300 text-[14px]">
+              Lorem ipsum dolor sit amet, vehiculaum elo felis loreum fitiona
+              fringilla goes scelerisque interdum et.
+            </p>
+           <.link navigate="/" class="inline-block bg-[#395af9] text-white hover:bg-indigo-500 transition-all duration-100 py-2 px-3 rounded-lg">
             Learn More
-          </button>
-        </div>
-      </dvi>
-    </div>
+          </.link>
+          </.card_content>
+        </.card>
+      </div>
     <!-- end card 8 -->
 
     <!-- start card 9 -->
