@@ -162,6 +162,7 @@ defmodule CommunityDemoWeb.CommunityCard do
   attr :alt, :string, default: nil, doc: ""
   attr :link, :string, default: nil, doc: ""
   attr :title, :string, default: "", doc: ""
+  attr :tag, :string, default: "", doc: ""
   attr :description, :string, default: "", doc: ""
   attr :avatar, :string, default: "", doc: "Source of avatar image"
   attr :author, :string, default: "", doc: "Author name"
