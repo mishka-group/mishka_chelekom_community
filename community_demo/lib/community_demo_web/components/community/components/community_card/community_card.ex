@@ -11,6 +11,7 @@ defmodule CommunityDemoWeb.CommunityCard do
     default: nil,
     doc: "A unique identifier is used to manage state and interaction"
 
+  attr :class, :string, default: nil, doc: ""
   attr :src, :string, default: "", doc: "Card image source"
   attr :alt, :string, default: "", doc: "Card image alt"
   attr :link, :string, default: nil, doc: ""
@@ -29,7 +30,7 @@ defmodule CommunityDemoWeb.CommunityCard do
 
   def community_card_01(assigns) do
     ~H"""
-    <.card rounded="large" id={@id}>
+    <.card class={@class} rounded="large" id={@id}>
       <.card_media
         src={@src}
         alt={@alt}
@@ -66,6 +67,7 @@ defmodule CommunityDemoWeb.CommunityCard do
     default: nil,
     doc: "A unique identifier is used to manage state and interaction"
 
+    attr :class, :string, default: nil, doc: ""
     attr :src, :string, default: nil, doc: "Card image source"
     attr :alt, :string, default: nil, doc: "Card image alt"
     attr :link, :string, default: nil, doc: ""
@@ -81,7 +83,7 @@ defmodule CommunityDemoWeb.CommunityCard do
 
   def community_card_02(assigns) do
     ~H"""
-    <.card rounded="none" padding="medium" id="community-card-10" class="border-t-4 !border-t-[#3758f9] shadow-xl">
+    <.card class={@class} rounded="none" padding="medium" id="community-card-10" class="border-t-4 !border-t-[#3758f9] shadow-xl">
       <.card_content class="grid grid-cols-2">
         <div class="space-y-2">
           <h3 class="text-[#3758f9] text-[14px] font-bold">
@@ -109,6 +111,7 @@ defmodule CommunityDemoWeb.CommunityCard do
     default: nil,
     doc: "A unique identifier is used to manage state and interaction"
 
+  attr :class, :string, default: nil, doc: ""
   attr :src, :string, default: nil, doc: "Card image source"
   attr :alt, :string, default: nil, doc: "Card image alt"
   attr :link, :string, default: nil, doc: ""
@@ -128,7 +131,7 @@ defmodule CommunityDemoWeb.CommunityCard do
 
   def community_card_03(assigns) do
     ~H"""
-    <.card rounded="large" border="none" id={@id} class="shadow-xl">
+    <.card class={@class} rounded="large" border="none" id={@id} class="shadow-xl">
       <.card_media
         src={@src}
         alt={@alt}
@@ -158,6 +161,7 @@ defmodule CommunityDemoWeb.CommunityCard do
     default: nil,
     doc: "A unique identifier is used to manage state and interaction"
 
+  attr :class, :string, default: nil, doc: ""
   attr :src, :string, default: nil, doc: ""
   attr :alt, :string, default: nil, doc: ""
   attr :link, :string, default: nil, doc: ""
@@ -175,7 +179,7 @@ defmodule CommunityDemoWeb.CommunityCard do
 
   def community_card_04(assigns) do
     ~H"""
-    <.card rounded="large" class="grid grid-cols-7" id={@id}>
+    <.card class={@class} rounded="large" class="grid grid-cols-7" id={@id}>
       <.card_media
         src={@src}
         alt={@alt}
@@ -207,6 +211,7 @@ defmodule CommunityDemoWeb.CommunityCard do
     default: nil,
     doc: "A unique identifier is used to manage state and interaction"
 
+  attr :class, :string, default: nil, doc: ""
   attr :link, :string, default: nil, doc: ""
   attr :title, :string, default: "", doc: ""
   attr :description, :string, default: "", doc: ""
@@ -219,7 +224,7 @@ defmodule CommunityDemoWeb.CommunityCard do
 
   def community_card_05(assigns) do
     ~H"""
-    <.card rounded="large" class="shadow-md" id={@id}>
+    <.card class={@class} rounded="large" class="shadow-md" id={@id}>
       <.card_content padding="large" space="medium">
         <h3 class="text-[18px] font-bold mb-3">
           {@title}
@@ -240,6 +245,7 @@ defmodule CommunityDemoWeb.CommunityCard do
     default: nil,
     doc: "A unique identifier is used to manage state and interaction"
 
+  attr :class, :string, default: nil, doc: ""
   attr :link, :string, default: nil, doc: ""
   attr :title, :string, default: "", doc: ""
   attr :description, :string, default: "", doc: ""
@@ -252,7 +258,7 @@ defmodule CommunityDemoWeb.CommunityCard do
 
   def community_card_06(assigns) do
     ~H"""
-    <.card rounded="large" class="shadow-md" id={@id}>
+    <.card class={@class} rounded="large" class="shadow-md" id={@id}>
       <.card_content padding="large" space="large">
         <h3 class="text-[18px] font-bold">
           {@title}
@@ -260,7 +266,7 @@ defmodule CommunityDemoWeb.CommunityCard do
         <p class="text-[#637381] dark:text-gray-300 text-[14px]">
          {@description}
         </p>
-        <.button_link navigate={@link} size="py-2 px-3 leading-5" display="inline-block" rounded="large">
+        <.button_link navigate={@link} size="py-2 px-3 leading-5" color="secondary" variant="default" display="inline-block" rounded="large">
           Learn More
         </.button_link>
       </.card_content>
@@ -273,9 +279,11 @@ defmodule CommunityDemoWeb.CommunityCard do
     doc: "A unique identifier is used to manage state and interaction"
 
   attr :link, :string, default: nil, doc: ""
+  attr :class, :string, default: nil, doc: ""
   attr :title, :string, default: "", doc: ""
   attr :description, :string, default: "", doc: ""
   attr :avatar, :string, default: nil, doc: ""
+  attr :author, :string, default: nil, doc: ""
   attr :tag, :string, default: nil, doc: ""
 
   attr :rest, :global,
@@ -286,7 +294,7 @@ defmodule CommunityDemoWeb.CommunityCard do
 
   def community_card_07(assigns) do
     ~H"""
-    <.card rounded="large" class="shadow-md" id={@id}>
+    <.card class={@class} rounded="large" class="shadow-md" id={@id}>
       <.card_content padding="large" space="large">
         <h3 class="text-[18px] font-bold">
           <.link :if={@link} navigate={@link}>{@title}</.link>
@@ -313,12 +321,14 @@ defmodule CommunityDemoWeb.CommunityCard do
     default: nil,
     doc: "A unique identifier is used to manage state and interaction"
 
+  attr :class, :string, default: nil, doc: ""
   attr :src, :string, default: nil, doc: ""
   attr :alt, :string, default: nil, doc: ""
   attr :link, :string, default: nil, doc: ""
   attr :title, :string, default: "", doc: ""
   attr :description, :string, default: "", doc: ""
   attr :avatar, :string, default: nil, doc: ""
+  attr :author, :string, default: nil, doc: ""
   attr :tag, :string, default: nil, doc: ""
 
   attr :rest, :global,
@@ -329,7 +339,7 @@ defmodule CommunityDemoWeb.CommunityCard do
 
   def community_card_08(assigns) do
     ~H"""
-    <.card rounded="large" class="shadow-md" id={@id}>
+    <.card class={@class} rounded="large" class="shadow-md" id={@id}>
       <.card_content padding="large" space="large">
         <div class="flex gap-5 items-center">
         <.avatar src={@avatar} rounded="full" size="medium" />
@@ -361,6 +371,7 @@ defmodule CommunityDemoWeb.CommunityCard do
     default: nil,
     doc: "A unique identifier is used to manage state and interaction"
 
+  attr :class, :string, default: nil, doc: ""
   attr :src, :string, default: nil, doc: ""
   attr :alt, :string, default: nil, doc: ""
   attr :link, :string, default: nil, doc: ""
@@ -375,7 +386,7 @@ defmodule CommunityDemoWeb.CommunityCard do
 
   def community_card_09(assigns) do
     ~H"""
-     <.card rounded="large" class="shadow-md" id={@id}>
+     <.card class={@class} rounded="large" class="shadow-md" id={@id}>
       <.card_content padding="large" space="large">
         <.card_media
           src={@src}
@@ -398,6 +409,7 @@ defmodule CommunityDemoWeb.CommunityCard do
     default: nil,
     doc: "A unique identifier is used to manage state and interaction"
 
+  attr :class, :string, default: nil, doc: ""
   attr :src, :string, default: nil, doc: ""
   attr :alt, :string, default: nil, doc: ""
   attr :link, :string, default: nil, doc: ""
@@ -412,7 +424,7 @@ defmodule CommunityDemoWeb.CommunityCard do
 
   def community_card_10(assigns) do
     ~H"""
-     <.card rounded="large" class="shadow-md" id={@id}>
+     <.card class={@class} rounded="large" class="shadow-md" id={@id}>
       <.card_content padding="large" space="large">
         <.card_media
           src={@src}
@@ -435,6 +447,7 @@ defmodule CommunityDemoWeb.CommunityCard do
     default: nil,
     doc: "A unique identifier is used to manage state and interaction"
 
+  attr :class, :string, default: nil, doc: ""
   attr :title, :string, default: "", doc: ""
   attr :description, :string, default: "", doc: ""
 
@@ -446,7 +459,7 @@ defmodule CommunityDemoWeb.CommunityCard do
 
   def community_card_11(assigns) do
     ~H"""
-    <.card rounded="extra_small" class="shadow-md" id={@id}>
+    <.card class={@class} rounded="extra_small" class="shadow-md" id={@id}>
       <.card_title padding="large" title={@title} class="border-b dark:border-[#36363d]" />
       <.card_content padding="large" space="large">
       <p class="text-[#637381] dark:text-gray-300 text-[14px]">
@@ -461,6 +474,7 @@ defmodule CommunityDemoWeb.CommunityCard do
     default: nil,
     doc: "A unique identifier is used to manage state and interaction"
 
+  attr :class, :string, default: nil, doc: ""
   attr :title, :string, default: "", doc: ""
   attr :description, :string, default: "", doc: ""
   attr :avatar, :string, default: nil, doc: ""
@@ -474,7 +488,7 @@ defmodule CommunityDemoWeb.CommunityCard do
 
   def community_card_12(assigns) do
     ~H"""
-    <.card rounded="large" padding="large" class="shadow-md" id={@id}>
+    <.card class={@class} rounded="large" padding="large" class="shadow-md" id={@id}>
       <.card_content class="flex gap-5 items-start">
         <.avatar class="shrink-0" src={@avatar} rounded="full" size="medium" />
         <div class="space-y-2 flex-1">
@@ -502,15 +516,12 @@ defmodule CommunityDemoWeb.CommunityCard do
     default: nil,
     doc: "A unique identifier is used to manage state and interaction"
 
+  attr :class, :string, default: nil, doc: ""
   attr :src, :string, default: "", doc: ""
   attr :alt, :string, default: "", doc: ""
   attr :title, :string, default: "", doc: ""
   attr :description, :string, default: "", doc: ""
-  attr :avatar, :string, default: nil, doc: ""
   attr :link, :string, default: nil, doc: ""
-
-  slot :price, required: false
-  slot :badge, required: false
 
   attr :rest, :global,
     doc:
@@ -520,7 +531,7 @@ defmodule CommunityDemoWeb.CommunityCard do
 
   def community_card_13(assigns) do
     ~H"""
-    <.card rounded="large" class="shadow-sm" id="community-card-1">
+    <.card class={@class} rounded="large" class="shadow-sm" id={@id}>
       <.card_media
         src={@src}
         alt={@alt}
@@ -543,6 +554,7 @@ defmodule CommunityDemoWeb.CommunityCard do
     default: nil,
     doc: "A unique identifier is used to manage state and interaction"
 
+  attr :class, :string, default: nil, doc: ""
   attr :src, :string, default: "", doc: ""
   attr :alt, :string, default: "", doc: ""
   attr :title, :string, default: "", doc: ""
@@ -561,7 +573,7 @@ defmodule CommunityDemoWeb.CommunityCard do
 
   def community_card_14(assigns) do
     ~H"""
-    <.card class="grid grid-cols-7 gap-2 shadow-sm" rounded="large" id={@id}>
+    <.card class={@class} class="grid grid-cols-7 gap-2 shadow-sm" rounded="large" id={@id}>
       <.card_media
       class="col-span-3 [&>img]:h-full [&>img]:w-full [&>img]:object-cover"
         src={@src}
@@ -577,6 +589,57 @@ defmodule CommunityDemoWeb.CommunityCard do
         </p>
         <.button_link navigate={@link} rounded="full" variant="outline" color="misc" size="leading-5 px-7 py-2 text-[15px]">View Details</.button_link>
       </.card_content>
+    </.card>
+    """
+  end
+
+  attr :id, :string,
+    default: nil,
+    doc: "A unique identifier is used to manage state and interaction"
+
+  attr :class, :string, default: nil, doc: ""
+  attr :src, :string, default: "", doc: ""
+  attr :alt, :string, default: "", doc: ""
+  attr :title, :string, default: "", doc: ""
+  attr :description, :string, default: "", doc: ""
+  attr :avatar, :string, default: nil, doc: ""
+  attr :link, :string, default: nil, doc: ""
+
+  slot :price, required: false
+  slot :badge, required: false
+
+  attr :rest, :global,
+    doc:
+      "Global attributes can define defaults which are merged with attributes provided by the caller"
+
+  slot :inner_block, required: false, doc: "Inner block that renders HEEx content"
+
+  def community_card_15(assigns) do
+    ~H"""
+    <.card rounded="large" class="shadow-md relative" id="community-card-39">
+      <.card_media
+        src={@src}
+        alt={@alt}
+      />
+      <.card_content padding="large">
+        <h3 class="text-[#111928] dark:text-white text-2xl font-bold">
+        <.link :if={@link} navigate={@link}>{@title}</.link>
+          <span :if={!@link}>{@title}</span>
+        </h3>
+        <p class="text-[#808d99] text-xl font-semibold mt-5">
+         {@description}
+        </p>
+        <div class="flex mt-5 gap-x-3 pb-3">
+          <div :for={price <- @price}>
+          {render_slot(price)}
+          </div>
+        </div>
+      </.card_content>
+      <div class="absolute top-0 start-0 mt-3 ms-3">
+        <div :for={badge <- @badge}>
+        {render_slot(badge)}
+        </div>
+      </div>
     </.card>
     """
   end
