@@ -1,4 +1,4 @@
-defmodule CommunityDemoWeb.CardsLive do
+defmodule CommunityDemoWeb.Demo.Community.CardsLive do
   use CommunityDemoWeb, :live_view
 
   import CommunityDemoWeb.Community.Components.Cards.{
