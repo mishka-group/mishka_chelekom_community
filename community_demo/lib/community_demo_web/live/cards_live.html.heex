@@ -1,75 +1,61 @@
 <div class="max-w-6xl mx-auto px-10">
      <!-- start card 1 -->
     <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 my-10">
-    <div class="overflow-hidden rounded-lg bg-white dark:bg-[#1F2A37] shadow-sm duration-300" id="community-card-1">
-        <img src={~p"/images/image-01.jpg"} alt="" class="w-full" />
-            <div class="p-8 text-center sm:p-9 md:p-7 xl:p-9">
-                <h3>
-                    <.link
-                    navigate="/"
-                    class="mb-4 block text-xl font-semibold text-dark hover:text-blue-600 dark:text-white sm:text-[22px] md:text-xl lg:text-[22px] xl:text-xl 2xl:text-[22px]"
-                    >
-                    50+ Best creative website themes & templates
-                    </.link>
-                </h3>
-                <p class="mb-7 text-base leading-relaxed text-[#98A2AB] dark:text-dark-6">
-                    Lorem ipsum dolor sit amet pretium consectetur adipiscing elit. Lorem consectetur adipiscing elit.
-                </p>
+      <!--<.community_card_13
+        id="community-card-1"
+        link="/"
+        src={~p"/images/image-01.jpg"}
+        alt="Community card 01"
+        title="50+ Best creative website themes & templates"
+        description="Lorem ipsum dolor sit amet pretium consectetur adipiscing elit. Lorem consectetur adipiscing elit."
+      />-->
 
-                <.link
-                href="/"
-                class="inline-block rounded-full border border-[#98A2AB] text-[#98A2AB] px-7 py-2 hover:border-blue-500 transition hover:text-blue-500"
-                >
-                View Details
-                </.link>
-            </div>
-        </div>
-        <div class="overflow-hidden rounded-lg bg-white dark:bg-[#1F2A37] shadow-sm duration-300" id="community-card-2">
-        <img src={~p"/images/image-02.jpg"} alt="" class="w-full" />
-        <div class="p-8 text-center sm:p-9 md:p-7 xl:p-9">
-        <h3>
+      <.card rounded="large" class="shadow-sm" id="community-card-1">
+        <.card_media
+          src={~p"/images/image-01.jpg"}
+          alt="Community card"
+        />
+        <.card_content padding="large" class="text-center">
+          <h3>
             <.link
-            navigate="/"
-            class="mb-4 block text-xl font-semibold text-dark hover:text-blue-600 dark:text-white sm:text-[22px] md:text-xl lg:text-[22px] xl:text-xl 2xl:text-[22px]"
+              navigate="/"
+              class="mb-4 block text-xl font-semibold text-dark hover:text-blue-600 dark:text-white sm:text-[22px] md:text-xl lg:text-[22px] xl:text-xl 2xl:text-[22px]"
             >
-            Creative Card Component designs graphic elements
+              50+ Best creative website themes & templates
             </.link>
-        </h3>
-        <p class="mb-7 text-base leading-relaxed text-[#98A2AB] dark:text-dark-6">
+          </h3>
+          <p class="mb-7 text-base leading-relaxed text-[#98A2AB] dark:text-dark-6">
             Lorem ipsum dolor sit amet pretium consectetur adipiscing elit. Lorem consectetur adipiscing elit.
-        </p>
+          </p>
 
-            <.link
-            href="/"
-            class="inline-block rounded-full border border-[#98A2AB] text-[#98A2AB] px-7 py-2 hover:border-blue-500 transition hover:text-blue-500"
-            >
+          <.link href="/" class="inline-block rounded-full border border-[#98A2AB] text-[#98A2AB] px-7 py-2 hover:border-blue-500 transition hover:text-blue-500">
             View Details
-            </.link>
-        </div>
-        </div>
-        <div class="overflow-hidden rounded-lg bg-white dark:bg-[#1F2A37] shadow-sm duration-300" id="community-card-3">
-        <img src={~p"/images/image-03.jpg"} alt="" class="w-full" />
-        <div class="p-8 text-center sm:p-9 md:p-7 xl:p-9">
-        <h3>
+          </.link>
+        </.card_content>
+      </.card>
+      <.card rounded="large" class="shadow-sm" id="community-card-1">
+        <.card_media
+          src={~p"/images/image-01.jpg"}
+          alt="Community card"
+        />
+        <.card_content padding="large" class="text-center">
+          <h3>
             <.link
-            navigate="/"
-            class="mb-4 block text-xl font-semibold text-dark hover:text-blue-600 dark:text-white sm:text-[22px] md:text-xl lg:text-[22px] xl:text-xl 2xl:text-[22px]"
+              navigate="/"
+              class="mb-4 block text-xl font-semibold text-dark hover:text-blue-600 dark:text-white sm:text-[22px] md:text-xl lg:text-[22px] xl:text-xl 2xl:text-[22px]"
             >
-            The ultimate UX and UI guide to card design
+              50+ Best creative website themes & templates
             </.link>
-        </h3>
-        <p class="mb-7 text-base leading-relaxed text-[#98A2AB] dark:text-dark-6">
+          </h3>
+          <p class="mb-7 text-base leading-relaxed text-[#98A2AB] dark:text-dark-6">
             Lorem ipsum dolor sit amet pretium consectetur adipiscing elit. Lorem consectetur adipiscing elit.
-        </p>
+          </p>
 
-            <.link
-            href="/"
-            class="inline-block rounded-full border border-[#98A2AB] text-[#98A2AB] px-7 py-2 hover:border-blue-500 transition hover:text-blue-500"
-            >
+          <.link href="/" class="inline-block rounded-full border border-[#98A2AB] text-[#98A2AB] px-7 py-2 hover:border-blue-500 transition hover:text-blue-500">
             View Details
-            </.link>
-        </div>
-        </div>
+          </.link>
+        </.card_content>
+      </.card>
           </div>
     <!-- end card 1 -->
 
@@ -77,52 +63,44 @@
       <div
         class="grid md:grid-cols-2 gap-5 mb-10"
       >
-       <div class="flex gap-2 overflow-hidden rounded-lg bg-gray-200 shadow-sm duration-300 dark:bg-[#1F2A37]" id="community-card-4">
-            <div class="w-1/3 shrink-0 md:w-2/6">
-                <img class="h-full w-full object-cover" src={~p"/images/card02.jpg"} />
-            </div>
-            <div class="flex flex-col items-start justify-between p-4">
+          <.card class="grid grid-cols-7 gap-2 overflow-hidden rounded-lg bg-gray-200 shadow-sm duration-300 dark:bg-[#1F2A37]" id="community-card-4">
+            <.card_media
+            class="col-span-3 [&>img]:h-full [&>img]:w-full [&>img]:object-cover"
+              src={~p"/images/card02.jpg"}
+              alt="Community card"
+            />
+            <.card_content class="col-span-4 flex flex-col items-start justify-between" padding="medium">
                 <h3 class="mb-3 text-xl font-bold text-[#111928] dark:text-white">Creative Website Temes & Templates in 2024</h3>
                 <p class="mb-5 text-[16px] text-[#637381] dark:text-gray-300">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
                 <button class="rounded-full border border-blue-500 px-7 py-2 text-[15px] text-blue-500 transition hover:bg-blue-500 hover:text-white">View Details</button>
-            </div>
-        </div>
+            </.card_content>
+        </.card>
 
 
-        <div class="flex gap-2 overflow-hidden rounded-lg bg-gray-200 shadow-sm duration-300 dark:bg-[#1F2A37]" id="community-card-5">
-            <div class="w-1/3 shrink-0 md:w-2/6">
-                <img class="h-full w-full object-cover" src={~p"/images/card02.jpg"} />
-            </div>
-
-            <div class="flex flex-col items-start justify-between p-4">
-                <h3 class="mb-3 text-xl font-bold text-[#111928] dark:text-white">Androin App Development Cours With In 30 Day</h3>
+        <.card class="grid grid-cols-7 gap-2 overflow-hidden rounded-lg bg-gray-200 shadow-sm duration-300 dark:bg-[#1F2A37]" id="community-card-4">
+            <.card_media
+            class="col-span-3 [&>img]:h-full [&>img]:w-full [&>img]:object-cover"
+              src={~p"/images/card02.jpg"}
+              alt="Community card"
+            />
+            <.card_content class="col-span-4 flex flex-col items-start justify-between" padding="medium">
+                <h3 class="mb-3 text-xl font-bold text-[#111928] dark:text-white">Creative Website Temes & Templates in 2024</h3>
                 <p class="mb-5 text-[16px] text-[#637381] dark:text-gray-300">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
                 <button class="rounded-full border border-blue-500 px-7 py-2 text-[15px] text-blue-500 transition hover:bg-blue-500 hover:text-white">View Details</button>
-            </div>
-        </div>
-
-        <div class="flex gap-2 overflow-hidden rounded-lg bg-gray-200 shadow-sm duration-300 dark:bg-[#1F2A37]" id="community-card-6">
-            <div class="w-1/3 shrink-0 md:w-2/6">
-                <img class="h-full w-full object-cover" src={~p"/images/card02.jpg"} />
-            </div>
-            <div class="flex flex-col items-start justify-between p-4">
-                <h3 class="mb-3 text-xl font-bold text-[#111928] dark:text-white">Top 20+ Graphic Design Online Courses</h3>
+            </.card_content>
+        </.card>
+        <.card class="grid grid-cols-7 gap-2 overflow-hidden rounded-lg bg-gray-200 shadow-sm duration-300 dark:bg-[#1F2A37]" id="community-card-4">
+            <.card_media
+            class="col-span-3 [&>img]:h-full [&>img]:w-full [&>img]:object-cover"
+              src={~p"/images/card02.jpg"}
+              alt="Community card"
+            />
+            <.card_content class="col-span-4 flex flex-col items-start justify-between" padding="medium">
+                <h3 class="mb-3 text-xl font-bold text-[#111928] dark:text-white">Creative Website Temes & Templates in 2024</h3>
                 <p class="mb-5 text-[16px] text-[#637381] dark:text-gray-300">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
                 <button class="rounded-full border border-blue-500 px-7 py-2 text-[15px] text-blue-500 transition hover:bg-blue-500 hover:text-white">View Details</button>
-            </div>
-        </div>
-
-
-        <div class="flex gap-2 overflow-hidden rounded-lg bg-gray-200 shadow-sm duration-300 dark:bg-[#1F2A37]">
-        <div class="w-1/3 shrink-0 md:w-2/6">
-            <img class="h-full w-full object-cover" src={~p"/images/card02.jpg"} />
-        </div>
-        <div class="flex flex-col items-start justify-between p-4">
-            <h3 class="mb-3 text-xl font-bold text-[#111928] dark:text-white">Best Web Design Courses Online In 2024</h3>
-            <p class="mb-5 text-[16px] text-[#637381] dark:text-gray-300">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-            <button class="rounded-full border border-blue-500 px-7 py-2 text-[15px] text-blue-500 transition hover:bg-blue-500 hover:text-white">View Details</button>
-        </div>
-        </div>
+            </.card_content>
+        </.card>
 
       </div>
     <!-- end card 2 -->
