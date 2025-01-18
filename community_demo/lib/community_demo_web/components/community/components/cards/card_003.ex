@@ -1,13 +1,13 @@
 defmodule CommunityDemoWeb.Community.Components.Cards.Card003 do
   use Phoenix.Component
-  import CommunityDemoWeb.Components.{Card, Avatar, Button}
+  import CommunityDemoWeb.Components.Card
 
   attr(:id, :string,
     default: nil,
     doc: "A unique identifier is used to manage state and interaction"
   )
 
-  attr(:class, :string, default: nil, doc: "")
+  attr(:class, :string, default: "shadow-xl", doc: "")
   attr(:src, :string, default: nil, doc: "Card image source")
   attr(:alt, :string, default: nil, doc: "Card image alt")
   attr(:link, :string, default: nil, doc: "")
@@ -27,7 +27,7 @@ defmodule CommunityDemoWeb.Community.Components.Cards.Card003 do
 
   def community_card_003(assigns) do
     ~H"""
-    <.card class={@class} rounded="large" border="none" id={@id} class="shadow-xl">
+    <.card class={@class} rounded="large" border="none" id={@id}>
       <.card_media
         src={@src}
         alt={@alt}

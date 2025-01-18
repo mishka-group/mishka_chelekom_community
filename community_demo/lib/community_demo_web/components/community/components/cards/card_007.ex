@@ -1,6 +1,6 @@
 defmodule CommunityDemoWeb.Community.Components.Cards.Card007 do
   use Phoenix.Component
-  import CommunityDemoWeb.Components.{Card, Avatar, Button}
+  import CommunityDemoWeb.Components.{Card, Avatar}
 
   attr(:id, :string,
     default: nil,
@@ -8,7 +8,7 @@ defmodule CommunityDemoWeb.Community.Components.Cards.Card007 do
   )
 
   attr(:link, :string, default: nil, doc: "")
-  attr(:class, :string, default: nil, doc: "")
+  attr(:class, :string, default: "shadow-md", doc: "")
   attr(:title, :string, default: "", doc: "")
   attr(:description, :string, default: "", doc: "")
   attr(:avatar, :string, default: nil, doc: "")
@@ -24,7 +24,7 @@ defmodule CommunityDemoWeb.Community.Components.Cards.Card007 do
 
   def community_card_007(assigns) do
     ~H"""
-    <.card class={@class} rounded="large" class="shadow-md" id={@id}>
+    <.card class={@class} rounded="large" id={@id}>
       <.card_content padding="large" space="large">
         <h3 class="text-[18px] font-bold">
           <.link :if={@link} navigate={@link}>{@title}</.link>

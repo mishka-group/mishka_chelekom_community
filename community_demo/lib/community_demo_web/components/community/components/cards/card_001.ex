@@ -1,6 +1,6 @@
 defmodule CommunityDemoWeb.Community.Components.Cards.Card001 do
   use Phoenix.Component
-  import CommunityDemoWeb.Components.{Card, Avatar, Button}
+  import CommunityDemoWeb.Components.{Card, Avatar}
 
   @doc type: :component
   attr(:id, :string,
