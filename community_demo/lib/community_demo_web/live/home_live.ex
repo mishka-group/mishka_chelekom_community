@@ -11,7 +11,7 @@ defmodule CommunityDemoWeb.HomeLive do
 
   def render(assigns) do
     ~H"""
-      <section class="text-[#202020] dark:text-[#f6f6f6]">
+    <section class="text-[#202020] dark:text-[#f6f6f6]">
       <div class={["max-w-6xl mx-auto px-5 lg:px-2 space-y-10 py-16"]}>
         <h4 class="text-center sm:text-2xl lg:text-4xl font-bold dark:text-[#cacfd2]">
           Chelekom Components

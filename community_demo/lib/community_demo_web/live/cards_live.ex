@@ -1,4 +1,4 @@
-defmodule CommunityDemoWeb.CardsLive do
+defmodule CommunityDemoWeb.Demo.Community.CardsLive do
   use CommunityDemoWeb, :live_view
 
   import CommunityDemoWeb.Community.Components.Cards.{
@@ -15,8 +15,7 @@ defmodule CommunityDemoWeb.CardsLive do
     Card011,
     Card012,
     Card013,
-    Card014,
-    Card015
+    Card014
   }
 
   def mount(_params, _session, socket) do

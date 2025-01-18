@@ -18,6 +18,11 @@ defmodule CommunityDemoWeb.Router do
     pipe_through :browser
 
     live "/", HomeLive
+  end
+
+  scope "/demo/community", CommunityDemoWeb.Demo.Community do
+    pipe_through(:browser)
+
     live "/cards", CardsLive
   end
 

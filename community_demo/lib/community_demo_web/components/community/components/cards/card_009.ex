@@ -23,13 +23,9 @@ defmodule CommunityDemoWeb.Community.Components.Cards.Card009 do
 
   def community_card_009(assigns) do
     ~H"""
-     <.card class={@class} rounded="large" id={@id}>
+    <.card class={@class} rounded="large" id={@id}>
       <.card_content padding="large" space="large">
-        <.card_media
-          src={@src}
-          alt={@alt}
-          rounded="medium"
-        />
+        <.card_media src={@src} alt={@alt} rounded="medium" />
         <h3 class="text-[18px] font-bold">
           <.link :if={@link} navigate={@link}>{@title}</.link>
           <span :if={!@link}>{@title}</span>

@@ -1,13 +1,13 @@
 defmodule CommunityDemoWeb.Community.Components.Cards.Card014 do
   use Phoenix.Component
-  import CommunityDemoWeb.Components.{Card, Button}
+  import CommunityDemoWeb.Components.Card
 
   attr(:id, :string,
     default: nil,
     doc: "A unique identifier is used to manage state and interaction"
   )
 
-  attr(:class, :string, default: "grid grid-cols-7 gap-2 shadow-sm", doc: "")
+  attr(:class, :string, default: "shadow-md relative", doc: "")
   attr(:src, :string, default: "", doc: "")
   attr(:alt, :string, default: "", doc: "")
   attr(:title, :string, default: "", doc: "")
@@ -27,22 +27,27 @@ defmodule CommunityDemoWeb.Community.Components.Cards.Card014 do
 
   def community_card_014(assigns) do
     ~H"""
-    <.card class={@class} rounded="large" id={@id}>
-      <.card_media
-      class="col-span-3 [&>img]:h-full [&>img]:w-full [&>img]:object-cover"
-        src={@src}
-        alt={@alt}
-      />
-      <.card_content class="col-span-4 flex flex-col items-start justify-between" padding="medium">
-        <h3 class="mb-3 text-[18px] font-bold text-[#111928] dark:text-white">
+    <.card rounded="large" class={@class} id={@id}>
+      <.card_media src={@src} alt={@alt} />
+      <.card_content padding="large">
+        <h3 class="text-[#111928] dark:text-white text-2xl font-bold">
           <.link :if={@link} navigate={@link}>{@title}</.link>
           <span :if={!@link}>{@title}</span>
         </h3>
-        <p class="mb-5 text-[16px] text-[#637381] dark:text-gray-300">
+        <p class="text-[#808d99] text-xl font-semibold mt-5">
           {@description}
         </p>
-        <.button_link navigate={@link} rounded="full" variant="outline" color="misc" size="leading-5 px-7 py-2 text-[15px]">View Details</.button_link>
+        <div class="flex mt-5 gap-x-3 pb-3">
+          <div :for={price <- @price}>
+            {render_slot(price)}
+          </div>
+        </div>
       </.card_content>
+      <div class="absolute top-0 start-0 mt-3 ms-3">
+        <div :for={badge <- @badge}>
+          {render_slot(badge)}
+        </div>
+      </div>
     </.card>
     """
   end

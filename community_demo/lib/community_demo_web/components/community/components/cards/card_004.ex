@@ -37,7 +37,7 @@ defmodule CommunityDemoWeb.Community.Components.Cards.Card004 do
           <.avatar src={@avatar} rounded="full" size="medium" />
           <div>
             <h6 class="text-[#111928] dark:text-white text-[14px] font-bold mb-1">
-             {@author}
+              {@author}
             </h6>
             <p class="text-[#637381] dark:text-gray-300 text-[13px]">{@tag}</p>
           </div>
@@ -47,7 +47,7 @@ defmodule CommunityDemoWeb.Community.Components.Cards.Card004 do
           <span :if={!@link}>{@title}</span>
         </h3>
         <p class="text-[#637381] dark:text-gray-300 text-[13px] font-semibold">
-         {@description}
+          {@description}
         </p>
       </.card_content>
     </.card>

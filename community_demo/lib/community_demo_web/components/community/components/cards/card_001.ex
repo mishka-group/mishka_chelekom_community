@@ -29,20 +29,20 @@ defmodule CommunityDemoWeb.Community.Components.Cards.Card001 do
   def community_card_001(assigns) do
     ~H"""
     <.card class={@class} rounded="large" id={@id}>
-      <.card_media
-        src={@src}
-        alt={@alt}
-      />
+      <.card_media src={@src} alt={@alt} />
       <.card_content padding="medium">
         <h3 class="text-[#111928] dark:text-white text-[24px] font-bold mb-3">
-        <.link :if={@link} navigate={@link}>{@title}</.link>
-        <span :if={!@link}>{@title}</span>
+          <.link :if={@link} navigate={@link}>{@title}</.link>
+          <span :if={!@link}>{@title}</span>
         </h3>
         <p class="text-[13px]">
           {@description}
         </p>
       </.card_content>
-      <.card_footer padding="medium" class="flex justify-between items-center border-t dark:border-gray-800 pt-5 lg:mx-2">
+      <.card_footer
+        padding="medium"
+        class="flex justify-between items-center border-t dark:border-gray-800 pt-5 lg:mx-2"
+      >
         <div class="flex gap-3 items-center">
           <.avatar size="large" rounded="full" src={@avatar} />
           <div class="space-y-1">
