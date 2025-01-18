@@ -58,6 +58,7 @@ defmodule CommunityDemo.MixProject do
       {:jason, "~> 1.2"},
       {:dns_cluster, "~> 0.1.1"},
       {:bandit, "~> 1.5"},
+      {:igniter_js, "~> 0.4.3", override: true},
       {:mishka_chelekom, github: "mishka-group/mishka_chelekom", only: :dev}
     ]
   end
