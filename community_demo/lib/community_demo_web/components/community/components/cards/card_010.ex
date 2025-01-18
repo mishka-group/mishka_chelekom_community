@@ -8,9 +8,6 @@ defmodule CommunityDemoWeb.Community.Components.Cards.Card010 do
   )
 
   attr(:class, :string, default: "shadow-md", doc: "")
-  attr(:src, :string, default: nil, doc: "")
-  attr(:alt, :string, default: nil, doc: "")
-  attr(:link, :string, default: nil, doc: "")
   attr(:title, :string, default: "", doc: "")
   attr(:description, :string, default: "", doc: "")
 
@@ -23,20 +20,12 @@ defmodule CommunityDemoWeb.Community.Components.Cards.Card010 do
 
   def community_card_010(assigns) do
     ~H"""
-     <.card class={@class} rounded="large" id={@id}>
+     <.card class={@class} rounded="extra_small" id={@id}>
+      <.card_title padding="large" title={@title} class="border-b dark:border-[#36363d]" />
       <.card_content padding="large" space="large">
-        <.card_media
-          src={@src}
-          alt={@alt}
-          rounded="medium"
-        />
-        <h3 class="text-[18px] font-bold">
-          <.link :if={@link} navigate={@link}>{@title}</.link>
-          <span :if={!@link}>{@title}</span>
-        </h3>
-        <p class="text-[#637381] dark:text-gray-300 text-[14px]">
-          {@description}
-        </p>
+      <p class="text-[#637381] dark:text-gray-300 text-[14px]">
+        {@description}
+      </p>
       </.card_content>
     </.card>
     """

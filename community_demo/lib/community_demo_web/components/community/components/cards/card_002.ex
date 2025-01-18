@@ -24,7 +24,7 @@ defmodule CommunityDemoWeb.Community.Components.Cards.Card002 do
 
   def community_card_002(assigns) do
     ~H"""
-    <.card class={@class} rounded="none" padding="medium" id="community-card-10">
+    <.card class={@class} rounded="none" padding="medium" id={@id}>
       <.card_content class="grid grid-cols-2">
         <div class="space-y-2">
           <h3 class="text-[#3758f9] text-[14px] font-bold">
