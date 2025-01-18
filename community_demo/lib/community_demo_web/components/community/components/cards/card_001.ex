@@ -1,0 +1,63 @@
+defmodule CommunityDemoWeb.Community.Components.Cards.Card001 do
+  use Phoenix.Component
+  import CommunityDemoWeb.Components.{Card, Avatar, Button}
+
+  @doc type: :component
+  attr(:id, :string,
+    default: nil,
+    doc: "A unique identifier is used to manage state and interaction"
+  )
+
+  attr(:class, :string, default: nil, doc: "")
+  attr(:src, :string, default: "", doc: "Card image source")
+  attr(:alt, :string, default: "", doc: "Card image alt")
+  attr(:link, :string, default: nil, doc: "")
+  attr(:title, :string, default: "", doc: "")
+  attr(:description, :string, default: "", doc: "")
+  attr(:author, :string, default: "", doc: "")
+  attr(:tag, :string, default: "", doc: "")
+  attr(:date, :string, default: "", doc: "")
+  attr(:avatar, :string, default: "", doc: "Source of avatar image")
+
+  attr(:rest, :global,
+    doc:
+      "Global attributes can define defaults which are merged with attributes provided by the caller"
+  )
+
+  slot(:inner_block, required: false, doc: "Inner block that renders HEEx content")
+
+  def community_card_001(assigns) do
+    ~H"""
+    <.card class={@class} rounded="large" id={@id}>
+      <.card_media
+        src={@src}
+        alt={@alt}
+      />
+      <.card_content padding="medium">
+        <h3 class="text-[#111928] dark:text-white text-[24px] font-bold mb-3">
+        <.link :if={@link} navigate={@link}>{@title}</.link>
+        <span :if={!@link}>{@title}</span>
+        </h3>
+        <p class="text-[13px]">
+          {@description}
+        </p>
+      </.card_content>
+      <.card_footer padding="medium" class="flex justify-between items-center border-t dark:border-gray-800 pt-5 lg:mx-2">
+        <div class="flex gap-3 items-center">
+          <.avatar size="large" rounded="full" src={@avatar} />
+          <div class="space-y-1">
+            <h6 class="text-[15px] font-semibold">
+              By {@author}
+            </h6>
+            <div class="text-[#637381] text-[13px] dark:text-gray-300">{@tag}</div>
+          </div>
+        </div>
+        <div class="text-end space-y-1">
+          <h6 class="text-[15px] font-bold">Date</h6>
+          <div class="text-[#637381] text-[13px] dark:text-gray-300">{@date}</div>
+        </div>
+      </.card_footer>
+    </.card>
+    """
+  end
+end
