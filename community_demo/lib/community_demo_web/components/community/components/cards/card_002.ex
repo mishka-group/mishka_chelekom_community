@@ -28,8 +28,8 @@ defmodule CommunityDemoWeb.Community.Components.Cards.Card002 do
       <.card_content class="grid grid-cols-2">
         <div class="space-y-2">
           <h3 class="text-[#3758f9] text-[14px] font-bold">
-          <.link :if={@link} navigate={@link}>{@title}</.link>
-          <span :if={!@link}>{@title}</span>
+            <.link :if={@link} navigate={@link}>{@title}</.link>
+            <span :if={!@link}>{@title}</span>
           </h3>
           <h3 class="text-[#111928] dark:text-gray-400 text-[13px] font-bold">
             {@sub_title}
@@ -38,11 +38,7 @@ defmodule CommunityDemoWeb.Community.Components.Cards.Card002 do
             {@description}
           </p>
         </div>
-        <.card_media
-          src={@src}
-          alt="Community card"
-          class="[&>img]:w-full"
-        />
+        <.card_media src={@src} alt="Community card" class="[&>img]:w-full" />
       </.card_content>
     </.card>
     """

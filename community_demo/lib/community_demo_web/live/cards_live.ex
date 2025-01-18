@@ -15,7 +15,7 @@ defmodule CommunityDemoWeb.CardsLive do
     Card011,
     Card012,
     Card013,
-    Card014,
+    Card014
   }
 
   def mount(_params, _session, socket) do

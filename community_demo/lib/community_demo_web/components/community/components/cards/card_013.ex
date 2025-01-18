@@ -29,7 +29,7 @@ defmodule CommunityDemoWeb.Community.Components.Cards.Card013 do
     ~H"""
     <.card class={@class} rounded="large" id={@id}>
       <.card_media
-      class="col-span-3 [&>img]:h-full [&>img]:w-full [&>img]:object-cover"
+        class="col-span-3 [&>img]:h-full [&>img]:w-full [&>img]:object-cover"
         src={@src}
         alt={@alt}
       />
@@ -41,7 +41,15 @@ defmodule CommunityDemoWeb.Community.Components.Cards.Card013 do
         <p class="mb-5 text-[16px] text-[#637381] dark:text-gray-300">
           {@description}
         </p>
-        <.button_link navigate={@link} rounded="full" variant="outline" color="misc" size="leading-5 px-7 py-2 text-[15px]">View Details</.button_link>
+        <.button_link
+          navigate={@link}
+          rounded="full"
+          variant="outline"
+          color="misc"
+          size="leading-5 px-7 py-2 text-[15px]"
+        >
+          View Details
+        </.button_link>
       </.card_content>
     </.card>
     """

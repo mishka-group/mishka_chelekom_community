@@ -31,17 +31,17 @@ defmodule CommunityDemoWeb.Community.Components.Cards.Card007 do
           <span :if={!@link}>{@title}</span>
         </h3>
         <p class="text-[#637381] dark:text-gray-300 text-[14px]">
-         {@description}
+          {@description}
         </p>
         <div class="flex gap-5 items-center">
-        <.avatar src={@avatar} rounded="full" size="medium" />
-        <div>
-          <h6 class="text-[#111928] dark:text-white text-[14px] font-bold mb-1">
-            {@author}
-          </h6>
-          <p class="text-[#637381] dark:text-gray-300 text-[13px]">{@tag}</p>
+          <.avatar src={@avatar} rounded="full" size="medium" />
+          <div>
+            <h6 class="text-[#111928] dark:text-white text-[14px] font-bold mb-1">
+              {@author}
+            </h6>
+            <p class="text-[#637381] dark:text-gray-300 text-[13px]">{@tag}</p>
+          </div>
         </div>
-      </div>
       </.card_content>
     </.card>
     """

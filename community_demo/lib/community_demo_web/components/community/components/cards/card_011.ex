@@ -33,13 +33,42 @@ defmodule CommunityDemoWeb.Community.Components.Cards.Card011 do
           <p class="text-[#637381] dark:text-gray-300 text-[14px]">
             {@description}
           </p>
-          <.link navigate={@link} class="inline-flex items-center leading-5 text-[#91939b] hover:text-[#565860] dark:text-[#dedfe4] dark:hover:text-[#bcbec4] transition-all duration-150 gap-1">
+          <.link
+            navigate={@link}
+            class="inline-flex items-center leading-5 text-[#91939b] hover:text-[#565860] dark:text-[#dedfe4] dark:hover:text-[#bcbec4] transition-all duration-150 gap-1"
+          >
             <span>Learn more</span>
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4"><path d="M18 8L22 12L18 16"/><path d="M2 12H22"/></svg>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="size-4"
+            >
+              <path d="M18 8L22 12L18 16" /><path d="M2 12H22" />
+            </svg>
           </.link>
         </div>
         <.link navigate={@link} target="_blank" class="text-gray-500 inline-block mt-1.5">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4"><path d="M21 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h6"/><path d="m21 3-9 9"/><path d="M15 3h6v6"/></svg>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="size-4"
+          >
+            <path d="M21 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h6" /><path d="m21 3-9 9" /><path d="M15 3h6v6" />
+          </svg>
         </.link>
       </.card_content>
     </.card>

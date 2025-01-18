@@ -28,27 +28,24 @@ defmodule CommunityDemoWeb.Community.Components.Cards.Card014 do
   def community_card_014(assigns) do
     ~H"""
     <.card rounded="large" class={@class} id={@id}>
-      <.card_media
-        src={@src}
-        alt={@alt}
-      />
+      <.card_media src={@src} alt={@alt} />
       <.card_content padding="large">
         <h3 class="text-[#111928] dark:text-white text-2xl font-bold">
-        <.link :if={@link} navigate={@link}>{@title}</.link>
+          <.link :if={@link} navigate={@link}>{@title}</.link>
           <span :if={!@link}>{@title}</span>
         </h3>
         <p class="text-[#808d99] text-xl font-semibold mt-5">
-         {@description}
+          {@description}
         </p>
         <div class="flex mt-5 gap-x-3 pb-3">
           <div :for={price <- @price}>
-          {render_slot(price)}
+            {render_slot(price)}
           </div>
         </div>
       </.card_content>
       <div class="absolute top-0 start-0 mt-3 ms-3">
         <div :for={badge <- @badge}>
-        {render_slot(badge)}
+          {render_slot(badge)}
         </div>
       </div>
     </.card>

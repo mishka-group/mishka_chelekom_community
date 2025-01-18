@@ -27,9 +27,16 @@ defmodule CommunityDemoWeb.Community.Components.Cards.Card006 do
           {@title}
         </h3>
         <p class="text-[#637381] dark:text-gray-300 text-[14px]">
-         {@description}
+          {@description}
         </p>
-        <.button_link navigate={@link} size="py-2 px-3 leading-5" color="secondary" variant="default" display="inline-block" rounded="large">
+        <.button_link
+          navigate={@link}
+          size="py-2 px-3 leading-5"
+          color="secondary"
+          variant="default"
+          display="inline-block"
+          rounded="large"
+        >
           Learn More
         </.button_link>
       </.card_content>

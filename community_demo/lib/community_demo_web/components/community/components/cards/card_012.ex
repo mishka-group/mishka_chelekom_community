@@ -24,10 +24,7 @@ defmodule CommunityDemoWeb.Community.Components.Cards.Card012 do
   def community_card_012(assigns) do
     ~H"""
     <.card class={@class} rounded="large" id={@id}>
-      <.card_media
-        src={@src}
-        alt={@alt}
-      />
+      <.card_media src={@src} alt={@alt} />
       <.card_content padding="large" class="text-center">
         <h3 class="mb-4 block text-xl font-semibold text-dark hover:text-blue-600 dark:text-white sm:text-[22px] md:text-xl lg:text-[22px] xl:text-xl 2xl:text-[22px]">
           <.link :if={@link} navigate={@link}>{@title}</.link>
@@ -36,7 +33,15 @@ defmodule CommunityDemoWeb.Community.Components.Cards.Card012 do
         <p class="mb-7 text-base leading-relaxed text-[#98A2AB] dark:text-dark-6">
           {@description}
         </p>
-        <.button_link navigate={@link} rounded="full" variant="outline" color="natural" size="leading-5 px-7 py-2 text-[15px]">View Details</.button_link>
+        <.button_link
+          navigate={@link}
+          rounded="full"
+          variant="outline"
+          color="natural"
+          size="leading-5 px-7 py-2 text-[15px]"
+        >
+          View Details
+        </.button_link>
       </.card_content>
     </.card>
     """
