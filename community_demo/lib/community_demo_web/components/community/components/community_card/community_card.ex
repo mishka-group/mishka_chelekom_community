@@ -1,13 +1,18 @@
 defmodule CommunityDemoWeb.CommunityCard do
   use Phoenix.Component
+  import CommunityDemoWeb.Components.{
+    Card,
+    Avatar,
+    Button
+  }
 
   @doc type: :component
   attr :id, :string,
     default: nil,
     doc: "A unique identifier is used to manage state and interaction"
 
-  attr :src, :string, default: nil, doc: "Card image source"
-  attr :alt, :string, default: nil, doc: "Card image alt"
+  attr :src, :string, default: "", doc: "Card image source"
+  attr :alt, :string, default: "", doc: "Card image alt"
   attr :link, :string, default: nil, doc: ""
   attr :title, :string, default: "", doc: ""
   attr :description, :string, default: "", doc: ""
@@ -459,8 +464,6 @@ defmodule CommunityDemoWeb.CommunityCard do
   attr :description, :string, default: "", doc: ""
   attr :avatar, :string, default: nil, doc: ""
   attr :link, :string, default: nil, doc: ""
-  attr :title, :string, default: "", doc: ""
-  attr :description, :string, default: "", doc: ""
 
   attr :rest, :global,
     doc:
@@ -498,12 +501,12 @@ defmodule CommunityDemoWeb.CommunityCard do
     default: nil,
     doc: "A unique identifier is used to manage state and interaction"
 
+  attr :src, :string, default: "", doc: ""
+  attr :alt, :string, default: "", doc: ""
   attr :title, :string, default: "", doc: ""
   attr :description, :string, default: "", doc: ""
   attr :avatar, :string, default: nil, doc: ""
   attr :link, :string, default: nil, doc: ""
-  attr :title, :string, default: "", doc: ""
-  attr :description, :string, default: "", doc: ""
 
   slot :price, required: false
   slot :badge, required: false
@@ -529,7 +532,7 @@ defmodule CommunityDemoWeb.CommunityCard do
         <p class="mb-7 text-base leading-relaxed text-[#98A2AB] dark:text-dark-6">
           {@description}
         </p>
-        <.button_link rounded="full" variant="outline" color="natural" size="leading-5 px-7 py-2 text-[15px]">View Details</.button>
+        <.button_link navigate={@link} rounded="full" variant="outline" color="natural" size="leading-5 px-7 py-2 text-[15px]">View Details</.button_link>
       </.card_content>
     </.card>
     """
@@ -539,12 +542,12 @@ defmodule CommunityDemoWeb.CommunityCard do
     default: nil,
     doc: "A unique identifier is used to manage state and interaction"
 
+  attr :src, :string, default: "", doc: ""
+  attr :alt, :string, default: "", doc: ""
   attr :title, :string, default: "", doc: ""
   attr :description, :string, default: "", doc: ""
   attr :avatar, :string, default: nil, doc: ""
   attr :link, :string, default: nil, doc: ""
-  attr :title, :string, default: "", doc: ""
-  attr :description, :string, default: "", doc: ""
 
   slot :price, required: false
   slot :badge, required: false
@@ -560,8 +563,8 @@ defmodule CommunityDemoWeb.CommunityCard do
     <.card class="grid grid-cols-7 gap-2 shadow-sm" rounded="large" id={@id}>
       <.card_media
       class="col-span-3 [&>img]:h-full [&>img]:w-full [&>img]:object-cover"
-        src={~p"/images/card02.jpg"}
-        alt="Community card"
+        src={@src}
+        alt={@alt}
       />
       <.card_content class="col-span-4 flex flex-col items-start justify-between" padding="medium">
         <h3 class="mb-3 text-[18px] font-bold text-[#111928] dark:text-white">
@@ -571,7 +574,7 @@ defmodule CommunityDemoWeb.CommunityCard do
         <p class="mb-5 text-[16px] text-[#637381] dark:text-gray-300">
           {@description}
         </p>
-        <.button_link rounded="full" variant="outline" color="misc" size="leading-5 px-7 py-2 text-[15px]">View Details</.button>
+        <.button_link navigate={@link} rounded="full" variant="outline" color="misc" size="leading-5 px-7 py-2 text-[15px]">View Details</.button_link>
       </.card_content>
     </.card>
     """
