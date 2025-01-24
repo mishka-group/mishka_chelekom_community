@@ -14,6 +14,14 @@ integrated with its dedicated CLI tool. It serves as a platform where you can:
   </pre>
 </div>
 
+<br />
+
+<p align="center">
+  <a href="https://www.buymeacoffee.com/mishkagroup">
+    <img src="https://img.buymeacoffee.com/button-api/?text=Donate with Buy Me a Coffee&emoji=☕&slug=mishkagroup&button_colour=FFDD00&font_colour=000000&font_family=Bree&outline_colour=000000&coffee_colour=ffffff" />
+  </a>
+</p>
+
 
 
 ## How to Get Started
