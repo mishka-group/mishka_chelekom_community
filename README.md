@@ -6,6 +6,16 @@ integrated with its dedicated CLI tool. It serves as a platform where you can:
 - Share your custom components with others.
 - Use components not included in the Core, developed by the Mishka team.
 
+<h2 align="center">Mishka Chelekom Community Edition Project</h2>
+
+<div align="center">
+  <pre style="display: inline-block; text-align: left;">
+    💖 Hey there! This project needs your support; Please <b><a href="https://github.com/sponsors/mishka-group">support me financially!</a></b> 💖
+  </pre>
+</div>
+
+
+
 ## How to Get Started
 
 No additional installations are needed! Simply:
