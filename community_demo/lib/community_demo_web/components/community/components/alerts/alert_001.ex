@@ -9,6 +9,7 @@ defmodule CommunityDemoWeb.Community.Components.Alerts.Alert001 do
   )
 
   attr(:class, :string, default: nil, doc: "")
+
   attr(:rest, :global,
     doc:
       "Global attributes can define defaults which are merged with attributes provided by the caller"

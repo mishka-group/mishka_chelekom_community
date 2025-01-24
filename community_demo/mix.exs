@@ -58,7 +58,7 @@ defmodule CommunityDemo.MixProject do
       {:jason, "~> 1.2"},
       {:dns_cluster, "~> 0.1.1"},
       {:bandit, "~> 1.5"},
-      {:mishka_chelekom, "~> 0.0.2-rc.2"}
+      {:mishka_chelekom, "~> 0.0.3-alpha.1", only: :dev}
     ]
   end
 

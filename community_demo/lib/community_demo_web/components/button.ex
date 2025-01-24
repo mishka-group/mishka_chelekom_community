@@ -153,6 +153,7 @@ defmodule CommunityDemoWeb.Components.Button do
     default: "inline-flex",
     doc: "Specifies the CSS display property for the element"
 
+  attr :line_height, :string, default: "leading-5", doc: "Line height"
   attr :icon, :string, default: nil, doc: "Icon displayed alongside of an item"
   attr :icon_class, :string, default: nil, doc: "Determines custom class for the icon"
 
@@ -201,6 +202,7 @@ defmodule CommunityDemoWeb.Components.Button do
             rounded_size(@rounded),
             border_size(@border, @variant),
             @full_width && "w-full",
+            @line_height,
             @font_weight,
             @display,
             @class
@@ -264,6 +266,7 @@ defmodule CommunityDemoWeb.Components.Button do
       "Determines the overall size of the elements, including padding, font size, and other items"
 
   attr :type, :string, default: "button", doc: "Determines type of input"
+  attr :line_height, :string, default: "leading-5", doc: "Line height"
 
   attr :content_position, :string,
     default: "center",
@@ -301,6 +304,7 @@ defmodule CommunityDemoWeb.Components.Button do
             border_size(@border, @variant),
             @full_width && "w-full",
             @font_weight,
+            @line_height,
             @display,
             @class
           ]
@@ -356,6 +360,7 @@ defmodule CommunityDemoWeb.Components.Button do
     default: "inline-flex",
     doc: "Specifies the CSS display property for the element"
 
+  attr :line_height, :string, default: "leading-5", doc: "Line height"
   attr :icon, :string, default: nil, doc: "Icon displayed alongside of an item"
   attr :icon_class, :string, default: nil, doc: "Determines custom class for the icon"
 
@@ -402,6 +407,7 @@ defmodule CommunityDemoWeb.Components.Button do
             border_size(@border, @variant),
             @full_width && "w-full",
             @font_weight,
+            @line_height,
             @display,
             @class
           ]
@@ -446,6 +452,7 @@ defmodule CommunityDemoWeb.Components.Button do
             border_size(@border, @variant),
             @full_width && "w-full",
             @font_weight,
+            @line_height,
             @class
           ]
       }
@@ -489,6 +496,7 @@ defmodule CommunityDemoWeb.Components.Button do
             border_size(@border, @variant),
             @full_width && "w-full",
             @font_weight,
+            @line_height,
             @class
           ]
       }
