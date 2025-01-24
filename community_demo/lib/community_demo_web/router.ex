@@ -24,6 +24,7 @@ defmodule CommunityDemoWeb.Router do
     pipe_through(:browser)
 
     live "/cards", CardsLive
+    live "/alerts", AlertsLive
   end
 
   # Other scopes may use custom stacks.
