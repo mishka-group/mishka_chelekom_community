@@ -10,7 +10,7 @@ integrated with its dedicated CLI tool. It serves as a platform where you can:
 
 <div align="center">
   <pre style="display: inline-block; text-align: left;">
-    💖 This project needs your support; Please <b><a href="https://github.com/sponsors/mishka-group">support us financially!</a></b> 💖
+    💖 Hey there! This project needs your support; Please <b><a href="https://github.com/sponsors/mishka-group">support us financially!</a></b> 💖
   </pre>
 </div>
 
