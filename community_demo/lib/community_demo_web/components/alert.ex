@@ -82,6 +82,9 @@ defmodule CommunityDemoWeb.Components.Alert do
     doc: "Icon displayed alongside of an item"
 
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
+  attr :content_class, :string, default: nil, doc: "Custom CSS class for additional styling for contnet"
+  attr :title_class, :string, default: "flex items-center gap-1.5 leading-6 font-semibold mb-1", doc: "Custom CSS class for additional styling to tile"
+  attr :button_class, :string, default: "p-2", doc: "Custom CSS class for additional styling to tile"
 
   slot :inner_block, doc: "Inner block that renders HEEx content"
 
@@ -109,15 +112,15 @@ defmodule CommunityDemoWeb.Components.Alert do
       {@rest}
     >
       <div class="flex items-center justify-between gap-2">
-        <div class="space-y-1.5">
-          <div :if={@title} class="flex items-center gap-1.5 font-semibold">
+        <div>
+          <div :if={@title} class="flex items-center gap-1.5 leading-6 font-semibold mb-1">
             <.icon :if={!is_nil(@icon)} name={@icon} class="aler-icon" /> {@title}
           </div>
 
           <div class="">{msg}</div>
         </div>
 
-        <button type="button" class="group p-2 shrink-0" aria-label={gettext("close")}>
+        <button type="button" class={["group shrink-0", @button_class]} aria-label={gettext("close")}>
           <.icon name="hero-x-mark-solid" class="aler-icon opacity-40 group-hover:opacity-70" />
         </button>
       </div>
@@ -225,6 +228,7 @@ defmodule CommunityDemoWeb.Components.Alert do
     doc: "Icon displayed alongside of an item"
 
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
+  attr :title_class, :string, default: "flex items-center gap-1.5 leading-6 font-semibold mb-1", doc: "Custom CSS class for additional styling to tile"
 
   slot :inner_block, doc: "Inner block that renders HEEx content"
 
@@ -250,15 +254,11 @@ defmodule CommunityDemoWeb.Components.Alert do
       ]}
       {@rest}
     >
-      <div class="flex items-center justify-between gap-2">
-        <div class="space-y-1.5">
-          <div :if={@title} class="flex items-center gap-1.5 font-semibold">
-            <.icon :if={!is_nil(@icon)} name={@icon} class="aler-icon" /> {@title}
-          </div>
-
-          <div class="">{render_slot(@inner_block)}</div>
-        </div>
+      <div :if={@title} class={@title_class}>
+        <.icon :if={!is_nil(@icon)} name={@icon} class="aler-icon" /> {@title}
       </div>
+
+      {render_slot(@inner_block)}
     </div>
     """
   end
