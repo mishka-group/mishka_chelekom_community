@@ -64,6 +64,7 @@ defmodule CommunityDemoWeb.Components.Alert do
   attr :position, :string, default: "", doc: "Determines the element position"
   attr :width, :string, default: "full", doc: "Determines the element width"
   attr :border, :string, default: "extra_small", doc: "Determines the element border width"
+  attr :padding, :string, default: "small", doc: "Determines the element padding size"
 
   attr :size, :string,
     default: "medium",
@@ -81,6 +82,9 @@ defmodule CommunityDemoWeb.Components.Alert do
     doc: "Icon displayed alongside of an item"
 
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
+  attr :content_class, :string, default: nil, doc: "Custom CSS class for additional styling for contnet"
+  attr :title_class, :string, default: "flex items-center gap-1.5 leading-6 font-semibold mb-1", doc: "Custom CSS class for additional styling to tile"
+  attr :button_class, :string, default: "p-2", doc: "Custom CSS class for additional styling to tile"
 
   slot :inner_block, doc: "Inner block that renders HEEx content"
 
@@ -94,12 +98,13 @@ defmodule CommunityDemoWeb.Components.Alert do
       phx-click={JS.push("lv:clear-flash", value: %{key: @kind}) |> hide_alert("##{@id}")}
       role="alert"
       class={[
-        "z-50 px-2 py-1.5",
+        "z-50",
         border_class(@border, @variant),
         color_variant(@variant, @kind),
         position_class(@position),
         rounded_size(@rounded),
         width_class(@width),
+        padding_size(@padding),
         content_size(@size),
         @font_weight,
         @class
@@ -107,15 +112,15 @@ defmodule CommunityDemoWeb.Components.Alert do
       {@rest}
     >
       <div class="flex items-center justify-between gap-2">
-        <div class="space-y-1.5">
-          <div :if={@title} class="flex items-center gap-1.5 font-semibold">
+        <div>
+          <div :if={@title} class="flex items-center gap-1.5 leading-6 font-semibold mb-1">
             <.icon :if={!is_nil(@icon)} name={@icon} class="aler-icon" /> {@title}
           </div>
 
           <div class="">{msg}</div>
         </div>
 
-        <button type="button" class="group p-2 shrink-0" aria-label={gettext("close")}>
+        <button type="button" class={["group shrink-0", @button_class]} aria-label={gettext("close")}>
           <.icon name="hero-x-mark-solid" class="aler-icon opacity-40 group-hover:opacity-70" />
         </button>
       </div>
@@ -205,6 +210,7 @@ defmodule CommunityDemoWeb.Components.Alert do
   attr :position, :string, default: "", doc: "Determines the element position"
   attr :width, :string, default: "full", doc: "Determines the element width"
   attr :border, :string, default: "extra_small", doc: "Determines the element border width"
+  attr :padding, :string, default: "small", doc: "Determines the element padding size"
 
   attr :size, :string,
     default: "medium",
@@ -222,6 +228,7 @@ defmodule CommunityDemoWeb.Components.Alert do
     doc: "Icon displayed alongside of an item"
 
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
+  attr :title_class, :string, default: "flex items-center gap-1.5 leading-6 font-semibold mb-1", doc: "Custom CSS class for additional styling to tile"
 
   slot :inner_block, doc: "Inner block that renders HEEx content"
 
@@ -235,30 +242,40 @@ defmodule CommunityDemoWeb.Components.Alert do
       id={@id}
       role="alert"
       class={[
-        "p-3.5",
         border_class(@border, @variant),
         color_variant(@variant, @kind),
         position_class(@position),
         rounded_size(@rounded),
         width_class(@width),
+        padding_size(@padding),
         content_size(@size),
         @font_weight,
         @class
       ]}
       {@rest}
     >
-      <div class="flex items-center justify-between gap-2">
-        <div class="space-y-1.5">
-          <div :if={@title} class="flex items-center gap-1.5 font-semibold">
-            <.icon :if={!is_nil(@icon)} name={@icon} class="aler-icon" /> {@title}
-          </div>
-
-          <div class="">{render_slot(@inner_block)}</div>
-        </div>
+      <div :if={@title} class={@title_class}>
+        <.icon :if={!is_nil(@icon)} name={@icon} class="aler-icon" /> {@title}
       </div>
+
+      {render_slot(@inner_block)}
     </div>
     """
   end
+
+  defp padding_size("extra_small"), do: "p-2"
+
+  defp padding_size("small"), do: "p-3"
+
+  defp padding_size("medium"), do: "p-4"
+
+  defp padding_size("large"), do: "p-5"
+
+  defp padding_size("extra_large"), do: "p-6"
+
+  defp padding_size("none"), do: nil
+
+  defp padding_size(params) when is_binary(params), do: params
 
   defp rounded_size("extra_small"), do: "rounded-sm"
 
@@ -282,6 +299,7 @@ defmodule CommunityDemoWeb.Components.Alert do
   defp width_class("large"), do: "w-80"
   defp width_class("extra_large"), do: "w-96"
   defp width_class("full"), do: "w-full"
+  defp width_class("fit"), do: "w-fit"
   defp width_class(params) when is_binary(params), do: params
 
   defp content_size("extra_small"), do: "text-[12px] [&_.aler-icon]:size-3.5"

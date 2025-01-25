@@ -25,6 +25,7 @@ defmodule CommunityDemoWeb.Router do
 
     live "/cards", CardsLive
     live "/alerts", AlertsLive
+    live "/tabs", TabsLive
   end
 
   # Other scopes may use custom stacks.
