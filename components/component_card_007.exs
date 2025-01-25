@@ -3,6 +3,7 @@
     name: "component_card_007",
     args: [
       only: ["community_card_007"],
+      helpers: [],
       module: ""
     ],
     optional: [],
