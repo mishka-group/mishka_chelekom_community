@@ -3,7 +3,8 @@ defmodule CommunityDemoWeb.Demo.Community.AlertsLive do
 
   import CommunityDemoWeb.Community.Components.Alerts.{
     Alert001,
-    Alert002
+    Alert002,
+    Alert003,
   }
 
   def mount(_params, _session, socket) do

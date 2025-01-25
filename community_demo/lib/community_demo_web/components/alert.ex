@@ -64,6 +64,7 @@ defmodule CommunityDemoWeb.Components.Alert do
   attr :position, :string, default: "", doc: "Determines the element position"
   attr :width, :string, default: "full", doc: "Determines the element width"
   attr :border, :string, default: "extra_small", doc: "Determines the element border width"
+  attr :padding, :string, default: "small", doc: "Determines the element padding size"
 
   attr :size, :string,
     default: "medium",
@@ -94,12 +95,13 @@ defmodule CommunityDemoWeb.Components.Alert do
       phx-click={JS.push("lv:clear-flash", value: %{key: @kind}) |> hide_alert("##{@id}")}
       role="alert"
       class={[
-        "z-50 px-2 py-1.5",
+        "z-50",
         border_class(@border, @variant),
         color_variant(@variant, @kind),
         position_class(@position),
         rounded_size(@rounded),
         width_class(@width),
+        padding_size(@padding),
         content_size(@size),
         @font_weight,
         @class
@@ -205,6 +207,7 @@ defmodule CommunityDemoWeb.Components.Alert do
   attr :position, :string, default: "", doc: "Determines the element position"
   attr :width, :string, default: "full", doc: "Determines the element width"
   attr :border, :string, default: "extra_small", doc: "Determines the element border width"
+  attr :padding, :string, default: "small", doc: "Determines the element padding size"
 
   attr :size, :string,
     default: "medium",
@@ -235,12 +238,12 @@ defmodule CommunityDemoWeb.Components.Alert do
       id={@id}
       role="alert"
       class={[
-        "p-3.5",
         border_class(@border, @variant),
         color_variant(@variant, @kind),
         position_class(@position),
         rounded_size(@rounded),
         width_class(@width),
+        padding_size(@padding),
         content_size(@size),
         @font_weight,
         @class
@@ -259,6 +262,20 @@ defmodule CommunityDemoWeb.Components.Alert do
     </div>
     """
   end
+
+  defp padding_size("extra_small"), do: "p-2"
+
+  defp padding_size("small"), do: "p-3"
+
+  defp padding_size("medium"), do: "p-4"
+
+  defp padding_size("large"), do: "p-5"
+
+  defp padding_size("extra_large"), do: "p-6"
+
+  defp padding_size("none"), do: nil
+
+  defp padding_size(params) when is_binary(params), do: params
 
   defp rounded_size("extra_small"), do: "rounded-sm"
 
@@ -282,6 +299,7 @@ defmodule CommunityDemoWeb.Components.Alert do
   defp width_class("large"), do: "w-80"
   defp width_class("extra_large"), do: "w-96"
   defp width_class("full"), do: "w-full"
+  defp width_class("fit"), do: "w-fit"
   defp width_class(params) when is_binary(params), do: params
 
   defp content_size("extra_small"), do: "text-[12px] [&_.aler-icon]:size-3.5"
