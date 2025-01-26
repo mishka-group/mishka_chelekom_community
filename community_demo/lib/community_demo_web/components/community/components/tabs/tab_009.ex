@@ -23,16 +23,11 @@ defmodule CommunityDemoWeb.Community.Components.Tabs.Tab009 do
     attr :icon_class, :string, doc: "Determines custom class for the icon"
     attr :icon_position, :string, doc: "Determines icon position"
     attr :active, :boolean, doc: "Indicates whether the element is currently active and visible"
-    attr :badge, :string, doc: "Indicates whether the element is currently active and visible"
-
-    attr :badge_color, :string,
-      doc: "Indicates whether the element is currently active and visible"
-
-    attr :badge_position, :string,
-      doc: "Indicates whether the element is currently active and visible"
-
-    attr :badge_size, :string,
-      doc: "Indicates whether the element is currently active and visible"
+    attr :badge, :string, doc: "Add badge to tab"
+    attr :badge_color, :string, doc: "badge color"
+    attr :badge_position, :string, doc: "badge position"
+    attr :badge_size, :string, doc: "badge size"
+    attr :badge_variant, :string, doc: "badge color varinat"
   end
 
   slot :panel, required: false do
@@ -60,16 +55,20 @@ defmodule CommunityDemoWeb.Community.Components.Tabs.Tab009 do
       color={@color}
       hide_list_border
       full_width_tab
-      class={[
-        "bg-white shadow-lg dark:bg-[#323238] py-5 px-3 rounded-lg dark:border-[#454549]",
-        @class
-      ]}
+      class={
+        [
+          "bg-white shadow-lg dark:bg-[#323238] py-5 px-3 rounded-lg dark:border-[#454549]",
+          @class
+        ]
+        |> Enum.join(" ")
+        |> String.trim()
+      }
     >
-      <:tab :for={{tab, index} <- Enum.with_index(@tab, 1)} icon={tab[:icon]} class={tab[:class]}>
+      <:tab :for={{tab, _} <- Enum.with_index(@tab, 1)} icon={tab[:icon]} class={tab[:class]}>
         {render_slot(tab)}
       </:tab>
 
-      <:panel :for={{panel, index} <- Enum.with_index(@panel, 1)} class={panel[:class]}>
+      <:panel :for={{panel, _} <- Enum.with_index(@panel, 1)} class={panel[:class]}>
         {render_slot(panel)}
       </:panel>
     </.tabs>
