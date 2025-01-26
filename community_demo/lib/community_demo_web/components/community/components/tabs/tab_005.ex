@@ -20,16 +20,10 @@ defmodule CommunityDemoWeb.Community.Components.Tabs.Tab005 do
     attr :icon_class, :string, doc: "Determines custom class for the icon"
     attr :icon_position, :string, doc: "Determines icon position"
     attr :active, :boolean, doc: "Indicates whether the element is currently active and visible"
-    attr :badge, :string, doc: "Indicates whether the element is currently active and visible"
-
-    attr :badge_color, :string,
-      doc: "Indicates whether the element is currently active and visible"
-
-    attr :badge_position, :string,
-      doc: "Indicates whether the element is currently active and visible"
-
-    attr :badge_size, :string,
-      doc: "Indicates whether the element is currently active and visible"
+    attr :badge, :string, doc: ""
+    attr :badge_color, :string, doc: ""
+    attr :badge_position, :string, doc: ""
+    attr :badge_size, :string,doc: ""
   end
 
   slot :panel, required: false do
@@ -53,11 +47,11 @@ defmodule CommunityDemoWeb.Community.Components.Tabs.Tab005 do
       size={@size}
       class={@class}
     >
-      <:tab :for={{tab, index} <- Enum.with_index(@tab, 1)} icon={tab[:icon]} class={tab[:class]}>
+      <:tab :for={{tab, _} <- Enum.with_index(@tab, 1)} icon={tab[:icon]} class={tab[:class]}>
         {render_slot(tab)}
       </:tab>
 
-      <:panel :for={{panel, index} <- Enum.with_index(@panel, 1)} class={panel[:class]}>
+      <:panel :for={{panel, _} <- Enum.with_index(@panel, 1)} class={panel[:class]}>
         {render_slot(panel)}
       </:panel>
     </.tabs>
