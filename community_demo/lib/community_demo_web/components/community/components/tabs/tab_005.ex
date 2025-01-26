@@ -20,10 +20,11 @@ defmodule CommunityDemoWeb.Community.Components.Tabs.Tab005 do
     attr :icon_class, :string, doc: "Determines custom class for the icon"
     attr :icon_position, :string, doc: "Determines icon position"
     attr :active, :boolean, doc: "Indicates whether the element is currently active and visible"
-    attr :badge, :string, doc: ""
-    attr :badge_color, :string, doc: ""
-    attr :badge_position, :string, doc: ""
-    attr :badge_size, :string,doc: ""
+    attr :badge, :string, doc: "Add badge to tab"
+    attr :badge_color, :string, doc: "badge color"
+    attr :badge_position, :string, doc: "badge position"
+    attr :badge_size, :string, doc: "badge size"
+    attr :badge_variant, :string, doc: "badge color varinat"
   end
 
   slot :panel, required: false do
