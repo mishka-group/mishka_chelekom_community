@@ -39,15 +39,15 @@ defmodule CommunityDemoWeb.Components.FormWrapper do
     doc: "A unique identifier is used to manage state and interaction"
 
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
-  attr :color, :string, default: nil, doc: "Determines color theme"
-  attr :variant, :string, default: nil, doc: "Determines the style"
-  attr :border, :string, default: nil, doc: "Determines border style"
-  attr :rounded, :string, default: nil, doc: "Determines the border radius"
-  attr :padding, :string, default: nil, doc: "Determines padding for items"
-  attr :space, :string, default: nil, doc: "Space between items"
+  attr :color, :string, default: "", doc: "Determines color theme"
+  attr :variant, :string, default: "", doc: "Determines the style"
+  attr :border, :string, default: "", doc: "Determines border style"
+  attr :rounded, :string, default: "", doc: "Determines the border radius"
+  attr :padding, :string, default: "", doc: "Determines padding for items"
+  attr :space, :string, default: "", doc: "Space between items"
 
   attr :size, :string,
-    default: nil,
+    default: "",
     doc:
       "Determines the overall size of the elements, including padding, font size, and other items"
 
@@ -98,9 +98,7 @@ defmodule CommunityDemoWeb.Components.FormWrapper do
 
   defp size_class("extra_large"), do: "text-xl"
 
-  defp size_class(_), do: nil
-
-  defp rounded_size("none"), do: "rounded-none"
+  defp size_class(params) when is_binary(params), do: params
 
   defp rounded_size("extra_small"), do: "rounded-sm"
 
@@ -114,26 +112,17 @@ defmodule CommunityDemoWeb.Components.FormWrapper do
 
   defp rounded_size("full"), do: "rounded-full"
 
-  defp rounded_size(_), do: nil
+  defp rounded_size(params) when is_binary(params), do: params
 
   defp border_class(_, variant) when variant in ["default", "shadow", "transparent"],
     do: nil
 
-  defp border_class("none", _), do: "border-0"
-
   defp border_class("extra_small", _), do: "border"
-
   defp border_class("small", _), do: "border-2"
-
   defp border_class("medium", _), do: "border-[3px]"
-
   defp border_class("large", _), do: "border-4"
-
   defp border_class("extra_large", _), do: "border-[5px]"
-
   defp border_class(params, _) when is_binary(params), do: params
-
-  defp border_class(_, _), do: nil
 
   defp padding_class("extra_small"), do: "p-2"
 
@@ -146,7 +135,6 @@ defmodule CommunityDemoWeb.Components.FormWrapper do
   defp padding_class("extra_large"), do: "p-6"
 
   defp padding_class(params) when is_binary(params), do: params
-  defp padding_class(_), do: nil
 
   defp space_class("extra_small"), do: "space-y-1"
 
@@ -159,7 +147,13 @@ defmodule CommunityDemoWeb.Components.FormWrapper do
   defp space_class("extra_large"), do: "space-y-3"
 
   defp space_class(params) when is_binary(params), do: params
-  defp space_class(_), do: nil
+
+  defp color_variant("base", "base") do
+    [
+      "bg-white text-[#09090b] border-[#e4e4e7] shadow-sm",
+      "dark:bg-[#18181B] dark:text-[#FAFAFA] dark:border-[#27272a]"
+    ]
+  end
 
   defp color_variant("default", "white") do
     [
@@ -506,6 +500,4 @@ defmodule CommunityDemoWeb.Components.FormWrapper do
   end
 
   defp color_variant(params, _) when is_binary(params), do: params
-
-  defp color_variant(_, _), do: nil
 end

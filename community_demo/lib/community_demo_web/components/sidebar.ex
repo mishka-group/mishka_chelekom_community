@@ -18,23 +18,6 @@ defmodule CommunityDemoWeb.Components.Sidebar do
   use Gettext, backend: CommunityDemoWeb.Gettext
   alias Phoenix.LiveView.JS
 
-  @colors [
-    "natural",
-    "white",
-    "dark",
-    "primary",
-    "secondary",
-    "success",
-    "warning",
-    "danger",
-    "info",
-    "silver",
-    "misc",
-    "dawn"
-  ]
-
-  @variants ["default", "outline", "transparent", "bordered", "gradient"]
-
   @doc """
   Renders a `sidebar` component that can be shown or hidden based on user interactions.
 
@@ -56,8 +39,8 @@ defmodule CommunityDemoWeb.Components.Sidebar do
     required: true,
     doc: "A unique identifier is used to manage state and interaction"
 
-  attr :variant, :string, values: @variants, default: "default", doc: "Determines the style"
-  attr :color, :string, values: @colors, default: "natural", doc: "Determines color theme"
+  attr :variant, :string, default: "base", doc: "Determines the style"
+  attr :color, :string, default: "base", doc: "Determines color theme"
 
   attr :size, :string,
     default: "large",
@@ -178,7 +161,6 @@ defmodule CommunityDemoWeb.Components.Sidebar do
   defp position_class("start"), do: "top-0 start-0"
   defp position_class("end"), do: "top-0 end-0"
   defp position_class(params) when is_binary(params), do: params
-  defp position_class(_), do: position_class("start")
 
   defp border_class(_, _, variant)
        when variant in ["default", "shadow", "transparent", "gradient"],
@@ -198,7 +180,6 @@ defmodule CommunityDemoWeb.Components.Sidebar do
   defp border_class("extra_large", "end", _), do: "border-s-[5px]"
 
   defp border_class(params, _, _) when is_binary(params), do: params
-  defp border_class(_, _, _), do: border_class("extra_small", "start", nil)
 
   defp size_class("extra_small"), do: "w-60"
 
@@ -212,7 +193,12 @@ defmodule CommunityDemoWeb.Components.Sidebar do
 
   defp size_class(params) when is_binary(params), do: params
 
-  defp size_class(_), do: size_class("large")
+  defp color_variant("base", "base") do
+    [
+      "bg-white text-[#09090b] border-[#e4e4e7]",
+      "dark:bg-[#18181B] dark:text-[#FAFAFA] dark:border-[#27272a]"
+    ]
+  end
 
   defp color_variant("default", "white") do
     [
@@ -589,8 +575,6 @@ defmodule CommunityDemoWeb.Components.Sidebar do
   end
 
   defp color_variant(params, _) when is_binary(params), do: params
-
-  defp color_variant(_, _), do: color_variant("default", "natural")
 
   attr :name, :string, required: true, doc: "Specifies the name of the element"
   attr :class, :any, default: nil, doc: "Custom CSS class for additional styling"

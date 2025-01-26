@@ -17,7 +17,15 @@ defmodule CommunityDemoWeb.Router do
   scope "/", CommunityDemoWeb do
     pipe_through :browser
 
-    get "/", PageController, :home
+    live "/", HomeLive
+  end
+
+  scope "/demo/community", CommunityDemoWeb.Demo.Community do
+    pipe_through(:browser)
+
+    live "/cards", CardsLive
+    live "/alerts", AlertsLive
+    live "/tabs", TabsLive
   end
 
   # Other scopes may use custom stacks.

@@ -20,7 +20,7 @@ config :community_demo, CommunityDemoWeb.Endpoint,
     layout: false
   ],
   pubsub_server: CommunityDemo.PubSub,
-  live_view: [signing_salt: "L6ChnFxz"]
+  live_view: [signing_salt: "EHvAT9ZN"]
 
 # Configures the mailer
 #

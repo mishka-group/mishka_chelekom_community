@@ -21,23 +21,6 @@ defmodule CommunityDemoWeb.Components.MegaMenu do
   use Phoenix.Component
   alias Phoenix.LiveView.JS
 
-  @colors [
-    "natural",
-    "white",
-    "primary",
-    "secondary",
-    "dark",
-    "success",
-    "warning",
-    "danger",
-    "info",
-    "silver",
-    "misc",
-    "dawn"
-  ]
-
-  @variants ["default", "outline", "shadow", "bordered"]
-
   @doc """
   Renders a customizable `mega_menu` component that can display various sections of content.
   It includes slots for defining a trigger element, such as a button, and inner content blocks.
@@ -137,23 +120,23 @@ defmodule CommunityDemoWeb.Components.MegaMenu do
     default: false,
     doc: "Determines if the element can be activated on click"
 
-  attr :variant, :string, values: @variants, default: "shadow", doc: "Determines the style"
-  attr :color, :string, values: @colors, default: "natural", doc: "Determines color theme"
-  attr :rounded, :string, default: nil, doc: "Determines the border radius"
+  attr :variant, :string, default: "base", doc: "Determines the style"
+  attr :color, :string, default: "base", doc: "Determines color theme"
+  attr :rounded, :string, default: "", doc: "Determines the border radius"
 
   attr :size, :string,
-    default: nil,
+    default: "",
     doc:
       "Determines the overall size of the elements, including padding, font size, and other items"
 
-  attr :space, :string, default: nil, doc: "Space between items"
+  attr :space, :string, default: "", doc: "Space between items"
   attr :width, :string, default: "full", doc: "Determines the element width"
 
   attr :font_weight, :string,
     default: "font-normal",
     doc: "Determines custom class for the font weight"
 
-  attr :padding, :string, default: "none", doc: "Determines padding for items"
+  attr :padding, :string, default: "", doc: "Determines padding for items"
   attr :icon, :string, default: nil, doc: "Icon displayed alongside of an item"
   attr :icon_class, :string, default: nil, doc: "Determines custom class for the icon"
   attr :title, :string, default: nil, doc: "Specifies the title of the element"
@@ -246,7 +229,6 @@ defmodule CommunityDemoWeb.Components.MegaMenu do
   defp top_gap("large"), do: "[&>.mega-menu-content]:mt-4"
   defp top_gap("extra_large"), do: "[&>.mega-menu-content]:mt-5"
   defp top_gap(params) when is_binary(params), do: params
-  defp top_gap(_), do: top_gap("extra_small")
 
   defp width_size("full"), do: "[&>.mega-menu-content]:w-ful"
 
@@ -255,7 +237,6 @@ defmodule CommunityDemoWeb.Components.MegaMenu do
       "[&>.mega-menu-content]:w-full md:[&>.mega-menu-content]:w-1/2 md:[&>.mega-menu-content]:mx-auto"
 
   defp width_size(params) when is_binary(params), do: params
-  defp width_size(_), do: width_size("full")
 
   defp border_class(_, variant) when variant in ["default", "shadow", "gradient"],
     do: nil
@@ -270,7 +251,6 @@ defmodule CommunityDemoWeb.Components.MegaMenu do
     do: "[&>.mega-menu-content]:[&>.mega-menu-content]:border-[5px]"
 
   defp border_class(params, _) when is_binary(params), do: params
-  defp border_class(_, _), do: border_class("extra_small", nil)
 
   defp rounded_size("extra_small"), do: "[&>.mega-menu-content]:rounded-sm"
 
@@ -282,11 +262,7 @@ defmodule CommunityDemoWeb.Components.MegaMenu do
 
   defp rounded_size("extra_large"), do: "[&>.mega-menu-content]:rounded-xl"
 
-  defp rounded_size("none"), do: "[&>.mega-menu-content]:rounded-none"
-
   defp rounded_size(params) when is_binary(params), do: params
-
-  defp rounded_size(_), do: rounded_size("small")
 
   defp size_class("extra_small"), do: "text-xs"
 
@@ -300,8 +276,6 @@ defmodule CommunityDemoWeb.Components.MegaMenu do
 
   defp size_class(params) when is_binary(params), do: params
 
-  defp size_class(_), do: size_class("medium")
-
   defp padding_size("extra_small"), do: "[&>.mega-menu-content]:p-2"
 
   defp padding_size("small"), do: "[&>.mega-menu-content]:p-3"
@@ -312,13 +286,7 @@ defmodule CommunityDemoWeb.Components.MegaMenu do
 
   defp padding_size("extra_large"), do: "[&>.mega-menu-content]:p-6"
 
-  defp padding_size("none"), do: "[&>.mega-menu-content]:p-0"
-
   defp padding_size(params) when is_binary(params), do: params
-
-  defp padding_size(_), do: padding_size("extra_small")
-
-  defp space_class("none"), do: "[&>.mega-menu-content]:space-y-0"
 
   defp space_class("extra_small"), do: "[&>.mega-menu-content]:space-y-2"
 
@@ -332,7 +300,12 @@ defmodule CommunityDemoWeb.Components.MegaMenu do
 
   defp space_class(params) when is_binary(params), do: params
 
-  defp space_class(_), do: space_class("none")
+  defp color_variant("base", "base") do
+    [
+      "[&>.mega-menu-content]:bg-white text-[#09090b] [&>.mega-menu-content]:border-[#e4e4e7] [&>.mega-menu-content]:shadow-sm",
+      "dark:[&>.mega-menu-content]:bg-[#18181B] dark:text-[#FAFAFA] dark:[&>.mega-menu-content]:border-[#27272a]"
+    ]
+  end
 
   defp color_variant("default", "white") do
     [
@@ -689,8 +662,6 @@ defmodule CommunityDemoWeb.Components.MegaMenu do
   end
 
   defp color_variant(params, _) when is_binary(params), do: params
-
-  defp color_variant(_, _), do: color_variant("default", "natural")
 
   attr :name, :string, required: true, doc: "Specifies the name of the element"
   attr :class, :any, default: nil, doc: "Custom CSS class for additional styling"

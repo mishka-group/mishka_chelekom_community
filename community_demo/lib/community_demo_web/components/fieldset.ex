@@ -15,23 +15,6 @@ defmodule CommunityDemoWeb.Components.Fieldset do
   """
   use Phoenix.Component
 
-  @variants ["default", "outline", "bordered", "shadow", "transparent", "gradient"]
-
-  @colors [
-    "natural",
-    "white",
-    "primary",
-    "secondary",
-    "dark",
-    "success",
-    "warning",
-    "danger",
-    "info",
-    "misc",
-    "dawn",
-    "silver"
-  ]
-
   @doc """
   Renders a `fieldset` component that groups related form elements visually and semantically.
 
@@ -71,11 +54,11 @@ defmodule CommunityDemoWeb.Components.Fieldset do
     doc: "A unique identifier is used to manage state and interaction"
 
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
-  attr :color, :string, values: @colors, default: "natural", doc: "Determines color theme"
+  attr :color, :string, default: "base", doc: "Determines color theme"
   attr :border, :string, default: "extra_small", doc: "Determines border style"
   attr :rounded, :string, default: "small", doc: "Determines the border radius"
   attr :padding, :string, default: "small", doc: "Determines padding for items"
-  attr :variant, :string, values: @variants, default: "outline", doc: "Determines the style"
+  attr :variant, :string, default: "base", doc: "Determines the style"
   attr :space, :string, default: "medium", doc: "Space between items"
 
   attr :size, :string,
@@ -109,7 +92,9 @@ defmodule CommunityDemoWeb.Components.Fieldset do
       @class
     ]}>
       <fieldset class="fieldset-field">
-        <legend :if={@legend} for={@id}>{@legend}</legend>
+        <legend :if={@legend} class="fieldset-legend py-0.5 px-1 leading-7" for={@id}>
+          {@legend}
+        </legend>
 
         <div :for={{control, index} <- Enum.with_index(@control, 1)} id={"#{@id}-control-#{index}"}>
           {render_slot(control)}
@@ -156,40 +141,44 @@ defmodule CommunityDemoWeb.Components.Fieldset do
 
   defp size_class("extra_large"), do: "text-xl"
 
-  defp size_class(_), do: size_class("medium")
+  defp size_class(params) when is_binary(params), do: params
 
-  defp rounded_size("extra_small"), do: "[&_.fieldset-field]:rounded-sm"
+  defp rounded_size("none"), do: nil
 
-  defp rounded_size("small"), do: "[&_.fieldset-field]:rounded"
+  defp rounded_size("extra_small") do
+    "[&_.fieldset-field]:rounded-sm [&_.fieldset-legend]:rounded-t-sm"
+  end
 
-  defp rounded_size("medium"), do: "[&_.fieldset-field]:rounded-md"
+  defp rounded_size("small") do
+    "[&_.fieldset-field]:rounded [&_.fieldset-legend]:rounded-t"
+  end
 
-  defp rounded_size("large"), do: "[&_.fieldset-field]:rounded-lg"
+  defp rounded_size("medium") do
+    "[&_.fieldset-field]:rounded-md [&_.fieldset-legend]:rounded-t-md"
+  end
 
-  defp rounded_size("extra_large"), do: "[&_.fieldset-field]:rounded-xl"
+  defp rounded_size("large") do
+    "[&_.fieldset-field]:rounded-lg [&_.fieldset-legend]:rounded-t-lg"
+  end
+
+  defp rounded_size("extra_large") do
+    "[&_.fieldset-field]:rounded-xl [&_.fieldset-legend]:rounded-t-xl"
+  end
 
   defp rounded_size("full"), do: "[&_.fieldset-field]:rounded-full"
 
-  defp rounded_size(_), do: "[&_.fieldset-field]:rounded-none"
+  defp rounded_size(params) when is_binary(params), do: params
 
   defp border_class(_, variant) when variant in ["default", "shadow", "transparent", "gradient"],
     do: nil
 
   defp border_class("none", _), do: nil
-
   defp border_class("extra_small", _), do: "[&_.fieldset-field]:border"
-
   defp border_class("small", _), do: "[&_.fieldset-field]:border-2"
-
   defp border_class("medium", _), do: "[&_.fieldset-field]:border-[3px]"
-
   defp border_class("large", _), do: "[&_.fieldset-field]:border-4"
-
   defp border_class("extra_large", _), do: "[&_.fieldset-field]:border-[5px]"
-
   defp border_class(params, _) when is_binary(params), do: params
-
-  defp border_class(_, _), do: border_class("extra_small", nil)
 
   defp padding_class("extra_small"), do: "[&_.fieldset-field]:p-2"
 
@@ -203,91 +192,108 @@ defmodule CommunityDemoWeb.Components.Fieldset do
 
   defp padding_class(params) when is_binary(params), do: params
 
-  defp padding_class(_), do: padding_class("medium")
+  defp space_class("none"), do: nil
 
-  defp space_class("extra_small"), do: "space-y-1"
+  defp space_class("extra_small"), do: "[&_fieldset]:space-y-1"
 
-  defp space_class("small"), do: "space-y-1.5"
+  defp space_class("small"), do: "[&_fieldset]:space-y-1.5"
 
-  defp space_class("medium"), do: "space-y-2"
+  defp space_class("medium"), do: "[&_fieldset]:space-y-2"
 
-  defp space_class("large"), do: "space-y-2.5"
+  defp space_class("large"), do: "[&_fieldset]:space-y-2.5"
 
-  defp space_class("extra_large"), do: "space-y-3"
+  defp space_class("extra_large"), do: "[&_fieldset]:space-y-3"
 
   defp space_class(params) when is_binary(params), do: params
 
-  defp space_class(_), do: space_class("medium")
+  defp color_variant("base", "base") do
+    [
+      "text-[#09090b] [&_.fieldset-field]:border-[#e4e4e7] [&_.fieldset-field]:bg-white [&_.fieldset-field]:shadow-sm",
+      "dark:text-[#FAFAFA] dark:[&_.fieldset-field]:border-[#27272a] dark:[&_.fieldset-field]:bg-[#18181B]"
+    ]
+  end
 
   defp color_variant("default", "white") do
     [
-      "[&_.fieldset-field]:bg-white text-black"
+      "[&_.fieldset-field]:bg-white text-black",
+      "[&_.fieldset-legend]:bg-white"
     ]
   end
 
   defp color_variant("default", "dark") do
     [
-      "[&_.fieldset-field]:bg-[#282828] text-white"
+      "[&_.fieldset-field]:bg-[#282828] text-white",
+      "[&_.fieldset-legend]:bg-[#282828] dark:[&_.fieldset-legend]:bg-[#18181B]"
     ]
   end
 
   defp color_variant("default", "natural") do
     [
-      "[&_.fieldset-field]:bg-[#4B4B4B] text-white dark:[&_.fieldset-field]:bg-[#DDDDDD] dark:text-black"
+      "[&_.fieldset-field]:bg-[#4B4B4B] text-white dark:[&_.fieldset-field]:bg-[#DDDDDD] dark:text-black",
+      "[&_.fieldset-legend]:bg-[#4B4B4B] dark:[&_.fieldset-legend]:bg-[#DDDDDD]"
     ]
   end
 
   defp color_variant("default", "primary") do
     [
-      "[&_.fieldset-field]:bg-[#007F8C] text-white dark:[&_.fieldset-field]:bg-[#01B8CA] dark:text-black"
+      "[&_.fieldset-field]:bg-[#007F8C] text-white dark:[&_.fieldset-field]:bg-[#01B8CA] dark:text-black",
+      "[&_.fieldset-legend]:bg-[#007F8C] dark:[&_.fieldset-legend]:bg-[#01B8CA]"
     ]
   end
 
   defp color_variant("default", "secondary") do
     [
-      "[&_.fieldset-field]:bg-[#266EF1] text-white dark:[&_.fieldset-field]:bg-[#6DAAFB] dark:text-black"
+      "[&_.fieldset-field]:bg-[#266EF1] text-white dark:[&_.fieldset-field]:bg-[#6DAAFB] dark:text-black",
+      "[&_.fieldset-legend]:bg-[#266EF1] dark:[&_.fieldset-legend]:bg-[#6DAAFB]"
     ]
   end
 
   defp color_variant("default", "success") do
     [
-      "[&_.fieldset-field]:bg-[#0E8345] text-white dark:[&_.fieldset-field]:bg-[#06C167] dark:text-black"
+      "[&_.fieldset-field]:bg-[#0E8345] text-white dark:[&_.fieldset-field]:bg-[#06C167] dark:text-black",
+      "[&_.fieldset-legend]:bg-[#0E8345] dark:[&_.fieldset-legend]:bg-[#06C167]"
     ]
   end
 
   defp color_variant("default", "warning") do
     [
-      "[&_.fieldset-field]:bg-[#CA8D01] text-white dark:[&_.fieldset-field]:bg-[#FDC034] dark:text-black"
+      "[&_.fieldset-field]:bg-[#CA8D01] text-white dark:[&_.fieldset-field]:bg-[#FDC034] dark:text-black",
+      "[&_.fieldset-legend]:bg-[#CA8D01] dark:[&_.fieldset-legend]:bg-[#FDC034]"
     ]
   end
 
   defp color_variant("default", "danger") do
     [
-      "[&_.fieldset-field]:bg-[#DE1135] text-white dark:[&_.fieldset-field]:bg-[#FC7F79] dark:text-black"
+      "[&_.fieldset-field]:bg-[#DE1135] text-white dark:[&_.fieldset-field]:bg-[#FC7F79] dark:text-black",
+      "[&_.fieldset-legend]:bg-[#DE1135] dark:[&_.fieldset-legend]:bg-[#FC7F79]"
     ]
   end
 
   defp color_variant("default", "info") do
     [
-      "[&_.fieldset-field]:bg-[#0B84BA] text-white dark:[&_.fieldset-field]:bg-[#3EB7ED] dark:text-black"
+      "[&_.fieldset-field]:bg-[#0B84BA] text-white dark:[&_.fieldset-field]:bg-[#3EB7ED] dark:text-black",
+      "[&_.fieldset-legend]:bg-[#0B84BA] dark:[&_.fieldset-legend]:bg-[#3EB7ED]"
     ]
   end
 
   defp color_variant("default", "misc") do
     [
-      "[&_.fieldset-field]:bg-[#8750C5] text-white dark:[&_.fieldset-field]:bg-[#BA83F9] dark:text-black"
+      "[&_.fieldset-field]:bg-[#8750C5] text-white dark:[&_.fieldset-field]:bg-[#BA83F9] dark:text-black",
+      "[&_.fieldset-legend]:bg-[#8750C5] dark:[&_.fieldset-legend]:bg-[#BA83F9]"
     ]
   end
 
   defp color_variant("default", "dawn") do
     [
-      "[&_.fieldset-field]:bg-[#A86438] text-white dark:[&_.fieldset-field]:bg-[#DB976B] dark:text-black"
+      "[&_.fieldset-field]:bg-[#A86438] text-white dark:[&_.fieldset-field]:bg-[#DB976B] dark:text-black",
+      "[&_.fieldset-legend]:bg-[#A86438] dark:[&_.fieldset-legend]:bg-[#DB976B]"
     ]
   end
 
   defp color_variant("default", "silver") do
     [
-      "[&_.fieldset-field]:bg-[#868686] text-white dark:[&_.fieldset-field]:bg-[#A6A6A6] dark:text-black"
+      "[&_.fieldset-field]:bg-[#868686] text-white dark:[&_.fieldset-field]:bg-[#A6A6A6] dark:text-black",
+      "[&_.fieldset-legend]:bg-[#868686] dark:[&_.fieldset-legend]:bg-[#A6A6A6]"
     ]
   end
 
@@ -354,152 +360,174 @@ defmodule CommunityDemoWeb.Components.Fieldset do
   defp color_variant("shadow", "natural") do
     [
       "[&_.fieldset-field]:bg-[#4B4B4B] text-white dark:[&_.fieldset-field]:bg-[#DDDDDD] dark:text-black",
-      "shadow-[0px_4px_6px_-4px_rgba(134,134,134,0.5)] shadow-[0px_10px_15px_-3px_rgba(134,134,134,0.5)] dark:shadow-none"
+      "shadow-[0px_4px_6px_-4px_rgba(134,134,134,0.5)] shadow-[0px_10px_15px_-3px_rgba(134,134,134,0.5)] dark:shadow-none",
+      "[&_.fieldset-legend]:bg-[#4B4B4B] dark:[&_.fieldset-legend]:bg-[#DDDDDD]"
     ]
   end
 
   defp color_variant("shadow", "primary") do
     [
       "[&_.fieldset-field]:bg-[#007F8C] text-white dark:[&_.fieldset-field]:bg-[#01B8CA] dark:text-black",
-      "shadow-[0px_4px_6px_-4px_rgba(0,149,164,0.5)] shadow-[0px_10px_15px_-3px_rgba(0,149,164,0.5)] dark:shadow-none"
+      "shadow-[0px_4px_6px_-4px_rgba(0,149,164,0.5)] shadow-[0px_10px_15px_-3px_rgba(0,149,164,0.5)] dark:shadow-none",
+      "[&_.fieldset-legend]:bg-[#007F8C] dark:[&_.fieldset-legend]:bg-[#01B8CA]"
     ]
   end
 
   defp color_variant("shadow", "secondary") do
     [
       "[&_.fieldset-field]:bg-[#266EF1] text-white dark:[&_.fieldset-field]:bg-[#6DAAFB] dark:text-black",
-      "shadow-[0px_4px_6px_-4px_rgba(6,139,238,0.5)] shadow-[0px_10px_15px_-3px_rgba(6,139,238,0.5)] dark:shadow-none"
+      "shadow-[0px_4px_6px_-4px_rgba(6,139,238,0.5)] shadow-[0px_10px_15px_-3px_rgba(6,139,238,0.5)] dark:shadow-none",
+      "[&_.fieldset-legend]:bg-[#266EF1] dark:[&_.fieldset-legend]:bg-[#6DAAFB]"
     ]
   end
 
   defp color_variant("shadow", "success") do
     [
-      "[&_.fieldset-field]:bg-[#0E8345] text-white hover:[&_.fieldset-field]:bg-[#166C3B] dark:[&_.fieldset-field]:bg-[#06C167] dark:text-black",
-      "shadow-[0px_4px_6px_-4px_rgba(0,154,81,0.5)] shadow-[0px_10px_15px_-3px_rgba(0,154,81,0.5)] dark:shadow-none"
+      "[&_.fieldset-field]:bg-[#0E8345] text-white dark:[&_.fieldset-field]:bg-[#06C167] dark:text-black",
+      "shadow-[0px_4px_6px_-4px_rgba(0,154,81,0.5)] shadow-[0px_10px_15px_-3px_rgba(0,154,81,0.5)] dark:shadow-none",
+      "[&_.fieldset-legend]:bg-[#0E8345] dark:[&_.fieldset-legend]:bg-[#06C167]"
     ]
   end
 
   defp color_variant("shadow", "warning") do
     [
       "[&_.fieldset-field]:bg-[#CA8D01] text-white dark:[&_.fieldset-field]:bg-[#FDC034] dark:text-black",
-      "shadow-[0px_4px_6px_-4px_rgba(252,176,1,0.5)] shadow-[0px_10px_15px_-3px_rgba(252,176,1,0.5)] dark:shadow-none"
+      "shadow-[0px_4px_6px_-4px_rgba(252,176,1,0.5)] shadow-[0px_10px_15px_-3px_rgba(252,176,1,0.5)] dark:shadow-none",
+      "[&_.fieldset-legend]:bg-[#CA8D01] dark:[&_.fieldset-legend]:bg-[#FDC034]"
     ]
   end
 
   defp color_variant("shadow", "danger") do
     [
       "[&_.fieldset-field]:bg-[#DE1135] text-white dark:[&_.fieldset-field]:bg-[#FC7F79] dark:text-black",
-      "shadow-[0px_4px_6px_-4px_rgba(248,52,70,0.5)] shadow-[0px_10px_15px_-3px_rgba(248,52,70,0.5)] dark:shadow-none"
+      "shadow-[0px_4px_6px_-4px_rgba(248,52,70,0.5)] shadow-[0px_10px_15px_-3px_rgba(248,52,70,0.5)] dark:shadow-none",
+      "[&_.fieldset-legend]:bg-[#DE1135] dark:[&_.fieldset-legend]:bg-[#FC7F79]"
     ]
   end
 
   defp color_variant("shadow", "info") do
     [
       "[&_.fieldset-field]:bg-[#0B84BA] text-white dark:[&_.fieldset-field]:bg-[#3EB7ED] dark:text-black",
-      "shadow-[0px_4px_6px_-4px_rgba(14,165,233,0.5)] shadow-[0px_10px_15px_-3px_rgba(14,165,233,0.5)] dark:shadow-none"
+      "shadow-[0px_4px_6px_-4px_rgba(14,165,233,0.5)] shadow-[0px_10px_15px_-3px_rgba(14,165,233,0.5)] dark:shadow-none",
+      "[&_.fieldset-legend]:bg-[#0B84BA] dark:[&_.fieldset-legend]:bg-[#3EB7ED]"
     ]
   end
 
   defp color_variant("shadow", "misc") do
     [
       "[&_.fieldset-field]:bg-[#8750C5] text-white dark:[&_.fieldset-field]:bg-[#BA83F9] dark:text-black",
-      "shadow-[0px_4px_6px_-4px_rgba(169,100,247,0.5)] shadow-[0px_10px_15px_-3px_rgba(169,100,247,0.5)] dark:shadow-none"
+      "shadow-[0px_4px_6px_-4px_rgba(169,100,247,0.5)] shadow-[0px_10px_15px_-3px_rgba(169,100,247,0.5)] dark:shadow-none",
+      "[&_.fieldset-legend]:bg-[#8750C5] dark:[&_.fieldset-legend]:bg-[#BA83F9]"
     ]
   end
 
   defp color_variant("shadow", "dawn") do
     [
       "[&_.fieldset-field]:bg-[#A86438] text-white dark:[&_.fieldset-field]:bg-[#DB976B] dark:text-black",
-      "shadow-[0px_4px_6px_-4px_rgba(210,125,70,0.5)] shadow-[0px_10px_15px_-3px_rgba(210,125,70,0.5)] dark:shadow-none"
+      "shadow-[0px_4px_6px_-4px_rgba(210,125,70,0.5)] shadow-[0px_10px_15px_-3px_rgba(210,125,70,0.5)] dark:shadow-none",
+      "[&_.fieldset-legend]:bg-[#A86438] dark:[&_.fieldset-legend]:bg-[#DB976B]"
     ]
   end
 
   defp color_variant("shadow", "silver") do
     [
       "[&_.fieldset-field]:bg-[#868686] text-white dark:[&_.fieldset-field]:bg-[#A6A6A6] dark:text-black",
-      "shadow-[0px_4px_6px_-4px_rgba(134,134,134,0.5)] shadow-[0px_10px_15px_-3px_rgba(134,134,134,0.5)] dark:shadow-none"
+      "shadow-[0px_4px_6px_-4px_rgba(134,134,134,0.5)] shadow-[0px_10px_15px_-3px_rgba(134,134,134,0.5)] dark:shadow-none",
+      "[&_.fieldset-legend]:bg-[#868686] dark:[&_.fieldset-legend]:bg-[#A6A6A6]"
     ]
   end
 
   defp color_variant("bordered", "white") do
     [
-      "[&_.fieldset-field]:bg-white text-black [&_.fieldset-field]:border-[#DDDDDD]"
+      "[&_.fieldset-field]:bg-white text-black [&_.fieldset-field]:border-[#DDDDDD]",
+      "[&_.fieldset-legend]:bg-white"
     ]
   end
 
   defp color_variant("bordered", "dark") do
     [
-      "[&_.fieldset-field]:bg-[#282828] text-white [&_.fieldset-field]:border-[#727272]"
+      "[&_.fieldset-field]:bg-[#282828] text-white [&_.fieldset-field]:border-[#727272]",
+      "[&_.fieldset-legend]:bg-[#282828]"
     ]
   end
 
   defp color_variant("bordered", "natural") do
     [
       "text-[#282828] [&_.fieldset-field]:border-[#282828] [&_.fieldset-field]:bg-[#F3F3F3]",
-      "dark:text-[#E8E8E8] dark:[&_.fieldset-field]:border-[#E8E8E8] dark:[&_.fieldset-field]:bg-[#4B4B4B]"
+      "dark:text-[#E8E8E8] dark:[&_.fieldset-field]:border-[#E8E8E8] dark:[&_.fieldset-field]:bg-[#4B4B4B]",
+      "[&_.fieldset-legend]:bg-[#F3F3F3] dark:[&_.fieldset-legend]:bg-[#4B4B4B]"
     ]
   end
 
   defp color_variant("bordered", "primary") do
     [
       "text-[#016974] [&_.fieldset-field]:border-[#016974] [&_.fieldset-field]:bg-[#E2F8FB]",
-      "dark:text-[#77D5E3] dark:[&_.fieldset-field]:border-[#77D5E3] dark:[&_.fieldset-field]:bg-[#002D33]"
+      "dark:text-[#77D5E3] dark:[&_.fieldset-field]:border-[#77D5E3] dark:[&_.fieldset-field]:bg-[#002D33]",
+      "[&_.fieldset-legend]:bg-[#E2F8FB] dark:[&_.fieldset-legend]:bg-[#002D33]"
     ]
   end
 
   defp color_variant("bordered", "secondary") do
     [
       "text-[#175BCC] [&_.fieldset-field]:border-[#175BCC] [&_.fieldset-field]:bg-[#EFF4FE]",
-      "dark:text-[#A9C9FF] dark:[&_.fieldset-field]:border-[#A9C9FF] dark:[&_.fieldset-field]:bg-[#002661]"
+      "dark:text-[#A9C9FF] dark:[&_.fieldset-field]:border-[#A9C9FF] dark:[&_.fieldset-field]:bg-[#002661]",
+      "[&_.fieldset-legend]:bg-[#EFF4FE] dark:[&_.fieldset-legend]:bg-[#002661]"
     ]
   end
 
   defp color_variant("bordered", "success") do
     [
       "text-[#166C3B] [&_.fieldset-field]:border-[#166C3B] [&_.fieldset-field]:bg-[#EAF6ED]",
-      "dark:text-[#7FD99A] dark:[&_.fieldset-field]:border-[#7FD99A] dark:[&_.fieldset-field]:bg-[#002F14]"
+      "dark:text-[#7FD99A] dark:[&_.fieldset-field]:border-[#7FD99A] dark:[&_.fieldset-field]:bg-[#002F14]",
+      "[&_.fieldset-legend]:bg-[#EAF6ED] dark:[&_.fieldset-legend]:bg-[#002F14]"
     ]
   end
 
   defp color_variant("bordered", "warning") do
     [
       "text-[#976A01] [&_.fieldset-field]:border-[#976A01] [&_.fieldset-field]:bg-[#FFF7E6]",
-      "dark:text-[#FDD067] dark:[&_.fieldset-field]:border-[#FDD067] dark:[&_.fieldset-field]:bg-[#322300]"
+      "dark:text-[#FDD067] dark:[&_.fieldset-field]:border-[#FDD067] dark:[&_.fieldset-field]:bg-[#322300]",
+      "[&_.fieldset-legend]:bg-[#FFF7E6] dark:[&_.fieldset-legend]:bg-[#322300]"
     ]
   end
 
   defp color_variant("bordered", "danger") do
     [
       "text-[#BB032A] [&_.fieldset-field]:border-[#BB032A] [&_.fieldset-field]:bg-[#FFF0EE]",
-      "dark:text-[#FFB2AB] dark:[&_.fieldset-field]:border-[#FFB2AB] dark:[&_.fieldset-field]:bg-[#520810]"
+      "dark:text-[#FFB2AB] dark:[&_.fieldset-field]:border-[#FFB2AB] dark:[&_.fieldset-field]:bg-[#520810]",
+      "[&_.fieldset-legend]:bg-[#FFF0EE] dark:[&_.fieldset-legend]:bg-[#520810]"
     ]
   end
 
   defp color_variant("bordered", "info") do
     [
       "text-[#0B84BA] [&_.fieldset-field]:border-[#0B84BA] [&_.fieldset-field]:bg-[#E7F6FD]",
-      "dark:text-[#6EC9F2] dark:[&_.fieldset-field]:border-[#6EC9F2] dark:[&_.fieldset-field]:bg-[#03212F]"
+      "dark:text-[#6EC9F2] dark:[&_.fieldset-field]:border-[#6EC9F2] dark:[&_.fieldset-field]:bg-[#03212F]",
+      "[&_.fieldset-legend]:bg-[#E7F6FD] dark:[&_.fieldset-legend]:bg-[#03212F]"
     ]
   end
 
   defp color_variant("bordered", "misc") do
     [
       "text-[#653C94] [&_.fieldset-field]:border-[#653C94] [&_.fieldset-field]:bg-[#F6F0FE]",
-      "dark:text-[#CBA2FA] dark:[&_.fieldset-field]:border-[#CBA2FA] dark:[&_.fieldset-field]:bg-[#221431]"
+      "dark:text-[#CBA2FA] dark:[&_.fieldset-field]:border-[#CBA2FA] dark:[&_.fieldset-field]:bg-[#221431]",
+      "[&_.fieldset-legend]:bg-[#F6F0FE] dark:[&_.fieldset-legend]:bg-[#221431]"
     ]
   end
 
   defp color_variant("bordered", "dawn") do
     [
       "text-[#7E4B2A] [&_.fieldset-field]:border-[#7E4B2A] [&_.fieldset-field]:bg-[#FBF2ED]",
-      "dark:text-[#E4B190] dark:[&_.fieldset-field]:border-[#E4B190] dark:[&_.fieldset-field]:bg-[#2A190E]"
+      "dark:text-[#E4B190] dark:[&_.fieldset-field]:border-[#E4B190] dark:[&_.fieldset-field]:bg-[#2A190E]",
+      "[&_.fieldset-legend]:bg-[#FBF2ED] dark:[&_.fieldset-legend]:bg-[#2A190E]"
     ]
   end
 
   defp color_variant("bordered", "silver") do
     [
       "text-[#727272] [&_.fieldset-field]:border-[#727272] [&_.fieldset-field]:bg-[#F3F3F3]",
-      "dark:text-[#BBBBBB] dark:[&_.fieldset-field]:border-[#BBBBBB] dark:[&_.fieldset-field]:bg-[#4B4B4B]"
+      "dark:text-[#BBBBBB] dark:[&_.fieldset-field]:border-[#BBBBBB] dark:[&_.fieldset-field]:bg-[#4B4B4B]",
+      "[&_.fieldset-legend]:bg-[#F3F3F3] dark:[&_.fieldset-legend]:bg-[#4B4B4B]"
     ]
   end
 
@@ -566,76 +594,84 @@ defmodule CommunityDemoWeb.Components.Fieldset do
   defp color_variant("gradient", "natural") do
     [
       "[&_.fieldset-field]:bg-gradient-to-br from-[#282828] to-[#727272] text-white",
-      "dark:from-[#A6A6A6] dark:to-[#FFFFFF] dark:text-black"
+      "dark:from-[#A6A6A6] dark:to-[#FFFFFF] dark:text-black",
+      "[&_.fieldset-legend]:bg-[#282828] dark:[&_.fieldset-legend]:bg-[#A6A6A6]"
     ]
   end
 
   defp color_variant("gradient", "primary") do
     [
       "[&_.fieldset-field]:bg-gradient-to-br from-[#016974] to-[#01B8CA] text-white",
-      "dark:from-[#01B8CA] dark:to-[#B0E7EF] dark:text-black"
+      "dark:from-[#01B8CA] dark:to-[#B0E7EF] dark:text-black",
+      "[&_.fieldset-legend]:bg-[#016974] dark:[&_.fieldset-legend]:bg-[#01B8CA]"
     ]
   end
 
   defp color_variant("gradient", "secondary") do
     [
       "[&_.fieldset-field]:bg-gradient-to-br from-[#175BCC] to-[#6DAAFB] text-white",
-      "dark:from-[#6DAAFB] dark:to-[#CDDEFF] dark:text-black"
+      "dark:from-[#6DAAFB] dark:to-[#CDDEFF] dark:text-black",
+      "[&_.fieldset-legend]:bg-[#175BCC] dark:[&_.fieldset-legend]:bg-[#6DAAFB]"
     ]
   end
 
   defp color_variant("gradient", "success") do
     [
       "[&_.fieldset-field]:bg-gradient-to-br from-[#166C3B] to-[#06C167] text-white",
-      "dark:from-[#06C167] dark:to-[#B1EAC2] dark:text-black"
+      "dark:from-[#06C167] dark:to-[#B1EAC2] dark:text-black",
+      "[&_.fieldset-legend]:bg-[#166C3B] dark:[&_.fieldset-legend]:bg-[#06C167]"
     ]
   end
 
   defp color_variant("gradient", "warning") do
     [
       "[&_.fieldset-field]:bg-gradient-to-br from-[#976A01] to-[#FDC034] text-white",
-      "dark:from-[#FDC034] dark:to-[#FEDF99] dark:text-black"
+      "dark:from-[#FDC034] dark:to-[#FEDF99] dark:text-black",
+      "[&_.fieldset-legend]:bg-[#976A01] dark:[&_.fieldset-legend]:bg-[#FDC034]"
     ]
   end
 
   defp color_variant("gradient", "danger") do
     [
       "[&_.fieldset-field]:bg-gradient-to-br from-[#BB032A] to-[#FC7F79] text-white",
-      "dark:from-[#FC7F79] dark:to-[#FFD2CD] dark:text-black"
+      "dark:from-[#FC7F79] dark:to-[#FFD2CD] dark:text-black",
+      "[&_.fieldset-legend]:bg-[#BB032A] dark:[&_.fieldset-legend]:bg-[#FC7F79]"
     ]
   end
 
   defp color_variant("gradient", "info") do
     [
       "[&_.fieldset-field]:bg-gradient-to-br from-[#08638C] to-[#3EB7ED] text-white",
-      "dark:from-[#3EB7ED] dark:to-[#9FDBF6] dark:text-black"
+      "dark:from-[#3EB7ED] dark:to-[#9FDBF6] dark:text-black",
+      "[&_.fieldset-legend]:bg-[#08638C] dark:[&_.fieldset-legend]:bg-[#3EB7ED]"
     ]
   end
 
   defp color_variant("gradient", "misc") do
     [
       "[&_.fieldset-field]:bg-gradient-to-br from-[#653C94] to-[#BA83F9] text-white",
-      "dark:from-[#BA83F9] dark:to-[#DDC1FC] dark:text-black"
+      "dark:from-[#BA83F9] dark:to-[#DDC1FC] dark:text-black",
+      "[&_.fieldset-legend]:bg-[#653C94] dark:[&_.fieldset-legend]:bg-[#BA83F9]"
     ]
   end
 
   defp color_variant("gradient", "dawn") do
     [
       "[&_.fieldset-field]:bg-gradient-to-br from-[#7E4B2A] to-[#DB976B] text-white",
-      "dark:from-[#DB976B] dark:to-[#EDCBB5] dark:text-black"
+      "dark:from-[#DB976B] dark:to-[#EDCBB5] dark:text-black",
+      "[&_.fieldset-legend]:bg-[#7E4B2A] dark:[&_.fieldset-legend]:bg-[#DB976B]"
     ]
   end
 
   defp color_variant("gradient", "silver") do
     [
       "[&_.fieldset-field]:bg-gradient-to-br from-[#5E5E5E] to-[#A6A6A6] text-white",
-      "dark:from-[#868686] dark:to-[#BBBBBB] dark:text-black"
+      "dark:from-[#868686] dark:to-[#BBBBBB] dark:text-black",
+      "[&_.fieldset-legend]:bg-[#5E5E5E] dark:[&_.fieldset-legend]:bg-[#868686]"
     ]
   end
 
   defp color_variant(params, _) when is_binary(params), do: params
-
-  defp color_variant(_, _), do: color_variant("default", "natural")
 
   attr :name, :string, required: true, doc: "Specifies the name of the element"
   attr :class, :any, default: nil, doc: "Custom CSS class for additional styling"

@@ -24,31 +24,6 @@ defmodule CommunityDemoWeb.Components.Blockquote do
 
   use Phoenix.Component
 
-  @sizes ["extra_small", "small", "medium", "large", "extra_large"]
-  @colors [
-    "natural",
-    "white",
-    "dark",
-    "primary",
-    "secondary",
-    "success",
-    "warning",
-    "danger",
-    "info",
-    "silver",
-    "misc",
-    "dawn"
-  ]
-
-  @variants [
-    "default",
-    "outline",
-    "transparent",
-    "shadow",
-    "bordered",
-    "gradient"
-  ]
-
   @doc """
   The `blockquote` component is used to display stylized quotations with customizable attributes
   such as `variant`, `color`, and `padding`. It supports optional captions and icons to
@@ -109,34 +84,23 @@ defmodule CommunityDemoWeb.Components.Blockquote do
     default: nil,
     doc: "A unique identifier is used to manage state and interaction"
 
-  attr :variant, :string, values: @variants, default: "default", doc: "Determines the style"
-  attr :color, :string, values: @colors, default: "natural", doc: "Determines color theme"
-
-  attr :border, :string,
-    values: @sizes ++ [nil],
-    default: "medium",
-    doc: "Determines border style"
-
-  attr :rounded, :string,
-    values: @sizes ++ ["full", "none"],
-    default: "small",
-    doc: "Determines the border radius"
+  attr :variant, :string, default: "base", doc: "Determines the style"
+  attr :color, :string, default: "base", doc: "Determines color theme"
+  attr :border, :string, default: "medium", doc: "Determines border style"
+  attr :rounded, :string, default: "small", doc: "Determines the border radius"
 
   attr :size, :string,
     default: "medium",
     doc:
       "Determines the overall size of the elements, including padding, font size, and other items"
 
-  attr :space, :string, values: @sizes, default: "small", doc: "Space between items"
+  attr :space, :string, default: "small", doc: "Space between items"
 
   attr :font_weight, :string,
     default: "font-normal",
     doc: "Determines custom class for the font weight"
 
-  attr :padding, :string,
-    values: @sizes ++ ["none"],
-    default: "small",
-    doc: "Determines padding for items"
+  attr :padding, :string, default: "small", doc: "Determines padding for items"
 
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
   attr :icon, :string, default: "hero-quote", doc: "Icon displayed alongside of an item"
@@ -160,7 +124,7 @@ defmodule CommunityDemoWeb.Components.Blockquote do
 
   def blockquote(assigns) do
     ~H"""
-    <figure class={[
+    <div class={[
       space_class(@space),
       border_class(@border, border_position(@rest), @variant),
       color_variant(@variant, @color),
@@ -178,11 +142,11 @@ defmodule CommunityDemoWeb.Components.Blockquote do
       <blockquote class="p-2 italic">
         {render_slot(@inner_block)}
       </blockquote>
-      <figcaption
+      <div
         :for={caption <- @caption}
         class={[
           "flex items-center space-x-3 rtl:space-x-reverse",
-          caption_position(caption[:position])
+          !is_nil(caption[:position]) && caption_position(caption[:position])
         ]}
       >
         <img
@@ -193,8 +157,8 @@ defmodule CommunityDemoWeb.Components.Blockquote do
         <div class="flex items-center divide-x-2 rtl:divide-x-reverse">
           {render_slot(caption)}
         </div>
-      </figcaption>
-    </figure>
+      </div>
+    </div>
     """
   end
 
@@ -237,7 +201,7 @@ defmodule CommunityDemoWeb.Components.Blockquote do
     "justify-center"
   end
 
-  defp caption_position(_), do: caption_position("right")
+  defp caption_position(params) when is_binary(params), do: params
 
   defp space_class("extra_small"), do: "space-y-2"
 
@@ -248,6 +212,8 @@ defmodule CommunityDemoWeb.Components.Blockquote do
   defp space_class("large"), do: "space-y-5"
 
   defp space_class("extra_large"), do: "space-y-6"
+
+  defp space_class("none"), do: nil
 
   defp space_class(params) when is_binary(params), do: params
 
@@ -298,7 +264,6 @@ defmodule CommunityDemoWeb.Components.Blockquote do
   end
 
   defp border_class(params, _, _) when is_binary(params), do: [params]
-  defp border_class(nil, _, _), do: nil
 
   defp rounded_size("extra_small"), do: "rounded-sm"
 
@@ -312,7 +277,9 @@ defmodule CommunityDemoWeb.Components.Blockquote do
 
   defp rounded_size("full"), do: "rounded-full"
 
-  defp rounded_size(nil), do: "rounded-none"
+  defp rounded_size("none"), do: nil
+
+  defp rounded_size(params) when is_binary(params), do: params
 
   defp padding_size("extra_small"), do: "p-1"
 
@@ -328,8 +295,6 @@ defmodule CommunityDemoWeb.Components.Blockquote do
 
   defp padding_size(params) when is_binary(params), do: params
 
-  defp padding_size(_), do: padding_size("small")
-
   defp size_class("extra_small"), do: "text-[12px] [&>.quote-icon]:size-7"
 
   defp size_class("small"), do: "text-[13px] [&>.quote-icon]:size-8"
@@ -342,7 +307,12 @@ defmodule CommunityDemoWeb.Components.Blockquote do
 
   defp size_class(params) when is_binary(params), do: params
 
-  defp size_class(_), do: size_class("medium")
+  defp color_variant("base", "base") do
+    [
+      "bg-white text-[#09090b] border-[#e4e4e7] shadow-sm",
+      "dark:bg-[#18181B] dark:text-[#FAFAFA] dark:border-[#27272a]"
+    ]
+  end
 
   defp color_variant("default", "white") do
     ["bg-white text-black"]
@@ -751,8 +721,6 @@ defmodule CommunityDemoWeb.Components.Blockquote do
   end
 
   defp color_variant(params, _) when is_binary(params), do: params
-
-  defp color_variant(_, _), do: color_variant("default", "natural")
 
   defp border_position(%{hide_border: true}), do: "none"
   defp border_position(%{left_border: true}), do: "left"

@@ -17,23 +17,6 @@ defmodule CommunityDemoWeb.Components.Badge do
   use Phoenix.Component
   alias Phoenix.LiveView.JS
 
-  @sizes ["extra_small", "small", "medium", "large", "extra_large"]
-  @variants ["default", "outline", "transparent", "shadow", "bordered", "gradient"]
-  @colors [
-    "natural",
-    "white",
-    "dark",
-    "primary",
-    "secondary",
-    "success",
-    "warning",
-    "danger",
-    "info",
-    "silver",
-    "misc",
-    "dawn"
-  ]
-
   @icon_positions [
     "right_icon",
     "left_icon"
@@ -77,19 +60,16 @@ defmodule CommunityDemoWeb.Components.Badge do
     default: nil,
     doc: "A unique identifier is used to manage state and interaction"
 
-  attr :variant, :string, values: @variants, default: "default", doc: "Determines the style"
+  attr :variant, :string, default: "base", doc: "Determines the style"
 
   attr :size, :string,
     default: "extra_small",
     doc:
       "Determines the overall size of the elements, including padding, font size, and other items"
 
-  attr :rounded, :string,
-    values: @sizes ++ ["full", "none"],
-    default: "small",
-    doc: "Determines the border radius"
+  attr :rounded, :string, default: "small", doc: "Determines the border radius"
 
-  attr :color, :string, values: @colors, default: "natural", doc: "Determines color theme"
+  attr :color, :string, default: "base", doc: "Determines color theme"
   attr :border, :string, default: "extra_small", doc: "Determines border style"
 
   attr :font_weight, :string,
@@ -98,13 +78,15 @@ defmodule CommunityDemoWeb.Components.Badge do
 
   attr :icon, :string, default: nil, doc: "Icon displayed alongside of an item"
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
-  attr :badge_position, :string, default: nil, doc: "Custom CSS class for additional styling"
+  attr :icon_class, :string, default: nil, doc: "Custom CSS class for additional styling"
+  attr :content_class, :string, default: nil, doc: "Custom CSS class for additional styling"
+  attr :badge_position, :string, default: "", doc: "poistion of badge"
 
   attr :indicator_class, :string,
     default: nil,
     doc: "CSS class for additional styling of the badge indicator"
 
-  attr :indicator_size, :string, default: nil, doc: "Specifies the size of the badge indicator"
+  attr :indicator_size, :string, default: "", doc: "Specifies the size of the badge indicator"
 
   attr :params, :map,
     default: %{kind: "badge"},
@@ -130,7 +112,7 @@ defmodule CommunityDemoWeb.Components.Badge do
             border_size(@border, @variant),
             rounded_size(@rounded),
             badge_position(@badge_position),
-            @badge_position && "absolute",
+            @badge_position != "" && "absolute",
             @font_weight,
             @class
           ]
@@ -139,9 +121,17 @@ defmodule CommunityDemoWeb.Components.Badge do
     >
       <.badge_dismiss :if={dismiss_position(@rest) == "left"} id={@id} params={@params} />
       <.badge_indicator position="left" size={@indicator_size} class={@indicator_class} {@rest} />
-      <.icon :if={icon_position(@icon, @rest) == "left"} name={@icon} />
-      <span class="leading-5">{render_slot(@inner_block)}</span>
-      <.icon :if={icon_position(@icon, @rest) == "right"} name={@icon} />
+      <.icon
+        :if={icon_position(@icon, @rest) == "left"}
+        name={@icon}
+        class={["badge-icon", @icon_class]}
+      />
+      <div class={["leading-5", @content_class]}>{render_slot(@inner_block)}</div>
+      <.icon
+        :if={icon_position(@icon, @rest) == "right"}
+        name={@icon}
+        class={["badge-icon", @icon_class]}
+      />
       <.badge_indicator size={@indicator_size} class={@indicator_class} {@rest} />
       <.badge_dismiss :if={dismiss_position(@rest) == "right"} id={@id} params={@params} />
     </div>
@@ -300,7 +290,13 @@ defmodule CommunityDemoWeb.Components.Badge do
     do: "translate-y-1/2 translate-x-1/2 left-auto bottom-0 right-0"
 
   defp badge_position(params) when is_binary(params), do: params
-  defp badge_position(_), do: nil
+
+  defp color_variant("base", "base") do
+    [
+      "bg-white text-[#09090b] border-[#e4e4e7] shadow-sm [&>.indicator]:bg-[#e4e4e7]",
+      "dark:bg-[#18181B] dark:text-[#FAFAFA] dark:border-[#27272a] dark:[&>.indicator]:bg-[#27272a]"
+    ]
+  end
 
   defp color_variant("default", "white") do
     ["bg-white text-black [&>.indicator]:bg-black"]
@@ -790,8 +786,6 @@ defmodule CommunityDemoWeb.Components.Badge do
 
   defp color_variant(params, _) when is_binary(params), do: params
 
-  defp color_variant(_, _), do: color_variant("default", "natural")
-
   defp rounded_size("extra_small"), do: "rounded-sm"
 
   defp rounded_size("small"), do: "rounded"
@@ -806,6 +800,8 @@ defmodule CommunityDemoWeb.Components.Badge do
 
   defp rounded_size("none"), do: nil
 
+  defp rounded_size(params) when is_binary(params), do: params
+
   defp border_size(_, variant) when variant in ["default", "shadow", "transparent", "gradient"],
     do: nil
 
@@ -816,7 +812,6 @@ defmodule CommunityDemoWeb.Components.Badge do
   defp border_size("large", _), do: "border-4"
   defp border_size("extra_large", _), do: "border-[5px]"
   defp border_size(params, _) when is_binary(params), do: params
-  defp border_size(_, _), do: border_size("extra_small", nil)
 
   defp indicator_size("extra_small"), do: "!size-2"
   defp indicator_size("small"), do: "!size-2.5"
@@ -824,7 +819,6 @@ defmodule CommunityDemoWeb.Components.Badge do
   defp indicator_size("large"), do: "!size-3.5"
   defp indicator_size("extra_large"), do: "!size-4"
   defp indicator_size(params) when is_binary(params), do: params
-  defp indicator_size(nil), do: nil
 
   defp size_class("extra_small", circle) do
     [
@@ -867,8 +861,6 @@ defmodule CommunityDemoWeb.Components.Badge do
   end
 
   defp size_class(params, _circle) when is_binary(params), do: [params]
-
-  defp size_class(_, _circle), do: size_class("extra_small", nil)
 
   defp icon_position(nil, _), do: false
   defp icon_position(_icon, %{left_icon: true}), do: "left"

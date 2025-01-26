@@ -19,11 +19,11 @@ config :community_demo, CommunityDemo.Repo,
 config :community_demo, CommunityDemoWeb.Endpoint,
   # Binding to loopback ipv4 address prevents access from other machines.
   # Change to `ip: {0, 0, 0, 0}` to allow access from other machines.
-  http: [ip: {127, 0, 0, 1}, port: 4000],
+  http: [ip: {127, 0, 0, 1}, port: 4002],
   check_origin: false,
   code_reloader: true,
   debug_errors: true,
-  secret_key_base: "QgFrx8PHKux6HgzltC0xvbT9Uj7Jqowr2vGJLM3r9MRslAhOP1bWwWXMm33odKWS",
+  secret_key_base: "n5NDMuzxGSIvuLovwrn3m0FZPARLtKDmajjOKzMw6UjnUD14vQBB00sd3nMKIzK+",
   watchers: [
     esbuild: {Esbuild, :install_and_run, [:community_demo, ~w(--sourcemap=inline --watch)]},
     tailwind: {Tailwind, :install_and_run, [:community_demo, ~w(--watch)]}

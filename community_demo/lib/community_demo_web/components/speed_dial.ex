@@ -31,28 +31,6 @@ defmodule CommunityDemoWeb.Components.SpeedDial do
   use Gettext, backend: CommunityDemoWeb.Gettext
   alias Phoenix.LiveView.JS
 
-  @colors [
-    "natural",
-    "primary",
-    "secondary",
-    "success",
-    "warning",
-    "danger",
-    "info",
-    "silver",
-    "misc",
-    "dark",
-    "white",
-    "dawn"
-  ]
-
-  @variants [
-    "default",
-    "shadow",
-    "bordered",
-    "gradient"
-  ]
-
   @doc """
   Renders a customizable `speed_dial` component that provides quick access to multiple actions.
   The speed dial can be configured with various styles, sizes, and colors.
@@ -86,8 +64,8 @@ defmodule CommunityDemoWeb.Components.SpeedDial do
     doc:
       "Determines the overall size of the elements, including padding, font size, and other items"
 
-  attr :color, :string, values: @colors, default: "natural", doc: "Determines color theme"
-  attr :variant, :string, values: @variants, default: "default", doc: "Determines the style"
+  attr :color, :string, default: "base", doc: "Determines color theme"
+  attr :variant, :string, default: "base", doc: "Determines the style"
   attr :space, :string, default: "extra_small", doc: "Space between items"
   attr :width, :string, default: "fit", doc: "Determines the element width"
   attr :border, :string, default: "extra_small", doc: "Determines border style"
@@ -303,7 +281,6 @@ defmodule CommunityDemoWeb.Components.SpeedDial do
   defp width_class("quadruple_large"), do: "[&_.speed-dial-content]:w-96"
   defp width_class("fit"), do: "[&_.speed-dial-content]:w-fit"
   defp width_class(params) when is_binary(params), do: params
-  defp width_class(_), do: width_class("fit")
 
   defp space_class("extra_small", "top"), do: "[&_.speed-dial-content]:space-y-2"
 
@@ -345,9 +322,7 @@ defmodule CommunityDemoWeb.Components.SpeedDial do
 
   defp space_class("extra_large", "right"), do: "[&_.speed-dial-content]:space-x-6"
 
-  defp space_class(_, params) when is_binary(params), do: params
-
-  defp space_class(_, _), do: space_class("extra_small", "bottom")
+  defp space_class(params, _) when is_binary(params), do: params
 
   defp padding_class("none"), do: "[&_.speed-dial-content]:p-0"
 
@@ -363,7 +338,7 @@ defmodule CommunityDemoWeb.Components.SpeedDial do
 
   defp padding_class(params) when is_binary(params), do: params
 
-  defp padding_class(_), do: padding_class("extra_small")
+  defp rounded_size("none"), do: nil
 
   defp rounded_size("extra_small"), do: "[&_.speed-dial-base]:rounded-sm"
 
@@ -376,7 +351,8 @@ defmodule CommunityDemoWeb.Components.SpeedDial do
   defp rounded_size("extra_large"), do: "[&_.speed-dial-base]:rounded-xl"
 
   defp rounded_size("full"), do: "[&_.speed-dial-base]:rounded-full"
-  defp rounded_size(_), do: rounded_size("full")
+
+  defp rounded_size(params) when is_binary(params), do: params
 
   defp size_class("extra_small") do
     [
@@ -428,8 +404,6 @@ defmodule CommunityDemoWeb.Components.SpeedDial do
 
   defp size_class(params) when is_binary(params), do: params
 
-  defp size_class(_), do: size_class("extra_large")
-
   defp border_class(_, variant) when variant in ["default", "shadow", "gradient"],
     do: nil
 
@@ -440,7 +414,6 @@ defmodule CommunityDemoWeb.Components.SpeedDial do
   defp border_class("large", _), do: "[&_.speed-dial-base]:border-4"
   defp border_class("extra_large", _), do: "[&_.speed-dial-base]:border-[5px]"
   defp border_class(params, _) when is_binary(params), do: params
-  defp border_class(_, _), do: border_class("extra_small", nil)
 
   defp action_position("none", "top-start"), do: "top-0 start-0"
   defp action_position("extra_small", "top-start"), do: "top-1 start-4"
@@ -469,6 +442,14 @@ defmodule CommunityDemoWeb.Components.SpeedDial do
   defp action_position("medium", "bottom-end"), do: "bottom-6 end-6"
   defp action_position("large", "bottom-end"), do: "bottom-8 end-8"
   defp action_position("extra_large", "bottom-end"), do: "bottom-9 end-9"
+  defp action_position(params, _) when is_binary(params), do: params
+
+  defp color_variant("base", "base") do
+    [
+      "bg-white text-[#09090b] border-[#e4e4e7] shadow-sm",
+      "dark:bg-[#18181B] dark:text-[#FAFAFA] dark:border-[#27272a]"
+    ]
+  end
 
   defp color_variant("default", "white") do
     ["bg-white text-black"]
@@ -761,8 +742,6 @@ defmodule CommunityDemoWeb.Components.SpeedDial do
   end
 
   defp color_variant(params, _) when is_binary(params), do: params
-
-  defp color_variant(_, _), do: color_variant("default", "natural")
 
   attr :name, :string, required: true, doc: "Specifies the name of the element"
   attr :class, :any, default: nil, doc: "Custom CSS class for additional styling"

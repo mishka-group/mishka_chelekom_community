@@ -20,30 +20,6 @@ defmodule CommunityDemoWeb.Components.Jumbotron do
   """
   use Phoenix.Component
 
-  @colors [
-    "natural",
-    "white",
-    "primary",
-    "secondary",
-    "dark",
-    "success",
-    "warning",
-    "danger",
-    "info",
-    "silver",
-    "misc",
-    "dawn"
-  ]
-
-  @variants [
-    "default",
-    "outline",
-    "transparent",
-    "shadow",
-    "bordered",
-    "gradient"
-  ]
-
   @doc """
   Renders a `jumbotron` component, a large content area designed to showcase key information with a
   prominent background. It supports customizable styles, borders, and spacing.
@@ -106,17 +82,17 @@ defmodule CommunityDemoWeb.Components.Jumbotron do
     default: nil,
     doc: "A unique identifier is used to manage state and interaction"
 
-  attr :variant, :string, values: @variants, default: "default", doc: "Determines the style"
-  attr :color, :string, values: @colors, default: "natural", doc: "Determines color theme"
-  attr :border_size, :string, default: "none", doc: ""
+  attr :variant, :string, default: "base", doc: "Determines the style"
+  attr :color, :string, default: "base", doc: "Determines color theme"
+  attr :border_size, :string, default: "extra_small", doc: ""
   attr :border_position, :string, default: "bottom", doc: ""
-  attr :space, :string, default: nil, doc: "Space between items"
+  attr :space, :string, default: "", doc: "Space between items"
 
   attr :font_weight, :string,
     default: "font-normal",
     doc: "Determines custom class for the font weight"
 
-  attr :padding, :string, default: "none", doc: "Determines padding for items"
+  attr :padding, :string, default: "", doc: "Determines padding for items"
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
 
   attr :rest, :global,
@@ -151,37 +127,24 @@ defmodule CommunityDemoWeb.Components.Jumbotron do
   defp border_class("none", _, _), do: nil
 
   defp border_class("extra_small", "top", _), do: "border-t"
-
   defp border_class("small", "top", _), do: "border-t-2"
-
   defp border_class("medium", "top", _), do: "border-t-[3px]"
-
   defp border_class("large", "top", _), do: "border-t-4"
-
   defp border_class("extra_large", "top", _), do: "border-t-[5px]"
 
   defp border_class("extra_small", "bottom", _), do: "border-b"
-
   defp border_class("small", "bottom", _), do: "border-b-2"
-
   defp border_class("medium", "bottom", _), do: "border-b-[3px]"
-
   defp border_class("large", "bottom", _), do: "border-b-4"
-
   defp border_class("extra_large", "bottom", _), do: "border-b-[5px]"
 
   defp border_class("extra_small", "vertical", _), do: "border-y"
-
   defp border_class("small", "vertical", _), do: "border-y-2"
-
   defp border_class("medium", "vertical", _), do: "border-y-[3px]"
-
   defp border_class("large", "vertical", _), do: "border-y-4"
-
   defp border_class("extra_large", "vertical", _), do: "border-y-[5px]"
 
   defp border_class(params, _, _) when is_binary(params), do: params
-  defp border_class(_, _, _), do: border_class("none", nil, nil)
 
   defp padding_size("extra_small"), do: "p-1"
 
@@ -199,11 +162,7 @@ defmodule CommunityDemoWeb.Components.Jumbotron do
 
   defp padding_size("quadruple_large"), do: "p-8"
 
-  defp padding_size("none"), do: "p-0"
-
   defp padding_size(params) when is_binary(params), do: params
-
-  defp padding_size(_), do: padding_size("none")
 
   defp space_class("extra_small"), do: "space-y-2"
 
@@ -216,7 +175,13 @@ defmodule CommunityDemoWeb.Components.Jumbotron do
   defp space_class("extra_large"), do: "space-y-6"
 
   defp space_class(params) when is_binary(params), do: params
-  defp space_class(_), do: nil
+
+  defp color_variant("base", "base") do
+    [
+      "bg-white text-[#09090b] border-[#e4e4e7] shadow-sm",
+      "dark:bg-[#18181B] dark:text-[#FAFAFA] dark:border-[#27272a]"
+    ]
+  end
 
   defp color_variant("default", "white") do
     [
@@ -633,6 +598,4 @@ defmodule CommunityDemoWeb.Components.Jumbotron do
   end
 
   defp color_variant(params, _) when is_binary(params), do: params
-
-  defp color_variant(_, _), do: color_variant("default", "natural")
 end

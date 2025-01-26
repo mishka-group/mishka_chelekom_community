@@ -26,24 +26,7 @@ defmodule CommunityDemoWeb.Components.Tabs do
 
   use Phoenix.Component
   alias Phoenix.LiveView.JS
-
-  @colors [
-    "natural",
-    "primary",
-    "secondary",
-    "success",
-    "warning",
-    "danger",
-    "info",
-    "silver",
-    "misc",
-    "dawn"
-  ]
-
-  @variants [
-    "default",
-    "pills"
-  ]
+  import CommunityDemoWeb.Components.Badge, only: [badge: 1]
 
   @doc """
   The `tabs` component provides a set of clickable tabs for organizing content.
@@ -82,10 +65,12 @@ defmodule CommunityDemoWeb.Components.Tabs do
     required: true,
     doc: "A unique identifier is used to manage state and interaction"
 
-  attr :variant, :string, values: @variants, default: "default", doc: "Determines the style"
-  attr :color, :string, values: @colors, default: "natural", doc: "Determines color theme"
+  attr :variant, :string, default: "base", doc: "Determines the style"
+  attr :color, :string, default: "base", doc: "Determines color theme"
   attr :border, :string, default: "none", doc: "Determines border style"
-  attr :tab_border, :string, default: "small", doc: "Determines border style for tab"
+  attr :tab_border_size, :string, default: "small", doc: "Determines border style for tab"
+  attr :full_width_tab, :boolean, default: false, doc: "Determines border style for tab"
+  attr :hide_list_border, :boolean, default: false, doc: "Determines border style for tab"
 
   attr :size, :string,
     default: "small",
@@ -93,7 +78,7 @@ defmodule CommunityDemoWeb.Components.Tabs do
     doc:
       "Determines the overall size of the elements, including padding, font size, and other items"
 
-  attr :gap, :string, default: nil, doc: "Determines gap for tabs"
+  attr :gap, :string, default: "", doc: "Determines gap for tabs"
   attr :rounded, :string, default: "none", doc: "Determines the border radius"
 
   attr :font_weight, :string,
@@ -101,6 +86,7 @@ defmodule CommunityDemoWeb.Components.Tabs do
     doc: "Determines custom class for the font weight"
 
   attr :padding, :string, default: "extra_small", doc: "Determines padding for items"
+  attr :content_padding, :string, default: "extra_small", doc: "Determines padding for items"
   attr :triggers_position, :string, default: "extra_small", doc: ""
   attr :vertical, :boolean, default: false, doc: "Determines whether element is vertical"
   attr :placement, :string, default: "start", doc: ""
@@ -119,9 +105,14 @@ defmodule CommunityDemoWeb.Components.Tabs do
     attr :icon_class, :string, doc: "Determines custom class for the icon"
     attr :icon_position, :string, doc: "Determines icon position"
     attr :active, :boolean, doc: "Indicates whether the element is currently active and visible"
+    attr :badge, :string, doc: "Add badge to tab"
+    attr :badge_color, :string, doc: "badge color"
+    attr :badge_position, :string, doc: "badge position"
+    attr :badge_size, :string, doc: "badge size"
+    attr :badge_variant, :string, doc: "badge color varinat"
   end
 
-  slot :panel, required: true do
+  slot :panel, required: false do
     attr :class, :string, doc: "Custom CSS class for additional styling"
   end
 
@@ -136,13 +127,14 @@ defmodule CommunityDemoWeb.Components.Tabs do
       id={@id}
       phx-mounted={is_nil(@mounted_active_tab) && hide_tab(@id, length(@tab)) |> show_tab(@id, 1)}
       class={[
-        "vertical-tab flex",
+        "vertical-tab flex dark:text-gray-200",
         @placement == "end" && "flex-row-reverse",
         content_position(@triggers_position),
-        @variant == "default" && tab_border(@tab_border, @vertical),
+        @variant == "default" || (@variant == "base" && tab_border(@tab_border_size, @vertical)),
         color_variant(@variant, @color),
         rounded_size(@rounded, @variant),
         padding_size(@padding),
+        content_padding(@content_padding),
         border_class(@border),
         size_class(@size),
         gap_size(@gap),
@@ -157,7 +149,9 @@ defmodule CommunityDemoWeb.Components.Tabs do
         class={[
           "tab-trigger-list flex flex-col shrink-0 text-[#4B4B4B] dark:text-[#DDDDDD]",
           @variant == "default" &&
-            "border-[#e8e8e8] dark:border-[#5e5e5e] [&:not(.active-tab)_.tab-trigger]:border-[#e8e8e8] dark:[&:not(.active-tab)_.tab-trigger]:border-[#5e5e5e]"
+            "border-[#e8e8e8] dark:border-[#5e5e5e] [&:not(.active-tab)_.tab-trigger]:border-[#e8e8e8] dark:[&:not(.active-tab)_.tab-trigger]:border-[#5e5e5e]",
+          @variant == "base" &&
+            "border-[#e4e4e7] dark:border-[#27272A] [&:not(.active-tab)_.tab-trigger]:border-[#e4e4e7] dark:[&:not(.active-tab)_.tab-trigger]:border-[#27272a]"
         ]}
       >
         <button
@@ -168,14 +162,24 @@ defmodule CommunityDemoWeb.Components.Tabs do
           phx-mounted={tab[:active] && JS.exec("phx-show-tab", to: "##{@id}-tab-header-#{index}")}
           role="tab"
           class={[
-            "tab-trigger flex flex-row flex-nowrap items-center gap-1.5",
+            "tab-trigger flex flex-row flex-nowrap items-center gap-1.5 leading-5",
             "transition-all duration-400 delay-100 disabled:opacity-80",
-            tab[:icon_position] == "end" && "flex-row-reverse",
+            tab[:icon_position] == "end" && tab[:badge_position] == "end" && "flex-row-reverse",
             tab[:class]
           ]}
         >
           <.icon :if={tab[:icon]} name={tab[:icon]} class="tab-icon" />
-          <span class="block">
+          <.badge
+            :if={tab[:badge]}
+            variant={tab[:badge_variant] || "default"}
+            color={tab[:badge_color] || "natural"}
+            size={tab[:badge_size] || "extra_small"}
+            rounded="full"
+            circle
+          >
+            {tab[:badge]}
+          </.badge>
+          <span class="block tab-button_contnet">
             {render_slot(tab)}
           </span>
         </button>
@@ -189,7 +193,8 @@ defmodule CommunityDemoWeb.Components.Tabs do
           class={[
             "tab-content",
             "[&:not(.active-tab-panel)]:hidden [&:not(.active-tab-panel)]:opacity-0 [&:not(.active-tab-panel)]:invisible",
-            "[&.active-tab-panel]:block [&.active-tab-panel]:opacity-100 [&.active-tab-panel]:visible"
+            "[&.active-tab-panel]:block [&.active-tab-panel]:opacity-100 [&.active-tab-panel]:visible",
+            panel[:class]
           ]}
         >
           {render_slot(panel)}
@@ -210,12 +215,15 @@ defmodule CommunityDemoWeb.Components.Tabs do
       id={@id}
       phx-mounted={is_nil(@mounted_active_tab) && hide_tab(@id, length(@tab)) |> show_tab(@id, 1)}
       class={[
-        "horizontal-tab w-full",
+        "horizontal-tab dark:text-gray-200",
         content_position(@triggers_position),
-        @variant == "default" && tab_border(@tab_border, @vertical),
+        @variant == "default" || (@variant == "base" && tab_border(@tab_border_size, @vertical)),
+        @hide_list_border && "no-border-tabs-list [&_.tab-trigger]:flex-1",
+        @full_width_tab && "[&_.tab-trigger]:flex-1",
         color_variant(@variant, @color),
         rounded_size(@rounded, @variant),
         padding_size(@padding),
+        content_padding(@content_padding),
         border_class(@border),
         size_class(@size),
         gap_size(@gap),
@@ -224,21 +232,39 @@ defmodule CommunityDemoWeb.Components.Tabs do
       ]}
       {@rest}
     >
-      <div role="tablist" tabindex="0" class="tab-trigger-list w-full flex flex-wrap flex-wrap">
+      <div
+        role="tablist"
+        tabindex="0"
+        class={[
+          "tab-trigger-list flex flex-wrap flex-wrap",
+          @variant == "nav_pills" && "tab-nav-pills bg-[#F4F4F5] dark:bg-[#27272A]",
+          @variant == "nav_pills" && !@full_width_tab && "w-fit"
+        ]}
+      >
         <button
           :for={{tab, index} <- Enum.with_index(@tab, 1)}
           id={"#{@id}-tab-header-#{index}"}
           phx-click={hide_tab(@id, length(@tab)) |> show_tab(@id, index)}
           role="tab"
           class={[
-            "tab-trigger flex flex-row flex-nowrap items-center gap-1.5",
+            "tab-trigger flex flex-row flex-nowrap justify-center items-center gap-1.5 leading-5",
             "transition-all duration-400 delay-100 disabled:opacity-80",
-            tab[:icon_position] == "end" && "flex-row-reverse",
+            tab[:icon_position] == "end" && tab[:badge_position] == "end" && "flex-row-reverse",
             tab[:class]
           ]}
         >
           <.icon :if={tab[:icon]} name={tab[:icon]} class="tab-icon" />
-          <span class="block">
+          <.badge
+            :if={tab[:badge]}
+            variant={tab[:badge_variant] || "default"}
+            color={tab[:badge_color] || "natural"}
+            size={tab[:badge_size] || "extra_small"}
+            rounded="full"
+            circle
+          >
+            {tab[:badge]}
+          </.badge>
+          <span class="block tab-button_contnet">
             {render_slot(tab)}
           </span>
         </button>
@@ -250,9 +276,10 @@ defmodule CommunityDemoWeb.Components.Tabs do
           id={"#{@id}-tab-panel-#{index}"}
           role="tabpanel"
           class={[
-            "tab-content",
+            "tab-content w-full",
             "[&:not(.active-tab-panel)]:hidden [&:not(.active-tab-panel)]:opacity-0 [&:not(.active-tab-panel)]:invisible",
-            "[&.active-tab-panel]:block [&.active-tab-panel]:opacity-100 [&.active-tab-panel]:visible"
+            "[&.active-tab-panel]:block [&.active-tab-panel]:opacity-100 [&.active-tab-panel]:visible",
+            panel[:class]
           ]}
         >
           {render_slot(panel)}
@@ -297,47 +324,54 @@ defmodule CommunityDemoWeb.Components.Tabs do
     ]
   end
 
-  defp content_position(_), do: content_position("start")
+  defp content_position(params) when is_binary(params), do: params
 
-  defp padding_size("none") do
-    [
-      "[&_.tab-trigger]:p-0 [&_.tab-content]:p-0"
-    ]
-  end
+  defp padding_size("none"), do: nil
 
   defp padding_size("extra_small") do
     [
-      "[&_.tab-trigger]:py-1 [&_.tab-trigger]:px-2 [&_.tab-content]:p-2"
+      "[&_.tab-trigger]:py-1 [&_.tab-trigger]:px-2",
+      "[&_.tab-nav-pills]:py-1 [&_.tab-nav-pills]:px-2"
     ]
   end
 
   defp padding_size("small") do
     [
-      "[&_.tab-trigger]:py-1.5 [&_.tab-trigger]:px-3 [&_.tab-content]:p-3"
+      "[&_.tab-trigger]:py-1.5 [&_.tab-trigger]:px-3",
+      "[&_.tab-nav-pills]:py-1.5 [&_.tab-nav-pills]:px-3"
     ]
   end
 
   defp padding_size("medium") do
     [
-      "[&_.tab-trigger]:py-2 [&_.tab-trigger]:px-4 [&_.tab-content]:p-4"
+      "[&_.tab-trigger]:py-2 [&_.tab-trigger]:px-4",
+      "[&_.tab-nav-pills]:py-2 [&_.tab-nav-pills]:px-4"
     ]
   end
 
   defp padding_size("large") do
     [
-      "[&_.tab-trigger]:py-2.5 [&_.tab-trigger]:px-5 [&_.tab-content]:p-5"
+      "[&_.tab-trigger]:py-2.5 [&_.tab-trigger]:px-5",
+      "[&_.tab-nav-pills]:py-2.5 [&_.tab-nav-pills]:px-5"
     ]
   end
 
   defp padding_size("extra_large") do
     [
-      "[&_.tab-trigger]:py-3 [&_.tab-trigger]:px-5 [&_.tab-content]:p-6"
+      "[&_.tab-trigger]:py-3 [&_.tab-trigger]:px-5",
+      "[&_.tab-nav-pills]:py-3 [&_.tab-nav-pills]:px-5"
     ]
   end
 
   defp padding_size(params) when is_binary(params), do: params
 
-  defp padding_size(_), do: padding_size("small")
+  defp content_padding("none"), do: nil
+  defp content_padding("extra_small"), do: "[&_.tab-content]:p-2"
+  defp content_padding("small"), do: "[&_.tab-content]:p-3"
+  defp content_padding("medium"), do: "[&_.tab-content]:p-4"
+  defp content_padding("large"), do: "[&_.tab-content]:p-5"
+  defp content_padding("extra_large"), do: "[&_.tab-content]:p-6"
+  defp content_padding(params) when is_binary(params), do: params
 
   defp size_class("extra_small"), do: "text-xs [&_.tab-icon]:size-4"
 
@@ -351,17 +385,15 @@ defmodule CommunityDemoWeb.Components.Tabs do
 
   defp size_class(params) when is_binary(params), do: params
 
-  defp size_class(_), do: size_class("medium")
-
   defp gap_size("extra_small"), do: "[&_.tab-trigger-list]:gap-1"
   defp gap_size("small"), do: "[&_.tab-trigger-list]:gap-2"
   defp gap_size("medium"), do: "[&_.tab-trigger-list]:gap-3"
   defp gap_size("large"), do: "[&_.tab-trigger-list]:gap-4"
   defp gap_size("extra_large"), do: "[&_.tab-trigger-list]:gap-5"
+  defp gap_size("none"), do: nil
   defp gap_size(params) when is_binary(params), do: params
-  defp gap_size(_), do: nil
 
-  defp border_class("none"), do: "border-0"
+  defp border_class("none"), do: nil
   defp border_class("extra_small"), do: "border"
   defp border_class("small"), do: "border-2"
   defp border_class("medium"), do: "border-[3px]"
@@ -370,55 +402,64 @@ defmodule CommunityDemoWeb.Components.Tabs do
   defp border_class(params) when is_binary(params), do: [params]
   defp border_class(nil), do: border_class("none")
 
-  defp tab_border("none", true), do: "[&_.tab-trigger]:border-e-0"
+  defp tab_border("none", true), do: nil
   defp tab_border("extra_small", true), do: "[&_.tab-trigger]:border-e"
   defp tab_border("small", true), do: "[&_.tab-trigger]:border-e-2"
   defp tab_border("medium", true), do: "[&_.tab-trigger]:border-e-[3px]"
   defp tab_border("large", true), do: "[&_.tab-trigger]:border-e-4"
   defp tab_border("extra_large", true), do: "[&_.tab-trigger]:border-e-[5px]"
   defp tab_border(params, true) when is_binary(params), do: [params]
-  defp tab_border(_, true), do: tab_border("extra_small", true)
 
-  defp tab_border("none", false) do
-    [
-      "[&_.tab-trigger]:border-b-0  [&_.tab-trigger-list]:border-b-0"
-    ]
-  end
+  defp tab_border("none", false), do: nil
 
   defp tab_border("extra_small", false) do
     [
-      "[&_.tab-trigger]:border-b [&_.tab-trigger]:-mb-px [&_.tab-trigger-list]:border-b"
+      "[&_.tab-trigger]:border-b [&_.tab-trigger]:-mb-px",
+      "[&:not(.no-border-tabs-list)_.tab-trigger-list]:border-b"
     ]
   end
 
   defp tab_border("small", false) do
     [
-      "[&_.tab-trigger]:border-b-2 [&_.tab-trigger]:-mb-0.5 [&_.tab-trigger-list]:border-b-2"
+      "[&_.tab-trigger]:border-b-2 [&_.tab-trigger]:-mb-0.5",
+      "[&:not(.no-border-tabs-list)_.tab-trigger-list]:border-b-2"
     ]
   end
 
   defp tab_border("medium", false) do
     [
-      "[&_.tab-trigger]:border-b-[3px]  [&_.tab-trigger]:-mb-1 [&_.tab-trigger-list]:border-b-[3px]"
+      "[&_.tab-trigger]:border-b-[3px]  [&_.tab-trigger]:-mb-1",
+      "[&:not(.no-border-tabs-list)_.tab-trigger-list]:border-b-[3px]"
     ]
   end
 
   defp tab_border("large", false) do
     [
-      "[&_.tab-trigger]:border-b-4 [&_.tab-trigger]:-mb-1.5 [&_.tab-trigger-list]:border-b-4"
+      "[&_.tab-trigger]:border-b-4 [&_.tab-trigger]:-mb-1.5",
+      "[&:not(.no-border-tabs-list)_.tab-trigger-list]:border-b-4"
     ]
   end
 
   defp tab_border("extra_large", false) do
     [
-      "[&_.tab-trigger]:border-b-[5px] [&_.tab-trigger]:-mb-2 [&_.tab-trigger-list]:border-b-[5px]"
+      "[&_.tab-trigger]:border-b-[5px] [&_.tab-trigger]:-mb-2",
+      "[&:not(.no-border-tabs-list)_.tab-trigger-list]:border-b-[5px]"
     ]
   end
 
   defp tab_border(params, false) when is_binary(params), do: [params]
-  defp tab_border(_, false), do: tab_border("extra_small", false)
 
-  defp rounded_size(_, "default"), do: "rounded-none"
+  defp rounded_size("none", "default"), do: nil
+
+  defp rounded_size("extra_small", "default"), do: "[&_.tab-trigger]:rounded-t-sm"
+
+  defp rounded_size("small", "default"), do: "[&_.tab-trigger]:rounded-t"
+
+  defp rounded_size("medium", "default"), do: "[&_.tab-trigger]:rounded-t-md"
+
+  defp rounded_size("large", "default"), do: "[&_.tab-trigger]:rounded-t-lg"
+
+  defp rounded_size("extra_large", "default"), do: "[&_.tab-trigger]:rounded-t-xl"
 
   defp rounded_size("none", "pills"), do: "[&_.tab-trigger]:rounded-none"
 
@@ -434,9 +475,42 @@ defmodule CommunityDemoWeb.Components.Tabs do
 
   defp rounded_size("full", "pills"), do: "[&_.tab-trigger]:rounded-full"
 
+  defp rounded_size("none", "nav_pills"),
+    do: "[&_.tab-trigger]:rounded-none [&_.tab-nav-pills]:rounded-none"
+
+  defp rounded_size("extra_small", "nav_pills"),
+    do: "[&_.tab-trigger]:rounded-sm [&_.tab-nav-pills]:rounded-sm"
+
+  defp rounded_size("small", "nav_pills"),
+    do: "[&_.tab-trigger]:rounded [&_.tab-nav-pills]:rounded"
+
+  defp rounded_size("medium", "nav_pills"),
+    do: "[&_.tab-trigger]:rounded-md [&_.tab-nav-pills]:rounded-md"
+
+  defp rounded_size("large", "nav_pills"),
+    do: "[&_.tab-trigger]:rounded-lg [&_.tab-nav-pills]:rounded-lg"
+
+  defp rounded_size("extra_large", "nav_pills"),
+    do: "[&_.tab-trigger]:rounded-xl [&_.tab-nav-pills]:rounded-xl"
+
+  defp rounded_size("full", "nav_pills"),
+    do: "[&_.tab-trigger]:rounded-full [&_.tab-nav-pills]:rounded-full"
+
   defp rounded_size(params, _) when is_binary(params), do: [params]
 
-  defp rounded_size(_, _), do: rounded_size(nil, "default")
+  defp color_variant("base", "base") do
+    [
+      "[&_.tab-trigger.active-tab]:bg-[#e4e4e7] [&_.tab-trigger.active-tab]:text-[#09090b]",
+      "[&_.tab-trigger.active-tab]:border-[#e4e4e7]",
+      "hover:[&_.tab-trigger]:text-[#09090b] hover:[&_.tab-trigger]:border-[#e4e4e7]",
+      "[&_.tab-trigger]:border-[#e4e4e7] dark:[&_.tab-trigger]:border-[#27272a]",
+      "dark:[&_.tab-trigger.active-tab]:bg-[#27272a] dark:[&_.tab-trigger.active-tab]:text-[#FAFAFA]",
+      "dark:[&_.tab-trigger.active-tab]:border-[#27272a] ",
+      "dark:hover:[&_.tab-trigger]:text-[#FAFAFA] dark:hover:[&_.tab-trigger]:border-[#27272a]",
+      "hover:[&_.tab-trigger]:bg-[#e4e4e7] dark:hover:[&_.tab-trigger]:bg-[#27272a]",
+      "dark:[&_.tab-trigger-list]:border-[#27272A] [&_.tab-trigger-list]:border-[#e4e4e7]"
+    ]
+  end
 
   defp color_variant("default", "natural") do
     [
@@ -617,6 +691,107 @@ defmodule CommunityDemoWeb.Components.Tabs do
       "dark:[&_.tab-trigger.active-tab]:text-black dark:[&_.tab-trigger.active-tab]:bg-[#A6A6A6]"
     ]
   end
+
+  defp color_variant("nav_pills", "base") do
+    [
+      "hover:[&_.tab-trigger]:text-[#09090b] hover:[&_.tab-trigger]:bg-[#e4e4e7]",
+      "[&_.tab-trigger.active-tab]:text-[#09090b] [&_.tab-trigger.active-tab]:bg-white",
+      "dark:hover:[&_.tab-trigger]:text-[#FAFAFA] dark:hover:[&_.tab-trigger]:bg-[#18181B]",
+      "dark:[&_.tab-trigger.active-tab]:text-[#FAFAFA] dark:[&_.tab-trigger.active-tab]:bg-[#18181B]"
+    ]
+  end
+
+  defp color_variant("nav_pills", "natural") do
+    [
+      "hover:[&_.tab-trigger]:text-white hover:[&_.tab-trigger]:bg-[#282828]",
+      "[&_.tab-trigger.active-tab]:text-white [&_.tab-trigger.active-tab]:bg-[#4B4B4B]",
+      "dark:hover:[&_.tab-trigger]:text-black dark:hover:[&_.tab-trigger]:bg-[#E8E8E8]",
+      "dark:[&_.tab-trigger.active-tab]:text-black dark:[&_.tab-trigger.active-tab]:bg-[#DDDDDD]"
+    ]
+  end
+
+  defp color_variant("nav_pills", "primary") do
+    [
+      "hover:[&_.tab-trigger]:text-white hover:[&_.tab-trigger]:bg-[#016974]",
+      "[&_.tab-trigger.active-tab]:text-white [&_.tab-trigger.active-tab]:bg-[#007F8C]",
+      "dark:hover:[&_.tab-trigger]:text-black dark:hover:[&_.tab-trigger]:bg-[#77D5E3]",
+      "dark:[&_.tab-trigger.active-tab]:text-black dark:[&_.tab-trigger.active-tab]:bg-[#01B8CA]"
+    ]
+  end
+
+  defp color_variant("nav_pills", "secondary") do
+    [
+      "hover:[&_.tab-trigger]:text-white hover:[&_.tab-trigger]:bg-[#175BCC]",
+      "[&_.tab-trigger.active-tab]:text-white [&_.tab-trigger.active-tab]:bg-[#266EF1]",
+      "dark:hover:[&_.tab-trigger]:text-black dark:hover:[&_.tab-trigger]:bg-[#A9C9FF]",
+      "dark:[&_.tab-trigger.active-tab]:text-black dark:[&_.tab-trigger.active-tab]:bg-[#6DAAFB]"
+    ]
+  end
+
+  defp color_variant("nav_pills", "success") do
+    [
+      "hover:[&_.tab-trigger]:text-white hover:[&_.tab-trigger]:bg-[#166C3B]",
+      "[&_.tab-trigger.active-tab]:text-white [&_.tab-trigger.active-tab]:bg-[#0E8345]",
+      "dark:hover:[&_.tab-trigger]:text-black dark:hover:[&_.tab-trigger]:bg-[#7FD99A]",
+      "dark:[&_.tab-trigger.active-tab]:text-black dark:[&_.tab-trigger.active-tab]:bg-[#06C167]"
+    ]
+  end
+
+  defp color_variant("nav_pills", "warning") do
+    [
+      "hover:[&_.tab-trigger]:text-white hover:[&_.tab-trigger]:bg-[#976A01]",
+      "[&_.tab-trigger.active-tab]:text-white [&_.tab-trigger.active-tab]:bg-[#CA8D01]",
+      "dark:hover:[&_.tab-trigger]:text-black dark:hover:[&_.tab-trigger]:bg-[#FDD067]",
+      "dark:[&_.tab-trigger.active-tab]:text-black dark:[&_.tab-trigger.active-tab]:bg-[#FDC034]"
+    ]
+  end
+
+  defp color_variant("nav_pills", "danger") do
+    [
+      "hover:[&_.tab-trigger]:text-white hover:[&_.tab-trigger]:bg-[#BB032A]",
+      "[&_.tab-trigger.active-tab]:text-white [&_.tab-trigger.active-tab]:bg-[#DE1135]",
+      "dark:hover:[&_.tab-trigger]:text-black dark:hover:[&_.tab-trigger]:bg-[#FFB2AB]",
+      "dark:[&_.tab-trigger.active-tab]:text-black dark:[&_.tab-trigger.active-tab]:bg-[#FC7F79]"
+    ]
+  end
+
+  defp color_variant("nav_pills", "info") do
+    [
+      "hover:[&_.tab-trigger]:text-white hover:[&_.tab-trigger]:bg-[#08638C]",
+      "[&_.tab-trigger.active-tab]:text-white [&_.tab-trigger.active-tab]:bg-[#0B84BA]",
+      "dark:hover:[&_.tab-trigger]:text-black dark:hover:[&_.tab-trigger]:bg-[#6EC9F2]",
+      "dark:[&_.tab-trigger.active-tab]:text-black dark:[&_.tab-trigger.active-tab]:bg-[#3EB7ED]"
+    ]
+  end
+
+  defp color_variant("nav_pills", "misc") do
+    [
+      "hover:[&_.tab-trigger]:text-white hover:[&_.tab-trigger]:bg-[#653C94]",
+      "[&_.tab-trigger.active-tab]:text-white [&_.tab-trigger.active-tab]:bg-[#8750C5]",
+      "dark:hover:[&_.tab-trigger]:text-black dark:hover:[&_.tab-trigger]:bg-[#CBA2FA]",
+      "dark:[&_.tab-trigger.active-tab]:text-black dark:[&_.tab-trigger.active-tab]:bg-[#BA83F9]"
+    ]
+  end
+
+  defp color_variant("nav_pills", "dawn") do
+    [
+      "hover:[&_.tab-trigger]:text-white hover:[&_.tab-trigger]:bg-[#7E4B2A]",
+      "[&_.tab-trigger.active-tab]:text-white [&_.tab-trigger.active-tab]:bg-[#A86438]",
+      "dark:hover:[&_.tab-trigger]:text-black dark:hover:[&_.tab-trigger]:bg-[#E4B190]",
+      "dark:[&_.tab-trigger.active-tab]:text-black dark:[&_.tab-trigger.active-tab]:bg-[#DB976B]"
+    ]
+  end
+
+  defp color_variant("nav_pills", "silver") do
+    [
+      "hover:[&_.tab-trigger]:text-white hover:[&_.tab-trigger]:bg-[#727272]",
+      "[&_.tab-trigger.active-tab]:text-white [&_.tab-trigger.active-tab]:bg-[#868686]",
+      "dark:hover:[&_.tab-trigger]:text-black dark:hover:[&_.tab-trigger]:bg-[#BBBBBB]",
+      "dark:[&_.tab-trigger.active-tab]:text-black dark:[&_.tab-trigger.active-tab]:bg-[#A6A6A6]"
+    ]
+  end
+
+  defp color_variant(params, _) when is_binary(params), do: params
 
   @doc """
   Sets a specific tab as active by adding `active-tab` and `active-tab-panel` CSS classes to the

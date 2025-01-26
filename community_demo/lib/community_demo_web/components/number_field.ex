@@ -13,23 +13,6 @@ defmodule CommunityDemoWeb.Components.NumberField do
 
   use Phoenix.Component
 
-  @variants ["outline", "default", "shadow", "bordered", "transparent"]
-
-  @colors [
-    "natural",
-    "white",
-    "primary",
-    "secondary",
-    "dark",
-    "success",
-    "warning",
-    "danger",
-    "info",
-    "misc",
-    "dawn",
-    "silver"
-  ]
-
   @doc """
   Renders a customizable `number_input` field with various options such as labels, descriptions,
   and error messages.
@@ -70,10 +53,10 @@ defmodule CommunityDemoWeb.Components.NumberField do
     doc: "A unique identifier is used to manage state and interaction"
 
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
-  attr :color, :string, values: @colors, default: "natural", doc: "Determines color theme"
+  attr :color, :string, default: "base", doc: "Determines color theme"
   attr :border, :string, default: "extra_small", doc: "Determines border style"
   attr :rounded, :string, default: "small", doc: "Determines the border radius"
-  attr :variant, :string, values: @variants, default: "outline", doc: "Determines the style"
+  attr :variant, :string, default: "base", doc: "Determines the style"
   attr :description, :string, default: nil, doc: "Determines a short description"
   attr :space, :string, default: "medium", doc: "Space between items"
 
@@ -147,7 +130,7 @@ defmodule CommunityDemoWeb.Components.NumberField do
         <div
           :if={@start_section}
           class={[
-            "flex items-center justify-center shrink-0 ps-2 h-[inherit]",
+            "flex items-center justify-center shrink-0 ps-2",
             @start_section[:class]
           ]}
         >
@@ -184,7 +167,7 @@ defmodule CommunityDemoWeb.Components.NumberField do
 
         <div
           :if={@end_section}
-          class={["flex items-center justify-center shrink-0 pe-2 h-[inherit]", @end_section[:class]]}
+          class={["flex items-center justify-center shrink-0 pe-2", @end_section[:class]]}
         >
           {render_slot(@end_section)}
         </div>
@@ -214,13 +197,13 @@ defmodule CommunityDemoWeb.Components.NumberField do
       </div>
 
       <div class={[
-        "number-field-wrapper overflow-hidden transition-all ease-in-out duration-200 flex flex-nowrap",
+        "number-field-wrapper overflow-hidden transition-all ease-in-out duration-200 flex items-center flex-nowrap",
         @errors != [] && "number-field-error"
       ]}>
         <div
           :if={@start_section}
           class={[
-            "flex items-center justify-center shrink-0 ps-2 h-[inherit]",
+            "flex items-center justify-center shrink-0 ps-2",
             @start_section[:class]
           ]}
         >
@@ -245,7 +228,7 @@ defmodule CommunityDemoWeb.Components.NumberField do
 
         <div
           :if={@end_section}
-          class={["flex items-center justify-center shrink-0 pe-2 h-[inherit]", @end_section[:class]]}
+          class={["flex items-center justify-center shrink-0 pe-2", @end_section[:class]]}
         >
           {render_slot(@end_section)}
         </div>
@@ -317,7 +300,7 @@ defmodule CommunityDemoWeb.Components.NumberField do
     do:
       "[&_.number-field-wrapper_input]:h-11 [&_.number-field-wrapper_.password-field-icon]:size-6"
 
-  defp size_class(_), do: size_class("medium")
+  defp size_class(params) when is_binary(params), do: params
 
   defp rounded_size("extra_small"), do: "[&_.number-field-wrapper]:rounded-sm"
 
@@ -331,7 +314,9 @@ defmodule CommunityDemoWeb.Components.NumberField do
 
   defp rounded_size("full"), do: "[&_.number-field-wrapper]:rounded-full"
 
-  defp rounded_size(_), do: "[&_.number-field-wrapper]:rounded-none"
+  defp rounded_size("none"), do: nil
+
+  defp rounded_size(params) when is_binary(params), do: params
 
   defp border_class(_, variant) when variant in ["default", "shadow", "transparent"],
     do: nil
@@ -343,7 +328,8 @@ defmodule CommunityDemoWeb.Components.NumberField do
   defp border_class("large", _), do: "[&_.number-field-wrapper]:border-4"
   defp border_class("extra_large", _), do: "[&_.number-field-wrapper]:border-[5px]"
   defp border_class(params, _) when is_binary(params), do: params
-  defp border_class(_, _), do: border_class("extra_small", nil)
+
+  defp space_class("none"), do: nil
 
   defp space_class("extra_small"), do: "space-y-1"
 
@@ -357,7 +343,20 @@ defmodule CommunityDemoWeb.Components.NumberField do
 
   defp space_class(params) when is_binary(params), do: params
 
-  defp space_class(_), do: space_class("medium")
+  defp color_variant("base", "base", floating) do
+    [
+      "[&_.number-field-wrapper:not(:has(.number-field-error))]:bg-white",
+      "dark:[&_.number-field-wrapper:not(:has(.number-field-error))]:bg-[#18181B]",
+      "text-[#09090b] dark:text-[#FAFAFA] [&_.number-field-wrapper:not(:has(.number-field-error))]:border-[#e4e4e7]",
+      "dark:[&_.number-field-wrapper:not(:has(.number-field-error))]:border-[#27272a]",
+      "[&_.number-field-wrapper.number-field-error]:border-rose-700",
+      "[&_.number-field-wrapper>input]:placeholder:text-[#09090b] dark:[&_.number-field-wrapper>input]:placeholder:text-[#FAFAFA]",
+      "focus-within:[&_.number-field-wrapper]:ring-[#e4e4e7] dark:focus-within:[&_.number-field-wrapper]:ring-[#e4e4e7]",
+      "[&_.number-field-wrapper]:shadow-sm",
+      floating == "outer" &&
+        "[&_.number-field-wrapper_.floating-label]:bg-white dark:[&_.number-field-wrapper_.floating-label]:bg-[#27272a]"
+    ]
+  end
 
   defp color_variant("outline", "natural", floating) do
     [
@@ -1024,8 +1023,6 @@ defmodule CommunityDemoWeb.Components.NumberField do
   end
 
   defp color_variant(params, _, _) when is_binary(params), do: params
-
-  defp color_variant(_, _, _), do: color_variant("outline", "natural", "none")
 
   defp translate_error({msg, opts}) do
     # When using gettext, we typically pass the strings we want

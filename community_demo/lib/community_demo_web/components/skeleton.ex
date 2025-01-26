@@ -25,24 +25,6 @@ defmodule CommunityDemoWeb.Components.Skeleton do
 
   use Phoenix.Component
 
-  @sizes ["extra_small", "small", "medium", "large", "extra_large"]
-
-  @colors [
-    "natural",
-    "white",
-    "primary",
-    "secondary",
-    "dark",
-    "success",
-    "warning",
-    "danger",
-    "info",
-    "misc",
-    "dawn",
-    "silver",
-    "none"
-  ]
-
   @doc """
   Renders a `skeleton` loader component to indicate loading state in your application.
   The skeleton component provides customizable options such as size, color, and rounded corners.
@@ -67,14 +49,10 @@ defmodule CommunityDemoWeb.Components.Skeleton do
     doc: "A unique identifier is used to manage state and interaction"
 
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
-  attr :color, :string, values: @colors, default: "none", doc: "Determines color theme"
+  attr :color, :string, default: "base", doc: "Determines color theme"
   attr :height, :string, default: "extra_small", doc: "Determines the element width"
   attr :width, :string, default: "full", doc: "Determines the element width"
-
-  attr :rounded, :string,
-    values: @sizes ++ ["full", "none"],
-    default: "small",
-    doc: "Determines the border radius"
+  attr :rounded, :string, default: "small", doc: "Determines the border radius"
 
   attr :visible, :boolean, default: true, doc: ""
 
@@ -116,13 +94,14 @@ defmodule CommunityDemoWeb.Components.Skeleton do
 
   defp rounded_size("none"), do: "rounded-none"
 
+  defp rounded_size(params) when is_binary(params), do: params
+
   defp height_class("extra_small"), do: "h-1"
   defp height_class("small"), do: "h-2"
   defp height_class("medium"), do: "h-3"
   defp height_class("large"), do: "h-4"
   defp height_class("extra_large"), do: "h-5"
   defp height_class(params) when is_binary(params), do: params
-  defp height_class(_), do: height_class("extra_small")
 
   defp width_class("extra_small"), do: "w-60"
   defp width_class("small"), do: "w-64"
@@ -131,7 +110,8 @@ defmodule CommunityDemoWeb.Components.Skeleton do
   defp width_class("extra_large"), do: "w-96"
   defp width_class("full"), do: "w-full"
   defp width_class(params) when is_binary(params), do: params
-  defp width_class(_), do: width_class("full")
+
+  defp color_class("base"), do: "bg-[#e4e4e7] dark:bg-[#27272a]"
 
   defp color_class("white"), do: "bg-white"
 
@@ -157,5 +137,5 @@ defmodule CommunityDemoWeb.Components.Skeleton do
 
   defp color_class("dark"), do: "bg-[#282828]"
 
-  defp color_class("none"), do: nil
+  defp color_class(params) when is_binary(params), do: params
 end

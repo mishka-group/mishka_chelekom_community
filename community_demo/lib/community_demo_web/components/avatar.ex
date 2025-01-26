@@ -21,22 +21,6 @@ defmodule CommunityDemoWeb.Components.Avatar do
 
   use Phoenix.Component
 
-  @sizes ["extra_small", "small", "medium", "large", "extra_large"]
-  @colors [
-    "natural",
-    "white",
-    "dark",
-    "primary",
-    "secondary",
-    "success",
-    "warning",
-    "danger",
-    "info",
-    "silver",
-    "misc",
-    "dawn"
-  ]
-
   @doc """
   The `avatar` component is used to display user avatars with various customization options,
   including size, shape, and styling.
@@ -68,29 +52,20 @@ defmodule CommunityDemoWeb.Components.Avatar do
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
   attr :src, :string, default: nil, doc: "Media link"
 
-  attr :color, :string,
-    values: @colors ++ ["transparent"],
-    default: "transparent",
-    doc: "Determines color theme"
+  attr :color, :string, default: "transparent", doc: "Determines color theme"
 
   attr :size, :string,
     default: "small",
     doc:
       "Determines the overall size of the elements, including padding, font size, and other items"
 
-  attr :shadow, :string,
-    values: @sizes ++ ["none"],
-    default: "none",
-    doc: "Determines shadow style"
+  attr :shadow, :string, default: "none", doc: "Determines shadow style"
 
   attr :font_weight, :string,
     default: "font-normal",
     doc: "Determines custom class for the font weight"
 
-  attr :rounded, :string,
-    values: @sizes ++ ["full", "none"],
-    default: "medium",
-    doc: "Determines the border radius"
+  attr :rounded, :string, default: "medium", doc: "Determines the border radius"
 
   attr :border, :string, default: "none", doc: "Determines border style"
 
@@ -222,7 +197,7 @@ defmodule CommunityDemoWeb.Components.Avatar do
     doc: "A unique identifier is used to manage state and interaction"
 
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
-  attr :space, :string, values: @sizes ++ ["none"], default: "medium", doc: "Space between items"
+  attr :space, :string, default: "medium", doc: "Space between items"
 
   attr :rest, :global,
     doc:
@@ -235,7 +210,7 @@ defmodule CommunityDemoWeb.Components.Avatar do
     <div
       id={@id}
       class={[
-        "flex items-center",
+        "flex items-center rtl:space-x-reverse",
         space_class(@space),
         @class
       ]}
@@ -248,6 +223,10 @@ defmodule CommunityDemoWeb.Components.Avatar do
 
   defp image_color("transparent") do
     nil
+  end
+
+  defp image_color("base") do
+    "border-[#e4e4e7] dark:border-[#27272a]"
   end
 
   defp image_color("white") do
@@ -299,6 +278,13 @@ defmodule CommunityDemoWeb.Components.Avatar do
   end
 
   defp image_color(params), do: params
+
+  defp color_class("base") do
+    [
+      "bg-white text-[#09090b] border-[#e4e4e7]",
+      "dark:bg-[#18181B] dark:text-[#FAFAFA] dark:border-[#27272a]"
+    ]
+  end
 
   defp color_class("white") do
     ["bg-white text-black border-[#DDDDDD]"]
@@ -378,16 +364,15 @@ defmodule CommunityDemoWeb.Components.Avatar do
     ]
   end
 
-  defp color_class(_), do: color_class("natural")
+  defp color_class(params) when is_binary(params), do: params
 
   defp border_class("extra_small"), do: "border-avatar border"
   defp border_class("small"), do: "border-avatar border-2"
   defp border_class("medium"), do: "border-avatar border-[3px]"
   defp border_class("large"), do: "border-avatar border-4"
   defp border_class("extra_large"), do: "border-avatar border-[5px]"
-  defp border_class("none"), do: "border-0"
+  defp border_class("none"), do: nil
   defp border_class(params) when is_binary(params), do: params
-  defp border_class(_), do: border_class("none")
 
   defp rounded_size("extra_small"), do: "rounded-sm"
 
@@ -401,10 +386,9 @@ defmodule CommunityDemoWeb.Components.Avatar do
 
   defp rounded_size("full"), do: "rounded-full"
 
-  defp rounded_size("none"), do: "rounded-none"
+  defp rounded_size("none"), do: nil
 
   defp rounded_size(params) when is_binary(params), do: params
-  defp rounded_size(_), do: rounded_size("medium")
 
   defp size_class("extra_small"), do: "size-8 text-xs"
 
@@ -566,7 +550,6 @@ defmodule CommunityDemoWeb.Components.Avatar do
   end
 
   defp size_class(params, :text) when is_binary(params), do: params
-  defp size_class(_, :text), do: size_class("small", :text)
 
   defp shadow_class("extra_small"), do: "shadow-sm"
   defp shadow_class("small"), do: "shadow"
@@ -575,7 +558,6 @@ defmodule CommunityDemoWeb.Components.Avatar do
   defp shadow_class("extra_large"), do: "shadow-xl"
   defp shadow_class("none"), do: "shadow-none"
   defp shadow_class(params) when is_binary(params), do: params
-  defp shadow_class(_), do: shadow_class("none")
 
   defp space_class("extra_small"), do: "-space-x-2"
 
@@ -587,10 +569,9 @@ defmodule CommunityDemoWeb.Components.Avatar do
 
   defp space_class("extra_large"), do: "-space-x-6"
 
-  defp space_class("none"), do: "space-x-0"
+  defp space_class("none"), do: nil
 
   defp space_class(params) when is_binary(params), do: params
-  defp space_class(_), do: space_class("medium")
 
   defp default_classes() do
     [

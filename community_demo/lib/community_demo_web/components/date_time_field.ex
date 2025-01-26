@@ -16,22 +16,7 @@ defmodule CommunityDemoWeb.Components.DateTimeField do
 
   use Phoenix.Component
 
-  @variants ["outline", "default", "bordered", "shadow", "transparent"]
-
-  @colors [
-    "natural",
-    "white",
-    "primary",
-    "secondary",
-    "dark",
-    "success",
-    "warning",
-    "danger",
-    "info",
-    "silver",
-    "misc",
-    "dawn"
-  ]
+  @variants ["outline", "default", "bordered", "shadow", "transparent", "base"]
 
   @doc """
   The `date_time_field` component is used to create a customizable date, time, or datetime input field with various options such as `type`, `color`, and `size`. It supports floating labels, descriptions, and error messages, making it suitable for form validation and enhanced UX.
@@ -100,7 +85,7 @@ defmodule CommunityDemoWeb.Components.DateTimeField do
     doc: "A unique identifier is used to manage state and interaction"
 
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
-  attr :color, :string, values: @colors, default: "natural", doc: "Determines color theme"
+  attr :color, :string, default: "base", doc: "Determines color theme"
 
   attr :type, :string,
     values: ["date", "datetime-local", "time", "week", "month"],
@@ -109,7 +94,7 @@ defmodule CommunityDemoWeb.Components.DateTimeField do
 
   attr :border, :string, default: "extra_small", doc: "Determines border style"
   attr :rounded, :string, default: "small", doc: "Determines the border radius"
-  attr :variant, :string, values: @variants, default: "outline", doc: "Determines the style"
+  attr :variant, :string, values: @variants, default: "base", doc: "Determines the style"
   attr :description, :string, default: nil, doc: "Determines a short description"
   attr :space, :string, default: "medium", doc: "Space between items"
 
@@ -181,7 +166,7 @@ defmodule CommunityDemoWeb.Components.DateTimeField do
         <div
           :if={@start_section}
           class={[
-            "flex items-center justify-center shrink-0 ps-2 h-[inherit]",
+            "flex items-center justify-center shrink-0 ps-2",
             @start_section[:class]
           ]}
         >
@@ -214,7 +199,7 @@ defmodule CommunityDemoWeb.Components.DateTimeField do
 
         <div
           :if={@end_section}
-          class={["flex items-center justify-center shrink-0 pe-2 h-[inherit]", @end_section[:class]]}
+          class={["flex items-center justify-center shrink-0 pe-2", @end_section[:class]]}
         >
           {render_slot(@end_section)}
         </div>
@@ -244,13 +229,13 @@ defmodule CommunityDemoWeb.Components.DateTimeField do
       </div>
 
       <div class={[
-        "date-time-field-wrapper overflow-hidden transition-all ease-in-out duration-200 flex flex-nowrap",
+        "date-time-field-wrapper overflow-hidden transition-all ease-in-out duration-200 flex items-center flex-nowrap",
         @errors != [] && "date-time-field-error"
       ]}>
         <div
           :if={@start_section}
           class={[
-            "flex items-center justify-center shrink-0 ps-2 h-[inherit]",
+            "flex items-center justify-center shrink-0 ps-2",
             @start_section[:class]
           ]}
         >
@@ -271,7 +256,7 @@ defmodule CommunityDemoWeb.Components.DateTimeField do
 
         <div
           :if={@end_section}
-          class={["flex items-center justify-center shrink-0 pe-2 h-[inherit]", @end_section[:class]]}
+          class={["flex items-center justify-center shrink-0 pe-2", @end_section[:class]]}
         >
           {render_slot(@end_section)}
         </div>
@@ -353,7 +338,7 @@ defmodule CommunityDemoWeb.Components.DateTimeField do
     ]
   end
 
-  defp size_class(_), do: size_class("medium")
+  defp size_class(params) when is_binary(params), do: params
 
   defp rounded_size("extra_small"), do: "[&_.date-time-field-wrapper]:rounded-sm"
 
@@ -367,26 +352,22 @@ defmodule CommunityDemoWeb.Components.DateTimeField do
 
   defp rounded_size("full"), do: "[&_.date-time-field-wrapper]:rounded-full"
 
-  defp rounded_size(_), do: "[&_.date-time-field-wrapper]:rounded-none"
+  defp rounded_size("none"), do: nil
+
+  defp rounded_size(params) when is_binary(params), do: params
 
   defp border_class(_, variant) when variant in ["default", "shadow", "transparent"],
     do: nil
 
   defp border_class("none", _), do: "[&_.date-time-field-wrapper]:border-0"
-
   defp border_class("extra_small", _), do: "[&_.date-time-field-wrapper]:border"
-
   defp border_class("small", _), do: "[&_.date-time-field-wrapper]:border-2"
-
   defp border_class("medium", _), do: "[&_.date-time-field-wrapper]:border-[3px]"
-
   defp border_class("large", _), do: "[&_.date-time-field-wrapper]:border-4"
-
   defp border_class("extra_large", _), do: "[&_.date-time-field-wrapper]:border-[5px]"
-
   defp border_class(params, _) when is_binary(params), do: params
 
-  defp border_class(_, _), do: border_class("extra_small", nil)
+  defp space_class("none"), do: nil
 
   defp space_class("extra_small"), do: "space-y-1"
 
@@ -400,7 +381,20 @@ defmodule CommunityDemoWeb.Components.DateTimeField do
 
   defp space_class(params) when is_binary(params), do: params
 
-  defp space_class(_), do: space_class("medium")
+  defp color_variant("base", "base", floating) do
+    [
+      "[&_.date-time-field-wrapper:not(:has(.date-time-field-error))]:bg-white",
+      "dark:[&_.date-time-field-wrapper:not(:has(.date-time-field-error))]:bg-[#18181B]",
+      "text-[#09090b] dark:text-[#FAFAFA] [&_.date-time-field-wrapper:not(:has(.date-time-field-error))]:border-[#e4e4e7]",
+      "dark:[&_.date-time-field-wrapper:not(:has(.date-time-field-error))]:border-[#27272a]",
+      "[&_.date-time-field-wrapper.date-time-field-error]:border-rose-700",
+      "[&_.date-time-field-wrapper>input]:placeholder:text-[#09090b] dark:[&_.date-time-field-wrapper>input]:placeholder:text-[#FAFAFA]",
+      "focus-within:[&_.date-time-field-wrapper]:ring-[#e4e4e7] dark:focus-within:[&_.date-time-field-wrapper]:ring-[#e4e4e7]",
+      "[&_.date-time-field-wrapper]:shadow-sm",
+      floating == "outer" &&
+        "[&_.date-time-field-wrapper_.floating-label]:bg-white dark:[&_.date-time-field-wrapper_.floating-label]:bg-[#27272a]"
+    ]
+  end
 
   defp color_variant("outline", "natural", floating) do
     [
@@ -1067,8 +1061,6 @@ defmodule CommunityDemoWeb.Components.DateTimeField do
   end
 
   defp color_variant(params, _, _) when is_binary(params), do: params
-
-  defp color_variant(_, _, _), do: color_variant("outline", "natural", "none")
 
   defp translate_error({msg, opts}) do
     # When using gettext, we typically pass the strings we want

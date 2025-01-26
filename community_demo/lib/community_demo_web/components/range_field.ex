@@ -17,21 +17,6 @@ defmodule CommunityDemoWeb.Components.RangeField do
   """
   use Phoenix.Component
 
-  @colors [
-    "natural",
-    "white",
-    "primary",
-    "secondary",
-    "dark",
-    "success",
-    "warning",
-    "danger",
-    "info",
-    "silver",
-    "misc",
-    "dawn"
-  ]
-
   @doc """
   Renders a customizable `range_field`, which allows users to select a numeric value from a defined range.
   The component can be styled in different ways and supports additional labels or values at specified positions.
@@ -74,7 +59,7 @@ defmodule CommunityDemoWeb.Components.RangeField do
 
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
   attr :label_class, :string, default: nil, doc: "Custom CSS class for the label styling"
-  attr :color, :string, values: @colors, default: "natural", doc: "Determines color theme"
+  attr :color, :string, default: "primary", doc: "Determines color theme"
   attr :border, :string, default: "extra_small", doc: "Determines border style"
 
   attr :size, :string,
@@ -82,7 +67,7 @@ defmodule CommunityDemoWeb.Components.RangeField do
     doc:
       "Determines the overall size of the elements, including padding, font size, and other items"
 
-  attr :appearance, :string, default: "default", doc: "custom"
+  attr :appearance, :string, default: "default", doc: "custom, default"
   attr :width, :string, default: "full", doc: "Determines the element width"
 
   attr :ring, :boolean,
@@ -237,12 +222,10 @@ defmodule CommunityDemoWeb.Components.RangeField do
   defp value_position("two-thirds"), do: "start-2/3 -translate-x-1/2 rtl:translate-x-1/2"
   defp value_position("one-thirds"), do: "start-1/3 -translate-x-1/2 rtl:translate-x-1/2"
   defp value_position(params) when is_binary(params), do: params
-  defp value_position(_), do: value_position("start")
 
   defp width_class("half"), do: "[&_.range-field]:w-1/2"
   defp width_class("full"), do: "[&_.range-field]:w-full"
   defp width_class(params) when is_binary(params), do: params
-  defp width_class(_), do: width_class("full")
 
   defp size_class("extra_small") do
     [
@@ -281,7 +264,9 @@ defmodule CommunityDemoWeb.Components.RangeField do
 
   defp size_class(params) when is_binary(params), do: params
 
-  defp size_class(_), do: size_class("extra_small")
+  defp color_class("default", "base") do
+    ["accent-[#27272a] dark:accent-[#e4e4e7]"]
+  end
 
   defp color_class("default", "white") do
     ["accent-white"]
@@ -434,6 +419,8 @@ defmodule CommunityDemoWeb.Components.RangeField do
       "[&_.range-field::-webkit-slider-thumb]:shadow-[0_0_0_4px_rgba(40,40,40,1)]"
     ]
   end
+
+  defp color_class(params, _) when is_binary(params), do: params
 
   defp translate_error({msg, opts}) do
     # When using gettext, we typically pass the strings we want

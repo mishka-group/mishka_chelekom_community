@@ -13,34 +13,6 @@ defmodule CommunityDemoWeb.Components.Overlay do
 
   use Phoenix.Component
 
-  @sizes ["extra_small", "small", "medium", "large", "extra_large"]
-  @colors [
-    "natural",
-    "white",
-    "dark",
-    "primary",
-    "secondary",
-    "success",
-    "warning",
-    "danger",
-    "info",
-    "silver",
-    "misc",
-    "dawn"
-  ]
-
-  @opacities [
-    "transparent",
-    "translucent",
-    "semi_transparent",
-    "lightly_tinted",
-    "tinted",
-    "semi_opaque",
-    "opaque",
-    "heavily_tinted",
-    "almost_solid"
-  ]
-
   @doc """
   Renders an `overlay` element with customizable color, opacity, and backdrop options.
 
@@ -64,9 +36,9 @@ defmodule CommunityDemoWeb.Components.Overlay do
     default: nil,
     doc: "A unique identifier is used to manage state and interaction"
 
-  attr :color, :string, values: @colors, default: "natural", doc: "Determines color theme"
-  attr :opacity, :string, values: @opacities ++ [nil], default: nil, doc: ""
-  attr :backdrop, :string, values: @sizes ++ ["none", nil], default: nil, doc: ""
+  attr :color, :string, default: "base", doc: "Determines color theme"
+  attr :opacity, :string, default: "", doc: ""
+  attr :backdrop, :string, default: "", doc: ""
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
 
   attr :rest, :global,
@@ -92,6 +64,10 @@ defmodule CommunityDemoWeb.Components.Overlay do
       {render_slot(@inner_block)}
     </div>
     """
+  end
+
+  defp color_class("base") do
+    ["bg-white dark:bg-[#18181B]"]
   end
 
   defp color_class("white") do
@@ -185,7 +161,6 @@ defmodule CommunityDemoWeb.Components.Overlay do
   end
 
   defp opacity_class(params) when is_binary(params), do: params
-  defp opacity_class(_), do: nil
 
   defp backdrop_class("extra_small") do
     "backdrop-backdrop-[1px]"
@@ -208,5 +183,4 @@ defmodule CommunityDemoWeb.Components.Overlay do
   end
 
   defp backdrop_class(params) when is_binary(params), do: params
-  defp backdrop_class(_), do: nil
 end

@@ -20,29 +20,6 @@ defmodule CommunityDemoWeb.Components.Toast do
   alias Phoenix.LiveView.JS
   use Gettext, backend: CommunityDemoWeb.Gettext
 
-  @colors [
-    "natural",
-    "white",
-    "primary",
-    "secondary",
-    "dark",
-    "success",
-    "warning",
-    "danger",
-    "info",
-    "silver",
-    "misc",
-    "dawn"
-  ]
-
-  @variants [
-    "default",
-    "outline",
-    "shadow",
-    "bordered",
-    "gradient"
-  ]
-
   @doc """
   The `toast` component displays temporary notifications or messages, usually at the top
   or bottom of the screen.
@@ -87,8 +64,8 @@ defmodule CommunityDemoWeb.Components.Toast do
     doc: "A unique identifier is used to manage state and interaction"
 
   attr :fixed, :boolean, default: true, doc: "Determines whether the element is fixed"
-  attr :variant, :string, values: @variants, default: "default", doc: "Determines the style"
-  attr :color, :string, values: @colors, default: "natural", doc: "Determines color theme"
+  attr :variant, :string, default: "base", doc: "Determines the style"
+  attr :color, :string, default: "base", doc: "Determines color theme"
   attr :border, :string, default: "extra_small", doc: "Determines border style"
   attr :rounded, :string, default: "medium", doc: "Determines the border radius"
   attr :width, :string, default: "medium", doc: "Determines the element width"
@@ -297,7 +274,6 @@ defmodule CommunityDemoWeb.Components.Toast do
   defp boder_position("end"), do: "pe-1.5 before:end-1"
   defp boder_position("start"), do: "ps-1.5 before:start-1"
   defp boder_position(params) when is_binary(params), do: params
-  defp boder_position(_), do: boder_position("start")
 
   defp content_border("extra_small"), do: "before:w-px"
   defp content_border("small"), do: "before:w-0.5"
@@ -306,7 +282,6 @@ defmodule CommunityDemoWeb.Components.Toast do
   defp content_border("extra_large"), do: "before:w-[5px]"
   defp content_border("none"), do: "before:content-none"
   defp content_border(params) when is_binary(params), do: params
-  defp content_border(_), do: content_border("none")
 
   defp row_direction("none"), do: "flex-row"
   defp row_direction("reverse"), do: "flex-row-reverse"
@@ -326,8 +301,6 @@ defmodule CommunityDemoWeb.Components.Toast do
 
   defp padding_size(params) when is_binary(params), do: params
 
-  defp padding_size(_), do: padding_size("extra_small")
-
   defp width_class("extra_small"), do: "max-w-60"
   defp width_class("small"), do: "max-w-64"
   defp width_class("medium"), do: "max-w-72"
@@ -335,7 +308,6 @@ defmodule CommunityDemoWeb.Components.Toast do
   defp width_class("extra_large"), do: "max-w-96"
   defp width_class("full"), do: "w-[calc(100%-10px)]"
   defp width_class(params) when is_binary(params), do: params
-  defp width_class(_), do: width_class("medium")
 
   defp dismiss_size("extra_small"), do: "size-3.5"
   defp dismiss_size("small"), do: "size-4"
@@ -343,7 +315,6 @@ defmodule CommunityDemoWeb.Components.Toast do
   defp dismiss_size("large"), do: "size-6"
   defp dismiss_size("extra_large"), do: "size-7"
   defp dismiss_size(params) when is_binary(params), do: params
-  defp dismiss_size(_), do: dismiss_size("small")
 
   defp vertical_position("extra_small", "top"), do: "top-1"
   defp vertical_position("small", "top"), do: "top-2"
@@ -358,7 +329,6 @@ defmodule CommunityDemoWeb.Components.Toast do
   defp vertical_position("extra_large", "bottom"), do: "bottom-5"
 
   defp vertical_position(params, _) when is_binary(params), do: params
-  defp vertical_position(_, _), do: vertical_position("none", "top")
 
   defp position_class("extra_small", "left"), do: "left-1 ml-1"
   defp position_class("small", "left"), do: "left-2 ml-2"
@@ -375,7 +345,6 @@ defmodule CommunityDemoWeb.Components.Toast do
   defp position_class(_, "center"), do: "left-1/2 -translate-x-1/2"
 
   defp position_class(params, _) when is_binary(params), do: params
-  defp position_class(_, _), do: position_class("extra_small", "right")
 
   defp rounded_size("extra_small"), do: "rounded-sm"
 
@@ -388,6 +357,8 @@ defmodule CommunityDemoWeb.Components.Toast do
   defp rounded_size("extra_large"), do: "rounded-xl"
 
   defp rounded_size("none"), do: "rounded-none"
+
+  defp rounded_size(params) when is_binary(params), do: params
 
   defp space_class("none"), do: nil
 
@@ -403,8 +374,6 @@ defmodule CommunityDemoWeb.Components.Toast do
 
   defp space_class(params) when is_binary(params), do: params
 
-  defp space_class(_), do: space_class("extra_small")
-
   defp border_class(_, variant) when variant in ["default", "shadow", "gradient"],
     do: nil
 
@@ -414,7 +383,14 @@ defmodule CommunityDemoWeb.Components.Toast do
   defp border_class("large", _), do: "border-4"
   defp border_class("extra_large", _), do: "border-[5px]"
   defp border_class(params, _) when is_binary(params), do: params
-  defp border_class(_, _), do: border_class("extra_small", nil)
+
+  defp color_variant("base", "base") do
+    [
+      "bg-white text-[#09090b] dark:bg-[#18181B] dark:text-[#FAFAFA]",
+      "[&>.toast-content-wrapper]:before:bg-[#09090b] dark:[&>.toast-content-wrapper]:before:bg-[#FAFAFA]",
+      "border-[#e4e4e7] dark:border-[#27272a]"
+    ]
+  end
 
   defp color_variant("default", "white") do
     ["bg-white text-black [&>.toast-content-wrapper]:before:bg-black"]
@@ -829,8 +805,6 @@ defmodule CommunityDemoWeb.Components.Toast do
   end
 
   defp color_variant(params, _) when is_binary(params), do: params
-
-  defp color_variant(_, _), do: color_variant("default", "natural")
 
   ## JS Commands
 

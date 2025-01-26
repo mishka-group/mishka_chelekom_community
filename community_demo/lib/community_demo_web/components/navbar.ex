@@ -15,23 +15,6 @@ defmodule CommunityDemoWeb.Components.Navbar do
   """
   use Phoenix.Component
 
-  @colors [
-    "natural",
-    "white",
-    "primary",
-    "secondary",
-    "dark",
-    "success",
-    "warning",
-    "danger",
-    "info",
-    "silver",
-    "misc",
-    "dawn"
-  ]
-
-  @variants ["default", "shadow", "bordered", "gradient"]
-
   @doc """
   Renders a customizable navigation bar (`navbar` component) that can include links,
   dropdowns, and other components.
@@ -117,12 +100,12 @@ defmodule CommunityDemoWeb.Components.Navbar do
     required: true,
     doc: "A unique identifier is used to manage state and interaction"
 
-  attr :variant, :string, values: @variants, default: "default", doc: "Determines the style"
-  attr :color, :string, values: @colors, default: "natural", doc: "Determines color theme"
+  attr :variant, :string, default: "base", doc: "Determines the style"
+  attr :color, :string, default: "base", doc: "Determines color theme"
   attr :border, :string, default: "extra_small", doc: "Determines border style"
-  attr :text_position, :string, default: nil, doc: "Determines the element' text position"
-  attr :rounded, :string, default: nil, doc: "Determines the border radius"
-  attr :max_width, :string, default: nil, doc: "Determines the style of element max width"
+  attr :text_position, :string, default: "", doc: "Determines the element' text position"
+  attr :rounded, :string, default: "", doc: "Determines the border radius"
+  attr :max_width, :string, default: "", doc: "Determines the style of element max width"
 
   attr :content_position, :string,
     default: "between",
@@ -133,7 +116,7 @@ defmodule CommunityDemoWeb.Components.Navbar do
   attr :name, :string, default: nil, doc: "Specifies the name of the element"
   attr :relative, :boolean, default: false, doc: ""
   attr :link, :string, default: nil, doc: ""
-  attr :space, :string, default: nil, doc: "Space between items"
+  attr :space, :string, default: "", doc: "Space between items"
 
   attr :font_weight, :string,
     default: "font-normal",
@@ -146,9 +129,15 @@ defmodule CommunityDemoWeb.Components.Navbar do
     doc:
       "Global attributes can define defaults which are merged with attributes provided by the caller"
 
-  slot :start_content, required: false, doc: ""
+  slot :start_content,
+    required: false,
+    doc: "Content to be rendered at the start (start side based on rtl or ltr) of the navbar."
+
   slot :inner_block, required: false, doc: "Inner block that renders HEEx content"
-  slot :end_content, required: false, doc: ""
+
+  slot :end_content,
+    required: false,
+    doc: "Content to be rendered at the end (end side based on rtl or ltr) of the navbar."
 
   slot :list, required: false do
     attr :class, :string, doc: "Custom CSS class for additional styling"
@@ -238,12 +227,12 @@ defmodule CommunityDemoWeb.Components.Navbar do
     "[&_.nav-wrapper]:justify-around"
   end
 
-  defp content_position(_), do: content_position("between")
+  defp content_position(params) when is_binary(params), do: params
 
   defp text_position("left"), do: "text-left"
   defp text_position("right"), do: "text-right"
   defp text_position("center"), do: "text-center"
-  defp text_position(_), do: nil
+  defp text_position(params) when is_binary(params), do: params
 
   defp space_class("extra_small"), do: "space-y-2"
 
@@ -256,7 +245,6 @@ defmodule CommunityDemoWeb.Components.Navbar do
   defp space_class("extra_large"), do: "space-y-6"
 
   defp space_class(params) when is_binary(params), do: params
-  defp space_class(_), do: nil
 
   defp maximum_width("extra_small"), do: "[&_.nav-wrapper]:max-w-3xl	[&_.nav-wrapper]:mx-auto"
   defp maximum_width("small"), do: "[&_.nav-wrapper]:max-w-4xl [&_.nav-wrapper]:mx-auto"
@@ -264,7 +252,6 @@ defmodule CommunityDemoWeb.Components.Navbar do
   defp maximum_width("large"), do: "[&_.nav-wrapper]:max-w-6xl [&_.nav-wrapper]:mx-auto"
   defp maximum_width("extra_large"), do: "[&_.nav-wrapper]:max-w-7xl [&_.nav-wrapper]:mx-auto"
   defp maximum_width(params) when is_binary(params), do: params
-  defp maximum_width(_), do: nil
 
   defp padding_size("extra_small"), do: "p-1"
 
@@ -280,8 +267,6 @@ defmodule CommunityDemoWeb.Components.Navbar do
 
   defp padding_size(params) when is_binary(params), do: params
 
-  defp padding_size(_), do: padding_size("none")
-
   defp border_class(_, variant) when variant in ["default", "shadow", "gradient"],
     do: nil
 
@@ -292,7 +277,6 @@ defmodule CommunityDemoWeb.Components.Navbar do
   defp border_class("large", _), do: "border-b-4"
   defp border_class("extra_large", _), do: "border-b-[5px]"
   defp border_class(params, _) when is_binary(params), do: params
-  defp border_class(_, _), do: border_class("extra_small", nil)
 
   defp rounded_size("extra_small"), do: "rounded-b-sm"
 
@@ -305,7 +289,13 @@ defmodule CommunityDemoWeb.Components.Navbar do
   defp rounded_size("extra_large"), do: "rounded-b-xl"
 
   defp rounded_size(params) when is_binary(params), do: params
-  defp rounded_size(_), do: nil
+
+  defp color_variant("base", "base") do
+    [
+      "bg-white text-[#09090b] border-[#e4e4e7] shadow-sm",
+      "dark:bg-[#18181B] dark:text-[#FAFAFA] dark:border-[#27272a]"
+    ]
+  end
 
   defp color_variant("default", "white") do
     [
@@ -602,8 +592,6 @@ defmodule CommunityDemoWeb.Components.Navbar do
   end
 
   defp color_variant(params, _) when is_binary(params), do: params
-
-  defp color_variant(_, _), do: color_variant("default", "natural")
 
   attr :name, :string, required: true, doc: "Specifies the name of the element"
   attr :class, :any, default: nil, doc: "Custom CSS class for additional styling"

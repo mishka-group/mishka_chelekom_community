@@ -16,30 +16,6 @@ defmodule CommunityDemoWeb.Components.Footer do
 
   use Phoenix.Component
 
-  @colors [
-    "natural",
-    "white",
-    "primary",
-    "secondary",
-    "dark",
-    "success",
-    "warning",
-    "danger",
-    "info",
-    "silver",
-    "misc",
-    "dawn"
-  ]
-
-  @variants [
-    "default",
-    "outline",
-    "transparent",
-    "shadow",
-    "bordered",
-    "gradient"
-  ]
-
   @doc """
   Renders a customizable `footer` component with different sections and styling options, allowing
   for the inclusion of text, links, and other content.
@@ -80,19 +56,19 @@ defmodule CommunityDemoWeb.Components.Footer do
     default: nil,
     doc: "A unique identifier is used to manage state and interaction"
 
-  attr :variant, :string, values: @variants, default: "default", doc: "Determines the style"
-  attr :color, :string, values: @colors, default: "white", doc: "Determines color theme"
+  attr :variant, :string, default: "base", doc: "Determines the style"
+  attr :color, :string, default: "base", doc: "Determines color theme"
   attr :border, :string, default: "extra_small", doc: "Determines border style"
-  attr :text_position, :string, default: nil, doc: "Determines the element' text position"
-  attr :rounded, :string, default: nil, doc: "Determines the border radius"
-  attr :max_width, :string, default: nil, doc: "Determines the style of element max width"
-  attr :space, :string, default: nil, doc: "Space between items"
+  attr :text_position, :string, default: "", doc: "Determines the element' text position"
+  attr :rounded, :string, default: "", doc: "Determines the border radius"
+  attr :max_width, :string, default: "", doc: "Determines the style of element max width"
+  attr :space, :string, default: "", doc: "Space between items"
 
   attr :font_weight, :string,
     default: "font-normal",
     doc: "Determines custom class for the font weight"
 
-  attr :padding, :string, default: "none", doc: "Determines padding for items"
+  attr :padding, :string, default: "", doc: "Determines padding for items"
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
 
   attr :rest, :global,
@@ -141,9 +117,9 @@ defmodule CommunityDemoWeb.Components.Footer do
     default: "font-normal",
     doc: "Determines custom class for the font weight"
 
-  attr :text_position, :string, default: nil, doc: "Determines the element' text position"
-  attr :space, :string, default: nil, doc: "Space between items"
-  attr :padding, :string, default: "none", doc: "Determines padding for items"
+  attr :text_position, :string, default: "", doc: "Determines the element' text position"
+  attr :space, :string, default: "", doc: "Space between items"
+  attr :padding, :string, default: "", doc: "Determines padding for items"
   slot :inner_block, required: false, doc: "Inner block that renders HEEx content"
 
   def footer_section(assigns) do
@@ -163,7 +139,7 @@ defmodule CommunityDemoWeb.Components.Footer do
   defp text_position("left"), do: "text-left"
   defp text_position("right"), do: "text-right"
   defp text_position("center"), do: "text-center"
-  defp text_position(_), do: nil
+  defp text_position(params) when is_binary(params), do: params
 
   defp space_class("extra_small"), do: "space-y-2"
 
@@ -176,7 +152,6 @@ defmodule CommunityDemoWeb.Components.Footer do
   defp space_class("extra_large"), do: "space-y-6"
 
   defp space_class(params) when is_binary(params), do: params
-  defp space_class(_), do: nil
 
   defp maximum_width("extra_small"), do: "[&>div]:max-w-3xl	[&>div]:mx-auto"
   defp maximum_width("small"), do: "[&>div]:max-w-4xl [&>div]:mx-auto"
@@ -184,7 +159,6 @@ defmodule CommunityDemoWeb.Components.Footer do
   defp maximum_width("large"), do: "[&>div]:max-w-6xl [&>div]:mx-auto"
   defp maximum_width("extra_large"), do: "[&>div]:max-w-7xl [&>div]:mx-auto"
   defp maximum_width(params) when is_binary(params), do: params
-  defp maximum_width(_), do: nil
 
   defp padding_size("extra_small"), do: "p-1"
 
@@ -196,30 +170,18 @@ defmodule CommunityDemoWeb.Components.Footer do
 
   defp padding_size("extra_large"), do: "p-5"
 
-  defp padding_size("none"), do: "p-0"
-
   defp padding_size(params) when is_binary(params), do: params
-
-  defp padding_size(_), do: padding_size("none")
 
   defp border_class(_, variant) when variant in ["default", "shadow", "transparent", "gradient"],
     do: nil
 
   defp border_class("none", _), do: "border-t-0"
-
   defp border_class("extra_small", _), do: "border-t"
-
   defp border_class("small", _), do: "border-t-2"
-
   defp border_class("medium", _), do: "border-t-[3px]"
-
   defp border_class("large", _), do: "border-t-4"
-
   defp border_class("extra_large", _), do: "border-t-[5px]"
-
   defp border_class(params, _) when is_binary(params), do: params
-
-  defp border_class(_, _), do: border_class("extra_small", nil)
 
   defp rounded_size("extra_small"), do: "rounded-t-sm"
 
@@ -232,7 +194,13 @@ defmodule CommunityDemoWeb.Components.Footer do
   defp rounded_size("extra_large"), do: "rounded-t-xl"
 
   defp rounded_size(params) when is_binary(params), do: params
-  defp rounded_size(_), do: "rounded-t-none"
+
+  defp color_variant("base", "base") do
+    [
+      "bg-white text-[#09090b] border-[#e4e4e7]",
+      "dark:bg-[#18181B] dark:text-[#FAFAFA] dark:border-[#27272a]"
+    ]
+  end
 
   defp color_variant("default", "white") do
     [
@@ -649,6 +617,4 @@ defmodule CommunityDemoWeb.Components.Footer do
   end
 
   defp color_variant(params, _) when is_binary(params), do: params
-
-  defp color_variant(_, _), do: color_variant("default", "natural")
 end

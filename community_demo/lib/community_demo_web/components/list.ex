@@ -1,6 +1,6 @@
 defmodule CommunityDemoWeb.Components.List do
   @moduledoc """
-  The `MishkaWeb.Components.List` module provides a versatile and customizable list
+  The `CommunityDemoWeb.Components.List` module provides a versatile and customizable list
   component for building both ordered and unordered lists, as well as a list
   group component for more structured content. This module is designed to cater to
   various styles and use cases, such as navigation menus, data presentations, or simple item listings.
@@ -8,7 +8,7 @@ defmodule CommunityDemoWeb.Components.List do
   ### Features
 
   - **Styling Variants:** The component offers multiple variants like `default`,
-  `bordered`, `outline`, `outline_separated`, `bordered_seperated`, and `transparent` to meet diverse design requirements.
+  `bordered`, `outline`, `outline_separated`, `bordered_separated`, and `transparent` to meet diverse design requirements.
   - **Color Customization:** Choose from a variety of colors to style the list according to
   your application's theme.
   - **Flexible Layouts:** Control the size, spacing, and appearance of list items with extensive
@@ -21,33 +21,6 @@ defmodule CommunityDemoWeb.Components.List do
   """
 
   use Phoenix.Component
-
-  @sizes ["extra_small", "small", "medium", "large", "extra_large"]
-  @variants [
-    "default",
-    "bordered",
-    "outline",
-    "shadow",
-    "gradient",
-    "outline_separated",
-    "bordered_seperated",
-    "transparent"
-  ]
-
-  @colors [
-    "natural",
-    "white",
-    "primary",
-    "secondary",
-    "dark",
-    "success",
-    "warning",
-    "danger",
-    "info",
-    "silver",
-    "misc",
-    "dawn"
-  ]
 
   @doc """
   Renders a `list` component that supports both ordered and unordered lists with customizable styles,
@@ -80,13 +53,25 @@ defmodule CommunityDemoWeb.Components.List do
     doc:
       "Determines the overall size of the elements, including padding, font size, and other items"
 
-  attr :space, :string, values: @sizes ++ [nil], default: nil, doc: "Space between items"
-  attr :border, :string, values: @sizes, default: "extra_small", doc: "Border size"
-  attr :color, :string, values: @colors, default: "natural", doc: "Determines color theme"
-  attr :variant, :string, values: @variants, default: "transparent", doc: "Determines the style"
+  attr :space, :string, default: "", doc: "Space between items"
+  attr :border, :string, default: "extra_small", doc: "Border size"
+  attr :color, :string, default: "natural", doc: "Determines color theme"
+  attr :variant, :string, default: "transparent", doc: "Determines the style"
+  attr :rounded, :string, default: "small", doc: "Determines the border radius"
   attr :hoverable, :boolean, default: false, doc: "active hover style"
   attr :style, :string, default: "list-none", doc: ""
-  slot :item, validate_attrs: false, doc: "Specifies item slot of a list"
+
+  slot :item, validate_attrs: false do
+    attr :id, :string, doc: "A unique identifier is used to manage state and interaction"
+    attr :class, :string, doc: "Custom CSS class for additional styling"
+    attr :count, :integer, doc: "Li counter"
+    attr :count_separator, :string, doc: "Li counter separator"
+    attr :icon, :string, doc: "Icon displayed alongside of an item"
+    attr :icon_class, :string, doc: "Determines custom class for the icon"
+    attr :content_class, :string, doc: "Determines custom class for the content"
+    attr :padding, :string, doc: "Determines padding for items"
+    attr :position, :string, doc: "Determines the element position"
+  end
 
   attr :rest, :global,
     include: ~w(ordered unordered),
@@ -135,7 +120,7 @@ defmodule CommunityDemoWeb.Components.List do
     default: nil,
     doc: "A unique identifier is used to manage state and interaction"
 
-  attr :class, :list, default: nil, doc: "Custom CSS class for additional styling"
+  attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
   attr :count, :integer, default: nil, doc: "Li counter"
   attr :count_separator, :string, default: ". ", doc: "Li counter separator"
   attr :icon, :string, default: nil, doc: "Icon displayed alongside of an item"
@@ -145,7 +130,7 @@ defmodule CommunityDemoWeb.Components.List do
     doc: "Determines custom class for the icon"
 
   attr :content_class, :string, default: nil, doc: "Determines custom class for the content"
-  attr :padding, :string, default: "none", doc: "Determines padding for items"
+  attr :padding, :string, default: "", doc: "Determines padding for items"
 
   attr :position, :string,
     values: ["start", "end", "center"],
@@ -175,7 +160,7 @@ defmodule CommunityDemoWeb.Components.List do
       ]}>
         <.icon :if={!is_nil(@icon)} name={@icon} class={@icon_class} />
         <span :if={is_integer(@count)}>{@count}{@count_separator}</span>
-        <div class="w-full">
+        <div class={["w-full", @content_class]}>
           {render_slot(@inner_block)}
         </div>
       </div>
@@ -204,8 +189,8 @@ defmodule CommunityDemoWeb.Components.List do
     default: nil,
     doc: "A unique identifier is used to manage state and interaction"
 
-  attr :color, :string, values: @colors, default: "natural", doc: "Determines color theme"
-  attr :variant, :string, values: @variants, default: "transparent", doc: "Determines the style"
+  attr :color, :string, default: "natural", doc: "Determines color theme"
+  attr :variant, :string, default: "transparent", doc: "Determines the style"
 
   attr :size, :string,
     default: "medium",
@@ -213,11 +198,13 @@ defmodule CommunityDemoWeb.Components.List do
       "Determines the overall size of the elements, including padding, font size, and other items"
 
   attr :width, :string, default: "full", doc: "Determines the element width"
-  attr :border, :string, values: @sizes, default: "extra_small", doc: "Border size"
+  attr :border, :string, default: "extra_small", doc: "Border size"
   attr :style, :string, default: "list-none", doc: "Determines the element style"
-  attr :space, :string, values: @sizes ++ [nil], default: nil, doc: "Space between items"
+  attr :rounded, :string, default: "small", doc: "Determines the border radius"
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
   attr :hoverable, :boolean, default: false, doc: "active hover style"
+
+  attr :space, :string, default: "", doc: "Space between items"
 
   attr :font_weight, :string,
     default: "font-normal",
@@ -237,9 +224,10 @@ defmodule CommunityDemoWeb.Components.List do
         "[&.list-decimal]:ps-5 [&.list-disc]:ps-5",
         color_variant(@variant, @color, @hoverable),
         border_class(@border, @variant),
+        rounded_size(@rounded),
         size_class(@size),
         width_class(@width),
-        list_space(@space),
+        variant_space(@space, @variant),
         @style,
         @font_weight,
         @class
@@ -271,8 +259,8 @@ defmodule CommunityDemoWeb.Components.List do
     default: nil,
     doc: "A unique identifier is used to manage state and interaction"
 
-  attr :color, :string, values: @colors, default: "natural", doc: "Determines color theme"
-  attr :variant, :string, values: @variants, default: "transparent", doc: "Determines the style"
+  attr :color, :string, default: "natural", doc: "Determines color theme"
+  attr :variant, :string, default: "transparent", doc: "Determines the style"
 
   attr :size, :string,
     default: "medium",
@@ -280,9 +268,10 @@ defmodule CommunityDemoWeb.Components.List do
       "Determines the overall size of the elements, including padding, font size, and other items"
 
   attr :width, :string, default: "full", doc: "Determines the element width"
-  attr :border, :string, values: @sizes, default: "extra_small", doc: "Border size"
+  attr :border, :string, default: "extra_small", doc: "Border size"
+  attr :rounded, :string, default: "small", doc: "Determines the border radius"
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
-  attr :space, :string, values: @sizes ++ [nil], default: nil, doc: "Space between items"
+  attr :space, :string, default: "", doc: "Space between items"
   attr :hoverable, :boolean, default: false, doc: "active hover style"
 
   attr :font_weight, :string,
@@ -304,8 +293,9 @@ defmodule CommunityDemoWeb.Components.List do
         color_variant(@variant, @color, @hoverable),
         border_class(@border, @variant),
         size_class(@size),
+        rounded_size(@rounded),
         width_class(@width),
-        list_space(@space),
+        variant_space(@space, @variant),
         @font_weight,
         @class
       ]}
@@ -334,8 +324,8 @@ defmodule CommunityDemoWeb.Components.List do
     default: nil,
     doc: "A unique identifier is used to manage state and interaction"
 
-  attr :variant, :string, values: @variants, default: "transparent", doc: "Determines the style"
-  attr :color, :string, values: @colors, default: "natural", doc: "Determines color theme"
+  attr :variant, :string, default: "transparent", doc: "Determines the style"
+  attr :color, :string, default: "natural", doc: "Determines color theme"
 
   attr :size, :string,
     default: "medium",
@@ -343,27 +333,16 @@ defmodule CommunityDemoWeb.Components.List do
       "Determines the overall size of the elements, including padding, font size, and other items"
 
   attr :width, :string, default: "full", doc: "Determines the element width"
-  attr :space, :string, values: @sizes ++ [nil], default: "small", doc: "Space between items"
+  attr :space, :string, default: "small", doc: "Space between items"
   attr :hoverable, :boolean, default: false, doc: "active hover style"
-
-  attr :rounded, :string,
-    values: @sizes ++ ["full", "none"],
-    default: "small",
-    doc: "Determines the border radius"
-
-  attr :border, :string,
-    values: @sizes ++ [nil],
-    default: "extra_small",
-    doc: "Determines border style"
+  attr :rounded, :string, default: "small", doc: "Determines the border radius"
+  attr :border, :string, default: "extra_small", doc: "Determines border style"
 
   attr :font_weight, :string,
     default: "font-normal",
     doc: "Determines custom class for the font weight"
 
-  attr :padding, :string,
-    values: @sizes ++ ["none"],
-    default: "none",
-    doc: "Determines padding for items"
+  attr :padding, :string, default: "", doc: "Determines padding for items"
 
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
 
@@ -408,7 +387,7 @@ defmodule CommunityDemoWeb.Components.List do
     "justify-center"
   end
 
-  defp content_position(_), do: content_position("start")
+  defp content_position(params) when is_binary(params), do: params
 
   defp rounded_size("extra_small"),
     do: "[&:not(.list-items-gap)]:rounded-sm [&.list-items-gap>li]:rounded-sm"
@@ -430,8 +409,9 @@ defmodule CommunityDemoWeb.Components.List do
   defp rounded_size("none"),
     do: "[&:not(.list-items-gap)]:rounded-none [&.list-items-gap>li]:rounded-none"
 
-  defp variant_space(_, variant) when variant not in ["outline_separated", "bordered_seperated"],
-    do: nil
+  defp variant_space(_, variant)
+       when variant not in ["outline_separated", "bordered_separated", "base_separated"],
+       do: nil
 
   defp variant_space("extra_small", _), do: "list-items-gap space-y-2"
 
@@ -444,20 +424,6 @@ defmodule CommunityDemoWeb.Components.List do
   defp variant_space("extra_large", _), do: "list-items-gap space-y-6"
 
   defp variant_space(params, _) when is_binary(params), do: params
-  defp variant_space(_, _), do: nil
-
-  defp list_space("extra_small"), do: "space-y-2"
-
-  defp list_space("small"), do: "space-y-3"
-
-  defp list_space("medium"), do: "space-y-4"
-
-  defp list_space("large"), do: "space-y-5"
-
-  defp list_space("extra_large"), do: "space-y-6"
-
-  defp list_space(params) when is_binary(params), do: params
-  defp list_space(_), do: nil
 
   defp width_class("extra_small"), do: "w-60"
   defp width_class("small"), do: "w-64"
@@ -466,7 +432,6 @@ defmodule CommunityDemoWeb.Components.List do
   defp width_class("extra_large"), do: "w-96"
   defp width_class("full"), do: "w-full"
   defp width_class(params) when is_binary(params), do: params
-  defp width_class(_), do: width_class("full")
 
   defp size_class("extra_small"), do: "text-xs [&_.list-item-icon]:size-4"
 
@@ -480,8 +445,6 @@ defmodule CommunityDemoWeb.Components.List do
 
   defp size_class(params) when is_binary(params), do: params
 
-  defp size_class(_), do: size_class("medium")
-
   defp padding_size("extra_small"), do: "p-1"
 
   defp padding_size("small"), do: "p-2"
@@ -492,11 +455,7 @@ defmodule CommunityDemoWeb.Components.List do
 
   defp padding_size("extra_large"), do: "p-5"
 
-  defp padding_size("none"), do: "p-0"
-
   defp padding_size(params) when is_binary(params), do: params
-
-  defp padding_size(_), do: padding_size("none")
 
   defp border_class(_, variant) when variant in ["default", "shadow", "transparent", "gradient"],
     do: nil
@@ -529,33 +488,74 @@ defmodule CommunityDemoWeb.Components.List do
   defp border_class("extra_large", "bordered"),
     do: "border-[5px] [&>li:not(:last-child)]:border-b-[5px]"
 
-  defp border_class("none", "bordered_seperated"), do: "[&>li]:border-0"
+  defp border_class("none", "bordered_separated"), do: "[&>li]:border-0"
 
-  defp border_class("extra_small", "bordered_seperated"), do: "[&>li]:border"
+  defp border_class("extra_small", "bordered_separated"), do: "[&>li]:border"
 
-  defp border_class("small", "bordered_seperated"), do: "[&>li]:border-2"
+  defp border_class("small", "bordered_separated"), do: "[&>li]:border-2"
 
-  defp border_class("medium", "bordered_seperated"), do: "[&>li]:border-[3px]"
+  defp border_class("medium", "bordered_separated"), do: "[&>li]:border-[3px]"
 
-  defp border_class("large", "bordered_seperated"), do: "[&>li]:border-4"
+  defp border_class("large", "bordered_separated"), do: "[&>li]:border-4"
 
-  defp border_class("extra_large", "bordered_seperated"), do: "[&>li]:border-[5px]"
+  defp border_class("extra_large", "bordered_separated"), do: "[&>li]:border-[5px]"
 
-  defp border_class("none", "outline_seperated"), do: "[&>li]:border-0"
+  defp border_class("none", "outline_separated"), do: "[&>li]:border-0"
 
-  defp border_class("extra_small", "outline_seperated"), do: "[&>li]:border"
+  defp border_class("extra_small", "outline_separated"), do: "[&>li]:border"
 
-  defp border_class("small", "outline_seperated"), do: "[&>li]:border-2"
+  defp border_class("small", "outline_separated"), do: "[&>li]:border-2"
 
-  defp border_class("medium", "outline_seperated"), do: "[&>li]:border-[3px]"
+  defp border_class("medium", "outline_separated"), do: "[&>li]:border-[3px]"
 
-  defp border_class("large", "outline_seperated"), do: "[&>li]:border-4"
+  defp border_class("large", "outline_separated"), do: "[&>li]:border-4"
 
-  defp border_class("extra_large", "outline_seperated"), do: "[&>li]:border-[5px]"
+  defp border_class("extra_large", "outline_separated"), do: "[&>li]:border-[5px]"
+
+  defp border_class("none", "base"), do: "border-0 [&>li:not(:last-child)]:border-b-0"
+
+  defp border_class("extra_small", "base"), do: "border [&>li:not(:last-child)]:border-b"
+
+  defp border_class("small", "base"), do: "border-2 [&>li:not(:last-child)]:border-b-2"
+
+  defp border_class("medium", "base"),
+    do: "border-[3px] [&>li:not(:last-child)]:border-b-[3px]"
+
+  defp border_class("large", "base"), do: "border-4 [&>li:not(:last-child)]:border-b-4"
+
+  defp border_class("extra_large", "base"),
+    do: "border-[5px] [&>li:not(:last-child)]:border-b-[5px]"
+
+  defp border_class("none", "base_separated"), do: "[&>li]:border-0"
+
+  defp border_class("extra_small", "base_separated"), do: "[&>li]:border"
+
+  defp border_class("small", "base_separated"), do: "[&>li]:border-2"
+
+  defp border_class("medium", "base_separated"), do: "[&>li]:border-[3px]"
+
+  defp border_class("large", "base_separated"), do: "[&>li]:border-4"
+
+  defp border_class("extra_large", "base_separated"), do: "[&>li]:border-[5px]"
 
   defp border_class(params, _) when is_binary(params), do: params
 
-  defp border_class(_, _), do: border_class(nil, "transparent")
+  defp color_variant("base", "base", hoverable) do
+    [
+      "bg-white text-[#09090b] border-[#e4e4e7] shadow-sm",
+      "dark:bg-[#18181B] dark:text-[#FAFAFA] dark:border-[#27272a]",
+      "[&>li:not(:last-child)]:border-[#e4e4e7] dark:[&>li:not(:last-child)]:border-[#27272a]",
+      hoverable && "hover:[&_li]:bg-[#F8F9FA] dark:hover:[&_li]:bg-[#242424]"
+    ]
+  end
+
+  defp color_variant("base_separated", "base", hoverable) do
+    [
+      "[&>li]:text-[#09090b] [&>li]:border-[#e4e4e7] [&>li]:bg-white",
+      "dark:[&>li]:text-[#FAFAFA] dark:[&>li]:border-[#27272a] dark:[&>li]:bg-[#18181B]",
+      hoverable && "hover:[&_li]:bg-[#F8F9FA] dark:hover:[&_li]:bg-[#242424]"
+    ]
+  end
 
   defp color_variant("default", "white", hoverable) do
     [
@@ -1087,7 +1087,7 @@ defmodule CommunityDemoWeb.Components.List do
     ]
   end
 
-  defp color_variant("bordered_seperated", "natural", hoverable) do
+  defp color_variant("bordered_separated", "natural", hoverable) do
     [
       "[&>li]:text-[#282828] [&>li]:border-[#282828] [&>li]:bg-[#F3F3F3]",
       "dark:[&>li]:text-[#E8E8E8] dark:[&>li]:border-[#E8E8E8] dark:[&>li]:bg-[#4B4B4B]",
@@ -1096,7 +1096,7 @@ defmodule CommunityDemoWeb.Components.List do
     ]
   end
 
-  defp color_variant("bordered_seperated", "primary", hoverable) do
+  defp color_variant("bordered_separated", "primary", hoverable) do
     [
       "[&>li]:text-[#016974] [&>li]:border-[#016974] [&>li]:bg-[#E2F8FB]",
       "dark:[&>li]:text-[#77D5E3] dark:[&>li]:border-[#77D5E3] dark:[&>li]:bg-[#002D33]",
@@ -1105,7 +1105,7 @@ defmodule CommunityDemoWeb.Components.List do
     ]
   end
 
-  defp color_variant("bordered_seperated", "secondary", hoverable) do
+  defp color_variant("bordered_separated", "secondary", hoverable) do
     [
       "[&>li]:text-[#175BCC] [&>li]:border-[#175BCC] [&>li]:bg-[#EFF4FE]",
       "dark:[&>li]:text-[#A9C9FF] dark:[&>li]:border-[#A9C9FF] dark:[&>li]:bg-[#002661]",
@@ -1114,7 +1114,7 @@ defmodule CommunityDemoWeb.Components.List do
     ]
   end
 
-  defp color_variant("bordered_seperated", "success", hoverable) do
+  defp color_variant("bordered_separated", "success", hoverable) do
     [
       "[&>li]:text-[#166C3B] [&>li]:border-[#166C3B] [&>li]:bg-[#EAF6ED]",
       "dark:[&>li]:text-[#7FD99A] dark:[&>li]:border-[#7FD99A] dark:[&>li]:bg-[#002F14]",
@@ -1123,7 +1123,7 @@ defmodule CommunityDemoWeb.Components.List do
     ]
   end
 
-  defp color_variant("bordered_seperated", "warning", hoverable) do
+  defp color_variant("bordered_separated", "warning", hoverable) do
     [
       "[&>li]:text-[#976A01] [&>li]:border-[#976A01] [&>li]:bg-[#FFF7E6]",
       "dark:[&>li]:text-[#FDD067] dark:[&>li]:border-[#FDD067] dark:[&>li]:bg-[#322300]",
@@ -1132,7 +1132,7 @@ defmodule CommunityDemoWeb.Components.List do
     ]
   end
 
-  defp color_variant("bordered_seperated", "danger", hoverable) do
+  defp color_variant("bordered_separated", "danger", hoverable) do
     [
       "[&>li]:text-[#BB032A] [&>li]:border-[#BB032A] [&>li]:bg-[#FFF0EE]",
       "dark:[&>li]:text-[#FFB2AB] dark:[&>li]:border-[#FFB2AB] dark:[&>li]:bg-[#520810]",
@@ -1141,7 +1141,7 @@ defmodule CommunityDemoWeb.Components.List do
     ]
   end
 
-  defp color_variant("bordered_seperated", "info", hoverable) do
+  defp color_variant("bordered_separated", "info", hoverable) do
     [
       "[&>li]:text-[#0B84BA] [&>li]:border-[#0B84BA] [&>li]:bg-[#E7F6FD]",
       "dark:[&>li]:text-[#6EC9F2] dark:[&>li]:border-[#6EC9F2] dark:[&>li]:bg-[#03212F]",
@@ -1150,7 +1150,7 @@ defmodule CommunityDemoWeb.Components.List do
     ]
   end
 
-  defp color_variant("bordered_seperated", "misc", hoverable) do
+  defp color_variant("bordered_separated", "misc", hoverable) do
     [
       "[&>li]:text-[#653C94] [&>li]:border-[#653C94] [&>li]:bg-[#F6F0FE]",
       "dark:[&>li]:text-[#CBA2FA] dark:[&>li]:border-[#CBA2FA] dark:[&>li]:bg-[#221431]",
@@ -1159,7 +1159,7 @@ defmodule CommunityDemoWeb.Components.List do
     ]
   end
 
-  defp color_variant("bordered_seperated", "dawn", hoverable) do
+  defp color_variant("bordered_separated", "dawn", hoverable) do
     [
       "[&>li]:text-[#7E4B2A] [&>li]:border-[#7E4B2A] [&>li]:bg-[#FBF2ED]",
       "dark:[&>li]:text-[#E4B190] dark:[&>li]:border-[#E4B190] dark:[&>li]:bg-[#2A190E]",
@@ -1168,7 +1168,7 @@ defmodule CommunityDemoWeb.Components.List do
     ]
   end
 
-  defp color_variant("bordered_seperated", "silver", hoverable) do
+  defp color_variant("bordered_separated", "silver", hoverable) do
     [
       "[&>li]:text-[#727272] [&>li]:border-[#727272] [&>li]:bg-[#F3F3F3]",
       "dark:[&>li]:text-[#BBBBBB] dark:[&>li]:border-[#BBBBBB] dark:[&>li]:bg-[#4B4B4B]",
@@ -1258,8 +1258,6 @@ defmodule CommunityDemoWeb.Components.List do
   end
 
   defp color_variant(params, _, _) when is_binary(params), do: params
-
-  defp color_variant(_, _, _), do: color_variant("transparent", "natural", false)
 
   attr :name, :string, required: true, doc: "Specifies the name of the element"
   attr :class, :any, default: nil, doc: "Custom CSS class for additional styling"

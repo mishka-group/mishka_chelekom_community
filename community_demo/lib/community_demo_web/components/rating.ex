@@ -66,7 +66,7 @@ defmodule CommunityDemoWeb.Components.Rating do
     <div
       id={@id}
       class={[
-        "flex flex-nowrap text-[#DDDDDD] dark:text-[#4B4B4B]",
+        "flex flex-nowrap text-[#F4F4F4] dark:text-[#4B4B4B]",
         gap_class(@gap),
         size_class(@size),
         color_class(@color)
@@ -75,7 +75,7 @@ defmodule CommunityDemoWeb.Components.Rating do
       <%= for item <- 1..@count do %>
         <%= if @interactive do %>
           <button
-            class={["rating-button"]}
+            class={["rating-button leading-5"]}
             phx-click={
               @on_action
               |> JS.push("rating", value: Map.merge(%{action: "select", number: item}, @params))
@@ -96,8 +96,8 @@ defmodule CommunityDemoWeb.Components.Rating do
   defp gap_class("medium"), do: "gap-2"
   defp gap_class("large"), do: "gap-2.5"
   defp gap_class("extra_large"), do: "gap-3"
+  defp gap_class("none"), do: nil
   defp gap_class(params) when is_binary(params), do: params
-  defp gap_class(_), do: gap_class("small")
 
   defp size_class("extra_small"), do: "[&_.rating-icon]:size-4"
 
@@ -117,7 +117,13 @@ defmodule CommunityDemoWeb.Components.Rating do
 
   defp size_class(params) when is_binary(params), do: params
 
-  defp size_class(_), do: size_class("small")
+  defp color_class("base") do
+    [
+      "[&_.rated]:text-[#e4e4e7] dark:[&_.rated]:text-[#27272a]",
+      "hover:[&_.rating-button]:text-[#e4e4e7] [&_.rating-button:has(~.rating-button:hover)]:text-[#e4e4e7]",
+      "dark:hover:[&_.rating-button]:text-[#27272a] dark:[&_.rating-button:has(~.rating-button:hover)]:text-[#27272a]"
+    ]
+  end
 
   defp color_class("white") do
     [
@@ -212,6 +218,8 @@ defmodule CommunityDemoWeb.Components.Rating do
       "hover:[&_.rating-button]:text-[#282828] [&_.rating-button:has(~.rating-button:hover)]:text-[#282828]"
     ]
   end
+
+  defp color_class(params) when is_binary(params), do: params
 
   attr :name, :string, required: true, doc: "Specifies the name of the element"
   attr :class, :any, default: nil, doc: "Custom CSS class for additional styling"

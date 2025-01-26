@@ -15,21 +15,6 @@ defmodule CommunityDemoWeb.Components.Divider do
   """
   use Phoenix.Component
 
-  @colors [
-    "natural",
-    "white",
-    "dark",
-    "primary",
-    "secondary",
-    "success",
-    "warning",
-    "danger",
-    "info",
-    "misc",
-    "dawn",
-    "silver"
-  ]
-
   @doc """
   The `divider` component is used to visually separate content with either a horizontal or
   vertical line. It supports different line styles (like dashed, dotted, or solid) and can
@@ -60,7 +45,7 @@ defmodule CommunityDemoWeb.Components.Divider do
     default: "solid",
     doc: "Determines type of element"
 
-  attr :color, :string, values: @colors, default: "silver", doc: "Determines color theme"
+  attr :color, :string, default: "base", doc: "Determines color theme"
 
   attr :size, :string,
     default: "extra_small",
@@ -217,7 +202,7 @@ defmodule CommunityDemoWeb.Components.Divider do
     default: "solid",
     doc: "Specifies the type of the element"
 
-  attr :color, :string, values: @colors, default: "silver", doc: "Determines color theme"
+  attr :color, :string, default: "base", doc: "Determines color theme"
 
   attr :size, :string,
     default: "extra_small",
@@ -386,21 +371,13 @@ defmodule CommunityDemoWeb.Components.Divider do
 
   defp size_class("extra_large", :icon), do: "[&>*]:size-9"
 
-  defp size_class(params, :icon) when is_binary(params), do: params
-
-  defp size_class(_, :icon), do: size_class("extra_small", :icon)
-
-  defp size_class(params, _) when is_binary(params), do: [params]
-
-  defp size_class(_, _), do: size_class("extra_small", :horizontal)
+  defp size_class(params, _) when is_binary(params), do: params
 
   defp width_class("full"), do: "w-full"
 
   defp width_class("half"), do: "w-1/2"
 
   defp width_class(params) when is_binary(params), do: params
-
-  defp width_class(_), do: width_class("full")
 
   defp height_class("full"), do: "h-screen"
 
@@ -409,8 +386,6 @@ defmodule CommunityDemoWeb.Components.Divider do
   defp height_class("half"), do: "h-1/2"
 
   defp height_class(params) when is_binary(params), do: params
-
-  defp height_class(_), do: height_class("auto")
 
   defp margin_class("extra_small", :horizontal) do
     ["my-2"]
@@ -458,6 +433,18 @@ defmodule CommunityDemoWeb.Components.Divider do
 
   defp margin_class("none", :vertical) do
     ["mx-0"]
+  end
+
+  defp margin_class(params, _) when is_binary(params), do: params
+
+  defp color_class("base") do
+    [
+      "text-[#09090b] border-[#e4e4e7] dark:text-[#27272a] dark:border-[#27272a]",
+      "has-[.divider-content.devider-middle]:before:border-[#e4e4e7] has-[.divider-content.devider-middle]:after:border-[#e4e4e7]",
+      "has-[.divider-content.devider-right]:before:border-[#e4e4e7] has-[.divider-content.devider-left]:after:border-[#e4e4e7]",
+      "dark:has-[.divider-content.devider-middle]:before:border-[#27272a] dark:has-[.divider-content.devider-middle]:after:border-[#27272a]",
+      "dark:has-[.divider-content.devider-right]:before:border-[#27272a] dark:has-[.divider-content.devider-left]:after:border-[#27272a]"
+    ]
   end
 
   defp color_class("white") do

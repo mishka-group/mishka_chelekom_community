@@ -16,31 +16,6 @@ defmodule CommunityDemoWeb.Components.Spinner do
 
   use Phoenix.Component
 
-  @sizes [
-    "extra_small",
-    "small",
-    "medium",
-    "large",
-    "extra_large",
-    "double_large",
-    "triple_large",
-    "quadruple_large"
-  ]
-  @colors [
-    "natural",
-    "white",
-    "dark",
-    "primary",
-    "secondary",
-    "success",
-    "warning",
-    "danger",
-    "info",
-    "silver",
-    "misc",
-    "dawn"
-  ]
-
   @spinner_types [
     "default",
     "dots",
@@ -69,10 +44,9 @@ defmodule CommunityDemoWeb.Components.Spinner do
 
   attr :type, :string, values: @spinner_types, default: "default", doc: ""
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
-  attr :color, :string, values: @colors, default: "natural", doc: "Determines color theme"
+  attr :color, :string, default: "base", doc: "Determines color theme"
 
   attr :size, :string,
-    values: @sizes,
     default: "small",
     doc:
       "Determines the overall size of the elements, including padding, font size, and other items"
@@ -284,7 +258,14 @@ defmodule CommunityDemoWeb.Components.Spinner do
 
   defp size_class("default", "quadruple_large"), do: "size-10 border-[6px]"
 
-  defp size_class(_, _), do: size_class("default", "small")
+  defp size_class(_, params) when is_binary(params), do: params
+
+  defp color_class("base") do
+    [
+      "[&>span]:bg-[#e4e4e7] [&>svg]:stroke-[#e4e4e7] text-[#e4e4e7]",
+      "dark:[&>span]:bg-[#27272a] dark:[&>svg]:stroke-[#27272a] dark:text-[#27272a]"
+    ]
+  end
 
   defp color_class("white") do
     ["[&>span]:bg-white [&>svg]:stroke-white text-white"]
@@ -363,4 +344,6 @@ defmodule CommunityDemoWeb.Components.Spinner do
       "dark:[&>span]:bg-[#A6A6A6] dark:[&>svg]:stroke-[#A6A6A6] dark:text-[#A6A6A6]"
     ]
   end
+
+  defp color_class(params) when is_binary(params), do: params
 end

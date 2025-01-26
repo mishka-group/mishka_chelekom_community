@@ -24,36 +24,6 @@ defmodule CommunityDemoWeb.Components.Button do
 
   use Phoenix.Component
 
-  @sizes ["extra_small", "small", "medium", "large", "extra_large"]
-  @variants [
-    "default",
-    "outline",
-    "transparent",
-    "subtle",
-    "shadow",
-    "inverted",
-    "bordered",
-    "default_gradient",
-    "outline_gradient",
-    "inverted_gradient"
-  ]
-
-  @colors [
-    "natural",
-    "white",
-    "dark",
-    "primary",
-    "secondary",
-    "success",
-    "warning",
-    "danger",
-    "info",
-    "silver",
-    "misc",
-    "dawn",
-    "transparent"
-  ]
-
   @indicator_positions [
     "indicator",
     "right_indicator",
@@ -110,13 +80,8 @@ defmodule CommunityDemoWeb.Components.Button do
     default: "horizontal",
     doc: "Defines the layout orientation of the component"
 
-  attr :color, :string, values: @colors, default: "natural", doc: "Determines color theme"
-
-  attr :rounded, :string,
-    values: @sizes ++ ["full", "none"],
-    default: "small",
-    doc: "Determines the border radius"
-
+  attr :color, :string, default: "base", doc: "Determines color theme"
+  attr :rounded, :string, default: "small", doc: "Determines the border radius"
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
 
   attr :rest, :global,
@@ -164,14 +129,14 @@ defmodule CommunityDemoWeb.Components.Button do
     default: nil,
     doc: "A unique identifier is used to manage state and interaction"
 
-  attr :variant, :string, values: @variants, default: "default", doc: "Determines the style"
+  attr :variant, :string, default: "base", doc: "Determines the style"
 
-  attr :type, :string,
+  attr :type, :any,
     values: ["button", "submit", "reset", nil],
     default: nil,
     doc: "Specifies the type of the element"
 
-  attr :color, :string, default: "natural", doc: "Determines color theme"
+  attr :color, :string, default: "base", doc: "Determines color theme"
   attr :rounded, :string, default: "large", doc: "Determines the border radius"
   attr :border, :string, default: "extra_small", doc: "Determines border style"
 
@@ -188,6 +153,7 @@ defmodule CommunityDemoWeb.Components.Button do
     default: "inline-flex",
     doc: "Specifies the CSS display property for the element"
 
+  attr :line_height, :string, default: "leading-5", doc: "Line height"
   attr :icon, :string, default: nil, doc: "Icon displayed alongside of an item"
   attr :icon_class, :string, default: nil, doc: "Determines custom class for the icon"
 
@@ -201,8 +167,12 @@ defmodule CommunityDemoWeb.Components.Button do
     default: nil,
     doc: "Custom CSS class for styling the indicator element"
 
-  attr :indicator_size, :string, default: nil, doc: "Defines the size of the indicator element"
+  attr :indicator_size, :string,
+    default: "extra_small",
+    doc: "Defines the size of the indicator element"
+
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
+  attr :content_class, :string, default: "block", doc: "Custom CSS class for additional styling"
 
   attr :rest, :global,
     include:
@@ -232,6 +202,7 @@ defmodule CommunityDemoWeb.Components.Button do
             rounded_size(@rounded),
             border_size(@border, @variant),
             @full_width && "w-full",
+            @line_height,
             @font_weight,
             @display,
             @class
@@ -249,7 +220,7 @@ defmodule CommunityDemoWeb.Components.Button do
 
       <.button_indicator position="left" size={@indicator_size} class={@indicator_class} {@rest} />
       <.icon :if={icon_position(@icon, @rest) == "left"} name={@icon} class={@icon_class} />
-      <span :if={@inner_block && render_slot(@inner_block)} class="block">
+      <span :if={@inner_block && render_slot(@inner_block)} class={[@content_class]}>
         {render_slot(@inner_block)}
       </span>
       <.icon :if={icon_position(@icon, @rest) == "right"} name={@icon} class={@icon_class} />
@@ -283,8 +254,8 @@ defmodule CommunityDemoWeb.Components.Button do
     default: nil,
     doc: "A unique identifier is used to manage state and interaction"
 
-  attr :variant, :string, values: @variants, default: "default", doc: "Determines the style"
-  attr :color, :string, default: "natural", doc: "Determines color theme"
+  attr :variant, :string, default: "base", doc: "Determines the style"
+  attr :color, :string, default: "base", doc: "Determines color theme"
   attr :rounded, :string, default: "large", doc: "Determines the border radius"
   attr :value, :string, default: "", doc: "Value of input"
   attr :border, :string, default: "extra_small", doc: "Determines border style"
@@ -295,6 +266,7 @@ defmodule CommunityDemoWeb.Components.Button do
       "Determines the overall size of the elements, including padding, font size, and other items"
 
   attr :type, :string, default: "button", doc: "Determines type of input"
+  attr :line_height, :string, default: "leading-5", doc: "Line height"
 
   attr :content_position, :string,
     default: "center",
@@ -332,6 +304,7 @@ defmodule CommunityDemoWeb.Components.Button do
             border_size(@border, @variant),
             @full_width && "w-full",
             @font_weight,
+            @line_height,
             @display,
             @class
           ]
@@ -370,9 +343,9 @@ defmodule CommunityDemoWeb.Components.Button do
 
   attr :patch, :string, doc: "Specifies the path for navigation using a LiveView patch"
   attr :href, :string, doc: "Sets the URL for an external link"
-  attr :variant, :string, values: @variants, default: "default", doc: "Determines the style"
-  attr :color, :string, values: @colors, default: "natural", doc: "Determines color theme"
-  attr :rounded, :string, values: @sizes ++ ["full", "none"], default: "large", doc: ""
+  attr :variant, :string, default: "base", doc: "Determines the style"
+  attr :color, :string, default: "base", doc: "Determines color theme"
+  attr :rounded, :string, default: "large", doc: ""
   attr :border, :string, default: "extra_small", doc: "Determines border style"
 
   attr :size, :string,
@@ -381,11 +354,13 @@ defmodule CommunityDemoWeb.Components.Button do
       "Determines the overall size of the elements, including padding, font size, and other items"
 
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
+  attr :content_class, :string, default: "block", doc: "Custom CSS class for additional styling"
 
   attr :display, :string,
     default: "inline-flex",
     doc: "Specifies the CSS display property for the element"
 
+  attr :line_height, :string, default: "leading-5", doc: "Line height"
   attr :icon, :string, default: nil, doc: "Icon displayed alongside of an item"
   attr :icon_class, :string, default: nil, doc: "Determines custom class for the icon"
 
@@ -399,7 +374,9 @@ defmodule CommunityDemoWeb.Components.Button do
     default: nil,
     doc: "Custom CSS class for styling the indicator element"
 
-  attr :indicator_size, :string, default: nil, doc: "Defines the size of the indicator element"
+  attr :indicator_size, :string,
+    default: "extra_small",
+    doc: "Defines the size of the indicator element"
 
   attr :rest, :global,
     include:
@@ -430,6 +407,7 @@ defmodule CommunityDemoWeb.Components.Button do
             border_size(@border, @variant),
             @full_width && "w-full",
             @font_weight,
+            @line_height,
             @display,
             @class
           ]
@@ -446,7 +424,7 @@ defmodule CommunityDemoWeb.Components.Button do
 
       <.button_indicator position="left" size={@indicator_size} class={@indicator_class} {@rest} />
       <.icon :if={icon_position(@icon, @rest) == "left"} name={@icon} class={@icon_class} />
-      <span :if={(@inner_block && render_slot(@inner_block)) || @title} class="block">
+      <span :if={(@inner_block && render_slot(@inner_block)) || @title} class={[@content_class]}>
         {render_slot(@inner_block) || @title}
       </span>
       <.icon :if={icon_position(@icon, @rest) == "right"} name={@icon} class={@icon_class} />
@@ -474,6 +452,7 @@ defmodule CommunityDemoWeb.Components.Button do
             border_size(@border, @variant),
             @full_width && "w-full",
             @font_weight,
+            @line_height,
             @class
           ]
       }
@@ -489,7 +468,7 @@ defmodule CommunityDemoWeb.Components.Button do
 
       <.button_indicator position="left" size={@indicator_size} class={@indicator_class} {@rest} />
       <.icon :if={icon_position(@icon, @rest) == "left"} name={@icon} />
-      <span :if={(@inner_block && render_slot(@inner_block)) || @title} class="block">
+      <span :if={(@inner_block && render_slot(@inner_block)) || @title} class={[@content_class]}>
         {render_slot(@inner_block) || @title}
       </span>
       <.icon :if={icon_position(@icon, @rest) == "right"} name={@icon} />
@@ -517,6 +496,7 @@ defmodule CommunityDemoWeb.Components.Button do
             border_size(@border, @variant),
             @full_width && "w-full",
             @font_weight,
+            @line_height,
             @class
           ]
       }
@@ -532,7 +512,7 @@ defmodule CommunityDemoWeb.Components.Button do
 
       <.button_indicator position="left" size={@indicator_size} class={@indicator_class} {@rest} />
       <.icon :if={icon_position(@icon, @rest) == "left"} name={@icon} />
-      <span :if={(@inner_block && render_slot(@inner_block)) || @title} class="block">
+      <span :if={(@inner_block && render_slot(@inner_block)) || @title} class={[@content_class]}>
         {render_slot(@inner_block) || @title}
       </span>
       <.icon :if={icon_position(@icon, @rest) == "right"} name={@icon} />
@@ -680,7 +660,17 @@ defmodule CommunityDemoWeb.Components.Button do
   defp border_size("large", _), do: "border-4"
   defp border_size("extra_large", _), do: "border-[5px]"
   defp border_size(params, _) when is_binary(params), do: params
-  defp border_size(_, _), do: border_size("extra_small", nil)
+
+  defp color_variant("base", "base") do
+    [
+      "bg-white text-[#09090b] border-[#e4e4e7] hover:bg-[#F8F9FA]",
+      "dark:bg-[#18181B] dark:text-[#FAFAFA] dark:border-[#27272a] dark:hover:bg-[#242424]",
+      "[&>.indicator]:bg-[#e4e4e7] dark:[&>.indicator]:bg-[#27272a]",
+      "disabled:bg-[#f1f3f5] disabled:text-[#adb5bd] dark:disabled:bg-[#2e2e2e] dark:disabled:text-[#696969]",
+      "disabled:border-[#dee2e6] dark:disabled:border-[#424242]",
+      "shadow-sm"
+    ]
+  end
 
   defp color_variant("default", "white") do
     ["bg-white text-black"]
@@ -1791,7 +1781,9 @@ defmodule CommunityDemoWeb.Components.Button do
 
   defp color_variant(params, _) when is_binary(params), do: params
 
-  defp color_variant(_, _), do: color_variant("default", "natural")
+  defp border_class("base") do
+    "border-[#e4e4e7] dark:border-[#27272a]"
+  end
 
   defp border_class("natural") do
     "border-black dark:border-white"
@@ -1839,8 +1831,6 @@ defmodule CommunityDemoWeb.Components.Button do
 
   defp border_class(params) when is_binary(params), do: params
 
-  defp border_class(_), do: border_class("natural")
-
   defp rounded_size("extra_small"), do: "rounded-sm [&.gradient-button:before]:rounded-[1px]"
 
   defp rounded_size("small"), do: "rounded [&.gradient-button:before]:rounded-[2px]"
@@ -1854,6 +1844,8 @@ defmodule CommunityDemoWeb.Components.Button do
   defp rounded_size("full"), do: "rounded-full [&.gradient-button:before]:rounded-full"
 
   defp rounded_size("none"), do: nil
+
+  defp rounded_size(params) when is_binary(params), do: params
 
   defp size_class("extra_small", circle) do
     [
@@ -1897,8 +1889,6 @@ defmodule CommunityDemoWeb.Components.Button do
 
   defp size_class(params, _circle) when is_binary(params), do: [params]
 
-  defp size_class(_, _circle), do: size_class("large", nil)
-
   defp icon_position(nil, _), do: false
   defp icon_position(_icon, %{left_icon: true}), do: "left"
   defp icon_position(_icon, %{right_icon: true}), do: "right"
@@ -1918,7 +1908,6 @@ defmodule CommunityDemoWeb.Components.Button do
   defp indicator_size("large"), do: "!size-3.5"
   defp indicator_size("extra_large"), do: "!size-4"
   defp indicator_size(params) when is_binary(params), do: params
-  defp indicator_size(nil), do: nil
 
   defp content_position("start") do
     "justify-start"
@@ -1940,7 +1929,7 @@ defmodule CommunityDemoWeb.Components.Button do
     "justify-around"
   end
 
-  defp content_position(_), do: content_position("start")
+  defp content_position(params) when is_binary(params), do: params
 
   defp default_classes(:grouped) do
     [

@@ -27,37 +27,6 @@ defmodule CommunityDemoWeb.Components.Card do
 
   use Phoenix.Component
 
-  @sizes [
-    "extra_small",
-    "small",
-    "medium",
-    "large",
-    "extra_large"
-  ]
-  @colors [
-    "natural",
-    "primary",
-    "secondary",
-    "success",
-    "warning",
-    "danger",
-    "info",
-    "silver",
-    "misc",
-    "dark",
-    "white",
-    "dawn"
-  ]
-
-  @variants [
-    "default",
-    "outline",
-    "transparent",
-    "shadow",
-    "bordered",
-    "gradient"
-  ]
-
   @positions [
     "start",
     "center",
@@ -120,17 +89,17 @@ defmodule CommunityDemoWeb.Components.Card do
     default: nil,
     doc: "A unique identifier is used to manage state and interaction"
 
-  attr :variant, :string, values: @variants, default: "default", doc: "Determines the style"
-  attr :color, :string, values: @colors, default: "natural", doc: "Determines color theme"
+  attr :variant, :string, default: "base", doc: "Determines the style"
+  attr :color, :string, default: "base", doc: "Determines color theme"
   attr :border, :string, default: "extra_small", doc: "Determines border style"
-  attr :rounded, :string, default: nil, doc: "Determines the border radius"
-  attr :space, :string, default: nil, doc: "Space between items"
+  attr :rounded, :string, default: "", doc: "Determines the border radius"
+  attr :space, :string, default: "", doc: "Space between items"
 
   attr :font_weight, :string,
     default: "font-normal",
     doc: "Determines custom class for the font weight"
 
-  attr :padding, :string, default: nil, doc: "Determines padding for items"
+  attr :padding, :string, default: "", doc: "Determines padding for items"
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
 
   attr :rest, :global,
@@ -194,12 +163,11 @@ defmodule CommunityDemoWeb.Components.Card do
     doc: "Determines custom class for the font weight"
 
   attr :size, :string,
-    values: @sizes,
     default: "large",
     doc:
       "Determines the overall size of the elements, including padding, font size, and other items"
 
-  attr :padding, :string, default: "none", doc: "Determines padding for items"
+  attr :padding, :string, default: "", doc: "Determines padding for items"
 
   attr :rest, :global,
     doc:
@@ -249,12 +217,8 @@ defmodule CommunityDemoWeb.Components.Card do
 
   attr :alt, :string, doc: "Media link description"
   attr :src, :string, required: true, doc: "Media link"
-
-  attr :rounded, :string,
-    values: @sizes ++ [nil],
-    default: nil,
-    doc: "Determines the border radius"
-
+  attr :width, :string, default: "w-full", doc: "Media width"
+  attr :rounded, :string, default: "", doc: "Determines the border radius"
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
 
   attr :rest, :global,
@@ -265,14 +229,12 @@ defmodule CommunityDemoWeb.Components.Card do
 
   def card_media(assigns) do
     ~H"""
-    <div id={@id} class="card-media">
+    <div id={@id} class={["card-media overflow-hidden", rounded_size(@rounded), @width, @class]}>
       <img
         src={@src}
         alt={@alt}
         class={[
-          "max-w-full",
-          rounded_size(@rounded),
-          @class
+          "max-w-full"
         ]}
       />
     </div>
@@ -301,13 +263,8 @@ defmodule CommunityDemoWeb.Components.Card do
     default: nil,
     doc: "A unique identifier is used to manage state and interaction"
 
-  attr :space, :string, default: nil, doc: "Space between items"
-
-  attr :padding, :string,
-    values: @sizes ++ ["none"],
-    default: "none",
-    doc: "Determines padding for items"
-
+  attr :space, :string, default: "", doc: "Space between items"
+  attr :padding, :string, default: "", doc: "Determines padding for items"
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
 
   attr :rest, :global,
@@ -353,11 +310,7 @@ defmodule CommunityDemoWeb.Components.Card do
     doc: "A unique identifier is used to manage state and interaction"
 
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
-
-  attr :padding, :string,
-    values: @sizes ++ ["none"],
-    default: "none",
-    doc: "Determines padding for items"
+  attr :padding, :string, default: "", doc: "Determines padding for items"
 
   attr :rest, :global,
     doc:
@@ -385,20 +338,12 @@ defmodule CommunityDemoWeb.Components.Card do
     do: nil
 
   defp border_class("none", _), do: nil
-
   defp border_class("extra_small", _), do: "border"
-
   defp border_class("small", _), do: "border-2"
-
   defp border_class("medium", _), do: "border-[3px]"
-
   defp border_class("large", _), do: "border-4"
-
   defp border_class("extra_large", _), do: "border-[5px]"
-
   defp border_class(params, _) when is_binary(params), do: params
-
-  defp border_class(_, _), do: border_class("extra_small", nil)
 
   defp rounded_size("extra_small"), do: "rounded-sm"
 
@@ -410,8 +355,9 @@ defmodule CommunityDemoWeb.Components.Card do
 
   defp rounded_size("extra_large"), do: "rounded-xl"
 
+  defp rounded_size("none"), do: nil
+
   defp rounded_size(params) when is_binary(params), do: params
-  defp rounded_size(_), do: "rounded-none"
 
   defp size_class("extra_small"), do: "text-xs [&_.card-title-icon]:size-3"
 
@@ -424,8 +370,6 @@ defmodule CommunityDemoWeb.Components.Card do
   defp size_class("extra_large"), do: "text-xl [&_.card-title-icon]:size-6"
 
   defp size_class(params) when is_binary(params), do: params
-
-  defp size_class(_), do: size_class("large")
 
   defp content_position("start") do
     "justify-start"
@@ -447,7 +391,7 @@ defmodule CommunityDemoWeb.Components.Card do
     "justify-around"
   end
 
-  defp content_position(_), do: content_position("start")
+  defp content_position(params) when is_binary(params), do: params
 
   defp wrapper_padding("extra_small"),
     do: "[&:has(.card-section)>.card-section]:p-1 [&:not(:has(.card-section))]:p-1"
@@ -464,11 +408,7 @@ defmodule CommunityDemoWeb.Components.Card do
   defp wrapper_padding("extra_large"),
     do: "[&:has(.card-section)>.card-section]:p-5 [&:not(:has(.card-section))]:p-5"
 
-  defp wrapper_padding("none"), do: nil
-
   defp wrapper_padding(params) when is_binary(params), do: params
-
-  defp wrapper_padding(_), do: wrapper_padding("none")
 
   defp padding_size("extra_small"), do: "p-1"
 
@@ -481,7 +421,6 @@ defmodule CommunityDemoWeb.Components.Card do
   defp padding_size("extra_large"), do: "p-5"
 
   defp padding_size(params) when is_binary(params), do: params
-  defp padding_size(_), do: nil
 
   defp space_class("extra_small"), do: "space-y-2"
 
@@ -493,8 +432,16 @@ defmodule CommunityDemoWeb.Components.Card do
 
   defp space_class("extra_large"), do: "space-y-6"
 
+  defp space_class("none"), do: nil
+
   defp space_class(params) when is_binary(params), do: params
-  defp space_class(_), do: nil
+
+  defp color_variant("base", "base") do
+    [
+      "[&:not(:has(.overlay))]:bg-white text-[#09090b] border-[#e4e4e7] shadow-sm",
+      "dark:[&:not(:has(.overlay))]:bg-[#18181B] dark:text-[#FAFAFA] dark:border-[#27272a]"
+    ]
+  end
 
   defp color_variant("default", "white") do
     [
@@ -911,8 +858,6 @@ defmodule CommunityDemoWeb.Components.Card do
   end
 
   defp color_variant(params, _) when is_binary(params), do: params
-
-  defp color_variant(_, _), do: color_variant("default", "natural")
 
   attr :name, :string, required: true, doc: "Specifies the name of the element"
   attr :class, :any, default: nil, doc: "Custom CSS class for additional styling"

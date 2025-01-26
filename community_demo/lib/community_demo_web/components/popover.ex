@@ -18,28 +18,6 @@ defmodule CommunityDemoWeb.Components.Popover do
   use Phoenix.Component
   alias Phoenix.LiveView.JS
 
-  @colors [
-    "natural",
-    "primary",
-    "secondary",
-    "success",
-    "warning",
-    "danger",
-    "info",
-    "silver",
-    "misc",
-    "dark",
-    "white",
-    "dawn"
-  ]
-
-  @variants [
-    "default",
-    "shadow",
-    "bordered",
-    "gradient"
-  ]
-
   @doc """
   Renders a customizable `popover` component that can display additional information when an element is
   hovered or clicked.
@@ -105,18 +83,18 @@ defmodule CommunityDemoWeb.Components.Popover do
     doc: "Determines if the element can be activated on click"
 
   attr :position, :string, default: "top", doc: "Determines the element position"
-  attr :variant, :string, values: @variants, default: "shadow", doc: "Determines the style"
-  attr :color, :string, values: @colors, default: "natural", doc: "Determines color theme"
-  attr :rounded, :string, default: nil, doc: "Determines the border radius"
+  attr :variant, :string, default: "base", doc: "Determines the style"
+  attr :color, :string, default: "base", doc: "Determines color theme"
+  attr :rounded, :string, default: "", doc: "Determines the border radius"
   attr :show_arrow, :boolean, default: true, doc: "Show or hide arrow of popover"
   attr :border, :string, default: "extra_small", doc: "Determines border style"
 
   attr :size, :string,
-    default: nil,
+    default: "",
     doc:
       "Determines the overall size of the elements, including padding, font size, and other items"
 
-  attr :space, :string, default: nil, doc: "Space between items"
+  attr :space, :string, default: "", doc: "Space between items"
   attr :width, :string, default: "extra_large", doc: "Determines the element width"
   attr :text_position, :string, default: "start", doc: "Determines the element' text position"
 
@@ -124,7 +102,7 @@ defmodule CommunityDemoWeb.Components.Popover do
     default: "font-normal",
     doc: "Determines custom class for the font weight"
 
-  attr :padding, :string, default: "none", doc: "Determines padding for items"
+  attr :padding, :string, default: "", doc: "Determines padding for items"
 
   attr :rest, :global,
     doc:
@@ -177,7 +155,7 @@ defmodule CommunityDemoWeb.Components.Popover do
           size_class(@size),
           position_class(@position),
           text_position(@text_position),
-          @variant == "bordered" && border_class(@border),
+          @variant == "bordered" || (@variant == "base" && border_class(@border)),
           width_class(@width),
           wrapper_padding(@padding),
           @font_weight,
@@ -187,8 +165,8 @@ defmodule CommunityDemoWeb.Components.Popover do
       >
         {render_slot(content)}
         <span
-          :if={@show_arrow && @variant != "bordered"}
-          class={["block absolute size-[8px] bg-inherit rotate-45 popover-arrow"]}
+          :if={@show_arrow && @variant != "bordered" && @variant != "base"}
+          class={["block absolute size-[8px] bg-inherit rotate-45 -z-[1] popover-arrow"]}
         >
         </span>
       </span>
@@ -230,7 +208,7 @@ defmodule CommunityDemoWeb.Components.Popover do
           size_class(@size),
           position_class(@position),
           text_position(@text_position),
-          @variant == "bordered" && border_class(@border),
+          @variant == "bordered" || (@variant == "base" && border_class(@border)),
           width_class(@width),
           wrapper_padding(@padding),
           @font_weight,
@@ -240,8 +218,8 @@ defmodule CommunityDemoWeb.Components.Popover do
       >
         {render_slot(content)}
         <span
-          :if={@show_arrow && @variant != "bordered"}
-          class={["block absolute size-[8px] bg-inherit rotate-45 popover-arrow"]}
+          :if={@show_arrow && @variant != "bordered" && @variant != "base"}
+          class={["block absolute size-[8px] bg-inherit rotate-45 -z-[1] popover-arrow"]}
         >
         </span>
       </div>
@@ -361,18 +339,18 @@ defmodule CommunityDemoWeb.Components.Popover do
 
   attr :inline, :boolean, default: false, doc: "Determines whether this element is inline"
   attr :position, :string, default: "top", doc: "Determines the element position"
-  attr :variant, :string, values: @variants, default: "shadow", doc: "Determines the style"
-  attr :color, :string, values: @colors, default: "natural", doc: "Determines color theme"
-  attr :rounded, :string, default: nil, doc: "Determines the border radius"
+  attr :variant, :string, default: "base", doc: "Determines the style"
+  attr :color, :string, default: "base", doc: "Determines color theme"
+  attr :rounded, :string, default: "", doc: "Determines the border radius"
   attr :show_arrow, :boolean, default: true, doc: "Show or hide arrow of popover"
   attr :border, :string, default: "extra_small", doc: "Determines border style"
 
   attr :size, :string,
-    default: nil,
+    default: "",
     doc:
       "Determines the overall size of the elements, including padding, font size, and other items"
 
-  attr :space, :string, default: nil, doc: "Space between items"
+  attr :space, :string, default: "", doc: "Space between items"
   attr :width, :string, default: "extra_large", doc: "Determines the element width"
   attr :text_position, :string, default: "start", doc: "Determines the element' text position"
 
@@ -380,7 +358,7 @@ defmodule CommunityDemoWeb.Components.Popover do
     default: "font-normal",
     doc: "Determines custom class for the font weight"
 
-  attr :padding, :string, default: "none", doc: "Determines padding for items"
+  attr :padding, :string, default: "", doc: "Determines padding for items"
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
 
   attr :rest, :global,
@@ -411,12 +389,12 @@ defmodule CommunityDemoWeb.Components.Popover do
       ]}
       {@rest}
     >
-      {render_slot(@inner_block)}
       <span
-        :if={@show_arrow && @variant != "bordered"}
-        class={["block absolute size-[8px] bg-inherit rotate-45 popover-arrow"]}
+        :if={@show_arrow && @variant != "bordered" && @variant != "base"}
+        class={["block absolute size-[8px] bg-inherit rotate-45 -z-[1] popover-arrow"]}
       >
       </span>
+      {render_slot(@inner_block)}
     </span>
     """
   end
@@ -443,12 +421,12 @@ defmodule CommunityDemoWeb.Components.Popover do
       ]}
       {@rest}
     >
-      {render_slot(@inner_block)}
       <span
-        :if={@show_arrow && @variant != "bordered"}
-        class={["block absolute size-[8px] bg-inherit rotate-45 popover-arrow"]}
+        :if={@show_arrow && @variant != "bordered" && @variant != "base"}
+        class={["block absolute size-[8px] bg-inherit rotate-45 -z-[1] popover-arrow"]}
       >
       </span>
+      {render_slot(@inner_block)}
     </div>
     """
   end
@@ -466,9 +444,9 @@ defmodule CommunityDemoWeb.Components.Popover do
 
   defp border_class("extra_large"), do: "border-[5px]"
 
-  defp border_class(params) when is_binary(params), do: params
+  defp border_class("none"), do: nil
 
-  defp border_class(_), do: border_class("extra_small")
+  defp border_class(params) when is_binary(params), do: params
 
   defp rounded_size("extra_small"), do: "rounded-sm"
 
@@ -480,11 +458,7 @@ defmodule CommunityDemoWeb.Components.Popover do
 
   defp rounded_size("extra_large"), do: "rounded-xl"
 
-  defp rounded_size("none"), do: "rounded-none"
-
   defp rounded_size(params) when is_binary(params), do: params
-
-  defp rounded_size(_), do: rounded_size("small")
 
   defp position_class("top") do
     [
@@ -526,15 +500,13 @@ defmodule CommunityDemoWeb.Components.Popover do
 
   defp size_class(params) when is_binary(params), do: params
 
-  defp size_class(_), do: size_class("medium")
-
   defp text_position("left"), do: "text-left"
   defp text_position("right"), do: "text-right"
   defp text_position("center"), do: "text-center"
   defp text_position("justify"), do: "text-justify"
   defp text_position("start"), do: "text-start"
   defp text_position("end"), do: "text-end"
-  defp text_position(_), do: text_position("start")
+  defp text_position(params) when is_binary(params), do: params
 
   defp width_class("extra_small"), do: "min-w-48"
   defp width_class("small"), do: "min-w-52"
@@ -545,7 +517,6 @@ defmodule CommunityDemoWeb.Components.Popover do
   defp width_class("triple_large"), do: "min-w-80"
   defp width_class("quadruple_large"), do: "min-w-96"
   defp width_class(params) when is_binary(params), do: params
-  defp width_class(_), do: width_class("extra_large")
 
   defp wrapper_padding("extra_small") do
     "[&:has(.popover-section)>.popover-section]:p-1 [&:not(:has(.popover-section))]:p-1"
@@ -567,11 +538,7 @@ defmodule CommunityDemoWeb.Components.Popover do
     "[&:has(.popover-section)>.popover-section]:p-5 [&:not(:has(.popover-section))]:p-5"
   end
 
-  defp wrapper_padding("none"), do: nil
-
   defp wrapper_padding(params) when is_binary(params), do: params
-
-  defp wrapper_padding(_), do: wrapper_padding("none")
 
   defp space_class("extra_small"), do: "space-y-2"
 
@@ -584,7 +551,13 @@ defmodule CommunityDemoWeb.Components.Popover do
   defp space_class("extra_large"), do: "space-y-6"
 
   defp space_class(params) when is_binary(params), do: params
-  defp space_class(_), do: nil
+
+  defp color_variant("base", "base") do
+    [
+      "bg-white text-[#09090b] border-[#e4e4e7] shadow-sm",
+      "dark:bg-[#18181B] dark:text-[#FAFAFA] dark:border-[#27272a]"
+    ]
+  end
 
   defp color_variant("default", "white") do
     ["bg-white text-black"]
@@ -877,6 +850,4 @@ defmodule CommunityDemoWeb.Components.Popover do
   end
 
   defp color_variant(params, _) when is_binary(params), do: params
-
-  defp color_variant(_, _), do: color_variant("default", "natural")
 end

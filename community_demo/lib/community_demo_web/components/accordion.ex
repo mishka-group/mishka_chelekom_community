@@ -24,35 +24,6 @@ defmodule CommunityDemoWeb.Components.Accordion do
 
   alias Phoenix.LiveView.JS
 
-  @sizes ["extra_small", "small", "medium", "large", "extra_large"]
-
-  @variants [
-    "default",
-    "bordered",
-    "outline",
-    "shadow",
-    "gradient",
-    "menu",
-    "outline_separated",
-    "bordered_separated",
-    "transparent"
-  ]
-
-  @colors [
-    "natural",
-    "white",
-    "primary",
-    "secondary",
-    "dark",
-    "success",
-    "warning",
-    "danger",
-    "info",
-    "silver",
-    "misc",
-    "dawn"
-  ]
-
   @doc """
   The `accordion` component provides a collapsible structure with various styling options,
   ideal for organizing content into expandable panels. It supports customizable attributes such
@@ -88,9 +59,9 @@ defmodule CommunityDemoWeb.Components.Accordion do
     doc: "A unique identifier is used to manage state and interaction"
 
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
-  attr :variant, :string, values: @variants, default: "default", doc: "Determines the style"
-  attr :space, :string, values: @sizes, default: "small", doc: "Space between items"
-  attr :color, :string, values: @colors, default: "natural", doc: "Determines color theme"
+  attr :variant, :string, default: "base", doc: "Determines the style"
+  attr :space, :string, default: "small", doc: "Space between items"
+  attr :color, :string, default: "base", doc: "Determines color theme"
   attr :border, :string, default: "extra_small", doc: "Determines border style"
   attr :padding, :string, default: "small", doc: "Determines padding for items"
   attr :rounded, :string, default: "none", doc: "Determines the border radius"
@@ -99,13 +70,12 @@ defmodule CommunityDemoWeb.Components.Accordion do
     default: "hero-chevron-right",
     doc: "Determines the icon for the chevron"
 
-  attr :media_size, :string,
-    values: @sizes,
-    default: "small",
-    doc: "Determines size of the media elements"
+  attr :chevron_class, :string, default: nil, doc: "Determines the icon for the chevron"
+
+  attr :media_size, :string, default: "small", doc: "Determines size of the media elements"
 
   attr :size, :string,
-    default: nil,
+    default: "",
     doc:
       "Determines the overall size of the elements, including padding, font size, and other items"
 
@@ -119,6 +89,7 @@ defmodule CommunityDemoWeb.Components.Accordion do
     attr :icon, :string, doc: "Icon displayed alongside of an item"
     attr :class, :string, doc: "Custom CSS class for additional styling"
     attr :image, :string, doc: "Image displayed alongside of an item"
+    attr :icon_wrapper_class, :string, doc: "Image displayed alongside of an item"
     attr :hover, :string, doc: "Determines custom class for the hover"
     attr :image_class, :string, doc: "Determines custom class for the image"
     attr :icon_class, :string, doc: "Determines custom class for the icon"
@@ -137,10 +108,11 @@ defmodule CommunityDemoWeb.Components.Accordion do
   def accordion(assigns) do
     ~H"""
     <div
+      id={@id}
       class={[
         "overflow-hidden w-full h-fit",
         @variant == "menu" && menu_rounded(@rounded),
-        @variant != "menu" && rounded_size(@rounded),
+        @variant != "menu" && rounded_size(@rounded, @variant),
         color_variant(@variant, @color),
         space_class(@space, @variant),
         border_class(@border, @variant),
@@ -173,6 +145,7 @@ defmodule CommunityDemoWeb.Components.Accordion do
             }
             position={chevron_position(@rest)}
             chevron_icon={@chevron_icon}
+            chevron_class={@chevron_class}
             item={item}
             hide_chevron={@rest[:hide_chevron] || false}
           />
@@ -186,6 +159,7 @@ defmodule CommunityDemoWeb.Components.Accordion do
             }
             position={chevron_position(@rest)}
             chevron_icon={@chevron_icon}
+            chevron_class={@chevron_class}
             item={item}
             class="hidden"
             hide_chevron={@rest[:hide_chevron] || false}
@@ -250,29 +224,22 @@ defmodule CommunityDemoWeb.Components.Accordion do
 
   attr :name, :string, default: nil, doc: "Specifies the name of the element"
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
-  attr :variant, :string, values: @variants, default: "default", doc: "Determines the style"
-  attr :space, :string, values: @sizes, default: "small", doc: "Space between items"
-  attr :color, :string, default: "natural", doc: "Determines color theme"
+  attr :variant, :string, default: "base", doc: "Determines the style"
+  attr :space, :string, default: "small", doc: "Space between items"
+  attr :color, :string, default: "base", doc: "Determines color theme"
   attr :border, :string, default: "extra_small", doc: "Determines border style"
 
-  attr :padding, :string,
-    values: @sizes ++ ["none"],
-    default: "small",
-    doc: "Determines padding for items"
+  attr :padding, :string, default: "small", doc: "Determines padding for items"
 
-  attr :rounded, :string,
-    values: @sizes ++ ["full", "none"],
-    default: "none",
-    doc: "Determines the border radius"
+  attr :rounded, :string, default: "none", doc: "Determines the border radius"
 
-  attr :media_size, :string,
-    values: @sizes,
-    default: "small",
-    doc: "Determines size of the media elements"
+  attr :media_size, :string, default: "small", doc: "Determines size of the media elements"
 
   attr :chevron_icon, :string,
     default: "hero-chevron-right",
     doc: "Determines the icon for the chevron"
+
+  attr :chevron_class, :string, default: nil, doc: "Determines the icon for the chevron"
 
   slot :item, required: true, doc: "Specifies item slot of a accordion" do
     attr :title, :string, required: true, doc: "Specifies the title of the element"
@@ -300,7 +267,7 @@ defmodule CommunityDemoWeb.Components.Accordion do
       class={[
         "overflow-hidden",
         @variant == "menu" && menu_rounded(@rounded),
-        @variant != "menu" && rounded_size(@rounded),
+        @variant != "menu" && rounded_size(@rounded, @variant),
         space_class(@space, @variant),
         padding_size(@padding),
         border_class(@border, @variant),
@@ -351,6 +318,7 @@ defmodule CommunityDemoWeb.Components.Accordion do
   attr :item, :map, doc: "Determines each item"
   attr :position, :string, values: ["left", "right"], doc: "Determines the element position"
   attr :chevron_icon, :string, doc: "Determines the icon for the chevron"
+  attr :chevron_class, :string, default: nil, doc: "Determines the icon for the chevron"
   attr :hide_chevron, :boolean, default: false, doc: "Hide chevron icon"
 
   attr :rest, :global,
@@ -367,7 +335,11 @@ defmodule CommunityDemoWeb.Components.Accordion do
         <.icon
           :if={!@hide_chevron}
           name={@chevron_icon}
-          class="accordion-chevron size-5 transition-transform duration-300 ease-in-out group-open:rotate-90 rotate-180 rtl:rotate-0"
+          class={[
+            "accordion-chevron transition-transform duration-300",
+            "ease-in-out group-open:rotate-90 rotate-180 rtl:rotate-0 shrink-0",
+            @chevron_class
+          ]}
         />
 
         <div class="flex items-center gap-2">
@@ -377,11 +349,13 @@ defmodule CommunityDemoWeb.Components.Accordion do
             src={@item[:image]}
           />
 
-          <.icon
-            :if={!is_nil(@item[:icon])}
-            name={@item[:icon]}
-            class={@item[:icon_class] || "accordion-title-media"}
-          />
+          <div class={["shrink-0", @item[:icon_wrapper_class]]}>
+            <.icon
+              :if={!is_nil(@item[:icon])}
+              name={@item[:icon]}
+              class={@item[:icon_class] || "accordion-title-media"}
+            />
+          </div>
 
           <div class={["space-y-2"]}>
             <div class={[
@@ -415,11 +389,13 @@ defmodule CommunityDemoWeb.Components.Accordion do
             src={@item[:image]}
           />
 
-          <.icon
-            :if={!is_nil(@item[:icon])}
-            name={@item[:icon]}
-            class={@item[:icon_class] || "accordion-title-media"}
-          />
+          <div class={["shrink-0", @item[:icon_wrapper_class]]}>
+            <.icon
+              :if={!is_nil(@item[:icon])}
+              name={@item[:icon]}
+              class={@item[:icon_class] || "accordion-title-media"}
+            />
+          </div>
 
           <div class={["space-y-2", @item[:title_class]]}>
             <div class={[
@@ -438,7 +414,11 @@ defmodule CommunityDemoWeb.Components.Accordion do
         <.icon
           :if={!@hide_chevron}
           name={@chevron_icon}
-          class="accordion-chevron size-5 transition-transform duration-300 ease-in-out group-open:rotate-90 rtl:rotate-180"
+          class={[
+            "accordion-chevron transition-transform duration-300",
+            "ease-in-out group-open:rotate-90 rtl:rotate-180 shrink-0",
+            @chevron_class
+          ]}
         />
       </div>
     </div>
@@ -506,8 +486,9 @@ defmodule CommunityDemoWeb.Components.Accordion do
     |> JS.remove_class("active-accordion-button", to: "##{id}-role-button")
   end
 
-  defp space_class(_, variant) when variant not in ["outline_separated", "bordered_separated"],
-    do: nil
+  defp space_class(_, variant)
+       when variant not in ["outline_separated", "bordered_separated", "base_separated"],
+       do: nil
 
   defp space_class("extra_small", _), do: "accordion-item-gap space-y-2"
 
@@ -519,8 +500,9 @@ defmodule CommunityDemoWeb.Components.Accordion do
 
   defp space_class("extra_large", _), do: "accordion-item-gap space-y-6"
 
+  defp space_class("none", _), do: nil
+
   defp space_class(params, _) when is_binary(params), do: params
-  defp space_class(_, _), do: nil
 
   defp menu_rounded("extra_small"), do: "[&_.accordion-summary]:rounded-sm"
 
@@ -535,7 +517,6 @@ defmodule CommunityDemoWeb.Components.Accordion do
   defp menu_rounded("full"), do: "[&_.accordion-summary]:rounded-full"
 
   defp menu_rounded(params) when is_binary(params), do: params
-  defp menu_rounded(_), do: nil
 
   defp media_size("extra_small"), do: "[&>.accordion-item-wrapper_.accordion-title-media]:size-12"
 
@@ -548,7 +529,6 @@ defmodule CommunityDemoWeb.Components.Accordion do
   defp media_size("extra_large"), do: "[&>.accordion-item-wrapper_.accordion-title-media]:size-24"
 
   defp media_size(params) when is_binary(params), do: params
-  defp media_size(_), do: media_size("small")
 
   defp size_class("extra_small") do
     [
@@ -581,49 +561,97 @@ defmodule CommunityDemoWeb.Components.Accordion do
   end
 
   defp size_class(params) when is_binary(params), do: params
-  defp size_class(_), do: nil
 
-  defp rounded_size("extra_small") do
+  defp rounded_size("extra_small", variant)
+       when variant in ["outline_separated", "bordered_separated", "base_separated"] do
+    [
+      "[&_.accordion-item-wrapper_.accordion-summary]:rounded-sm"
+    ]
+  end
+
+  defp rounded_size("small", variant)
+       when variant in ["outline_separated", "bordered_separated", "base_separated"] do
+    [
+      "[&_.accordion-item-wrapper_.accordion-summary]:rounded"
+    ]
+  end
+
+  defp rounded_size("medium", variant)
+       when variant in ["outline_separated", "bordered_separated", "base_separated"] do
+    [
+      "[&_.accordion-item-wrapper_.accordion-summary]:rounded-md"
+    ]
+  end
+
+  defp rounded_size("medium", variant)
+       when variant in ["outline_separated", "bordered_separated", "base_separated"] do
+    [
+      "[&_.accordion-item-wrapper_.accordion-summary]:rounded-md"
+    ]
+  end
+
+  defp rounded_size("large", variant)
+       when variant in ["outline_separated", "bordered_separated", "base_separated"] do
+    [
+      "[&_.accordion-item-wrapper_.accordion-summary]:rounded-lg"
+    ]
+  end
+
+  defp rounded_size("extra_large", variant)
+       when variant in ["outline_separated", "bordered_separated", "base_separated"] do
+    [
+      "[&_.accordion-item-wrapper_.accordion-summary]:rounded-xl"
+    ]
+  end
+
+  defp rounded_size("extra_small", variant)
+       when variant in ["default", "bordered", "outline", "base", "shadow", "gradient"] do
     [
       "rounded-sm [&:not(.accordion-item-gap)>.accordion-item-wrapper:first-child>.accordion-summary]:rounded-t-sm",
-      "[&.accordion-item-gap>.accordion-item-wrapper]:rounded-sm [&.accordion-item-gap>.accordion-item-wrapper>.accordion-summary]:rounded-t-sm",
+      "[&.accordion-item-gap>.accordion-item-wrapper>.accordion-summary]:rounded-t-sm",
       "[&.accordion-item-gap>.accordion-item-wrapper>:not(.accordion-summary)]:rounded-b-sm"
     ]
   end
 
-  defp rounded_size("small") do
+  defp rounded_size("small", variant)
+       when variant in ["default", "bordered", "outline", "base", "shadow", "gradient"] do
     [
       "rounded [&:not(.accordion-item-gap)>.accordion-item-wrapper:first-child>.accordion-summary]:rounded-t",
-      "[&.accordion-item-gap>.accordion-item-wrapper]:rounded [&.accordion-item-gap>.accordion-item-wrapper>.accordion-summary]:rounded-t",
+      "[&.accordion-item-gap>.accordion-item-wrapper>.accordion-summary]:rounded-t",
       "[&.accordion-item-gap>.accordion-item-wrapper>:not(.accordion-summary)]:rounded-b"
     ]
   end
 
-  defp rounded_size("medium") do
+  defp rounded_size("medium", variant)
+       when variant in ["default", "bordered", "outline", "base", "shadow", "gradient"] do
     [
       "rounded-md [&:not(.accordion-item-gap)>.accordion-item-wrapper:first-child>.accordion-summary]:rounded-t-md",
-      "[&.accordion-item-gap>.accordion-item-wrapper]:rounded-md [&.accordion-item-gap>.accordion-item-wrapper>.accordion-summary]:rounded-t-md",
+      "[&.accordion-item-gap>.accordion-item-wrapper>.accordion-summary]:rounded-t-md",
       "[&.accordion-item-gap>.accordion-item-wrapper>:not(.accordion-summary)]:rounded-b-md"
     ]
   end
 
-  defp rounded_size("large") do
+  defp rounded_size("large", variant)
+       when variant in ["default", "bordered", "outline", "base", "shadow", "gradient"] do
     [
       "rounded-lg [&:not(.accordion-item-gap)>.accordion-item-wrapper:first-child>.accordion-summary]:rounded-t-lg",
-      "[&.accordion-item-gap>.accordion-item-wrapper]:rounded-lg [&.accordion-item-gap>.accordion-item-wrapper>.accordion-summary]:rounded-t-lg",
+      "[&.accordion-item-gap>.accordion-item-wrapper>.accordion-summary]:rounded-t-lg",
       "[&.accordion-item-gap>.accordion-item-wrapper>:not(.accordion-summary)]:rounded-b-lg"
     ]
   end
 
-  defp rounded_size("extra_large") do
+  defp rounded_size("extra_large", variant)
+       when variant in ["default", "bordered", "outline", "base", "shadow", "gradient"] do
     [
       "rounded-xl [&:not(.accordion-item-gap)>.accordion-item-wrapper:first-child>.accordion-summary]:rounded-t-xl",
-      "[&.accordion-item-gap>.accordion-item-wrapper]:rounded-xl [&.accordion-item-gap>.accordion-item-wrapper>.accordion-summary]:rounded-t-xl",
+      "[&.accordion-item-gap>.accordion-item-wrapper>.accordion-summary]:rounded-t-xl",
       "[&.accordion-item-gap>.accordion-item-wrapper>:not(.accordion-summary)]:rounded-b-xl"
     ]
   end
 
-  defp rounded_size("none"), do: "rounded-none"
+  defp rounded_size("none", _), do: nil
+
+  defp rounded_size(params, _) when is_binary(params), do: params
 
   defp padding_size("extra_small") do
     [
@@ -672,7 +700,6 @@ defmodule CommunityDemoWeb.Components.Accordion do
 
   defp padding_size("zero"), do: "[&>.accordion-item-wrapper>.accordion-summary]:p-0"
   defp padding_size(params) when is_binary(params), do: params
-  defp padding_size(_), do: padding_size("small")
 
   defp border_class(_, variant) when variant in ["default", "shadow", "transparent", "gradient"],
     do: nil
@@ -821,9 +848,101 @@ defmodule CommunityDemoWeb.Components.Accordion do
     "[&>.accordion-item-wrapper>.accordion-summary]:border-[5px]"
   end
 
+  defp border_class("none", "base") do
+    [
+      "border-0",
+      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-summary]:border-b-0",
+      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-content-wrapper.active]:border-b-0"
+    ]
+  end
+
+  defp border_class("extra_small", "base") do
+    [
+      "border",
+      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-summary]:border-b",
+      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-content-wrapper.active]:border-b"
+    ]
+  end
+
+  defp border_class("small", "base") do
+    [
+      "border-2",
+      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-summary]:border-b-2",
+      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-content-wrapper.active]:border-b-2"
+    ]
+  end
+
+  defp border_class("medium", "base") do
+    [
+      "border-[3px]",
+      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-summary]:border-b-[3px]",
+      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-content-wrapper.active]:border-b-[3px]"
+    ]
+  end
+
+  defp border_class("large", "base") do
+    [
+      "border-4",
+      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-summary]:border-b-4",
+      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-content-wrapper.active]:border-b-4"
+    ]
+  end
+
+  defp border_class("extra_large", "base") do
+    [
+      "border-[5px]",
+      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-summary]:border-b-[5px]",
+      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-content-wrapper.active]:border-b-[5px]"
+    ]
+  end
+
+  defp border_class("none", "base_separated") do
+    "[&>.accordion-item-wrapper>.accordion-summary]:border-0"
+  end
+
+  defp border_class("extra_small", "base_separated") do
+    "[&>.accordion-item-wrapper>.accordion-summary]:border"
+  end
+
+  defp border_class("small", "base_separated") do
+    "[&>.accordion-item-wrapper>.accordion-summary]:border-2"
+  end
+
+  defp border_class("medium", "base_separated") do
+    "[&>.accordion-item-wrapper>.accordion-summary]:border-[3px]"
+  end
+
+  defp border_class("large", "base_separated") do
+    "[&>.accordion-item-wrapper>.accordion-summary]:border-4"
+  end
+
+  defp border_class("extra_large", "base_separated") do
+    "[&>.accordion-item-wrapper>.accordion-summary]:border-[5px]"
+  end
+
   defp border_class(params, _) when is_binary(params), do: params
 
-  defp border_class(_, _), do: border_class(nil, "default")
+  defp color_variant("base", "base") do
+    [
+      "text-[#09090b] border-[#e4e4e7] bg-white",
+      "dark:text-[#FAFAFA] dark:border-[#27272a] dark:bg-[#18181B]",
+      "hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#F8F9FA] dark:hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#242424]",
+      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-summary]:border-[#e4e4e7]",
+      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-content-wrapper.active]:border-[#e4e4e7]",
+      "dark:[&>.accordion-item-wrapper:not(:last-child)>.accordion-summary]:border-[#27272a]",
+      "dark:[&>.accordion-item-wrapper:not(:last-child)>.accordion-content-wrapper.active]:border-[#27272a]"
+    ]
+  end
+
+  defp color_variant("base_separated", "base") do
+    [
+      "text-[#09090b] [&>.accordion-item-wrapper>.accordion-summary]:border-[#e4e4e7]",
+      "[&>.accordion-item-wrapper]:bg-white",
+      "dark:text-[#FAFAFA] dark:[&>.accordion-item-wrapper>.accordion-summary]:border-[#27272a]",
+      "dark:[&>.accordion-item-wrapper]:bg-[#18181B]",
+      "hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#F8F9FA] dark:hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#242424]"
+    ]
+  end
 
   defp color_variant("transparent", "natural") do
     [
@@ -1113,7 +1232,7 @@ defmodule CommunityDemoWeb.Components.Accordion do
     [
       "text-[#282828] border-[#282828] bg-[#F3F3F3]",
       "dark:text-[#E8E8E8] dark:border-[#E8E8E8] dark:bg-[#4B4B4B]",
-      "hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#E8E8E8] dark:hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#5E5E5]",
+      "hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#E8E8E8] dark:hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#5E5E5E]",
       "[&>.accordion-item-wrapper:not(:last-child)>.accordion-summary]:border-[#282828]",
       "[&>.accordion-item-wrapper:not(:last-child)>.accordion-content-wrapper.active]:border-[#282828]",
       "dark:[&>.accordion-item-wrapper:not(:last-child)>.accordion-summary]:border-[#E8E8E8]",
@@ -1651,6 +1770,20 @@ defmodule CommunityDemoWeb.Components.Accordion do
     ]
   end
 
+  defp color_variant(params, _) when is_binary(params), do: params
+
+  defp item_color("base", "base") do
+    [
+      "group-open:bg-white group-open:text-[#09090b] dark:group-open:bg-[#18181B] dark:group-open:text-[#FAFAFA]"
+    ]
+  end
+
+  defp item_color("base_separated", "base") do
+    [
+      "group-open:bg-white group-open:text-[#09090b] dark:group-open:bg-[#18181B] dark:group-open:text-[#FAFAFA]"
+    ]
+  end
+
   defp item_color("default", "white") do
     [
       "group-open:bg-white text-black",
@@ -1994,6 +2127,8 @@ defmodule CommunityDemoWeb.Components.Accordion do
       "group-open:bg-[#868686] group-open:text-white dark:group-open:bg-[#A6A6A6] dark:group-open:text-black"
     ]
   end
+
+  defp item_color(params, _) when is_binary(params), do: params
 
   defp chevron_position(%{left_chevron: true}), do: "left"
   defp chevron_position(%{right_chevron: true}), do: "right"

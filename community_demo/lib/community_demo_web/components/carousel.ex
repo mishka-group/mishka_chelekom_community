@@ -82,7 +82,7 @@ defmodule CommunityDemoWeb.Components.Carousel do
     doc: "A unique identifier is used to manage state and interaction"
 
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
-  attr :overlay, :string, default: "natural", doc: "Determines an overlay"
+  attr :overlay, :string, default: "base", doc: "Determines an overlay"
 
   attr :size, :string,
     default: "large",
@@ -253,7 +253,7 @@ defmodule CommunityDemoWeb.Components.Carousel do
   attr :wrapper_class, :string, default: nil, doc: "Determines custom class for the wrapper"
 
   attr :content_position, :string,
-    default: nil,
+    default: "",
     doc: "Determines the alignment of the element's content"
 
   attr :index, :integer, required: true, doc: "Determines item index"
@@ -345,8 +345,6 @@ defmodule CommunityDemoWeb.Components.Carousel do
 
   defp size_class(params) when is_binary(params), do: params
 
-  defp size_class(_), do: size_class("medium")
-
   defp padding_size("extra_small"),
     do: "[&_.description-wrapper]:p-2.5 md:[&_.description-wrapper]:p-6"
 
@@ -361,8 +359,6 @@ defmodule CommunityDemoWeb.Components.Carousel do
     do: "[&_.description-wrapper]:p-5 md:[&_.description-wrapper]:p-10"
 
   defp padding_size(params) when is_binary(params), do: params
-
-  defp padding_size(_), do: padding_size("medium")
 
   defp content_position("start") do
     "justify-start"
@@ -384,7 +380,7 @@ defmodule CommunityDemoWeb.Components.Carousel do
     "justify-around"
   end
 
-  defp content_position(_), do: content_position("center")
+  defp content_position(params) when is_binary(params), do: params
 
   defp text_position("start") do
     "[&_.description-wrapper]:text-start"
@@ -398,7 +394,14 @@ defmodule CommunityDemoWeb.Components.Carousel do
     "[&_.description-wrapper]:text-center"
   end
 
-  defp text_position(_), do: text_position("center")
+  defp text_position(params) when is_binary(params), do: params
+
+  defp color_class("base") do
+    [
+      "[&_.carousel-overlay]:bg-white/30 text-[#09090b] hover:[&_.carousel-controls]:bg-[#e4e4e7]/5",
+      "dark:[&_.carousel-overlay]:bg-[#18181B]/30 dark:text-[#FAFAFA] dark:hover:[&_.carousel-controls]:bg-[#27272a]/5"
+    ]
+  end
 
   defp color_class("natural") do
     [
@@ -477,6 +480,8 @@ defmodule CommunityDemoWeb.Components.Carousel do
   defp color_class("dark") do
     "[&_.carousel-overlay]:bg-[#282828]/30 text-white hover:[&_.carousel-controls]:bg-[#282828]/5"
   end
+
+  defp color_class(params) when is_binary(params), do: params
 
   @doc """
   Sets the specified slide as active and enables the navigation controls in the carousel.

@@ -220,7 +220,7 @@ defmodule CommunityDemoWeb.Components.RadioField do
           color_class(@color),
           border_class(@border),
           size_class(@size),
-          space_class(radio[:space]),
+          space_class(radio[:space] || "small"),
           @ring && "[&_.radio-field-wrapper_input]:focus-within:ring-1",
           @reverse && "[&_.radio-field-wrapper]:flex-row-reverse"
         ]}
@@ -301,8 +301,6 @@ defmodule CommunityDemoWeb.Components.RadioField do
 
   defp size_class(params) when is_binary(params), do: params
 
-  defp size_class(_), do: size_class("medium")
-
   defp border_class("none"), do: "[&_.radio-field-wrapper_.radio-input]:border-0"
   defp border_class("extra_small"), do: "[&_.radio-field-wrapper_.radio-input]:border"
   defp border_class("small"), do: "[&_.radio-field-wrapper_.radio-input]:border-2"
@@ -310,7 +308,6 @@ defmodule CommunityDemoWeb.Components.RadioField do
   defp border_class("large"), do: "[&_.radio-field-wrapper_.radio-input]:border-4"
   defp border_class("extra_large"), do: "[&_.radio-field-wrapper_.radio-input]:border-[5px]"
   defp border_class(params) when is_binary(params), do: params
-  defp border_class(_), do: border_class("extra_small")
 
   defp space_class("extra_small"), do: "[&_.radio-field-wrapper]:gap-1"
 
@@ -322,9 +319,9 @@ defmodule CommunityDemoWeb.Components.RadioField do
 
   defp space_class("extra_large"), do: "[&_.radio-field-wrapper]:gap-3"
 
-  defp space_class(params) when is_binary(params), do: params
+  defp space_class("none"), do: nil
 
-  defp space_class(_), do: space_class("medium")
+  defp space_class(params) when is_binary(params), do: params
 
   defp variation_gap("extra_small"), do: "gap-1"
   defp variation_gap("small"), do: "gap-2"
@@ -333,7 +330,17 @@ defmodule CommunityDemoWeb.Components.RadioField do
   defp variation_gap("extra_large"), do: "gap-5"
 
   defp variation_gap(params) when is_binary(params), do: params
-  defp variation_gap(_), do: variation_gap("medium")
+
+  defp color_class("base") do
+    [
+      "text-[#09090b] dark:text-[#FAFAFA]",
+      "checked:[&_.radio-field-wrapper_.radio-input]:text-[#e4e4e7]",
+      "dark:checked:[&_.radio-field-wrapper_.radio-input]:text-[#27272a]",
+      "[&_.radio-field-wrapper_.radio-input]:border-[#F8F9FA]",
+      "dark:[&_.radio-field-wrapper_.radio-input]:border-[#242424]",
+      "focus-within:[&_.radio-field-wrapper_.radio-input]:ring-[#F8F9FA] dark:focus-within:[&_.radio-field-wrapper_.radio-input]:ring-[#242424]"
+    ]
+  end
 
   defp color_class("white") do
     [
@@ -460,6 +467,8 @@ defmodule CommunityDemoWeb.Components.RadioField do
       "focus-within:[&_.radio-field-wrapper_.radio-input]:ring-[#282828]"
     ]
   end
+
+  defp color_class(params) when is_binary(params), do: params
 
   defp translate_error({msg, opts}) do
     # When using gettext, we typically pass the strings we want

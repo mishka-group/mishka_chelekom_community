@@ -14,32 +14,6 @@ defmodule CommunityDemoWeb.Components.Table do
 
   use Phoenix.Component
 
-  @variants [
-    "outline",
-    "bordered",
-    "shadow",
-    "default",
-    "transparent",
-    "hoverable",
-    "stripped",
-    "separated"
-  ]
-
-  @colors [
-    "natural",
-    "white",
-    "primary",
-    "secondary",
-    "dark",
-    "success",
-    "warning",
-    "danger",
-    "info",
-    "misc",
-    "dawn",
-    "silver"
-  ]
-
   @doc """
   Renders a customizable `table` component that supports custom styling for rows, columns,
   and table headers. This component allows for specifying borders, padding, rounded corners,
@@ -96,15 +70,15 @@ defmodule CommunityDemoWeb.Components.Table do
     doc: "A unique identifier is used to manage state and interaction"
 
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
-  attr :variant, :string, values: @variants, default: "default", doc: "Determines the style"
-  attr :rounded, :string, default: nil, doc: "Determines the border radius"
+  attr :variant, :string, default: "base", doc: "Determines the style"
+  attr :rounded, :string, default: "", doc: "Determines the border radius"
   attr :padding, :string, default: "small", doc: "Determines padding for items"
   attr :text_size, :string, default: "small", doc: "Determines text size"
-  attr :color, :string, values: @colors, default: "natural", doc: "Determines color theme"
-  attr :border, :string, default: nil, doc: "Determines border style"
-  attr :header_border, :string, default: nil, doc: "Sets the border style for the table header"
-  attr :rows_border, :string, default: nil, doc: "Sets the border style for rows in the table"
-  attr :cols_border, :string, default: nil, doc: "Sets the border style for columns in the table"
+  attr :color, :string, default: "base", doc: "Determines color theme"
+  attr :border, :string, default: "extra_small", doc: "Determines border style"
+  attr :header_border, :string, default: "", doc: "Sets the border style for the table header"
+  attr :rows_border, :string, default: "", doc: "Sets the border style for rows in the table"
+  attr :cols_border, :string, default: "", doc: "Sets the border style for columns in the table"
   attr :thead_class, :string, default: nil, doc: "Adds custom CSS classes to the table header"
   attr :footer_class, :string, default: nil, doc: "Adds custom CSS classes to the table footer"
   attr :table_fixed, :boolean, default: false, doc: "Enables or disables the table's fixed layout"
@@ -143,14 +117,14 @@ defmodule CommunityDemoWeb.Components.Table do
           padding_size(@padding),
           rows_space(@space, @variant),
           @header_border && header_border(@header_border, @variant),
-          @rows_border && rows_border(@rows_border, @variant),
+          @rows_border != "" && rows_border(@rows_border, @variant),
           @cols_border && cols_border(@cols_border, @variant)
         ]}>
           <table
             class={[
               "min-w-full",
               @table_fixed && "table-fixed",
-              @variant == "separated" && "border-separate",
+              @variant == "separated" || (@variant == "base_separated" && "border-separate"),
               @class
             ]}
             {@rest}
@@ -343,6 +317,51 @@ defmodule CommunityDemoWeb.Components.Table do
     ]
   end
 
+  defp rounded_size("extra_small", "base_separated") do
+    [
+      "[&_.border-separate_tr_td:first-child]:rounded-s-sm [&_.border-separate_tr_td:first-child]:rounded-s-sm",
+      "[&_.border-separate_tr_td:last-child]:rounded-e-sm [&_.border-separate_tr_td:last-child]:rounded-e-sm",
+      "[&_.border-separate_tr_th:first-child]:rounded-s-sm [&_.border-separate_tr_th:first-child]:rounded-s-sm",
+      "[&_.border-separate_tr_th:last-child]:rounded-e-sm [&_.border-separate_tr_th:last-child]:rounded-e-sm"
+    ]
+  end
+
+  defp rounded_size("small", "base_separated") do
+    [
+      "[&_.border-separate_tr_td:first-child]:rounded-s [&_.border-separate_tr_td:first-child]:rounded-s",
+      "[&_.border-separate_tr_td:last-child]:rounded-e [&_.border-separate_tr_td:last-child]:rounded-e",
+      "[&_.border-separate_tr_th:first-child]:rounded-s [&_.border-separate_tr_th:first-child]:rounded-s",
+      "[&_.border-separate_tr_th:last-child]:rounded-e [&_.border-separate_tr_th:last-child]:rounded-e"
+    ]
+  end
+
+  defp rounded_size("medium", "base_separated") do
+    [
+      "[&_.border-separate_tr_td:first-child]:rounded-s-md [&_.border-separate_tr_td:first-child]:rounded-s-md",
+      "[&_.border-separate_tr_td:last-child]:rounded-e-md [&_.border-separate_tr_td:last-child]:rounded-e-md",
+      "[&_.border-separate_tr_th:first-child]:rounded-s-md [&_.border-separate_tr_th:first-child]:rounded-s-md",
+      "[&_.border-separate_tr_th:last-child]:rounded-e-md [&_.border-separate_tr_th:last-child]:rounded-e-md"
+    ]
+  end
+
+  defp rounded_size("large", "base_separated") do
+    [
+      "[&_.border-separate_tr_td:first-child]:rounded-s-lg [&_.border-separate_tr_td:first-child]:rounded-s-lg",
+      "[&_.border-separate_tr_td:last-child]:rounded-e-lg [&_.border-separate_tr_td:last-child]:rounded-e-lg",
+      "[&_.border-separate_tr_th:first-child]:rounded-s-lg [&_.border-separate_tr_th:first-child]:rounded-s-lg",
+      "[&_.border-separate_tr_th:last-child]:rounded-e-lg [&_.border-separate_tr_th:last-child]:rounded-e-lg"
+    ]
+  end
+
+  defp rounded_size("extra_large", "base_separated") do
+    [
+      "[&_.border-separate_tr_td:first-child]:rounded-s-xl [&_.border-separate_tr_td:first-child]:rounded-s-xl",
+      "[&_.border-separate_tr_td:last-child]:rounded-e-xl [&_.border-separate_tr_td:last-child]:rounded-e-xl",
+      "[&_.border-separate_tr_th:first-child]:rounded-s-xl [&_.border-separate_tr_th:first-child]:rounded-s-xl",
+      "[&_.border-separate_tr_th:last-child]:rounded-e-xl [&_.border-separate_tr_th:last-child]:rounded-e-xl"
+    ]
+  end
+
   defp rounded_size("extra_small", _), do: "rounded-sm"
 
   defp rounded_size("small", _), do: "rounded"
@@ -354,7 +373,6 @@ defmodule CommunityDemoWeb.Components.Table do
   defp rounded_size("extra_large", _), do: "rounded-xl"
 
   defp rounded_size(params, _) when is_binary(params), do: [params]
-  defp rounded_size(_, _), do: nil
 
   defp text_size("extra_small"), do: "text-xs"
   defp text_size("small"), do: "text-sm"
@@ -362,7 +380,6 @@ defmodule CommunityDemoWeb.Components.Table do
   defp text_size("large"), do: "text-lg"
   defp text_size("extra_large"), do: "text-xl"
   defp text_size(params) when is_binary(params), do: [params]
-  defp text_size(_), do: text_size("small")
 
   defp text_position("left"), do: "[&_table]:text-left [&_table_thead]:text-left"
   defp text_position("right"), do: "[&_table]:text-right [&_table_thead]:text-right"
@@ -370,10 +387,18 @@ defmodule CommunityDemoWeb.Components.Table do
   defp text_position("justify"), do: "[&_table]:text-justify [&_table_thead]:text-justify"
   defp text_position("start"), do: "[&_table]:text-start [&_table_thead]:text-start"
   defp text_position("end"), do: "[&_table]:text-end [&_table_thead]:text-end"
-  defp text_position(_), do: text_position("start")
+  defp text_position(params) when is_binary(params), do: params
 
   defp border_class(_, variant)
-       when variant in ["default", "shadow", "transparent", "stripped", "hoverable", "separated"],
+       when variant in [
+              "default",
+              "shadow",
+              "transparent",
+              "stripped",
+              "hoverable",
+              "separated",
+              "base_separated"
+            ],
        do: nil
 
   defp border_class("extra_small", _), do: "border"
@@ -382,7 +407,6 @@ defmodule CommunityDemoWeb.Components.Table do
   defp border_class("large", _), do: "border-4"
   defp border_class("extra_large", _), do: "border-[5px]"
   defp border_class(params, _) when is_binary(params), do: [params]
-  defp border_class(_, _), do: nil
 
   defp cols_border(_, variant)
        when variant in ["default", "shadow", "transparent", "stripped", "hoverable", "separated"],
@@ -429,22 +453,71 @@ defmodule CommunityDemoWeb.Components.Table do
   end
 
   defp cols_border(params, _) when is_binary(params), do: [params]
-  defp cols_border(_, _), do: nil
 
   defp rows_border(_, variant)
        when variant in ["default", "shadow", "transparent", "stripped", "hoverable", "separated"],
        do: nil
 
+  defp rows_border("none", "base_separated"), do: nil
+
+  defp rows_border("extra_small", "base_separated") do
+    [
+      "[&_td]:border-y [&_th]:border-y",
+      "[&_td:first-child]:border-s [&_th:first-child]:border-s",
+      "[&_td:last-child]:border-e [&_th:last-child]:border-e"
+    ]
+  end
+
+  defp rows_border("small", "base_separated") do
+    [
+      "[&_td]:border-y-2 [&_th]:border-y-2",
+      "[&_td:first-child]:border-s-2 [&_th:first-child]:border-s-2",
+      "[&_td:last-child]:border-e-2 [&_th:last-child]:border-e-2"
+    ]
+  end
+
+  defp rows_border("medium", "base_separated") do
+    [
+      "[&_td]:border-y-[3px] [&_th]:border-y-[3px]",
+      "[&_td:first-child]:border-s-3 [&_th:first-child]:border-s-3",
+      "[&_td:last-child]:border-e-3 [&_th:last-child]:border-e-3"
+    ]
+  end
+
+  defp rows_border("large", "base_separated") do
+    [
+      "[&_td]:border-y-4 [&_th]:border-y-4",
+      "[&_td:first-child]:border-s-4 [&_th:first-child]:border-s-4",
+      "[&_td:last-child]:border-e-4 [&_th:last-child]:border-e-4"
+    ]
+  end
+
+  defp rows_border("extra_large", "base_separated") do
+    [
+      "[&_td]:border-y-[5px] [&_th]:border-y-[5px]",
+      "[&_td:first-child]:border-s-5 [&_th:first-child]:border-s-5",
+      "[&_td:last-child]:border-e-5 [&_th:last-child]:border-e-5"
+    ]
+  end
+
+  defp rows_border("none", _), do: nil
   defp rows_border("extra_small", _), do: "[&_table_tbody]:divide-y"
   defp rows_border("small", _), do: "[&_table_tbody]:divide-y-2"
   defp rows_border("medium", _), do: "[&_table_tbody]:divide-y-[3px]"
   defp rows_border("large", _), do: "[&_table_tbody]:divide-y-4"
   defp rows_border("extra_large", _), do: "[&_table_tbody]:divide-y-[5px]"
   defp rows_border(params, _) when is_binary(params), do: [params]
-  defp rows_border(_, _), do: nil
 
   defp header_border(_, variant)
-       when variant in ["default", "shadow", "transparent", "stripped", "hoverable", "separated"],
+       when variant in [
+              "default",
+              "shadow",
+              "transparent",
+              "stripped",
+              "hoverable",
+              "separated",
+              "base_separated"
+            ],
        do: nil
 
   defp header_border("extra_small", _), do: "[&_table]:divide-y"
@@ -453,7 +526,6 @@ defmodule CommunityDemoWeb.Components.Table do
   defp header_border("large", _), do: "[&_table]:divide-y-4"
   defp header_border("extra_large", _), do: "[&_table]:divide-y-[5px]"
   defp header_border(params, _) when is_binary(params), do: [params]
-  defp header_border(_, _), do: nil
 
   defp rows_space(_, variant)
        when variant in [
@@ -463,17 +535,19 @@ defmodule CommunityDemoWeb.Components.Table do
               "stripped",
               "hoverable",
               "bordered",
+              "base",
+              "base_hoverable",
+              "base_stripped",
               "outline"
             ],
        do: nil
 
   defp rows_space("extra_small", _), do: "[&_table]:border-spacing-y-0.5"
   defp rows_space("small", _), do: "[&_table]:border-spacing-y-1"
-  defp rows_space("medium", _), do: "[&_table]:border-separate border-spacing-y-2"
+  defp rows_space("medium", _), do: "[&_table]:border-spacing-y-2"
   defp rows_space("large", _), do: "[&_table]:border-spacing-y-3"
   defp rows_space("extra_large", _), do: "[&_table]:border-spacing-y-4"
   defp rows_space(params, _) when is_binary(params), do: [params]
-  defp rows_space(_, _), do: rows_space("medium", nil)
 
   defp padding_size("extra_small") do
     [
@@ -512,7 +586,43 @@ defmodule CommunityDemoWeb.Components.Table do
 
   defp padding_size(params) when is_binary(params), do: params
 
-  defp padding_size(_), do: padding_size("small")
+  defp color_variant("base", "base") do
+    [
+      "[&_table]:bg-white dark:[&_table]:bg-[#18181B] [&_table]:text-[#09090b] dark:[&_table]:text-[#FAFAFA]",
+      "border-[#e4e4e7] dark:border-[#27272a]",
+      "[&_*]:divide-[#e4e4e7] [&_td]:border-[#e4e4e7] [&_th]:border-[#e4e4e7]",
+      "dark:[&_*]:divide-[#27272a] dark:[&_td]:border-[#27272a] dark:[&_th]:border-[#27272a]",
+      "shadow-sm"
+    ]
+  end
+
+  defp color_variant("base_separated", "base") do
+    [
+      "[&_table_tr]:bg-white [&_table]:text-[#09090b] dark:[&_table_tr]:bg-[#18181B] dark:[&_table]:text-[#FAFAFA]",
+      "[&_td]:border-[#e4e4e7] dark:[&_td]:border-[#27272a]",
+      "[&_th]:border-[#e4e4e7] dark:[&_th]:border-[#27272a]"
+    ]
+  end
+
+  defp color_variant("base_hoverable", "base") do
+    [
+      "[&_table]:bg-white [&_table]:text-[#09090b] dark:[&_table]:bg-[#18181B] dark:[&_table]:text-[#FAFAFA]",
+      "hover:[&_table_tbody_tr]:bg-[#e4e4e7] dark:hover:[&_table_tbody_tr]:bg-[#27272a]",
+      "border-[#e4e4e7] dark:border-[#27272a]",
+      "[&_*]:divide-[#e4e4e7] [&_td]:border-[#e4e4e7] [&_th]:border-[#e4e4e7]",
+      "dark:[&_*]:divide-[#27272a] dark:[&_td]:border-[#27272a] dark:[&_th]:border-[#27272a]"
+    ]
+  end
+
+  defp color_variant("base_stripped", "base") do
+    [
+      "[&_table]:bg-white [&_table]:text-[#09090b] dark:[&_table]:bg-[#18181B] dark:[&_table]:text-[#FAFAFA]",
+      "odd:[&_table_tbody_tr]:bg-[#F8F9FA] dark:odd:[&_table_tbody_tr]:bg-[#242424]",
+      "border-[#e4e4e7] dark:border-[#27272a]",
+      "[&_*]:divide-[#e4e4e7] [&_td]:border-[#e4e4e7] [&_th]:border-[#e4e4e7]",
+      "dark:[&_*]:divide-[#27272a] dark:[&_td]:border-[#27272a] dark:[&_th]:border-[#27272a]"
+    ]
+  end
 
   defp color_variant("bordered", "white") do
     "[&_table]:bg-white text-[#3E3E3E] border-[#DADADA] [&_*]:divide-[#DADADA] [&_td]:border-[#DADADA] [&_th]:border-[#DADADA]"
@@ -1082,7 +1192,7 @@ defmodule CommunityDemoWeb.Components.Table do
     "[&_table_tr]:bg-[#282828] [&_table]:text-white"
   end
 
-  defp color_variant(_, _), do: nil
+  defp color_variant(params, _) when is_binary(params), do: params
 
   attr :name, :string, required: true, doc: "Specifies the name of the element"
   attr :class, :any, default: nil, doc: "Custom CSS class for additional styling"

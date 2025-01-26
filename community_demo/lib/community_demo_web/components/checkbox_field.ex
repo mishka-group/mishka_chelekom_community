@@ -18,21 +18,6 @@ defmodule CommunityDemoWeb.Components.CheckboxField do
   alias Phoenix.LiveView.Utils
   alias Phoenix.HTML.Form
 
-  @colors [
-    "natural",
-    "white",
-    "primary",
-    "secondary",
-    "dark",
-    "success",
-    "warning",
-    "danger",
-    "info",
-    "silver",
-    "misc",
-    "dawn"
-  ]
-
   @doc """
   The `checkbox_field` component is used to create customizable checkbox input elements with various
   attributes such as `color`, `size`, and `label`.
@@ -60,7 +45,7 @@ defmodule CommunityDemoWeb.Components.CheckboxField do
     doc: "A unique identifier is used to manage state and interaction"
 
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
-  attr :color, :string, values: @colors, default: "primary", doc: "Determines color theme"
+  attr :color, :string, default: "primary", doc: "Determines color theme"
   attr :border, :string, default: "extra_small", doc: "Determines border style"
   attr :rounded, :string, default: "small", doc: "Determines the border radius"
   attr :space, :string, default: "medium", doc: "Space between items"
@@ -171,7 +156,7 @@ defmodule CommunityDemoWeb.Components.CheckboxField do
     doc: "A unique identifier is used to manage state and interaction"
 
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
-  attr :color, :string, values: @colors, default: "primary", doc: "Determines color theme"
+  attr :color, :string, default: "primary", doc: "Determines color theme"
   attr :border, :string, default: "extra_small", doc: "Determines border style"
   attr :rounded, :string, default: "small", doc: "Determines the border radius"
   attr :space, :string, default: "medium", doc: "Space between items"
@@ -243,7 +228,7 @@ defmodule CommunityDemoWeb.Components.CheckboxField do
           rounded_size(@rounded),
           border_class(@border),
           size_class(@size),
-          space_class(checkbox[:space]),
+          space_class(checkbox[:space] || "small"),
           @ring && "[&_.checkbox-field-wrapper_input]:focus-within:ring-1",
           @reverse && "[&_.checkbox-field-wrapper]:flex-row-reverse"
         ]}
@@ -328,8 +313,6 @@ defmodule CommunityDemoWeb.Components.CheckboxField do
 
   defp size_class(params) when is_binary(params), do: params
 
-  defp size_class(_), do: size_class("medium")
-
   defp rounded_size("extra_small"), do: "[&_.checkbox-field-wrapper_.checkbox-input]:rounded-sm"
 
   defp rounded_size("small"), do: "[&_.checkbox-field-wrapper_.checkbox-input]:rounded"
@@ -342,23 +325,19 @@ defmodule CommunityDemoWeb.Components.CheckboxField do
 
   defp rounded_size("full"), do: "[&_.checkbox-field-wrapper_.checkbox-input]:rounded-full"
 
-  defp rounded_size(_), do: "[&_.checkbox-field-wrapper_.checkbox-input]:rounded-none"
+  defp rounded_size("none"), do: "[&_.checkbox-field-wrapper_.checkbox-input]:rounded-none"
+
+  defp rounded_size(params) when is_binary(params), do: params
 
   defp border_class("none"), do: "[&_.checkbox-field-wrapper_.checkbox-input]:border-0"
-
   defp border_class("extra_small"), do: "[&_.checkbox-field-wrapper_.checkbox-input]:border"
-
   defp border_class("small"), do: "[&_.checkbox-field-wrapper_.checkbox-input]:border-2"
-
   defp border_class("medium"), do: "[&_.checkbox-field-wrapper_.checkbox-input]:border-[3px]"
-
   defp border_class("large"), do: "[&_.checkbox-field-wrapper_.checkbox-input]:border-4"
-
   defp border_class("extra_large"), do: "[&_.checkbox-field-wrapper_.checkbox-input]:border-[5px]"
-
   defp border_class(params) when is_binary(params), do: params
 
-  defp border_class(_), do: border_class("extra_small")
+  defp space_class("none"), do: nil
 
   defp space_class("extra_small"), do: "[&_.checkbox-field-wrapper]:gap-1"
 
@@ -372,8 +351,6 @@ defmodule CommunityDemoWeb.Components.CheckboxField do
 
   defp space_class(params) when is_binary(params), do: params
 
-  defp space_class(_), do: space_class("medium")
-
   defp variation_gap("extra_small"), do: "gap-1"
 
   defp variation_gap("small"), do: "gap-2"
@@ -386,7 +363,16 @@ defmodule CommunityDemoWeb.Components.CheckboxField do
 
   defp variation_gap(params) when is_binary(params), do: params
 
-  defp variation_gap(_), do: variation_gap("medium")
+  defp color_class("base") do
+    [
+      "text-[#09090b] dark:text-[#FAFAFA]",
+      "checked:[&_.checkbox-field-wrapper_.checkbox-input]:text-[#e4e4e7]",
+      "dark:checked:[&_.checkbox-field-wrapper_.checkbox-input]:text-[#27272a]",
+      "[&_.checkbox-field-wrapper_.checkbox-input]:border-[#e4e4e7]",
+      "dark:[&_.checkbox-field-wrapper_.checkbox-input]:border-[#27272a]",
+      "focus-within:[&_.checkbox-field-wrapper_.checkbox-input]:ring-[#F8F9FA] dark:focus-within:[&_.checkbox-field-wrapper_.checkbox-input]:ring-[#696969]"
+    ]
+  end
 
   defp color_class("white") do
     [
@@ -513,6 +499,8 @@ defmodule CommunityDemoWeb.Components.CheckboxField do
       "focus-within:[&_.checkbox-field-wrapper_.checkbox-input]:ring-[#282828]"
     ]
   end
+
+  defp color_class(params) when is_binary(params), do: params
 
   attr :name, :string, required: true, doc: "Specifies the name of the element"
   attr :class, :any, default: nil, doc: "Custom CSS class for additional styling"

@@ -30,31 +30,6 @@ defmodule CommunityDemoWeb.Components.Banner do
   alias Phoenix.LiveView.JS
   use Gettext, backend: CommunityDemoWeb.Gettext
 
-  @sizes ["extra_small", "small", "medium", "large", "extra_large"]
-  @colors [
-    "natural",
-    "white",
-    "dark",
-    "primary",
-    "secondary",
-    "success",
-    "warning",
-    "danger",
-    "info",
-    "silver",
-    "misc",
-    "dawn"
-  ]
-
-  @variants [
-    "default",
-    "outline",
-    "transparent",
-    "shadow",
-    "bordered",
-    "gradient"
-  ]
-
   @positions ["top_left", "top_right", "bottom_left", "bottom_right", "center", "full"]
 
   @doc """
@@ -103,8 +78,8 @@ defmodule CommunityDemoWeb.Components.Banner do
     doc:
       "Determines the overall size of the elements, including padding, font size, and other items"
 
-  attr :variant, :string, values: @variants, default: "default", doc: "Determines the style"
-  attr :color, :string, values: @colors, default: "natural", doc: "Determines color theme"
+  attr :variant, :string, default: "base", doc: "Determines the style"
+  attr :color, :string, default: "base", doc: "Determines color theme"
   attr :border, :string, default: "extra_small", doc: "Determines border style"
 
   attr :border_position, :string,
@@ -112,20 +87,14 @@ defmodule CommunityDemoWeb.Components.Banner do
     default: "top",
     doc: ""
 
-  attr :rounded, :string,
-    values: @sizes ++ ["none"],
-    default: "none",
-    doc: "Determines the border radius"
+  attr :rounded, :string, default: "none", doc: "Determines the border radius"
 
   attr :rounded_position, :string,
     values: ["top", "bottom", "all", "none"],
     default: "none",
     doc: ""
 
-  attr :space, :string,
-    values: @sizes ++ ["none"],
-    default: "extra_small",
-    doc: "Space between items"
+  attr :space, :string, default: "extra_small", doc: "Space between items"
 
   attr :vertical_position, :string, values: ["top", "bottom"], default: "top", doc: ""
   attr :vertical_size, :string, default: "none", doc: "Specifies the vertical size of the element"
@@ -133,7 +102,6 @@ defmodule CommunityDemoWeb.Components.Banner do
   attr :hide_dismiss, :boolean, default: false, doc: "Show or hide dismiss classes"
 
   attr :dismiss_size, :string,
-    values: @sizes,
     default: "small",
     doc: "Add custom classes to control dismiss sizes"
 
@@ -143,7 +111,6 @@ defmodule CommunityDemoWeb.Components.Banner do
     doc: "Determines the element position"
 
   attr :position_size, :string,
-    values: @sizes ++ ["none"],
     default: "none",
     doc: "Determines the size for positioning the element"
 
@@ -151,10 +118,7 @@ defmodule CommunityDemoWeb.Components.Banner do
     default: "font-normal",
     doc: "Determines custom class for the font weight"
 
-  attr :padding, :string,
-    values: @sizes ++ ["none"],
-    default: "extra_small",
-    doc: "Determines padding for items"
+  attr :padding, :string, default: "extra_small", doc: "Determines padding for items"
 
   attr :class, :string, default: "", doc: "Custom CSS class for additional styling"
 
@@ -205,7 +169,6 @@ defmodule CommunityDemoWeb.Components.Banner do
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
 
   attr :dismiss_size, :string,
-    values: @sizes,
     default: "small",
     doc: "Add custom classes to control dismiss sizes"
 
@@ -245,8 +208,6 @@ defmodule CommunityDemoWeb.Components.Banner do
 
   defp dismiss_size(params) when is_binary(params), do: params
 
-  defp dismiss_size(_), do: dismiss_size("small")
-
   defp padding_size("extra_small"), do: "p-2"
 
   defp padding_size("small"), do: "p-3"
@@ -260,8 +221,6 @@ defmodule CommunityDemoWeb.Components.Banner do
   defp padding_size("none"), do: "p-0"
 
   defp padding_size(params) when is_binary(params), do: params
-
-  defp padding_size(_), do: padding_size("extra_small")
 
   defp vertical_position("none", "top"), do: "top-0"
   defp vertical_position("extra_small", "top"), do: "top-1"
@@ -278,7 +237,6 @@ defmodule CommunityDemoWeb.Components.Banner do
   defp vertical_position("extra_large", "bottom"), do: "bottom-5"
 
   defp vertical_position(params, _) when is_binary(params), do: params
-  defp vertical_position(_, _), do: vertical_position("none", "top")
 
   defp position_class("none", "top_left"), do: "left-0 ml-0"
   defp position_class("extra_small", "top_left"), do: "left-1 ml-1"
@@ -312,7 +270,6 @@ defmodule CommunityDemoWeb.Components.Banner do
   defp position_class(_, "full"), do: "inset-x-0"
 
   defp position_class(params, _) when is_binary(params), do: params
-  defp position_class(_, _), do: position_class(nil, "full")
 
   defp rounded_size("extra_small", "top"), do: "rounded-b-sm"
 
@@ -346,6 +303,8 @@ defmodule CommunityDemoWeb.Components.Banner do
 
   defp rounded_size("none", _), do: nil
 
+  defp rounded_size(params, _) when is_binary(params), do: params
+
   defp space_class("none"), do: nil
 
   defp space_class("extra_small"), do: "space-y-2"
@@ -359,8 +318,6 @@ defmodule CommunityDemoWeb.Components.Banner do
   defp space_class("extra_large"), do: "space-y-6"
 
   defp space_class(params) when is_binary(params), do: params
-
-  defp space_class(_), do: space_class("extra_small")
 
   defp border_class(_, _, variant)
        when variant in ["default", "shadow", "transparent", "gradient"],
@@ -386,7 +343,13 @@ defmodule CommunityDemoWeb.Components.Banner do
   defp border_class("extra_large", "full", _), do: "border-[5px]"
 
   defp border_class(params, _, _) when is_binary(params), do: params
-  defp border_class(_, _, _), do: border_class("extra_small", "top", nil)
+
+  defp color_variant("base", "base") do
+    [
+      "bg-white text-[#09090b] border-[#e4e4e7] shadow-sm",
+      "dark:bg-[#18181B] dark:text-[#FAFAFA] dark:border-[#27272a]"
+    ]
+  end
 
   defp color_variant("default", "white") do
     ["bg-white text-black"]
@@ -765,8 +728,6 @@ defmodule CommunityDemoWeb.Components.Banner do
   end
 
   defp color_variant(params, _) when is_binary(params), do: params
-
-  defp color_variant(_, _), do: color_variant("default", "natural")
 
   ## JS Commands
   @doc """

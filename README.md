@@ -6,13 +6,30 @@ integrated with its dedicated CLI tool. It serves as a platform where you can:
 - Share your custom components with others.
 - Use components not included in the Core, developed by the Mishka team.
 
+<h2 align="center">Mishka Chelekom Community Edition Project</h2>
+
+<div align="center">
+  <pre style="display: inline-block; text-align: left;">
+    💖 Hey there! This project needs your support; Please <b><a href="https://github.com/sponsors/mishka-group">support us financially!</a></b> 💖
+  </pre>
+</div>
+
+<br />
+
+<p align="center">
+  <a href="https://www.buymeacoffee.com/mishkagroup">
+    <img src="https://img.buymeacoffee.com/button-api/?text=Donate with Buy Me a Coffee&emoji=☕&slug=mishkagroup&button_colour=FFDD00&font_colour=000000&font_family=Bree&outline_colour=000000&coffee_colour=ffffff" />
+  </a>
+</p>
+
+
 ## How to Get Started
 
 No additional installations are needed! Simply:
 
 1. Add **Mishka Chelekom** to your project.
 ```elixir
-{:mishka_chelekom, "~> 0.0.2", only: :dev}
+{:mishka_chelekom, "~> 0.0.3-alpha.2", only: :dev}
 ```
 2. Run the following CLI task: `mix mishka.ui.add component_some_component_name`
 

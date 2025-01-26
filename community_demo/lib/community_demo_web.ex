@@ -55,6 +55,7 @@ defmodule CommunityDemoWeb do
       use Phoenix.LiveView,
         layout: {CommunityDemoWeb.Layouts, :app}
 
+      use CommunityDemoWeb.Components.MishkaComponents
       unquote(html_helpers())
     end
   end

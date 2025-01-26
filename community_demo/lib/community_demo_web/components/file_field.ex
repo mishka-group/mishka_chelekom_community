@@ -23,23 +23,6 @@ defmodule CommunityDemoWeb.Components.FileField do
   import CommunityDemoWeb.Components.Progress, only: [progress: 1]
   import CommunityDemoWeb.Components.Spinner, only: [spinner: 1]
 
-  @variants ["default", "outline", "bordered", "shadow", "gradient", "transparent"]
-
-  @colors [
-    "natural",
-    "white",
-    "primary",
-    "secondary",
-    "dark",
-    "success",
-    "warning",
-    "danger",
-    "info",
-    "misc",
-    "dawn",
-    "silver"
-  ]
-
   @doc """
   Renders a `file_input` field with customizable styles, labels, and live upload capabilities.
 
@@ -59,8 +42,8 @@ defmodule CommunityDemoWeb.Components.FileField do
 
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
   attr :label_class, :string, default: nil, doc: "Custom CSS class for the label styling"
-  attr :color, :string, values: @colors, default: "natural", doc: "Determines color theme"
-  attr :variant, :string, values: @variants, default: "default", doc: "Determines the style"
+  attr :color, :string, default: "base", doc: "Determines color theme"
+  attr :variant, :string, default: "base", doc: "Determines the style"
   attr :border, :string, default: "extra_small", doc: "Determines border style"
   attr :rounded, :string, default: "small", doc: "Determines the border radius"
   attr :live, :boolean, default: false, doc: "Specifies whether this upload is live or input file"
@@ -257,9 +240,9 @@ defmodule CommunityDemoWeb.Components.FileField do
               <div
                 :if={!entry.done?}
                 role="status"
-                class="absolute top-1 left-1 bottom-1 right-1 bg-black/25 flex justify-center items-center"
+                class="absolute inset-0 bg-black/25 flex justify-center items-center"
               >
-                <.spinner color="silver" />
+                <.spinner color="base" />
               </div>
             </div>
             <%= for err <- upload_errors(@upload_error, entry) do %>
@@ -347,20 +330,12 @@ defmodule CommunityDemoWeb.Components.FileField do
     do: nil
 
   defp border_class("none", _), do: nil
-
   defp border_class("extra_small", _), do: "[&_.dropzone-wrapper]:border"
-
   defp border_class("small", _), do: "[&_.dropzone-wrapper]:border-2"
-
   defp border_class("medium", _), do: "[&_.dropzone-wrapper]:border-[3px]"
-
   defp border_class("large", _), do: "[&_.dropzone-wrapper]:border-4"
-
   defp border_class("extra_large", _), do: "[&_.dropzone-wrapper]:border-[5px]"
-
   defp border_class(params, _) when is_binary(params), do: params
-
-  defp border_class(_, _), do: border_class("extra_small", nil)
 
   defp size_class("extra_small"), do: "[&_.dropzone-wrapper]:h-52"
 
@@ -374,7 +349,7 @@ defmodule CommunityDemoWeb.Components.FileField do
 
   defp size_class(params) when is_binary(params), do: params
 
-  defp size_class(_), do: size_class("extra_small")
+  defp rounded_size("none"), do: nil
 
   defp rounded_size("extra_small"),
     do: "[&_.file-field]:rounded-sm [&_.dropzone-wrapper]:rounded-sm"
@@ -390,7 +365,7 @@ defmodule CommunityDemoWeb.Components.FileField do
 
   defp rounded_size(params) when is_binary(params), do: params
 
-  defp rounded_size(_), do: rounded_size("small")
+  defp space_class("none"), do: nil
 
   defp space_class("extra_small"), do: "space-y-1"
 
@@ -404,12 +379,18 @@ defmodule CommunityDemoWeb.Components.FileField do
 
   defp space_class(params) when is_binary(params), do: params
 
-  defp space_class(_), do: space_class("medium")
+  defp color_class("base") do
+    [
+      "[&_.file-field]:bg-white file:[&_.file-field]:text-[#09090b] [&_.file-field]:text-[#09090b] file:[&_.file-field]:bg-[#e4e4e7]",
+      "dark:[&_.file-field]:bg-[#27272a] dark:file:[&_.file-field]:bg-[#18181B]",
+      "dark:file:[&_.file-field]:text-[#FAFAFA] dark:[&_.file-field]:text-[#FAFAFA]"
+    ]
+  end
 
   defp color_class("natural") do
     [
       "[&_.file-field]:bg-[#4B4B4B] file:[&_.file-field]:text-white [&_.file-field]:text-white file:[&_.file-field]:bg-[#282828]",
-      "dark:[&_.file-field]:bg-[#E8E8E8]  dark:file:[&_.file-field]:bg-[#DDDDDD]",
+      "dark:[&_.file-field]:bg-[#E8E8E8] dark:file:[&_.file-field]:bg-[#DDDDDD]",
       "dark:file:[&_.file-field]:text-black dark:[&_.file-field]:text-black"
     ]
   end
@@ -483,6 +464,15 @@ defmodule CommunityDemoWeb.Components.FileField do
       "[&_.file-field]:bg-[#868686] file:[&_.file-field]:text-white [&_.file-field]:text-white file:[&_.file-field]:bg-[#727272]",
       "dark:[&_.file-field]:bg-[#BBBBBB] dark:file:[&_.file-field]:bg-[#A6A6A6]",
       "dark:file:[&_.file-field]:text-black dark:[&_.file-field]:text-black"
+    ]
+  end
+
+  defp color_class(params) when is_binary(params), do: params
+
+  defp color_variant("base", "base") do
+    [
+      "text-[#09090b] [&_.dropzone-wrapper]:border-[#e4e4e7] [&_.dropzone-wrapper]:bg-white shadow-sm",
+      "dark:text-[#FAFAFA] dark:[&_.dropzone-wrapper]:border-[#27272a] dark:[&_.dropzone-wrapper]:bg-[#18181B]"
     ]
   end
 
@@ -911,8 +901,6 @@ defmodule CommunityDemoWeb.Components.FileField do
   end
 
   defp color_variant(params, _) when is_binary(params), do: params
-
-  defp color_variant(_, _), do: color_variant("default", "natural")
 
   defp translate_error({msg, opts}) do
     # When using gettext, we typically pass the strings we want

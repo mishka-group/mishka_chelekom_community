@@ -21,31 +21,6 @@ defmodule CommunityDemoWeb.Components.Keyboard do
   """
   use Phoenix.Component
 
-  @sizes ["extra_small", "small", "medium", "large", "extra_large"]
-  @colors [
-    "natural",
-    "white",
-    "primary",
-    "secondary",
-    "dark",
-    "success",
-    "warning",
-    "danger",
-    "info",
-    "silver",
-    "misc",
-    "dawn"
-  ]
-
-  @variants [
-    "default",
-    "outline",
-    "transparent",
-    "shadow",
-    "bordered",
-    "gradient"
-  ]
-
   @doc """
   Renders a `keyboard` component, typically used to represent key presses or shortcuts in UI documentation.
   It supports various styles, colors, and border radius options.
@@ -65,8 +40,8 @@ defmodule CommunityDemoWeb.Components.Keyboard do
     default: nil,
     doc: "A unique identifier is used to manage state and interaction"
 
-  attr :variant, :string, values: @variants, default: "default", doc: "Determines the style"
-  attr :color, :string, values: @colors, default: "natural", doc: "Determines color theme"
+  attr :variant, :string, default: "base", doc: "Determines the style"
+  attr :color, :string, default: "base", doc: "Determines color theme"
   attr :border, :string, default: "extra_small", doc: "Determines border style"
 
   attr :size, :string,
@@ -74,10 +49,7 @@ defmodule CommunityDemoWeb.Components.Keyboard do
     doc:
       "Determines the overall size of the elements, including padding, font size, and other items"
 
-  attr :rounded, :string,
-    values: @sizes ++ ["full", "none"],
-    default: "small",
-    doc: "Determines the border radius"
+  attr :rounded, :string, default: "small", doc: "Determines the border radius"
 
   attr :font_weight, :string,
     default: "font-normal",
@@ -128,8 +100,6 @@ defmodule CommunityDemoWeb.Components.Keyboard do
 
   defp border_class(params, _) when is_binary(params), do: params
 
-  defp border_class(_, _), do: border_class("extra_small", nil)
-
   defp size_class("extra_small"), do: "text-xs"
 
   defp size_class("small"), do: "text-sm"
@@ -141,8 +111,6 @@ defmodule CommunityDemoWeb.Components.Keyboard do
   defp size_class("extra_large"), do: "text-xl"
 
   defp size_class(params) when is_binary(params), do: params
-
-  defp size_class(_), do: size_class("small")
 
   defp rounded_size("extra_small"), do: "rounded-sm"
 
@@ -156,7 +124,16 @@ defmodule CommunityDemoWeb.Components.Keyboard do
 
   defp rounded_size("full"), do: "rounded-full"
 
-  defp rounded_size("none"), do: "rounded-none"
+  defp rounded_size("none"), do: nil
+
+  defp rounded_size(params) when is_binary(params), do: params
+
+  defp color_variant("base", "base") do
+    [
+      "bg-white text-[#09090b] border-[#e4e4e7] shadow-sm",
+      "dark:bg-[#18181B] dark:text-[#FAFAFA] dark:border-[#27272a]"
+    ]
+  end
 
   defp color_variant("default", "white") do
     [
@@ -573,6 +550,4 @@ defmodule CommunityDemoWeb.Components.Keyboard do
   end
 
   defp color_variant(params, _) when is_binary(params), do: params
-
-  defp color_variant(_, _), do: color_variant("default", "natural")
 end

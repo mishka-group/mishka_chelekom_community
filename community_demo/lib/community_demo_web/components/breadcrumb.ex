@@ -15,22 +15,6 @@ defmodule CommunityDemoWeb.Components.Breadcrumb do
   """
   use Phoenix.Component
 
-  @sizes ["extra_small", "small", "medium", "large", "extra_large"]
-  @colors [
-    "natural",
-    "dark",
-    "white",
-    "primary",
-    "secondary",
-    "success",
-    "warning",
-    "danger",
-    "info",
-    "silver",
-    "misc",
-    "dawn"
-  ]
-
   @doc """
   The `breadcrumb` component is used to display a navigational path with customizable
   attributes such as `color`, `size`, and `separator`.
@@ -74,10 +58,9 @@ defmodule CommunityDemoWeb.Components.Breadcrumb do
     default: "hero-chevron-right",
     doc: "Determines a separator for items of an element"
 
-  attr :color, :string, values: @colors, default: "natural", doc: "Determines color theme"
+  attr :color, :string, default: "base", doc: "Determines color theme"
 
   attr :size, :string,
-    values: @sizes,
     default: "small",
     doc:
       "Determines the overall size of the elements, including padding, font size, and other items"
@@ -141,6 +124,13 @@ defmodule CommunityDemoWeb.Components.Breadcrumb do
     ~H"""
     <span class={@class || "separator-text"}>{@name}</span>
     """
+  end
+
+  defp color_class("base") do
+    [
+      "text-[#09090b] hover:[&>li_a]:text-[#1b1b1f]",
+      "dark:text-[#FAFAFA] dark:hover:[&>li_a]:text-[#ededed]"
+    ]
   end
 
   defp color_class("white") do
@@ -225,6 +215,8 @@ defmodule CommunityDemoWeb.Components.Breadcrumb do
     ]
   end
 
+  defp color_class(params) when is_binary(params), do: params
+
   defp size_class("extra_small") do
     "text-xs gap-1.5 [&>li]:gap-1.5 [&>li>.separator-icon]:size-3 [&>li>.breadcrumb-icon]:size-4"
   end
@@ -246,8 +238,6 @@ defmodule CommunityDemoWeb.Components.Breadcrumb do
   end
 
   defp size_class(params) when is_binary(params), do: params
-
-  defp size_class(_), do: size_class("small")
 
   defp default_classes() do
     [

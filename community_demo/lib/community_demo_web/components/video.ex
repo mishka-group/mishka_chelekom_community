@@ -16,21 +16,6 @@ defmodule CommunityDemoWeb.Components.Video do
   use Phoenix.Component
   use Gettext, backend: CommunityDemoWeb.Gettext
 
-  @colors [
-    "white",
-    "natrual",
-    "primary",
-    "secondary",
-    "dark",
-    "success",
-    "warning",
-    "danger",
-    "info",
-    "silver",
-    "misc",
-    "dawn"
-  ]
-
   # https://stackoverflow.com/questions/15268604/html5-track-captions-not-showing/15268843#15268843
   # https://www.w3schools.com/tags/tag_video.asp
 
@@ -61,7 +46,7 @@ defmodule CommunityDemoWeb.Components.Video do
   <div class="space-y-5 max-w-xl mx-auto py-10">
     <.video
       ratio="video"
-      caption_bakcground="danger"
+      caption_background="danger"
       caption_size="quadruple_large"
       thumbnail="https://example.com/uploads/title_anouncement.jpg"
       controls
@@ -92,12 +77,11 @@ defmodule CommunityDemoWeb.Components.Video do
 
   attr :thumbnail, :string, default: nil, doc: "Determines thumbnail for video"
   attr :width, :string, default: "full", doc: "Determines the element width"
-  attr :rounded, :string, default: "none", doc: "Determines the border radius"
+  attr :rounded, :string, default: "", doc: "Determines the border radius"
   attr :height, :string, default: "auto", doc: "Determines the element width"
   attr :caption_size, :string, default: "extra_small", doc: "Determines the video caption size"
 
-  attr :caption_bakcground, :string,
-    values: @colors,
+  attr :caption_background, :string,
     default: "dark",
     doc: "Determines the video caption bakcground"
 
@@ -133,7 +117,7 @@ defmodule CommunityDemoWeb.Components.Video do
         rounded_size(@rounded),
         aspect_ratio(@ratio),
         caption_size(@caption_size),
-        caption_bakcground(@caption_bakcground),
+        caption_background(@caption_background),
         caption_opacity(@caption_opacity),
         @class
       ]}
@@ -193,8 +177,7 @@ defmodule CommunityDemoWeb.Components.Video do
 
   defp rounded_size("extra_large"), do: "rounded-xl"
 
-  defp rounded_size("none"), do: "rounded-none"
-  defp rounded_size(_), do: rounded_size("none")
+  defp rounded_size(params) when is_binary(params), do: params
 
   defp caption_size("extra_small"), do: "[&::cue]:text-xs"
   defp caption_size("small"), do: "[&::cue]:text-sm"
@@ -205,46 +188,47 @@ defmodule CommunityDemoWeb.Components.Video do
   defp caption_size("triple_large"), do: "[&::cue]:text-3xl"
   defp caption_size("quadruple_large"), do: "[&::cue]:text-4xl"
   defp caption_size(params) when is_binary(params), do: params
-  defp caption_size(_), do: caption_size("extra_small")
 
-  defp caption_bakcground("white"),
+  defp caption_background("base"),
+    do: "[&::cue]:bg-[linear-gradient(#fff,#fff)] [&::cue]:text-[#09090b]"
+
+  defp caption_background("white"),
     do: "[&::cue]:bg-[linear-gradient(#fff,#fff)] [&::cue]:text-[#282828]"
 
-  defp caption_bakcground("natural"),
+  defp caption_background("natural"),
     do: "[&::cue]:bg-[linear-gradient(#4B4B4B,#4B4B4B)] [&::cue]:text-white"
 
-  defp caption_bakcground("primary"),
+  defp caption_background("primary"),
     do: "[&::cue]:bg-[linear-gradient(#007F8C,#007F8C)] [&::cue]:text-white"
 
-  defp caption_bakcground("secondary"),
+  defp caption_background("secondary"),
     do: "[&::cue]:bg-[linear-gradient(#266EF1,#266EF1)] [&::cue]:text-white"
 
-  defp caption_bakcground("success"),
+  defp caption_background("success"),
     do: "[&::cue]:bg-[linear-gradient(#0E8345,#0E8345)] [&::cue]:text-[#282828]"
 
-  defp caption_bakcground("warning"),
+  defp caption_background("warning"),
     do: "[&::cue]:bg-[linear-gradient(#CA8D01,#CA8D01)] [&::cue]:text-[#282828]"
 
-  defp caption_bakcground("danger"),
+  defp caption_background("danger"),
     do: "[&::cue]:bg-[linear-gradient(#DE1135,#DE1135)] [&::cue]:text-[#282828]"
 
-  defp caption_bakcground("info"),
+  defp caption_background("info"),
     do: "[&::cue]:bg-[linear-gradient(#0B84BA,#0B84BA)] [&::cue]:text-[#282828]"
 
-  defp caption_bakcground("misc"),
+  defp caption_background("misc"),
     do: "[&::cue]:bg-[linear-gradient(#8750C5,#8750C5)] [&::cue]:text-[#282828]"
 
-  defp caption_bakcground("dawn"),
+  defp caption_background("dawn"),
     do: "[&::cue]:bg-[linear-gradient(#A86438,#A86438)] [&::cue]:text-[#282828]"
 
-  defp caption_bakcground("silver"),
+  defp caption_background("silver"),
     do: "[&::cue]:bg-[linear-gradient(#868686,#868686)] [&::cue]:text-[#282828]"
 
-  defp caption_bakcground("dark"),
+  defp caption_background("dark"),
     do: "[&::cue]:bg-[linear-gradient(#282828,#282828)] [&::cue]:text-white"
 
-  defp caption_bakcground(params) when is_binary(params), do: params
-  defp caption_bakcground(_), do: caption_bakcground("white")
+  defp caption_background(params) when is_binary(params), do: params
 
   defp caption_opacity("transparent") do
     "[&::cue]:bg-opacity-10"
@@ -287,5 +271,4 @@ defmodule CommunityDemoWeb.Components.Video do
   end
 
   defp caption_opacity(params) when is_binary(params), do: params
-  defp caption_opacity(_), do: caption_opacity("solid")
 end

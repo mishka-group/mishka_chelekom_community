@@ -17,7 +17,7 @@ config :community_demo, CommunityDemo.Repo,
 # you can enable the server option below.
 config :community_demo, CommunityDemoWeb.Endpoint,
   http: [ip: {127, 0, 0, 1}, port: 4002],
-  secret_key_base: "NrHCBSkD+IGBR25Ops2Nmgh6OcLCsFgOkYKTbMi3UXmxVWs1WCOmE1hFV6Eqw/HK",
+  secret_key_base: "Qc2FyMcGpK717tjsibs0D+e2qeXQl8csPjqZV8lxvkqXB6MWqR0pYFQvtgnsNXJS",
   server: false
 
 # In test we don't send emails

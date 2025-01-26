@@ -20,38 +20,6 @@ defmodule CommunityDemoWeb.Components.Modal do
   use Gettext, backend: CommunityDemoWeb.Gettext
   alias Phoenix.LiveView.JS
 
-  @sizes [
-    "extra_small",
-    "small",
-    "medium",
-    "large",
-    "extra_large",
-    "double_large",
-    "triple_large",
-    "quadruple_large"
-  ]
-  @colors [
-    "white",
-    "natural",
-    "primary",
-    "secondary",
-    "dark",
-    "success",
-    "warning",
-    "danger",
-    "info",
-    "silver",
-    "misc",
-    "dawn"
-  ]
-
-  @variants [
-    "default",
-    "shadow",
-    "bordered",
-    "gradient"
-  ]
-
   @doc """
   Renders a customizable `modal` component that displays overlay content with optional title and inner content.
   It can be controlled with the `show` attribute and includes actions for closing the modal.
@@ -84,18 +52,13 @@ defmodule CommunityDemoWeb.Components.Modal do
     doc: "A unique identifier is used to manage state and interaction"
 
   attr :title, :string, default: nil, doc: "Specifies the title of the element"
-  attr :variant, :string, values: @variants, default: "default", doc: "Determines the style"
-  attr :color, :string, values: @colors, default: "white", doc: "Determines color theme"
-  attr :rounded, :string, values: @sizes, default: "small", doc: "Determines the border radius"
+  attr :variant, :string, default: "base", doc: "Determines the style"
+  attr :color, :string, default: "base", doc: "Determines color theme"
+  attr :rounded, :string, default: "small", doc: "Determines the border radius"
   attr :border, :string, default: "extra_small", doc: "Determines border style"
-
-  attr :padding, :string,
-    values: @sizes ++ ["none"],
-    default: "medium",
-    doc: "Determines padding for items"
+  attr :padding, :string, default: "medium", doc: "Determines padding for items"
 
   attr :size, :string,
-    values: @sizes ++ ["screen"],
     default: "extra_large",
     doc:
       "Determines the overall size of the elements, including padding, font size, and other items"
@@ -114,7 +77,11 @@ defmodule CommunityDemoWeb.Components.Modal do
       data-cancel={JS.exec(@on_cancel, "phx-remove")}
       class="relative z-50 hidden"
     >
-      <div id={"#{@id}-bg"} class="bg-zinc-50/90 fixed inset-0 transition-opacity" aria-hidden="true" />
+      <div
+        id={"#{@id}-bg"}
+        class="bg-zinc-50/90 dark:bg-zinc-600/90 fixed inset-0 transition-opacity"
+        aria-hidden="true"
+      />
       <div
         class="fixed inset-0 overflow-y-auto"
         aria-labelledby={"#{@id}-title"}
@@ -179,7 +146,6 @@ defmodule CommunityDemoWeb.Components.Modal do
   defp border_size("large", _), do: "border-4"
   defp border_size("extra_large", _), do: "border-[5px]"
   defp border_size(params, _) when is_binary(params), do: params
-  defp border_size(_, _), do: border_size("extra_small", nil)
 
   defp rounded_size("extra_small"), do: "rounded-sm"
 
@@ -191,7 +157,9 @@ defmodule CommunityDemoWeb.Components.Modal do
 
   defp rounded_size("extra_large"), do: "rounded-xl"
 
-  defp rounded_size(_), do: nil
+  defp rounded_size("none"), do: nil
+
+  defp rounded_size(params) when is_binary(params), do: params
 
   defp padding_size("extra_small"), do: "p-2"
 
@@ -206,8 +174,6 @@ defmodule CommunityDemoWeb.Components.Modal do
   defp padding_size("none"), do: "p-0"
 
   defp padding_size(params) when is_binary(params), do: params
-
-  defp padding_size(_), do: padding_size("small")
 
   defp size_class("extra_small"), do: "mx-auto max-w-xs"
 
@@ -229,7 +195,12 @@ defmodule CommunityDemoWeb.Components.Modal do
 
   defp size_class(params) when is_binary(params), do: params
 
-  defp size_class(_), do: size_class("extra_large")
+  defp color_variant("base", "base") do
+    [
+      "bg-white text-[#09090b] border-[#e4e4e7] shadow-sm",
+      "dark:bg-[#18181B] dark:text-[#FAFAFA] dark:border-[#27272a]"
+    ]
+  end
 
   defp color_variant("default", "white") do
     [
@@ -526,8 +497,6 @@ defmodule CommunityDemoWeb.Components.Modal do
   end
 
   defp color_variant(params, _) when is_binary(params), do: params
-
-  defp color_variant(_, _), do: color_variant("default", "natural")
 
   attr :name, :string, required: true, doc: "Specifies the name of the element"
   attr :class, :any, default: nil, doc: "Custom CSS class for additional styling"

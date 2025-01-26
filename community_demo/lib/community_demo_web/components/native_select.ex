@@ -16,23 +16,6 @@ defmodule CommunityDemoWeb.Components.NativeSelect do
 
   use Phoenix.Component
 
-  @variants ["default", "shadow", "bordered", "native"]
-
-  @colors [
-    "natural",
-    "white",
-    "primary",
-    "secondary",
-    "dark",
-    "success",
-    "warning",
-    "danger",
-    "info",
-    "silver",
-    "misc",
-    "dawn"
-  ]
-
   @doc """
   Renders a customizable `native_select` input component with options for single or multiple selections.
   Supports validation and various styling options.
@@ -75,10 +58,10 @@ defmodule CommunityDemoWeb.Components.NativeSelect do
     doc: "A unique identifier is used to manage state and interaction"
 
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
-  attr :color, :string, values: @colors, default: "natural", doc: "Determines color theme"
+  attr :color, :string, default: "base", doc: "Determines color theme"
   attr :border, :string, default: "extra_small", doc: "Determines border style"
   attr :rounded, :string, default: "small", doc: "Determines the border radius"
-  attr :variant, :string, values: @variants, default: "native", doc: "Determines the style"
+  attr :variant, :string, default: "base", doc: "Determines the style"
   attr :description, :string, default: nil, doc: "Determines a short description"
   attr :space, :string, default: "medium", doc: "Space between items"
   attr :min_height, :string, default: nil, doc: "Determines min height style"
@@ -278,7 +261,7 @@ defmodule CommunityDemoWeb.Components.NativeSelect do
     ]
   end
 
-  defp size_class(_), do: size_class("medium")
+  defp size_class(params) when is_binary(params), do: params
 
   defp rounded_size("extra_small"), do: "[&_.select-field]:rounded-sm"
 
@@ -292,7 +275,9 @@ defmodule CommunityDemoWeb.Components.NativeSelect do
 
   defp rounded_size("full"), do: "[&_.select-field]:rounded-full"
 
-  defp rounded_size(_), do: "[&_.select-field]:rounded-none"
+  defp rounded_size("none"), do: nil
+
+  defp rounded_size(params) when is_binary(params), do: params
 
   defp border_class(_, variant)
        when variant in [
@@ -309,7 +294,8 @@ defmodule CommunityDemoWeb.Components.NativeSelect do
   defp border_class("large", _), do: "[&_.select-field]:border-4"
   defp border_class("extra_large", _), do: "[&_.select-field]:border-[5px]"
   defp border_class(params, _) when is_binary(params), do: params
-  defp border_class(_, _), do: border_class("extra_small", nil)
+
+  defp space_class("none"), do: nil
 
   defp space_class("extra_small"), do: "space-y-1"
 
@@ -323,7 +309,16 @@ defmodule CommunityDemoWeb.Components.NativeSelect do
 
   defp space_class(params) when is_binary(params), do: params
 
-  defp space_class(_), do: space_class("medium")
+  defp color_variant("base", "base") do
+    [
+      "text-[#09090b] dark:text-[#FAFAFA] [&_.select-field:not(:has(.select-field-error))]:border-[#e4e4e7] [&_.select-field]:shadow-sm",
+      "[&_.select-field:not(:has(.select-field-error))]:bg-white",
+      "dark:[&_.select-field:not(:has(.select-field-error))]:bg-[#18181B]",
+      "dark:[&_.select-field:not(:has(.select-field-error))]:border-[#27272a]",
+      "[&_.select-field.select-field-error]:bg-rose-700 [&_.select-field.select-field-error]:border-rose-700",
+      "focus-within:[&_.select-field]:ring-[#F8F9FA] dark:focus-within:[&_.select-field]:ring-[#242424]"
+    ]
+  end
 
   defp color_variant("default", "white") do
     [
@@ -684,6 +679,8 @@ defmodule CommunityDemoWeb.Components.NativeSelect do
       "dark:[&_.select-field]:shadow-none"
     ]
   end
+
+  defp color_variant(params, _) when is_binary(params), do: params
 
   defp translate_error({msg, opts}) do
     # When using gettext, we typically pass the strings we want

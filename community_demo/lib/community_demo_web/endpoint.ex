@@ -7,7 +7,7 @@ defmodule CommunityDemoWeb.Endpoint do
   @session_options [
     store: :cookie,
     key: "_community_demo_key",
-    signing_salt: "UtomThwV",
+    signing_salt: "gwjuoiVq",
     same_site: "Lax"
   ]
 

@@ -17,28 +17,6 @@ defmodule CommunityDemoWeb.Components.Tooltip do
   """
   use Phoenix.Component
 
-  @colors [
-    "natural",
-    "primary",
-    "secondary",
-    "success",
-    "warning",
-    "danger",
-    "info",
-    "silver",
-    "misc",
-    "dark",
-    "white",
-    "dawn"
-  ]
-
-  @variants [
-    "default",
-    "shadow",
-    "bordered",
-    "gradient"
-  ]
-
   @doc """
   The `tooltip` component is used to display additional information when users hover over an element.
 
@@ -75,24 +53,25 @@ defmodule CommunityDemoWeb.Components.Tooltip do
     doc: "A unique identifier is used to manage state and interaction"
 
   attr :position, :string, default: "top", doc: "Determines the element position"
-  attr :variant, :string, values: @variants, default: "shadow", doc: "Determines the style"
-  attr :color, :string, values: @colors, default: "natural", doc: "Determines color theme"
-  attr :rounded, :string, default: nil, doc: "Determines the border radius"
+  attr :variant, :string, default: "base", doc: "Determines the style"
+  attr :color, :string, default: "base", doc: "Determines color theme"
+  attr :rounded, :string, default: "", doc: "Determines the border radius"
   attr :border, :string, default: "extra_small", doc: "Determines border style"
   attr :show_arrow, :boolean, default: true, doc: "Show or hide arrow of popover"
 
   attr :size, :string,
-    default: nil,
+    default: "",
     doc:
       "Determines the overall size of the elements, including padding, font size, and other items"
 
-  attr :space, :string, default: nil, doc: "Space between items"
+  attr :space, :string, default: "", doc: "Space between items"
 
   attr :font_weight, :string,
     default: "font-normal",
     doc: "Determines custom class for the font weight"
 
   attr :width, :string, default: "fit", doc: "Determines the element width"
+  attr :wrapper_width, :string, default: "w-fit", doc: "Determines the parent element width"
   attr :padding, :string, default: "small", doc: "Determines padding for items"
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
   attr :text_position, :string, default: "center", doc: "Determines the element' text position"
@@ -106,7 +85,7 @@ defmodule CommunityDemoWeb.Components.Tooltip do
 
   def tooltip(assigns) do
     ~H"""
-    <span class="relative w-fit group">
+    <span class={["relative group", @wrapper_width]}>
       {render_slot(@inner_block)}
       <span
         role="tooltip"
@@ -119,7 +98,7 @@ defmodule CommunityDemoWeb.Components.Tooltip do
           rounded_size(@rounded),
           size_class(@size),
           padding_size(@padding),
-          @variant == "bordered" && border_class(@border),
+          @variant == "bordered" || (@variant == "base" && border_class(@border)),
           position_class(@position),
           text_position(@text_position),
           width_class(@width),
@@ -128,12 +107,12 @@ defmodule CommunityDemoWeb.Components.Tooltip do
         ]}
         {@rest}
       >
-        {@text}
         <span
-          :if={@show_arrow && @variant != "bordered"}
-          class="block absolute size-[8px] bg-inherit rotate-45 tooltip-arrow"
+          :if={@show_arrow && @variant != "bordered" && @variant != "base"}
+          class="block absolute size-[8px] bg-inherit rotate-45 -z-[1] tooltip-arrow"
         >
         </span>
+        {@text}
       </span>
     </span>
     """
@@ -149,11 +128,7 @@ defmodule CommunityDemoWeb.Components.Tooltip do
 
   defp rounded_size("extra_large"), do: "rounded-xl"
 
-  defp rounded_size("none"), do: "rounded-none"
-
   defp rounded_size(params) when is_binary(params), do: params
-
-  defp rounded_size(_), do: rounded_size("small")
 
   defp position_class("top") do
     [
@@ -193,9 +168,9 @@ defmodule CommunityDemoWeb.Components.Tooltip do
 
   defp border_class("extra_large"), do: "border-[5px]"
 
-  defp border_class(params) when is_binary(params), do: params
+  defp border_class("none"), do: nil
 
-  defp border_class(_), do: border_class("extra_small")
+  defp border_class(params) when is_binary(params), do: params
 
   defp size_class("extra_small"), do: "text-xs max-w-40"
 
@@ -208,8 +183,6 @@ defmodule CommunityDemoWeb.Components.Tooltip do
   defp size_class("extra_large"), do: "text-xl max-w-32"
 
   defp size_class(params) when is_binary(params), do: params
-
-  defp size_class(_), do: size_class("medium")
 
   defp text_position("left"), do: "text-left"
   defp text_position("right"), do: "text-right"
@@ -229,7 +202,6 @@ defmodule CommunityDemoWeb.Components.Tooltip do
   defp width_class("quadruple_large"), do: "min-w-56"
   defp width_class("fit"), do: "min-w-fit"
   defp width_class(params) when is_binary(params), do: params
-  defp width_class(_), do: width_class("fit")
 
   defp padding_size("extra_small"), do: "p-1"
 
@@ -245,8 +217,6 @@ defmodule CommunityDemoWeb.Components.Tooltip do
 
   defp padding_size(params) when is_binary(params), do: params
 
-  defp padding_size(_), do: padding_size("small")
-
   defp space_class("extra_small"), do: "space-y-2"
 
   defp space_class("small"), do: "space-y-3"
@@ -258,7 +228,13 @@ defmodule CommunityDemoWeb.Components.Tooltip do
   defp space_class("extra_large"), do: "space-y-6"
 
   defp space_class(params) when is_binary(params), do: params
-  defp space_class(_), do: nil
+
+  defp color_variant("base", "base") do
+    [
+      "bg-white text-[#09090b] border-[#e4e4e7] shadow-sm",
+      "dark:bg-[#18181B] dark:text-[#FAFAFA] dark:border-[#27272a]"
+    ]
+  end
 
   defp color_variant("default", "white") do
     ["bg-white text-black"]
@@ -551,6 +527,4 @@ defmodule CommunityDemoWeb.Components.Tooltip do
   end
 
   defp color_variant(params, _) when is_binary(params), do: params
-
-  defp color_variant(_, _), do: color_variant("default", "natural")
 end
