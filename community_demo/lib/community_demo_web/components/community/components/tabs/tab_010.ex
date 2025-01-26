@@ -21,15 +21,20 @@ defmodule CommunityDemoWeb.Community.Components.Tabs.Tab010 do
     attr :icon_position, :string, doc: "Determines icon position"
     attr :active, :boolean, doc: "Indicates whether the element is currently active and visible"
     attr :badge, :string, doc: "Indicates whether the element is currently active and visible"
-    attr :badge_color, :string, doc: "Indicates whether the element is currently active and visible"
-    attr :badge_position, :string, doc: "Indicates whether the element is currently active and visible"
-    attr :badge_size, :string, doc: "Indicates whether the element is currently active and visible"
+
+    attr :badge_color, :string,
+      doc: "Indicates whether the element is currently active and visible"
+
+    attr :badge_position, :string,
+      doc: "Indicates whether the element is currently active and visible"
+
+    attr :badge_size, :string,
+      doc: "Indicates whether the element is currently active and visible"
   end
 
   slot :panel, required: false do
     attr :class, :string, doc: "Custom CSS class for additional styling"
   end
-
 
   attr(:rest, :global,
     doc:
@@ -40,7 +45,14 @@ defmodule CommunityDemoWeb.Community.Components.Tabs.Tab010 do
 
   def community_tab_010(assigns) do
     ~H"""
-    <.tabs id={@id} padding={@padding} class={@class} variant={color_class()} rounded={@rounded} gap={@gap}>
+    <.tabs
+      id={@id}
+      padding={@padding}
+      class={@class}
+      variant={color_class()}
+      rounded={@rounded}
+      gap={@gap}
+    >
       <:tab :for={{tab, index} <- Enum.with_index(@tab, 1)} icon={tab[:icon]} class={tab[:class]}>
         {render_slot(tab)}
       </:tab>
@@ -53,6 +65,6 @@ defmodule CommunityDemoWeb.Community.Components.Tabs.Tab010 do
   end
 
   defp color_class() do
-      "[&_.tab-trigger]:rounded-t-lg border-[#e4e4e7] dark:border-[#27272A] [&:not(.active-tab)_.tab-trigger]:border-[#e4e4e7] dark:[&:not(.active-tab)_.tab-trigger]:border-[#27272a] [&_.tab-trigger.active-tab]:bg-[#e4e4e7] [&_.tab-trigger.active-tab]:text-[#09090b] [&_.tab-trigger.active-tab]:border-[#e4e4e7] hover:[&_.tab-trigger]:text-[#09090b] hover:[&_.tab-trigger]:border-[#e4e4e7] [&_.tab-trigger]:border-[#e4e4e7] dark:[&_.tab-trigger]:border-[#27272a] dark:[&_.tab-trigger.active-tab]:bg-[#27272a] dark:[&_.tab-trigger.active-tab]:text-[#FAFAFA] dark:[&_.tab-trigger.active-tab]:border-[#27272a]  dark:hover:[&_.tab-trigger]:text-[#FAFAFA] dark:hover:[&_.tab-trigger]:border-[#27272a] hover:[&_.tab-trigger]:bg-[#e4e4e7] dark:hover:[&_.tab-trigger]:bg-[#27272a] dark:[&_.tab-trigger-list]:border-[#27272A] [&_.tab-trigger-list]:border-[#e4e4e7]"
+    "[&_.tab-trigger]:rounded-t-lg border-[#e4e4e7] dark:border-[#27272A] [&:not(.active-tab)_.tab-trigger]:border-[#e4e4e7] dark:[&:not(.active-tab)_.tab-trigger]:border-[#27272a] [&_.tab-trigger.active-tab]:bg-[#e4e4e7] [&_.tab-trigger.active-tab]:text-[#09090b] [&_.tab-trigger.active-tab]:border-[#e4e4e7] hover:[&_.tab-trigger]:text-[#09090b] hover:[&_.tab-trigger]:border-[#e4e4e7] [&_.tab-trigger]:border-[#e4e4e7] dark:[&_.tab-trigger]:border-[#27272a] dark:[&_.tab-trigger.active-tab]:bg-[#27272a] dark:[&_.tab-trigger.active-tab]:text-[#FAFAFA] dark:[&_.tab-trigger.active-tab]:border-[#27272a]  dark:hover:[&_.tab-trigger]:text-[#FAFAFA] dark:hover:[&_.tab-trigger]:border-[#27272a] hover:[&_.tab-trigger]:bg-[#e4e4e7] dark:hover:[&_.tab-trigger]:bg-[#27272a] dark:[&_.tab-trigger-list]:border-[#27272A] [&_.tab-trigger-list]:border-[#e4e4e7]"
   end
 end

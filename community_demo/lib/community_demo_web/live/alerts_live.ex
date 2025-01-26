@@ -13,7 +13,7 @@ defmodule CommunityDemoWeb.Demo.Community.AlertsLive do
     Alert009,
     Alert010,
     Alert011,
-    Alert012,
+    Alert012
   }
 
   def mount(_params, _session, socket) do

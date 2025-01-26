@@ -8,7 +8,6 @@ defmodule CommunityDemoWeb.Community.Components.Tabs.Tab002 do
     doc: "A unique identifier is used to manage state and interaction"
   )
 
-
   attr(:class, :string, default: nil, doc: "")
   attr(:color, :string, default: "primary", doc: "")
   attr(:size, :string, default: "medium", doc: "")
@@ -22,9 +21,15 @@ defmodule CommunityDemoWeb.Community.Components.Tabs.Tab002 do
     attr :icon_position, :string, doc: "Determines icon position"
     attr :active, :boolean, doc: "Indicates whether the element is currently active and visible"
     attr :badge, :string, doc: "Indicates whether the element is currently active and visible"
-    attr :badge_color, :string, doc: "Indicates whether the element is currently active and visible"
-    attr :badge_position, :string, doc: "Indicates whether the element is currently active and visible"
-    attr :badge_size, :string, doc: "Indicates whether the element is currently active and visible"
+
+    attr :badge_color, :string,
+      doc: "Indicates whether the element is currently active and visible"
+
+    attr :badge_position, :string,
+      doc: "Indicates whether the element is currently active and visible"
+
+    attr :badge_size, :string,
+      doc: "Indicates whether the element is currently active and visible"
   end
 
   slot :panel, required: false do

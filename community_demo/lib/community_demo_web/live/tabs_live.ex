@@ -11,7 +11,7 @@ defmodule CommunityDemoWeb.Demo.Community.TabsLive do
     Tab007,
     Tab008,
     Tab009,
-    Tab010,
+    Tab010
   }
 
   def mount(_params, _session, socket) do

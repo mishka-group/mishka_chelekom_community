@@ -19,15 +19,20 @@ defmodule CommunityDemoWeb.Community.Components.Tabs.Tab001 do
     attr :icon_position, :string, doc: "Determines icon position"
     attr :active, :boolean, doc: "Indicates whether the element is currently active and visible"
     attr :badge, :string, doc: "Indicates whether the element is currently active and visible"
-    attr :badge_color, :string, doc: "Indicates whether the element is currently active and visible"
-    attr :badge_position, :string, doc: "Indicates whether the element is currently active and visible"
-    attr :badge_size, :string, doc: "Indicates whether the element is currently active and visible"
+
+    attr :badge_color, :string,
+      doc: "Indicates whether the element is currently active and visible"
+
+    attr :badge_position, :string,
+      doc: "Indicates whether the element is currently active and visible"
+
+    attr :badge_size, :string,
+      doc: "Indicates whether the element is currently active and visible"
   end
 
   slot :panel, required: false do
     attr :class, :string, doc: "Custom CSS class for additional styling"
   end
-
 
   attr(:rest, :global,
     doc:

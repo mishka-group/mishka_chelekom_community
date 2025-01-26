@@ -8,7 +8,6 @@ defmodule CommunityDemoWeb.Community.Components.Tabs.Tab006 do
     doc: "A unique identifier is used to manage state and interaction"
   )
 
-
   attr(:class, :string, default: nil, doc: "")
   attr(:size, :string, default: "small", doc: "")
   attr(:padding, :string, default: "large", doc: "")
@@ -22,9 +21,15 @@ defmodule CommunityDemoWeb.Community.Components.Tabs.Tab006 do
     attr :icon_position, :string, doc: "Determines icon position"
     attr :active, :boolean, doc: "Indicates whether the element is currently active and visible"
     attr :badge, :string, doc: "Indicates whether the element is currently active and visible"
-    attr :badge_color, :string, doc: "Indicates whether the element is currently active and visible"
-    attr :badge_position, :string, doc: "Indicates whether the element is currently active and visible"
-    attr :badge_size, :string, doc: "Indicates whether the element is currently active and visible"
+
+    attr :badge_color, :string,
+      doc: "Indicates whether the element is currently active and visible"
+
+    attr :badge_position, :string,
+      doc: "Indicates whether the element is currently active and visible"
+
+    attr :badge_size, :string,
+      doc: "Indicates whether the element is currently active and visible"
   end
 
   slot :panel, required: false do
@@ -40,7 +45,14 @@ defmodule CommunityDemoWeb.Community.Components.Tabs.Tab006 do
 
   def community_tab_006(assigns) do
     ~H"""
-    <.tabs id={@id} padding={@padding} variant={color_class()} rounded={@rounded} size={@size} class={@class}>
+    <.tabs
+      id={@id}
+      padding={@padding}
+      variant={color_class()}
+      rounded={@rounded}
+      size={@size}
+      class={@class}
+    >
       <:tab :for={{tab, index} <- Enum.with_index(@tab, 1)} icon={tab[:icon]} class={tab[:class]}>
         {render_slot(tab)}
       </:tab>
@@ -53,6 +65,6 @@ defmodule CommunityDemoWeb.Community.Components.Tabs.Tab006 do
   end
 
   defp color_class() do
-      "[&_.tab-trigger-list]:text-white [&_.tab-trigger-list]:bg-[#3056D3] [&_.tab-trigger.active-tab]:border-[#1C3FB7] hover:[&_.tab-trigger]:border-[#1C3FB7] [&_.tab-trigger]:border-b-2 [&_.tab-trigger]:border-transparent"
+    "[&_.tab-trigger-list]:text-white [&_.tab-trigger-list]:bg-[#3056D3] [&_.tab-trigger.active-tab]:border-[#1C3FB7] hover:[&_.tab-trigger]:border-[#1C3FB7] [&_.tab-trigger]:border-b-2 [&_.tab-trigger]:border-transparent"
   end
 end

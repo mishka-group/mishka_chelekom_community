@@ -22,18 +22,31 @@ defmodule CommunityDemoWeb.Community.Components.Alerts.Alert004 do
   def community_alert_004(assigns) do
     ~H"""
     <.alert id={@id} variant="base" class={@class} icon={nil} rounded="large" padding="medium">
-    <div class="flex gap-5">
-      <div class="size-8 shrink-0 bg-[#22AD5C]/10 text-[#22AD5C] rounded flex items-center justify-center">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-[21px]"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+      <div class="flex gap-5">
+        <div class="size-8 shrink-0 bg-[#22AD5C]/10 text-[#22AD5C] rounded flex items-center justify-center">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="size-[21px]"
+          >
+            <circle cx="12" cy="12" r="10" /><path d="m9 12 2 2 4-4" />
+          </svg>
+        </div>
+        <div>
+          <div :if={@title} class="text-[20px] mb-5 leading-6 font-semibold">{@title}</div>
+          <p :if={@description} class="text-[#637381] dark:text-[#a6b1ba]">
+            {@description}
+          </p>
+          {render_slot(@inner_block)}
+        </div>
       </div>
-      <div>
-        <div :if={@title} class="text-[20px] mb-5 leading-6 font-semibold">{@title}</div>
-        <p :if={@description} class="text-[#637381] dark:text-[#a6b1ba]">
-          {@description}
-        </p>
-        {render_slot(@inner_block)}
-      </div>
-    </div>
     </.alert>
     """
   end

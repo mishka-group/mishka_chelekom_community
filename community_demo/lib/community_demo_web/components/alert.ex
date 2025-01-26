@@ -82,9 +82,18 @@ defmodule CommunityDemoWeb.Components.Alert do
     doc: "Icon displayed alongside of an item"
 
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
-  attr :content_class, :string, default: nil, doc: "Custom CSS class for additional styling for contnet"
-  attr :title_class, :string, default: "flex items-center gap-1.5 leading-6 font-semibold mb-1", doc: "Custom CSS class for additional styling to tile"
-  attr :button_class, :string, default: "p-2", doc: "Custom CSS class for additional styling to tile"
+
+  attr :content_class, :string,
+    default: nil,
+    doc: "Custom CSS class for additional styling for contnet"
+
+  attr :title_class, :string,
+    default: "flex items-center gap-1.5 leading-6 font-semibold mb-1",
+    doc: "Custom CSS class for additional styling to tile"
+
+  attr :button_class, :string,
+    default: "p-2",
+    doc: "Custom CSS class for additional styling to tile"
 
   slot :inner_block, doc: "Inner block that renders HEEx content"
 
@@ -113,11 +122,11 @@ defmodule CommunityDemoWeb.Components.Alert do
     >
       <div class="flex items-center justify-between gap-2">
         <div>
-          <div :if={@title} class="flex items-center gap-1.5 leading-6 font-semibold mb-1">
+          <div :if={@title} class={@title_class}>
             <.icon :if={!is_nil(@icon)} name={@icon} class="aler-icon" /> {@title}
           </div>
 
-          <div class="">{msg}</div>
+          <div class={@content_class}>{msg}</div>
         </div>
 
         <button type="button" class={["group shrink-0", @button_class]} aria-label={gettext("close")}>
@@ -228,7 +237,10 @@ defmodule CommunityDemoWeb.Components.Alert do
     doc: "Icon displayed alongside of an item"
 
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
-  attr :title_class, :string, default: "flex items-center gap-1.5 leading-6 font-semibold mb-1", doc: "Custom CSS class for additional styling to tile"
+
+  attr :title_class, :string,
+    default: "flex items-center gap-1.5 leading-6 font-semibold mb-1",
+    doc: "Custom CSS class for additional styling to tile"
 
   slot :inner_block, doc: "Inner block that renders HEEx content"
 

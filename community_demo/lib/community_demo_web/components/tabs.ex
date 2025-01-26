@@ -26,6 +26,7 @@ defmodule CommunityDemoWeb.Components.Tabs do
 
   use Phoenix.Component
   alias Phoenix.LiveView.JS
+  import CommunityDemoWeb.Components.Badge, only: [badge: 1]
 
   @doc """
   The `tabs` component provides a set of clickable tabs for organizing content.
@@ -104,6 +105,11 @@ defmodule CommunityDemoWeb.Components.Tabs do
     attr :icon_class, :string, doc: "Determines custom class for the icon"
     attr :icon_position, :string, doc: "Determines icon position"
     attr :active, :boolean, doc: "Indicates whether the element is currently active and visible"
+    attr :badge, :string, doc: "Add badge to tab"
+    attr :badge_color, :string, doc: "badge color"
+    attr :badge_position, :string, doc: "badge position"
+    attr :badge_size, :string, doc: "badge size"
+    attr :badge_variant, :string, doc: "badge color varinat"
   end
 
   slot :panel, required: false do
@@ -121,7 +127,7 @@ defmodule CommunityDemoWeb.Components.Tabs do
       id={@id}
       phx-mounted={is_nil(@mounted_active_tab) && hide_tab(@id, length(@tab)) |> show_tab(@id, 1)}
       class={[
-        "vertical-tab flex",
+        "vertical-tab flex dark:text-gray-200",
         @placement == "end" && "flex-row-reverse",
         content_position(@triggers_position),
         @variant == "default" || (@variant == "base" && tab_border(@tab_border_size, @vertical)),
@@ -158,12 +164,22 @@ defmodule CommunityDemoWeb.Components.Tabs do
           class={[
             "tab-trigger flex flex-row flex-nowrap items-center gap-1.5 leading-5",
             "transition-all duration-400 delay-100 disabled:opacity-80",
-            tab[:icon_position] == "end" && "flex-row-reverse",
+            tab[:icon_position] == "end" && tab[:badge_position] == "end" && "flex-row-reverse",
             tab[:class]
           ]}
         >
           <.icon :if={tab[:icon]} name={tab[:icon]} class="tab-icon" />
-          <span class="block">
+          <.badge
+            :if={tab[:badge]}
+            variant={tab[:badge_variant] || "default"}
+            color={tab[:badge_color] || "natural"}
+            size={tab[:badge_size] || "extra_small"}
+            rounded="full"
+            circle
+          >
+            {tab[:badge]}
+          </.badge>
+          <span class="block tab-button_contnet">
             {render_slot(tab)}
           </span>
         </button>
@@ -199,7 +215,7 @@ defmodule CommunityDemoWeb.Components.Tabs do
       id={@id}
       phx-mounted={is_nil(@mounted_active_tab) && hide_tab(@id, length(@tab)) |> show_tab(@id, 1)}
       class={[
-        "horizontal-tab",
+        "horizontal-tab dark:text-gray-200",
         content_position(@triggers_position),
         @variant == "default" || (@variant == "base" && tab_border(@tab_border_size, @vertical)),
         @hide_list_border && "no-border-tabs-list [&_.tab-trigger]:flex-1",
@@ -233,12 +249,22 @@ defmodule CommunityDemoWeb.Components.Tabs do
           class={[
             "tab-trigger flex flex-row flex-nowrap justify-center items-center gap-1.5 leading-5",
             "transition-all duration-400 delay-100 disabled:opacity-80",
-            tab[:icon_position] == "end" && "flex-row-reverse",
+            tab[:icon_position] == "end" && tab[:badge_position] == "end" && "flex-row-reverse",
             tab[:class]
           ]}
         >
           <.icon :if={tab[:icon]} name={tab[:icon]} class="tab-icon" />
-          <span class="block">
+          <.badge
+            :if={tab[:badge]}
+            variant={tab[:badge_variant] || "default"}
+            color={tab[:badge_color] || "natural"}
+            size={tab[:badge_size] || "extra_small"}
+            rounded="full"
+            circle
+          >
+            {tab[:badge]}
+          </.badge>
+          <span class="block tab-button_contnet">
             {render_slot(tab)}
           </span>
         </button>
@@ -364,6 +390,7 @@ defmodule CommunityDemoWeb.Components.Tabs do
   defp gap_size("medium"), do: "[&_.tab-trigger-list]:gap-3"
   defp gap_size("large"), do: "[&_.tab-trigger-list]:gap-4"
   defp gap_size("extra_large"), do: "[&_.tab-trigger-list]:gap-5"
+  defp gap_size("none"), do: nil
   defp gap_size(params) when is_binary(params), do: params
 
   defp border_class("none"), do: nil
@@ -473,7 +500,7 @@ defmodule CommunityDemoWeb.Components.Tabs do
 
   defp color_variant("base", "base") do
     [
-      "[&_.tab-trigger.active-tab]:bg-[#e4e4e7] [&_.tab-trigger.active-tab]:text-[#09090b] dark:text-gray-200",
+      "[&_.tab-trigger.active-tab]:bg-[#e4e4e7] [&_.tab-trigger.active-tab]:text-[#09090b]",
       "[&_.tab-trigger.active-tab]:border-[#e4e4e7]",
       "hover:[&_.tab-trigger]:text-[#09090b] hover:[&_.tab-trigger]:border-[#e4e4e7]",
       "[&_.tab-trigger]:border-[#e4e4e7] dark:[&_.tab-trigger]:border-[#27272a]",

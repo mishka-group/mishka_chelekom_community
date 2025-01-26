@@ -8,7 +8,6 @@ defmodule CommunityDemoWeb.Community.Components.Tabs.Tab008 do
     doc: "A unique identifier is used to manage state and interaction"
   )
 
-
   attr(:class, :string, default: nil, doc: "")
   attr(:size, :string, default: "small", doc: "")
   attr(:padding, :string, default: "large", doc: "")
@@ -23,9 +22,15 @@ defmodule CommunityDemoWeb.Community.Components.Tabs.Tab008 do
     attr :icon_position, :string, doc: "Determines icon position"
     attr :active, :boolean, doc: "Indicates whether the element is currently active and visible"
     attr :badge, :string, doc: "Indicates whether the element is currently active and visible"
-    attr :badge_color, :string, doc: "Indicates whether the element is currently active and visible"
-    attr :badge_position, :string, doc: "Indicates whether the element is currently active and visible"
-    attr :badge_size, :string, doc: "Indicates whether the element is currently active and visible"
+
+    attr :badge_color, :string,
+      doc: "Indicates whether the element is currently active and visible"
+
+    attr :badge_position, :string,
+      doc: "Indicates whether the element is currently active and visible"
+
+    attr :badge_size, :string,
+      doc: "Indicates whether the element is currently active and visible"
   end
 
   slot :panel, required: false do
@@ -41,7 +46,15 @@ defmodule CommunityDemoWeb.Community.Components.Tabs.Tab008 do
 
   def community_tab_008(assigns) do
     ~H"""
-    <.tabs id={@id} padding={@padding} variant={color_class()} rounded={@rounded} size={@size} gap={@gap} class={@class}>
+    <.tabs
+      id={@id}
+      padding={@padding}
+      variant={color_class()}
+      rounded={@rounded}
+      size={@size}
+      gap={@gap}
+      class={@class}
+    >
       <:tab :for={{tab, index} <- Enum.with_index(@tab, 1)} icon={tab[:icon]} class={tab[:class]}>
         {render_slot(tab)}
       </:tab>
@@ -54,6 +67,6 @@ defmodule CommunityDemoWeb.Community.Components.Tabs.Tab008 do
   end
 
   defp color_class() do
-      "[&_.tab-trigger]:text-[#111928] [&_.tab-trigger]:bg-[#DFE4EA] [&_.tab-trigger-list]:px-3 [&_.tab-trigger-list]:pt-3 text-gray-700 bg-white [&_.tab-trigger.active-tab]:text-white [&_.tab-trigger.active-tab]:bg-[#3758F9] hover:[&_.tab-trigger]:bg-[#3758F9] hover:[&_.tab-trigger]:text-white [&_.tab-trigger]:rounded-t-lg"
+    "[&_.tab-trigger]:text-[#111928] [&_.tab-trigger]:bg-[#DFE4EA] [&_.tab-trigger-list]:px-3 [&_.tab-trigger-list]:pt-3 text-gray-700 bg-white [&_.tab-trigger.active-tab]:text-white [&_.tab-trigger.active-tab]:bg-[#3758F9] hover:[&_.tab-trigger]:bg-[#3758F9] hover:[&_.tab-trigger]:text-white [&_.tab-trigger]:rounded-t-lg"
   end
 end
