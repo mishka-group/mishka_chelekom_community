@@ -8,7 +8,7 @@ defmodule CommunityDemoWeb.Community.Components.Tabs.Tab009 do
     doc: "A unique identifier is used to manage state and interaction"
   )
 
-  attr(:class, :string, default: "bg-white shadow-lg dark:bg-[#323238] py-5 px-3 rounded-lg dark:border-[#454549]", doc: "")
+  attr(:class, :string, default: nil, doc: "")
   attr(:size, :string, default: "small", doc: "")
   attr(:color, :string, default: "base", doc: "")
   attr(:padding, :string, default: "small", doc: "")
@@ -54,7 +54,14 @@ defmodule CommunityDemoWeb.Community.Components.Tabs.Tab009 do
       color={@color}
       hide_list_border
       full_width_tab
-      class={@class}
+      class={
+        [
+          "bg-white shadow-lg dark:bg-[#323238] py-5 px-3 rounded-lg dark:border-[#454549]",
+          @class
+        ]
+        |> Enum.join(" ")
+        |> String.trim()
+      }
     >
       <:tab :for={{tab, _} <- Enum.with_index(@tab, 1)} icon={tab[:icon]} class={tab[:class]}>
         {render_slot(tab)}
