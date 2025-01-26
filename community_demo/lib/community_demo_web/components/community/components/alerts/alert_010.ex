@@ -1,6 +1,6 @@
 defmodule CommunityDemoWeb.Community.Components.Alerts.Alert010 do
   use Phoenix.Component
-  import CommunityDemoWeb.Components.{Alert}
+  import CommunityDemoWeb.Components.Alert
 
   @doc type: :component
   attr(:id, :string,

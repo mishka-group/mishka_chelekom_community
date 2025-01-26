@@ -1,6 +1,6 @@
-defmodule CommunityDemoWeb.Community.Components.Alerts.Alert005 do
+defmodule <%= @module %> do
   use Phoenix.Component
-  import CommunityDemoWeb.Components.Alert
+  import <%= inspect(@web_module) %>.Components.Alert
 
   @doc type: :component
   attr(:id, :string,
