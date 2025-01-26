@@ -1,0 +1,15 @@
+{
+  "name": "component_card_010",
+  "type": "component",
+  "files": [
+    {
+      "args": { "module": "", "only": ["community_card_010"], "helpers": {} },
+      "name": "component_card_010",
+      "type": "component",
+      "optional": [],
+      "necessary": ["card"],
+      "scripts": [],
+      "content": "ZGVmbW9kdWxlIDwlPSBAbW9kdWxlICU+IGRvCiAgdXNlIFBob2VuaXguQ29tcG9uZW50CiAgaW1wb3J0IDwlPSBpbnNwZWN0KEB3ZWJfbW9kdWxlKSAlPi5Db21wb25lbnRzLkNhcmQKCiAgYXR0cig6aWQsIDpzdHJpbmcsCiAgICBkZWZhdWx0OiBuaWwsCiAgICBkb2M6ICJBIHVuaXF1ZSBpZGVudGlmaWVyIGlzIHVzZWQgdG8gbWFuYWdlIHN0YXRlIGFuZCBpbnRlcmFjdGlvbiIKICApCgogIGF0dHIoOmNsYXNzLCA6c3RyaW5nLCBkZWZhdWx0OiAic2hhZG93LW1kIiwgZG9jOiAiIikKICBhdHRyKDp0aXRsZSwgOnN0cmluZywgZGVmYXVsdDogIiIsIGRvYzogIiIpCiAgYXR0cig6ZGVzY3JpcHRpb24sIDpzdHJpbmcsIGRlZmF1bHQ6ICIiLCBkb2M6ICIiKQoKICBhdHRyKDpyZXN0LCA6Z2xvYmFsLAogICAgZG9jOgogICAgICAiR2xvYmFsIGF0dHJpYnV0ZXMgY2FuIGRlZmluZSBkZWZhdWx0cyB3aGljaCBhcmUgbWVyZ2VkIHdpdGggYXR0cmlidXRlcyBwcm92aWRlZCBieSB0aGUgY2FsbGVyIgogICkKCiAgc2xvdCg6aW5uZXJfYmxvY2ssIHJlcXVpcmVkOiBmYWxzZSwgZG9jOiAiSW5uZXIgYmxvY2sgdGhhdCByZW5kZXJzIEhFRXggY29udGVudCIpCgogIGRlZiBjb21tdW5pdHlfY2FyZF8wMTAoYXNzaWducykgZG8KICAgIH5IIiIiCiAgICA8LmNhcmQgY2xhc3M9e0BjbGFzc30gcm91bmRlZD0iZXh0cmFfc21hbGwiIGlkPXtAaWR9PgogICAgICA8LmNhcmRfdGl0bGUgcGFkZGluZz0ibGFyZ2UiIHRpdGxlPXtAdGl0bGV9IGNsYXNzPSJib3JkZXItYiBkYXJrOmJvcmRlci1bIzM2MzYzZF0iIC8+CiAgICAgIDwuY2FyZF9jb250ZW50IHBhZGRpbmc9ImxhcmdlIiBzcGFjZT0ibGFyZ2UiPgogICAgICAgIDxwIGNsYXNzPSJ0ZXh0LVsjNjM3MzgxXSBkYXJrOnRleHQtZ3JheS0zMDAgdGV4dC1bMTRweF0iPgogICAgICAgICAge0BkZXNjcmlwdGlvbn0KICAgICAgICA8L3A+CiAgICAgIDwvLmNhcmRfY29udGVudD4KICAgIDwvLmNhcmQ+CiAgICAiIiIKICBlbmQKZW5kCg=="
+    }
+  ]
+}
