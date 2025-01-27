@@ -1,6 +1,5 @@
 defmodule CommunityDemoWeb.HomeLive do
   use CommunityDemoWeb, :live_view
-  import CommunityDemoWeb.Components.CustomHeader
 
   def mount(_params, _session, socket) do
     socket =
@@ -12,13 +11,6 @@ defmodule CommunityDemoWeb.HomeLive do
 
   def render(assigns) do
     ~H"""
-    <.custom_header>
-      <:link heading="Mishka Chelekom" description="This project has been developed using the components of Mishka Chelekom." title="Mishka Chelekom" url="https://github.com/mishka-group/mishka_chelekom" image="/images/mishka-logo.svg" />
-      <:link heading="Author" description="This Project was written by Mona Aghili." title="Mona Aghili Github" url="https://github.com/MonaAghili"  />
-      <:link heading="Docs" description="For detailed information about this component and its usage check out the docs." url="https://mishka.tools/chelekom/docs"  />
-      <:link heading="Source" description="The design and UI components of this project were inspired by a Figma template." title="Figma source" url="https://www.figma.com/design/aUDatlc87xWZr0JJzpKh3K/Tailwind-UI-Components-for-Figma-%7C-TailGrids-(Community)-(Copy)?t=a3pLFSaHtphs6ZIb-0"  />
-    </.custom_header>
-
     <section class="text-[#202020] dark:text-[#f6f6f6]">
       <div class={["max-w-6xl mx-auto px-5 lg:px-2 space-y-10 py-16"]}>
         <h4 class="text-center sm:text-2xl lg:text-4xl font-bold dark:text-[#cacfd2]">

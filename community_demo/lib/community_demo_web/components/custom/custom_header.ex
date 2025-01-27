@@ -19,7 +19,7 @@ defmodule CommunityDemoWeb.Components.CustomHeader do
     <section class={["text-[#202020] dark:text-[#f6f6f6] max-w-6xl mx-auto py-8 md:py-16 px-5 lg:px-2 grid md:grid-cols-4 gap-5", @class]}>
       <.link
         :for={{link, _} <- Enum.with_index(@link, 1)}
-        href={@link[:url]}
+        navigate={@link[:url]}
         class={["block transition-all duration-600 delay-100 rounded-xl border dark:border-[#4C4C4C] dark:bg-[#252424] dark:hover:bg-[#252424]/65 hover:bg-[#f1f1f1] px-2 py-5 space-y-3", link[:class]]}
         target="_blank"
         title={@link[:title]}

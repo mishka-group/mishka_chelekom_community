@@ -22,6 +22,9 @@ defmodule CommunityDemoWeb.Components.CustomCommand do
       <button
         title="copy mix command"
         phx-click={JS.dispatch("code:click", to: "##{@id}")}
+        class={[
+            "hover:text-emerald-500 transition-all delay-200 duration-600"
+          ]}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
