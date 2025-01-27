@@ -1,35 +1,42 @@
 defmodule CommunityDemoWeb.Components.CustomCommand do
   use Phoenix.Component
+  alias Phoenix.LiveView.JS
+  import Phoenix.LiveView.Utils, only: [random_id: 0]
 
   @doc type: :component
-  attr(:command, :string, default: nil, doc: "Add custom classes")
+  attr(:code, :string, default: nil, doc: "Add custom classes")
 
   def custom_command(assigns) do
+    assigns =
+      assigns
+      |> assign_new(:id, fn -> random_id() end)
+
     ~H"""
     <div
-      :if={@command}
-      class="flex gap-3 items-center bg-neutral-300 text-black dark:text-[#f6f6f6] w-fit mx-auto dark:bg-[#232323] py-1 px-3 rounded-[4px] text-[10px] sm:text-xs md:text-sm text-nowrap"
+      :if={@code}
+      id={"code-parent-#{@id}"}
+      phx-hook="CopyMixInstallationHook"
+      class="flex gap-3 items-center bg-neutral-300 text-black dark:text-[#f6f6f6] w-fit mx-auto dark:bg-[#232323] py-1 px-3 rounded-[4px] text-[10px] sm:text-xs md:text-sm text-nowrap my-8"
     >
-      <code class="whitespace-nowrap text-[10px] sm:text-xs md:text-xl">{@command}</code>
+      <code id={@id} class="whitespace-nowrap text-[10px] sm:text-xs md:text-xl">{@code}</code>
       <button
         title="copy mix command"
+        phx-click={JS.dispatch("code:click", to: "##{@id}")}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          fill="none"
+          width="20"
+          height="20"
           viewBox="0 0 24 24"
-          stroke-width="1.5"
+          fill="none"
           stroke="currentColor"
-          class="size-4 md:size-[18px]"
-          width="16"
-          height="16"
-          id="copy-mix-code-svg"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="size-4 copy-mix-code-svg"
         >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M16.5 8.25V6a2.25 2.25 0 0 0-2.25-2.25H6A2.25 2.25 0 0 0 3.75 6v8.25A2.25 2.25 0 0 0 6 16.5h2.25m8.25-8.25H18a2.25 2.25 0 0 1 2.25 2.25V18A2.25 2.25 0 0 1 18 20.25h-7.5A2.25 2.25 0 0 1 8.25 18v-1.5m8.25-8.25h-6a2.25 2.25 0 0 0-2.25 2.25v6"
-          />
+          <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
+          <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
         </svg>
       </button>
     </div>

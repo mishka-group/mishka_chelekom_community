@@ -2,10 +2,6 @@ defmodule CommunityDemoWeb.Components.CustomFooter do
   use Phoenix.Component
 
   @doc type: :component
-  attr :title, :string
-  attr :logo_link, :string
-  attr :products, :string
-  attr :services, :string
 
   def custom_footer(assigns) do
     ~H"""

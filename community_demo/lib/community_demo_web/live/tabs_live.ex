@@ -1,6 +1,6 @@
 defmodule CommunityDemoWeb.Demo.Community.TabsLive do
   use CommunityDemoWeb, :live_view
-  import CommunityDemoWeb.Components.CustomHeader
+  import CommunityDemoWeb.Components.{CustomHeader, CustomCommand}
 
   import CommunityDemoWeb.Community.Components.Tabs.{
     Tab001,
