@@ -16,7 +16,7 @@ defmodule CommunityDemoWeb.Components.CustomHeader do
 
   def custom_header(assigns) do
     ~H"""
-    <section class={["text-[#202020] dark:text-[#f6f6f6] max-w-3xl mx-auto py-8 md:py-16 px-5 lg:px-2 grid md:grid-cols-2 gap-5", @class]}>
+    <section class={["text-[#202020] dark:text-[#f6f6f6] max-w-3xl mx-auto py-8 md:pt-16 md:pb-8 px-5 lg:px-2 grid md:grid-cols-2 gap-5", @class]}>
       <.link
         :for={{link, _} <- Enum.with_index(@link, 1)}
         href={@link[:url]}
