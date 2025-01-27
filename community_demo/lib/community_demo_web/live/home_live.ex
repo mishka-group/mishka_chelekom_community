@@ -1,6 +1,6 @@
 defmodule CommunityDemoWeb.HomeLive do
   use CommunityDemoWeb, :live_view
-  import CommunityDemoWeb.Components.{CustomFooter, CustomHeader}
+  import CommunityDemoWeb.Components.CustomHeader
 
   def mount(_params, _session, socket) do
     socket =
@@ -3547,7 +3547,6 @@ defmodule CommunityDemoWeb.HomeLive do
         </div>
       </div>
     </section>
-    <.custom_footer />
     """
   end
 end
