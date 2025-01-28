@@ -110,8 +110,8 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Cards <span class="size-6 text-[12px] font-semibold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Cards <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
@@ -158,8 +158,8 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Carousel <span class="size-6 text-[12px] font-semibold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Carousel <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
@@ -227,8 +227,8 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Forms <span class="size-6 text-[12px] font-semibold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Forms <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
@@ -273,8 +273,8 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Chat <span class="size-6 text-[12px] font-semibold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Chat <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
@@ -347,8 +347,8 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Menu <span class="size-6 text-[12px] font-semibold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Menu <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
@@ -388,8 +388,8 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Navbar <span class="size-6 text-[12px] font-semibold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Navbar <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
@@ -488,8 +488,8 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Drawer <span class="size-6 text-[12px] font-semibold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Drawer <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
@@ -555,8 +555,8 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Modal <span class="size-6 text-[12px] font-semibold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Modal <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
@@ -659,8 +659,8 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Table <span class="size-6 text-[12px] font-semibold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Table <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
@@ -696,8 +696,8 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Tabs <span class="size-6 text-[12px] font-semibold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Tabs <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
@@ -865,8 +865,8 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Toast <span class="size-6 text-[12px] font-semibold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Toast <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
@@ -929,8 +929,8 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Timeline <span class="size-6 text-[12px] font-semibold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Timeline <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
@@ -1159,8 +1159,8 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Stepper <span class="size-6 text-[12px] font-semibold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Stepper <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
@@ -1236,8 +1236,8 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Accordion <span class="size-6 text-[12px] font-semibold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Accordion <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
@@ -1289,8 +1289,8 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Alert <span class="size-6 text-[12px] font-semibold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Alert <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
@@ -1416,8 +1416,8 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Avatar <span class="size-6 text-[12px] font-semibold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Avatar <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
@@ -1460,8 +1460,8 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Video <span class="size-6 text-[12px] font-semibold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Video <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
@@ -1531,8 +1531,8 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Skeleton <span class="size-6 text-[12px] font-semibold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Skeleton <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
@@ -1702,8 +1702,8 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Rating <span class="size-6 text-[12px] font-semibold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Rating <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
@@ -1905,8 +1905,8 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Gallery <span class="size-6 text-[12px] font-semibold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Gallery <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
@@ -1990,8 +1990,8 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Buttons <span class="size-6 text-[12px] font-semibold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Buttons <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
@@ -2044,8 +2044,8 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Badge <span class="size-6 text-[12px] font-semibold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Badge <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
@@ -2108,8 +2108,8 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Dropdown <span class="size-6 text-[12px] font-semibold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Dropdown <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
@@ -2135,8 +2135,8 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Jumbotron <span class="size-6 text-[12px] font-semibold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Jumbotron <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
@@ -2203,8 +2203,8 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Breadcrumb <span class="size-6 text-[12px] font-semibold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Breadcrumb <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
@@ -2379,8 +2379,8 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Pagination <span class="size-6 text-[12px] font-semibold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Pagination <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
@@ -2406,8 +2406,8 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Tooltip <span class="size-6 text-[12px] font-semibold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Tooltip <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
@@ -2439,8 +2439,8 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Popover <span class="size-6 text-[12px] font-semibold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Popover <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
@@ -2480,8 +2480,8 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Progress <span class="size-6 text-[12px] font-semibold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Progress <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
@@ -2599,8 +2599,8 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Spinner <span class="size-6 text-[12px] font-semibold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Spinner <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
@@ -2646,8 +2646,8 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Banner <span class="size-6 text-[12px] font-semibold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Banner <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
@@ -2711,8 +2711,8 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Blockquote <span class="size-6 text-[12px] font-semibold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Blockquote <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
@@ -2746,8 +2746,8 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Divider <span class="size-6 text-[12px] font-semibold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Divider <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
@@ -2790,8 +2790,8 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Mega Menu <span class="size-6 text-[12px] font-semibold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Mega Menu <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
@@ -2840,8 +2840,8 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Footer <span class="size-6 text-[12px] font-semibold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Footer <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
@@ -2942,8 +2942,8 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Typography <span class="size-6 text-[12px] font-semibold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Typography <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
@@ -2989,8 +2989,8 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              List <span class="size-6 text-[12px] font-semibold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              List <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
@@ -3019,8 +3019,8 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Overlay <span class="size-6 text-[12px] font-semibold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Overlay <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
@@ -3067,8 +3067,8 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Indicator <span class="size-6 text-[12px] font-semibold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Indicator <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
@@ -3102,8 +3102,8 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Image <span class="size-6 text-[12px] font-semibold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Image <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
@@ -3128,8 +3128,8 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Keyboard <span class="size-6 text-[12px] font-semibold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Keyboard <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
@@ -3221,8 +3221,8 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Speed Dial <span class="size-6 text-[12px] font-semibold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Speed Dial <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
@@ -3260,8 +3260,8 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Device Mockup <span class="size-6 text-[12px] font-semibold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Device Mockup <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
@@ -3332,8 +3332,8 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Table of Content <span class="size-6 text-[12px] font-semibold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Table of Content <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
@@ -3401,8 +3401,8 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Sidebar <span class="size-6 text-[12px] font-semibold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Sidebar <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
         </div>
