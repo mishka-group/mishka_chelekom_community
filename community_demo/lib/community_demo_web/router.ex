@@ -26,6 +26,48 @@ defmodule CommunityDemoWeb.Router do
     live "/cards", CardsLive
     live "/alerts", AlertsLive
     live "/tabs", TabsLive
+    live "/forms", FormsLive
+    live "/carousel", CarouselLive
+    live "/chats", ChatsLive
+    live "/drawer", DrawerLive
+    live "/tables", TablesLive
+    live "/toast", ToastLive
+    live "/timeline", TimelineLive
+    live "/stepper", StepperLive
+    live "/accordion", AccordionLive
+    live "/avatars", AvatarsLive
+    live "/video", VideoLive
+    live "/skeleton", SkeletonLive
+    live "/ratings", RatingsLive
+    live "/badges", BadgesLive
+    live "/dropdown", DropdownLive
+    live "/jumbotron", JumbotronLive
+    live "/breadcrumb", BreadcrumbLive
+    live "/paginations", PaginationsLive
+    live "/tooltips", TooltipsLive
+    live "/popovers", PopoversLive
+    live "/progress", ProgressLive
+    live "/spinner", SpinnerLive
+    live "/banner", BannerLive
+    live "/blockquote", BlockquoteLive
+    live "/divider", DividerLive
+    live "/mega-menu", MegaMenuLive
+    live "/typography", TypographyLive
+    live "/footer", FooterLive
+    live "/lists", ListsLive
+    live "/overlays", OverlaysLive
+    live "/indicators", IndicatorsLive
+    live "/images", ImagesLive
+    live "/keyboars", KeyboardsLive
+    live "/speed-dials", SpeedDialsLive
+    live "/device-mockups", DeviceMockupsLive
+    live "/table-contents", TableContentsLive
+    live "/sidebar", SidebarLive
+    live "/navbar", NavbarLive
+    live "/menu", MenuLive
+    live "/modal", ModalLive
+    live "/buttons", ButtonsLive
+    live "/gallery", GalleryLive
   end
 
   # Other scopes may use custom stacks.

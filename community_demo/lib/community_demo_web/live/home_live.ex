@@ -18,7 +18,7 @@ defmodule CommunityDemoWeb.HomeLive do
         </h4>
         <div class={["grid gap-5 sm:grid-cols-2 lg:grid-cols-4"]}>
           <.link
-            navigate={~p"/"}
+            navigate={~p"/demo/community/cards"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -110,12 +110,12 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Cards
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Cards <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
-            navigate={~p"/"}
+            navigate={~p"/demo/community/carousel"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -158,12 +158,12 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Carousel
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Carousel <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
-            navigate={~p"/"}
+            navigate={~p"/demo/community/forms"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -227,12 +227,12 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Forms
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Forms <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
-            navigate={~p"/"}
+            navigate={~p"/demo/community/chats"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -273,12 +273,12 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Chat
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Chat <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
-            navigate={~p"/"}
+            navigate={~p"/demo/community/menu"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -347,12 +347,12 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Menu
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Menu <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
-            navigate={~p"/"}
+            navigate={~p"/demo/community/navbar"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -388,12 +388,12 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Navbar
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Navbar <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
-            navigate={~p"/"}
+            navigate={~p"/demo/community/drawer"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -488,12 +488,12 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Drawer
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Drawer <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
-            navigate={~p"/"}
+            navigate={~p"/demo/community/modal"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -555,12 +555,12 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Modal
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Modal <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
-            navigate={~p"/"}
+            navigate={~p"/demo/community/tables"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -659,12 +659,12 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Table
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Table <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
-            navigate={~p"/"}
+            navigate={~p"/demo/community/tabs"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -696,12 +696,12 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Tabs
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Tabs <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
-            navigate={~p"/"}
+            navigate={~p"/demo/community/toast"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -865,12 +865,12 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Toast
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Toast <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
-            navigate={~p"/"}
+            navigate={~p"/demo/community/timeline"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -929,12 +929,12 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Timeline
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Timeline <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
-            navigate={~p"/"}
+            navigate={~p"/demo/community/stepper"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -1159,12 +1159,12 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Stepper
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Stepper <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
-            navigate={~p"/"}
+            navigate={~p"/demo/community/accordion"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -1236,12 +1236,12 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Accordion
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Accordion <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
-            navigate={~p"/"}
+            navigate={~p"/demo/community/alerts"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -1289,12 +1289,12 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Alert
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Alert <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
-            navigate={~p"/"}
+            navigate={~p"/demo/community/avatars"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -1416,12 +1416,12 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Avatar
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Avatar <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
-            navigate={~p"/"}
+            navigate={~p"/demo/community/video"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -1460,12 +1460,12 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Video
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Video <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
-            navigate={~p"/"}
+            navigate={~p"/demo/community/skeleton"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -1531,12 +1531,12 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Skeleton
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Skeleton <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
-            navigate={~p"/"}
+            navigate={~p"/demo/community/ratings"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -1702,12 +1702,12 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Rating
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Rating <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
-            navigate={~p"/"}
+            navigate={~p"/demo/community/gallery"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -1905,12 +1905,12 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Gallery
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Gallery <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
-            navigate={~p"/"}
+            navigate={~p"/demo/community/buttons"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -1990,12 +1990,12 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Buttons
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Buttons <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
-            navigate={~p"/"}
+            navigate={~p"/demo/community/badges"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -2044,12 +2044,12 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Badge
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Badge <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
-            navigate={~p"/"}
+            navigate={~p"/demo/community/dropdown"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -2108,12 +2108,12 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Dropdown
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Dropdown <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
-            navigate={~p"/"}
+            navigate={~p"/demo/community/jumbotron"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -2135,12 +2135,12 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Jumbotron
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Jumbotron <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
-            navigate={~p"/"}
+            navigate={~p"/demo/community/breadcrumb"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -2203,12 +2203,12 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Breadcrumb
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Breadcrumb <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
-            navigate={~p"/"}
+            navigate={~p"/demo/community/paginations"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -2379,12 +2379,12 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Pagination
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Pagination <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
-            navigate={~p"/"}
+            navigate={~p"/demo/community/tooltips"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -2406,12 +2406,12 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Tooltip
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Tooltip <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
-            navigate={~p"/"}
+            navigate={~p"/demo/community/popovers"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -2439,12 +2439,12 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Popover
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Popover <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
-            navigate={~p"/"}
+            navigate={~p"/demo/community/progress"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -2480,12 +2480,12 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Progress
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Progress <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
-            navigate={~p"/"}
+            navigate={~p"/demo/community/spinner"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -2599,12 +2599,12 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Spinner
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Spinner <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
-            navigate={~p"/"}
+            navigate={~p"/demo/community/banner"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -2646,12 +2646,12 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Banner
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Banner <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
-            navigate={~p"/"}
+            navigate={~p"/demo/community/blockquote"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -2711,12 +2711,12 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Blockquote
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Blockquote <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
-            navigate={~p"/"}
+            navigate={~p"/demo/community/divider"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -2746,12 +2746,12 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Divider
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Divider <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
-            navigate={~p"/"}
+            navigate={~p"/demo/community/mega-menu"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -2790,12 +2790,12 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Mega Menu
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Mega Menu <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
-            navigate={~p"/"}
+            navigate={~p"/demo/community/footer"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -2840,12 +2840,12 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Footer
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Footer <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
-            navigate={~p"/"}
+            navigate={~p"/demo/community/typography"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -2942,12 +2942,12 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Typography
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Typography <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
-            navigate={~p"/"}
+            navigate={~p"/demo/community/lists"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -2989,12 +2989,12 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              List
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              List <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
-            navigate={~p"/"}
+            navigate={~p"/demo/community/overlays"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -3019,12 +3019,12 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Overlay
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Overlay <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
-            navigate={~p"/"}
+            navigate={~p"/demo/community/indicators"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -3067,12 +3067,12 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Indicator
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Indicator <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
-            navigate={~p"/"}
+            navigate={~p"/demo/community/images"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -3102,12 +3102,12 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Image
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Image <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
-            navigate={~p"/"}
+            navigate={~p"/demo/community/keyboars"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -3128,12 +3128,12 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Keyboard
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Keyboard <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
-            navigate={~p"/"}
+            navigate={~p"/demo/community/speed-dials"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -3221,12 +3221,12 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Speed Dial
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Speed Dial <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
-            navigate={~p"/"}
+            navigate={~p"/demo/community/device-mockups"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -3260,12 +3260,12 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Device Mockup
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Device Mockup <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
-            navigate={~p"/"}
+            navigate={~p"/demo/community/table-contents"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -3332,12 +3332,12 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Table of Content
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Table of Content <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
           <.link
-            navigate={~p"/"}
+            navigate={~p"/demo/community/sidebar"}
             class="overflow-hidden relative border border-[#e8e8e8] dark:border-[#525151] rounded-lg pt-5 group"
           >
             <div class="relative w-fit mx-auto">
@@ -3401,8 +3401,8 @@ defmodule CommunityDemoWeb.HomeLive do
                 </div>
               </div>
             </div>
-            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2">
-              Sidebar
+            <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
+              Sidebar <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">100</span>
             </div>
           </.link>
         </div>
