@@ -92,5 +92,51 @@
             <CommunityDemoWeb.Components.Button.button size="extra_small" color="secondary" variant="default">Sign up</CommunityDemoWeb.Components.Button.button>
         </div>
     </.community_navbar_003>
+        <.community_navbar_003 class="mt-10" variant="bordered" color="dawn" id="community_navbar_003-3" logo="/images/mishka-logo.svg" brand="Mishka">
+        <:item>
+            <.link>Home</.link>
+        </:item>
+        <:item>
+            <.link>Media</.link>
+        </:item>
+        <:item>
+            <.link>Sponsors</.link>
+        </:item>
+        <div class="hidden sm:flex gap-3 items-center justify-end">
+           <.search_field
+            name="search"
+            space="small"
+            size="small"
+            value=""
+            search_button
+            placeholder="Seacrch"
+          />
+        </div>
+    </.community_navbar_003>
+    
+    <.community_navbar_004 class="mt-10" variant="bordered" color="dawn" id="community_navbar_004" logo="/images/mishka-logo.svg" brand="Mishka">
+        <:alert class="text-center">
+            50% off for new arrivals. Ends today! <a href="#" class="underline">Shop now</a>
+        </:alert>
+        <:item>
+            <.link>Home</.link>
+        </:item>
+        <:item>
+            <.link>Media</.link>
+        </:item>
+        <:item>
+            <.link>Sponsors</.link>
+        </:item>
+        <div class="hidden sm:flex gap-3 items-center justify-end">
+            <.search_field
+            name="search"
+            space="small"
+            size="small"
+            value=""
+            search_button
+            placeholder="Seacrch"
+            />
+        </div>
+    </.community_navbar_004>
 
 </div>
