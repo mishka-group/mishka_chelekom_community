@@ -23,6 +23,7 @@ defmodule CommunityDemoWeb.Community.Components.Navbars.Navbar004 do
   )
 
   slot :alert, required: false do
+    attr(:id, :string, doc: "Alert unique id")
     attr(:class, :string, doc: "Custom CSS class for additional styling")
     attr(:kind, :string, doc: "alert color")
     attr(:variant, :string, doc: "alert variant")
@@ -37,7 +38,7 @@ defmodule CommunityDemoWeb.Community.Components.Navbars.Navbar004 do
   def community_navbar_004(assigns) do
     ~H"""
     <div class={@class} id={@id}>
-    <.flash :for={alert <- @alert} rounded="none" variant={alert[:variant] || "gradient"} icon={nil} kind={alert[:kind] || :success} padding="py-1 px-2" class={alert[:class]}>
+    <.flash :for={alert <- @alert} rounded="none" id={"#{@id}-alert"} variant={alert[:variant] || "gradient"} icon={nil} kind={alert[:kind] || :success} padding="py-1 px-2" class={alert[:class]}>
       {render_slot(alert)}
     </.flash>
     <.navbar variant={@variant} color={@color} max_width={@max_width} border="none" id={"#{@id}-navbar"}>
