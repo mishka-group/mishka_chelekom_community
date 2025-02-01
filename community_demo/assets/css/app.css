@@ -8,5 +8,5 @@
     @apply lg:bg-[url(/images/footer/bg-1.svg)] lg:bg-no-repeat lg:bg-[bottom_0_left-0] lg:bg-contain
 }
 .footer-bg-2 {
-    @apply bg-[url(/images/footer/bg-2.svg)]  bg-no-repeat bg-[top_0_right_10px] bg-contain
+    @apply bg-[url(/images/footer/bg-2.svg)]  bg-no-repeat bg-[-10px -20px]
 }
