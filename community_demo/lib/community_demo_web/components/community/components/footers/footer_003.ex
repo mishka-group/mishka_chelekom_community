@@ -21,7 +21,7 @@ defmodule CommunityDemoWeb.Community.Components.Footers.Footer003 do
 
   def community_footer_003(assigns) do
     ~H"""
-    <.footer variant="bg-white" padding="py-20 px-9" max_width="extra_large" border="none" class="overflow-hidden footer-bg-1 " id={@id}>
+    <.footer variant="bg-white" padding="py-20 px-9" max_width="extra_large" border="none" class="overflow-hidden footer-bg-1" id={@id}>
       <div class="flex gap-8 flex-wrap">
         <div class="space-y-5 lg:w-1/4">
           <h3 :if={@brand} class="text-2xl font-bold">
