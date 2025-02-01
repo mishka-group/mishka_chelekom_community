@@ -36,13 +36,14 @@ defmodule CommunityDemoWeb.Community.Components.Lists.List005 do
 
   def community_list_005(assigns) do
     ~H"""
-    <.list
-      space="extra_small"
-      id={@id}
-      class={@class}
-      rounded="none"
-    >
-      <.li :for={item <- @item} padding="medium" class={item[:class]} icon={@icon} icon_class={@icon_class}>
+    <.list space="extra_small" id={@id} class={@class} rounded="none">
+      <.li
+        :for={item <- @item}
+        padding="medium"
+        class={item[:class]}
+        icon={@icon}
+        icon_class={@icon_class}
+      >
         {render_slot(item)}
       </.li>
     </.list>

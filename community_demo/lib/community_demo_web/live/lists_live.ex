@@ -7,7 +7,7 @@ defmodule CommunityDemoWeb.Demo.Community.ListsLive do
     List002,
     List003,
     List004,
-    List005,
+    List005
   }
 
   def mount(_params, _session, socket) do

@@ -26,20 +26,16 @@ defmodule CommunityDemoWeb.Community.Components.Lists.List001 do
 
   def community_list_001(assigns) do
     ~H"""
-    <.list
-      space="extra_small"
-      id={@id}
-      class={@class}
-      rounded="none"
-    >
+    <.list space="extra_small" id={@id} class={@class} rounded="none">
       <.li :for={{item, index} <- Enum.with_index(@item, 1)} padding="py-1 px-2" class={item[:class]}>
         <div class="flex items-center gap-2">
-          <span class="bg-[#3758F9] text-white rounded-full size-5 flex leading-5 text-[13px] items-center justify-center">{index}</span>
+          <span class="bg-[#3758F9] text-white rounded-full size-5 flex leading-5 text-[13px] items-center justify-center">
+            {index}
+          </span>
           {render_slot(item)}
         </div>
       </.li>
     </.list>
-
     """
   end
 end

@@ -7,6 +7,7 @@ defmodule CommunityDemoWeb.Community.Components.Lists.List002 do
     default: nil,
     doc: "A unique identifier is used to manage state and interaction"
   )
+
   attr(:class, :string,
     default: nil,
     doc: "custom classes"
@@ -25,20 +26,16 @@ defmodule CommunityDemoWeb.Community.Components.Lists.List002 do
 
   def community_list_002(assigns) do
     ~H"""
-    <.list
-      space="extra_small"
-      id={@id}
-      class={@class}
-      rounded="none"
-    >
+    <.list space="extra_small" id={@id} class={@class} rounded="none">
       <.li :for={{item, index} <- Enum.with_index(@item, 1)} padding="py-1 px-2" class={item[:class]}>
         <div class="flex items-center gap-2">
-          <span class="bg-[#3758F9] text-white size-5 flex leading-5 text-[13px] items-center justify-center">{index}</span>
+          <span class="bg-[#3758F9] text-white size-5 flex leading-5 text-[13px] items-center justify-center">
+            {index}
+          </span>
           {render_slot(item)}
         </div>
       </.li>
     </.list>
-
     """
   end
 end

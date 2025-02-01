@@ -26,12 +26,7 @@ defmodule CommunityDemoWeb.Community.Components.Lists.List004 do
 
   def community_list_004(assigns) do
     ~H"""
-    <.list
-      id={@id}
-      class={@class}
-      space="extra_small"
-      rounded="none"
-    >
+    <.list id={@id} class={@class} space="extra_small" rounded="none">
       <.li :for={item <- @item} padding="py-1 px-2" class={item[:class]}>
         <div class="flex items-center gap-3">
           <.indicator size="extra_small" color="info" />
