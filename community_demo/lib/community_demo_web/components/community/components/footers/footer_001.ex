@@ -1,6 +1,6 @@
-defmodule CommunityDemoWeb.Community.Components.Alerts.Alert002 do
+defmodule CommunityDemoWeb.Community.Components.Footers.Footer001 do
   use Phoenix.Component
-  import CommunityDemoWeb.Components.{Footer, Button}
+  import CommunityDemoWeb.Components.{Footer, Button, TextField}
 
   @doc type: :component
   attr(:id, :string,
@@ -9,8 +9,8 @@ defmodule CommunityDemoWeb.Community.Components.Alerts.Alert002 do
   )
 
   attr(:class, :string, default: nil, doc: "")
-  attr(:brand, :string, default: nil, doc: "Heading of alert")
-  attr(:description, :string, default: nil, doc: "Description of alert")
+  attr(:brand, :string, default: nil, doc: "Heading of footer")
+  attr(:description, :string, default: nil, doc: "Description of footer")
 
   attr(:rest, :global,
     doc:
@@ -19,7 +19,7 @@ defmodule CommunityDemoWeb.Community.Components.Alerts.Alert002 do
 
   slot(:inner_block, required: false, doc: "Inner block that renders HEEx content")
 
-  def community_alert_002(assigns) do
+  def community_footer_001(assigns) do
     ~H"""
     <.footer padding="large" max_width="extra_large" border="none" id={@id}>
       <div :if={@brand} class="text-2xl font-bold">{@brand}</div>

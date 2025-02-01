@@ -5,6 +5,7 @@ defmodule CommunityDemoWeb.Demo.Community.FooterLive do
   import CommunityDemoWeb.Community.Components.Footers.{
     Footer001,
     Footer002,
+    Footer003,
   }
 
 
