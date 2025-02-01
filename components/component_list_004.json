@@ -1,0 +1,17 @@
+{
+  "name": "component_list_004",
+  "author": "Mona Aghili",
+  "source": "https://www.figma.com/design/aUDatlc87xWZr0JJzpKh3K/Tailwind-UI-Components-for-Figma-%7C-TailGrids-(Community)-(Copy)?node-id=102-227&t=Ncu6lqpuVKrQc5Fx-1",
+  "type": "component",
+  "files": [
+    {
+      "args": { "module": "", "only": ["community_list_004"], "helpers": {} },
+      "name": "component_list_004",
+      "type": "component",
+      "optional": [],
+      "necessary": ["list", "indicator"],
+      "scripts": [],
+      "content": "ZGVmbW9kdWxlIDwlPSBAbW9kdWxlICU+IGRvCiAgdXNlIFBob2VuaXguQ29tcG9uZW50CiAgaW1wb3J0IDwlPSBpbnNwZWN0KEB3ZWJfbW9kdWxlKSAlPi5Db21wb25lbnRzLntMaXN0LCBJbmRpY2F0b3J9CgogIEBkb2MgdHlwZTogOmNvbXBvbmVudAogIGF0dHIoOmlkLCA6c3RyaW5nLAogICAgZGVmYXVsdDogbmlsLAogICAgZG9jOiAiQSB1bmlxdWUgaWRlbnRpZmllciBpcyB1c2VkIHRvIG1hbmFnZSBzdGF0ZSBhbmQgaW50ZXJhY3Rpb24iCiAgKQoKICBhdHRyKDpjbGFzcywgOnN0cmluZywKICAgIGRlZmF1bHQ6IG5pbCwKICAgIGRvYzogImN1c3RvbSBjbGFzc2VzIgogICkKCiAgYXR0cig6cmVzdCwgOmdsb2JhbCwKICAgIGRvYzoKICAgICAgIkdsb2JhbCBhdHRyaWJ1dGVzIGNhbiBkZWZpbmUgZGVmYXVsdHMgd2hpY2ggYXJlIG1lcmdlZCB3aXRoIGF0dHJpYnV0ZXMgcHJvdmlkZWQgYnkgdGhlIGNhbGxlciIKICApCgogIHNsb3QgOml0ZW0sIHJlcXVpcmVkOiB0cnVlIGRvCiAgICBhdHRyKDpjbGFzcywgOnN0cmluZywgZG9jOiAiQ3VzdG9tIENTUyBjbGFzcyBmb3IgYWRkaXRpb25hbCBzdHlsaW5nIikKICBlbmQKCiAgc2xvdCg6aW5uZXJfYmxvY2ssIHJlcXVpcmVkOiBmYWxzZSwgZG9jOiAiSW5uZXIgYmxvY2sgdGhhdCByZW5kZXJzIEhFRXggY29udGVudCIpCgogIGRlZiBjb21tdW5pdHlfbGlzdF8wMDQoYXNzaWducykgZG8KICAgIH5IIiIiCiAgICA8Lmxpc3QgaWQ9e0BpZH0gY2xhc3M9e0BjbGFzc30gc3BhY2U9ImV4dHJhX3NtYWxsIiByb3VuZGVkPSJub25lIj4KICAgICAgPC5saSA6Zm9yPXtpdGVtIDwtIEBpdGVtfSBwYWRkaW5nPSJweS0xIHB4LTIiIGNsYXNzPXtpdGVtWzpjbGFzc119PgogICAgICAgIDxkaXYgY2xhc3M9ImZsZXggaXRlbXMtY2VudGVyIGdhcC0zIj4KICAgICAgICAgIDwuaW5kaWNhdG9yIHNpemU9ImV4dHJhX3NtYWxsIiBjb2xvcj0iaW5mbyIgLz4KICAgICAgICAgIHtyZW5kZXJfc2xvdChpdGVtKX0KICAgICAgICA8L2Rpdj4KICAgICAgPC8ubGk+CiAgICA8Ly5saXN0PgogICAgIiIiCiAgZW5kCmVuZAo="
+    }
+  ]
+}

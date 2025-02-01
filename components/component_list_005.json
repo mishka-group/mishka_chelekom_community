@@ -1,0 +1,17 @@
+{
+  "name": "component_list_005",
+  "author": "Mona Aghili",
+  "source": "https://www.figma.com/design/aUDatlc87xWZr0JJzpKh3K/Tailwind-UI-Components-for-Figma-%7C-TailGrids-(Community)-(Copy)?node-id=102-227&t=Ncu6lqpuVKrQc5Fx-1",
+  "type": "component",
+  "files": [
+    {
+      "args": { "module": "", "only": ["community_list_005"], "helpers": {} },
+      "name": "component_list_005",
+      "type": "component",
+      "optional": [],
+      "necessary": ["list"],
+      "scripts": [],
+      "content": "ZGVmbW9kdWxlIDwlPSBAbW9kdWxlICU+IGRvCiAgdXNlIFBob2VuaXguQ29tcG9uZW50CiAgaW1wb3J0IDwlPSBpbnNwZWN0KEB3ZWJfbW9kdWxlKSAlPi5Db21wb25lbnRzLkxpc3QKCiAgQGRvYyB0eXBlOiA6Y29tcG9uZW50CiAgYXR0cig6aWQsIDpzdHJpbmcsCiAgICBkZWZhdWx0OiBuaWwsCiAgICBkb2M6ICJBIHVuaXF1ZSBpZGVudGlmaWVyIGlzIHVzZWQgdG8gbWFuYWdlIHN0YXRlIGFuZCBpbnRlcmFjdGlvbiIKICApCgogIGF0dHIoOmNsYXNzLCA6c3RyaW5nLAogICAgZGVmYXVsdDogbmlsLAogICAgZG9jOiAiY3VzdG9tIGNsYXNzZXMiCiAgKQoKICBhdHRyKDppY29uLCA6c3RyaW5nLAogICAgZGVmYXVsdDogImhlcm8tY2hlY2stY2lyY2xlIiwKICAgIGRvYzogIm5hbWUgb2YgaGVybyBpY29uIgogICkKCiAgYXR0cig6aWNvbl9jbGFzcywgOnN0cmluZywKICAgIGRlZmF1bHQ6IG5pbCwKICAgIGRvYzogImFkZCBjbGFzcyB0byBpY29ucyIKICApCgogIGF0dHIoOnJlc3QsIDpnbG9iYWwsCiAgICBkb2M6CiAgICAgICJHbG9iYWwgYXR0cmlidXRlcyBjYW4gZGVmaW5lIGRlZmF1bHRzIHdoaWNoIGFyZSBtZXJnZWQgd2l0aCBhdHRyaWJ1dGVzIHByb3ZpZGVkIGJ5IHRoZSBjYWxsZXIiCiAgKQoKICBzbG90IDppdGVtLCByZXF1aXJlZDogdHJ1ZSBkbwogICAgYXR0cig6Y2xhc3MsIDpzdHJpbmcsIGRvYzogIkN1c3RvbSBDU1MgY2xhc3MgZm9yIGFkZGl0aW9uYWwgc3R5bGluZyIpCiAgZW5kCgogIHNsb3QoOmlubmVyX2Jsb2NrLCByZXF1aXJlZDogZmFsc2UsIGRvYzogIklubmVyIGJsb2NrIHRoYXQgcmVuZGVycyBIRUV4IGNvbnRlbnQiKQoKICBkZWYgY29tbXVuaXR5X2xpc3RfMDA1KGFzc2lnbnMpIGRvCiAgICB+SCIiIgogICAgPC5saXN0IHNwYWNlPSJleHRyYV9zbWFsbCIgaWQ9e0BpZH0gY2xhc3M9e0BjbGFzc30gcm91bmRlZD0ibm9uZSI+CiAgICAgIDwubGkKICAgICAgICA6Zm9yPXtpdGVtIDwtIEBpdGVtfQogICAgICAgIHBhZGRpbmc9Im1lZGl1bSIKICAgICAgICBjbGFzcz17aXRlbVs6Y2xhc3NdfQogICAgICAgIGljb249e0BpY29ufQogICAgICAgIGljb25fY2xhc3M9e0BpY29uX2NsYXNzfQogICAgICA+CiAgICAgICAge3JlbmRlcl9zbG90KGl0ZW0pfQogICAgICA8Ly5saT4KICAgIDwvLmxpc3Q+CiAgICAiIiIKICBlbmQKZW5kCg=="
+    }
+  ]
+}

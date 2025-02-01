@@ -1,0 +1,17 @@
+{
+  "name": "component_list_001",
+  "author": "Mona Aghili",
+  "source": "https://www.figma.com/design/aUDatlc87xWZr0JJzpKh3K/Tailwind-UI-Components-for-Figma-%7C-TailGrids-(Community)-(Copy)?node-id=102-227&t=Ncu6lqpuVKrQc5Fx-1",
+  "type": "component",
+  "files": [
+    {
+      "args": { "module": "", "only": ["community_list_001"], "helpers": {} },
+      "name": "component_list_001",
+      "type": "component",
+      "optional": [],
+      "necessary": ["list"],
+      "scripts": [],
+      "content": "ZGVmbW9kdWxlIDwlPSBAbW9kdWxlICU+IGRvCiAgdXNlIFBob2VuaXguQ29tcG9uZW50CiAgaW1wb3J0IDwlPSBpbnNwZWN0KEB3ZWJfbW9kdWxlKSAlPi5Db21wb25lbnRzLkxpc3QKCiAgQGRvYyB0eXBlOiA6Y29tcG9uZW50CiAgYXR0cig6aWQsIDpzdHJpbmcsCiAgICBkZWZhdWx0OiBuaWwsCiAgICBkb2M6ICJBIHVuaXF1ZSBpZGVudGlmaWVyIGlzIHVzZWQgdG8gbWFuYWdlIHN0YXRlIGFuZCBpbnRlcmFjdGlvbiIKICApCgogIGF0dHIoOmNsYXNzLCA6c3RyaW5nLAogICAgZGVmYXVsdDogbmlsLAogICAgZG9jOiAiY3VzdG9tIGNsYXNzZXMiCiAgKQoKICBhdHRyKDpyZXN0LCA6Z2xvYmFsLAogICAgZG9jOgogICAgICAiR2xvYmFsIGF0dHJpYnV0ZXMgY2FuIGRlZmluZSBkZWZhdWx0cyB3aGljaCBhcmUgbWVyZ2VkIHdpdGggYXR0cmlidXRlcyBwcm92aWRlZCBieSB0aGUgY2FsbGVyIgogICkKCiAgc2xvdCA6aXRlbSwgcmVxdWlyZWQ6IHRydWUgZG8KICAgIGF0dHIoOmNsYXNzLCA6c3RyaW5nLCBkb2M6ICJDdXN0b20gQ1NTIGNsYXNzIGZvciBhZGRpdGlvbmFsIHN0eWxpbmciKQogIGVuZAoKICBzbG90KDppbm5lcl9ibG9jaywgcmVxdWlyZWQ6IGZhbHNlLCBkb2M6ICJJbm5lciBibG9jayB0aGF0IHJlbmRlcnMgSEVFeCBjb250ZW50IikKCiAgZGVmIGNvbW11bml0eV9saXN0XzAwMShhc3NpZ25zKSBkbwogICAgfkgiIiIKICAgIDwubGlzdCBzcGFjZT0iZXh0cmFfc21hbGwiIGlkPXtAaWR9IGNsYXNzPXtAY2xhc3N9IHJvdW5kZWQ9Im5vbmUiPgogICAgICA8LmxpIDpmb3I9e3tpdGVtLCBpbmRleH0gPC0gRW51bS53aXRoX2luZGV4KEBpdGVtLCAxKX0gcGFkZGluZz0icHktMSBweC0yIiBjbGFzcz17aXRlbVs6Y2xhc3NdfT4KICAgICAgICA8ZGl2IGNsYXNzPSJmbGV4IGl0ZW1zLWNlbnRlciBnYXAtMiI+CiAgICAgICAgICA8c3BhbiBjbGFzcz0iYmctWyMzNzU4RjldIHRleHQtd2hpdGUgcm91bmRlZC1mdWxsIHNpemUtNSBmbGV4IGxlYWRpbmctNSB0ZXh0LVsxM3B4XSBpdGVtcy1jZW50ZXIganVzdGlmeS1jZW50ZXIiPgogICAgICAgICAgICB7aW5kZXh9CiAgICAgICAgICA8L3NwYW4+CiAgICAgICAgICB7cmVuZGVyX3Nsb3QoaXRlbSl9CiAgICAgICAgPC9kaXY+CiAgICAgIDwvLmxpPgogICAgPC8ubGlzdD4KICAgICIiIgogIGVuZAplbmQK"
+    }
+  ]
+}

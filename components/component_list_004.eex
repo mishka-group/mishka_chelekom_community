@@ -1,0 +1,39 @@
+defmodule <%= @module %> do
+  use Phoenix.Component
+  import <%= inspect(@web_module) %>.Components.{List, Indicator}
+
+  @doc type: :component
+  attr(:id, :string,
+    default: nil,
+    doc: "A unique identifier is used to manage state and interaction"
+  )
+
+  attr(:class, :string,
+    default: nil,
+    doc: "custom classes"
+  )
+
+  attr(:rest, :global,
+    doc:
+      "Global attributes can define defaults which are merged with attributes provided by the caller"
+  )
+
+  slot :item, required: true do
+    attr(:class, :string, doc: "Custom CSS class for additional styling")
+  end
+
+  slot(:inner_block, required: false, doc: "Inner block that renders HEEx content")
+
+  def community_list_004(assigns) do
+    ~H"""
+    <.list id={@id} class={@class} space="extra_small" rounded="none">
+      <.li :for={item <- @item} padding="py-1 px-2" class={item[:class]}>
+        <div class="flex items-center gap-3">
+          <.indicator size="extra_small" color="info" />
+          {render_slot(item)}
+        </div>
+      </.li>
+    </.list>
+    """
+  end
+end
