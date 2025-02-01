@@ -3100,7 +3100,7 @@ defmodule CommunityDemoWeb.HomeLive do
             <div class="absolute inset-x-0 bottom-0 backdrop-blur-[1px] transition-all duration-200 h-9 group-hover:h-11 px-2 bg-black/10 text-[#767676] dark:text-white flex items-center gap-2 justify-between">
               List
               <span class="py-[2px] px-3.5 text-[12px] font-bold flex items-center justify-center leading-5 rounded-full bg-white text-black">
-                0
+              5
               </span>
             </div>
           </.link>
