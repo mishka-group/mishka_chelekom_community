@@ -1,6 +1,6 @@
 defmodule CommunityDemoWeb.Community.Components.Lists.List001 do
   use Phoenix.Component
-  import CommunityDemoWeb.Components.{List}
+  import CommunityDemoWeb.Components.List
 
   @doc type: :component
   attr(:id, :string,

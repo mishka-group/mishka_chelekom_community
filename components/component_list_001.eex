@@ -1,6 +1,6 @@
-defmodule CommunityDemoWeb.Community.Components.Lists.List005 do
+defmodule <%= @module %> do
   use Phoenix.Component
-  import CommunityDemoWeb.Components.List
+  import <%= inspect(@web_module) %>.Components.List
 
   @doc type: :component
   attr(:id, :string,
@@ -11,16 +11,6 @@ defmodule CommunityDemoWeb.Community.Components.Lists.List005 do
   attr(:class, :string,
     default: nil,
     doc: "custom classes"
-  )
-
-  attr(:icon, :string,
-    default: "hero-check-circle",
-    doc: "name of hero icon"
-  )
-
-  attr(:icon_class, :string,
-    default: nil,
-    doc: "add class to icons"
   )
 
   attr(:rest, :global,
@@ -34,17 +24,16 @@ defmodule CommunityDemoWeb.Community.Components.Lists.List005 do
 
   slot(:inner_block, required: false, doc: "Inner block that renders HEEx content")
 
-  def community_list_005(assigns) do
+  def community_list_001(assigns) do
     ~H"""
     <.list space="extra_small" id={@id} class={@class} rounded="none">
-      <.li
-        :for={item <- @item}
-        padding="medium"
-        class={item[:class]}
-        icon={@icon}
-        icon_class={@icon_class}
-      >
-        {render_slot(item)}
+      <.li :for={{item, index} <- Enum.with_index(@item, 1)} padding="py-1 px-2" class={item[:class]}>
+        <div class="flex items-center gap-2">
+          <span class="bg-[#3758F9] text-white rounded-full size-5 flex leading-5 text-[13px] items-center justify-center">
+            {index}
+          </span>
+          {render_slot(item)}
+        </div>
       </.li>
     </.list>
     """
