@@ -1,12 +1,12 @@
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
 
 /* This file is for your main application CSS */
 
 .footer-bg-1 {
-    @apply lg:bg-[url(/images/footer/bg-1.svg)] lg:bg-no-repeat lg:bg-[bottom_0_left-0] lg:bg-contain
+    @apply lg:bg-[url(/images/footer/bg-1.svg)] lg:bg-no-repeat lg:bg-[bottom_0_left-0] lg:bg-contain;
 }
 .footer-bg-2 {
-    @apply bg-[url(/images/footer/bg-2.svg)]  bg-no-repeat bg-[-10px -20px]
+    @apply bg-[url(/images/footer/bg-2.svg)]  bg-no-repeat bg-[-10px -20px];
 }
