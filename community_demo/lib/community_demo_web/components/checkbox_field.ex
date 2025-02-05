@@ -162,7 +162,7 @@ defmodule CommunityDemoWeb.Components.CheckboxField do
   attr :space, :string, default: "medium", doc: "Space between items"
 
   attr :variation, :string,
-    default: "vetrical",
+    default: "vertical",
     doc: "Defines the layout orientation of the component"
 
   attr :size, :string,
@@ -215,7 +215,7 @@ defmodule CommunityDemoWeb.Components.CheckboxField do
     ~H"""
     <div class={[
       @variation == "horizontal" && "flex flex-wrap items-center",
-      @variation == "vetrical" && "flex flex-col",
+      @variation == "vertical" && "flex flex-col",
       variation_gap(@space),
       @class
     ]}>

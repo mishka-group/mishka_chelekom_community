@@ -155,7 +155,7 @@ defmodule CommunityDemoWeb.Components.RadioField do
   attr :space, :string, default: "medium", doc: "Space between items"
 
   attr :variation, :string,
-    default: "vetrical",
+    default: "vertical",
     doc: "Defines the layout orientation of the component"
 
   attr :label_class, :string, default: nil, doc: "Custom CSS class for the label styling"
@@ -208,7 +208,7 @@ defmodule CommunityDemoWeb.Components.RadioField do
     ~H"""
     <div class={[
       @variation == "horizontal" && "flex flex-wrap items-center",
-      @variation == "vetrical" && "flex flex-col",
+      @variation == "vertical" && "flex flex-col",
       variation_gap(@space),
       @class
     ]}>

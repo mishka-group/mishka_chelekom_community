@@ -96,7 +96,7 @@ defmodule CommunityDemoWeb.Components.Gallery do
 
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
   attr :src, :string, default: nil, doc: "Media link"
-  attr :alt, :string, default: "", doc: "Media link description"
+  attr :alt, :string, default: nil, doc: "Media link description"
   attr :rounded, :string, default: "none", doc: "Determines the border radius"
   attr :shadow, :string, default: "shadow-none", doc: "Determines shadow style"
 
@@ -110,6 +110,7 @@ defmodule CommunityDemoWeb.Components.Gallery do
     ~H"""
     <div id={@id} class={["relative gallery-media overflow-hidden transition-all duration-300"]}>
       <img
+        :if={@src}
         class={[
           "gallery-media-img h-auto max-w-full transition-all duration-300",
           rounded_size(@rounded),
@@ -120,6 +121,7 @@ defmodule CommunityDemoWeb.Components.Gallery do
         alt={@alt}
         {@rest}
       />
+      {render_slot(@inner_block)}
     </div>
     """
   end
