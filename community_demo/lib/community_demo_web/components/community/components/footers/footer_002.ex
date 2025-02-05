@@ -45,11 +45,7 @@ defmodule CommunityDemoWeb.Community.Components.Footers.Footer002 do
           </svg>
         </.link>
 
-        <.link
-          href="/"
-          target="_blank"
-          title=""
-        >
+        <.link href="/" target="_blank" title="">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -67,11 +63,7 @@ defmodule CommunityDemoWeb.Community.Components.Footers.Footer002 do
           </svg>
         </.link>
 
-        <.link
-          href="/"
-          target="_blank"
-          title=""
-        >
+        <.link href="/" target="_blank" title="">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"

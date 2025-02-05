@@ -44,12 +44,7 @@ defmodule CommunityDemoWeb.Community.Components.Footers.Footer001 do
             placeholder="Email"
             class="flex-1"
           />
-          <.button
-            variant="default"
-            size="py-2 mt-1 px-4"
-            rounded="large"
-            color="misc"
-          >
+          <.button variant="default" size="py-2 mt-1 px-4" rounded="large" color="misc">
             Subscribe
           </.button>
         </div>

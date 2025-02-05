@@ -1,6 +1,6 @@
 defmodule CommunityDemoWeb.Community.Components.Navbars.Navbar003 do
   use Phoenix.Component
-  import CommunityDemoWeb.Components.{Navbar}
+  import CommunityDemoWeb.Components.Navbar
 
   @doc type: :component
   attr(:id, :string,

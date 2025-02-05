@@ -6,9 +6,8 @@ defmodule CommunityDemoWeb.Demo.Community.FooterLive do
     Footer001,
     Footer002,
     Footer003,
-    Footer004,
+    Footer004
   }
-
 
   def mount(_params, _session, socket) do
     socket =
