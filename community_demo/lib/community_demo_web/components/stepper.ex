@@ -70,17 +70,20 @@ defmodule CommunityDemoWeb.Components.Stepper do
   @spec stepper(map()) :: Phoenix.LiveView.Rendered.t()
   def stepper(%{vertical: true} = assigns) do
     ~H"""
-    <div class={[
-      "vertical-stepper relative flex flex-col",
-      "[&_.vertical-step:last-child_.stepper-seperator]:hidden",
-      step_visibility(),
-      border_class(@border),
-      space_class(@space),
-      size_class(@size),
-      color_variant(@color, @variant),
-      @font_weight,
-      @class
-    ]}>
+    <div
+      class={[
+        "vertical-stepper relative flex flex-col",
+        "[&_.vertical-step:last-child_.stepper-seperator]:hidden",
+        step_visibility(),
+        border_class(@border),
+        space_class(@space),
+        size_class(@size),
+        color_variant(@color, @variant),
+        @font_weight,
+        @class
+      ]}
+      {@rest}
+    >
       {render_slot(@inner_block)}
     </div>
     """
@@ -160,6 +163,10 @@ defmodule CommunityDemoWeb.Components.Stepper do
   attr :space, :string, default: "small", doc: "Switches the order of the element and label"
   attr :border, :string, default: "", doc: "Determines border style"
 
+  attr :rest, :global,
+    doc:
+      "Global attributes can define defaults which are merged with attributes provided by the caller"
+
   slot :inner_block, required: false, doc: "Inner block that renders HEEx content"
 
   def stepper_section(%{vertical: true} = assigns) do
@@ -172,6 +179,7 @@ defmodule CommunityDemoWeb.Components.Stepper do
         @class
       ]}
       disabled={!@clickable}
+      {@rest}
     >
       <span class="block relative">
         <span class="stepper-seperator block h-screen absolute start-1/2"></span>
@@ -242,6 +250,7 @@ defmodule CommunityDemoWeb.Components.Stepper do
         @class
       ]}
       disabled={!@clickable}
+      {@rest}
     >
       <span
         :if={@icon}

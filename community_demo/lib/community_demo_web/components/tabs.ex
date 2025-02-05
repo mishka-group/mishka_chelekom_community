@@ -110,6 +110,7 @@ defmodule CommunityDemoWeb.Components.Tabs do
     attr :badge_position, :string, doc: "badge position"
     attr :badge_size, :string, doc: "badge size"
     attr :badge_variant, :string, doc: "badge color varinat"
+    attr :on_select, :any, doc: "Custom JS module for on_select action"
   end
 
   slot :panel, required: false do
@@ -158,7 +159,13 @@ defmodule CommunityDemoWeb.Components.Tabs do
           :for={{tab, index} <- Enum.with_index(@tab, 1)}
           id={"#{@id}-tab-header-#{index}"}
           phx-show-tab={hide_tab(@id, length(@tab)) |> show_tab(@id, index)}
-          phx-click={JS.exec("phx-show-tab", to: "##{@id}-tab-header-#{index}")}
+          phx-click={
+            if is_nil(tab[:on_select]) do
+              JS.exec("phx-show-tab", to: "##{@id}-tab-header-#{index}")
+            else
+              JS.exec(tab[:on_select] || %JS{}, "phx-show-tab", to: "##{@id}-tab-header-#{index}")
+            end
+          }
           phx-mounted={tab[:active] && JS.exec("phx-show-tab", to: "##{@id}-tab-header-#{index}")}
           role="tab"
           class={[
@@ -244,7 +251,13 @@ defmodule CommunityDemoWeb.Components.Tabs do
         <button
           :for={{tab, index} <- Enum.with_index(@tab, 1)}
           id={"#{@id}-tab-header-#{index}"}
-          phx-click={hide_tab(@id, length(@tab)) |> show_tab(@id, index)}
+          phx-click={
+            if is_nil(tab[:on_select]) do
+              hide_tab(@id, length(@tab)) |> show_tab(@id, index)
+            else
+              tab[:on_select] |> hide_tab(@id, length(@tab)) |> show_tab(@id, index)
+            end
+          }
           role="tab"
           class={[
             "tab-trigger flex flex-row flex-nowrap justify-center items-center gap-1.5 leading-5",

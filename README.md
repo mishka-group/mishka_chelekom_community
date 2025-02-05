@@ -29,7 +29,7 @@ No additional installations are needed! Simply:
 
 1. Add **Mishka Chelekom** to your project.
 ```elixir
-{:mishka_chelekom, "~> 0.0.3-alpha.3", only: :dev}
+{:mishka_chelekom, "~> 0.0.4-alpha.1", only: :dev}
 ```
 2. Run the following CLI task: `mix mishka.ui.add component_some_component_name`
 

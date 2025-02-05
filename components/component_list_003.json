@@ -1,0 +1,17 @@
+{
+  "name": "component_list_003",
+  "author": "Mona Aghili",
+  "source": "https://www.figma.com/design/aUDatlc87xWZr0JJzpKh3K/Tailwind-UI-Components-for-Figma-%7C-TailGrids-(Community)-(Copy)?node-id=102-227&t=Ncu6lqpuVKrQc5Fx-1",
+  "type": "component",
+  "files": [
+    {
+      "args": { "module": "", "only": ["community_list_003"], "helpers": {} },
+      "name": "component_list_003",
+      "type": "component",
+      "optional": [],
+      "necessary": ["list"],
+      "scripts": [],
+      "content": "ZGVmbW9kdWxlIDwlPSBAbW9kdWxlICU+IGRvCiAgdXNlIFBob2VuaXguQ29tcG9uZW50CiAgaW1wb3J0IDwlPSBpbnNwZWN0KEB3ZWJfbW9kdWxlKSAlPi5Db21wb25lbnRzLkxpc3QKCiAgQGRvYyB0eXBlOiA6Y29tcG9uZW50CiAgYXR0cig6aWQsIDpzdHJpbmcsCiAgICBkZWZhdWx0OiBuaWwsCiAgICBkb2M6ICJBIHVuaXF1ZSBpZGVudGlmaWVyIGlzIHVzZWQgdG8gbWFuYWdlIHN0YXRlIGFuZCBpbnRlcmFjdGlvbiIKICApCgogIGF0dHIoOmNsYXNzLCA6c3RyaW5nLAogICAgZGVmYXVsdDogbmlsLAogICAgZG9jOiAiY3VzdG9tIGNsYXNzZXMiCiAgKQoKICBhdHRyKDpyZXN0LCA6Z2xvYmFsLAogICAgZG9jOgogICAgICAiR2xvYmFsIGF0dHJpYnV0ZXMgY2FuIGRlZmluZSBkZWZhdWx0cyB3aGljaCBhcmUgbWVyZ2VkIHdpdGggYXR0cmlidXRlcyBwcm92aWRlZCBieSB0aGUgY2FsbGVyIgogICkKCiAgc2xvdCA6aXRlbSwgcmVxdWlyZWQ6IHRydWUgZG8KICAgIGF0dHIoOmNsYXNzLCA6c3RyaW5nLCBkb2M6ICJDdXN0b20gQ1NTIGNsYXNzIGZvciBhZGRpdGlvbmFsIHN0eWxpbmciKQogIGVuZAoKICBzbG90KDppbm5lcl9ibG9jaywgcmVxdWlyZWQ6IGZhbHNlLCBkb2M6ICJJbm5lciBibG9jayB0aGF0IHJlbmRlcnMgSEVFeCBjb250ZW50IikKCiAgZGVmIGNvbW11bml0eV9saXN0XzAwMyhhc3NpZ25zKSBkbwogICAgfkgiIiIKICAgIDwubGlzdCBpZD17QGlkfSBjbGFzcz17QGNsYXNzfSByb3VuZGVkPSJub25lIj4KICAgICAgPC5saSA6Zm9yPXt7aXRlbSwgaW5kZXh9IDwtIEVudW0ud2l0aF9pbmRleChAaXRlbSwgMSl9IHBhZGRpbmc9InB4LTIgcHktNCIgY2xhc3M9e2l0ZW1bOmNsYXNzXX0+CiAgICAgICAgPGRpdiBjbGFzcz0iZmxleCBpdGVtcy1jZW50ZXIgZ2FwLTQiPgogICAgICAgICAgPHNwYW4gY2xhc3M9ImJnLVsjMzc1OEY5XSB0ZXh0LXdoaXRlIHNpemUtNiBmbGV4IGxlYWRpbmctNSB0ZXh0LVsxM3B4XSBpdGVtcy1jZW50ZXIganVzdGlmeS1jZW50ZXIgcm90YXRlLTQ1Ij4KICAgICAgICAgICAgPHNwYW4gY2xhc3M9Ii1yb3RhdGUtNDUiPgogICAgICAgICAgICAgIHtpbmRleH0KICAgICAgICAgICAgPC9zcGFuPgogICAgICAgICAgPC9zcGFuPgogICAgICAgICAge3JlbmRlcl9zbG90KGl0ZW0pfQogICAgICAgIDwvZGl2PgogICAgICA8Ly5saT4KICAgIDwvLmxpc3Q+CiAgICAiIiIKICBlbmQKZW5kCg=="
+    }
+  ]
+}
