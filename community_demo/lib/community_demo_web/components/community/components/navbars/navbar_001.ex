@@ -35,7 +35,10 @@ defmodule CommunityDemoWeb.Community.Components.Navbars.Navbar001 do
           <h2 :if={@brand} class={["font-bold text-lg", @brand_class]}>{@brand}</h2>
         </div>
         <ul :if={@item} class="hidden md:flex gap-8">
-          <li :for={item <- @item} class={[item[:class] || "hover:text-gray-700 dark:hover:text-gray-200 cursor-pointer"]}>
+          <li
+            :for={item <- @item}
+            class={[item[:class] || "hover:text-gray-700 dark:hover:text-gray-200 cursor-pointer"]}
+          >
             {render_slot(item)}
           </li>
         </ul>

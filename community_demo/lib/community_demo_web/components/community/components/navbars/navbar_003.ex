@@ -30,14 +30,24 @@ defmodule CommunityDemoWeb.Community.Components.Navbars.Navbar003 do
 
   def community_navbar_003(assigns) do
     ~H"""
-    <.navbar variant={@variant} color={@color} id={@id} class={@class} max_width={@max_width} border="none">
+    <.navbar
+      variant={@variant}
+      color={@color}
+      id={@id}
+      class={@class}
+      max_width={@max_width}
+      border="none"
+    >
       <div class="flex items-center gap-3 justify-between w-full">
         <div class="flex items-center">
           <img :if={@logo} src={@logo} class={["size-8 me-4", @logo_class]} />
           <h2 :if={@brand} class={["font-bold text-lg", @brand_class]}>{@brand}</h2>
         </div>
         <ul :if={@item} class="hidden md:flex gap-8">
-          <li :for={item <- @item} class={[item[:class] || "hover:text-blue-700 dark:hover:text-blue-200 cursor-pointer"]}>
+          <li
+            :for={item <- @item}
+            class={[item[:class] || "hover:text-blue-700 dark:hover:text-blue-200 cursor-pointer"]}
+          >
             {render_slot(item)}
           </li>
         </ul>

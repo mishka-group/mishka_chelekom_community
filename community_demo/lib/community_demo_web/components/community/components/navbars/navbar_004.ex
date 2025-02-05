@@ -38,23 +38,41 @@ defmodule CommunityDemoWeb.Community.Components.Navbars.Navbar004 do
   def community_navbar_004(assigns) do
     ~H"""
     <div class={@class} id={@id}>
-    <.flash :for={alert <- @alert} rounded="none" id={"#{@id}-alert"} variant={alert[:variant] || "gradient"} icon={nil} kind={alert[:kind] || :success} padding="py-1 px-2" class={alert[:class]}>
-      {render_slot(alert)}
-    </.flash>
-    <.navbar variant={@variant} color={@color} max_width={@max_width} border="none" id={"#{@id}-navbar"}>
-      <div class="flex items-center gap-3 justify-between w-full">
-        <div class="flex items-center">
-          <img :if={@logo} src={@logo} class={["size-8 me-4", @logo_class]} />
-          <h2 :if={@brand} class={["font-bold text-lg", @brand_class]}>{@brand}</h2>
+      <.flash
+        :for={alert <- @alert}
+        rounded="none"
+        id={"#{@id}-alert"}
+        variant={alert[:variant] || "gradient"}
+        icon={nil}
+        kind={alert[:kind] || :success}
+        padding="py-1 px-2"
+        class={alert[:class]}
+      >
+        {render_slot(alert)}
+      </.flash>
+      <.navbar
+        variant={@variant}
+        color={@color}
+        max_width={@max_width}
+        border="none"
+        id={"#{@id}-navbar"}
+      >
+        <div class="flex items-center gap-3 justify-between w-full">
+          <div class="flex items-center">
+            <img :if={@logo} src={@logo} class={["size-8 me-4", @logo_class]} />
+            <h2 :if={@brand} class={["font-bold text-lg", @brand_class]}>{@brand}</h2>
+          </div>
+          <ul :if={@item} class="hidden md:flex gap-8">
+            <li
+              :for={item <- @item}
+              class={[item[:class] || "hover:text-blue-700 dark:hover:text-blue-200 cursor-pointer"]}
+            >
+              {render_slot(item)}
+            </li>
+          </ul>
+          {render_slot(@inner_block)}
         </div>
-        <ul :if={@item} class="hidden md:flex gap-8">
-          <li :for={item <- @item} class={[item[:class] || "hover:text-blue-700 dark:hover:text-blue-200 cursor-pointer"]}>
-            {render_slot(item)}
-          </li>
-        </ul>
-        {render_slot(@inner_block)}
-      </div>
-    </.navbar>
+      </.navbar>
     </div>
     """
   end

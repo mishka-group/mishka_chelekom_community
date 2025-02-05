@@ -31,7 +31,10 @@ defmodule CommunityDemoWeb.Community.Components.Navbars.Navbar002 do
     <.navbar id={@id} class={@class} max_width={@max_width} border="none">
       <div class="flex items-center gap-3 justify-between w-full">
         <ul :if={@item} class="hidden md:flex gap-8">
-          <li :for={item <- @item} class={[item[:class] || "hover:text-gray-700 dark:hover:text-gray-200 cursor-pointer"]}>
+          <li
+            :for={item <- @item}
+            class={[item[:class] || "hover:text-gray-700 dark:hover:text-gray-200 cursor-pointer"]}
+          >
             {render_slot(item)}
           </li>
         </ul>

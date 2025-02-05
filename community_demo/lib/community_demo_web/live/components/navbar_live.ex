@@ -6,7 +6,7 @@ defmodule CommunityDemoWeb.Demo.Community.NavbarLive do
     Navbar001,
     Navbar002,
     Navbar003,
-    Navbar004,
+    Navbar004
   }
 
   def mount(_params, _session, socket) do
