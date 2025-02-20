@@ -10,3 +10,11 @@
 .footer-bg-2 {
     @apply bg-[url(/images/footer/bg-2.svg)]  bg-no-repeat bg-[-10px -20px];
 }
+
+.hide-scrollbar {
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+    scrollbar-width: none; /* Firefox */
+}
+.hide-scrollbar::-webkit-scrollbar {
+    display: none; /* Safari and Chrome */
+}
