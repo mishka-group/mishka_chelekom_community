@@ -71,6 +71,7 @@ defmodule CommunityDemoWeb.Components.List do
     attr :content_class, :string, doc: "Determines custom class for the content"
     attr :padding, :string, doc: "Determines padding for items"
     attr :position, :string, doc: "Determines the element position"
+    attr :title, :string, required: false
   end
 
   attr :rest, :global,
@@ -94,7 +95,16 @@ defmodule CommunityDemoWeb.Components.List do
   def list(assigns) do
     ~H"""
     <.ul {assigns}>
-      <.li :for={item <- @item} {item}>
+      <.li
+        :for={item <- @item}
+        class={
+          Enum.join(["[&_.list-content]:flex [&_.list-content]:items-center", item[:class]], " ")
+        }
+        {item}
+      >
+        <div :if={!is_nil(Map.get(item, :title))} class="font-semibold me-2">
+          {item.title}
+        </div>
         {render_slot(item)}
       </.li>
       {render_slot(@inner_block)}
@@ -160,7 +170,7 @@ defmodule CommunityDemoWeb.Components.List do
       ]}>
         <.icon :if={!is_nil(@icon)} name={@icon} class={@icon_class} />
         <span :if={is_integer(@count)}>{@count}{@count_separator}</span>
-        <div class={["w-full", @content_class]}>
+        <div class={["w-full list-content", @content_class]}>
           {render_slot(@inner_block)}
         </div>
       </div>

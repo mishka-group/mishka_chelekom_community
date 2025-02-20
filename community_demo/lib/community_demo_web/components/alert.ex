@@ -107,7 +107,7 @@ defmodule CommunityDemoWeb.Components.Alert do
       phx-click={JS.push("lv:clear-flash", value: %{key: @kind}) |> hide_alert("##{@id}")}
       role="alert"
       class={[
-        "z-50",
+        "z-50 flash-alert",
         border_class(@border, @variant),
         color_variant(@variant, @kind),
         position_class(@position),
@@ -150,35 +150,53 @@ defmodule CommunityDemoWeb.Components.Alert do
     default: "flash-group",
     doc: "A unique identifier is used to manage state and interaction"
 
+  attr :variant, :string, default: "bordered", doc: "Determines the style"
+  attr :position, :string, default: "top_right", doc: "Position of flashes"
   attr :flash, :map, required: true, doc: "the map of flash messages"
 
   def flash_group(assigns) do
     ~H"""
-    <div id={@id} class="space-y-3">
-      <.flash kind={:info} title={gettext("Success!")} flash={@flash} />
-      <.flash kind={:error} title={gettext("Error!")} flash={@flash} />
+    <div id={@id} class={["[&_.flash-alert:not(:first-child)]:mt-3 z-50", position_class(@position)]}>
+      <.flash
+        kind={:info}
+        title={gettext("Success!")}
+        flash={@flash}
+        variant={@variant}
+        width="medium"
+      />
+      <.flash
+        kind={:error}
+        title={gettext("Error!")}
+        flash={@flash}
+        variant={@variant}
+        width="medium"
+      />
       <.flash
         id="client-error"
         kind={:error}
+        variant={@variant}
         title={gettext("We can't find the internet")}
         phx-disconnected={show_alert(".phx-client-error #client-error")}
         phx-connected={hide_alert("#client-error")}
+        width="medium"
         hidden
       >
         {gettext("Attempting to reconnect")}
-        <.icon name="hero-arrow-path" class="ml-1 h-3 w-3 animate-spin" />
+        <.icon name="hero-arrow-path" class="ms-1 h-3 w-3 animate-spin" />
       </.flash>
 
       <.flash
         id="server-error"
         kind={:error}
+        variant={@variant}
         title={gettext("Something went wrong!")}
         phx-disconnected={show_alert(".phx-server-error #server-error")}
         phx-connected={hide_alert("#server-error")}
+        width="medium"
         hidden
       >
         {gettext("Hang in there while we get back on track")}
-        <.icon name="hero-arrow-path" class="ml-1 h-3 w-3 animate-spin" />
+        <.icon name="hero-arrow-path" class="ms-1 h-3 w-3 animate-spin" />
       </.flash>
     </div>
     """

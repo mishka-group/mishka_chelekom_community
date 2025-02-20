@@ -68,6 +68,7 @@ defmodule CommunityDemoWeb.Components.FormWrapper do
       :let={f}
       for={@for}
       as={@as}
+      id={@id}
       {@rest}
       class={[
         color_variant(@variant, @color),
@@ -80,11 +81,45 @@ defmodule CommunityDemoWeb.Components.FormWrapper do
       ]}
       {@rest}
     >
-      {render_slot(@inner_block, f)}
-      <div :for={action <- @actions}>
-        {render_slot(action, f)}
+      <div class="wrapper-form">
+        {render_slot(@inner_block, f)}
+        <div :for={action <- @actions} class="wrapper-form-actions">
+          {render_slot(action, f)}
+        </div>
       </div>
     </.form>
+    """
+  end
+
+  @doc type: :component
+  attr :id, :string,
+    default: nil,
+    doc: "A unique identifier is used to manage state and interaction"
+
+  attr :for, :any, required: true, doc: "the data structure for the form"
+  attr :as, :any, default: nil, doc: "the server side parameter to collect all input under"
+
+  attr :extra_classes, :list,
+    default: [
+      "[&_.wrapper-form]:mt-10 [&_.wrapper-form]:space-y-8",
+      "[&_.wrapper-form]:bg-white [&_.wrapper-form-actions]:mt-2",
+      "[&_.wrapper-form-actions]:flex [&_.wrapper-form-actions]:items-center",
+      "[&_.wrapper-form-actions]:justify-between [&_.wrapper-form-actions]:gap-6"
+    ],
+    doc: "additional classes to apply to the form wrapper"
+
+  attr :rest, :global,
+    include: ~w(autocomplete name rel action enctype method novalidate target multipart),
+    doc: "the arbitrary HTML attributes to apply to the form tag"
+
+  slot :inner_block, required: true
+  slot :actions, doc: "the slot for form actions, such as a submit button"
+
+  def simple_form(assigns) do
+    ~H"""
+    <.form_wrapper :let={f} class={@extra_classes} {assigns}>
+      {render_slot(@inner_block, f)}
+    </.form_wrapper>
     """
   end
 

@@ -19,7 +19,7 @@ defmodule CommunityDemoWeb.Components.MishkaComponents do
       import CommunityDemoWeb.Components.Breadcrumb, only: [breadcrumb: 1]
 
       import CommunityDemoWeb.Components.Button,
-        only: [button_group: 1, button: 1, input_button: 1, button_link: 1]
+        only: [button_group: 1, button: 1, input_button: 1, button_link: 1, back: 1]
 
       import CommunityDemoWeb.Components.Card,
         only: [card: 1, card_title: 1, card_media: 1, card_content: 1, card_footer: 1]
@@ -45,8 +45,9 @@ defmodule CommunityDemoWeb.Components.MishkaComponents do
       import CommunityDemoWeb.Components.Fieldset, only: [fieldset: 1]
       import CommunityDemoWeb.Components.FileField, only: [file_field: 1]
       import CommunityDemoWeb.Components.Footer, only: [footer: 1, footer_section: 1]
-      import CommunityDemoWeb.Components.FormWrapper, only: [form_wrapper: 1]
+      import CommunityDemoWeb.Components.FormWrapper, only: [form_wrapper: 1, simple_form: 1]
       import CommunityDemoWeb.Components.Gallery, only: [gallery: 1, gallery_media: 1]
+      import CommunityDemoWeb.Components.Icon, only: [icon: 1]
       import CommunityDemoWeb.Components.Image, only: [image: 1]
       import CommunityDemoWeb.Components.Indicator, only: [indicator: 1]
       import CommunityDemoWeb.Components.InputField, only: [input_field: 1]
@@ -60,7 +61,7 @@ defmodule CommunityDemoWeb.Components.MishkaComponents do
       import CommunityDemoWeb.Components.NativeSelect,
         only: [native_select: 1, select_option_group: 1]
 
-      import CommunityDemoWeb.Components.Navbar, only: [navbar: 1]
+      import CommunityDemoWeb.Components.Navbar, only: [navbar: 1, header: 1]
       import CommunityDemoWeb.Components.NumberField, only: [number_field: 1]
       import CommunityDemoWeb.Components.Overlay, only: [overlay: 1]
       import CommunityDemoWeb.Components.Pagination, only: [pagination: 1]
@@ -76,6 +77,7 @@ defmodule CommunityDemoWeb.Components.MishkaComponents do
 
       import CommunityDemoWeb.Components.RangeField, only: [range_field: 1]
       import CommunityDemoWeb.Components.Rating, only: [rating: 1]
+      import CommunityDemoWeb.Components.ScrollArea, only: [scroll_area: 1]
       import CommunityDemoWeb.Components.SearchField, only: [search_field: 1]
       import CommunityDemoWeb.Components.Sidebar, only: [sidebar: 1]
       import CommunityDemoWeb.Components.Skeleton, only: [skeleton: 1]

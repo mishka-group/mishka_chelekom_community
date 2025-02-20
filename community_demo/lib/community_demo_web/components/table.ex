@@ -13,6 +13,7 @@ defmodule CommunityDemoWeb.Components.Table do
   """
 
   use Phoenix.Component
+  use Gettext, backend: CommunityDemoWeb.Gettext
 
   @doc """
   Renders a customizable `table` component that supports custom styling for rows, columns,
@@ -62,6 +63,12 @@ defmodule CommunityDemoWeb.Components.Table do
     <:footer>Total</:footer>
     <:footer>3 Employees</:footer>
   </.table>
+
+
+  <.table id="users" rows={@users}>
+    <:col :let={user} label="id">{user.id}</:col>
+    <:col :let={user} label="username">{user.username}</:col>
+  </.table>
   ```
   """
   @doc type: :component
@@ -103,7 +110,26 @@ defmodule CommunityDemoWeb.Components.Table do
     attr :icon_class, :any, doc: "Determines custom class for the icon"
   end
 
+  attr :rows, :list, default: []
+  attr :row_id, :any, default: nil, doc: "the function for generating the row id"
+  attr :row_click, :any, default: nil, doc: "the function for handling phx-click on each row"
+
+  attr :row_item, :any,
+    default: &Function.identity/1,
+    doc: "the function for mapping each row before calling the :col and :action slots"
+
+  slot :col, required: false do
+    attr :label, :string
+  end
+
+  slot :action, doc: "the slot for showing user actions in the last table column"
+
   def table(assigns) do
+    assigns =
+      with %{rows: %Phoenix.LiveView.LiveStream{}} <- assigns do
+        assign(assigns, row_id: assigns.row_id || fn {id, _item} -> id end)
+      end
+
     ~H"""
     <div class="-m-1.5 overflow-x-auto">
       <div class="p-1.5 min-w-full inline-block align-middle">
@@ -123,6 +149,7 @@ defmodule CommunityDemoWeb.Components.Table do
           <table
             class={[
               "min-w-full",
+              @rows != [] && "divide-y",
               @table_fixed && "table-fixed",
               @variant == "separated" || (@variant == "base_separated" && "border-separate"),
               @class
@@ -145,10 +172,45 @@ defmodule CommunityDemoWeb.Components.Table do
                   {render_slot(header)}
                 </.th>
               </.tr>
+
+              <.tr :if={@col}>
+                <.th :for={col <- @col} class="font-normal">{col[:label]}</.th>
+                <.th :if={@action != []} class="relative">
+                  <span class="sr-only">{gettext("Actions")}</span>
+                </.th>
+              </.tr>
             </thead>
 
-            <tbody class="">
+            <tbody
+              id={@id}
+              phx-update={match?(%Phoenix.LiveView.LiveStream{}, @rows) && "stream"}
+              class={@rows != [] && "divide-y"}
+            >
               {render_slot(@inner_block)}
+
+              <.tr :for={row <- @rows} :if={@rows != []} id={@row_id && @row_id.(row)}>
+                <.td
+                  :for={{col, i} <- Enum.with_index(@col)}
+                  phx-click={@row_click && @row_click.(row)}
+                  class={@row_click && "hover:cursor-pointer"}
+                >
+                  <div class="relative">
+                    <span class="absolute -inset-y-px right-0 -left-4" />
+                    <span class={["relative", i == 0 && "font-semibold"]}>
+                      {render_slot(col, @row_item.(row))}
+                    </span>
+                  </div>
+                </.td>
+
+                <.td :if={@action} class="relative w-14 p-0">
+                  <div class="relative whitespace-nowrap py-4 text-right text-sm font-medium">
+                    <span class="absolute -inset-y-px -right-4 left-0" />
+                    <span :for={action <- @action} class="relative ml-4 font-semibold leading-6">
+                      {render_slot(action, @row_item.(row))}
+                    </span>
+                  </div>
+                </.td>
+              </.tr>
             </tbody>
 
             <tfoot :if={length(@footer) > 0} class={@footer_class}>
@@ -586,7 +648,7 @@ defmodule CommunityDemoWeb.Components.Table do
 
   defp padding_size(params) when is_binary(params), do: params
 
-  defp color_variant("base", "base") do
+  defp color_variant("base", _) do
     [
       "[&_table]:bg-white dark:[&_table]:bg-[#18181B] [&_table]:text-[#09090b] dark:[&_table]:text-[#FAFAFA]",
       "border-[#e4e4e7] dark:border-[#27272a]",
@@ -596,7 +658,7 @@ defmodule CommunityDemoWeb.Components.Table do
     ]
   end
 
-  defp color_variant("base_separated", "base") do
+  defp color_variant("base_separated", _) do
     [
       "[&_table_tr]:bg-white [&_table]:text-[#09090b] dark:[&_table_tr]:bg-[#18181B] dark:[&_table]:text-[#FAFAFA]",
       "[&_td]:border-[#e4e4e7] dark:[&_td]:border-[#27272a]",
@@ -604,7 +666,7 @@ defmodule CommunityDemoWeb.Components.Table do
     ]
   end
 
-  defp color_variant("base_hoverable", "base") do
+  defp color_variant("base_hoverable", _) do
     [
       "[&_table]:bg-white [&_table]:text-[#09090b] dark:[&_table]:bg-[#18181B] dark:[&_table]:text-[#FAFAFA]",
       "hover:[&_table_tbody_tr]:bg-[#e4e4e7] dark:hover:[&_table_tbody_tr]:bg-[#27272a]",
@@ -614,7 +676,7 @@ defmodule CommunityDemoWeb.Components.Table do
     ]
   end
 
-  defp color_variant("base_stripped", "base") do
+  defp color_variant("base_stripped", _) do
     [
       "[&_table]:bg-white [&_table]:text-[#09090b] dark:[&_table]:bg-[#18181B] dark:[&_table]:text-[#FAFAFA]",
       "odd:[&_table_tbody_tr]:bg-[#F8F9FA] dark:odd:[&_table_tbody_tr]:bg-[#242424]",
