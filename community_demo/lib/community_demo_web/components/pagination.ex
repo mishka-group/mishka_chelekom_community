@@ -560,7 +560,7 @@ defmodule CommunityDemoWeb.Components.Pagination do
 
   defp size_class(params) when is_binary(params), do: params
 
-  defp color_variant("base", "base") do
+  defp color_variant("base", _) do
     [
       "bg-white dark:bg-[#18181B] [&_.pagination-button]:border-[#e4e4e7] [&_.pagination-button]:text-[#09090b]",
       "dark:[&_.pagination-button]:border-[#27272a] dark:[&_.pagination-button]:text-[#FAFAFA]",

@@ -90,7 +90,7 @@ defmodule CommunityDemoWeb.Components.Card do
     doc: "A unique identifier is used to manage state and interaction"
 
   attr :variant, :string, default: "base", doc: "Determines the style"
-  attr :color, :string, default: "base", doc: "Determines color theme"
+  attr :color, :string, default: "natural", doc: "Determines color theme"
   attr :border, :string, default: "extra_small", doc: "Determines border style"
   attr :rounded, :string, default: "", doc: "Determines the border radius"
   attr :space, :string, default: "", doc: "Space between items"
@@ -436,7 +436,7 @@ defmodule CommunityDemoWeb.Components.Card do
 
   defp space_class(params) when is_binary(params), do: params
 
-  defp color_variant("base", "base") do
+  defp color_variant("base", _) do
     [
       "[&:not(:has(.overlay))]:bg-white text-[#09090b] border-[#e4e4e7] shadow-sm",
       "dark:[&:not(:has(.overlay))]:bg-[#18181B] dark:text-[#FAFAFA] dark:border-[#27272a]"

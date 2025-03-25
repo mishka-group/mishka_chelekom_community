@@ -54,7 +54,7 @@ defmodule CommunityDemoWeb.Components.Fieldset do
     doc: "A unique identifier is used to manage state and interaction"
 
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
-  attr :color, :string, default: "base", doc: "Determines color theme"
+  attr :color, :string, default: "natural", doc: "Determines color theme"
   attr :border, :string, default: "extra_small", doc: "Determines border style"
   attr :rounded, :string, default: "small", doc: "Determines the border radius"
   attr :padding, :string, default: "small", doc: "Determines padding for items"
@@ -206,7 +206,7 @@ defmodule CommunityDemoWeb.Components.Fieldset do
 
   defp space_class(params) when is_binary(params), do: params
 
-  defp color_variant("base", "base") do
+  defp color_variant("base", _) do
     [
       "text-[#09090b] [&_.fieldset-field]:border-[#e4e4e7] [&_.fieldset-field]:bg-white [&_.fieldset-field]:shadow-sm",
       "dark:text-[#FAFAFA] dark:[&_.fieldset-field]:border-[#27272a] dark:[&_.fieldset-field]:bg-[#18181B]"

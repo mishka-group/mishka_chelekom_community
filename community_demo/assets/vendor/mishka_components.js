@@ -1,5 +1,7 @@
 import ScrollArea from "./scrollArea.js";
+import Combobox from "./combobox.js";
 const Components = {
-    ScrollArea
+  ScrollArea,
+  Combobox,
 };
 export default Components;

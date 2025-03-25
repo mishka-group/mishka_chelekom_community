@@ -171,19 +171,19 @@ defmodule CommunityDemoWeb.Components.FormWrapper do
 
   defp padding_class(params) when is_binary(params), do: params
 
-  defp space_class("extra_small"), do: "space-y-1"
+  defp space_class("extra_small"), do: "[&_.wrapper-form]:space-y-2"
 
-  defp space_class("small"), do: "space-y-1.5"
+  defp space_class("small"), do: "[&_.wrapper-form]:space-y-3"
 
-  defp space_class("medium"), do: "space-y-2"
+  defp space_class("medium"), do: "[&_.wrapper-form]:space-y-4"
 
-  defp space_class("large"), do: "space-y-2.5"
+  defp space_class("large"), do: "[&_.wrapper-form]:space-y-5"
 
-  defp space_class("extra_large"), do: "space-y-3"
+  defp space_class("extra_large"), do: "[&_.wrapper-form]:space-y-6"
 
   defp space_class(params) when is_binary(params), do: params
 
-  defp color_variant("base", "base") do
+  defp color_variant("base", _) do
     [
       "bg-white text-[#09090b] border-[#e4e4e7] shadow-sm",
       "dark:bg-[#18181B] dark:text-[#FAFAFA] dark:border-[#27272a]"

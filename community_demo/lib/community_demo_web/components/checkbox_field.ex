@@ -124,7 +124,7 @@ defmodule CommunityDemoWeb.Components.CheckboxField do
           class={["bg-white checkbox-input"]}
           {@rest}
         />
-        <span class="block">{@label}</span>
+        <span :if={@label} class="block">{@label}</span>
       </.label>
 
       <.error :for={msg <- @errors} icon={@error_icon}>{msg}</.error>
@@ -366,10 +366,10 @@ defmodule CommunityDemoWeb.Components.CheckboxField do
   defp color_class("base") do
     [
       "text-[#09090b] dark:text-[#FAFAFA]",
-      "checked:[&_.checkbox-field-wrapper_.checkbox-input]:text-[#e4e4e7]",
-      "dark:checked:[&_.checkbox-field-wrapper_.checkbox-input]:text-[#27272a]",
-      "[&_.checkbox-field-wrapper_.checkbox-input]:border-[#e4e4e7]",
-      "dark:[&_.checkbox-field-wrapper_.checkbox-input]:border-[#27272a]",
+      "checked:[&_.checkbox-field-wrapper_.checkbox-input]:text-[#8B8B8D]",
+      "dark:checked:[&_.checkbox-field-wrapper_.checkbox-input]:text-[#818182]",
+      "[&_.checkbox-field-wrapper_.checkbox-input]:border-[#8B8B8D]",
+      "dark:[&_.checkbox-field-wrapper_.checkbox-input]:border-[#818182]",
       "focus-within:[&_.checkbox-field-wrapper_.checkbox-input]:ring-[#F8F9FA] dark:focus-within:[&_.checkbox-field-wrapper_.checkbox-input]:ring-[#696969]"
     ]
   end

@@ -59,7 +59,7 @@ defmodule CommunityDemoWeb.Components.TableContent do
 
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
   attr :title, :string, default: nil, doc: "Specifies the title of the element"
-  attr :color, :string, default: "base", doc: "Determines color theme"
+  attr :color, :string, default: "natural", doc: "Determines color theme"
   attr :variant, :string, default: "base", doc: "Determines the style"
   attr :space, :string, default: "", doc: "Space between items"
   attr :animated, :boolean, default: false, doc: "Determines whether element's icon has animation"
@@ -349,7 +349,7 @@ defmodule CommunityDemoWeb.Components.TableContent do
 
   defp rounded_size(params) when is_binary(params), do: params
 
-  defp color_variant("base", "base") do
+  defp color_variant("base", _) do
     [
       "bg-white text-[#09090b] border-[#e4e4e7]",
       "dark:bg-[#18181B] dark:text-[#FAFAFA] dark:border-[#27272a]"

@@ -48,13 +48,10 @@ defmodule CommunityDemoWeb.Components.Alert do
   <.flash kind={:info} phx-mounted={show("#flash")}>Welcome Back!</.flash>
   ```
   """
-  attr :id, :string,
-    default: nil,
-    doc: "A unique identifier is used to manage state and interaction"
-
+  attr :id, :string, doc: "A unique identifier is used to manage state and interaction"
   attr :flash, :map, default: %{}, doc: "the map of flash messages to display"
   attr :title, :string, default: nil, doc: "Specifies the title of the element"
-  attr :kind, :atom, default: :base, doc: "used for styling and flash lookup"
+  attr :kind, :atom, default: :natural, doc: "used for styling and flash lookup"
 
   attr :rest, :global,
     doc:
@@ -107,7 +104,7 @@ defmodule CommunityDemoWeb.Components.Alert do
       phx-click={JS.push("lv:clear-flash", value: %{key: @kind}) |> hide_alert("##{@id}")}
       role="alert"
       class={[
-        "z-50 flash-alert",
+        "z-50 flash-alert leading-5",
         border_class(@border, @variant),
         color_variant(@variant, @kind),
         position_class(@position),
@@ -232,7 +229,7 @@ defmodule CommunityDemoWeb.Components.Alert do
     doc: "A unique identifier is used to manage state and interaction"
 
   attr :title, :string, default: nil, doc: "Specifies the title of the element"
-  attr :kind, :atom, default: :base, doc: "used for styling and flash lookup"
+  attr :kind, :atom, default: :natural, doc: "used for styling and flash lookup"
   attr :variant, :string, default: "default", doc: "Determines the style"
   attr :position, :string, default: "", doc: "Determines the element position"
   attr :width, :string, default: "full", doc: "Determines the element width"
@@ -270,7 +267,7 @@ defmodule CommunityDemoWeb.Components.Alert do
     ~H"""
     <div
       id={@id}
-      role="alert"
+      role="alert leading-5"
       class={[
         border_class(@border, @variant),
         color_variant(@variant, @kind),
@@ -366,7 +363,7 @@ defmodule CommunityDemoWeb.Components.Alert do
   defp border_class("extra_large", _), do: "border-[5px]"
   defp border_class(params, _) when is_binary(params), do: params
 
-  defp color_variant("base", :base) do
+  defp color_variant("base", _) do
     [
       "bg-white text-[#09090b] border-[#e4e4e7] shadow-sm",
       "dark:bg-[#18181B] dark:text-[#FAFAFA] dark:border-[#27272a]"

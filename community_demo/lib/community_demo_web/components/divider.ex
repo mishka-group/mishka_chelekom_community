@@ -177,7 +177,7 @@ defmodule CommunityDemoWeb.Components.Divider do
   end
 
   @doc """
-  `MishkaChelekom.Divider.hr` is used to create a horizontal divider with customizable style, color,
+  `CommunityDemoWeb.Components.Divider.hr` is used to create a horizontal divider with customizable style, color,
   and size options.
 
   It can also include text or icons to enhance visual separation between content sections.

@@ -53,7 +53,7 @@ defmodule CommunityDemoWeb.Components.Modal do
 
   attr :title, :string, default: nil, doc: "Specifies the title of the element"
   attr :variant, :string, default: "base", doc: "Determines the style"
-  attr :color, :string, default: "base", doc: "Determines color theme"
+  attr :color, :string, default: "natural", doc: "Determines color theme"
   attr :rounded, :string, default: "small", doc: "Determines the border radius"
   attr :border, :string, default: "extra_small", doc: "Determines border style"
   attr :padding, :string, default: "medium", doc: "Determines padding for items"
@@ -195,7 +195,7 @@ defmodule CommunityDemoWeb.Components.Modal do
 
   defp size_class(params) when is_binary(params), do: params
 
-  defp color_variant("base", "base") do
+  defp color_variant("base", _) do
     [
       "bg-white text-[#09090b] border-[#e4e4e7] shadow-sm",
       "dark:bg-[#18181B] dark:text-[#FAFAFA] dark:border-[#27272a]"
@@ -552,6 +552,30 @@ defmodule CommunityDemoWeb.Components.Modal do
   end
 
   defp transition_hide(js, selector) do
+    JS.hide(js,
+      to: selector,
+      time: 200,
+      transition:
+        {"transition-all transform ease-in duration-200",
+         "opacity-100 translate-y-0 sm:scale-100",
+         "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"}
+    )
+  end
+
+  ## We do not use these functions, just for Phoenix CoreComponent backward compatibility
+
+  def show(js \\ %JS{}, selector) do
+    JS.show(js,
+      to: selector,
+      time: 300,
+      transition:
+        {"transition-all transform ease-out duration-300",
+         "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95",
+         "opacity-100 translate-y-0 sm:scale-100"}
+    )
+  end
+
+  def hide(js \\ %JS{}, selector) do
     JS.hide(js,
       to: selector,
       time: 200,

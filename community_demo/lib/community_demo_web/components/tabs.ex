@@ -511,7 +511,7 @@ defmodule CommunityDemoWeb.Components.Tabs do
 
   defp rounded_size(params, _) when is_binary(params), do: [params]
 
-  defp color_variant("base", "base") do
+  defp color_variant("base", _) do
     [
       "[&_.tab-trigger.active-tab]:bg-[#e4e4e7] [&_.tab-trigger.active-tab]:text-[#09090b]",
       "[&_.tab-trigger.active-tab]:border-[#e4e4e7]",

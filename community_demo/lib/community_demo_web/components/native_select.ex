@@ -9,7 +9,7 @@ defmodule CommunityDemoWeb.Components.NativeSelect do
   color variants, and rounded corners. It also provides a convenient way to render select
   options through slots, enabling dynamic rendering of form elements based on the passed data.
 
-  With built-in error handling and custom error messages, `MishkaChelekom.NativeSelect`
+  With built-in error handling and custom error messages, `CommunityDemoWeb.Components.NativeSelect`
   enhances the user experience by providing clear feedback and interaction states,
   ensuring a polished and user-friendly interface for form-based applications.
   """
@@ -58,7 +58,7 @@ defmodule CommunityDemoWeb.Components.NativeSelect do
     doc: "A unique identifier is used to manage state and interaction"
 
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
-  attr :color, :string, default: "base", doc: "Determines color theme"
+  attr :color, :string, default: "natural", doc: "Determines color theme"
   attr :border, :string, default: "extra_small", doc: "Determines border style"
   attr :rounded, :string, default: "small", doc: "Determines the border radius"
   attr :variant, :string, default: "base", doc: "Determines the style"
@@ -127,10 +127,12 @@ defmodule CommunityDemoWeb.Components.NativeSelect do
     ]}>
       <div>
         <.label for={@id}>{@label}</.label>
+
         <div :if={!is_nil(@description)} class="text-xs">
           {@description}
         </div>
       </div>
+
       <select
         name={@name}
         id={@id}
@@ -144,7 +146,6 @@ defmodule CommunityDemoWeb.Components.NativeSelect do
         ]}
         {@rest}
       >
-        {render_slot(@inner_block)}
         <option
           :for={{option, index} <- Enum.with_index(@option, 1)}
           id={"#{@id}-option-#{index}"}
@@ -155,6 +156,7 @@ defmodule CommunityDemoWeb.Components.NativeSelect do
           {render_slot(option)}
         </option>
       </select>
+
       <.error :for={msg <- @errors} icon={@error_icon}>{msg}</.error>
     </div>
     """
@@ -309,7 +311,7 @@ defmodule CommunityDemoWeb.Components.NativeSelect do
 
   defp space_class(params) when is_binary(params), do: params
 
-  defp color_variant("base", "base") do
+  defp color_variant("base", _) do
     [
       "text-[#09090b] dark:text-[#FAFAFA] [&_.select-field:not(:has(.select-field-error))]:border-[#e4e4e7] [&_.select-field]:shadow-sm",
       "[&_.select-field:not(:has(.select-field-error))]:bg-white",

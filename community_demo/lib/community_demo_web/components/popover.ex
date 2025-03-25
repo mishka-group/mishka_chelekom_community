@@ -84,7 +84,7 @@ defmodule CommunityDemoWeb.Components.Popover do
 
   attr :position, :string, default: "top", doc: "Determines the element position"
   attr :variant, :string, default: "base", doc: "Determines the style"
-  attr :color, :string, default: "base", doc: "Determines color theme"
+  attr :color, :string, default: "natural", doc: "Determines color theme"
   attr :rounded, :string, default: "", doc: "Determines the border radius"
   attr :show_arrow, :boolean, default: true, doc: "Show or hide arrow of popover"
   attr :border, :string, default: "extra_small", doc: "Determines border style"
@@ -340,7 +340,7 @@ defmodule CommunityDemoWeb.Components.Popover do
   attr :inline, :boolean, default: false, doc: "Determines whether this element is inline"
   attr :position, :string, default: "top", doc: "Determines the element position"
   attr :variant, :string, default: "base", doc: "Determines the style"
-  attr :color, :string, default: "base", doc: "Determines color theme"
+  attr :color, :string, default: "natural", doc: "Determines color theme"
   attr :rounded, :string, default: "", doc: "Determines the border radius"
   attr :show_arrow, :boolean, default: true, doc: "Show or hide arrow of popover"
   attr :border, :string, default: "extra_small", doc: "Determines border style"
@@ -552,7 +552,7 @@ defmodule CommunityDemoWeb.Components.Popover do
 
   defp space_class(params) when is_binary(params), do: params
 
-  defp color_variant("base", "base") do
+  defp color_variant("base", _) do
     [
       "bg-white text-[#09090b] border-[#e4e4e7] shadow-sm",
       "dark:bg-[#18181B] dark:text-[#FAFAFA] dark:border-[#27272a]"

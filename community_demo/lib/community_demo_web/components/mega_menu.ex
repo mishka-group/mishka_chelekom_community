@@ -121,7 +121,7 @@ defmodule CommunityDemoWeb.Components.MegaMenu do
     doc: "Determines if the element can be activated on click"
 
   attr :variant, :string, default: "base", doc: "Determines the style"
-  attr :color, :string, default: "base", doc: "Determines color theme"
+  attr :color, :string, default: "natural", doc: "Determines color theme"
   attr :rounded, :string, default: "", doc: "Determines the border radius"
 
   attr :size, :string,
@@ -300,7 +300,7 @@ defmodule CommunityDemoWeb.Components.MegaMenu do
 
   defp space_class(params) when is_binary(params), do: params
 
-  defp color_variant("base", "base") do
+  defp color_variant("base", _) do
     [
       "[&>.mega-menu-content]:bg-white text-[#09090b] [&>.mega-menu-content]:border-[#e4e4e7] [&>.mega-menu-content]:shadow-sm",
       "dark:[&>.mega-menu-content]:bg-[#18181B] dark:text-[#FAFAFA] dark:[&>.mega-menu-content]:border-[#27272a]"

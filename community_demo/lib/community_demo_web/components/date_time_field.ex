@@ -16,8 +16,6 @@ defmodule CommunityDemoWeb.Components.DateTimeField do
 
   use Phoenix.Component
 
-  @variants ["outline", "default", "bordered", "shadow", "transparent", "base"]
-
   @doc """
   The `date_time_field` component is used to create a customizable date, time, or datetime input field with various options such as `type`, `color`, and `size`. It supports floating labels, descriptions, and error messages, making it suitable for form validation and enhanced UX.
 
@@ -85,7 +83,7 @@ defmodule CommunityDemoWeb.Components.DateTimeField do
     doc: "A unique identifier is used to manage state and interaction"
 
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
-  attr :color, :string, default: "base", doc: "Determines color theme"
+  attr :color, :string, default: "natural", doc: "Determines color theme"
 
   attr :type, :string,
     values: ["date", "datetime-local", "time", "week", "month"],
@@ -94,7 +92,7 @@ defmodule CommunityDemoWeb.Components.DateTimeField do
 
   attr :border, :string, default: "extra_small", doc: "Determines border style"
   attr :rounded, :string, default: "small", doc: "Determines the border radius"
-  attr :variant, :string, values: @variants, default: "base", doc: "Determines the style"
+  attr :variant, :string, default: "base", doc: "Determines the style"
   attr :description, :string, default: nil, doc: "Determines a short description"
   attr :space, :string, default: "medium", doc: "Space between items"
 
@@ -381,7 +379,7 @@ defmodule CommunityDemoWeb.Components.DateTimeField do
 
   defp space_class(params) when is_binary(params), do: params
 
-  defp color_variant("base", "base", floating) do
+  defp color_variant("base", _, floating) do
     [
       "[&_.date-time-field-wrapper:not(:has(.date-time-field-error))]:bg-white",
       "dark:[&_.date-time-field-wrapper:not(:has(.date-time-field-error))]:bg-[#18181B]",

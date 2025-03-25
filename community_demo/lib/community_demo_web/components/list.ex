@@ -550,7 +550,7 @@ defmodule CommunityDemoWeb.Components.List do
 
   defp border_class(params, _) when is_binary(params), do: params
 
-  defp color_variant("base", "base", hoverable) do
+  defp color_variant("base", _, hoverable) do
     [
       "bg-white text-[#09090b] border-[#e4e4e7] shadow-sm",
       "dark:bg-[#18181B] dark:text-[#FAFAFA] dark:border-[#27272a]",
@@ -559,7 +559,7 @@ defmodule CommunityDemoWeb.Components.List do
     ]
   end
 
-  defp color_variant("base_separated", "base", hoverable) do
+  defp color_variant("base_separated", _, hoverable) do
     [
       "[&>li]:text-[#09090b] [&>li]:border-[#e4e4e7] [&>li]:bg-white",
       "dark:[&>li]:text-[#FAFAFA] dark:[&>li]:border-[#27272a] dark:[&>li]:bg-[#18181B]",

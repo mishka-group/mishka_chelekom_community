@@ -65,7 +65,7 @@ defmodule CommunityDemoWeb.Components.Toast do
 
   attr :fixed, :boolean, default: true, doc: "Determines whether the element is fixed"
   attr :variant, :string, default: "base", doc: "Determines the style"
-  attr :color, :string, default: "base", doc: "Determines color theme"
+  attr :color, :string, default: "natural", doc: "Determines color theme"
   attr :border, :string, default: "extra_small", doc: "Determines border style"
   attr :rounded, :string, default: "medium", doc: "Determines the border radius"
   attr :width, :string, default: "medium", doc: "Determines the element width"
@@ -384,7 +384,7 @@ defmodule CommunityDemoWeb.Components.Toast do
   defp border_class("extra_large", _), do: "border-[5px]"
   defp border_class(params, _) when is_binary(params), do: params
 
-  defp color_variant("base", "base") do
+  defp color_variant("base", _) do
     [
       "bg-white text-[#09090b] dark:bg-[#18181B] dark:text-[#FAFAFA]",
       "[&>.toast-content-wrapper]:before:bg-[#09090b] dark:[&>.toast-content-wrapper]:before:bg-[#FAFAFA]",

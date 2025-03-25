@@ -63,7 +63,7 @@ defmodule CommunityDemoWeb.Components.Chat do
 
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
   attr :variant, :string, default: "base", doc: "Determines the style"
-  attr :color, :string, default: "base", doc: "Determines color theme"
+  attr :color, :string, default: "natural", doc: "Determines color theme"
   attr :border, :string, default: "extra_small", doc: "Determines border style"
   attr :rounded, :string, default: "extra_large", doc: "Determines the border radius"
 
@@ -296,7 +296,7 @@ defmodule CommunityDemoWeb.Components.Chat do
 
   defp size_class(params) when is_binary(params), do: params
 
-  defp color_variant("base", "base") do
+  defp color_variant("base", _) do
     [
       "[&>.chat-section-bubble]:bg-white [&>.chat-section-bubble]:text-[#09090b]",
       "[&>.chat-section-bubble]:border-[#e4e4e7] [&>.chat-section-bubble]:shadow-sm",

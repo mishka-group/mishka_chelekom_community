@@ -469,7 +469,7 @@ defmodule CommunityDemoWeb.Components.FileField do
 
   defp color_class(params) when is_binary(params), do: params
 
-  defp color_variant("base", "base") do
+  defp color_variant("base", _) do
     [
       "text-[#09090b] [&_.dropzone-wrapper]:border-[#e4e4e7] [&_.dropzone-wrapper]:bg-white shadow-sm",
       "dark:text-[#FAFAFA] dark:[&_.dropzone-wrapper]:border-[#27272a] dark:[&_.dropzone-wrapper]:bg-[#18181B]"

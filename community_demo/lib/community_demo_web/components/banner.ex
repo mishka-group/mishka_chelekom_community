@@ -79,7 +79,7 @@ defmodule CommunityDemoWeb.Components.Banner do
       "Determines the overall size of the elements, including padding, font size, and other items"
 
   attr :variant, :string, default: "base", doc: "Determines the style"
-  attr :color, :string, default: "base", doc: "Determines color theme"
+  attr :color, :string, default: "natural", doc: "Determines color theme"
   attr :border, :string, default: "extra_small", doc: "Determines border style"
 
   attr :border_position, :string,
@@ -344,7 +344,7 @@ defmodule CommunityDemoWeb.Components.Banner do
 
   defp border_class(params, _, _) when is_binary(params), do: params
 
-  defp color_variant("base", "base") do
+  defp color_variant("base", _) do
     [
       "bg-white text-[#09090b] border-[#e4e4e7] shadow-sm",
       "dark:bg-[#18181B] dark:text-[#FAFAFA] dark:border-[#27272a]"

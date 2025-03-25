@@ -61,7 +61,7 @@ defmodule CommunityDemoWeb.Components.Accordion do
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
   attr :variant, :string, default: "base", doc: "Determines the style"
   attr :space, :string, default: "small", doc: "Space between items"
-  attr :color, :string, default: "base", doc: "Determines color theme"
+  attr :color, :string, default: "natural", doc: "Determines color theme"
   attr :border, :string, default: "extra_small", doc: "Determines border style"
   attr :padding, :string, default: "small", doc: "Determines padding for items"
   attr :rounded, :string, default: "none", doc: "Determines the border radius"
@@ -226,7 +226,7 @@ defmodule CommunityDemoWeb.Components.Accordion do
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
   attr :variant, :string, default: "base", doc: "Determines the style"
   attr :space, :string, default: "small", doc: "Space between items"
-  attr :color, :string, default: "base", doc: "Determines color theme"
+  attr :color, :string, default: "natural", doc: "Determines color theme"
   attr :border, :string, default: "extra_small", doc: "Determines border style"
 
   attr :padding, :string, default: "small", doc: "Determines padding for items"
@@ -922,7 +922,7 @@ defmodule CommunityDemoWeb.Components.Accordion do
 
   defp border_class(params, _) when is_binary(params), do: params
 
-  defp color_variant("base", "base") do
+  defp color_variant("base", _) do
     [
       "text-[#09090b] border-[#e4e4e7] bg-white",
       "dark:text-[#FAFAFA] dark:border-[#27272a] dark:bg-[#18181B]",
@@ -934,7 +934,7 @@ defmodule CommunityDemoWeb.Components.Accordion do
     ]
   end
 
-  defp color_variant("base_separated", "base") do
+  defp color_variant("base_separated", _) do
     [
       "text-[#09090b] [&>.accordion-item-wrapper>.accordion-summary]:border-[#e4e4e7]",
       "[&>.accordion-item-wrapper]:bg-white",
@@ -1772,13 +1772,13 @@ defmodule CommunityDemoWeb.Components.Accordion do
 
   defp color_variant(params, _) when is_binary(params), do: params
 
-  defp item_color("base", "base") do
+  defp item_color("base", _) do
     [
       "group-open:bg-white group-open:text-[#09090b] dark:group-open:bg-[#18181B] dark:group-open:text-[#FAFAFA]"
     ]
   end
 
-  defp item_color("base_separated", "base") do
+  defp item_color("base_separated", _) do
     [
       "group-open:bg-white group-open:text-[#09090b] dark:group-open:bg-[#18181B] dark:group-open:text-[#FAFAFA]"
     ]

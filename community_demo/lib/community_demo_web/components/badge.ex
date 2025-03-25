@@ -69,7 +69,7 @@ defmodule CommunityDemoWeb.Components.Badge do
 
   attr :rounded, :string, default: "small", doc: "Determines the border radius"
 
-  attr :color, :string, default: "base", doc: "Determines color theme"
+  attr :color, :string, default: "natural", doc: "Determines color theme"
   attr :border, :string, default: "extra_small", doc: "Determines border style"
 
   attr :font_weight, :string,
@@ -291,7 +291,7 @@ defmodule CommunityDemoWeb.Components.Badge do
 
   defp badge_position(params) when is_binary(params), do: params
 
-  defp color_variant("base", "base") do
+  defp color_variant("base", _) do
     [
       "bg-white text-[#09090b] border-[#e4e4e7] shadow-sm [&>.indicator]:bg-[#e4e4e7]",
       "dark:bg-[#18181B] dark:text-[#FAFAFA] dark:border-[#27272a] dark:[&>.indicator]:bg-[#27272a]"

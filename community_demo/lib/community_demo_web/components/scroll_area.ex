@@ -33,6 +33,11 @@ defmodule CommunityDemoWeb.Components.ScrollArea do
   attr :padding, :string, default: "extra_small", doc: "Add paddings to content"
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
   attr :content_class, :string, default: nil, doc: "Custom CSS class for additional styling"
+  attr :scrollbar_width, :string, default: "w-2", doc: "Custom CSS class for width of scrollbar y"
+
+  attr :scrollbar_height, :string,
+    default: "h-2",
+    doc: "Custom CSS class for height of scrollbar x"
 
   attr :rest, :global,
     doc:
@@ -46,38 +51,31 @@ defmodule CommunityDemoWeb.Components.ScrollArea do
       id={@id}
       phx-hook="ScrollArea"
       phx-update="replace"
-      class={["relative overflow-hidden group p-0", @height, @width, @class]}
+      class={["scroll-area-wrapper relative overflow-hidden group h-fit", @width, @class]}
       {@rest}
     >
       <div class={[
-        "w-full h-full overflow-auto relative scroll-viewport foucus:outline-none hide-scrollbar"
+        "w-full overflow-auto relative scroll-viewport foucus:outline-none",
+        "[scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
+        @height
       ]}>
         <div class={["scroll-content", padding_size(@padding), @content_class]}>
           {render_slot(@inner_block)}
         </div>
       </div>
-      
-    <!-- Custom Scrollbars -->
+
       <div class={[
-        "absolute right-0 top-0 w-2 h-full bg-black/5 rounded-lg scrollbar-y transition-all duration-400",
-        (@vertical &&
-           %{
-             "hover" => "invisible group-hover:visible",
-             "auto" => "visible",
-             "never" => "invisible"
-           }[@type]) || "invisible"
+        "absolute right-0 top-0 h-full bg-black/5 rounded-lg scrollbar-y transition-all duration-400",
+        custom_scrollbars_visibility(@type, @vertical),
+        @scrollbar_width
       ]}>
         <div class="absolute w-full bg-black/40 h-[20%] rounded-lg thumb-y"></div>
       </div>
 
       <div class={[
-        "absolute left-0 bottom-0 h-2 w-full bg-black/5 rounded-lg scrollbar-x",
-        (@horizontal &&
-           %{
-             "hover" => "invisible group-hover:visible",
-             "auto" => "visible",
-             "never" => "invisible"
-           }[@type]) || "invisible"
+        "absolute left-0 bottom-0 w-full bg-black/5 rounded-lg transition-all duration-400 scrollbar-x",
+        custom_scrollbars_visibility(@type, @horizontal),
+        @scrollbar_height
       ]}>
         <div class="absolute h-full bg-black/40 w-[20%] rounded-lg thumb-x"></div>
       </div>
@@ -98,4 +96,11 @@ defmodule CommunityDemoWeb.Components.ScrollArea do
   defp padding_size("none"), do: nil
 
   defp padding_size(params) when is_binary(params), do: params
+
+  defp custom_scrollbars_visibility("hover", true),
+    do: "opacity-0 group-hover:opacity-100 group-focus-within:opacity-100"
+
+  defp custom_scrollbars_visibility("auto", true), do: "opacity-100"
+  defp custom_scrollbars_visibility("never", true), do: "opacity-0 pointer-events-none"
+  defp custom_scrollbars_visibility(_, false), do: "opacity-0 pointer-events-none"
 end

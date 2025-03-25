@@ -64,7 +64,7 @@ defmodule CommunityDemoWeb.Components.SpeedDial do
     doc:
       "Determines the overall size of the elements, including padding, font size, and other items"
 
-  attr :color, :string, default: "base", doc: "Determines color theme"
+  attr :color, :string, default: "natural", doc: "Determines color theme"
   attr :variant, :string, default: "base", doc: "Determines the style"
   attr :space, :string, default: "extra_small", doc: "Space between items"
   attr :width, :string, default: "fit", doc: "Determines the element width"
@@ -444,7 +444,7 @@ defmodule CommunityDemoWeb.Components.SpeedDial do
   defp action_position("extra_large", "bottom-end"), do: "bottom-9 end-9"
   defp action_position(params, _) when is_binary(params), do: params
 
-  defp color_variant("base", "base") do
+  defp color_variant("base", _) do
     [
       "bg-white text-[#09090b] border-[#e4e4e7] shadow-sm",
       "dark:bg-[#18181B] dark:text-[#FAFAFA] dark:border-[#27272a]"

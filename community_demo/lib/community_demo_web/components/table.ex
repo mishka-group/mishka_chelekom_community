@@ -81,7 +81,7 @@ defmodule CommunityDemoWeb.Components.Table do
   attr :rounded, :string, default: "", doc: "Determines the border radius"
   attr :padding, :string, default: "small", doc: "Determines padding for items"
   attr :text_size, :string, default: "small", doc: "Determines text size"
-  attr :color, :string, default: "base", doc: "Determines color theme"
+  attr :color, :string, default: "natural", doc: "Determines color theme"
   attr :border, :string, default: "extra_small", doc: "Determines border style"
   attr :header_border, :string, default: "", doc: "Sets the border style for the table header"
   attr :rows_border, :string, default: "", doc: "Sets the border style for rows in the table"
@@ -264,7 +264,7 @@ defmodule CommunityDemoWeb.Components.Table do
 
   def th(assigns) do
     ~H"""
-    <th scope={@scope} class={["table-header", @class]} {@rest}>
+    <th id={@id} scope={@scope} class={["table-header", @class]} {@rest}>
       {render_slot(@inner_block)}
     </th>
     """
@@ -298,7 +298,7 @@ defmodule CommunityDemoWeb.Components.Table do
 
   def tr(assigns) do
     ~H"""
-    <tr class={["table-row", @class]} {@rest}>
+    <tr id={@id} class={["table-row", @class]} {@rest}>
       {render_slot(@inner_block)}
     </tr>
     """
@@ -328,7 +328,7 @@ defmodule CommunityDemoWeb.Components.Table do
 
   def td(assigns) do
     ~H"""
-    <td class={["table-data-cell", @class]} {@rest}>
+    <td id={@id} class={["table-data-cell", @class]} {@rest}>
       {render_slot(@inner_block)}
     </td>
     """

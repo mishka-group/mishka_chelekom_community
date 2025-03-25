@@ -42,7 +42,7 @@ defmodule CommunityDemoWeb.Components.Stepper do
       "Determines the overall size of the elements, including padding, font size, and other items"
 
   attr :margin, :string, default: "medium", doc: "Determines the element margin"
-  attr :color, :string, default: "base", doc: "Determines color theme"
+  attr :color, :string, default: "natural", doc: "Determines color theme"
   attr :space, :string, default: "", doc: "Space between items"
   attr :border, :string, default: "extra_small", doc: "Determines border style"
 
@@ -554,7 +554,7 @@ defmodule CommunityDemoWeb.Components.Stepper do
   # colors
   # stepper-loading-step, stepper-current-step, stepper-completed-step, stepper-canceled-step
 
-  defp color_variant("base", "base") do
+  defp color_variant("base", _) do
     [
       "[&_.stepper-step]:bg-white [&_.stepper-step]:text-[#09090b] [&_.stepper-loading-icon]:fill-[#2563EB]",
       "[&_.stepper-step]:border-[#e4e4e7] [&_.stepper-current-step_.stepper-step]:border-[#2563EB]",

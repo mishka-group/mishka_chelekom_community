@@ -47,7 +47,7 @@ defmodule CommunityDemoWeb.Components.Drawer do
   attr :title, :string, default: nil, doc: "Specifies the title of the element"
   attr :title_class, :string, default: nil, doc: "Determines custom class for the title"
   attr :variant, :string, default: "base", doc: "Determines the style"
-  attr :color, :string, default: "base", doc: "Determines color theme"
+  attr :color, :string, default: "natural", doc: "Determines color theme"
 
   attr :size, :string,
     default: "large",
@@ -209,7 +209,7 @@ defmodule CommunityDemoWeb.Components.Drawer do
 
   defp size_class(params, _) when is_binary(params), do: params
 
-  defp color_variant("base", "base") do
+  defp color_variant("base", _) do
     [
       "bg-white text-[#09090b] border-[#e4e4e7]",
       "dark:bg-[#18181B] dark:text-[#FAFAFA] dark:border-[#27272a]"

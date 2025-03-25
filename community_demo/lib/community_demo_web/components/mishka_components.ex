@@ -29,10 +29,14 @@ defmodule CommunityDemoWeb.Components.MishkaComponents do
 
       import CommunityDemoWeb.Components.Chat, only: [chat: 1, chat_section: 1]
 
+      import CommunityDemoWeb.Components.CheckboxCard,
+        only: [checkbox_card: 1, checkbox_card_check: 3]
+
       import CommunityDemoWeb.Components.CheckboxField,
         only: [checkbox_field: 1, group_checkbox: 1, checkbox_check: 3]
 
       import CommunityDemoWeb.Components.ColorField, only: [color_field: 1]
+      import CommunityDemoWeb.Components.Combobox, only: [combobox: 1]
       import CommunityDemoWeb.Components.DateTimeField, only: [date_time_field: 1]
       import CommunityDemoWeb.Components.DeviceMockup, only: [device_mockup: 1]
       import CommunityDemoWeb.Components.Divider, only: [divider: 1, hr: 1]
@@ -50,13 +54,15 @@ defmodule CommunityDemoWeb.Components.MishkaComponents do
       import CommunityDemoWeb.Components.Icon, only: [icon: 1]
       import CommunityDemoWeb.Components.Image, only: [image: 1]
       import CommunityDemoWeb.Components.Indicator, only: [indicator: 1]
-      import CommunityDemoWeb.Components.InputField, only: [input_field: 1]
+      import CommunityDemoWeb.Components.InputField, only: [input: 1, error: 1]
       import CommunityDemoWeb.Components.Jumbotron, only: [jumbotron: 1]
       import CommunityDemoWeb.Components.Keyboard, only: [keyboard: 1]
       import CommunityDemoWeb.Components.List, only: [list: 1, li: 1, ul: 1, ol: 1, list_group: 1]
       import CommunityDemoWeb.Components.MegaMenu, only: [mega_menu: 1]
       import CommunityDemoWeb.Components.Menu, only: [menu: 1]
-      import CommunityDemoWeb.Components.Modal, only: [modal: 1, show_modal: 2, hide_modal: 2]
+
+      import CommunityDemoWeb.Components.Modal,
+        only: [modal: 1, show_modal: 2, hide_modal: 2, show: 2, hide: 2]
 
       import CommunityDemoWeb.Components.NativeSelect,
         only: [native_select: 1, select_option_group: 1]
@@ -71,6 +77,7 @@ defmodule CommunityDemoWeb.Components.MishkaComponents do
         only: [popover: 1, popover_trigger: 1, popover_content: 1]
 
       import CommunityDemoWeb.Components.Progress, only: [progress: 1, progress_section: 1]
+      import CommunityDemoWeb.Components.RadioCard, only: [radio_card: 1, radio_card_check: 3]
 
       import CommunityDemoWeb.Components.RadioField,
         only: [radio_field: 1, group_radio: 1, radio_check: 3]

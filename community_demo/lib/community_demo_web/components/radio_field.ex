@@ -54,7 +54,7 @@ defmodule CommunityDemoWeb.Components.RadioField do
     default: nil,
     doc: "A unique identifier is used to manage state and interaction"
 
-  attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
+  attr :class, :any, default: nil, doc: "Custom CSS class for additional styling"
   attr :label_class, :string, default: nil, doc: "Custom CSS class for the label styling"
   attr :color, :string, default: "primary", doc: "Determines color theme"
   attr :border, :string, default: "extra_small", doc: "Determines border style"
@@ -121,7 +121,7 @@ defmodule CommunityDemoWeb.Components.RadioField do
           ]}
           {@rest}
         />
-        <span class="block">{@label}</span>
+        <span :if={@label} class="block">{@label}</span>
       </.label>
 
       <.error :for={msg <- @errors} icon={@error_icon}>{msg}</.error>
@@ -334,10 +334,10 @@ defmodule CommunityDemoWeb.Components.RadioField do
   defp color_class("base") do
     [
       "text-[#09090b] dark:text-[#FAFAFA]",
-      "checked:[&_.radio-field-wrapper_.radio-input]:text-[#e4e4e7]",
-      "dark:checked:[&_.radio-field-wrapper_.radio-input]:text-[#27272a]",
-      "[&_.radio-field-wrapper_.radio-input]:border-[#F8F9FA]",
-      "dark:[&_.radio-field-wrapper_.radio-input]:border-[#242424]",
+      "checked:[&_.radio-field-wrapper_.radio-input]:text-[#8B8B8D]",
+      "dark:checked:[&_.radio-field-wrapper_.radio-input]:text-[#818182]",
+      "[&_.radio-field-wrapper_.radio-input]:border-[#8B8B8D]",
+      "dark:[&_.radio-field-wrapper_.radio-input]:border-[#818182]",
       "focus-within:[&_.radio-field-wrapper_.radio-input]:ring-[#F8F9FA] dark:focus-within:[&_.radio-field-wrapper_.radio-input]:ring-[#242424]"
     ]
   end

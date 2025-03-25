@@ -53,7 +53,7 @@ defmodule CommunityDemoWeb.Components.NumberField do
     doc: "A unique identifier is used to manage state and interaction"
 
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
-  attr :color, :string, default: "base", doc: "Determines color theme"
+  attr :color, :string, default: "natural", doc: "Determines color theme"
   attr :border, :string, default: "extra_small", doc: "Determines border style"
   attr :rounded, :string, default: "small", doc: "Determines the border radius"
   attr :variant, :string, default: "base", doc: "Determines the style"
@@ -343,7 +343,7 @@ defmodule CommunityDemoWeb.Components.NumberField do
 
   defp space_class(params) when is_binary(params), do: params
 
-  defp color_variant("base", "base", floating) do
+  defp color_variant("base", _, floating) do
     [
       "[&_.number-field-wrapper:not(:has(.number-field-error))]:bg-white",
       "dark:[&_.number-field-wrapper:not(:has(.number-field-error))]:bg-[#18181B]",

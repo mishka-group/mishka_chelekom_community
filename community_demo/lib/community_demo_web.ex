@@ -89,7 +89,7 @@ defmodule CommunityDemoWeb do
       # HTML escaping functionality
       import Phoenix.HTML
       # Core UI components
-      import CommunityDemoWeb.CoreComponents
+      use CommunityDemoWeb.Components.MishkaComponents
 
       # Shortcut for generating JS commands
       alias Phoenix.LiveView.JS
