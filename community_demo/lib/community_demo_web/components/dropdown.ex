@@ -9,7 +9,6 @@ defmodule CommunityDemoWeb.Components.Dropdown do
   """
 
   use Phoenix.Component
-  alias Phoenix.LiveView.JS
 
   @doc """
   A `dropdown` component that displays a list of options or content when triggered.
@@ -64,8 +63,12 @@ defmodule CommunityDemoWeb.Components.Dropdown do
   attr :relative, :string, default: nil, doc: "Custom relative position for the dropdown"
 
   attr :clickable, :boolean,
-    default: false,
+    default: true,
     doc: "Determines if the element can be activated on click"
+
+  attr :smart_position, :boolean,
+    default: false,
+    doc: "Enables and disables smart position"
 
   attr :nomobile, :boolean,
     default: false,
@@ -74,7 +77,6 @@ defmodule CommunityDemoWeb.Components.Dropdown do
   attr :variant, :string, default: "base", doc: "Determines the style"
   attr :color, :string, default: "natural", doc: "Determines color theme"
   attr :rounded, :string, default: "", doc: "Determines the border radius"
-  attr :content_width, :string, default: "extra_large", doc: "Determines the element width"
 
   attr :size, :string,
     default: "",
@@ -108,11 +110,14 @@ defmodule CommunityDemoWeb.Components.Dropdown do
     ~H"""
     <div
       id={@id}
+      data-position={@position || "bottom"}
+      data-floating-type="dropdown"
+      data-clickable={to_string(@clickable)}
+      data-smart-position={to_string(@smart_position)}
+      phx-hook="Floating"
       class={[
-        "[&>.dropdown-content]:invisible [&>.dropdown-content]:opacity-0",
+        "relative [&>.dropdown-content]:invisible [&>.dropdown-content]:opacity-0",
         "[&>.dropdown-content.show-dropdown]:visible [&>.dropdown-content.show-dropdown]:opacity-100",
-        !@clickable && tirgger_dropdown(),
-        !@nomobile && dropdown_position(@position),
         (!@nomobile && @position == "left") ||
           (@position == "right" && dropdown_mobile_position(@position)),
         @relative,
@@ -123,13 +128,11 @@ defmodule CommunityDemoWeb.Components.Dropdown do
     >
       <div
         :for={trigger <- @trigger}
-        phx-click={
-          @clickable &&
-            JS.toggle_class("show-dropdown",
-              to: "##{@id}-dropdown-content",
-              transition: "duration-100"
-            )
-        }
+        role="button"
+        aria-haspopup="menu"
+        aria-expanded="false"
+        aria-controls={@id && "#{@id}-dropdown-content"}
+        data-floating-trigger="true"
         class={["dropdown-trigger [&>*]:cursor-pointer", trigger[:class]]}
         {@rest}
       >
@@ -138,26 +141,25 @@ defmodule CommunityDemoWeb.Components.Dropdown do
 
       <div
         :for={content <- @content}
-        id={"#{@id}-dropdown-content"}
-        phx-click-away={
-          @id &&
-            JS.remove_class("show-dropdown",
-              to: "##{@id}-dropdown-content",
-              transition: "duration-300"
-            )
-        }
+        id={@id && "#{@id}-dropdown-content"}
+        role="menu"
+        tabindex="-1"
+        aria-orientation="vertical"
+        aria-labelledby={@id}
+        aria-hidden="true"
+        data-floating-content="true"
+        hidden
         class={[
-          "dropdown-content absolute z-20 transition-all ease-in-out delay-100 duratio-500 w-full",
-          "invisible opacity-0",
+          "dropdown-content transition-all ease-in-out",
           space_class(@space),
           color_variant(@variant, @color),
           rounded_size(@rounded),
           size_class(@size),
-          width_class(@content_width),
+          width_class(@width),
           border_class(@border, @variant),
           padding_size(@padding),
           @font_weight,
-          content[:class]
+          @class
         ]}
         {@rest}
       >
@@ -197,13 +199,11 @@ defmodule CommunityDemoWeb.Components.Dropdown do
     ~H"""
     <div
       id={@id}
-      phx-click={
-        @trigger_id &&
-          JS.toggle_class("show-dropdown",
-            to: "##{@trigger_id}-dropdown-content",
-            transition: "duration-100"
-          )
-      }
+      role="button"
+      aria-haspopup="menu"
+      aria-expanded="false"
+      aria-controls={@id && "#{@id}-dropdown-content"}
+      data-floating-trigger="true"
       class={["cursor-pointer dropdown-trigger", @class]}
       {@rest}
     >
@@ -264,13 +264,15 @@ defmodule CommunityDemoWeb.Components.Dropdown do
     ~H"""
     <div
       id={@id && "#{@id}-dropdown-content"}
-      phx-click-away={
-        @id &&
-          JS.remove_class("show-dropdown", to: "##{@id}-dropdown-content", transition: "duration-300")
-      }
+      role="menu"
+      tabindex="-1"
+      aria-orientation="vertical"
+      aria-labelledby={@id}
+      aria-hidden="true"
+      data-floating-content="true"
+      hidden
       class={[
-        "dropdown-content absolute z-20 transition-all ease-in-out delay-100 duratio-500 w-full",
-        "invisible opacity-0",
+        "dropdown-content transition-all ease-in-out",
         space_class(@space),
         color_variant(@variant, @color),
         rounded_size(@rounded),
@@ -286,65 +288,6 @@ defmodule CommunityDemoWeb.Components.Dropdown do
       {render_slot(@inner_block)}
     </div>
     """
-  end
-
-  defp tirgger_dropdown(),
-    do: "[&>.dropdown-content]:hover:visible [&>.dropdown-content]:hover:opacity-100"
-
-  defp dropdown_position("bottom") do
-    [
-      "[&>.dropdown-content]:top-full [&>.dropdown-content]:left-1/2",
-      "[&>.dropdown-content]:-translate-x-1/2 [&>.dropdown-content]:translate-y-[6px]"
-    ]
-  end
-
-  defp dropdown_position("left") do
-    [
-      "[&>.dropdown-content]:right-full [&>.dropdown-content]:top-0",
-      "[&>.dropdown-content]:-translate-x-[5%]"
-    ]
-  end
-
-  defp dropdown_position("right") do
-    [
-      "[&>.dropdown-content]:left-full [&>.dropdown-content]:top-0",
-      "[&>.dropdown-content]:translate-x-[5%]"
-    ]
-  end
-
-  defp dropdown_position("top") do
-    [
-      "[&>.dropdown-content]:bottom-full [&>.dropdown-content]:left-1/2",
-      "[&>.dropdown-content]:-translate-x-1/2 [&>.dropdown-content]:-translate-y-[4px]"
-    ]
-  end
-
-  defp dropdown_position("top-left") do
-    [
-      "[&>.dropdown-content]:bottom-full [&>.dropdown-content]:right-0",
-      "[&>.dropdown-content]:translate-x-0 [&>.dropdown-content]:-translate-y-[4px]"
-    ]
-  end
-
-  defp dropdown_position("top-right") do
-    [
-      "[&>.dropdown-content]:bottom-full [&>.dropdown-content]:left-0",
-      "[&>.dropdown-content]:translate-x-0 [&>.dropdown-content]:-translate-y-[4px]"
-    ]
-  end
-
-  defp dropdown_position("bottom-left") do
-    [
-      "[&>.dropdown-content]:top-full [&>.dropdown-content]:right-0",
-      "[&>.dropdown-content]:-translate-x-0 [&>.dropdown-content]:translate-y-[6px]"
-    ]
-  end
-
-  defp dropdown_position("bottom-right") do
-    [
-      "[&>.dropdown-content]:top-full [&>.dropdown-content]:left-0",
-      "[&>.dropdown-content]:-translate-x-0 [&>.dropdown-content]:translate-y-[6px]"
-    ]
   end
 
   defp dropdown_mobile_position("left") do
@@ -415,14 +358,14 @@ defmodule CommunityDemoWeb.Components.Dropdown do
 
   defp padding_size(params) when is_binary(params), do: params
 
-  defp width_class("extra_small"), do: "min-w-48"
-  defp width_class("small"), do: "min-w-52"
-  defp width_class("medium"), do: "min-w-56"
-  defp width_class("large"), do: "min-w-60"
-  defp width_class("extra_large"), do: "min-w-64"
-  defp width_class("double_large"), do: "min-w-72"
-  defp width_class("triple_large"), do: "min-w-80"
-  defp width_class("quadruple_large"), do: "min-w-96"
+  defp width_class("extra_small"), do: "lg:min-w-48"
+  defp width_class("small"), do: "lg:min-w-52"
+  defp width_class("medium"), do: "lg:min-w-56"
+  defp width_class("large"), do: "lg:min-w-60"
+  defp width_class("extra_large"), do: "lg:min-w-64"
+  defp width_class("double_large"), do: "lg:min-w-72"
+  defp width_class("triple_large"), do: "lg:min-w-80"
+  defp width_class("quadruple_large"), do: "lg:min-w-96"
   defp width_class("full"), do: "w-full"
   defp width_class(params) when is_binary(params), do: params
 

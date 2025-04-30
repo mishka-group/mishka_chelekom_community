@@ -19,6 +19,7 @@ defmodule CommunityDemoWeb.Components.Toast do
   use Phoenix.Component
   alias Phoenix.LiveView.JS
   use Gettext, backend: CommunityDemoWeb.Gettext
+  import CommunityDemoWeb.Components.Icon, only: [icon: 1]
 
   @doc """
   The `toast` component displays temporary notifications or messages, usually at the top
@@ -72,6 +73,7 @@ defmodule CommunityDemoWeb.Components.Toast do
   attr :space, :string, default: "extra_small", doc: "Space between items"
   attr :vertical, :string, values: ["top", "bottom"], default: "top", doc: "Type of vertical"
   attr :vertical_space, :string, default: "extra_small", doc: "Space between vertical items"
+  attr :z_index, :string, default: "z-50", doc: "custom z-index"
 
   attr :horizontal, :string,
     values: ["left", "right", "center"],
@@ -85,6 +87,26 @@ defmodule CommunityDemoWeb.Components.Toast do
     doc: "Determines custom class for the font weight"
 
   attr :class, :string, default: "", doc: "Additional CSS classes to be added to the toast."
+
+  attr :wrapper_class, :string,
+    default: "",
+    doc: "Additional CSS classes to be added to the toast contents."
+
+  attr :content_wrapper_class, :string,
+    default: "",
+    doc: "Additional CSS classes to be added to the toast contents."
+
+  attr :content_class, :string,
+    default: "",
+    doc: "Additional CSS classes to be added to the toast contents."
+
+  attr :dismiss_class, :string,
+    default: "",
+    doc: "Additional CSS classes to be added to the toast contents."
+
+  attr :dismiss_icon_class, :string,
+    default: "",
+    doc: "Additional CSS classes to be added to the toast contents."
 
   attr :params, :map,
     default: %{kind: "toast"},
@@ -105,8 +127,10 @@ defmodule CommunityDemoWeb.Components.Toast do
     ~H"""
     <div
       id={@id}
+      aria-atomic="true"
+      tabindex="0"
       class={[
-        "overflow-hidden z-50",
+        "overflow-hidden leading-5",
         @fixed && "fixed",
         width_class(@width),
         rounded_size(@rounded),
@@ -115,6 +139,7 @@ defmodule CommunityDemoWeb.Components.Toast do
         position_class(@horizontal_space, @horizontal),
         vertical_position(@vertical_space, @vertical),
         @font_weight,
+        @z_index,
         @class
       ]}
       {@rest}
@@ -123,19 +148,24 @@ defmodule CommunityDemoWeb.Components.Toast do
         "toast-content-wrapper relative",
         "before:block before:absolute before:inset-y-0 before:rounded-full before:my-1",
         content_border(@content_border),
-        @content_border != "none" && boder_position(@border_position)
+        @content_border != "none" && boder_position(@border_position),
+        @wrapper_class
       ]}>
         <div class={[
           "flex gap-2 items-center justify-between",
           row_direction(@row_direction),
-          padding_size(@padding)
+          padding_size(@padding),
+          @content_wrapper_class
         ]}>
-          <div class={[
-            space_class(@space)
-          ]}>
+          <div class={[space_class(@space), @content_class]}>
             {render_slot(@inner_block)}
           </div>
-          <.toast_dismiss id={@id} params={@params} />
+          <.toast_dismiss
+            id={@id}
+            params={@params}
+            class={@dismiss_class}
+            icon_class={@dismiss_icon_class}
+          />
         </div>
       </div>
     </div>
@@ -198,6 +228,7 @@ defmodule CommunityDemoWeb.Components.Toast do
   attr :space, :string, default: "small", doc: "Space between items"
   attr :vertical, :string, values: ["top", "bottom"], default: "bottom", doc: "Type of vertical"
   attr :vertical_space, :string, default: "extra_small", doc: "Space between vertical items"
+  attr :z_index, :string, default: "z-50", doc: "custom z-index"
 
   attr :horizontal, :string,
     values: ["left", "right", "center"],
@@ -217,11 +248,13 @@ defmodule CommunityDemoWeb.Components.Toast do
     ~H"""
     <div
       id={@id}
+      role="region"
       class={[
-        "fixed z-50",
+        "fixed",
         space_class(@space),
         position_class(@horizontal_space, @horizontal),
         vertical_position(@vertical_space, @vertical),
+        @z_index,
         @class
       ]}
       {@rest}
@@ -241,6 +274,7 @@ defmodule CommunityDemoWeb.Components.Toast do
     doc: "Determines if the toast should include a dismiss button"
 
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
+  attr :icon_class, :string, default: nil, doc: "Custom CSS class for additional styling"
 
   attr :size, :string,
     default: "small",
@@ -255,7 +289,7 @@ defmodule CommunityDemoWeb.Components.Toast do
     ~H"""
     <button
       type="button"
-      class="group shrink-0"
+      class={["shrink-0 leading-5", @class]}
       aria-label={gettext("close")}
       phx-click={JS.push("dismiss", value: Map.merge(%{id: @id}, @params)) |> hide_toast("##{@id}")}
     >
@@ -264,7 +298,7 @@ defmodule CommunityDemoWeb.Components.Toast do
         class={[
           "toast-icon opacity-80 group-hover:opacity-70",
           dismiss_size(@size),
-          @class
+          @icon_class
         ]}
       />
     </button>
@@ -870,20 +904,5 @@ defmodule CommunityDemoWeb.Components.Toast do
          "opacity-100 translate-y-0 sm:scale-100",
          "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"}
     )
-  end
-
-  attr :name, :string, required: true, doc: "Specifies the name of the element"
-  attr :class, :any, default: nil, doc: "Custom CSS class for additional styling"
-
-  defp icon(%{name: "hero-" <> _, class: class} = assigns) when is_list(class) do
-    ~H"""
-    <span class={[@name] ++ @class} />
-    """
-  end
-
-  defp icon(%{name: "hero-" <> _} = assigns) do
-    ~H"""
-    <span class={[@name, @class]} />
-    """
   end
 end

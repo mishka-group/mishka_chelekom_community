@@ -17,6 +17,8 @@ defmodule CommunityDemoWeb.Components.Sidebar do
   use Phoenix.Component
   use Gettext, backend: CommunityDemoWeb.Gettext
   alias Phoenix.LiveView.JS
+  import CommunityDemoWeb.Components.Icon, only: [icon: 1]
+  import Phoenix.LiveView.Utils, only: [random_id: 0]
 
   @doc """
   Renders a `sidebar` component that can be shown or hidden based on user interactions.
@@ -48,6 +50,11 @@ defmodule CommunityDemoWeb.Components.Sidebar do
       "Determines the overall size of the elements, including padding, font size, and other items"
 
   attr :border, :string, default: "extra_small", doc: "Determines border style"
+
+  attr :minimize, :boolean,
+    default: false,
+    doc: "Determines Minimize button show or hide"
+
   attr :position, :string, default: "start", doc: "Determines the element position"
 
   attr :hide_position, :string,
@@ -55,6 +62,25 @@ defmodule CommunityDemoWeb.Components.Sidebar do
     doc: "Determines what position should be hidden"
 
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
+  attr :hide_button_class, :string, default: nil, doc: "Custom CSS class for additional styling"
+
+  attr :minimize_wrapper_class, :string,
+    default: nil,
+    doc: "Custom CSS class for additional styling"
+
+  attr :close_wrapper_class, :string, default: nil, doc: "Custom CSS class for additional styling"
+  attr :content_class, :string, default: nil, doc: "Custom CSS class for additional styling"
+  attr :minimize_icon_class, :string, default: nil, doc: "Custom CSS class for additional styling"
+  attr :close_icon_class, :string, default: nil, doc: "Custom CSS class for additional styling"
+
+  attr :close_button_class, :string,
+    default: nil,
+    doc: "Custom CSS class for additional styling for button"
+
+  attr :list_wrapper_class, :string,
+    default: nil,
+    doc: "Custom CSS class for additional to list wrapper"
+
   attr :on_hide, JS, default: %JS{}, doc: "Custom JS module for on_hide action"
   attr :on_show, JS, default: %JS{}, doc: "Custom JS module for on_show action"
   attr :on_hide_away, JS, default: %JS{}, doc: "Custom JS module for on_hide_away action"
@@ -63,17 +89,32 @@ defmodule CommunityDemoWeb.Components.Sidebar do
     doc:
       "Global attributes can define defaults which are merged with attributes provided by the caller"
 
+  slot :item, doc: "Menu item slot for sidebar navigation items" do
+    attr :icon, :string, doc: "Icon name to display"
+    attr :icon_class, :string, doc: "CSS class for the icon"
+    attr :label, :string, doc: "Text label for the menu item"
+    attr :label_class, :string, doc: "CSS class for the label text"
+    attr :link, :string, doc: "URL for the item link"
+    attr :class, :string, doc: "CSS class for the entire item"
+    attr :link_class, :string, doc: "CSS class for the link"
+  end
+
   slot :inner_block, required: false, doc: "Inner block that renders HEEx content"
 
   @spec sidebar(map()) :: Phoenix.LiveView.Rendered.t()
   def sidebar(assigns) do
+    assigns =
+      assigns
+      |> assign_new(:id, fn -> "sidebar-#{random_id()}" end)
+
     ~H"""
     <aside
       id={@id}
       phx-click-away={hide_sidebar(@on_hide_away, @id, @hide_position)}
       phx-remove={hide_sidebar(@id, @hide_position)}
+      role="complementary"
       class={[
-        "fixed h-screen transition-transform z-10",
+        "fixed h-screen transition-transform z-10 overflow-x-hidden",
         border_class(@border, @position, @variant),
         hide_position(@hide_position),
         color_variant(@variant, @color),
@@ -81,20 +122,56 @@ defmodule CommunityDemoWeb.Components.Sidebar do
         size_class(@size),
         @class
       ]}
-      aria-label="Sidebar"
       {@rest}
     >
-      <div class="h-full overflow-y-auto">
-        <div class="flex justify-end pt-2 px-2 mb-1 md:hidden dismiss-sidebar-wrapper">
+      <div class={["h-full overflow-y-auto overflow-x-hidden", @content_class]}>
+        <div :if={@minimize} class={["flex mb-0.5 justify-end", @minimize_wrapper_class]}>
           <button
             type="button"
-            class="dismiss-sidebar-button"
+            phx-hook="Sidebar"
+            data-original-width={size_class(@size)}
+            id={"toggle-button-#{@id}"}
+            data-sidebar-selector={"##{@id}"}
+            aria-label={gettext("Minimize sidebar")}
+            class={[
+              "size-8 flex items-center justify-center leading-5",
+              "rounded focus:outline-none bg-gray-500/10 border",
+              "dark:border-gray-700 m-2 text-gray-500",
+              @hide_button_class
+            ]}
+          >
+            <.icon name="hero-chevron-right" class={["minimize-icon size-5", @minimize_icon_class]} />
+            <span class="sr-only">{gettext("Minimize sidebar")}</span>
+          </button>
+        </div>
+        <div class={[
+          "flex justify-end pt-2 px-2 mb-1 md:hidden dismiss-sidebar-wrapper",
+          @close_wrapper_class
+        ]}>
+          <button
+            type="button"
+            class={["dismiss-sidebar-button focus:outline-none", @close_button_class]}
+            aria-label={gettext("Close sidebar")}
             phx-click={JS.exec(@on_hide, "phx-remove", to: "##{@id}")}
           >
-            <.icon name="hero-x-mark" />
+            <.icon name="hero-x-mark" class={@close_icon_class} />
             <span class="sr-only">{gettext("Close menu")}</span>
           </button>
         </div>
+
+        <ul :if={@item != []} class={@list_wrapper_class} role="list">
+          <li :for={item <- @item} class={item[:class]}>
+            <.link
+              href={item[:link]}
+              class={["sidebar-item-link flex items-center leading-5", item[:link_class]]}
+            >
+              <.icon :if={item[:icon]} name={item[:icon]} class={["shrink-0", item[:icon_class]]} />
+              <span class={["sidebar-text block ms-1", item[:label_class]]} data-item-label>
+                {item[:label] || render_slot(item)}
+              </span>
+            </.link>
+          </li>
+        </ul>
         {render_slot(@inner_block)}
       </div>
     </aside>
@@ -575,19 +652,4 @@ defmodule CommunityDemoWeb.Components.Sidebar do
   end
 
   defp color_variant(params, _) when is_binary(params), do: params
-
-  attr :name, :string, required: true, doc: "Specifies the name of the element"
-  attr :class, :any, default: nil, doc: "Custom CSS class for additional styling"
-
-  defp icon(%{name: "hero-" <> _, class: class} = assigns) when is_list(class) do
-    ~H"""
-    <span class={[@name] ++ @class} />
-    """
-  end
-
-  defp icon(%{name: "hero-" <> _} = assigns) do
-    ~H"""
-    <span class={[@name, @class]} />
-    """
-  end
 end

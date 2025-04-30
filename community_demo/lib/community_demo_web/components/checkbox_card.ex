@@ -31,6 +31,7 @@ defmodule CommunityDemoWeb.Components.CheckboxCard do
   """
   use Phoenix.Component
   alias Phoenix.HTML.Form
+  import CommunityDemoWeb.Components.Icon, only: [icon: 1]
 
   @doc type: :component
   attr :id, :string,
@@ -51,6 +52,18 @@ defmodule CommunityDemoWeb.Components.CheckboxCard do
   attr :show_checkbox, :boolean, default: false, doc: "Boolean to show and hide checkbox"
   attr :label, :string, default: nil, doc: "Specifies text for the label"
   attr :description, :string, default: nil, doc: "Determines a short description"
+  attr :error_icon_class, :string, default: nil, doc: "Custom classes for error Icon"
+  attr :content_wrapper_class, :string, default: nil, doc: "Custom classes for content wrapper"
+
+  attr :description_wrapper_class, :string,
+    default: nil,
+    doc: "Custom classes for description wrapper"
+
+  attr :description_class, :string, default: nil, doc: "Custom classes for description"
+
+  attr :checkbox_wrapper_class, :string,
+    default: nil,
+    doc: "Custom classes for checkbox main wrapper"
 
   attr :size, :string,
     default: "small",
@@ -76,6 +89,9 @@ defmodule CommunityDemoWeb.Components.CheckboxCard do
     attr :icon, :string, doc: "Icon displayed alongside of a checkbox"
     attr :icon_class, :string, doc: "Determines custom class for the icon"
     attr :content_class, :string, doc: "Determines custom class for the content"
+    attr :description_class, :string, doc: "Determines custom class for the description"
+    attr :title_class, :string, doc: "Determines custom class for the title"
+    attr :card_content_class, :string, doc: "Determines custom class for the card content"
     attr :title, :string, required: false
     attr :description, :string, required: false
   end
@@ -101,9 +117,12 @@ defmodule CommunityDemoWeb.Components.CheckboxCard do
     <div class={["leading-5", space_class(@space)]}>
       <input type="hidden" name={@name} value="" disabled={@rest[:disabled]} />
 
-      <div :if={@label || @description} class="checkbox-card-label-wrapper">
-        <.label :if={@label} for={@id}>{@label}</.label>
-        <div :if={@description} class="text-[12px]">
+      <div
+        :if={@label || @description}
+        class={["checkbox-card-label-wrapper", @description_wrapper_class]}
+      >
+        <.label :if={@label} for={@id} class={@label_class}>{@label}</.label>
+        <div :if={@description} class={["text-[12px]", @description_class]}>
           {@description}
         </div>
       </div>
@@ -112,6 +131,8 @@ defmodule CommunityDemoWeb.Components.CheckboxCard do
         <label
           :for={{checkbox, index} <- Enum.with_index(@checkbox, 1)}
           for={"#{@id}-#{index}"}
+          aria-checked={(checkbox[:checked] && "true") || "false"}
+          aria-labelledby={"#{@id}-#{index}-label"}
           class={[
             "checkbox-card-wrapper flex items-start cursor-pointer",
             "has-[:disabled]:pointer-events-none has-[:disabled]:opacity-50",
@@ -123,7 +144,7 @@ defmodule CommunityDemoWeb.Components.CheckboxCard do
             rounded_size(@rounded),
             padding_size(@padding),
             size_class(@size),
-            @label_class
+            @checkbox_wrapper_class
           ]}
           {@rest}
         >
@@ -133,16 +154,20 @@ defmodule CommunityDemoWeb.Components.CheckboxCard do
             id={"#{@id}-#{index}"}
             value={checkbox[:value]}
             checked={checkbox[:checked]}
+            aria-describedby={"#{@id}-#{index}-description"}
             class={[
               "checkbox-card-input shrink-0 focus:ring-0 focus:ring-offset-0 appearance-none rounded-sm",
               "cursor-pointer disabled:opacity-50",
               !@show_checkbox && "opacity-0 absolute"
             ]}
           />
-          <div data-part="label" class="checkbox-card-content-wrapper flex-1">
+          <div
+            data-part="label"
+            class={["checkbox-card-content-wrapper flex-1", @content_wrapper_class]}
+          >
             <div
               :if={!is_nil(checkbox[:icon]) || checkbox[:title] || checkbox[:description]}
-              class="checkbox-slot-content flex flex-col"
+              class={["checkbox-slot-content flex flex-col", checkbox[:content_class]]}
             >
               <.icon
                 :if={!is_nil(checkbox[:icon])}
@@ -151,16 +176,22 @@ defmodule CommunityDemoWeb.Components.CheckboxCard do
               />
               <div
                 :if={checkbox[:title]}
-                class="block checkbox-card-title leading-[16px] font-semibold"
+                class={[
+                  "block checkbox-card-title leading-[16px] font-semibold",
+                  checkbox[:title_class]
+                ]}
               >
                 {checkbox[:title]}
               </div>
 
-              <p :if={checkbox[:description]} class="checkbox-card-description">
+              <p
+                :if={checkbox[:description]}
+                class={["checkbox-card-description", checkbox[:description_class]]}
+              >
                 {checkbox[:description]}
               </p>
             </div>
-            <div class="checkbox-card-content leading-[17px]">
+            <div class={["checkbox-card-content leading-[17px]", checkbox[:card_content_class]]}>
               {render_slot(checkbox)}
             </div>
           </div>
@@ -168,7 +199,7 @@ defmodule CommunityDemoWeb.Components.CheckboxCard do
       </div>
     </div>
 
-    <.error :for={msg <- @errors} icon={@error_icon}>{msg}</.error>
+    <.error :for={msg <- @errors} icon={@error_icon} icon_class={@error_icon_class}>{msg}</.error>
     """
   end
 
@@ -204,12 +235,15 @@ defmodule CommunityDemoWeb.Components.CheckboxCard do
 
   @doc type: :component
   attr :icon, :string, default: nil, doc: "Icon displayed alongside of an item"
+  attr :icon_class, :string, default: nil, doc: "Custom classes for error Icon"
   slot :inner_block, required: true, doc: "Inner block that renders HEEx content"
 
   defp error(assigns) do
     ~H"""
     <p class="mt-3 flex items-center gap-3 text-[14px] text-rose-700">
-      <.icon :if={!is_nil(@icon)} name={@icon} class="shrink-0" /> {render_slot(@inner_block)}
+      <.icon :if={!is_nil(@icon)} name={@icon} class={["shrink-0", @error_icon_class]} /> {render_slot(
+        @inner_block
+      )}
     </p>
     """
   end
@@ -848,20 +882,5 @@ defmodule CommunityDemoWeb.Components.CheckboxCard do
     else
       Gettext.dgettext(CommunityDemoWeb.Gettext, "errors", msg, opts)
     end
-  end
-
-  attr :name, :string, required: true, doc: "Specifies the name of the element"
-  attr :class, :any, default: nil, doc: "Custom CSS class for additional styling"
-
-  defp icon(%{name: "hero-" <> _, class: class} = assigns) when is_list(class) do
-    ~H"""
-    <span class={["checkbox-card-icon", @name, @class]} />
-    """
-  end
-
-  defp icon(%{name: "hero-" <> _} = assigns) do
-    ~H"""
-    <span class={["checkbox-card-icon", @name, @class]} />
-    """
   end
 end

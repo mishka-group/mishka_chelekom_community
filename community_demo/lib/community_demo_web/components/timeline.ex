@@ -26,6 +26,7 @@ defmodule CommunityDemoWeb.Components.Timeline do
   """
 
   use Phoenix.Component
+  import CommunityDemoWeb.Components.Icon, only: [icon: 1]
 
   @doc """
   The `timeline` component provides a structured layout to display a sequence of events or actions,
@@ -108,9 +109,11 @@ defmodule CommunityDemoWeb.Components.Timeline do
   def timeline(%{horizontal: true} = assigns) do
     ~H"""
     <div
+      role="list"
       class={[
         "timeline-horizontal items-center sm:flex px-5 lg:px-0",
-        color_class(@color)
+        color_class(@color),
+        @class
       ]}
       {@rest}
     >
@@ -122,10 +125,12 @@ defmodule CommunityDemoWeb.Components.Timeline do
   def timeline(assigns) do
     ~H"""
     <div
+      role="list"
       class={[
         color_class(@color),
         @gapped_sections && "[&_.timeline-bullet-wrapper]:items-center",
-        @hide_last_line && "[&_.timeline-section:last-child_.timeline-vertical-line]:after:hidden"
+        @hide_last_line && "[&_.timeline-section:last-child_.timeline-vertical-line]:after:hidden",
+        @class
       ]}
       {@rest}
     >
@@ -191,6 +196,34 @@ defmodule CommunityDemoWeb.Components.Timeline do
   attr :description, :string, default: nil, doc: "Determines a short description"
   attr :horizontal, :boolean, default: false, doc: "Determines whether element is horizontal"
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
+  attr :icon_class, :string, default: nil, doc: "Custom CSS class for additional styling icon"
+  attr :line_class, :string, default: nil, doc: "Custom CSS class for additional styling lines"
+
+  attr :bullte_wrapper_class,
+       :string,
+       default: nil,
+       doc: "Custom CSS class for additional styling icon"
+
+  attr :bullet_class, :string,
+    default: nil,
+    doc: "Custom CSS class for additional styling bullets"
+
+  attr :bullet_wrapper_Class, :string,
+    default: nil,
+    doc: "Custom CSS class for additional styling bullet wrapper"
+
+  attr :image_class, :string, default: nil, doc: "Custom CSS class for additional styling icon"
+
+  attr :content_class, :string,
+    default: nil,
+    doc: "Custom CSS class for additional styling content"
+
+  attr :title_class, :string, default: nil, doc: "Custom CSS class for additional styling title"
+  attr :time_class, :string, default: nil, doc: "Custom CSS class for additional styling time"
+
+  attr :description_class, :string,
+    default: "text-sm",
+    doc: "Custom CSS class for additional styling description"
 
   attr :rest, :global,
     doc:
@@ -202,46 +235,58 @@ defmodule CommunityDemoWeb.Components.Timeline do
     ~H"""
     <div
       id={@id}
+      role="listitem"
       class={[
         "timeline-section relative mb-6 sm:mb-0",
         @class
       ]}
       {@rest}
     >
-      <div :if={!@image} class="flex items-center">
+      <div :if={!@image} class={["flex items-center", @bullet_wrapper_Class]}>
         <div class={[
           "timeline-bullet z-10 flex items-center justify-center rounded-full shrink-0",
-          bullet_size(@size)
+          bullet_size(@size),
+          @bullet_class
         ]}>
-          <.icon :if={@bullet_icon} name={@bullet_icon} class="bullet-icon" />
+          <.icon
+            :if={@bullet_icon}
+            name={@bullet_icon}
+            class={["bullet-icon", @icon_class]}
+            aria-hidden="true"
+          />
         </div>
         <div class={[
           "timeline-horizontal-line hidden sm:flex w-full",
           line_size(@line_size, @horizontal),
-          line_style(@line_style, @horizontal)
+          line_style(@line_style, @horizontal),
+          @line_class
         ]}>
         </div>
       </div>
 
-      <div :if={@image} class="flex items-center">
+      <div :if={@image} class={["flex items-center", @bullet_wrapper_Class]}>
         <div class={[
           "timeline-image-wrapper z-10 shrink-0",
-          bullet_size(@size)
+          bullet_size(@size),
+          @bullet_class
         ]}>
-          <img class="rounded-full shadow-md" src={@image} alt={@image} />
+          <img class={["rounded-full shadow-md", @image_class]} src={@image} alt={@image} />
         </div>
         <div class={[
           "timeline-horizontal-line hidden sm:flex w-full",
           line_size(@line_size, @horizontal),
-          line_style(@line_style, @horizontal)
+          line_style(@line_style, @horizontal),
+          @line_class
         ]}>
         </div>
       </div>
 
-      <div class="mt-3 sm:pe-5">
-        <h3 :if={@title} class="text-lg font-semibold mb-2">{@title}</h3>
-        <time :if={@time} class="block mb-3 text-xs font-normal leading-none">{@time}</time>
-        <p :if={@description} class="text-sm">{@description}</p>
+      <div class={["mt-3 sm:pe-5", @content_class]}>
+        <h3 :if={@title} class={["text-lg font-semibold mb-2", @title_class]}>{@title}</h3>
+        <time :if={@time} class={["block mb-3 text-xs font-normal leading-none", @time_class]}>
+          {@time}
+        </time>
+        <p :if={@description} class={@description_class}>{@description}</p>
 
         {render_slot(@inner_block)}
       </div>
@@ -253,6 +298,7 @@ defmodule CommunityDemoWeb.Components.Timeline do
     ~H"""
     <div
       id={@id}
+      role="listitem"
       class={[
         "timeline-section flex gap-x-3 [&_.timeline-vertical-line]:after:top-3",
         @class
@@ -265,15 +311,25 @@ defmodule CommunityDemoWeb.Components.Timeline do
           "timeline-vertical-line relative after:absolute",
           "after:bottom-0 after:start-3.5 after:-translate-x-[0.5px]",
           line_size(@line_size, @horizontal),
-          line_style(@line_style, @horizontal)
+          line_style(@line_style, @horizontal),
+          @line_class
         ]}
       >
-        <div class="timeline-bullet-wrapper relative z-10 size-7 flex justify-center">
+        <div class={[
+          "timeline-bullet-wrapper relative z-10 size-7 flex justify-center",
+          @bullte_wrapper_class
+        ]}>
           <div class={[
             "timeline-bullet rounded-full flex justify-center items-center",
-            bullet_size(@size)
+            bullet_size(@size),
+            @bullet_class
           ]}>
-            <.icon :if={@bullet_icon} name={@bullet_icon} class="bullet-icon" />
+            <.icon
+              :if={@bullet_icon}
+              name={@bullet_icon}
+              class={["bullet-icon", @icon_class]}
+              aria-hidden="true"
+            />
           </div>
         </div>
       </div>
@@ -284,25 +340,27 @@ defmodule CommunityDemoWeb.Components.Timeline do
           "timeline-vertical-line relative after:absolute",
           "after:bottom-0 after:start-1/2 after:-translate-x-[0.5px] shrink-0",
           line_size(@line_size, @horizontal),
-          line_style(@line_style, @horizontal)
+          line_style(@line_style, @horizontal),
+          @line_class
         ]}
       >
-        <div class="relative z-10">
+        <div class={["relative z-10", @bullte_wrapper_class]}>
           <div class={[
             "timeline-image-wrapper",
-            bullet_size(@size)
+            bullet_size(@size),
+            @bullet_class
           ]}>
-            <img class="rounded-full shadow-md" src={@image} alt={@image} />
+            <img class={["rounded-full shadow-md", @image_class]} src={@image} alt={@image} />
           </div>
         </div>
       </div>
 
-      <div class={[
-        "grow pt-0.5 pb-5"
-      ]}>
-        <h3 :if={@title} class="text-lg font-semibold mb-2">{@title}</h3>
-        <time :if={@time} class="block mb-3 text-xs font-normal leading-none">{@time}</time>
-        <p :if={@description} class="text-sm">{@description}</p>
+      <div class={["grow pt-0.5 pb-5", @content_class]}>
+        <h3 :if={@title} class={["text-lg font-semibold mb-2", @title_class]}>{@title}</h3>
+        <time :if={@time} class={["block mb-3 text-[12px] font-normal leading-none", @time_class]}>
+          {@time}
+        </time>
+        <p :if={@description} class={@description_class}>{@description}</p>
 
         {render_slot(@inner_block)}
       </div>
@@ -510,19 +568,4 @@ defmodule CommunityDemoWeb.Components.Timeline do
   end
 
   defp color_class(params) when is_binary(params), do: params
-
-  attr :name, :string, required: true, doc: "Specifies the name of the element"
-  attr :class, :any, default: nil, doc: "Custom CSS class for additional styling"
-
-  defp icon(%{name: "hero-" <> _, class: class} = assigns) when is_list(class) do
-    ~H"""
-    <span class={[@name] ++ @class} />
-    """
-  end
-
-  defp icon(%{name: "hero-" <> _} = assigns) do
-    ~H"""
-    <span class={[@name, @class]} />
-    """
-  end
 end

@@ -14,6 +14,7 @@ defmodule CommunityDemoWeb.Components.Breadcrumb do
   behavior and appearance.
   """
   use Phoenix.Component
+  import CommunityDemoWeb.Components.Icon, only: [icon: 1]
 
   @doc """
   The `breadcrumb` component is used to display a navigational path with customizable
@@ -49,13 +50,26 @@ defmodule CommunityDemoWeb.Components.Breadcrumb do
   """
   @doc type: :component
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
+  attr :items_wrapper_class, :string, default: nil, doc: "Custom CSS class for additional styling"
 
   attr :id, :string,
     default: nil,
     doc: "A unique identifier is used to manage state and interaction"
 
-  attr :separator, :string,
+  attr :separator_icon, :string,
     default: "hero-chevron-right",
+    doc: "Determines a separator for items of an element"
+
+  attr :separator_icon_class, :string,
+    default: "rtl:rotate-180",
+    doc: "Custom CSS class for additional styling"
+
+  attr :separator_text, :string,
+    default: nil,
+    doc: "Determines a separator for items of an element"
+
+  attr :separator_text_class, :string,
+    default: nil,
     doc: "Determines a separator for items of an element"
 
   attr :color, :string, default: "base", doc: "Determines color theme"
@@ -69,8 +83,9 @@ defmodule CommunityDemoWeb.Components.Breadcrumb do
     attr :icon, :string, doc: "Icon displayed alongside of an item"
     attr :link, :string, doc: "Renders a navigation, patch link or normal link"
     attr :title, :string, doc: "Renders a navigation, patch link or normal link"
-    attr :separator, :string, doc: "Determines a separator for items of an element"
     attr :class, :string, doc: "Custom CSS class for additional styling"
+    attr :icon_class, :string, doc: "Custom CSS class for additional styling"
+    attr :link_class, :string, doc: "Custom CSS class for additional styling"
   end
 
   attr :rest, :global,
@@ -81,48 +96,40 @@ defmodule CommunityDemoWeb.Components.Breadcrumb do
 
   def breadcrumb(assigns) do
     ~H"""
-    <ul
-      id={@id}
-      class={
-        default_classes() ++
-          [
-            color_class(@color),
-            size_class(@size),
-            @class
-          ]
-      }
-      {@rest}
-    >
-      <li
-        :for={{item, index} <- Enum.with_index(@item, 1)}
-        class={["flex items-center", item[:class]]}
-      >
-        <.icon :if={!is_nil(item[:icon])} name={item[:icon]} class="breadcrumb-icon" />
-        <div :if={!is_nil(item[:link])}>
-          <.link navigate={item[:link]} title={item[:tile]}>{render_slot(item)}</.link>
-        </div>
+    <nav class={@class} id={@id} {@rest}>
+      <ol class={[default_classes(), color_class(@color), size_class(@size), @items_wrapper_class]}>
+        <li :for={{item, _} <- Enum.with_index(@item, 1)} class={["flex items-center", item[:class]]}>
+          <.icon
+            :if={!is_nil(item[:icon])}
+            name={item[:icon]}
+            class={["breadcrumb-icon", item[:icon_class]]}
+          />
+          <.link
+            :if={!is_nil(item[:link])}
+            navigate={item[:link]}
+            title={item[:tile]}
+            class={item[:link_class]}
+          >
+            {render_slot(item)}
+          </.link>
 
-        <div :if={is_nil(item[:link])}>{render_slot(item)}</div>
-        <.separator :if={index != length(@item)} name={item[:separator] || @separator} />
-      </li>
-      {render_slot(@inner_block)}
-    </ul>
-    """
-  end
+          <div :if={is_nil(item[:link])}>{render_slot(item)}</div>
 
-  @doc type: :component
-  attr :name, :string, doc: "Specifies the name of the element"
-  attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
-
-  defp separator(%{name: "hero-" <> _icon_name} = assigns) do
-    ~H"""
-    <.icon name={@name} class={@class || "separator-icon rtl:rotate-180"} />
-    """
-  end
-
-  defp separator(assigns) do
-    ~H"""
-    <span class={@class || "separator-text"}>{@name}</span>
+          <.icon
+            :if={@separator_icon}
+            name={@separator_icon}
+            class={["separator-icon", @separator_icon_class]}
+          />
+          <span
+            :if={@separator_text && !@separator_icon}
+            class={["separator-text", @separator_text_class]}
+          >
+            {@separator_text}
+          </span>
+        </li>
+        {render_slot(@inner_block)}
+      </ol>
+    </nav>
     """
   end
 
@@ -243,20 +250,5 @@ defmodule CommunityDemoWeb.Components.Breadcrumb do
     [
       "flex items-center transition-all ease-in-ou duration-100 group"
     ]
-  end
-
-  attr :name, :string, required: true, doc: "Specifies the name of the element"
-  attr :class, :any, default: nil, doc: "Custom CSS class for additional styling"
-
-  defp icon(%{name: "hero-" <> _, class: class} = assigns) when is_list(class) do
-    ~H"""
-    <span class={[@name] ++ @class} />
-    """
-  end
-
-  defp icon(%{name: "hero-" <> _} = assigns) do
-    ~H"""
-    <span class={[@name, @class]} />
-    """
   end
 end

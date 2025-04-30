@@ -15,6 +15,7 @@ defmodule CommunityDemoWeb.Components.Spinner do
   """
 
   use Phoenix.Component
+  use Gettext, backend: CommunityDemoWeb.Gettext
 
   @spinner_types [
     "default",
@@ -66,7 +67,6 @@ defmodule CommunityDemoWeb.Components.Spinner do
         @class
       ]}
       role="status"
-      aria-label="loading"
       {@rest}
     >
       <.spinner_content type={@type} />
@@ -79,7 +79,7 @@ defmodule CommunityDemoWeb.Components.Spinner do
 
   defp spinner_content(%{type: "pinging"} = assigns) do
     ~H"""
-    <span class="sr-only">Loading...</span>
+    <span class="sr-only">{gettext("Loading...")}</span>
     <svg viewBox="0 0 45 45" xmlns="http://www.w3.org/2000/svg">
       <g fill="none" fill-rule="evenodd" transform="translate(1 1)" stroke-width="2">
         <circle cx="22" cy="22" r="6" stroke-opacity="0">
@@ -158,7 +158,7 @@ defmodule CommunityDemoWeb.Components.Spinner do
 
   defp spinner_content(%{type: "dots"} = assigns) do
     ~H"""
-    <span class="sr-only">Loading...</span>
+    <span class="sr-only">{gettext("Loading...")}</span>
     <span class="block rounded-full animate-bounce"></span>
     <span class="block rounded-full animate-bounce [animation-delay:-0.2s]"></span>
     <span class="block rounded-full animate-bounce [animation-delay:-0.4s]"></span>
@@ -167,7 +167,7 @@ defmodule CommunityDemoWeb.Components.Spinner do
 
   defp spinner_content(%{type: "bars"} = assigns) do
     ~H"""
-    <span class="sr-only">Loading...</span>
+    <span class="sr-only">{gettext("Loading...")}</span>
     <span class="block rounded-sm animate-bounce [animation-delay:-0.4s]"></span>
     <span class="block rounded-sm animate-bounce [animation-delay:-0.2s]"></span>
     <span class="block rounded-sm animate-bounce"></span>
@@ -176,7 +176,7 @@ defmodule CommunityDemoWeb.Components.Spinner do
 
   defp spinner_content(assigns) do
     ~H"""
-    <span class="sr-only">Loading...</span>
+    <span class="sr-only">{gettext("Loading...")}</span>
     """
   end
 

@@ -20,16 +20,20 @@ defmodule CommunityDemoWeb.Components.Accordion do
   - **Icon and Media Support**: Allows the inclusion of icons and images within
   accordion items, enhancing the visual appeal and usability of the component.
   """
+
   use Phoenix.Component
 
   alias Phoenix.LiveView.JS
 
+  import CommunityDemoWeb.Components.Icon, only: [icon: 1]
+
   @doc """
   The `accordion` component provides a collapsible structure with various styling options,
   ideal for organizing content into expandable panels. It supports customizable attributes such
-  as `variant`, `color`, and `media_size.
+  as `variant`, `color`, and `media_size`.
 
   ## Examples
+
   ```elixir
   <.accordion id="test-108" media_size="medium" color="secondary">
     <:item
@@ -130,6 +134,9 @@ defmodule CommunityDemoWeb.Components.Accordion do
         <div
           id={"#{@id}-#{index}-role-button"}
           role="button"
+          tabindex="0"
+          aria-expanded="false"
+          aria-controls={"#{@id}-#{index}"}
           class={[
             "accordion-summary block w-full",
             "transition-all duration-100 ease-in-out [&.active-accordion-button_.accordion-chevron]:rotate-90",
@@ -167,6 +174,8 @@ defmodule CommunityDemoWeb.Components.Accordion do
         </div>
         <.focus_wrap
           id={"#{@id}-#{index}"}
+          role="region"
+          aria-labelledby={"#{@id}-#{index}-role-button"}
           class="accordion-content-wrapper relative hidden transition [&:not(.active)_.accordion-content]:grid-rows-[0fr] [&.active_.accordion-content]:grid-rows-[1fr]"
         >
           <div
@@ -455,6 +464,7 @@ defmodule CommunityDemoWeb.Components.Accordion do
     |> JS.show(to: "##{id}")
     |> JS.add_class("active", to: "##{id}")
     |> JS.add_class("active-accordion-button", to: "##{id}-role-button")
+    |> JS.set_attribute({"aria-expanded", "true"}, to: "##{id}-role-button")
   end
 
   @doc """
@@ -484,6 +494,7 @@ defmodule CommunityDemoWeb.Components.Accordion do
     js
     |> JS.remove_class("active", to: "##{id}")
     |> JS.remove_class("active-accordion-button", to: "##{id}-role-button")
+    |> JS.set_attribute({"aria-expanded", "false"}, to: "##{id}-role-button")
   end
 
   defp space_class(_, variant)
@@ -2141,20 +2152,5 @@ defmodule CommunityDemoWeb.Components.Accordion do
       |> Enum.map(&if(is_binary(&1), do: String.to_atom(&1), else: &1))
 
     Map.drop(rest, all_rest)
-  end
-
-  attr :name, :string, required: true, doc: "Specifies the name of the element"
-  attr :class, :any, default: nil, doc: "Custom CSS class for additional styling"
-
-  defp icon(%{name: "hero-" <> _, class: class} = assigns) when is_list(class) do
-    ~H"""
-    <span class={[@name] ++ @class} />
-    """
-  end
-
-  defp icon(%{name: "hero-" <> _} = assigns) do
-    ~H"""
-    <span class={[@name, @class]} />
-    """
   end
 end

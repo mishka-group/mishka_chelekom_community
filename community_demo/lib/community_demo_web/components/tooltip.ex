@@ -72,6 +72,8 @@ defmodule CommunityDemoWeb.Components.Tooltip do
 
   attr :width, :string, default: "fit", doc: "Determines the element width"
   attr :wrapper_width, :string, default: "w-fit", doc: "Determines the parent element width"
+  attr :wrapper_class, :string, default: "w-fit", doc: "Determines the parent element class"
+  attr :arrow_class, :string, default: nil, doc: "Determines arrow class"
   attr :padding, :string, default: "small", doc: "Determines padding for items"
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
   attr :text_position, :string, default: "center", doc: "Determines the element' text position"
@@ -85,7 +87,7 @@ defmodule CommunityDemoWeb.Components.Tooltip do
 
   def tooltip(assigns) do
     ~H"""
-    <span class={["relative group", @wrapper_width]}>
+    <span class={["relative group", @wrapper_width, @wrapper_class]}>
       {render_slot(@inner_block)}
       <span
         role="tooltip"
@@ -109,7 +111,7 @@ defmodule CommunityDemoWeb.Components.Tooltip do
       >
         <span
           :if={@show_arrow && @variant != "bordered" && @variant != "base"}
-          class="block absolute size-[8px] bg-inherit rotate-45 -z-[1] tooltip-arrow"
+          class={["block absolute size-[8px] bg-inherit rotate-45 -z-[1] tooltip-arrow", @arrow_class]}
         >
         </span>
         {@text}

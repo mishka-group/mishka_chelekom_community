@@ -14,6 +14,7 @@ defmodule CommunityDemoWeb.Components.Table do
 
   use Phoenix.Component
   use Gettext, backend: CommunityDemoWeb.Gettext
+  import CommunityDemoWeb.Components.Icon, only: [icon: 1]
 
   @doc """
   Renders a customizable `table` component that supports custom styling for rows, columns,
@@ -77,6 +78,10 @@ defmodule CommunityDemoWeb.Components.Table do
     doc: "A unique identifier is used to manage state and interaction"
 
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
+  attr :main_wrapper_class, :string, default: nil, doc: "Custom CSS class"
+  attr :inner_wrapper_class, :string, default: nil, doc: "Custom CSS class"
+  attr :table_wrapper_class, :string, default: nil, doc: "Custom CSS class"
+  attr :table_body_class, :string, default: nil, doc: "Custom CSS class"
   attr :variant, :string, default: "base", doc: "Determines the style"
   attr :rounded, :string, default: "", doc: "Determines the border radius"
   attr :padding, :string, default: "small", doc: "Determines padding for items"
@@ -120,6 +125,7 @@ defmodule CommunityDemoWeb.Components.Table do
 
   slot :col, required: false do
     attr :label, :string
+    attr :label_class, :string
   end
 
   slot :action, doc: "the slot for showing user actions in the last table column"
@@ -131,8 +137,8 @@ defmodule CommunityDemoWeb.Components.Table do
       end
 
     ~H"""
-    <div class="-m-1.5 overflow-x-auto">
-      <div class="p-1.5 min-w-full inline-block align-middle">
+    <div class={["-m-1.5 overflow-x-auto", @main_wrapper_class]}>
+      <div class={["p-1.5 min-w-full inline-block align-middle", @inner_wrapper_class]}>
         <div class={[
           "overflow-hidden",
           color_variant(@variant, @color),
@@ -144,7 +150,8 @@ defmodule CommunityDemoWeb.Components.Table do
           rows_space(@space, @variant),
           @header_border && header_border(@header_border, @variant),
           @rows_border != "" && rows_border(@rows_border, @variant),
-          @cols_border && cols_border(@cols_border, @variant)
+          @cols_border && cols_border(@cols_border, @variant),
+          @table_wrapper_class
         ]}>
           <table
             class={[
@@ -174,7 +181,7 @@ defmodule CommunityDemoWeb.Components.Table do
               </.tr>
 
               <.tr :if={@col}>
-                <.th :for={col <- @col} class="font-normal">{col[:label]}</.th>
+                <.th :for={col <- @col} class={["font-normal", col[:label_class]]}>{col[:label]}</.th>
                 <.th :if={@action != []} class="relative">
                   <span class="sr-only">{gettext("Actions")}</span>
                 </.th>
@@ -184,7 +191,8 @@ defmodule CommunityDemoWeb.Components.Table do
             <tbody
               id={@id}
               phx-update={match?(%Phoenix.LiveView.LiveStream{}, @rows) && "stream"}
-              class={@rows != [] && "divide-y"}
+              class={[@rows != [] && "divide-y", @table_body_class]}
+              aria-live="polite"
             >
               {render_slot(@inner_block)}
 
@@ -253,7 +261,7 @@ defmodule CommunityDemoWeb.Components.Table do
     default: nil,
     doc: "A unique identifier is used to manage state and interaction"
 
-  attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
+  attr :class, :any, default: nil, doc: "Custom CSS class for additional styling"
   attr :scope, :string, default: nil, doc: "Specifies the scope of the table header cell"
 
   attr :rest, :global,
@@ -1255,19 +1263,4 @@ defmodule CommunityDemoWeb.Components.Table do
   end
 
   defp color_variant(params, _) when is_binary(params), do: params
-
-  attr :name, :string, required: true, doc: "Specifies the name of the element"
-  attr :class, :any, default: nil, doc: "Custom CSS class for additional styling"
-
-  defp icon(%{name: "hero-" <> _, class: class} = assigns) when is_list(class) do
-    ~H"""
-    <span class={[@name] ++ @class} />
-    """
-  end
-
-  defp icon(%{name: "hero-" <> _} = assigns) do
-    ~H"""
-    <span class={[@name, @class]} />
-    """
-  end
 end

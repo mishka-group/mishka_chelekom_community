@@ -12,6 +12,7 @@ defmodule CommunityDemoWeb.Components.ToggleField do
   """
   use Phoenix.Component
   alias Phoenix.HTML.Form
+  import CommunityDemoWeb.Components.Icon, only: [icon: 1]
 
   @doc """
   The `toggle_field` component is a customizable toggle switch input, often used for binary on/off
@@ -39,7 +40,17 @@ defmodule CommunityDemoWeb.Components.ToggleField do
   attr :rounded, :string, default: "full", doc: "Determines border radius"
   attr :description, :string, default: nil, doc: "Determines a short description"
   attr :border, :string, default: "extra_small", doc: "Determines border style"
-  attr :labe_class, :string, default: nil, doc: "Determines the labe class"
+  attr :label_class, :string, default: nil, doc: "Determines the label class"
+  attr :label_wrapper_class, :string, default: nil, doc: "Determines the label wrapper"
+  attr :description_class, :string, default: nil, doc: "Determines the label description"
+  attr :toggle_wrapper_class, :string, default: nil, doc: "Determines the toggle wrapper"
+
+  attr :toggle_field_wrapper_class, :string,
+    default: nil,
+    doc: "Determines the toggle field wrapper"
+
+  attr :toggle_base_class, :string, default: nil, doc: "Determines the toggle base"
+  attr :toggle_circle_class, :string, default: nil, doc: "Determines the toggle circle"
 
   attr :size, :string,
     default: "medium",
@@ -92,14 +103,17 @@ defmodule CommunityDemoWeb.Components.ToggleField do
       rounded_size(@rounded),
       @class
     ]}>
-      <div>
-        <.label for={@id}>{@label}</.label>
-        <div :if={!is_nil(@description)} class="text-xs">
+      <div class={@label_wrapper_class}>
+        <.label for={@id} class={@label_class}>{@label}</.label>
+        <div :if={!is_nil(@description)} class={@description_class}>
           {@description}
         </div>
       </div>
-      <label for={@id} class="flex items-center cursor-pointer select-none w-fit">
-        <div class="relative toggle-field-wrapper">
+      <label
+        for={@id}
+        class={["flex items-center cursor-pointer select-none w-fit", @toggle_wrapper_class]}
+      >
+        <div class={["relative toggle-field-wrapper", @toggle_field_wrapper_class]}>
           <input type="hidden" name={@name} value="false" disabled={@rest[:disabled]} />
           <input
             type="checkbox"
@@ -108,16 +122,20 @@ defmodule CommunityDemoWeb.Components.ToggleField do
             name={@name}
             value="true"
             class="peer sr-only"
+            role="switch"
+            aria-checked={to_string(@checked)}
             {@rest}
           />
           <div class={[
             "toggle-field-circle absolute transition-all ease-in-out duration-500 bg-white",
-            "top-1 peer-checked:translate-x-full left-1"
+            "top-1 peer-checked:translate-x-full left-1",
+            @toggle_circle_class
           ]}>
           </div>
           <div class={[
             "bg-[#F4F4F4] dark:bg-[#4B4B4B] transition-all ease-in-out duration-500 toggle-field-base",
-            color_class(@color)
+            color_class(@color),
+            @toggle_base_class
           ]}>
           </div>
         </div>
@@ -310,20 +328,5 @@ defmodule CommunityDemoWeb.Components.ToggleField do
     else
       Gettext.dgettext(CommunityDemoWeb.Gettext, "errors", msg, opts)
     end
-  end
-
-  attr :name, :string, required: true, doc: "Specifies the name of the element"
-  attr :class, :any, default: nil, doc: "Custom CSS class for additional styling"
-
-  defp icon(%{name: "hero-" <> _, class: class} = assigns) when is_list(class) do
-    ~H"""
-    <span class={[@name] ++ @class} />
-    """
-  end
-
-  defp icon(%{name: "hero-" <> _} = assigns) do
-    ~H"""
-    <span class={[@name, @class]} />
-    """
   end
 end

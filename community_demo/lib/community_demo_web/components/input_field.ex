@@ -24,6 +24,7 @@ defmodule CommunityDemoWeb.Components.InputField do
   """
 
   use Phoenix.Component
+  import CommunityDemoWeb.Components.Icon, only: [icon: 1]
 
   @doc """
   Renders an `input` with label and error messages.
@@ -223,20 +224,5 @@ defmodule CommunityDemoWeb.Components.InputField do
     else
       Gettext.dgettext(CommunityDemoWeb.Gettext, "errors", msg, opts)
     end
-  end
-
-  attr :name, :string, required: true, doc: "Specifies the name of the element"
-  attr :class, :any, default: nil, doc: "Custom CSS class for additional styling"
-
-  defp icon(%{name: "hero-" <> _, class: class} = assigns) when is_list(class) do
-    ~H"""
-    <span class={[@name] ++ @class} />
-    """
-  end
-
-  defp icon(%{name: "hero-" <> _} = assigns) do
-    ~H"""
-    <span class={[@name, @class]} />
-    """
   end
 end

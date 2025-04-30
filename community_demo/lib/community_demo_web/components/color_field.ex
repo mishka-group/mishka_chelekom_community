@@ -13,6 +13,7 @@ defmodule CommunityDemoWeb.Components.ColorField do
   """
 
   use Phoenix.Component
+  import CommunityDemoWeb.Components.Icon, only: [icon: 1]
 
   @doc """
   The `color_field` component is used to create a customizable color input field with various
@@ -56,6 +57,15 @@ defmodule CommunityDemoWeb.Components.ColorField do
   attr :border, :string, default: "extra_small", doc: "Determines border style"
   attr :rounded, :string, default: "small", doc: "Determines the border radius"
   attr :description, :string, default: nil, doc: "Determines a short description"
+  attr :description_class, :string, default: "text-[12px]", doc: "Custom classes for description"
+  attr :label_class, :string, default: nil, doc: "Custom CSS class for the label styling"
+  attr :field_wrapper_class, :string, default: nil, doc: "Custom CSS class field wrapper"
+  attr :input_class, :string, default: nil, doc: "Custom CSS class for the input"
+  attr :space, :string, default: "medium", doc: "Space between items"
+
+  attr :description_wrapper_class, :string,
+    default: nil,
+    doc: "Custom classes for description wrapper"
 
   attr :size, :string,
     default: "extra_large",
@@ -111,23 +121,26 @@ defmodule CommunityDemoWeb.Components.ColorField do
       rounded_size(@rounded),
       border_class(@border),
       size_class(@size),
+      space_class(@space),
       @class
     ]}>
-      <div class="mb-2">
-        <.label for={@id}>{@label}</.label>
-        <div :if={!is_nil(@description)} class="text-xs">
+      <div
+        :if={@label || @description}
+        class={["checkbox-card-label-wrapper", @description_wrapper_class]}
+      >
+        <.label :if={@label} for={@id} class={@label_class}>{@label}</.label>
+        <div :if={@description} class={@description_class}>
           {@description}
         </div>
       </div>
+
       <div class="color-field-wrapper">
         <input
           type="color"
           name={@name}
           id={@id}
           value={@value}
-          class={[
-            "color-input"
-          ]}
+          class={["color-input", @input_class]}
           {@rest}
         />
       </div>
@@ -136,20 +149,18 @@ defmodule CommunityDemoWeb.Components.ColorField do
     """
   end
 
-  @doc type: :component
   attr :for, :string, default: nil, doc: "Specifies the form which is associated with"
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
   slot :inner_block, required: true, doc: "Inner block that renders HEEx content"
 
   defp label(assigns) do
     ~H"""
-    <label for={@for} class={["block text-sm font-semibold leading-6", @class]}>
+    <label for={@for} class={["leading-5 font-semibold", @class]}>
       {render_slot(@inner_block)}
     </label>
     """
   end
 
-  @doc type: :component
   attr :icon, :string, default: nil, doc: "Icon displayed alongside of an item"
   slot :inner_block, required: true, doc: "Inner block that renders HEEx content"
 
@@ -217,6 +228,20 @@ defmodule CommunityDemoWeb.Components.ColorField do
   defp border_class("large"), do: "[&_.color-field-wrapper_.color-input]:border-4"
   defp border_class("extra_large"), do: "[&_.color-field-wrapper_.color-input]:border-[5px]"
   defp border_class(params) when is_binary(params), do: params
+
+  defp space_class("none"), do: nil
+
+  defp space_class("extra_small"), do: "space-y-1"
+
+  defp space_class("small"), do: "space-y-1.5"
+
+  defp space_class("medium"), do: "space-y-2"
+
+  defp space_class("large"), do: "space-y-2.5"
+
+  defp space_class("extra_large"), do: "space-y-3"
+
+  defp space_class(params) when is_binary(params), do: params
 
   defp color_class("base") do
     [
@@ -325,20 +350,5 @@ defmodule CommunityDemoWeb.Components.ColorField do
     else
       Gettext.dgettext(CommunityDemoWeb.Gettext, "errors", msg, opts)
     end
-  end
-
-  attr :name, :string, required: true, doc: "Specifies the name of the element"
-  attr :class, :any, default: nil, doc: "Custom CSS class for additional styling"
-
-  defp icon(%{name: "hero-" <> _, class: class} = assigns) when is_list(class) do
-    ~H"""
-    <span class={[@name] ++ @class} />
-    """
-  end
-
-  defp icon(%{name: "hero-" <> _} = assigns) do
-    ~H"""
-    <span class={[@name, @class]} />
-    """
   end
 end

@@ -14,6 +14,8 @@ defmodule CommunityDemoWeb.Components.Navbar do
   visually appealing and interactive navigation bars that enhance the user experience.
   """
   use Phoenix.Component
+  import CommunityDemoWeb.Components.Icon, only: [icon: 1]
+  use Gettext, backend: CommunityDemoWeb.Gettext
 
   @doc """
   Renders a customizable navigation bar (`navbar` component) that can include links,
@@ -124,20 +126,24 @@ defmodule CommunityDemoWeb.Components.Navbar do
 
   attr :padding, :string, default: "small", doc: "Determines padding for items"
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
+  attr :nav_wrapper_class, :string, default: nil, doc: "Custom CSS class for nav wrapper"
+  attr :link_class, :string, default: nil, doc: "Custom CSS class for link"
+  attr :list_wrapper_class, :string, default: nil, doc: "Custom CSS class for list main wrapper"
+  attr :list_class, :string, default: nil, doc: "Custom CSS class for list ul"
 
   attr :rest, :global,
     doc:
       "Global attributes can define defaults which are merged with attributes provided by the caller"
 
-  slot :start_content,
-    required: false,
-    doc: "Content to be rendered at the start (start side based on rtl or ltr) of the navbar."
+  slot :start_content, required: false do
+    attr :class, :string, doc: "Custom CSS class for additional styling"
+  end
 
   slot :inner_block, required: false, doc: "Inner block that renders HEEx content"
 
-  slot :end_content,
-    required: false,
-    doc: "Content to be rendered at the end (end side based on rtl or ltr) of the navbar."
+  slot :end_content, required: false do
+    attr :class, :string, doc: "Custom CSS class for additional styling"
+  end
 
   slot :list, required: false do
     attr :class, :string, doc: "Custom CSS class for additional styling"
@@ -151,6 +157,7 @@ defmodule CommunityDemoWeb.Components.Navbar do
     ~H"""
     <nav
       id={@id}
+      role="navigation"
       class={[
         "relative",
         "[&.show-nav-menu_.nav-menu]:block [&.show-nav-menu_.nav-menu]:opacity-100",
@@ -167,28 +174,29 @@ defmodule CommunityDemoWeb.Components.Navbar do
       ]}
       {@rest}
     >
-      <div class="nav-wrapper md:flex items-center gap-2 md:gap-5">
-        <div :if={@start_content != [] and !is_nil(@start_content)}>
+      <div class={["nav-wrapper md:flex items-center gap-2 md:gap-5", @nav_wrapper_class]}>
+        <div :if={@start_content != [] and !is_nil(@start_content)} class={@start_content[:class]}>
           {render_slot(@start_content)}
         </div>
         <.link
           :if={!is_nil(@link)}
           navigate={@link}
-          class="flex items-center space-x-3 rtl:space-x-reverse mb-5 md:mb-0"
+          class={["flex items-center space-x-3 rtl:space-x-reverse mb-5 md:mb-0", @link_class]}
         >
-          <img :if={!is_nil(@image)} src={@image} class={@image_class} />
+          <img :if={!is_nil(@image)} src={@image} class={@image_class} alt={gettext("Logo")} />
           <h1 :if={!is_nil(@name)} class="text-xl font-semibold">
             {@name}
           </h1>
         </.link>
 
-        <div :if={!is_nil(@list) && length(@list) > 0} class={["w-auto"]}>
-          <ul class={[
-            "flex flex-wrap md:flex-nowrap gap-4",
-            @relative && "relative"
-          ]}>
+        <div :if={!is_nil(@list) && length(@list) > 0} class={["w-auto", @list_wrapper_class]}>
+          <ul
+            role="menubar"
+            class={["flex flex-wrap md:flex-nowrap gap-4", @relative && "relative", @list_class]}
+          >
             <li
               :for={list <- @list}
+              role="none"
               class={[
                 "inline-flex items-center",
                 list[:icon_position] == "end" && "flex-row-reverse",
@@ -201,7 +209,9 @@ defmodule CommunityDemoWeb.Components.Navbar do
           </ul>
         </div>
         {render_slot(@inner_block)}
-        <div :if={@end_content != [] and !is_nil(@end_content)}>{render_slot(@end_content)}</div>
+        <div :if={@end_content != [] and !is_nil(@end_content)} class={@end_content[:class]}>
+          {render_slot(@end_content)}
+        </div>
       </div>
     </nav>
     """
@@ -618,19 +628,4 @@ defmodule CommunityDemoWeb.Components.Navbar do
   end
 
   defp color_variant(params, _) when is_binary(params), do: params
-
-  attr :name, :string, required: true, doc: "Specifies the name of the element"
-  attr :class, :any, default: nil, doc: "Custom CSS class for additional styling"
-
-  defp icon(%{name: "hero-" <> _, class: class} = assigns) when is_list(class) do
-    ~H"""
-    <span class={[@name] ++ @class} />
-    """
-  end
-
-  defp icon(%{name: "hero-" <> _} = assigns) do
-    ~H"""
-    <span class={[@name, @class]} />
-    """
-  end
 end

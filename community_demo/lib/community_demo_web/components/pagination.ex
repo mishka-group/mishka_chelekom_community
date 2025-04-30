@@ -18,6 +18,8 @@ defmodule CommunityDemoWeb.Components.Pagination do
 
   use Phoenix.Component
   alias Phoenix.LiveView.JS
+  import CommunityDemoWeb.Components.Icon, only: [icon: 1]
+  use Gettext, backend: CommunityDemoWeb.Gettext
 
   @doc """
   Renders a `pagination` component that allows users to navigate through pages.
@@ -73,27 +75,59 @@ defmodule CommunityDemoWeb.Components.Pagination do
 
   attr :variant, :string, default: "base", doc: "Determines the style"
 
-  attr :separator, :string,
-    default: "hero-ellipsis-horizontal",
-    doc: "Determines a separator for items of an element"
+  attr :separator, :map,
+    default: %{type: :icon, value: "hero-ellipsis-horizontal"},
+    doc: "Separator between page groups"
 
-  attr :next_label, :string,
-    default: "hero-chevron-right",
-    doc: "Determines the next icon or label"
+  attr :first_label, :map,
+    default: %{type: :icon, value: "hero-chevron-double-left"},
+    doc: "Label for the 'first' button"
 
-  attr :previous_label, :string,
-    default: "hero-chevron-left",
-    doc: "Determines the previous icon or label"
+  attr :last_label, :map,
+    default: %{type: :icon, value: "hero-chevron-double-right"},
+    doc: "Label for the 'last' button"
 
-  attr :first_label, :string,
-    default: "hero-chevron-double-left",
-    doc: "Determines the first icon or label"
+  attr :next_label, :map,
+    default: %{type: :icon, value: "hero-chevron-right"},
+    doc: "Label for the 'next' button"
 
-  attr :last_label, :string,
-    default: "hero-chevron-double-right",
-    doc: "Determines the last icon or label"
+  attr :previous_label, :map,
+    default: %{type: :icon, value: "hero-chevron-left"},
+    doc: "Label for the 'previous' button"
 
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
+
+  attr :first_label_class, :string,
+    default: nil,
+    doc: "Custom CSS class for additional styling to first button"
+
+  attr :next_label_class, :string,
+    default: nil,
+    doc: "Custom CSS class for additional styling to next button"
+
+  attr :last_label_class, :string,
+    default: nil,
+    doc: "Custom CSS class for additional styling to last button"
+
+  attr :prev_label_class, :string,
+    default: nil,
+    doc: "Custom CSS class for additional styling to prveious button"
+
+  attr :pages_label_class, :string,
+    default: nil,
+    doc: "Custom CSS class for additional styling to pages buttons"
+
+  attr :seperator_class, :string,
+    default: nil,
+    doc: "Custom CSS class for additional styling to pages buttons"
+
+  attr :separator_icon_class, :string,
+    default: nil,
+    doc: "Custom CSS class for additional styling to icon of seperator"
+
+  attr :separator_text_class, :string,
+    default: nil,
+    doc: "Custom CSS class for additional styling to text of seperator"
 
   attr :params, :map,
     default: %{},
@@ -113,21 +147,20 @@ defmodule CommunityDemoWeb.Components.Pagination do
     assigns = assign(assigns, %{siblings: build_pagination(total, active, siblings, boundaries)})
 
     ~H"""
-    <div
+    <nav
       :if={show_pagination?(@rest[:hide_one_page], @total)}
       id={@id}
-      class={
-        default_classes() ++
-          [
-            color_variant(@variant, @color),
-            border_size(@border, @variant),
-            rounded_size(@rounded),
-            size_class(@size),
-            border_class(@color),
-            (!is_nil(@rest[:grouped]) && "gap-0 grouped-pagination") || space_class(@space),
-            @class
-          ]
-      }
+      class={[
+        default_classes(),
+        color_variant(@variant, @color),
+        border_size(@border, @variant),
+        rounded_size(@rounded),
+        size_class(@size),
+        border_class(@color),
+        (!is_nil(@rest[:grouped]) && "gap-0 grouped-pagination") || space_class(@space),
+        @class
+      ]}
+      {@rest}
     >
       {render_slot(@start_items)}
 
@@ -136,7 +169,9 @@ defmodule CommunityDemoWeb.Components.Pagination do
         on_action={{"first", @on_next}}
         page={{nil, @active}}
         params={@params}
-        icon={@first_label}
+        label={@first_label}
+        class={@first_label_class}
+        aria_label={gettext("First page")}
         disabled={@active <= 1}
       />
 
@@ -145,16 +180,36 @@ defmodule CommunityDemoWeb.Components.Pagination do
         on_action={{"previous", @on_previous}}
         page={{nil, @active}}
         params={@params}
-        icon={@previous_label}
+        label={@previous_label}
+        class={@prev_label_class}
+        aria_label={gettext("Previous page")}
         disabled={@active <= 1}
       />
 
       <div :for={range <- @siblings.range}>
         <%= if is_integer(range) do %>
-          <.item_button on_action={{"select", @on_select}} page={{range, @active}} params={@params} />
+          <.item_button
+            on_action={{"select", @on_select}}
+            page={{range, @active}}
+            params={@params}
+            class={@pages_label_class}
+          />
         <% else %>
-          <div class="pagination-seperator flex justify-center items-center">
-            <.icon_or_text name={@separator} />
+          <div
+            class={["pagination-seperator flex justify-center items-center", @seperator_class]}
+            aria-hidden="true"
+          >
+            <.icon
+              :if={Map.get(@separator, :type) == :icon}
+              name={@separator.value}
+              class={["pagination-icon", @separator_icon_class]}
+            />
+            <span
+              :if={Map.get(@separator, :type) != :icon}
+              class={["pagination-text", @separator_text_class]}
+            >
+              {@separator.value}
+            </span>
           </div>
         <% end %>
       </div>
@@ -164,7 +219,9 @@ defmodule CommunityDemoWeb.Components.Pagination do
         on_action={{"next", @on_next}}
         page={{nil, @active}}
         params={@params}
-        icon={@next_label}
+        label={@next_label}
+        class={@next_label_class}
+        aria_label={gettext("Next page")}
         disabled={@active >= @total}
       />
 
@@ -173,28 +230,14 @@ defmodule CommunityDemoWeb.Components.Pagination do
         on_action={{"last", @on_last}}
         page={{nil, @active}}
         params={@params}
-        icon={@last_label}
+        label={@last_label}
+        class={@last_label_class}
+        aria_label={gettext("Last page")}
         disabled={@active >= @total}
       />
 
       {render_slot(@end_items)}
-    </div>
-    """
-  end
-
-  @doc type: :component
-  attr :name, :string, doc: "Specifies the name of the element"
-  attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
-
-  defp icon_or_text(%{name: "hero-" <> _icon_name} = assigns) do
-    ~H"""
-    <.icon name={@name} class={@class || "pagination-icon"} />
-    """
-  end
-
-  defp icon_or_text(assigns) do
-    ~H"""
-    <span class={@class || "pagination-text"}>{@name}</span>
+    </nav>
     """
   end
 
@@ -205,15 +248,27 @@ defmodule CommunityDemoWeb.Components.Pagination do
 
   attr :page, :list, required: true, doc: "Specifies pagination pages"
   attr :on_action, JS, default: %JS{}, doc: "Custom JS module for on_action action"
-  attr :icon, :string, required: false, doc: "Icon displayed alongside of an item"
+  attr :label, :string, required: false, doc: "Icon displayed alongside of an item"
   attr :disabled, :boolean, required: false, doc: "Specifies whether the element is disabled"
+  attr :aria_label, :string, default: nil, doc: "Accessible label for screen readers"
+  attr :class, :string, default: nil, doc: "Custom class for addition styling"
 
   defp item_button(%{on_action: {"select", _on_action}} = assigns) do
     ~H"""
     <button
+      aria-current={elem(@page, 1) == elem(@page, 0) && "page"}
+      aria-label={
+        if elem(@page, 1) == elem(@page, 0) do
+          gettext("Page %{page}, current page", page: elem(@page, 0))
+        else
+          gettext("Go to page %{page}", page: elem(@page, 0))
+        end
+      }
+      aria-disabled={elem(@page, 0) == elem(@page, 1)}
       class={[
         "pagination-button",
-        elem(@page, 1) == elem(@page, 0) && "active-pagination-button"
+        elem(@page, 1) == elem(@page, 0) && "active-pagination-button",
+        @class
       ]}
       phx-click={
         elem(@on_action, 1)
@@ -229,14 +284,17 @@ defmodule CommunityDemoWeb.Components.Pagination do
   defp item_button(assigns) do
     ~H"""
     <button
-      class="pagination-control flex items-center justify-center"
+      class={["pagination-control flex items-center justify-center", @class]}
+      aria-disabled={@disabled}
+      aria-label={@aria_label}
       phx-click={
         elem(@on_action, 1)
         |> JS.push("pagination", value: Map.merge(%{action: elem(@on_action, 0)}, @params))
       }
       disabled={@disabled}
     >
-      <.icon_or_text name={@icon} />
+      <.icon :if={Map.get(@label, :type) == :icon} name={@label.value} class="pagination-icon" />
+      <span :if={Map.get(@label, :type) != :icon} class="pagination-text">{@label.value}</span>
     </button>
     """
   end
@@ -1487,19 +1545,4 @@ defmodule CommunityDemoWeb.Components.Pagination do
   defp show_pagination?(true, total) when total <= 1, do: false
   defp show_pagination?(_, total) when total > 1, do: true
   defp show_pagination?(_, _), do: false
-
-  attr :name, :string, required: true, doc: "Specifies the name of the element"
-  attr :class, :any, default: nil, doc: "Custom CSS class for additional styling"
-
-  defp icon(%{name: "hero-" <> _, class: class} = assigns) when is_list(class) do
-    ~H"""
-    <span class={[@name] ++ @class} />
-    """
-  end
-
-  defp icon(%{name: "hero-" <> _} = assigns) do
-    ~H"""
-    <span class={[@name, @class]} />
-    """
-  end
 end

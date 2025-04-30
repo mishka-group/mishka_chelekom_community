@@ -13,7 +13,7 @@ defmodule CommunityDemoWeb.Components.Carousel do
   - **Indicators**: Optional indicators show the current slide and allow direct navigation to any slide.
   - **Overlay Options**: Customize the appearance of the overlay for a more distinct visual style.
   - **Responsive Design**: Supports various sizes and padding options to adapt to different screen sizes.
-  ```
+  - **Image Loading**: Shows loading state while images are being loaded.
 
   This module offers an easy-to-use interface for building carousels with consistent
   styling and behavior across your application, while providing the flexibility to
@@ -21,8 +21,10 @@ defmodule CommunityDemoWeb.Components.Carousel do
   """
 
   use Phoenix.Component
-  alias Phoenix.LiveView.JS
   import CommunityDemoWeb.Components.Image, only: [image: 1]
+  import Phoenix.LiveView.Utils, only: [random_id: 0]
+  import CommunityDemoWeb.Components.Icon, only: [icon: 1]
+  use Gettext, backend: CommunityDemoWeb.Gettext
 
   @doc """
   The `carousel` component is used to create interactive image carousels with customizable attributes
@@ -50,36 +52,11 @@ defmodule CommunityDemoWeb.Components.Carousel do
       title="This is a dummy title 3"
       image="https://example.com/slides/3.webp"
     />
-    <:slide title="This is a dummy title 4" image="https://example.com/slides/3.webp"/>
-    <:slide title="This is a dummy title 5" image="https://example.com/slides/4.webp"/>
-    <:slide
-      title="This is a dummy title 6"
-      image="https://example.com/slides/5.webp"
-    />
-    <:slide
-      title="This is a dummy title 7"
-      image="https://example.com/slides/6.webp"
-      content_position="end"
-      navigate="/examples/popover"
-    />
-    <:slide
-      image="https://example.com/slides/8.webp"
-      content_position="end"
-      title="This is a dummy title 8"
-      description="This is a description for our carousel and this is a dummy text"
-      navigate="/examples/list"
-    />
   </.carousel>
   ```
-
-  > If you want to reduce the volume of this component when sending from the server to the client,
-  > it is better not to activate the indicator option. In the next versions, javascript will be used
-  > to solve this problem
   """
   @doc type: :component
-  attr :id, :string,
-    required: true,
-    doc: "A unique identifier is used to manage state and interaction"
+  attr :id, :string, doc: "A unique identifier is used to manage state and interaction"
 
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
   attr :overlay, :string, default: "base", doc: "Determines an overlay"
@@ -98,6 +75,24 @@ defmodule CommunityDemoWeb.Components.Carousel do
 
   attr :indicator, :boolean, default: false, doc: "Specifies whether to show element indicators"
   attr :control, :boolean, default: true, doc: "Determines whether to show navigation controls"
+  attr :active_index, :integer, default: 0, doc: "Index of the active slide (starts at 0)"
+  attr :autoplay, :boolean, default: false, doc: "Enable or disable autoplay functionality"
+
+  attr :autoplay_interval, :integer,
+    default: 5000,
+    doc: "Time between slides in ms (if autoplay is enabled)"
+
+  attr :active_slide_class, :string,
+    default: "active-slide z-10",
+    doc: "CSS class for active slide"
+
+  attr :hidden_slide_class, :string,
+    default: "opacity-0",
+    doc: "CSS class for hidden (inactive) slides"
+
+  attr :active_indicator_class, :string,
+    default: "active-indicator",
+    doc: "CSS class for active indicator"
 
   slot :inner_block, required: false, doc: "Inner block that renders HEEx content"
 
@@ -122,73 +117,65 @@ defmodule CommunityDemoWeb.Components.Carousel do
 
   def carousel(assigns) do
     assigns =
-      assign_new(assigns, :actived_carousel, fn ->
+      assigns
+      |> assign_new(:id, fn -> "carousel-#{random_id()}" end)
+      |> assign_new(:actived_carousel, fn ->
         Enum.find_index(assigns.slide, &(Map.get(&1, :active) == true)) || 0
       end)
 
     ~H"""
-    <div>
-      <div
-        id={@id}
-        phx-remove={unselect_carousel(@id, length(@slide))}
-        phx-mounted={
-          JS.exec("phx-remove", to: "##{@id}") |> select_carousel(@id, @actived_carousel + 1)
-        }
-        class={[
-          "relative w-full",
-          "[&_.slide:not(.active-slide)]:absolute [&_.slide]:inset-0 [&_.slide:not(.active-slide)]:opacity-0",
-          "[&_.slide]:transition-all [&_.slide]:delay-75 [&_.slide]:duration-1000 [&_.slide]:ease-in-out",
-          "[&_.slide.active-slide]:z-10",
-          text_position(@text_position),
-          padding_size(@padding),
-          color_class(@overlay),
-          size_class(@size)
-        ]}
+    <div
+      id={@id}
+      phx-hook="Carousel"
+      phx-update="ignore"
+      data-active-index={@active_index + 1}
+      data-autoplay={to_string(@autoplay)}
+      data-autoplay-interval={@autoplay_interval}
+      data-active-slide-class={@active_slide_class}
+      data-hidden-slide-class={@hidden_slide_class}
+      data-active-indicator-class={@active_indicator_class}
+      class={[
+        "relative w-full overflow-hidden",
+        "[&_.slide:not(.active-slide)]:absolute [&_.slide]:inset-0 [&_.slide]:opacity-0 [&_.slide.active-slide]:opacity-100 [&_.slide:not(.active-slide)]:pointer-events-none [&_.slide:not(.active-slide)]:z-0",
+        "[&_.slide.active-slide]:z-10",
+        "[&_.slide]:transition-opacity [&_.slide]:delay-[50ms] [&_.slide]:duration-[700ms] [&_.slide]:ease-in-out",
+        text_position(@text_position),
+        padding_size(@padding),
+        color_class(@overlay),
+        size_class(@size),
+        @class
+      ]}
+    >
+      <button
+        :if={@control}
+        id={"#{@id}-carousel-prev"}
+        class="absolute left-0 inset-y-0 z-20 p-4 bg-black/10 hover:bg-black/30 transition focus:outline-none"
       >
-        <div
-          :for={{slide, index} <- Enum.with_index(@slide, 1)}
-          id={"#{@id}-carousel-slide-#{index}"}
-          class={["slide h-full", slide[:class]]}
-          phx-select={JS.exec("phx-remove", to: "##{@id}") |> select_carousel(@id, index)}
-        >
-          <div class="relative w-full">
-            <button
-              :if={@control}
-              class={[
-                "carousel-controls drop-shadow-2xl w-fit absolute top-0 bottom-0 left-0 p-5 flex justify-center items-center",
-                "z-10 text-white transition-all ease-in-out duration-300 hover:bg-black/5"
-              ]}
-              id={"#{@id}-carousel-pervious-btn-#{index}"}
-              phx-click={
-                index - 1 != 0 &&
-                  JS.exec("phx-select", to: "##{@id}-carousel-slide-#{index - 1}")
-              }
-            >
-              <.icon name="hero-chevron-left" class="size-5 md:size-7 lg:size-9" />
-            </button>
+        <.icon name="hero-chevron-left" class="size-7 text-white" />
+      </button>
 
-            <.slide_image id={@id} index={index} {slide}>
-              <.slide_content id={@id} index={index} {slide} />
-            </.slide_image>
+      <button
+        :if={@control}
+        id={"#{@id}-carousel-next"}
+        class="absolute right-0 inset-y-0 z-20 p-4 bg-black/10 hover:bg-black/30 transition focus:outline-none"
+      >
+        <.icon name="hero-chevron-right" class="size-7 text-white" />
+      </button>
 
-            <button
-              :if={@control}
-              id={"#{@id}-carousel-next-btn-#{index}"}
-              class={[
-                "carousel-controls drop-shadow-2xl w-fit absolute top-0 bottom-0 right-0 p-5 flex justify-center items-center",
-                "z-10 text-white transition-all ease-in-out duration-300"
-              ]}
-              phx-click={
-                index + 1 <= length(@slide) &&
-                  JS.exec("phx-select", to: "##{@id}-carousel-slide-#{index + 1}")
-              }
-            >
-              <.icon name="hero-chevron-right" class="size-5 md:size-7 lg:size-9" />
-            </button>
-          </div>
+      <div
+        :for={{slide, index} <- Enum.with_index(@slide, 1)}
+        id={"#{@id}-carousel-slide-#{index}"}
+        class={["slide h-full", slide[:class]]}
+        aria-hidden={@actived_carousel + 1 != index}
+      >
+        <div class="relative w-full h-full">
+          <.slide_image id={@id} index={index} {slide}>
+            <.slide_content id={@id} index={index} {slide} />
+          </.slide_image>
         </div>
-        <.slide_indicators :if={@indicator} id={@id} count={length(@slide)} />
       </div>
+
+      <.slide_indicators :if={@indicator} id={@id} count={length(@slide)} />
     </div>
     """
   end
@@ -216,11 +203,13 @@ defmodule CommunityDemoWeb.Components.Carousel do
        when is_binary(nav) or is_binary(pat) or is_binary(hrf) do
     ~H"""
     <.link navigate={@navigate} patch={@patch} href={@href}>
-      <.image
-        class={["max-w-full", @image_class]}
-        src={@image}
-        id={"#{@id}-carousel-slide-image-#{@index}"}
-      />
+      <div class="relative">
+        <.image
+          class={["max-w-full", @image_class]}
+          src={@image}
+          id={"#{@id}-carousel-slide-image-#{@index}"}
+        />
+      </div>
       {render_slot(@inner_block)}
     </.link>
     """
@@ -228,11 +217,13 @@ defmodule CommunityDemoWeb.Components.Carousel do
 
   defp slide_image(assigns) do
     ~H"""
-    <.image
-      class={["max-w-full", @image_class]}
-      src={@image}
-      id={"#{@id}-carousel-slide-image-#{@index}"}
-    />
+    <div class="relative">
+      <.image
+        class={["max-w-full", @image_class]}
+        src={@image}
+        id={"#{@id}-carousel-slide-image-#{@index}"}
+      />
+    </div>
     {render_slot(@inner_block)}
     """
   end
@@ -315,9 +306,8 @@ defmodule CommunityDemoWeb.Components.Carousel do
         :for={indicator_item <- 1..@count}
         id={"#{@id}-carousel-indicator-#{indicator_item}"}
         data-indicator-index={"#{indicator_item}"}
-        phx-click={JS.exec("phx-select", to: "##{@id}-carousel-slide-#{indicator_item}")}
         class="carousel-indicator"
-        aria-label={"Slide #{indicator_item}"}
+        aria-label={gettext("Go to slide %{index}", index: indicator_item)}
       />
     </div>
     """
@@ -482,100 +472,4 @@ defmodule CommunityDemoWeb.Components.Carousel do
   end
 
   defp color_class(params) when is_binary(params), do: params
-
-  @doc """
-  Sets the specified slide as active and enables the navigation controls in the carousel.
-
-  ## Parameters
-
-    - `js`: A `Phoenix.LiveView.JS` structure for composing JavaScript commands.
-    Defaults to an empty `%JS{}` if not provided.
-    - `id`: The unique identifier of the carousel component.
-    - `count`: The index of the slide to be selected as active.
-
-  ## Functionality
-
-  Performs the following actions:
-
-    - Adds the `active-slide` CSS class to the specified slide, making it visible in the carousel.
-    - Removes the `disabled` attribute from the previous and next navigation buttons
-    for the active slide, allowing user interaction.
-
-  ### Example:
-
-    ```elixir
-    select_carousel(%JS{}, id, count)
-    ```
-
-  This function is used to display a specific slide in the carousel and enable
-  the navigation controls for that slide.
-  """
-
-  def select_carousel(js \\ %JS{}, id, count) when is_binary(id) do
-    JS.add_class(js, "active-slide",
-      to: "##{id}-carousel-slide-#{count}",
-      transition: "duration-0"
-    )
-    |> JS.remove_attribute("disabled", to: "##{id}-carousel-pervious-btn-#{count}")
-    |> JS.remove_attribute("disabled", to: "##{id}-carousel-next-btn-#{count}")
-    |> JS.set_attribute({"aria-current", "true"}, to: "##{id}-carousel-indicator-#{count}")
-    |> JS.add_class("active-indicator", to: "##{id}-carousel-indicator-#{count}")
-  end
-
-  @doc """
-  Removes the active state from all slides and disables navigation controls in the carousel.
-
-  ## Parameters
-
-    - `js`: A `Phoenix.LiveView.JS` structure for composing JavaScript commands.
-    Defaults to an empty `%JS{}` if not provided.
-    - `id`: The unique identifier of the carousel component.
-    - `count`: The total number of slides in the carousel.
-
-  ## Functionality
-
-  Iterates through each slide in the carousel, performing the following actions:
-
-    - Disables the previous and next navigation buttons by setting the `disabled` attribute.
-    - Removes the `active-slide` CSS class from all slides to hide them.
-    - Removes the `active-indicator` CSS class from all slide indicators.
-
-  ### Example:
-
-  ```elixir
-  unselect_carousel(%JS{}, id, count)
-  ```
-
-  This function is used to reset the carousel state, making all slides inactive and disabling
-  the navigation controls.
-  """
-
-  def unselect_carousel(js \\ %JS{}, id, count) do
-    Enum.reduce(1..count, js, fn item, acc ->
-      acc
-      |> JS.set_attribute({"disabled", "true"}, to: "##{id}-carousel-pervious-btn-#{item}")
-      |> JS.set_attribute({"disabled", "true"}, to: "##{id}-carousel-next-btn-#{item}")
-      |> JS.set_attribute({"aria-current", "false"}, to: "##{id}-carousel-indicator-#{item}")
-      |> JS.remove_class("active-slide",
-        to: "##{id}-carousel-slide-#{item}",
-        transition: "duration-0"
-      )
-      |> JS.remove_class("active-indicator", to: "##{id}-carousel-indicator-#{item}")
-    end)
-  end
-
-  attr :name, :string, required: true, doc: "Specifies the name of the element"
-  attr :class, :any, default: nil, doc: "Custom CSS class for additional styling"
-
-  defp icon(%{name: "hero-" <> _, class: class} = assigns) when is_list(class) do
-    ~H"""
-    <span class={[@name] ++ @class} />
-    """
-  end
-
-  defp icon(%{name: "hero-" <> _} = assigns) do
-    ~H"""
-    <span class={[@name, @class]} />
-    """
-  end
 end

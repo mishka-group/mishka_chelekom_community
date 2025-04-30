@@ -134,9 +134,15 @@ defmodule CommunityDemoWeb.Components.Popover do
     >
       <span
         :for={trigger <- @trigger}
-        phx-click-away={JS.remove_class("show-popover", to: "##{@id}-popover-content")}
-        phx-click={JS.toggle_class("show-popover", to: "##{@id}-popover-content")}
+        phx-click={show_popover(@id)}
+        phx-click-away={hide_popover(@id)}
         class={["inline-block cursor-pointer popover-trigger", trigger[:class]]}
+        role="button"
+        aria-haspopup="tooltip"
+        id={"#{@id}-popover-trigger"}
+        aria-expanded="false"
+        aria-controls={"#{@id}-popover-content"}
+        tabindex="0"
         {@rest}
       >
         {render_slot(trigger)}
@@ -145,7 +151,9 @@ defmodule CommunityDemoWeb.Components.Popover do
       <span
         :for={content <- @content}
         id={"#{@id}-popover-content"}
-        role="dialog"
+        role="tooltip"
+        aria-labelledby={"#{@id}-popover-trigger"}
+        tabindex="-1"
         class={[
           "popover-content absolute z-10 w-full",
           "transition-all ease-in-out delay-100 duratio-500",
@@ -187,9 +195,14 @@ defmodule CommunityDemoWeb.Components.Popover do
     >
       <div
         :for={trigger <- @trigger}
-        phx-click-away={JS.remove_class("show-popover", to: "##{@id}-popover-content")}
-        phx-click={JS.toggle_class("show-popover", to: "##{@id}-popover-content")}
+        phx-click={show_popover(@id)}
+        phx-click-away={hide_popover(@id)}
+        id={"#{@id}-popover-trigger"}
         class={["cursor-pointer popover-trigger", trigger[:class]]}
+        role="button"
+        aria-haspopup="tooltip"
+        aria-expanded="false"
+        aria-controls={"#{@id}-popover-content"}
         {@rest}
       >
         {render_slot(trigger)}
@@ -197,7 +210,9 @@ defmodule CommunityDemoWeb.Components.Popover do
 
       <div
         :for={content <- @content}
-        role="dialog"
+        role="tooltip"
+        aria-labelledby={"#{@id}-popover-trigger"}
+        tabindex="-1"
         id={"#{@id}-popover-content"}
         class={[
           "popover-content absolute z-10 w-full",
@@ -280,7 +295,7 @@ defmodule CommunityDemoWeb.Components.Popover do
     default: nil,
     doc: "A unique identifier is used to manage state and interaction"
 
-  attr :trigger_id, :string, default: nil, doc: "Identifies what is the triggered element id"
+  attr :trigger_id, :string, required: true, doc: "Identifies what is the triggered element id"
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
   attr :inline, :boolean, default: false, doc: "Determines whether this element is inline"
   slot :inner_block, required: false, doc: "Inner block that renders HEEx content"
@@ -292,10 +307,15 @@ defmodule CommunityDemoWeb.Components.Popover do
   def popover_trigger(%{inline: true} = assigns) do
     ~H"""
     <span
-      id={@id}
-      phx-click-away={@trigger_id && JS.remove_class("show-popover", to: "##{@trigger_id}")}
-      phx-click={@trigger_id && JS.toggle_class("show-popover", to: "##{@trigger_id}")}
+      id={"#{@trigger_id}-popover-trigger"}
+      phx-click-away={@trigger_id && hide_popover(@trigger_id)}
+      phx-click={@trigger_id && show_popover(@trigger_id)}
       class={["inline-block cursor-pointer popover-trigger", @class]}
+      role="button"
+      aria-haspopup="tooltip"
+      aria-expanded="false"
+      aria-controls={"#{@trigger_id}-popover-content"}
+      tabindex="0"
       {@rest}
     >
       {render_slot(@inner_block)}
@@ -306,10 +326,15 @@ defmodule CommunityDemoWeb.Components.Popover do
   def popover_trigger(assigns) do
     ~H"""
     <div
-      id={@id}
-      phx-click-away={@trigger_id && JS.remove_class("show-popover", to: "##{@trigger_id}")}
-      phx-click={@trigger_id && JS.toggle_class("show-popover", to: "##{@trigger_id}")}
+      id={"#{@trigger_id}-popover-trigger"}
+      phx-click-away={@trigger_id && hide_popover(@trigger_id)}
+      phx-click={@trigger_id && show_popover(@trigger_id)}
       class={["cursor-pointer popover-trigger", @class]}
+      role="button"
+      aria-haspopup="tooltip"
+      aria-expanded="false"
+      aria-controls={"#{@trigger_id}-popover-content"}
+      tabindex="0"
       {@rest}
     >
       {render_slot(@inner_block)}
@@ -333,10 +358,7 @@ defmodule CommunityDemoWeb.Components.Popover do
   ```
   """
   @doc type: :component
-  attr :id, :string,
-    default: nil,
-    doc: "A unique identifier is used to manage state and interaction"
-
+  attr :trigger_id, :string, required: true, doc: "Identifies what is the triggered element id"
   attr :inline, :boolean, default: false, doc: "Determines whether this element is inline"
   attr :position, :string, default: "top", doc: "Determines the element position"
   attr :variant, :string, default: "base", doc: "Determines the style"
@@ -371,7 +393,9 @@ defmodule CommunityDemoWeb.Components.Popover do
     ~H"""
     <span
       role="tooltip"
-      id={@id}
+      aria-labelledby={"#{@trigger_id}-popover-trigger"}
+      tabindex="-1"
+      id={"#{@trigger_id}-popover-content"}
       class={[
         "popover-content absolute z-10 w-full",
         "transition-all ease-in-out delay-100 duratio-500",
@@ -402,8 +426,10 @@ defmodule CommunityDemoWeb.Components.Popover do
   def popover_content(assigns) do
     ~H"""
     <div
-      role="dialog "
-      id={@id}
+      role="tooltip"
+      aria-labelledby={"#{@trigger_id}-popover-trigger"}
+      tabindex="-1"
+      id={"#{@trigger_id}-popover-content"}
       class={[
         "popover-content absolute z-10 w-full",
         "transition-all ease-in-out delay-100 duratio-500",
@@ -429,6 +455,18 @@ defmodule CommunityDemoWeb.Components.Popover do
       {render_slot(@inner_block)}
     </div>
     """
+  end
+
+  defp show_popover(js \\ %JS{}, id) when is_binary(id) do
+    js
+    |> JS.add_class("show-popover", to: "##{id}-popover-content")
+    |> JS.set_attribute({"aria-expanded", "true"}, to: "##{id}-trigger")
+  end
+
+  defp hide_popover(js \\ %JS{}, id) when is_binary(id) do
+    js
+    |> JS.remove_class("show-popover", to: "##{id}-popover-content")
+    |> JS.set_attribute({"aria-expanded", "false"}, to: "##{id}-trigger")
   end
 
   defp tirgger_popover(),

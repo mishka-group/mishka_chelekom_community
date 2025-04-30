@@ -15,6 +15,7 @@ defmodule CommunityDemoWeb.Components.TableContent do
 
   use Phoenix.Component
   alias Phoenix.LiveView.JS
+  import CommunityDemoWeb.Components.Icon, only: [icon: 1]
 
   @doc """
   The `table_content` component is used to display organized content with customizable styling
@@ -58,6 +59,11 @@ defmodule CommunityDemoWeb.Components.TableContent do
     doc: "A unique identifier is used to manage state and interaction"
 
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
+
+  attr :title_class, :string,
+    default: nil,
+    doc: "Custom CSS class for additional styling to title"
+
   attr :title, :string, default: nil, doc: "Specifies the title of the element"
   attr :color, :string, default: "natural", doc: "Determines color theme"
   attr :variant, :string, default: "base", doc: "Determines the style"
@@ -87,6 +93,13 @@ defmodule CommunityDemoWeb.Components.TableContent do
     attr :link_title, :string, doc: "Determines link"
     attr :link, :string, doc: "Determines link path"
     attr :active, :boolean, doc: "Indicates whether the element is currently active and visible"
+    attr :title_class, :string, doc: "Custom CSS class for additional styling to title"
+
+    attr :wrapper_class, :string,
+      doc: "Custom CSS class for additional styling to content wrapper"
+
+    attr :link_class, :string, doc: "Custom CSS class for additional styling to link"
+    attr :contetn_class, :string, doc: "Custom CSS class for additional styling to content"
   end
 
   def table_content(assigns) do
@@ -94,6 +107,8 @@ defmodule CommunityDemoWeb.Components.TableContent do
     <div
       id={@id}
       phx-mounted={@animated && JS.add_class("scroll-smooth", to: "html")}
+      role="navigation"
+      aria-labelledby={@title && @id && "#{@id}-title"}
       class={[
         color_variant(@variant, @color),
         padding_size(@padding),
@@ -104,7 +119,12 @@ defmodule CommunityDemoWeb.Components.TableContent do
       ]}
       {@rest}
     >
-      <h5 class="font-semibold text-sm leading-6">{@title}</h5>
+      <h5
+        class={["font-semibold text-sm leading-6", @title_class]}
+        id={@title && @id && "#{@id}-title"}
+      >
+        {@title}
+      </h5>
 
       <div
         :for={item <- @item}
@@ -115,17 +135,20 @@ defmodule CommunityDemoWeb.Components.TableContent do
           item[:class]
         ]}
       >
-        <div :if={!is_nil(item[:title])}>{item[:title]}</div>
-        <div class="flex items-center transition-all hover:font-bold hover:opacity-90">
+        <div :if={!is_nil(item[:title])} class={item[:title_class]}>{item[:title]}</div>
+        <div class={[
+          "flex items-center transition-all hover:font-bold hover:opacity-90",
+          item[:wrapper_class]
+        ]}>
           <.icon
             :if={!is_nil(item[:icon])}
             name={item[:icon]}
             class={["content-icon me-2 inline-block", item[:icon_class]]}
           />
-          <.link :if={item[:link_title] && item[:link]} patch={item[:link]}>
+          <.link :if={item[:link_title] && item[:link]} patch={item[:link]} class={item[:link_class]}>
             {item[:link_title]}
           </.link>
-          <div>
+          <div class={item[:content_class]}>
             {render_slot(item)}
           </div>
         </div>
@@ -215,6 +238,20 @@ defmodule CommunityDemoWeb.Components.TableContent do
     doc: "A unique identifier is used to manage state and interaction"
 
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
+
+  attr :title_class, :string,
+    default: nil,
+    doc: "Custom CSS class for additional styling to title"
+
+  attr :wrapper_content_class, :string,
+    default: nil,
+    doc: "Custom CSS class for additional styling content wrapper"
+
+  attr :content_class, :string,
+    default: nil,
+    doc: "Custom CSS class for additional styling to content"
+
+  attr :link_class, :string, default: nil, doc: "Custom CSS class for additional styling to link"
   attr :title, :string, default: nil, doc: "Specifies the title of the element"
   attr :icon, :string, default: nil, doc: "Icon displayed alongside of an item"
   attr :icon_class, :string, default: nil, doc: "Determines custom class for the icon"
@@ -239,6 +276,8 @@ defmodule CommunityDemoWeb.Components.TableContent do
     ~H"""
     <div
       id={@id}
+      role="listitem"
+      aria-current={@active && "true"}
       class={[
         "content-item",
         @active && "font-bold",
@@ -247,15 +286,18 @@ defmodule CommunityDemoWeb.Components.TableContent do
       ]}
       {@rest}
     >
-      <div :if={!is_nil(@title)}>{@title}</div>
-      <div class="flex items-center transition-all hover:font-bold hover:opacity-90">
+      <div :if={!is_nil(@title)} class={@title_class}>{@title}</div>
+      <div class={[
+        "flex items-center transition-all hover:font-bold hover:opacity-90",
+        @wrapper_content_class
+      ]}>
         <.icon
           :if={!is_nil(@icon)}
           name={@icon}
           class={["content-icon me-2 inline-block", @icon_class]}
         />
-        <.link :if={@link_title && @link} patch={@link}>{@link_title}</.link>
-        <div>
+        <.link :if={@link_title && @link} patch={@link} class={@link_class}>{@link_title}</.link>
+        <div class={@content_class}>
           {render_slot(@inner_block)}
         </div>
       </div>
@@ -731,19 +773,4 @@ defmodule CommunityDemoWeb.Components.TableContent do
   end
 
   defp color_variant(params, _) when is_binary(params), do: params
-
-  attr :name, :string, required: true, doc: "Specifies the name of the element"
-  attr :class, :any, default: nil, doc: "Custom CSS class for additional styling"
-
-  defp icon(%{name: "hero-" <> _, class: class} = assigns) when is_list(class) do
-    ~H"""
-    <span class={[@name] ++ @class} />
-    """
-  end
-
-  defp icon(%{name: "hero-" <> _} = assigns) do
-    ~H"""
-    <span class={[@name, @class]} />
-    """
-  end
 end

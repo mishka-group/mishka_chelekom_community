@@ -71,6 +71,10 @@ defmodule CommunityDemoWeb.Components.Footer do
   attr :padding, :string, default: "", doc: "Determines padding for items"
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
 
+  attr :wrapper_class, :string,
+    default: nil,
+    doc: "Custom CSS class for additional styling to footer content wrapper"
+
   attr :rest, :global,
     doc:
       "Global attributes can define defaults which are merged with attributes provided by the caller"
@@ -94,7 +98,7 @@ defmodule CommunityDemoWeb.Components.Footer do
       ]}
       {@rest}
     >
-      <div>
+      <div class={@wrapper_class}>
         {render_slot(@inner_block)}
       </div>
     </footer>

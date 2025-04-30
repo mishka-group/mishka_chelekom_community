@@ -30,6 +30,7 @@ defmodule CommunityDemoWeb.Components.SpeedDial do
   use Phoenix.Component
   use Gettext, backend: CommunityDemoWeb.Gettext
   alias Phoenix.LiveView.JS
+  import CommunityDemoWeb.Components.Icon, only: [icon: 1]
 
   @doc """
   Renders a customizable `speed_dial` component that provides quick access to multiple actions.
@@ -54,6 +55,15 @@ defmodule CommunityDemoWeb.Components.SpeedDial do
     doc: "A unique identifier is used to manage state and interaction"
 
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
+
+  attr :wrapper_content_class, :string,
+    default: nil,
+    doc: "Custom CSS class for additional styling to content"
+
+  attr :trigger_class, :string,
+    default: nil,
+    doc: "Custom CSS class for additional styling to button"
+
   attr :action_position, :string, default: "bottom-end", doc: ""
   attr :position_size, :string, default: "large", doc: ""
   attr :wrapper_position, :string, default: "top", doc: ""
@@ -124,7 +134,8 @@ defmodule CommunityDemoWeb.Components.SpeedDial do
         border_class(@border, @variant),
         padding_class(@padding),
         width_class(@width),
-        size_class(@size)
+        size_class(@size),
+        @class
       ]}
       {@rest}
     >
@@ -132,9 +143,11 @@ defmodule CommunityDemoWeb.Components.SpeedDial do
         class={[
           "speed-dial-content flex items-center",
           "absolute z-10 w-full transition-all ease-in-out delay-100 duratio-500",
-          (@wrapper_position == "top" || @wrapper_position == "bottom") && "flex-col"
+          (@wrapper_position == "top" || @wrapper_position == "bottom") && "flex-col",
+          @wrapper_content_class
         ]}
         id={@id && "#{@id}-speed-dial-content"}
+        role="menu"
         phx-click-away={
           @id &&
             JS.remove_class("show-speed-dial",
@@ -161,7 +174,9 @@ defmodule CommunityDemoWeb.Components.SpeedDial do
 
       <button
         type="button"
-        class={["speed-dial-base", color_variant(@variant, @color)]}
+        aria-haspopup="menu"
+        aria-controls={"#{@id}-speed-dial-content"}
+        class={["speed-dial-base", color_variant(@variant, @color), @trigger_class]}
         phx-click={
           @id &&
             JS.toggle_class("show-speed-dial",
@@ -214,6 +229,8 @@ defmodule CommunityDemoWeb.Components.SpeedDial do
     <.link
       id={"#{@id}-speed-dial-item-#{@index}"}
       class={["block speed-dial-base flex flex-col", color_variant(@variant, @color)]}
+      role="menuitem"
+      tabindex="0"
       navigate={@navigate}
       patch={@patch}
       href={@href}
@@ -742,19 +759,4 @@ defmodule CommunityDemoWeb.Components.SpeedDial do
   end
 
   defp color_variant(params, _) when is_binary(params), do: params
-
-  attr :name, :string, required: true, doc: "Specifies the name of the element"
-  attr :class, :any, default: nil, doc: "Custom CSS class for additional styling"
-
-  defp icon(%{name: "hero-" <> _, class: class} = assigns) when is_list(class) do
-    ~H"""
-    <span class={[@name] ++ @class} />
-    """
-  end
-
-  defp icon(%{name: "hero-" <> _} = assigns) do
-    ~H"""
-    <span class={[@name, @class]} />
-    """
-  end
 end

@@ -28,6 +28,8 @@ defmodule CommunityDemoWeb.Components.Alert do
   use Phoenix.Component
   use Gettext, backend: CommunityDemoWeb.Gettext
   alias Phoenix.LiveView.JS
+  import CommunityDemoWeb.Components.Icon, only: [icon: 1]
+  import Phoenix.LiveView.Utils, only: [random_id: 0]
 
   @doc type: :component
   @doc """
@@ -61,6 +63,7 @@ defmodule CommunityDemoWeb.Components.Alert do
   attr :position, :string, default: "", doc: "Determines the element position"
   attr :width, :string, default: "full", doc: "Determines the element width"
   attr :border, :string, default: "extra_small", doc: "Determines the element border width"
+  attr :z_index, :string, default: "z-50", doc: "custom z-index"
   attr :padding, :string, default: "small", doc: "Determines the element padding size"
 
   attr :size, :string,
@@ -103,8 +106,10 @@ defmodule CommunityDemoWeb.Components.Alert do
       id={@id}
       phx-click={JS.push("lv:clear-flash", value: %{key: @kind}) |> hide_alert("##{@id}")}
       role="alert"
+      aria-live="assertive"
+      aria-labelledby={@title && @id && "#{@id}-title"}
       class={[
-        "z-50 flash-alert leading-5",
+        "flash-alert leading-5",
         border_class(@border, @variant),
         color_variant(@variant, @kind),
         position_class(@position),
@@ -113,14 +118,15 @@ defmodule CommunityDemoWeb.Components.Alert do
         padding_size(@padding),
         content_size(@size),
         @font_weight,
+        @z_index,
         @class
       ]}
       {@rest}
     >
       <div class="flex items-center justify-between gap-2">
         <div>
-          <div :if={@title} class={@title_class}>
-            <.icon :if={!is_nil(@icon)} name={@icon} class="aler-icon" /> {@title}
+          <div :if={@title} class={@title_class} id={@id && "#{@id}-title"}>
+            <.icon :if={!is_nil(@icon)} name={@icon} class="aler-icon" aria-hidden="true" /> {@title}
           </div>
 
           <div class={@content_class}>{msg}</div>
@@ -149,11 +155,21 @@ defmodule CommunityDemoWeb.Components.Alert do
 
   attr :variant, :string, default: "bordered", doc: "Determines the style"
   attr :position, :string, default: "top_right", doc: "Position of flashes"
+  attr :class, :string, default: nil, doc: "Custom classes"
+  attr :z_index, :string, default: "z-50", doc: "custom z-index"
   attr :flash, :map, required: true, doc: "the map of flash messages"
+
+  attr :rest, :global,
+    doc:
+      "Global attributes can define defaults which are merged with attributes provided by the caller"
 
   def flash_group(assigns) do
     ~H"""
-    <div id={@id} class={["[&_.flash-alert:not(:first-child)]:mt-3 z-50", position_class(@position)]}>
+    <div
+      id={@id}
+      class={["[&_.flash-alert:not(:first-child)]:mt-3", position_class(@position), @z_index, @class]}
+      {@rest}
+    >
       <.flash
         kind={:info}
         title={gettext("Success!")}
@@ -235,6 +251,7 @@ defmodule CommunityDemoWeb.Components.Alert do
   attr :width, :string, default: "full", doc: "Determines the element width"
   attr :border, :string, default: "extra_small", doc: "Determines the element border width"
   attr :padding, :string, default: "small", doc: "Determines the element padding size"
+  attr :z_index, :string, default: "z-50", doc: "custom z-index"
 
   attr :size, :string,
     default: "medium",
@@ -257,6 +274,10 @@ defmodule CommunityDemoWeb.Components.Alert do
     default: "flex items-center gap-1.5 leading-6 font-semibold mb-1",
     doc: "Custom CSS class for additional styling to tile"
 
+  attr :icon_class, :string,
+    default: nil,
+    doc: "Custom CSS class for additional styling to icon"
+
   slot :inner_block, doc: "Inner block that renders HEEx content"
 
   attr :rest, :global,
@@ -264,10 +285,14 @@ defmodule CommunityDemoWeb.Components.Alert do
       "Global attributes can define defaults which are merged with attributes provided by the caller"
 
   def alert(assigns) do
+    assigns = assigns |> assign_new(:id, fn -> "alert-#{random_id()}" end)
+
     ~H"""
     <div
       id={@id}
-      role="alert leading-5"
+      role="alert"
+      aria-live="assertive"
+      aria-labelledby={@title && @id && "#{@id}-title"}
       class={[
         border_class(@border, @variant),
         color_variant(@variant, @kind),
@@ -277,12 +302,18 @@ defmodule CommunityDemoWeb.Components.Alert do
         padding_size(@padding),
         content_size(@size),
         @font_weight,
+        @z_index,
         @class
       ]}
       {@rest}
     >
-      <div :if={@title} class={@title_class}>
-        <.icon :if={!is_nil(@icon)} name={@icon} class="aler-icon" /> {@title}
+      <div :if={@title} class={@title_class} id={@id && "#{@id}-title"}>
+        <.icon
+          :if={!is_nil(@icon)}
+          name={@icon}
+          class={["aler-icon", @icon_class]}
+          aria-hidden="true"
+        /> {@title}
       </div>
 
       {render_slot(@inner_block)}
@@ -788,20 +819,5 @@ defmodule CommunityDemoWeb.Components.Alert do
          "opacity-100 translate-y-0 sm:scale-100",
          "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"}
     )
-  end
-
-  attr :name, :string, required: true, doc: "Specifies the name of the element"
-  attr :class, :any, default: nil, doc: "Custom CSS class for additional styling"
-
-  defp icon(%{name: "hero-" <> _, class: class} = assigns) when is_list(class) do
-    ~H"""
-    <span class={[@name] ++ @class} />
-    """
-  end
-
-  defp icon(%{name: "hero-" <> _} = assigns) do
-    ~H"""
-    <span class={[@name, @class]} />
-    """
   end
 end

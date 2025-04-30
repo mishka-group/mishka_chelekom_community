@@ -18,6 +18,9 @@ defmodule CommunityDemoWeb.Components.Gallery do
   """
 
   use Phoenix.Component
+  use Gettext, backend: CommunityDemoWeb.Gettext
+
+  import Phoenix.LiveView.Utils, only: [random_id: 0]
 
   @doc """
   Renders a `gallery` component that supports various layout types including default grid,
@@ -63,6 +66,7 @@ defmodule CommunityDemoWeb.Components.Gallery do
     ~H"""
     <div
       id={@id}
+      role="region"
       class={[
         (@type == "masonry" && "gallery-masonry") || "grid",
         grid_gap(@gap),
@@ -95,6 +99,7 @@ defmodule CommunityDemoWeb.Components.Gallery do
     doc: "A unique identifier is used to manage state and interaction"
 
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
+  attr :wrapper_class, :string, default: nil, doc: "Custom CSS class for additional styling"
   attr :src, :string, default: nil, doc: "Media link"
   attr :alt, :string, default: nil, doc: "Media link description"
   attr :rounded, :string, default: "none", doc: "Determines the border radius"
@@ -108,7 +113,11 @@ defmodule CommunityDemoWeb.Components.Gallery do
 
   def gallery_media(assigns) do
     ~H"""
-    <div id={@id} class={["relative gallery-media overflow-hidden transition-all duration-300"]}>
+    <div
+      id={@id}
+      class={["relative gallery-media overflow-hidden transition-all duration-300", @wrapper_class]}
+      {@rest}
+    >
       <img
         :if={@src}
         class={[
@@ -122,6 +131,109 @@ defmodule CommunityDemoWeb.Components.Gallery do
         {@rest}
       />
       {render_slot(@inner_block)}
+    </div>
+    """
+  end
+
+  @doc """
+  Renders a filterable gallery.
+
+  ## Attributes:
+  - `:id` - A unique DOM ID for the root element.
+  - `:filters` - A list of category names (e.g., ["all", "nature"]).
+  - `:media` - A list of media items (each should have `:src`, `:alt`, and `:category` keys).
+
+  ## Slots:
+  - `:filter` - Optional slot for rendering custom filter buttons. You will receive the current filter value with `let={filter}`.
+  """
+  @doc type: :component
+  attr :id, :string, doc: "Unique DOM ID"
+  attr :filters, :list, default: [], doc: "List of filter categories"
+  attr :media, :list, default: [], doc: "List of media items with :src, :alt, and :category"
+  attr :cols, :string, default: "three", doc: "Determines cols of elements"
+  attr :gap, :string, default: "small", doc: "Determines gap between elements"
+  attr :class, :string, default: nil, doc: "Add custom classe"
+  attr :default_filter, :string, default: "All", doc: "Default Button to show all images"
+  slot :filter, required: false, doc: "Slot for rendering each filter button with let={filter}"
+  attr :animation, :string, default: "", doc: "Determines gap between elements"
+  attr :animation_size, :string, default: "extra_small", doc: "Determines gap between elements"
+  attr :content_class, :string, default: nil, doc: "Add custom classe to content wrapper"
+
+  attr :filters_wrapper_class, :string,
+    default: nil,
+    doc: "Add custom classe to filter button wrapper"
+
+  slot :media_block,
+    required: false,
+    doc: "Optional slot for rendering each media item with let={media}"
+
+  attr :rest, :global,
+    doc:
+      "Global attributes can define defaults which are merged with attributes provided by the caller"
+
+  def filterable_gallery(assigns) do
+    assigns = assign_new(assigns, :id, fn -> random_id() end)
+
+    ~H"""
+    <div
+      id={@id}
+      phx-hook="GalleryFilter"
+      phx-update="ignore"
+      role="region"
+      data-default-filter={@default_filter}
+      class={["filterable-gallery", animation(@animation, @animation_size), @class]}
+      {@rest}
+    >
+      <div
+        class={["filter-buttons mb-4 flex flex-wrap gap-2", @filters_wrapper_class]}
+        role="group"
+        aria-label={gettext("Filter options")}
+      >
+        <div :if={not Enum.member?(@filters, @default_filter)}>
+          <div :if={@filter != []}>
+            {render_slot(@filter, @default_filter)}
+          </div>
+          <button
+            :if={@filter == []}
+            data-gallery-filter
+            data-category={@default_filter}
+            class="filter-btn bg-white border rounded py-1.5 px-3 leading-5 text-[#09090b] border-[#e4e4e7] hover:bg-[#F8F9FA] dark:bg-[#18181B] dark:text-[#FAFAFA] dark:border-[#27272a] dark:hover:bg-[#242424] disabled:bg-[#f1f3f5] disabled:text-[#adb5bd] dark:disabled:bg-[#2e2e2e] dark:disabled:text-[#696969] disabled:border-[#dee2e6] dark:disabled:border-[#424242] shadow-sm"
+          >
+            {@default_filter}
+          </button>
+        </div>
+
+        <div :for={filter <- @filters}>
+          <div :for={entry <- @filter}>
+            {render_slot(entry, filter)}
+          </div>
+
+          <button
+            :if={@filter == []}
+            data-gallery-filter
+            data-category={filter}
+            class="filter-btn bg-white border rounded py-1.5 px-3 leading-5 text-[#09090b] border-[#e4e4e7] hover:bg-[#F8F9FA] dark:bg-[#18181B] dark:text-[#FAFAFA] dark:border-[#27272a] dark:hover:bg-[#242424] disabled:bg-[#f1f3f5] disabled:text-[#adb5bd] dark:disabled:bg-[#2e2e2e] dark:disabled:text-[#696969] disabled:border-[#dee2e6] dark:disabled:border-[#424242] shadow-sm"
+          >
+            {filter}
+          </button>
+        </div>
+      </div>
+      <div class={["grid", grid_gap(@gap), grid_cols(@cols), @content_class]}>
+        <div
+          :for={media <- @media}
+          data-gallery-item
+          data-category={
+            if is_list(media.category), do: Enum.join(media.category, ","), else: media.category
+          }
+          class="transition-all duration-300 ease-in-out transform opacity-100 scale-100"
+        >
+          <div :if={@media_block != []}>
+            {render_slot(@media_block, media)}
+          </div>
+
+          <.gallery_media :if={@media_block == []} src={media.src} alt={media.alt} />
+        </div>
+      </div>
     </div>
     """
   end

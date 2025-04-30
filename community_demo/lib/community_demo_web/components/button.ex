@@ -23,6 +23,7 @@ defmodule CommunityDemoWeb.Components.Button do
   """
 
   use Phoenix.Component
+  import CommunityDemoWeb.Components.Icon, only: [icon: 1]
 
   @indicator_positions [
     "indicator",
@@ -94,15 +95,14 @@ defmodule CommunityDemoWeb.Components.Button do
     ~H"""
     <div
       id={@id}
-      class={
-        default_classes(:grouped) ++
-          [
-            variation(@variation),
-            rounded_size(@rounded),
-            border_class(@color),
-            @class
-          ]
-      }
+      role="group"
+      class={[
+        default_classes(:grouped, false),
+        variation(@variation),
+        rounded_size(@rounded),
+        border_class(@color),
+        @class
+      ]}
       {@rest}
     >
       {render_slot(@inner_block)}
@@ -183,37 +183,39 @@ defmodule CommunityDemoWeb.Components.Button do
   slot :inner_block, required: false, doc: "Inner block that renders HEEx content"
 
   slot :loading, required: false do
+    attr :class, :string, doc: "Custom CSS class for additional styling"
+
     attr :position, :string,
       values: ["start", "end"],
       doc: "Determines the element position"
   end
 
   def button(assigns) do
+    assigns = assign_new(assigns, :indicator, fn -> is_indicators?(assigns[:rest]) end)
+
     ~H"""
     <button
       type={@type}
       id={@id}
-      class={
-        default_classes(@rest[:pinging]) ++
-          [
-            size_class(@size, @rest[:circle]),
-            color_variant(@variant, @color),
-            content_position(@content_position),
-            rounded_size(@rounded),
-            border_size(@border, @variant),
-            @full_width && "w-full",
-            @line_height,
-            @font_weight,
-            @display,
-            @class
-          ]
-      }
+      class={[
+        default_classes(@rest[:pinging], @indicator),
+        size_class(@size, @rest[:circle]),
+        color_variant(@variant, @color, @indicator),
+        content_position(@content_position),
+        rounded_size(@rounded),
+        border_size(@border, @variant),
+        @full_width && "w-full",
+        @line_height,
+        @font_weight,
+        @display,
+        @class
+      ]}
       {drop_rest(@rest)}
     >
-      <!-- loading at the start -->
       <span
         :for={loading <- @loading}
         :if={is_nil(loading[:position]) || loading[:position] == "start"}
+        class={loading[:class]}
       >
         {render_slot(loading)}
       </span>
@@ -225,9 +227,8 @@ defmodule CommunityDemoWeb.Components.Button do
       </span>
       <.icon :if={icon_position(@icon, @rest) == "right"} name={@icon} class={@icon_class} />
       <.button_indicator size={@indicator_size} class={@indicator_class} {@rest} />
-      
-    <!-- loading at the end -->
-      <span :for={loading <- @loading} :if={loading[:position] == "end"}>
+
+      <span :for={loading <- @loading} :if={loading[:position] == "end"} class={loading[:class]}>
         {render_slot(loading)}
       </span>
     </button>
@@ -294,21 +295,19 @@ defmodule CommunityDemoWeb.Components.Button do
       type={@type}
       id={@id}
       value={@value}
-      class={
-        default_classes(@rest[:pinging]) ++
-          [
-            size_class(@size, @rest[:circle]),
-            color_variant(@variant, @color),
-            content_position(@content_position),
-            rounded_size(@rounded),
-            border_size(@border, @variant),
-            @full_width && "w-full",
-            @font_weight,
-            @line_height,
-            @display,
-            @class
-          ]
-      }
+      class={[
+        default_classes(@rest[:pinging], false),
+        size_class(@size, @rest[:circle]),
+        color_variant(@variant, @color, false),
+        content_position(@content_position),
+        rounded_size(@rounded),
+        border_size(@border, @variant),
+        @full_width && "w-full",
+        @font_weight,
+        @line_height,
+        @display,
+        @class
+      ]}
       {@rest}
     />
     """
@@ -388,36 +387,38 @@ defmodule CommunityDemoWeb.Components.Button do
   slot :inner_block, required: false, doc: "Inner block that renders HEEx content"
 
   slot :loading, required: false do
+    attr :class, :string, doc: "Custom CSS class for additional styling"
+
     attr :position, :string,
       values: ["start", "end"],
       doc: "Determines the element position"
   end
 
   def button_link(%{navigate: _navigate} = assigns) do
+    assigns = assign_new(assigns, :indicator, fn -> is_indicators?(assigns[:rest]) end)
+
     ~H"""
     <.link
       navigate={@navigate}
       id={@id}
-      class={
-        default_classes(@rest[:pinging]) ++
-          [
-            size_class(@size, @rest[:circle]),
-            color_variant(@variant, @color),
-            rounded_size(@rounded),
-            border_size(@border, @variant),
-            @full_width && "w-full",
-            @font_weight,
-            @line_height,
-            @display,
-            @class
-          ]
-      }
+      class={[
+        default_classes(@rest[:pinging], @indicator),
+        size_class(@size, @rest[:circle]),
+        color_variant(@variant, @color, @indicator),
+        rounded_size(@rounded),
+        border_size(@border, @variant),
+        @full_width && "w-full",
+        @font_weight,
+        @line_height,
+        @display,
+        @class
+      ]}
       {drop_rest(@rest)}
     >
-      <!-- loading at the start -->
       <span
         :for={loading <- @loading}
         :if={is_nil(loading[:position]) || loading[:position] == "start"}
+        class={loading[:class]}
       >
         {render_slot(loading)}
       </span>
@@ -429,9 +430,8 @@ defmodule CommunityDemoWeb.Components.Button do
       </span>
       <.icon :if={icon_position(@icon, @rest) == "right"} name={@icon} class={@icon_class} />
       <.button_indicator size={@indicator_size} class={@indicator_class} {@rest} />
-      
-    <!-- loading at the end -->
-      <span :for={loading <- @loading} :if={loading[:position] == "end"}>
+
+      <span :for={loading <- @loading} :if={loading[:position] == "end"} class={loading[:class]}>
         {render_slot(loading)}
       </span>
     </.link>
@@ -439,29 +439,29 @@ defmodule CommunityDemoWeb.Components.Button do
   end
 
   def button_link(%{patch: _patch} = assigns) do
+    assigns = assign_new(assigns, :indicator, fn -> is_indicators?(assigns[:rest]) end)
+
     ~H"""
     <.link
       patch={@patch}
       id={@id}
-      class={
-        default_classes(@rest[:pinging]) ++
-          [
-            size_class(@size, @rest[:circle]),
-            color_variant(@variant, @color),
-            rounded_size(@rounded),
-            border_size(@border, @variant),
-            @full_width && "w-full",
-            @font_weight,
-            @line_height,
-            @class
-          ]
-      }
+      class={[
+        default_classes(@rest[:pinging], @indicator),
+        size_class(@size, @rest[:circle]),
+        color_variant(@variant, @color, @indicator),
+        rounded_size(@rounded),
+        border_size(@border, @variant),
+        @full_width && "w-full",
+        @font_weight,
+        @line_height,
+        @class
+      ]}
       {drop_rest(@rest)}
     >
-      <!-- loading at the start -->
       <span
         :for={loading <- @loading}
         :if={is_nil(loading[:position]) || loading[:position] == "start"}
+        class={loading[:class]}
       >
         {render_slot(loading)}
       </span>
@@ -473,9 +473,8 @@ defmodule CommunityDemoWeb.Components.Button do
       </span>
       <.icon :if={icon_position(@icon, @rest) == "right"} name={@icon} />
       <.button_indicator size={@indicator_size} class={@indicator_class} {@rest} />
-      
-    <!-- loading at the end -->
-      <span :for={loading <- @loading} :if={loading[:position] == "end"}>
+
+      <span :for={loading <- @loading} :if={loading[:position] == "end"} class={loading[:class]}>
         {render_slot(loading)}
       </span>
     </.link>
@@ -483,29 +482,29 @@ defmodule CommunityDemoWeb.Components.Button do
   end
 
   def button_link(%{href: _href} = assigns) do
+    assigns = assign_new(assigns, :indicator, fn -> is_indicators?(assigns[:rest]) end)
+
     ~H"""
     <.link
       href={@href}
       id={@id}
-      class={
-        default_classes(@rest[:pinging]) ++
-          [
-            size_class(@size, @rest[:circle]),
-            color_variant(@variant, @color),
-            rounded_size(@rounded),
-            border_size(@border, @variant),
-            @full_width && "w-full",
-            @font_weight,
-            @line_height,
-            @class
-          ]
-      }
+      class={[
+        default_classes(@rest[:pinging], @indicator),
+        size_class(@size, @rest[:circle]),
+        color_variant(@variant, @color, @indicator),
+        rounded_size(@rounded),
+        border_size(@border, @variant),
+        @full_width && "w-full",
+        @font_weight,
+        @line_height,
+        @class
+      ]}
       {drop_rest(@rest)}
     >
-      <!-- loading at the start -->
       <span
         :for={loading <- @loading}
         :if={is_nil(loading[:position]) || loading[:position] == "start"}
+        class={loading[:class]}
       >
         {render_slot(loading)}
       </span>
@@ -517,9 +516,8 @@ defmodule CommunityDemoWeb.Components.Button do
       </span>
       <.icon :if={icon_position(@icon, @rest) == "right"} name={@icon} />
       <.button_indicator size={@indicator_size} class={@indicator_class} {@rest} />
-      
-    <!-- loading at the end -->
-      <span :for={loading <- @loading} :if={loading[:position] == "end"}>
+
+      <span :for={loading <- @loading} :if={loading[:position] == "end"} class={loading[:class]}>
         {render_slot(loading)}
       </span>
     </.link>
@@ -565,99 +563,123 @@ defmodule CommunityDemoWeb.Components.Button do
 
   defp button_indicator(%{position: "left", rest: %{left_indicator: true}} = assigns) do
     ~H"""
-    <span class={["indicator", indicator_size(@size), @class]} />
+    <span aria-hidden="true" class={["indicator", indicator_size(@size), @class]} />
     """
   end
 
   defp button_indicator(%{position: "left", rest: %{indicator: true}} = assigns) do
     ~H"""
-    <span class={["indicator", indicator_size(@size), @class]} />
+    <span aria-hidden="true" class={["indicator", indicator_size(@size), @class]} />
     """
   end
 
   defp button_indicator(%{position: "none", rest: %{right_indicator: true}} = assigns) do
     ~H"""
-    <span class={["indicator", indicator_size(@size), @class]} />
+    <span aria-hidden="true" class={["indicator", indicator_size(@size), @class]} />
     """
   end
 
   defp button_indicator(%{position: "none", rest: %{top_left_indicator: true}} = assigns) do
     ~H"""
-    <span class={[
-      "indicator",
-      indicator_size(@size),
-      @class || "absolute -translate-y-1/2 -translate-x-1/2 right-auto top-0 left-0"
-    ]} />
+    <span
+      aria-hidden="true"
+      class={[
+        "indicator",
+        indicator_size(@size),
+        @class || "absolute -translate-y-1/2 -translate-x-1/2 right-auto top-0 left-0"
+      ]}
+    />
     """
   end
 
   defp button_indicator(%{position: "none", rest: %{top_center_indicator: true}} = assigns) do
     ~H"""
-    <span class={[
-      "indicator",
-      indicator_size(@size),
-      @class || "absolute top-0 -translate-y-1/2 translate-x-1/2 right-1/2"
-    ]} />
+    <span
+      aria-hidden="true"
+      class={[
+        "indicator",
+        indicator_size(@size),
+        @class || "absolute top-0 -translate-y-1/2 translate-x-1/2 right-1/2"
+      ]}
+    />
     """
   end
 
   defp button_indicator(%{position: "none", rest: %{top_right_indicator: true}} = assigns) do
     ~H"""
-    <span class={[
-      "indicator",
-      indicator_size(@size),
-      @class || "absolute -translate-y-1/2 translate-x-1/2 left-auto top-0 right-0"
-    ]} />
+    <span
+      aria-hidden="true"
+      class={[
+        "indicator",
+        indicator_size(@size),
+        @class || "absolute -translate-y-1/2 translate-x-1/2 left-auto top-0 right-0"
+      ]}
+    />
     """
   end
 
   defp button_indicator(%{position: "none", rest: %{middle_left_indicator: true}} = assigns) do
     ~H"""
-    <span class={[
-      "indicator",
-      indicator_size(@size),
-      @class || "absolute -translate-y-1/2 -translate-x-1/2 right-auto left-0 top-2/4"
-    ]} />
+    <span
+      aria-hidden="true"
+      class={[
+        "indicator",
+        indicator_size(@size),
+        @class || "absolute -translate-y-1/2 -translate-x-1/2 right-auto left-0 top-2/4"
+      ]}
+    />
     """
   end
 
   defp button_indicator(%{position: "none", rest: %{middle_right_indicator: true}} = assigns) do
     ~H"""
-    <span class={[
-      "indicator",
-      indicator_size(@size),
-      @class || "absolute -translate-y-1/2 translate-x-1/2 left-auto right-0 top-2/4"
-    ]} />
+    <span
+      aria-hidden="true"
+      class={[
+        "indicator",
+        indicator_size(@size),
+        @class || "absolute -translate-y-1/2 translate-x-1/2 left-auto right-0 top-2/4"
+      ]}
+    />
     """
   end
 
   defp button_indicator(%{position: "none", rest: %{bottom_left_indicator: true}} = assigns) do
     ~H"""
-    <span class={[
-      "indicator",
-      indicator_size(@size),
-      @class || "absolute translate-y-1/2 -translate-x-1/2 right-auto bottom-0 left-0"
-    ]} />
+    <span
+      aria-hidden="true"
+      class={[
+        "indicator",
+        indicator_size(@size),
+        @class || "absolute translate-y-1/2 -translate-x-1/2 right-auto bottom-0 left-0"
+      ]}
+    />
     """
   end
 
   defp button_indicator(%{position: "none", rest: %{bottom_center_indicator: true}} = assigns) do
     ~H"""
-    <span class={[
-      "indicator",
-      indicator_size(@size),
-      @class || "absolute translate-y-1/2 translate-x-1/2 bottom-0 right-1/2"
-    ]} />
+    <span
+      aria-hidden="true"
+      class={[
+        "indicator",
+        indicator_size(@size),
+        @class || "absolute translate-y-1/2 translate-x-1/2 bottom-0 right-1/2"
+      ]}
+    />
     """
   end
 
   defp button_indicator(%{position: "none", rest: %{bottom_right_indicator: true}} = assigns) do
     ~H"""
-    <span class={[
-      "indicator",
-      indicator_size(@size),
-      @class || "absolute translate-y-1/2 translate-x-1/2 left-auto bottom-0 right-0"
-    ]} />
+    <span
+      aria-hidden="true"
+      class={[
+        "indicator",
+        indicator_size(@size),
+        @class || "absolute translate-y-1/2 translate-x-1/2 left-auto bottom-0 right-0"
+      ]}
+    />
     """
   end
 
@@ -686,846 +708,856 @@ defmodule CommunityDemoWeb.Components.Button do
   defp border_size("extra_large", _), do: "border-[5px]"
   defp border_size(params, _) when is_binary(params), do: params
 
-  defp color_variant("base", _) do
+  defp color_variant("base", _, indicator) do
     [
       "bg-white text-[#09090b] border-[#e4e4e7] hover:bg-[#F8F9FA]",
       "dark:bg-[#18181B] dark:text-[#FAFAFA] dark:border-[#27272a] dark:hover:bg-[#242424]",
-      "[&>.indicator]:bg-[#e4e4e7] dark:[&>.indicator]:bg-[#27272a]",
       "disabled:bg-[#f1f3f5] disabled:text-[#adb5bd] dark:disabled:bg-[#2e2e2e] dark:disabled:text-[#696969]",
       "disabled:border-[#dee2e6] dark:disabled:border-[#424242]",
-      "shadow-sm"
+      "shadow-sm",
+      indicator && "[&>.indicator]:bg-[#e4e4e7] dark:[&>.indicator]:bg-[#27272a]"
     ]
   end
 
-  defp color_variant("default", "white") do
+  defp color_variant("default", "white", _) do
     ["bg-white text-black"]
   end
 
-  defp color_variant("default", "dark") do
+  defp color_variant("default", "dark", _) do
     ["bg-[#282828] text-white"]
   end
 
-  defp color_variant("default", "natural") do
+  defp color_variant("default", "natural", indicator) do
     [
       "bg-[#4B4B4B] text-white hover:bg-[#282828] dark:bg-[#DDDDDD]",
-      "dark:text-black dark:hover:bg-[#E8E8E8] [&>.indicator]:bg-white",
-      "dark:[&>.indicator]:bg-black disabled:bg-[#F3F3F3] disabled:text-[#BBBBBB]",
-      "dark:disabled:bg-[#4B4B4B] dark:disabled:text-[#868686]"
+      "dark:text-black dark:hover:bg-[#E8E8E8]",
+      "disabled:bg-[#F3F3F3] disabled:text-[#BBBBBB]",
+      "dark:disabled:bg-[#4B4B4B] dark:disabled:text-[#868686]",
+      indicator && "[&>.indicator]:bg-white dark:[&>.indicator]:bg-black"
     ]
   end
 
-  defp color_variant("default", "primary") do
+  defp color_variant("default", "primary", indicator) do
     [
       "bg-[#007F8C] text-white hover:bg-[#016974] dark:bg-[#01B8CA] ",
-      "dark:text-black dark:hover:bg-[#77D5E3] [&>.indicator]:bg-[#1A535A]",
-      "dark:[&>.indicator]:bg-[#B0E7EF] disabled:bg-[#F3F3F3] disabled:text-[#BBBBBB]",
-      "dark:disabled:bg-[#4B4B4B] dark:disabled:text-[#868686]"
+      "dark:text-black dark:hover:bg-[#77D5E3]",
+      "disabled:bg-[#F3F3F3] disabled:text-[#BBBBBB]",
+      "dark:disabled:bg-[#4B4B4B] dark:disabled:text-[#868686]",
+      indicator && "[&>.indicator]:bg-[#1A535A] dark:[&>.indicator]:bg-[#B0E7EF]"
     ]
   end
 
-  defp color_variant("default", "secondary") do
+  defp color_variant("default", "secondary", indicator) do
     [
-      "bg-[#266EF1] text-white hover:bg-[#175BCC] dark:bg-[#6DAAFB] dark:text-black",
-      "dark:hover:bg-[#A9C9FF] [&>.indicator]:bg-[#1948A3]",
-      "dark:[&>.indicator]:bg-[#CDDEFF] disabled:bg-[#F3F3F3] disabled:text-[#BBBBBB]",
-      "dark:disabled:bg-[#4B4B4B] dark:disabled:text-[#868686]"
+      "bg-[#266EF1] text-white hover:bg-[#175BCC] dark:bg-[#6DAAFB]",
+      "dark:text-black dark:hover:bg-[#A9C9FF]",
+      "disabled:bg-[#F3F3F3] disabled:text-[#BBBBBB]",
+      "dark:disabled:bg-[#4B4B4B] dark:disabled:text-[#868686]",
+      indicator && "[&>.indicator]:bg-[#1948A3] dark:[&>.indicator]:bg-[#CDDEFF]"
     ]
   end
 
-  defp color_variant("default", "success") do
+  defp color_variant("default", "success", indicator) do
     [
-      "bg-[#0E8345] text-white hover:bg-[#166C3B] dark:bg-[#06C167] dark:text-black",
-      "dark:hover:bg-[#7FD99A] [&>.indicator]:bg-[#047857]",
-      "dark:[&>.indicator]:bg-[#B1EAC2] disabled:bg-[#F3F3F3] disabled:text-[#BBBBBB]",
-      "dark:disabled:bg-[#4B4B4B] dark:disabled:text-[#868686]"
+      "bg-[#0E8345] text-white hover:bg-[#166C3B] dark:bg-[#06C167]",
+      "dark:text-black dark:hover:bg-[#7FD99A]",
+      "disabled:bg-[#F3F3F3] disabled:text-[#BBBBBB]",
+      "dark:disabled:bg-[#4B4B4B] dark:disabled:text-[#868686]",
+      indicator && "[&>.indicator]:bg-[#047857] dark:[&>.indicator]:bg-[#B1EAC2]"
     ]
   end
 
-  defp color_variant("default", "warning") do
+  defp color_variant("default", "warning", indicator) do
     [
-      "bg-[#CA8D01] text-white hover:bg-[#976A01] dark:bg-[#FDC034] dark:text-black",
-      "dark:hover:bg-[#FDD067] [&>.indicator]:bg-[#FF8B08]",
-      "dark:[&>.indicator]:bg-[#FEDF99] disabled:bg-[#F3F3F3] disabled:text-[#BBBBBB]",
-      "dark:disabled:bg-[#4B4B4B] dark:disabled:text-[#868686]"
+      "bg-[#CA8D01] text-white hover:bg-[#976A01] dark:bg-[#FDC034]",
+      "dark:text-black dark:hover:bg-[#FDD067]",
+      "disabled:bg-[#F3F3F3] disabled:text-[#BBBBBB]",
+      "dark:disabled:bg-[#4B4B4B] dark:disabled:text-[#868686]",
+      indicator && "[&>.indicator]:bg-[#FF8B08] dark:[&>.indicator]:bg-[#FEDF99]"
     ]
   end
 
-  defp color_variant("default", "danger") do
+  defp color_variant("default", "danger", indicator) do
     [
-      "bg-[#DE1135] text-white hover:bg-[#BB032A] dark:bg-[#FC7F79] dark:text-black",
-      "dark:hover:bg-[#FFB2AB] [&>.indicator]:bg-[#E73B3B]",
-      "dark:[&>.indicator]:bg-[#FFD2CD] disabled:bg-[#F3F3F3] disabled:text-[#BBBBBB]",
-      "dark:disabled:bg-[#4B4B4B] dark:disabled:text-[#868686]"
+      "bg-[#DE1135] text-white hover:bg-[#BB032A] dark:bg-[#FC7F79]",
+      "dark:text-black dark:hover:bg-[#FFB2AB]",
+      "disabled:bg-[#F3F3F3] disabled:text-[#BBBBBB]",
+      "dark:disabled:bg-[#4B4B4B] dark:disabled:text-[#868686]",
+      indicator && "[&>.indicator]:bg-[#E73B3B] dark:[&>.indicator]:bg-[#FFD2CD]"
     ]
   end
 
-  defp color_variant("default", "info") do
+  defp color_variant("default", "info", indicator) do
     [
-      "bg-[#0B84BA] text-white hover:bg-[#08638C] dark:bg-[#3EB7ED] dark:text-black",
-      "dark:hover:bg-[#6EC9F2] [&>.indicator]:bg-[#004FC4]",
-      "dark:[&>.indicator]:bg-[#9FDBF6] disabled:bg-[#F3F3F3] disabled:text-[#BBBBBB]",
-      "dark:disabled:bg-[#4B4B4B] dark:disabled:text-[#868686]"
+      "bg-[#0B84BA] text-white hover:bg-[#08638C] dark:bg-[#3EB7ED]",
+      "dark:text-black dark:hover:bg-[#6EC9F2]",
+      "disabled:bg-[#F3F3F3] disabled:text-[#BBBBBB]",
+      "dark:disabled:bg-[#4B4B4B] dark:disabled:text-[#868686]",
+      indicator && "[&>.indicator]:bg-[#004FC4] dark:[&>.indicator]:bg-[#9FDBF6]"
     ]
   end
 
-  defp color_variant("default", "misc") do
+  defp color_variant("default", "misc", indicator) do
     [
-      "bg-[#8750C5] text-white hover:bg-[#653C94] dark:bg-[#BA83F9] dark:text-black",
-      "dark:hover:bg-[#CBA2FA] [&>.indicator]:bg-[#52059C]",
-      "dark:[&>.indicator]:bg-[#DDC1FC] disabled:bg-[#F3F3F3] disabled:text-[#BBBBBB]",
-      "dark:disabled:bg-[#4B4B4B] dark:disabled:text-[#868686]"
+      "bg-[#8750C5] text-white hover:bg-[#653C94] dark:bg-[#BA83F9]",
+      "dark:text-black dark:hover:bg-[#CBA2FA]",
+      "disabled:bg-[#F3F3F3] disabled:text-[#BBBBBB]",
+      "dark:disabled:bg-[#4B4B4B] dark:disabled:text-[#868686]",
+      indicator && "[&>.indicator]:bg-[#52059C] dark:[&>.indicator]:bg-[#DDC1FC]"
     ]
   end
 
-  defp color_variant("default", "dawn") do
+  defp color_variant("default", "dawn", indicator) do
     [
-      "bg-[#A86438] text-white hover:bg-[#7E4B2A] dark:bg-[#DB976B] dark:text-black",
-      "dark:hover:bg-[#E4B190] [&>.indicator]:bg-[#4D4137]",
-      "dark:[&>.indicator]:bg-[#EDCBB5] disabled:bg-[#F3F3F3] disabled:text-[#BBBBBB]",
-      "dark:disabled:bg-[#4B4B4B] dark:disabled:text-[#868686]"
+      "bg-[#A86438] text-white hover:bg-[#7E4B2A] dark:bg-[#DB976B]",
+      "dark:text-black dark:hover:bg-[#E4B190]",
+      "disabled:bg-[#F3F3F3] disabled:text-[#BBBBBB]",
+      "dark:disabled:bg-[#4B4B4B] dark:disabled:text-[#868686]",
+      indicator && "[&>.indicator]:bg-[#4D4137] dark:[&>.indicator]:bg-[#EDCBB5]"
     ]
   end
 
-  defp color_variant("default", "silver") do
+  defp color_variant("default", "silver", indicator) do
     [
-      "bg-[#868686] text-white hover:bg-[#727272] dark:bg-[#A6A6A6] dark:text-black",
-      "dark:hover:bg-[#BBBBBB] [&>.indicator]:bg-[#707483]",
-      "dark:[&>.indicator]:bg-[#DDDDDD] disabled:bg-[#F3F3F3] disabled:text-[#BBBBBB]",
-      "dark:disabled:bg-[#4B4B4B] dark:disabled:text-[#868686]"
+      "bg-[#868686] text-white hover:bg-[#727272] dark:bg-[#A6A6A6]",
+      "dark:text-black dark:hover:bg-[#BBBBBB]",
+      "disabled:bg-[#F3F3F3] disabled:text-[#BBBBBB]",
+      "dark:disabled:bg-[#4B4B4B] dark:disabled:text-[#868686]",
+      indicator && "[&>.indicator]:bg-[#707483] dark:[&>.indicator]:bg-[#DDDDDD]"
     ]
   end
 
-  defp color_variant("outline", "natural") do
+  defp color_variant("outline", "natural", indicator) do
     [
       "bg-transparent text-[#4B4B4B] border-[#4B4B4B] hover:text-[#282828]",
       "hover:border-[#282828] dark:text-[#DDDDDD] dark:border-[#DDDDDD]",
-      "dark:hover:text-[#E8E8E8] dark:hover:border-[#E8E8E8] [&>.indicator]:bg-black",
-      "dark:[&>.indicator]:bg-white disabled:text-[#DDDDDD]",
-      "disabled:border-[#DDDDDD] dark:disabled:text-[#727272] dark:disabled:border-[#727272]"
+      "dark:hover:text-[#E8E8E8] dark:hover:border-[#E8E8E8] disabled:text-[#DDDDDD]",
+      "disabled:border-[#DDDDDD] dark:disabled:text-[#727272] dark:disabled:border-[#727272]",
+      indicator && "[&>.indicator]:bg-black dark:[&>.indicator]:bg-white "
     ]
   end
 
-  defp color_variant("outline", "primary") do
+  defp color_variant("outline", "primary", indicator) do
     [
       "bg-transparent text-[#007F8C] border-[#007F8C] hover:text-[#016974]",
       "hover:border-[#016974] dark:text-[#01B8CA] dark:border-[#01B8CA]",
-      "dark:hover:text-[#77D5E3] dark:hover:border-[#77D5E3] [&>.indicator]:bg-[#1A535A]",
-      "dark:[&>.indicator]:bg-[#B0E7EF] disabled:text-[#DDDDDD]",
-      "disabled:border-[#DDDDDD] dark:disabled:text-[#727272] dark:disabled:border-[#727272]"
+      "dark:hover:text-[#77D5E3] dark:hover:border-[#77D5E3] disabled:text-[#DDDDDD]",
+      "disabled:border-[#DDDDDD] dark:disabled:text-[#727272] dark:disabled:border-[#727272]",
+      indicator && "[&>.indicator]:bg-[#1A535A] dark:[&>.indicator]:bg-[#B0E7EF]"
     ]
   end
 
-  defp color_variant("outline", "secondary") do
+  defp color_variant("outline", "secondary", indicator) do
     [
       "bg-transparent text-[#266EF1] border-[#266EF1] hover:text-[#175BCC]",
       "hover:border-[#175BCC] dark:text-[#6DAAFB] dark:border-[#6DAAFB]",
-      "dark:hover:text-[#A9C9FF] dark:hover:border-[#A9C9FF] [&>.indicator]:bg-[#1948A3]",
-      "dark:[&>.indicator]:bg-[#CDDEFF] disabled:text-[#DDDDDD]",
-      " disabled:border-[#DDDDDD] dark:disabled:text-[#727272] dark:disabled:border-[#727272]"
+      "dark:hover:text-[#A9C9FF] dark:hover:border-[#A9C9FF] disabled:text-[#DDDDDD]",
+      "disabled:border-[#DDDDDD] dark:disabled:text-[#727272] dark:disabled:border-[#727272]",
+      indicator && "[&>.indicator]:bg-[#1948A3] dark:[&>.indicator]:bg-[#CDDEFF]"
     ]
   end
 
-  defp color_variant("outline", "success") do
+  defp color_variant("outline", "success", indicator) do
     [
       "bg-transparent text-[#0E8345] border-[#0E8345] hover:text-[#166C3B]",
       "hover:border-[#166C3B] dark:text-[#06C167] dark:border-[#06C167]",
-      "dark:hover:text-[#7FD99A] dark:hover:border-[#7FD99A] [&>.indicator]:bg-[#0D572D]",
-      "dark:[&>.indicator]:bg-[#B1EAC2] disabled:text-[#DDDDDD]",
-      "disabled:border-[#DDDDDD] dark:disabled:text-[#727272] dark:disabled:border-[#727272]"
+      "dark:hover:text-[#7FD99A] dark:hover:border-[#7FD99A] disabled:text-[#DDDDDD]",
+      "disabled:border-[#DDDDDD] dark:disabled:text-[#727272] dark:disabled:border-[#727272]",
+      indicator && "[&>.indicator]:bg-[#0D572D] dark:[&>.indicator]:bg-[#B1EAC2]"
     ]
   end
 
-  defp color_variant("outline", "warning") do
+  defp color_variant("outline", "warning", indicator) do
     [
       "bg-transparent text-[#CA8D01] border-[#CA8D01] hover:text-[#976A01]",
       "hover:border-[#976A01] dark:text-[#FDC034] dark:border-[#FDC034]",
-      "dark:hover:text-[#FDD067] dark:hover:border-[#FDD067] [&>.indicator]:bg-[#654600]",
-      "dark:[&>.indicator]:bg-[#FEDF99] disabled:text-[#DDDDDD]",
-      "disabled:border-[#DDDDDD] dark:disabled:text-[#727272] dark:disabled:border-[#727272]"
+      "dark:hover:text-[#FDD067] dark:hover:border-[#FDD067]  disabled:text-[#DDDDDD]",
+      "disabled:border-[#DDDDDD] dark:disabled:text-[#727272] dark:disabled:border-[#727272]",
+      indicator && "[&>.indicator]:bg-[#654600] dark:[&>.indicator]:bg-[#FEDF99]"
     ]
   end
 
-  defp color_variant("outline", "danger") do
+  defp color_variant("outline", "danger", indicator) do
     [
       "bg-transparent text-[#DE1135] border-[#DE1135] hover:text-[#BB032A]",
       "hover:border-[#BB032A] dark:text-[#FC7F79] dark:border-[#FC7F79]",
-      "dark:hover:text-[#FFB2AB] dark:hover:border-[#FFB2AB] [&>.indicator]:bg-[#950F22]",
-      "dark:[&>.indicator]:bg-[#FFD2CD] disabled:text-[#DDDDDD]",
-      "disabled:border-[#DDDDDD] dark:disabled:text-[#727272] dark:disabled:border-[#727272]"
+      "dark:hover:text-[#FFB2AB] dark:hover:border-[#FFB2AB] disabled:text-[#DDDDDD]",
+      "disabled:border-[#DDDDDD] dark:disabled:text-[#727272] dark:disabled:border-[#727272]",
+      indicator && "[&>.indicator]:bg-[#950F22] dark:[&>.indicator]:bg-[#FFD2CD]"
     ]
   end
 
-  defp color_variant("outline", "info") do
+  defp color_variant("outline", "info", indicator) do
     [
       "bg-transparent text-[#0B84BA] border-[#0B84BA] hover:text-[#08638C]",
       "hover:border-[#08638C] dark:text-[#3EB7ED] dark:border-[#3EB7ED]",
-      "dark:hover:text-[#6EC9F2] dark:hover:border-[#6EC9F2] [&>.indicator]:bg-[#06425D]",
-      "dark:[&>.indicator]:bg-[#9FDBF6] disabled:text-[#DDDDDD]",
-      "disabled:border-[#DDDDDD] dark:disabled:text-[#727272] dark:disabled:border-[#727272]"
+      "dark:hover:text-[#6EC9F2] dark:hover:border-[#6EC9F2] disabled:text-[#DDDDDD]",
+      "disabled:border-[#DDDDDD] dark:disabled:text-[#727272] dark:disabled:border-[#727272]",
+      indicator && "[&>.indicator]:bg-[#06425D] dark:[&>.indicator]:bg-[#9FDBF6]"
     ]
   end
 
-  defp color_variant("outline", "misc") do
+  defp color_variant("outline", "misc", indicator) do
     [
       "bg-transparent text-[#8750C5] border-[#8750C5] hover:text-[#653C94]",
       "hover:border-[#653C94] dark:text-[#BA83F9] dark:border-[#BA83F9]",
-      "dark:hover:text-[#CBA2FA] dark:hover:border-[#CBA2FA] [&>.indicator]:bg-[#442863]",
-      "dark:[&>.indicator]:bg-[#DDC1FC] disabled:text-[#DDDDDD]",
-      "disabled:border-[#DDDDDD] dark:disabled:text-[#727272] dark:disabled:border-[#727272]"
+      "dark:hover:text-[#CBA2FA] dark:hover:border-[#CBA2FA] disabled:text-[#DDDDDD]",
+      "disabled:border-[#DDDDDD] dark:disabled:text-[#727272] dark:disabled:border-[#727272]",
+      indicator && "[&>.indicator]:bg-[#442863] dark:[&>.indicator]:bg-[#DDC1FC]"
     ]
   end
 
-  defp color_variant("outline", "dawn") do
+  defp color_variant("outline", "dawn", indicator) do
     [
       "bg-transparent text-[#A86438] border-[#A86438] hover:text-[#7E4B2A]",
       "hover:border-[#7E4B2A] dark:text-[#DB976B] dark:border-[#DB976B]",
-      "dark:hover:text-[#E4B190] dark:hover:border-[#E4B190] [&>.indicator]:bg-[#54321C]",
-      "dark:[&>.indicator]:bg-[#EDCBB5] disabled:text-[#DDDDDD]",
-      "disabled:border-[#DDDDDD] dark:disabled:text-[#727272] dark:disabled:border-[#727272]"
+      "dark:hover:text-[#E4B190] dark:hover:border-[#E4B190] disabled:text-[#DDDDDD]",
+      "disabled:border-[#DDDDDD] dark:disabled:text-[#727272] dark:disabled:border-[#727272]",
+      indicator && "[&>.indicator]:bg-[#54321C] dark:[&>.indicator]:bg-[#EDCBB5]"
     ]
   end
 
-  defp color_variant("outline", "silver") do
+  defp color_variant("outline", "silver", indicator) do
     [
       "bg-transparent text-[#868686] border-[#868686] hover:text-[#727272]",
       "hover:border-[#727272] dark:text-[#A6A6A6] dark:border-[#A6A6A6]",
-      "dark:hover:text-[#BBBBBB] dark:hover:border-[#BBBBBB] [&>.indicator]:bg-[#5E5E5E]",
-      "dark:[&>.indicator]:bg-[#DDDDDD] disabled:text-[#DDDDDD]",
-      "disabled:border-[#DDDDDD] dark:disabled:text-[#727272] dark:disabled:border-[#727272]"
+      "dark:hover:text-[#BBBBBB] dark:hover:border-[#BBBBBB] disabled:text-[#DDDDDD]",
+      "disabled:border-[#DDDDDD] dark:disabled:text-[#727272] dark:disabled:border-[#727272]",
+      indicator && "[&>.indicator]:bg-[#5E5E5E] dark:[&>.indicator]:bg-[#DDDDDD]"
     ]
   end
 
-  defp color_variant("transparent", "natural") do
+  defp color_variant("transparent", "natural", indicator) do
     [
       "bg-transparent text-[#4B4B4B] hover:text-[#282828]",
-      "dark:text-[#DDDDDD] dark:hover:text-[#E8E8E8] border-transparent",
-      "[&>.indicator]:bg-black dark:[&>.indicator]:bg-white",
-      "disabled:text-[#DDDDDD] dark:disabled:text-[#727272]"
+      "dark:text-[#DDDDDD] dark:hover:text-[#E8E8E8]",
+      "disabled:text-[#DDDDDD] dark:disabled:text-[#727272]",
+      indicator && "[&>.indicator]:bg-black dark:[&>.indicator]:bg-white"
     ]
   end
 
-  defp color_variant("transparent", "primary") do
+  defp color_variant("transparent", "primary", indicator) do
     [
       "bg-transparent text-[#007F8C] hover:text-[#016974]",
-      "dark:text-[#01B8CA] dark:hover:text-[#77D5E3] border-transparent",
-      "[&>.indicator]:bg-[#1A535A] dark:[&>.indicator]:bg-[#B0E7EF]",
-      "disabled:text-[#DDDDDD] dark:disabled:text-[#727272]"
+      "dark:text-[#01B8CA] dark:hover:text-[#77D5E3]",
+      "disabled:text-[#DDDDDD] dark:disabled:text-[#727272]",
+      indicator && "[&>.indicator]:bg-[#1A535A] dark:[&>.indicator]:bg-[#B0E7EF]"
     ]
   end
 
-  defp color_variant("transparent", "secondary") do
+  defp color_variant("transparent", "secondary", indicator) do
     [
       "bg-transparent text-[#266EF1] hover:text-[#175BCC]",
-      "dark:text-[#6DAAFB] dark:hover:text-[#A9C9FF] border-transparent",
-      "[&>.indicator]:bg-[#1948A3] dark:[&>.indicator]:bg-[#CDDEFF]",
-      "disabled:text-[#DDDDDD] dark:disabled:text-[#727272]"
+      "dark:text-[#6DAAFB] dark:hover:text-[#A9C9FF]",
+      "disabled:text-[#DDDDDD] dark:disabled:text-[#727272]",
+      indicator && "[&>.indicator]:bg-[#1948A3] dark:[&>.indicator]:bg-[#CDDEFF]"
     ]
   end
 
-  defp color_variant("transparent", "success") do
+  defp color_variant("transparent", "success", indicator) do
     [
       "bg-transparent text-[#0E8345] hover:text-[#166C3B]",
-      "dark:text-[#06C167] dark:hover:text-[#7FD99A] border-transparent",
-      "[&>.indicator]:bg-[#0D572D] dark:[&>.indicator]:bg-[#B1EAC2]",
-      "disabled:text-[#DDDDDD] dark:disabled:text-[#727272]"
+      "dark:text-[#06C167] dark:hover:text-[#7FD99A]",
+      "disabled:text-[#DDDDDD] dark:disabled:text-[#727272]",
+      indicator && "[&>.indicator]:bg-[#0D572D] dark:[&>.indicator]:bg-[#B1EAC2]"
     ]
   end
 
-  defp color_variant("transparent", "warning") do
+  defp color_variant("transparent", "warning", indicator) do
     [
       "bg-transparent text-[#CA8D01] hover:text-[#CA8D01]",
-      "dark:text-[#FDC034] dark:hover:text-[#FDD067] border-transparent",
-      "[&>.indicator]:bg-[#654600] dark:[&>.indicator]:bg-[#FEDF99]",
-      "disabled:text-[#DDDDDD] dark:disabled:text-[#727272]"
+      "dark:text-[#FDC034] dark:hover:text-[#FDD067]",
+      "disabled:text-[#DDDDDD] dark:disabled:text-[#727272]",
+      indicator && "[&>.indicator]:bg-[#654600] dark:[&>.indicator]:bg-[#FEDF99]"
     ]
   end
 
-  defp color_variant("transparent", "danger") do
+  defp color_variant("transparent", "danger", indicator) do
     [
       "bg-transparent text-[#DE1135] hover:text-[#BB032A]",
-      "dark:text-[#FC7F79] dark:hover:text-[#FFB2AB] border-transparent",
-      "[&>.indicator]:bg-[#950F22] dark:[&>.indicator]:bg-[#FFD2CD]",
-      "disabled:text-[#DDDDDD] dark:disabled:text-[#727272]"
+      "dark:text-[#FC7F79] dark:hover:text-[#FFB2AB]",
+      "disabled:text-[#DDDDDD] dark:disabled:text-[#727272]",
+      indicator && "[&>.indicator]:bg-[#950F22] dark:[&>.indicator]:bg-[#FFD2CD]"
     ]
   end
 
-  defp color_variant("transparent", "info") do
+  defp color_variant("transparent", "info", indicator) do
     [
       "bg-transparent text-[#0B84BA] hover:text-[#08638C]",
-      "dark:text-[#3EB7ED] dark:hover:text-[#6EC9F2] border-transparent",
-      "[&>.indicator]:bg-[#06425D] dark:[&>.indicator]:bg-[#9FDBF6]",
-      "disabled:text-[#DDDDDD] dark:disabled:text-[#727272]"
+      "dark:text-[#3EB7ED] dark:hover:text-[#6EC9F2]",
+      "disabled:text-[#DDDDDD] dark:disabled:text-[#727272]",
+      indicator && "[&>.indicator]:bg-[#06425D] dark:[&>.indicator]:bg-[#9FDBF6]"
     ]
   end
 
-  defp color_variant("transparent", "misc") do
+  defp color_variant("transparent", "misc", indicator) do
     [
       "bg-transparent text-[#8750C5] hover:text-[#653C94]",
-      "dark:text-[#BA83F9] dark:hover:text-[#CBA2FA] border-transparent",
-      "[&>.indicator]:bg-[#442863] dark:[&>.indicator]:bg-[#DDC1FC]",
-      "disabled:text-[#DDDDDD] dark:disabled:text-[#727272]"
+      "dark:text-[#BA83F9] dark:hover:text-[#CBA2FA]",
+      "disabled:text-[#DDDDDD] dark:disabled:text-[#727272]",
+      indicator && "[&>.indicator]:bg-[#442863] dark:[&>.indicator]:bg-[#DDC1FC]"
     ]
   end
 
-  defp color_variant("transparent", "dawn") do
+  defp color_variant("transparent", "dawn", indicator) do
     [
       "bg-transparent text-[#A86438] hover:text-[#7E4B2A]",
-      "dark:text-[#DB976B] dark:hover:text-[#E4B190] border-transparent",
-      "[&>.indicator]:bg-[#54321C] dark:[&>.indicator]:bg-[#EDCBB5]",
-      "disabled:text-[#DDDDDD] dark:disabled:text-[#727272]"
+      "dark:text-[#DB976B] dark:hover:text-[#E4B190]",
+      "disabled:text-[#DDDDDD] dark:disabled:text-[#727272]",
+      indicator && "[&>.indicator]:bg-[#54321C] dark:[&>.indicator]:bg-[#EDCBB5]"
     ]
   end
 
-  defp color_variant("transparent", "silver") do
+  defp color_variant("transparent", "silver", indicator) do
     [
       "bg-transparent text-[#868686] hover:text-[#727272]",
-      "dark:text-[#A6A6A6] dark:hover:text-[#BBBBBB] border-transparent",
-      "[&>.indicator]:bg-[#5E5E5E] dark:[&>.indicator]:bg-[#DDDDDD]",
-      "disabled:text-[#DDDDDD] dark:disabled:text-[#727272]"
+      "dark:text-[#A6A6A6] dark:hover:text-[#BBBBBB]",
+      "disabled:text-[#DDDDDD] dark:disabled:text-[#727272]",
+      indicator && "[&>.indicator]:bg-[#5E5E5E] dark:[&>.indicator]:bg-[#DDDDDD]"
     ]
   end
 
-  defp color_variant("subtle", "natural") do
+  defp color_variant("subtle", "natural", indicator) do
     [
       "bg-transparent text-[#4B4B4B] hover:text-[#282828] hover:bg-[#F3F3F3]",
       "dark:text-[#DDDDDD] dark:hover:text-[#E8E8E8] dark:hover:bg-[#4B4B4B]",
-      "border-transparent [&>.indicator]:bg-black dark:[&>.indicator]:bg-white",
       "disabled:text-[#DDDDDD] dark:disabled:text-[#727272]",
-      "disabled:hover:bg-transparent dark:disabled:hover:bg-transparent"
+      "disabled:hover:bg-transparent dark:disabled:hover:bg-transparent",
+      indicator && "[&>.indicator]:bg-black dark:[&>.indicator]:bg-white"
     ]
   end
 
-  defp color_variant("subtle", "primary") do
+  defp color_variant("subtle", "primary", indicator) do
     [
       "bg-transparent text-[#007F8C] hover:text-[#016974] hover:bg-[#E2F8FB]",
       "dark:text-[#01B8CA] dark:hover:text-[#77D5E3] dark:hover:bg-[#002D33]",
-      "border-transparent [&>.indicator]:bg-[#1A535A] dark:[&>.indicator]:bg-[#B0E7EF]",
       "disabled:text-[#DDDDDD] dark:disabled:text-[#727272]",
-      "disabled:hover:bg-transparent dark:disabled:hover:bg-transparent"
+      "disabled:hover:bg-transparent dark:disabled:hover:bg-transparent",
+      indicator && "[&>.indicator]:bg-[#1A535A] dark:[&>.indicator]:bg-[#B0E7EF]"
     ]
   end
 
-  defp color_variant("subtle", "secondary") do
+  defp color_variant("subtle", "secondary", indicator) do
     [
       "bg-transparent text-[#266EF1] hover:text-[#175BCC] hover:bg-[#EFF4FE]",
       "dark:text-[#6DAAFB] dark:hover:text-[#A9C9FF] dark:hover:bg-[#002661]",
-      "border-transparent [&>.indicator]:bg-[#1948A3] dark:[&>.indicator]:bg-[#CDDEFF]",
       "disabled:text-[#DDDDDD] dark:disabled:text-[#727272]",
-      "disabled:hover:bg-transparent dark:disabled:hover:bg-transparent"
+      "disabled:hover:bg-transparent dark:disabled:hover:bg-transparent",
+      indicator && "[&>.indicator]:bg-[#1948A3] dark:[&>.indicator]:bg-[#CDDEFF]"
     ]
   end
 
-  defp color_variant("subtle", "success") do
+  defp color_variant("subtle", "success", indicator) do
     [
       "bg-transparent text-[#0E8345] hover:text-[#166C3B] hover:bg-[#EAF6ED]",
       "dark:text-[#06C167] dark:hover:text-[#7FD99A] dark:hover:bg-[#002F14]",
-      "border-transparent [&>.indicator]:bg-[#0D572D] dark:[&>.indicator]:bg-[#B1EAC2]",
       "disabled:text-[#DDDDDD] dark:disabled:text-[#727272]",
-      "disabled:hover:bg-transparent dark:disabled:hover:bg-transparent"
+      "disabled:hover:bg-transparent dark:disabled:hover:bg-transparent",
+      indicator && "[&>.indicator]:bg-[#0D572D] dark:[&>.indicator]:bg-[#B1EAC2]"
     ]
   end
 
-  defp color_variant("subtle", "warning") do
+  defp color_variant("subtle", "warning", indicator) do
     [
       "bg-transparent text-[#CA8D01] hover:text-[#CA8D01] hover:bg-[#FFF7E6]",
       "dark:text-[#FDC034] dark:hover:text-[#FDD067] dark:hover:bg-[#322300]",
-      "border-transparent [&>.indicator]:bg-[#654600] dark:[&>.indicator]:bg-[#FEDF99]",
       "disabled:text-[#DDDDDD] dark:disabled:text-[#727272]",
-      "disabled:hover:bg-transparent dark:disabled:hover:bg-transparent"
+      "disabled:hover:bg-transparent dark:disabled:hover:bg-transparent",
+      indicator && "[&>.indicator]:bg-[#654600] dark:[&>.indicator]:bg-[#FEDF99]"
     ]
   end
 
-  defp color_variant("subtle", "danger") do
+  defp color_variant("subtle", "danger", indicator) do
     [
       "bg-transparent text-[#DE1135] hover:text-[#BB032A] hover:bg-[#FFF0EE]",
       "dark:text-[#FC7F79] dark:hover:text-[#FFB2AB] dark:hover:bg-[#520810]",
-      "border-transparent [&>.indicator]:bg-[#950F22] dark:[&>.indicator]:bg-[#FFD2CD]",
       "disabled:text-[#DDDDDD] dark:disabled:text-[#727272]",
-      "disabled:hover:bg-transparent dark:disabled:hover:bg-transparent"
+      "disabled:hover:bg-transparent dark:disabled:hover:bg-transparent",
+      indicator && "[&>.indicator]:bg-[#950F22] dark:[&>.indicator]:bg-[#FFD2CD]"
     ]
   end
 
-  defp color_variant("subtle", "info") do
+  defp color_variant("subtle", "info", indicator) do
     [
       "bg-transparent text-[#0B84BA] hover:text-[#08638C] hover:bg-[#E7F6FD]",
       "dark:text-[#3EB7ED] dark:hover:text-[#6EC9F2] dark:hover:bg-[#03212F]",
-      "border-transparent [&>.indicator]:bg-[#06425D] dark:[&>.indicator]:bg-[#9FDBF6]",
       "disabled:text-[#DDDDDD] dark:disabled:text-[#727272]",
-      "disabled:hover:bg-transparent dark:disabled:hover:bg-transparent"
+      "disabled:hover:bg-transparent dark:disabled:hover:bg-transparent",
+      indicator && "[&>.indicator]:bg-[#06425D] dark:[&>.indicator]:bg-[#9FDBF6]"
     ]
   end
 
-  defp color_variant("subtle", "misc") do
+  defp color_variant("subtle", "misc", indicator) do
     [
       "bg-transparent text-[#8750C5] hover:text-[#653C94] hover:bg-[#F6F0FE]",
       "dark:text-[#BA83F9] dark:hover:text-[#CBA2FA] dark:hover:bg-[#221431]",
-      "border-transparent [&>.indicator]:bg-[#442863] dark:[&>.indicator]:bg-[#DDC1FC]",
       "disabled:text-[#DDDDDD] dark:disabled:text-[#727272]",
-      "disabled:hover:bg-transparent dark:disabled:hover:bg-transparent"
+      "disabled:hover:bg-transparent dark:disabled:hover:bg-transparent",
+      indicator && "[&>.indicator]:bg-[#442863] dark:[&>.indicator]:bg-[#DDC1FC]"
     ]
   end
 
-  defp color_variant("subtle", "dawn") do
+  defp color_variant("subtle", "dawn", indicator) do
     [
       "bg-transparent text-[#A86438] hover:text-[#7E4B2A] hover:bg-[#FBF2ED]",
       "dark:text-[#DB976B] dark:hover:text-[#E4B190] dark:hover:bg-[#2A190E]",
-      "border-transparent [&>.indicator]:bg-[#54321C] dark:[&>.indicator]:bg-[#EDCBB5]",
       "disabled:text-[#DDDDDD] dark:disabled:text-[#727272]",
-      "disabled:hover:bg-transparent dark:disabled:hover:bg-transparent"
+      "disabled:hover:bg-transparent dark:disabled:hover:bg-transparent",
+      indicator && "[&>.indicator]:bg-[#54321C] dark:[&>.indicator]:bg-[#EDCBB5]"
     ]
   end
 
-  defp color_variant("subtle", "silver") do
+  defp color_variant("subtle", "silver", indicator) do
     [
       "bg-transparent text-[#868686] hover:text-[#727272] hover:bg-[#F3F3F3]",
       "dark:text-[#A6A6A6] dark:hover:text-[#BBBBBB] dark:hover:bg-[#4B4B4B]",
-      " border-transparent [&>.indicator]:bg-[#5E5E5E] dark:[&>.indicator]:bg-[#DDDDDD]",
       "disabled:text-[#DDDDDD] dark:disabled:text-[#727272]",
-      "disabled:hover:bg-transparent dark:disabled:hover:bg-transparent"
+      "disabled:hover:bg-transparent dark:disabled:hover:bg-transparent",
+      indicator && "[&>.indicator]:bg-[#5E5E5E] dark:[&>.indicator]:bg-[#DDDDDD]"
     ]
   end
 
-  defp color_variant("bordered", "natural") do
+  defp color_variant("bordered", "natural", indicator) do
     [
       "bg-white dark:bg-[#282828] text-[#4B4B4B] border-[#4B4B4B] hover:text-[#282828]",
       "hover:border-[#282828] dark:text-[#DDDDDD] dark:border-[#DDDDDD]",
-      "dark:hover:text-[#E8E8E8] dark:hover:border-[#E8E8E8] [&>.indicator]:bg-black",
-      "dark:[&>.indicator]:bg-white disabled:text-[#DDDDDD]",
-      "disabled:border-[#DDDDDD] dark:disabled:text-[#727272] dark:disabled:border-[#727272]"
+      "dark:hover:text-[#E8E8E8] dark:hover:border-[#E8E8E8] disabled:text-[#DDDDDD]",
+      "disabled:border-[#DDDDDD] dark:disabled:text-[#727272] dark:disabled:border-[#727272]",
+      indicator && "[&>.indicator]:bg-black dark:[&>.indicator]:bg-white"
     ]
   end
 
-  defp color_variant("bordered", "primary") do
+  defp color_variant("bordered", "primary", indicator) do
     [
       "bg-white dark:bg-[#282828] text-[#007F8C] border-[#007F8C] hover:text-[#016974]",
       "hover:border-[#016974] dark:text-[#01B8CA] dark:border-[#01B8CA]",
-      "dark:hover:text-[#77D5E3] dark:hover:border-[#77D5E3] [&>.indicator]:bg-[#1A535A]",
-      "dark:[&>.indicator]:bg-[#B0E7EF] disabled:text-[#DDDDDD]",
-      "disabled:border-[#DDDDDD] dark:disabled:text-[#727272] dark:disabled:border-[#727272]"
+      "dark:hover:text-[#77D5E3] dark:hover:border-[#77D5E3] disabled:text-[#DDDDDD]",
+      "disabled:border-[#DDDDDD] dark:disabled:text-[#727272] dark:disabled:border-[#727272]",
+      indicator && "[&>.indicator]:bg-[#1A535A] dark:[&>.indicator]:bg-[#B0E7EF]"
     ]
   end
 
-  defp color_variant("bordered", "secondary") do
+  defp color_variant("bordered", "secondary", indicator) do
     [
       "bg-white dark:bg-[#282828] text-[#266EF1] border-[#266EF1] hover:text-[#175BCC]",
       "hover:border-[#175BCC] dark:text-[#6DAAFB] dark:border-[#6DAAFB]",
-      "dark:hover:text-[#A9C9FF] dark:hover:border-[#A9C9FF] [&>.indicator]:bg-[#1948A3]",
-      "dark:[&>.indicator]:bg-[#CDDEFF] disabled:text-[#DDDDDD]",
-      " disabled:border-[#DDDDDD] dark:disabled:text-[#727272] dark:disabled:border-[#727272]"
+      "dark:hover:text-[#A9C9FF] dark:hover:border-[#A9C9FF] disabled:text-[#DDDDDD]",
+      " disabled:border-[#DDDDDD] dark:disabled:text-[#727272] dark:disabled:border-[#727272]",
+      indicator && "[&>.indicator]:bg-[#1948A3] dark:[&>.indicator]:bg-[#CDDEFF]"
     ]
   end
 
-  defp color_variant("bordered", "success") do
+  defp color_variant("bordered", "success", indicator) do
     [
       "bg-white dark:bg-[#282828] text-[#0E8345] border-[#0E8345] hover:text-[#166C3B]",
       "hover:border-[#166C3B] dark:text-[#06C167] dark:border-[#06C167]",
-      "dark:hover:text-[#7FD99A] dark:hover:border-[#7FD99A] [&>.indicator]:bg-[#0D572D]",
-      "dark:[&>.indicator]:bg-[#B1EAC2] disabled:text-[#DDDDDD]",
-      "disabled:border-[#DDDDDD] dark:disabled:text-[#727272] dark:disabled:border-[#727272]"
+      "dark:hover:text-[#7FD99A] dark:hover:border-[#7FD99A] disabled:text-[#DDDDDD]",
+      "disabled:border-[#DDDDDD] dark:disabled:text-[#727272] dark:disabled:border-[#727272]",
+      indicator && "[&>.indicator]:bg-[#0D572D] dark:[&>.indicator]:bg-[#B1EAC2]"
     ]
   end
 
-  defp color_variant("bordered", "warning") do
+  defp color_variant("bordered", "warning", indicator) do
     [
       "bg-white dark:bg-[#282828] text-[#CA8D01] border-[#CA8D01] hover:text-[#976A01]",
       "hover:border-[#976A01] dark:text-[#FDC034] dark:border-[#FDC034]",
-      "dark:hover:text-[#FDD067] dark:hover:border-[#FDD067] [&>.indicator]:bg-[#654600]",
-      "dark:[&>.indicator]:bg-[#FEDF99] disabled:text-[#DDDDDD]",
-      "disabled:border-[#DDDDDD] dark:disabled:text-[#727272] dark:disabled:border-[#727272]"
+      "dark:hover:text-[#FDD067] dark:hover:border-[#FDD067] disabled:text-[#DDDDDD]",
+      "disabled:border-[#DDDDDD] dark:disabled:text-[#727272] dark:disabled:border-[#727272]",
+      indicator && "[&>.indicator]:bg-[#654600] dark:[&>.indicator]:bg-[#FEDF99]"
     ]
   end
 
-  defp color_variant("bordered", "danger") do
+  defp color_variant("bordered", "danger", indicator) do
     [
       "bg-white dark:bg-[#282828] text-[#DE1135] border-[#DE1135] hover:text-[#BB032A]",
       "hover:border-[#BB032A] dark:text-[#FC7F79] dark:border-[#FC7F79]",
-      "dark:hover:text-[#FFB2AB] dark:hover:border-[#FFB2AB] [&>.indicator]:bg-[#950F22]",
-      "dark:[&>.indicator]:bg-[#FFD2CD] disabled:text-[#DDDDDD]",
-      "disabled:border-[#DDDDDD] dark:disabled:text-[#727272] dark:disabled:border-[#727272]"
+      "dark:hover:text-[#FFB2AB] dark:hover:border-[#FFB2AB] disabled:text-[#DDDDDD]",
+      "disabled:border-[#DDDDDD] dark:disabled:text-[#727272] dark:disabled:border-[#727272]",
+      indicator && "[&>.indicator]:bg-[#950F22] dark:[&>.indicator]:bg-[#FFD2CD]"
     ]
   end
 
-  defp color_variant("bordered", "info") do
+  defp color_variant("bordered", "info", indicator) do
     [
       "bg-white dark:bg-[#282828] text-[#0B84BA] border-[#0B84BA] hover:text-[#0B84BA]",
       "hover:border-[#0B84BA] dark:text-[#3EB7ED] dark:border-[#3EB7ED]",
-      "dark:hover:text-[#6EC9F2] dark:hover:border-[#6EC9F2] [&>.indicator]:bg-[#06425D]",
-      "dark:[&>.indicator]:bg-[#9FDBF6] disabled:text-[#DDDDDD]",
-      "disabled:border-[#DDDDDD] dark:disabled:text-[#727272] dark:disabled:border-[#727272]"
+      "dark:hover:text-[#6EC9F2] dark:hover:border-[#6EC9F2] disabled:text-[#DDDDDD]",
+      "disabled:border-[#DDDDDD] dark:disabled:text-[#727272] dark:disabled:border-[#727272]",
+      indicator && "[&>.indicator]:bg-[#06425D] dark:[&>.indicator]:bg-[#9FDBF6]"
     ]
   end
 
-  defp color_variant("bordered", "misc") do
+  defp color_variant("bordered", "misc", indicator) do
     [
       "bg-white dark:bg-[#282828] text-[#8750C5] border-[#8750C5] hover:text-[#653C94]",
       "hover:border-[#653C94] dark:text-[#BA83F9] dark:border-[#BA83F9]",
-      "dark:hover:text-[#CBA2FA] dark:hover:border-[#CBA2FA] [&>.indicator]:bg-[#442863]",
-      "dark:[&>.indicator]:bg-[#DDC1FC] disabled:text-[#DDDDDD]",
-      "disabled:border-[#DDDDDD] dark:disabled:text-[#727272] dark:disabled:border-[#727272]"
+      "dark:hover:text-[#CBA2FA] dark:hover:border-[#CBA2FA] disabled:text-[#DDDDDD]",
+      "disabled:border-[#DDDDDD] dark:disabled:text-[#727272] dark:disabled:border-[#727272]",
+      indicator && "[&>.indicator]:bg-[#442863] dark:[&>.indicator]:bg-[#DDC1FC]"
     ]
   end
 
-  defp color_variant("bordered", "dawn") do
+  defp color_variant("bordered", "dawn", indicator) do
     [
       "bg-white dark:bg-[#282828] text-[#A86438] border-[#A86438] hover:text-[#7E4B2A]",
       "hover:border-[#7E4B2A] dark:text-[#DB976B] dark:border-[#DB976B]",
-      "dark:hover:text-[#E4B190] dark:hover:border-[#E4B190] [&>.indicator]:bg-[#54321C]",
-      "dark:[&>.indicator]:bg-[#EDCBB5] disabled:text-[#DDDDDD]",
-      "disabled:border-[#DDDDDD] dark:disabled:text-[#727272] dark:disabled:border-[#727272]"
+      "dark:hover:text-[#E4B190] dark:hover:border-[#E4B190] disabled:text-[#DDDDDD]",
+      "disabled:border-[#DDDDDD] dark:disabled:text-[#727272] dark:disabled:border-[#727272]",
+      indicator && "[&>.indicator]:bg-[#54321C] dark:[&>.indicator]:bg-[#EDCBB5]"
     ]
   end
 
-  defp color_variant("bordered", "silver") do
+  defp color_variant("bordered", "silver", indicator) do
     [
       "bg-white dark:bg-[#282828] text-[#868686] border-[#868686] hover:text-[#727272]",
       "hover:border-[#727272] dark:text-[#A6A6A6] dark:border-[#A6A6A6]",
-      "dark:hover:text-[#BBBBBB] dark:hover:border-[#BBBBBB] [&>.indicator]:bg-[#5E5E5E]",
-      "dark:[&>.indicator]:bg-[#DDDDDD] disabled:text-[#DDDDDD]",
-      "disabled:border-[#DDDDDD] dark:disabled:text-[#727272] dark:disabled:border-[#727272]"
+      "dark:hover:text-[#BBBBBB] dark:hover:border-[#BBBBBB] disabled:text-[#DDDDDD]",
+      "disabled:border-[#DDDDDD] dark:disabled:text-[#727272] dark:disabled:border-[#727272]",
+      indicator && "[&>.indicator]:bg-[#5E5E5E] dark:[&>.indicator]:bg-[#DDDDDD]"
     ]
   end
 
-  defp color_variant("shadow", "natural") do
+  defp color_variant("shadow", "natural", indicator) do
     [
       "bg-[#4B4B4B] text-white hover:bg-[#282828] dark:bg-[#DDDDDD]",
-      "dark:text-black dark:hover:bg-[#E8E8E8] [&>.indicator]:bg-white",
-      "dark:[&>.indicator]:bg-black disabled:bg-[#F3F3F3] disabled:text-[#BBBBBB]",
+      "dark:text-black dark:hover:bg-[#E8E8E8] disabled:bg-[#F3F3F3] disabled:text-[#BBBBBB]",
       "dark:disabled:bg-[#4B4B4B] dark:disabled:text-[#868686]",
-      "shadow-[0px_4px_6px_-4px_rgba(134,134,134,0.5)] shadow-[0px_10px_15px_-3px_rgba(134,134,134,0.5)] dark:shadow-none"
+      "shadow-[0px_4px_6px_-4px_rgba(134,134,134,0.5)] shadow-[0px_10px_15px_-3px_rgba(134,134,134,0.5)] dark:shadow-none",
+      indicator && "[&>.indicator]:bg-white dark:[&>.indicator]:bg-black"
     ]
   end
 
-  defp color_variant("shadow", "primary") do
+  defp color_variant("shadow", "primary", indicator) do
     [
       "bg-[#007F8C] text-white hover:bg-[#016974] dark:bg-[#01B8CA]",
-      "dark:text-black dark:hover:bg-[#77D5E3] [&>.indicator]:bg-[#1A535A]",
-      "dark:[&>.indicator]:bg-[#B0E7EF] disabled:bg-[#F3F3F3] disabled:text-[#BBBBBB]",
+      "dark:text-black dark:hover:bg-[#77D5E3] disabled:bg-[#F3F3F3] disabled:text-[#BBBBBB]",
       "dark:disabled:bg-[#4B4B4B] dark:disabled:text-[#868686]",
-      "shadow-[0px_4px_6px_-4px_rgba(0,149,164,0.5)] shadow-[0px_10px_15px_-3px_rgba(0,149,164,0.5)] dark:shadow-none"
+      "shadow-[0px_4px_6px_-4px_rgba(0,149,164,0.5)] shadow-[0px_10px_15px_-3px_rgba(0,149,164,0.5)] dark:shadow-none",
+      indicator && "[&>.indicator]:bg-[#1A535A] dark:[&>.indicator]:bg-[#B0E7EF]"
     ]
   end
 
-  defp color_variant("shadow", "secondary") do
+  defp color_variant("shadow", "secondary", indicator) do
     [
       "bg-[#266EF1] text-white hover:bg-[#175BCC] dark:bg-[#6DAAFB]",
-      "dark:text-black dark:hover:bg-[#A9C9FF] [&>.indicator]:bg-[#1948A3]",
-      "dark:[&>.indicator]:bg-[#CDDEFF] disabled:bg-[#F3F3F3] disabled:text-[#BBBBBB]",
+      "dark:text-black dark:hover:bg-[#A9C9FF] disabled:bg-[#F3F3F3] disabled:text-[#BBBBBB]",
       "dark:disabled:bg-[#4B4B4B] dark:disabled:text-[#868686]",
-      "shadow-[0px_4px_6px_-4px_rgba(6,139,238,0.5)] shadow-[0px_10px_15px_-3px_rgba(6,139,238,0.5)] dark:shadow-none"
+      "shadow-[0px_4px_6px_-4px_rgba(6,139,238,0.5)] shadow-[0px_10px_15px_-3px_rgba(6,139,238,0.5)] dark:shadow-none",
+      indicator && "[&>.indicator]:bg-[#1948A3] dark:[&>.indicator]:bg-[#CDDEFF]"
     ]
   end
 
-  defp color_variant("shadow", "success") do
+  defp color_variant("shadow", "success", indicator) do
     [
       "bg-[#0E8345] text-white hover:bg-[#166C3B] dark:bg-[#06C167]",
-      "dark:text-black dark:hover:bg-[#7FD99A] [&>.indicator]:bg-[#047857]",
-      "dark:[&>.indicator]:bg-[#B1EAC2] disabled:bg-[#F3F3F3] disabled:text-[#BBBBBB]",
+      "dark:text-black dark:hover:bg-[#7FD99A] disabled:bg-[#F3F3F3] disabled:text-[#BBBBBB]",
       "dark:disabled:bg-[#4B4B4B] dark:disabled:text-[#868686]",
-      "shadow-[0px_4px_6px_-4px_rgba(0,154,81,0.5)] shadow-[0px_10px_15px_-3px_rgba(0,154,81,0.5)] dark:shadow-none"
+      "shadow-[0px_4px_6px_-4px_rgba(0,154,81,0.5)] shadow-[0px_10px_15px_-3px_rgba(0,154,81,0.5)] dark:shadow-none",
+      indicator && "[&>.indicator]:bg-[#047857] dark:[&>.indicator]:bg-[#B1EAC2]"
     ]
   end
 
-  defp color_variant("shadow", "warning") do
+  defp color_variant("shadow", "warning", indicator) do
     [
       "bg-[#CA8D01] text-white hover:bg-[#976A01] dark:bg-[#FDC034]",
-      "dark:text-black dark:hover:bg-[#FDD067] [&>.indicator]:bg-[#FF8B08]",
-      "dark:[&>.indicator]:bg-[#FEDF99] disabled:bg-[#F3F3F3] disabled:text-[#BBBBBB]",
+      "dark:text-black dark:hover:bg-[#FDD067] disabled:bg-[#F3F3F3] disabled:text-[#BBBBBB]",
       "dark:disabled:bg-[#4B4B4B] dark:disabled:text-[#868686]",
-      "shadow-[0px_4px_6px_-4px_rgba(252,176,1,0.5)] shadow-[0px_10px_15px_-3px_rgba(252,176,1,0.5)] dark:shadow-none"
+      "shadow-[0px_4px_6px_-4px_rgba(252,176,1,0.5)] shadow-[0px_10px_15px_-3px_rgba(252,176,1,0.5)] dark:shadow-none",
+      indicator && "[&>.indicator]:bg-[#FF8B08] dark:[&>.indicator]:bg-[#FEDF99]"
     ]
   end
 
-  defp color_variant("shadow", "danger") do
+  defp color_variant("shadow", "danger", indicator) do
     [
       "bg-[#DE1135] text-white hover:bg-[#BB032A] dark:bg-[#FC7F79]",
-      "dark:text-black dark:hover:bg-[#FFB2AB] [&>.indicator]:bg-[#E73B3B]",
-      "dark:[&>.indicator]:bg-[#FFD2CD] disabled:bg-[#F3F3F3] disabled:text-[#BBBBBB]",
+      "dark:text-black dark:hover:bg-[#FFB2AB] disabled:bg-[#F3F3F3] disabled:text-[#BBBBBB]",
       "dark:disabled:bg-[#4B4B4B] dark:disabled:text-[#868686]",
-      "shadow-[0px_4px_6px_-4px_rgba(248,52,70,0.5)] shadow-[0px_10px_15px_-3px_rgba(248,52,70,0.5)] dark:shadow-none"
+      "shadow-[0px_4px_6px_-4px_rgba(248,52,70,0.5)] shadow-[0px_10px_15px_-3px_rgba(248,52,70,0.5)] dark:shadow-none",
+      indicator && "[&>.indicator]:bg-[#E73B3B] dark:[&>.indicator]:bg-[#FFD2CD]"
     ]
   end
 
-  defp color_variant("shadow", "info") do
+  defp color_variant("shadow", "info", indicator) do
     [
       "bg-[#0B84BA] text-white hover:bg-[#08638C] dark:bg-[#3EB7ED]",
-      "dark:text-black dark:hover:bg-[#6EC9F2] [&>.indicator]:bg-[#004FC4]",
-      "dark:[&>.indicator]:bg-[#9FDBF6] disabled:bg-[#F3F3F3] disabled:text-[#BBBBBB]",
+      "dark:text-black dark:hover:bg-[#6EC9F2] disabled:bg-[#F3F3F3] disabled:text-[#BBBBBB]",
       "dark:disabled:bg-[#4B4B4B] dark:disabled:text-[#868686]",
-      "shadow-[0px_4px_6px_-4px_rgba(14,165,233,0.5)] shadow-[0px_10px_15px_-3px_rgba(14,165,233,0.5)] dark:shadow-none"
+      "shadow-[0px_4px_6px_-4px_rgba(14,165,233,0.5)] shadow-[0px_10px_15px_-3px_rgba(14,165,233,0.5)] dark:shadow-none",
+      indicator && "[&>.indicator]:bg-[#004FC4] dark:[&>.indicator]:bg-[#9FDBF6]"
     ]
   end
 
-  defp color_variant("shadow", "misc") do
+  defp color_variant("shadow", "misc", indicator) do
     [
       "bg-[#8750C5] text-white hover:bg-[#653C94] dark:bg-[#BA83F9]",
-      "dark:text-black dark:hover:bg-[#CBA2FA] [&>.indicator]:bg-[#52059C]",
-      "dark:[&>.indicator]:bg-[#DDC1FC] disabled:bg-[#F3F3F3] disabled:text-[#BBBBBB]",
+      "dark:text-black dark:hover:bg-[#CBA2FA] disabled:bg-[#F3F3F3] disabled:text-[#BBBBBB]",
       "dark:disabled:bg-[#4B4B4B] dark:disabled:text-[#868686]",
-      "shadow-[0px_4px_6px_-4px_rgba(169,100,247,0.5)] shadow-[0px_10px_15px_-3px_rgba(169,100,247,0.5)] dark:shadow-none"
+      "shadow-[0px_4px_6px_-4px_rgba(169,100,247,0.5)] shadow-[0px_10px_15px_-3px_rgba(169,100,247,0.5)] dark:shadow-none",
+      indicator && "[&>.indicator]:bg-[#52059C] dark:[&>.indicator]:bg-[#DDC1FC]"
     ]
   end
 
-  defp color_variant("shadow", "dawn") do
+  defp color_variant("shadow", "dawn", indicator) do
     [
       "bg-[#A86438] text-white hover:bg-[#7E4B2A] dark:bg-[#DB976B]",
-      "dark:text-black dark:hover:bg-[#E4B190] [&>.indicator]:bg-[#4D4137]",
-      "dark:[&>.indicator]:bg-[#EDCBB5] disabled:bg-[#F3F3F3] disabled:text-[#BBBBBB]",
+      "dark:text-black dark:hover:bg-[#E4B190] disabled:bg-[#F3F3F3] disabled:text-[#BBBBBB]",
       "dark:disabled:bg-[#4B4B4B] dark:disabled:text-[#868686]",
-      "shadow-[0px_4px_6px_-4px_rgba(210,125,70,0.5)] shadow-[0px_10px_15px_-3px_rgba(210,125,70,0.5)] dark:shadow-none"
+      "shadow-[0px_4px_6px_-4px_rgba(210,125,70,0.5)] shadow-[0px_10px_15px_-3px_rgba(210,125,70,0.5)] dark:shadow-none",
+      indicator && "[&>.indicator]:bg-[#4D4137] dark:[&>.indicator]:bg-[#EDCBB5]"
     ]
   end
 
-  defp color_variant("shadow", "silver") do
+  defp color_variant("shadow", "silver", indicator) do
     [
       "bg-[#868686] text-white hover:bg-[#727272] dark:bg-[#A6A6A6]",
-      "dark:text-black dark:hover:bg-[#BBBBBB] [&>.indicator]:bg-[#707483]",
-      "dark:[&>.indicator]:bg-[#DDDDDD] disabled:bg-[#F3F3F3] disabled:text-[#BBBBBB]",
+      "dark:text-black dark:hover:bg-[#BBBBBB] disabled:bg-[#F3F3F3] disabled:text-[#BBBBBB]",
       "dark:disabled:bg-[#4B4B4B] dark:disabled:text-[#868686]",
-      "shadow-[0px_4px_6px_-4px_rgba(134,134,134,0.5)] shadow-[0px_10px_15px_-3px_rgba(134,134,134,0.5)] dark:shadow-none"
+      "shadow-[0px_4px_6px_-4px_rgba(134,134,134,0.5)] shadow-[0px_10px_15px_-3px_rgba(134,134,134,0.5)] dark:shadow-none",
+      indicator && "[&>.indicator]:bg-[#707483] dark:[&>.indicator]:bg-[#DDDDDD]"
     ]
   end
 
-  defp color_variant("inverted", "natural") do
+  defp color_variant("inverted", "natural", indicator) do
     [
       "bg-transparent text-[#4B4B4B] border-[#4B4B4B] hover:text-[#282828]",
       "hover:border-[#282828] hover:bg-[#F3F3F3]",
       "dark:text-[#DDDDDD] dark:border-[#DDDDDD] dark:hover:text-[#E8E8E8]",
-      "dark:hover:border-[#E8E8E8] dark:hover:bg-[#4B4B4B]",
-      "[&>.indicator]:bg-black dark:[&>.indicator]:bg-white disabled:text-[#DDDDDD]",
+      "dark:hover:border-[#E8E8E8] dark:hover:bg-[#4B4B4B] disabled:text-[#DDDDDD]",
       "disabled:border-[#DDDDDD] dark:disabled:text-[#727272] dark:disabled:border-[#727272]",
-      "disabled:hover:bg-transparent dark:disabled:hover:bg-transparent"
+      "disabled:hover:bg-transparent dark:disabled:hover:bg-transparent",
+      indicator && "[&>.indicator]:bg-black dark:[&>.indicator]:bg-white"
     ]
   end
 
-  defp color_variant("inverted", "primary") do
+  defp color_variant("inverted", "primary", indicator) do
     [
       "bg-transparent text-[#007F8C] border-[#007F8C] hover:text-[#016974]",
       "hover:border-[#016974] hover:bg-[#E2F8FB]",
       "dark:text-[#01B8CA] dark:border-[#01B8CA] dark:hover:text-[#77D5E3]",
-      "dark:hover:border-[#77D5E3] dark:hover:bg-[#002D33]",
-      "[&>.indicator]:bg-[#1A535A] dark:[&>.indicator]:bg-[#B0E7EF] disabled:text-[#DDDDDD]",
+      "dark:hover:border-[#77D5E3] dark:hover:bg-[#002D33] disabled:text-[#DDDDDD]",
       "disabled:border-[#DDDDDD] dark:disabled:text-[#727272] dark:disabled:border-[#727272]",
-      "disabled:hover:bg-transparent dark:disabled:hover:bg-transparent"
+      "disabled:hover:bg-transparent dark:disabled:hover:bg-transparent",
+      indicator && "[&>.indicator]:bg-[#1A535A] dark:[&>.indicator]:bg-[#B0E7EF]"
     ]
   end
 
-  defp color_variant("inverted", "secondary") do
+  defp color_variant("inverted", "secondary", indicator) do
     [
       "bg-transparent text-[#266EF1] border-[#266EF1] hover:text-[#175BCC]",
       "hover:border-[#175BCC] hover:bg-[#EFF4FE]",
       "dark:text-[#6DAAFB] dark:border-[#6DAAFB] dark:hover:text-[#A9C9FF]",
-      "dark:hover:border-[#A9C9FF] dark:hover:bg-[#002661]",
-      "[&>.indicator]:bg-[#1948A3] dark:[&>.indicator]:bg-[#CDDEFF] disabled:text-[#DDDDDD]",
+      "dark:hover:border-[#A9C9FF] dark:hover:bg-[#002661] disabled:text-[#DDDDDD]",
       " disabled:border-[#DDDDDD] dark:disabled:text-[#727272] dark:disabled:border-[#727272]",
-      "disabled:hover:bg-transparent dark:disabled:hover:bg-transparent"
+      "disabled:hover:bg-transparent dark:disabled:hover:bg-transparent",
+      indicator && "[&>.indicator]:bg-[#1948A3] dark:[&>.indicator]:bg-[#CDDEFF]"
     ]
   end
 
-  defp color_variant("inverted", "success") do
+  defp color_variant("inverted", "success", indicator) do
     [
       "bg-transparent text-[#0E8345] border-[#0E8345] hover:text-[#166C3B]",
       "hover:border-[#166C3B] hover:bg-[#EAF6ED]",
       "dark:text-[#06C167] dark:border-[#06C167] dark:hover:text-[#7FD99A]",
-      "dark:hover:border-[#7FD99A] dark:hover:bg-[#002F14]",
-      "[&>.indicator]:bg-[#0D572D] dark:[&>.indicator]:bg-[#B1EAC2] disabled:text-[#DDDDDD]",
+      "dark:hover:border-[#7FD99A] dark:hover:bg-[#002F14] disabled:text-[#DDDDDD]",
       "disabled:border-[#DDDDDD] dark:disabled:text-[#727272] dark:disabled:border-[#727272]",
-      "disabled:hover:bg-transparent dark:disabled:hover:bg-transparent"
+      "disabled:hover:bg-transparent dark:disabled:hover:bg-transparent",
+      indicator && "[&>.indicator]:bg-[#0D572D] dark:[&>.indicator]:bg-[#B1EAC2]"
     ]
   end
 
-  defp color_variant("inverted", "warning") do
+  defp color_variant("inverted", "warning", indicator) do
     [
       "bg-transparent text-[#CA8D01] border-[#CA8D01] hover:text-[#976A01]",
       "hover:border-[#976A01] hover:bg-[#FFF7E6]",
       "dark:text-[#FDC034] dark:border-[#FDC034] dark:hover:text-[#FDD067]",
-      "dark:hover:border-[#FDD067] dark:hover:bg-[#322300]",
-      "[&>.indicator]:bg-[#654600] dark:[&>.indicator]:bg-[#FEDF99] disabled:text-[#DDDDDD]",
+      "dark:hover:border-[#FDD067] dark:hover:bg-[#322300] disabled:text-[#DDDDDD]",
       "disabled:border-[#DDDDDD] dark:disabled:text-[#727272] dark:disabled:border-[#727272]",
-      "disabled:hover:bg-transparent dark:disabled:hover:bg-transparent"
+      "disabled:hover:bg-transparent dark:disabled:hover:bg-transparent",
+      indicator && "[&>.indicator]:bg-[#654600] dark:[&>.indicator]:bg-[#FEDF99]"
     ]
   end
 
-  defp color_variant("inverted", "danger") do
+  defp color_variant("inverted", "danger", indicator) do
     [
       "bg-transparent text-[#DE1135] border-[#DE1135] hover:text-[#BB032A]",
       "hover:border-[#BB032A] hover:bg-[#FFF0EE]",
       "dark:text-[#FC7F79] dark:border-[#FC7F79] dark:hover:text-[#FFB2AB]",
-      "dark:hover:border-[#FFB2AB] dark:hover:bg-[#520810]",
-      "[&>.indicator]:bg-[#950F22] dark:[&>.indicator]:bg-[#FFD2CD] disabled:text-[#DDDDDD]",
+      "dark:hover:border-[#FFB2AB] dark:hover:bg-[#520810] disabled:text-[#DDDDDD]",
       "disabled:border-[#DDDDDD] dark:disabled:text-[#727272] dark:disabled:border-[#727272]",
-      "disabled:hover:bg-transparent dark:disabled:hover:bg-transparent"
+      "disabled:hover:bg-transparent dark:disabled:hover:bg-transparent",
+      indicator && "[&>.indicator]:bg-[#950F22] dark:[&>.indicator]:bg-[#FFD2CD]"
     ]
   end
 
-  defp color_variant("inverted", "info") do
+  defp color_variant("inverted", "info", indicator) do
     [
       "bg-transparent text-[#0B84BA] border-[#0B84BA] hover:text-[#0B84BA]",
       "hover:border-[#0B84BA] hover:bg-[#E7F6FD]",
       "dark:text-[#3EB7ED] dark:border-[#3EB7ED] dark:hover:text-[#6EC9F2]",
-      "dark:hover:border-[#6EC9F2] dark:hover:bg-[#03212F]",
-      "[&>.indicator]:bg-[#06425D] dark:[&>.indicator]:bg-[#9FDBF6] disabled:text-[#DDDDDD]",
+      "dark:hover:border-[#6EC9F2] dark:hover:bg-[#03212F] disabled:text-[#DDDDDD]",
       "disabled:border-[#DDDDDD] dark:disabled:text-[#727272] dark:disabled:border-[#727272]",
-      "disabled:hover:bg-transparent dark:disabled:hover:bg-transparent"
+      "disabled:hover:bg-transparent dark:disabled:hover:bg-transparent",
+      indicator && "[&>.indicator]:bg-[#06425D] dark:[&>.indicator]:bg-[#9FDBF6]"
     ]
   end
 
-  defp color_variant("inverted", "misc") do
+  defp color_variant("inverted", "misc", indicator) do
     [
       "bg-transparent text-[#8750C5] border-[#8750C5] hover:text-[#653C94]",
       "hover:border-[#653C94] hover:bg-[#F6F0FE]",
       "dark:text-[#BA83F9] dark:border-[#BA83F9] dark:hover:text-[#CBA2FA]",
-      "dark:hover:border-[#CBA2FA] dark:hover:bg-[#221431]",
-      "[&>.indicator]:bg-[#442863] dark:[&>.indicator]:bg-[#DDC1FC] disabled:text-[#DDDDDD]",
+      "dark:hover:border-[#CBA2FA] dark:hover:bg-[#221431] disabled:text-[#DDDDDD]",
       "disabled:border-[#DDDDDD] dark:disabled:text-[#727272] dark:disabled:border-[#727272]",
-      "disabled:hover:bg-transparent dark:disabled:hover:bg-transparent"
+      "disabled:hover:bg-transparent dark:disabled:hover:bg-transparent",
+      indicator && "[&>.indicator]:bg-[#442863] dark:[&>.indicator]:bg-[#DDC1FC]"
     ]
   end
 
-  defp color_variant("inverted", "dawn") do
+  defp color_variant("inverted", "dawn", indicator) do
     [
       "bg-transparent text-[#A86438] border-[#A86438] hover:text-[#7E4B2A]",
       "hover:border-[#7E4B2A] hover:bg-[#FBF2ED]",
       "dark:text-[#DB976B] dark:border-[#DB976B] dark:hover:text-[#E4B190]",
-      "dark:hover:border-[#E4B190] dark:hover:bg-[#2A190E]",
-      "[&>.indicator]:bg-[#54321C] dark:[&>.indicator]:bg-[#EDCBB5] disabled:text-[#DDDDDD]",
+      "dark:hover:border-[#E4B190] dark:hover:bg-[#2A190E] disabled:text-[#DDDDDD]",
       "disabled:border-[#DDDDDD] dark:disabled:text-[#727272] dark:disabled:border-[#727272]",
-      "disabled:hover:bg-transparent dark:disabled:hover:bg-transparent"
+      "disabled:hover:bg-transparent dark:disabled:hover:bg-transparent",
+      indicator && "[&>.indicator]:bg-[#54321C] dark:[&>.indicator]:bg-[#EDCBB5]"
     ]
   end
 
-  defp color_variant("inverted", "silver") do
+  defp color_variant("inverted", "silver", indicator) do
     [
       "bg-transparent text-[#868686] border-[#868686] hover:text-[#727272]",
       "hover:border-[#727272] hover:bg-[#F3F3F3]",
       "dark:text-[#A6A6A6] dark:border-[#A6A6A6] dark:hover:text-[#BBBBBB]",
-      "dark:hover:border-[#BBBBBB] dark:hover:bg-[#4B4B4B]",
-      "[&>.indicator]:bg-[#5E5E5E] dark:[&>.indicator]:bg-[#DDDDDD] disabled:text-[#DDDDDD]",
+      "dark:hover:border-[#BBBBBB] dark:hover:bg-[#4B4B4B] disabled:text-[#DDDDDD]",
       "disabled:border-[#DDDDDD] dark:disabled:text-[#727272] dark:disabled:border-[#727272]",
-      "disabled:hover:bg-transparent dark:disabled:hover:bg-transparent"
+      "disabled:hover:bg-transparent dark:disabled:hover:bg-transparent",
+      indicator && "[&>.indicator]:bg-[#5E5E5E] dark:[&>.indicator]:bg-[#DDDDDD]"
     ]
   end
 
-  defp color_variant("default_gradient", "natural") do
+  defp color_variant("default_gradient", "natural", indicator) do
     [
       "bg-gradient-to-br hover:bg-gradient-to-bl",
       "from-[#282828] to-[#727272] text-white",
       "dark:from-[#A6A6A6] dark:to-[#FFFFFF] dark:text-black",
-      "[&>.indicator]:bg-white dark:[&>.indicator]:bg-black",
       "disabled:text-[#BBBBBB] dark:disabled:bg-[#4B4B4B] dark:disabled:text-[#868686]",
       "disabled:from-[#F3F3F3] disabled:to-[#F3F3F3]",
-      "dark:disabled:from-[#4B4B4B] dark:disabled:to-[#4B4B4B]"
+      "dark:disabled:from-[#4B4B4B] dark:disabled:to-[#4B4B4B]",
+      indicator && "[&>.indicator]:bg-white dark:[&>.indicator]:bg-black"
     ]
   end
 
-  defp color_variant("default_gradient", "primary") do
+  defp color_variant("default_gradient", "primary", indicator) do
     [
       "bg-gradient-to-br hover:bg-gradient-to-bl",
       "from-[#016974] to-[#01B8CA] text-white",
       "dark:from-[#01B8CA] dark:to-[#B0E7EF] dark:text-black",
-      "[&>.indicator]:bg-[#1A535A] dark:[&>.indicator]:bg-[#CDEEF3]",
       "disabled:text-[#BBBBBB] dark:disabled:bg-[#4B4B4B] dark:disabled:text-[#868686]",
       "disabled:from-[#F3F3F3] disabled:to-[#F3F3F3]",
-      "dark:disabled:from-[#4B4B4B] dark:disabled:to-[#4B4B4B]"
+      "dark:disabled:from-[#4B4B4B] dark:disabled:to-[#4B4B4B]",
+      indicator && "[&>.indicator]:bg-[#1A535A] dark:[&>.indicator]:bg-[#CDEEF3]"
     ]
   end
 
-  defp color_variant("default_gradient", "secondary") do
+  defp color_variant("default_gradient", "secondary", indicator) do
     [
       "bg-gradient-to-br hover:bg-gradient-to-bl",
       "from-[#175BCC] to-[#6DAAFB] text-white",
       "dark:from-[#6DAAFB] dark:to-[#CDDEFF] dark:text-black",
-      "[&>.indicator]:bg-[#1948A3] dark:[&>.indicator]:bg-[#DEE9FE]",
       "disabled:text-[#BBBBBB] dark:disabled:bg-[#4B4B4B] dark:disabled:text-[#868686]",
       "disabled:from-[#F3F3F3] disabled:to-[#F3F3F3]",
-      "dark:disabled:from-[#4B4B4B] dark:disabled:to-[#4B4B4B]"
+      "dark:disabled:from-[#4B4B4B] dark:disabled:to-[#4B4B4B]",
+      indicator && "[&>.indicator]:bg-[#1948A3] dark:[&>.indicator]:bg-[#DEE9FE]"
     ]
   end
 
-  defp color_variant("default_gradient", "success") do
+  defp color_variant("default_gradient", "success", indicator) do
     [
       "bg-gradient-to-br hover:bg-gradient-to-bl",
       "from-[#166C3B] to-[#06C167] text-white",
       "dark:from-[#06C167] dark:to-[#B1EAC2] dark:text-black",
-      "[&>.indicator]:bg-[#0D572D] dark:[&>.indicator]:bg-[#D3EFDA]",
       "disabled:text-[#BBBBBB] dark:disabled:bg-[#4B4B4B] dark:disabled:text-[#868686]",
       "disabled:from-[#F3F3F3] disabled:to-[#F3F3F3]",
-      "dark:disabled:from-[#4B4B4B] dark:disabled:to-[#4B4B4B]"
+      "dark:disabled:from-[#4B4B4B] dark:disabled:to-[#4B4B4B]",
+      indicator && "[&>.indicator]:bg-[#0D572D] dark:[&>.indicator]:bg-[#D3EFDA]"
     ]
   end
 
-  defp color_variant("default_gradient", "warning") do
+  defp color_variant("default_gradient", "warning", indicator) do
     [
       "bg-gradient-to-br hover:bg-gradient-to-bl",
       "from-[#976A01] to-[#FDC034] text-white",
       "dark:from-[#FDC034] dark:to-[#FEDF99] dark:text-black",
-      "[&>.indicator]:bg-[#654600] dark:[&>.indicator]:bg-[#FEEFCC]",
       "disabled:text-[#BBBBBB] dark:disabled:bg-[#4B4B4B] dark:disabled:text-[#868686]",
       "disabled:from-[#F3F3F3] disabled:to-[#F3F3F3]",
-      "dark:disabled:from-[#4B4B4B] dark:disabled:to-[#4B4B4B]"
+      "dark:disabled:from-[#4B4B4B] dark:disabled:to-[#4B4B4B]",
+      indicator && "[&>.indicator]:bg-[#654600] dark:[&>.indicator]:bg-[#FEEFCC]"
     ]
   end
 
-  defp color_variant("default_gradient", "danger") do
+  defp color_variant("default_gradient", "danger", indicator) do
     [
       "bg-gradient-to-br hover:bg-gradient-to-bl",
       "from-[#BB032A] to-[#FC7F79] text-white",
       "dark:from-[#FC7F79] dark:to-[#FFD2CD] dark:text-black",
-      "[&>.indicator]:bg-[#950F22] dark:[&>.indicator]:bg-[#FFE1DE]",
       "disabled:text-[#BBBBBB] dark:disabled:bg-[#4B4B4B] dark:disabled:text-[#868686]",
       "disabled:from-[#F3F3F3] disabled:to-[#F3F3F3]",
-      "dark:disabled:from-[#4B4B4B] dark:disabled:to-[#4B4B4B]"
+      "dark:disabled:from-[#4B4B4B] dark:disabled:to-[#4B4B4B]",
+      indicator && "[&>.indicator]:bg-[#950F22] dark:[&>.indicator]:bg-[#FFE1DE]"
     ]
   end
 
-  defp color_variant("default_gradient", "info") do
+  defp color_variant("default_gradient", "info", indicator) do
     [
       "bg-gradient-to-br hover:bg-gradient-to-bl",
       "from-[#08638C] to-[#3EB7ED] text-white",
       "dark:from-[#3EB7ED] dark:to-[#9FDBF6] dark:text-black",
-      "[&>.indicator]:bg-[#06425D] dark:[&>.indicator]:bg-[#CFEDFB]",
       "disabled:text-[#BBBBBB] dark:disabled:bg-[#4B4B4B] dark:disabled:text-[#868686]",
       "disabled:from-[#F3F3F3] disabled:to-[#F3F3F3]",
-      "dark:disabled:from-[#4B4B4B] dark:disabled:to-[#4B4B4B]"
+      "dark:disabled:from-[#4B4B4B] dark:disabled:to-[#4B4B4B]",
+      indicator && "[&>.indicator]:bg-[#06425D] dark:[&>.indicator]:bg-[#CFEDFB]"
     ]
   end
 
-  defp color_variant("default_gradient", "misc") do
+  defp color_variant("default_gradient", "misc", indicator) do
     [
       "bg-gradient-to-br hover:bg-gradient-to-bl",
       "from-[#653C94] to-[#BA83F9] text-white",
       "dark:from-[#BA83F9] dark:to-[#DDC1FC] dark:text-black",
-      "[&>.indicator]:bg-[#442863] dark:[&>.indicator]:bg-[#EEE0FD]",
       "disabled:text-[#BBBBBB] dark:disabled:bg-[#4B4B4B] dark:disabled:text-[#868686]",
       "disabled:from-[#F3F3F3] disabled:to-[#F3F3F3]",
-      "dark:disabled:from-[#4B4B4B] dark:disabled:to-[#4B4B4B]"
+      "dark:disabled:from-[#4B4B4B] dark:disabled:to-[#4B4B4B]",
+      indicator && "[&>.indicator]:bg-[#442863] dark:[&>.indicator]:bg-[#EEE0FD]"
     ]
   end
 
-  defp color_variant("default_gradient", "dawn") do
+  defp color_variant("default_gradient", "dawn", indicator) do
     [
       "bg-gradient-to-br hover:bg-gradient-to-bl",
       "from-[#7E4B2A] to-[#DB976B] text-white",
       "dark:from-[#DB976B] dark:to-[#EDCBB5] dark:text-black",
-      "[&>.indicator]:bg-[#54321C] dark:[&>.indicator]:bg-[#F6E5DA]",
       "disabled:text-[#BBBBBB] dark:disabled:bg-[#4B4B4B] dark:disabled:text-[#868686]",
       "disabled:from-[#F3F3F3] disabled:to-[#F3F3F3]",
-      "dark:disabled:from-[#4B4B4B] dark:disabled:to-[#4B4B4B]"
+      "dark:disabled:from-[#4B4B4B] dark:disabled:to-[#4B4B4B]",
+      indicator && "[&>.indicator]:bg-[#54321C] dark:[&>.indicator]:bg-[#F6E5DA]"
     ]
   end
 
-  defp color_variant("default_gradient", "silver") do
+  defp color_variant("default_gradient", "silver", indicator) do
     [
       "bg-gradient-to-br hover:bg-gradient-to-bl",
       "from-[#5E5E5E] to-[#A6A6A6] text-white",
       "dark:from-[#868686] dark:to-[#BBBBBB] dark:text-black",
-      "[&>.indicator]:bg-[#4B4B4B] dark:[&>.indicator]:bg-[#E8E8E8]",
       "disabled:text-[#BBBBBB] dark:disabled:bg-[#4B4B4B] dark:disabled:text-[#868686]",
       "disabled:from-[#F3F3F3] disabled:to-[#F3F3F3]",
-      "dark:disabled:from-[#4B4B4B] dark:disabled:to-[#4B4B4B]"
+      "dark:disabled:from-[#4B4B4B] dark:disabled:to-[#4B4B4B]",
+      indicator && "[&>.indicator]:bg-[#4B4B4B] dark:[&>.indicator]:bg-[#E8E8E8]"
     ]
   end
 
-  defp color_variant("outline_gradient", "natural") do
+  defp color_variant("outline_gradient", "natural", indicator) do
     [
       "gradient-button [&>*]:relative [&>*]:z-[1] relative bg-gradient-to-br hover:bg-gradient-to-bl",
       "from-[#282828] to-[#727272] text-[#4B4B4B] hover:text-[#282828]",
@@ -1533,11 +1565,11 @@ defmodule CommunityDemoWeb.Components.Button do
       "before:bg-white dark:before:bg-[#282828] before:absolute before:inset-[2px] before:z-0",
       "disabled:from-[#DDDDDD] disabled:to-[#DDDDDD] disabled:text-[#DDDDDD]",
       "dark:disabled:from-[#727272] dark:disabled:to-[#727272] dark:disabled:text-[#727272]",
-      "[&>.indicator]:bg-black dark:[&>.indicator]:bg-white"
+      indicator && "[&>.indicator]:bg-black dark:[&>.indicator]:bg-white"
     ]
   end
 
-  defp color_variant("outline_gradient", "primary") do
+  defp color_variant("outline_gradient", "primary", indicator) do
     [
       "gradient-button [&>*]:relative [&>*]:z-[1] relative bg-gradient-to-br hover:bg-gradient-to-bl",
       "from-[#016974] to-[#01B8CA] text-[#007F8C] hover:text-[#016974]",
@@ -1545,11 +1577,11 @@ defmodule CommunityDemoWeb.Components.Button do
       "before:bg-white dark:before:bg-[#282828] before:absolute before:inset-[2px] before:z-0",
       "disabled:from-[#DDDDDD] disabled:to-[#DDDDDD] disabled:text-[#DDDDDD]",
       "dark:disabled:from-[#727272] dark:disabled:to-[#727272] dark:disabled:text-[#727272]",
-      "[&>.indicator]:bg-[#1A535A] dark:[&>.indicator]:bg-[#B0E7EF]"
+      indicator && "[&>.indicator]:bg-[#1A535A] dark:[&>.indicator]:bg-[#B0E7EF]"
     ]
   end
 
-  defp color_variant("outline_gradient", "secondary") do
+  defp color_variant("outline_gradient", "secondary", indicator) do
     [
       "gradient-button [&>*]:relative [&>*]:z-[1] relative bg-gradient-to-br hover:bg-gradient-to-bl",
       "from-[#175BCC] to-[#6DAAFB] text-[#266EF1] hover:text-[#175BCC]",
@@ -1557,11 +1589,11 @@ defmodule CommunityDemoWeb.Components.Button do
       "before:bg-white dark:before:bg-[#282828] before:absolute before:inset-[2px] before:z-0",
       "disabled:from-[#DDDDDD] disabled:to-[#DDDDDD] disabled:text-[#DDDDDD]",
       "dark:disabled:from-[#727272] dark:disabled:to-[#727272] dark:disabled:text-[#727272]",
-      "[&>.indicator]:bg-[#1948A3] dark:[&>.indicator]:bg-[#CDDEFF]"
+      indicator && "[&>.indicator]:bg-[#1948A3] dark:[&>.indicator]:bg-[#CDDEFF]"
     ]
   end
 
-  defp color_variant("outline_gradient", "success") do
+  defp color_variant("outline_gradient", "success", indicator) do
     [
       "gradient-button [&>*]:relative [&>*]:z-[1] relative bg-gradient-to-br hover:bg-gradient-to-bl",
       "from-[#166C3B] to-[#06C167] text-[#0E8345] hover:text-[#166C3B]",
@@ -1569,11 +1601,11 @@ defmodule CommunityDemoWeb.Components.Button do
       "before:bg-white dark:before:bg-[#282828] before:absolute before:inset-[2px] before:z-0",
       "disabled:from-[#DDDDDD] disabled:to-[#DDDDDD] disabled:text-[#DDDDDD]",
       "dark:disabled:from-[#727272] dark:disabled:to-[#727272] dark:disabled:text-[#727272]",
-      "[&>.indicator]:bg-[#0D572D] dark:[&>.indicator]:bg-[#B1EAC2]"
+      indicator && "[&>.indicator]:bg-[#0D572D] dark:[&>.indicator]:bg-[#B1EAC2]"
     ]
   end
 
-  defp color_variant("outline_gradient", "warning") do
+  defp color_variant("outline_gradient", "warning", indicator) do
     [
       "gradient-button [&>*]:relative [&>*]:z-[1] relative bg-gradient-to-br hover:bg-gradient-to-bl",
       "from-[#976A01] to-[#FDC034] text-[#CA8D01] hover:text-[#976A01]",
@@ -1581,11 +1613,11 @@ defmodule CommunityDemoWeb.Components.Button do
       "before:bg-white dark:before:bg-[#282828] before:absolute before:inset-[2px] before:z-0",
       "disabled:from-[#DDDDDD] disabled:to-[#DDDDDD] disabled:text-[#DDDDDD]",
       "dark:disabled:from-[#727272] dark:disabled:to-[#727272] dark:disabled:text-[#727272]",
-      "[&>.indicator]:bg-[#654600] dark:[&>.indicator]:bg-[#FEDF99]"
+      indicator && "[&>.indicator]:bg-[#654600] dark:[&>.indicator]:bg-[#FEDF99]"
     ]
   end
 
-  defp color_variant("outline_gradient", "danger") do
+  defp color_variant("outline_gradient", "danger", indicator) do
     [
       "gradient-button [&>*]:relative [&>*]:z-[1] relative bg-gradient-to-br hover:bg-gradient-to-bl",
       "from-[#BB032A] to-[#FC7F79] text-[#DE1135] hover:text-[#BB032A]",
@@ -1593,11 +1625,11 @@ defmodule CommunityDemoWeb.Components.Button do
       "before:bg-white dark:before:bg-[#282828] before:absolute before:inset-[2px] before:z-0",
       "disabled:from-[#DDDDDD] disabled:to-[#DDDDDD] disabled:text-[#DDDDDD]",
       "dark:disabled:from-[#727272] dark:disabled:to-[#727272] dark:disabled:text-[#727272]",
-      "[&>.indicator]:bg-[#950F22] dark:[&>.indicator]:bg-[#FFD2CD]"
+      indicator && "[&>.indicator]:bg-[#950F22] dark:[&>.indicator]:bg-[#FFD2CD]"
     ]
   end
 
-  defp color_variant("outline_gradient", "info") do
+  defp color_variant("outline_gradient", "info", indicator) do
     [
       "gradient-button [&>*]:relative [&>*]:z-[1] relative bg-gradient-to-br hover:bg-gradient-to-bl",
       "from-[#08638C] to-[#3EB7ED] text-[#0B84BA] hover:text-[#08638C]",
@@ -1605,11 +1637,11 @@ defmodule CommunityDemoWeb.Components.Button do
       "before:bg-white dark:before:bg-[#282828] before:absolute before:inset-[2px] before:z-0",
       "disabled:from-[#DDDDDD] disabled:to-[#DDDDDD] disabled:text-[#DDDDDD]",
       "dark:disabled:from-[#727272] dark:disabled:to-[#727272] dark:disabled:text-[#727272]",
-      "[&>.indicator]:bg-[#06425D] dark:[&>.indicator]:bg-[#9FDBF6]"
+      indicator && "[&>.indicator]:bg-[#06425D] dark:[&>.indicator]:bg-[#9FDBF6]"
     ]
   end
 
-  defp color_variant("outline_gradient", "misc") do
+  defp color_variant("outline_gradient", "misc", indicator) do
     [
       "gradient-button [&>*]:relative [&>*]:z-[1] relative bg-gradient-to-br hover:bg-gradient-to-bl",
       "from-[#653C94] to-[#BA83F9] text-[#8750C5] hover:text-[#653C94]",
@@ -1617,11 +1649,11 @@ defmodule CommunityDemoWeb.Components.Button do
       "before:bg-white dark:before:bg-[#282828] before:absolute before:inset-[2px] before:z-0",
       "disabled:from-[#DDDDDD] disabled:to-[#DDDDDD] disabled:text-[#DDDDDD]",
       "dark:disabled:from-[#727272] dark:disabled:to-[#727272] dark:disabled:text-[#727272]",
-      "[&>.indicator]:bg-[#442863] dark:[&>.indicator]:bg-[#DDC1FC]"
+      indicator && "[&>.indicator]:bg-[#442863] dark:[&>.indicator]:bg-[#DDC1FC]"
     ]
   end
 
-  defp color_variant("outline_gradient", "dawn") do
+  defp color_variant("outline_gradient", "dawn", indicator) do
     [
       "gradient-button [&>*]:relative [&>*]:z-[1] relative bg-gradient-to-br hover:bg-gradient-to-bl",
       "from-[#7E4B2A] to-[#DB976B] text-[#A86438] hover:text-[#7E4B2A]",
@@ -1629,11 +1661,11 @@ defmodule CommunityDemoWeb.Components.Button do
       "before:bg-white dark:before:bg-[#282828] before:absolute before:inset-[2px] before:z-0",
       "disabled:from-[#DDDDDD] disabled:to-[#DDDDDD] disabled:text-[#DDDDDD]",
       "dark:disabled:from-[#727272] dark:disabled:to-[#727272] dark:disabled:text-[#727272]",
-      "[&>.indicator]:bg-[#54321C] dark:[&>.indicator]:bg-[#EDCBB5]"
+      indicator && "[&>.indicator]:bg-[#54321C] dark:[&>.indicator]:bg-[#EDCBB5]"
     ]
   end
 
-  defp color_variant("outline_gradient", "silver") do
+  defp color_variant("outline_gradient", "silver", indicator) do
     [
       "gradient-button [&>*]:relative [&>*]:z-[1] relative bg-gradient-to-br hover:bg-gradient-to-bl",
       "from-[#5E5E5E] to-[#A6A6A6] text-[#868686] hover:text-[#727272]",
@@ -1641,11 +1673,11 @@ defmodule CommunityDemoWeb.Components.Button do
       "before:bg-white dark:before:bg-[#282828] before:absolute before:inset-[2px] before:z-0",
       "disabled:from-[#DDDDDD] disabled:to-[#DDDDDD] disabled:text-[#DDDDDD]",
       "dark:disabled:from-[#727272] dark:disabled:to-[#727272] dark:disabled:text-[#727272]",
-      "[&>.indicator]:bg-[#5E5E5E] dark:[&>.indicator]:bg-[#DDDDDD]"
+      indicator && "[&>.indicator]:bg-[#5E5E5E] dark:[&>.indicator]:bg-[#DDDDDD]"
     ]
   end
 
-  defp color_variant("inverted_gradient", "natural") do
+  defp color_variant("inverted_gradient", "natural", indicator) do
     [
       "gradient-button [&>*]:relative [&>*]:z-[1] relative bg-gradient-to-br hover:bg-gradient-to-bl",
       "from-[#282828] to-[#727272] text-[#4B4B4B] hover:text-white",
@@ -1656,11 +1688,12 @@ defmodule CommunityDemoWeb.Components.Button do
       "disabled:from-[#DDDDDD] disabled:to-[#DDDDDD] disabled:text-[#DDDDDD]",
       "dark:disabled:from-[#727272] dark:disabled:to-[#727272] dark:disabled:text-[#727272]",
       "hover:disabled:bg-white dark:hover:disabled:before:bg-[#282828]",
-      "[&>.indicator]:bg-black dark:[&>.indicator]:bg-white [&:hover>.indicator]:bg-white dark:[&:hover>.indicator]:bg-black"
+      indicator && "[&>.indicator]:bg-black dark:[&>.indicator]:bg-white",
+      indicator && "[&:hover>.indicator]:bg-white dark:[&:hover>.indicator]:bg-black"
     ]
   end
 
-  defp color_variant("inverted_gradient", "primary") do
+  defp color_variant("inverted_gradient", "primary", indicator) do
     [
       "gradient-button [&>*]:relative [&>*]:z-[1] relative bg-gradient-to-br hover:bg-gradient-to-bl",
       "from-[#016974] to-[#01B8CA] text-[#007F8C] hover:text-white",
@@ -1671,12 +1704,12 @@ defmodule CommunityDemoWeb.Components.Button do
       "disabled:from-[#DDDDDD] disabled:to-[#DDDDDD] disabled:text-[#DDDDDD]",
       "dark:disabled:from-[#727272] dark:disabled:to-[#727272] dark:disabled:text-[#727272]",
       "hover:disabled:bg-white dark:hover:disabled:before:bg-[#282828]",
-      "[&>.indicator]:bg-[#1A535A] dark:[&>.indicator]:bg-[#CDEEF3]",
-      "[&:hover>.indicator]:bg-[#CDEEF3] dark:[&:hover>.indicator]:bg-[#1A535A]"
+      indicator && "[&>.indicator]:bg-[#1A535A] dark:[&>.indicator]:bg-[#CDEEF3]",
+      indicator && "[&:hover>.indicator]:bg-[#CDEEF3] dark:[&:hover>.indicator]:bg-[#1A535A]"
     ]
   end
 
-  defp color_variant("inverted_gradient", "secondary") do
+  defp color_variant("inverted_gradient", "secondary", indicator) do
     [
       "gradient-button [&>*]:relative [&>*]:z-[1] relative bg-gradient-to-br hover:bg-gradient-to-bl",
       "from-[#175BCC] to-[#6DAAFB] text-[#266EF1] hover:text-white",
@@ -1687,12 +1720,12 @@ defmodule CommunityDemoWeb.Components.Button do
       "disabled:from-[#DDDDDD] disabled:to-[#DDDDDD] disabled:text-[#DDDDDD]",
       "dark:disabled:from-[#727272] dark:disabled:to-[#727272] dark:disabled:text-[#727272]",
       "hover:disabled:bg-white dark:hover:disabled:before:bg-[#282828]",
-      "[&>.indicator]:bg-[#1948A3] dark:[&>.indicator]:bg-[#CDDEFF]",
-      "[&:hover>.indicator]:bg-[#CDDEFF] dark:[&:hover>.indicator]:bg-[#1948A3]"
+      indicator && "[&>.indicator]:bg-[#1948A3] dark:[&>.indicator]:bg-[#CDDEFF]",
+      indicator && "[&:hover>.indicator]:bg-[#CDDEFF] dark:[&:hover>.indicator]:bg-[#1948A3]"
     ]
   end
 
-  defp color_variant("inverted_gradient", "success") do
+  defp color_variant("inverted_gradient", "success", indicator) do
     [
       "gradient-button [&>*]:relative [&>*]:z-[1] relative bg-gradient-to-br hover:bg-gradient-to-bl",
       "from-[#166C3B] to-[#06C167] text-[#0E8345] hover:text-white",
@@ -1703,12 +1736,12 @@ defmodule CommunityDemoWeb.Components.Button do
       "disabled:from-[#DDDDDD] disabled:to-[#DDDDDD] disabled:text-[#DDDDDD]",
       "dark:disabled:from-[#727272] dark:disabled:to-[#727272] dark:disabled:text-[#727272]",
       "hover:disabled:bg-white dark:hover:disabled:before:bg-[#282828]",
-      "[&>.indicator]:bg-[#0D572D] dark:[&>.indicator]:bg-[#B1EAC2]",
-      "[&:hover>.indicator]:bg-[#B1EAC2] dark:[&:hover>.indicator]:bg-[#0D572D]"
+      indicator && "[&>.indicator]:bg-[#0D572D] dark:[&>.indicator]:bg-[#B1EAC2]",
+      indicator && "[&:hover>.indicator]:bg-[#B1EAC2] dark:[&:hover>.indicator]:bg-[#0D572D]"
     ]
   end
 
-  defp color_variant("inverted_gradient", "warning") do
+  defp color_variant("inverted_gradient", "warning", indicator) do
     [
       "gradient-button [&>*]:relative [&>*]:z-[1] relative bg-gradient-to-br hover:bg-gradient-to-bl",
       "from-[#976A01] to-[#FDC034] text-[#CA8D01] hover:text-white",
@@ -1719,12 +1752,12 @@ defmodule CommunityDemoWeb.Components.Button do
       "disabled:from-[#DDDDDD] disabled:to-[#DDDDDD] disabled:text-[#DDDDDD]",
       "dark:disabled:from-[#727272] dark:disabled:to-[#727272] dark:disabled:text-[#727272]",
       "hover:disabled:bg-white dark:hover:disabled:before:bg-[#282828]",
-      "[&>.indicator]:bg-[#654600] dark:[&>.indicator]:bg-[#FEDF99]",
-      "[&:hover>.indicator]:bg-[#FEDF99] dark:[&:hover>.indicator]:bg-[#654600]"
+      indicator && "[&>.indicator]:bg-[#654600] dark:[&>.indicator]:bg-[#FEDF99]",
+      indicator && "[&:hover>.indicator]:bg-[#FEDF99] dark:[&:hover>.indicator]:bg-[#654600]"
     ]
   end
 
-  defp color_variant("inverted_gradient", "danger") do
+  defp color_variant("inverted_gradient", "danger", indicator) do
     [
       "gradient-button [&>*]:relative [&>*]:z-[1] relative bg-gradient-to-br hover:bg-gradient-to-bl",
       "from-[#BB032A] to-[#FC7F79] text-[#DE1135] hover:text-white",
@@ -1735,12 +1768,12 @@ defmodule CommunityDemoWeb.Components.Button do
       "disabled:from-[#DDDDDD] disabled:to-[#DDDDDD] disabled:text-[#DDDDDD]",
       "dark:disabled:from-[#727272] dark:disabled:to-[#727272] dark:disabled:text-[#727272]",
       "hover:disabled:bg-white dark:hover:disabled:before:bg-[#282828]",
-      "[&>.indicator]:bg-[#950F22] dark:[&>.indicator]:bg-[#FFD2CD]",
-      "[&:hover>.indicator]:bg-[#FFD2CD] dark:[&:hover>.indicator]:bg-[#950F22]"
+      indicator && "[&>.indicator]:bg-[#950F22] dark:[&>.indicator]:bg-[#FFD2CD]",
+      indicator && "[&:hover>.indicator]:bg-[#FFD2CD] dark:[&:hover>.indicator]:bg-[#950F22]"
     ]
   end
 
-  defp color_variant("inverted_gradient", "info") do
+  defp color_variant("inverted_gradient", "info", indicator) do
     [
       "gradient-button [&>*]:relative [&>*]:z-[1] relative bg-gradient-to-br hover:bg-gradient-to-bl",
       "from-[#08638C] to-[#3EB7ED] text-[#0B84BA] hover:text-white",
@@ -1751,12 +1784,12 @@ defmodule CommunityDemoWeb.Components.Button do
       "disabled:from-[#DDDDDD] disabled:to-[#DDDDDD] disabled:text-[#DDDDDD]",
       "dark:disabled:from-[#727272] dark:disabled:to-[#727272] dark:disabled:text-[#727272]",
       "hover:disabled:bg-white dark:hover:disabled:before:bg-[#282828]",
-      "[&>.indicator]:bg-[#06425D] dark:[&>.indicator]:bg-[#9FDBF6]",
-      "[&:hover>.indicator]:bg-[#9FDBF6] dark:[&:hover>.indicator]:bg-[#06425D]"
+      indicator && "[&>.indicator]:bg-[#06425D] dark:[&>.indicator]:bg-[#9FDBF6]",
+      indicator && "[&:hover>.indicator]:bg-[#9FDBF6] dark:[&:hover>.indicator]:bg-[#06425D]"
     ]
   end
 
-  defp color_variant("inverted_gradient", "misc") do
+  defp color_variant("inverted_gradient", "misc", indicator) do
     [
       "gradient-button [&>*]:relative [&>*]:z-[1] relative bg-gradient-to-br hover:bg-gradient-to-bl",
       "from-[#653C94] to-[#BA83F9] text-[#8750C5] hover:text-white",
@@ -1767,12 +1800,12 @@ defmodule CommunityDemoWeb.Components.Button do
       "disabled:from-[#DDDDDD] disabled:to-[#DDDDDD] disabled:text-[#DDDDDD]",
       "dark:disabled:from-[#727272] dark:disabled:to-[#727272] dark:disabled:text-[#727272]",
       "hover:disabled:bg-white dark:hover:disabled:before:bg-[#282828]",
-      "[&>.indicator]:bg-[#442863] dark:[&>.indicator]:bg-[#DDC1FC]",
-      "[&:hover>.indicator]:bg-[#DDC1FC] dark:[&:hover>.indicator]:bg-[#442863]"
+      indicator && "[&>.indicator]:bg-[#442863] dark:[&>.indicator]:bg-[#DDC1FC]",
+      indicator && "[&:hover>.indicator]:bg-[#DDC1FC] dark:[&:hover>.indicator]:bg-[#442863]"
     ]
   end
 
-  defp color_variant("inverted_gradient", "dawn") do
+  defp color_variant("inverted_gradient", "dawn", indicator) do
     [
       "gradient-button [&>*]:relative [&>*]:z-[1] relative bg-gradient-to-br hover:bg-gradient-to-bl",
       "from-[#7E4B2A] to-[#DB976B] text-[#A86438] hover:text-white",
@@ -1783,12 +1816,12 @@ defmodule CommunityDemoWeb.Components.Button do
       "disabled:from-[#DDDDDD] disabled:to-[#DDDDDD] disabled:text-[#DDDDDD]",
       "dark:disabled:from-[#727272] dark:disabled:to-[#727272] dark:disabled:text-[#727272]",
       "hover:disabled:bg-white dark:hover:disabled:before:bg-[#282828]",
-      "[&>.indicator]:bg-[#54321C] dark:[&>.indicator]:bg-[#EDCBB5]",
-      "[&:hover>.indicator]:bg-[#EDCBB5] dark:[&:hover>.indicator]:bg-[#54321C]"
+      indicator && "[&>.indicator]:bg-[#54321C] dark:[&>.indicator]:bg-[#EDCBB5]",
+      indicator && "[&:hover>.indicator]:bg-[#EDCBB5] dark:[&:hover>.indicator]:bg-[#54321C]"
     ]
   end
 
-  defp color_variant("inverted_gradient", "silver") do
+  defp color_variant("inverted_gradient", "silver", indicator) do
     [
       "gradient-button [&>*]:relative [&>*]:z-[1] relative bg-gradient-to-br hover:bg-gradient-to-bl",
       "from-[#5E5E5E] to-[#A6A6A6] text-[#868686] hover:text-white",
@@ -1799,12 +1832,12 @@ defmodule CommunityDemoWeb.Components.Button do
       "disabled:from-[#DDDDDD] disabled:to-[#DDDDDD] disabled:text-[#DDDDDD]",
       "dark:disabled:from-[#727272] dark:disabled:to-[#727272] dark:disabled:text-[#727272]",
       "hover:disabled:bg-white dark:hover:disabled:before:bg-[#282828]",
-      "[&>.indicator]:bg-[#E8E8E8] dark:[&>.indicator]:bg-[#DDDDDD]",
-      "[&:hover>.indicator]:bg-[#DDDDDD] dark:[&:hover>.indicator]:bg-[#E8E8E8]"
+      indicator && "[&>.indicator]:bg-[#E8E8E8] dark:[&>.indicator]:bg-[#DDDDDD]",
+      indicator && "[&:hover>.indicator]:bg-[#DDDDDD] dark:[&:hover>.indicator]:bg-[#E8E8E8]"
     ]
   end
 
-  defp color_variant(params, _) when is_binary(params), do: params
+  defp color_variant(params, _, _) when is_binary(params), do: params
 
   defp border_class("base") do
     "border-[#e4e4e7] dark:border-[#27272a]"
@@ -1956,20 +1989,21 @@ defmodule CommunityDemoWeb.Components.Button do
 
   defp content_position(params) when is_binary(params), do: params
 
-  defp default_classes(:grouped) do
+  defp default_classes(:grouped, _) do
     [
       "phx-submit-loading:opacity-75 overflow-hidden flex w-fit rounded-lg border",
       "[&>*]:rounded-none [&>*]:border-0"
     ]
   end
 
-  defp default_classes(pinging) do
+  defp default_classes(pinging, indicator) do
     [
       "phx-submit-loading:opacity-75 relative gap-2 items-center",
       "transition-all ease-in-ou duration-100 group",
       "disabled:cursor-not-allowed",
       "focus:outline-none",
-      "[&>.indicator]:inline-block [&>.indicator]:shrink-0 [&>.indicator]:rounded-full",
+      indicator &&
+        "[&>.indicator]:inline-block [&>.indicator]:shrink-0 [&>.indicator]:rounded-full",
       !is_nil(pinging) && "[&>.indicator]:animate-ping"
     ]
   end
@@ -1982,18 +2016,7 @@ defmodule CommunityDemoWeb.Components.Button do
     Map.drop(rest, all_rest)
   end
 
-  attr :name, :string, required: true, doc: "Specifies the name of the element"
-  attr :class, :any, default: nil, doc: "Custom CSS class for additional styling"
-
-  defp icon(%{name: "hero-" <> _, class: class} = assigns) when is_list(class) do
-    ~H"""
-    <span class={[@name] ++ @class} />
-    """
-  end
-
-  defp icon(%{name: "hero-" <> _} = assigns) do
-    ~H"""
-    <span class={[@name, @class]} />
-    """
+  defp is_indicators?(rest) do
+    Enum.any?(@indicator_positions, &Map.get(rest, String.to_atom(&1)))
   end
 end

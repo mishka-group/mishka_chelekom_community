@@ -24,6 +24,7 @@ defmodule CommunityDemoWeb.Components.Skeleton do
   """
 
   use Phoenix.Component
+  use Gettext, backend: CommunityDemoWeb.Gettext
 
   @doc """
   Renders a `skeleton` loader component to indicate loading state in your application.
@@ -66,6 +67,8 @@ defmodule CommunityDemoWeb.Components.Skeleton do
     <div
       :if={@visible}
       role="status"
+      aria-live="polite"
+      aria-busy="true"
       id={@id}
       class={[
         rounded_size(@rounded),
@@ -75,7 +78,9 @@ defmodule CommunityDemoWeb.Components.Skeleton do
         @rest[:animated] && "animate-pulse",
         @class
       ]}
+      {@rest}
     >
+      <span class="sr-only">{gettext("Loading...")}</span>
     </div>
     """
   end

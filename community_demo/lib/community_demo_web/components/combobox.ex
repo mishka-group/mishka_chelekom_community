@@ -18,6 +18,7 @@ defmodule CommunityDemoWeb.Components.Combobox do
   use Gettext, backend: CommunityDemoWeb.Gettext
   import CommunityDemoWeb.Components.ScrollArea, only: [scroll_area: 1]
   import Phoenix.LiveView.Utils, only: [random_id: 0]
+  import CommunityDemoWeb.Components.Icon, only: [icon: 1]
 
   @doc """
   The `combobox` component is a customizable select/dropdown element with advanced features
@@ -92,7 +93,15 @@ defmodule CommunityDemoWeb.Components.Combobox do
   attr :errors, :list, default: [], doc: "List of error messages to be displayed"
 
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
-  attr :placeholder, :string, default: nil, doc: "Custom CSS class for additional styling"
+  attr :placeholder, :string, default: nil, doc: "Placeholder of field"
+  attr :description_class, :string, default: "text-[12px]", doc: "Custom classes for description"
+  attr :label_class, :string, default: nil, doc: "Custom CSS class for the label styling"
+  attr :field_wrapper_class, :string, default: nil, doc: "Custom CSS class field wrapper"
+  attr :option_group_class, :string, default: nil, doc: "Custom CSS class option group"
+
+  attr :description_wrapper_class, :string,
+    default: nil,
+    doc: "Custom classes for description wrapper"
 
   attr :search_placeholder, :string,
     default: "Search..",
@@ -121,6 +130,7 @@ defmodule CommunityDemoWeb.Components.Combobox do
 
   slot :option, required: false do
     attr :value, :string, required: true, doc: "Value of the select option"
+    attr :class, :string, doc: "Value of the select option"
     attr :group, :string, required: false, doc: "Group name for the option"
     attr :disabled, :boolean, required: false, doc: "Specifies if this option is disabled"
   end
@@ -160,10 +170,9 @@ defmodule CommunityDemoWeb.Components.Combobox do
       size_class(@size),
       space_class(@space)
     ]}>
-      <div :if={@label || @description} class="combobox-label-wrapper">
-        <.label :if={@label} for={@id}>{@label}</.label>
-
-        <div :if={@description} class="text-[12px]">
+      <div :if={@label || @description} class={["combobox-label-wrapper", @description_wrapper_class]}>
+        <.label :if={@label} for={@id} class={@label_class}>{@label}</.label>
+        <div :if={@description} class={@description_class}>
           {@description}
         </div>
       </div>
@@ -196,7 +205,15 @@ defmodule CommunityDemoWeb.Components.Combobox do
         </select>
 
         <div phx-update="ignore" id={"#{@id}-combo-wrapper"} class="relative">
-          <button class="combobox-trigger w-full text-start py-1 flex items-center justify-between focus:outline-none border">
+          <button
+            class="combobox-trigger w-full text-start py-1 flex items-center justify-between focus:outline-none border"
+            role="combobox"
+            aria-haspopup="listbox"
+            aria-expanded="false"
+            aria-controls={"#{@id}-listbox"}
+            aria-labelledby={"#{@id}-label #{@id}-button"}
+            type="button"
+          >
             <div class="flex-1 flex items-center gap-2">
               <div
                 :if={@start_section != []}
@@ -258,16 +275,22 @@ defmodule CommunityDemoWeb.Components.Combobox do
           </button>
 
           <div
+            id={"#{@id}-listbox"}
             role="listbox"
             data-part="listbox"
+            aria-multiselectable={@multiple}
             class="combobox-dropdown z-50 absolute w-full px-[3px] py-2 transition-all ease-out duration-[250ms] top-full mt-2"
             hidden
           >
             <div :if={@searchable} class="mt-1 mb-2 mx-1.5">
               <input
                 type="text"
+                role="searchbox"
+                aria-controls={"#{@id}-listbox"}
+                aria-autocomplete="list"
+                aria-activedescendant=""
+                aria-label={@search_placeholder}
                 class="combobox-search-input appearance-none bg-transparent px-2 py-1 w-full focus:outline-none"
-                data-part="search"
                 placeholder={@search_placeholder}
               />
             </div>
@@ -286,7 +309,7 @@ defmodule CommunityDemoWeb.Components.Combobox do
                 <div
                   :for={{group_label, grouped_options} <- Enum.group_by(@option, & &1[:group])}
                   :if={!is_nil(group_label)}
-                  class="option-group"
+                  class={["option-group", @option_group_class]}
                 >
                   <div class="group-label font-semibold my-2">{group_label}</div>
 
@@ -295,6 +318,7 @@ defmodule CommunityDemoWeb.Components.Combobox do
                       :for={option <- grouped_options}
                       value={option[:value]}
                       disabled={option[:disabled]}
+                      class={option[:class]}
                     >
                       {render_slot(option)}
                     </.option>
@@ -305,6 +329,7 @@ defmodule CommunityDemoWeb.Components.Combobox do
                   :for={option <- Enum.filter(@option, &is_nil(&1[:group]))}
                   value={option[:value]}
                   disabled={option[:disabled]}
+                  class={option[:class]}
                 >
                   {render_slot(option)}
                 </.option>
@@ -341,10 +366,9 @@ defmodule CommunityDemoWeb.Components.Combobox do
       size_class(@size),
       space_class(@space)
     ]}>
-      <div :if={@label || @description} class="combobox-label-wrapper">
-        <.label :if={@label} for={@id}>{@label}</.label>
-
-        <div :if={@description} class="text-[12px]">
+      <div :if={@label || @description} class={["combobox-label-wrapper", @description_wrapper_class]}>
+        <.label :if={@label} for={@id} class={@label_class}>{@label}</.label>
+        <div :if={@description} class={@description_class}>
           {@description}
         </div>
       </div>
@@ -376,7 +400,15 @@ defmodule CommunityDemoWeb.Components.Combobox do
         </select>
 
         <div id={"#{@id}-combo-wrapper"} class="relative" phx-update="ignore">
-          <button class="combobox-trigger w-full text-start py-1 flex items-center justify-between focus:outline-none border">
+          <button
+            class="combobox-trigger w-full text-start py-1 flex items-center justify-between focus:outline-none border"
+            role="combobox"
+            aria-haspopup="listbox"
+            aria-expanded="false"
+            aria-controls={"#{@id}-listbox"}
+            aria-labelledby={"#{@id}-label #{@id}-button"}
+            type="button"
+          >
             <div id={"#{@id}-select-toggle-label"} class="flex-1 flex items-center gap-2">
               <div
                 :if={@start_section != []}
@@ -431,6 +463,7 @@ defmodule CommunityDemoWeb.Components.Combobox do
           </button>
 
           <div
+            id={"#{@id}-listbox"}
             role="listbox"
             data-part="listbox"
             class="combobox-dropdown z-50 absolute w-full px-[3px] py-2 transition-all ease-out duration-[250ms] top-full mt-2"
@@ -439,6 +472,11 @@ defmodule CommunityDemoWeb.Components.Combobox do
             <div :if={@searchable} class="mt-1 mb-2 mx-1.5">
               <input
                 type="text"
+                role="searchbox"
+                aria-controls={"#{@id}-listbox"}
+                aria-autocomplete="list"
+                aria-activedescendant=""
+                aria-label={@search_placeholder}
                 class="combobox-search-input appearance-none bg-transparent px-2 py-1 w-full focus:outline-none"
                 data-part="search"
                 placeholder={@search_placeholder}
@@ -459,7 +497,7 @@ defmodule CommunityDemoWeb.Components.Combobox do
                 <div
                   :for={{group_label, grouped_options} <- Enum.group_by(@option, & &1[:group])}
                   :if={!is_nil(group_label)}
-                  class="option-group"
+                  class={["option-group", @option_group_class]}
                 >
                   <div class="group-label font-semibold my-2">{group_label}</div>
 
@@ -468,6 +506,7 @@ defmodule CommunityDemoWeb.Components.Combobox do
                       :for={option <- grouped_options}
                       value={option[:value]}
                       disabled={option[:disabled]}
+                      class={option[:class]}
                     >
                       {render_slot(option)}
                     </.option>
@@ -478,6 +517,7 @@ defmodule CommunityDemoWeb.Components.Combobox do
                   :for={option <- Enum.filter(@option, &is_nil(&1[:group]))}
                   value={option[:value]}
                   disabled={option[:disabled]}
+                  class={option[:class]}
                 >
                   {render_slot(option)}
                 </.option>
@@ -499,6 +539,7 @@ defmodule CommunityDemoWeb.Components.Combobox do
   @doc type: :component
   attr :value, :string, required: true, doc: "Specifies the form which is associated with"
   attr :disabled, :boolean, default: false, doc: "Inner block that renders HEEx content"
+  attr :class, :string, default: nil, doc: "Custom class"
   slot :inner_block, required: false, doc: "Inner block that renders HEEx content"
 
   defp option(assigns) do
@@ -507,7 +548,8 @@ defmodule CommunityDemoWeb.Components.Combobox do
       role="option"
       class={[
         "combobox-option cursor-pointer rounded flex justify-between items-center",
-        "[&[data-combobox-navigate]]:bg-blue-500 [&[data-combobox-navigate]]:text-white"
+        "[&[data-combobox-navigate]]:bg-blue-500 [&[data-combobox-navigate]]:text-white",
+        @class
       ]}
       data-combobox-value={@value}
     >
@@ -530,20 +572,19 @@ defmodule CommunityDemoWeb.Components.Combobox do
     """
   end
 
-  @doc type: :component
+  attr :id, :string, default: nil, doc: "Unique identifire"
   attr :for, :string, default: nil, doc: "Specifies the form which is associated with"
   attr :class, :any, default: nil, doc: "Custom CSS class for additional styling"
   slot :inner_block, required: true, doc: "Inner block that renders HEEx content"
 
   defp label(assigns) do
     ~H"""
-    <label for={@for} class={["leading-5 font-semibold", @class]}>
+    <label for={@for} class={["leading-5 font-semibold", @class]} id={@id}>
       {render_slot(@inner_block)}
     </label>
     """
   end
 
-  @doc type: :component
   attr :icon, :string, default: nil, doc: "Icon displayed alongside of an item"
   slot :inner_block, required: true, doc: "Inner block that renders HEEx content"
 
@@ -1002,20 +1043,5 @@ defmodule CommunityDemoWeb.Components.Combobox do
     else
       Gettext.dgettext(CommunityDemoWeb.Gettext, "errors", msg, opts)
     end
-  end
-
-  attr :name, :string, required: true, doc: "Specifies the name of the element"
-  attr :class, :any, default: nil, doc: "Custom CSS class for additional styling"
-
-  defp icon(%{name: "hero-" <> _, class: class} = assigns) when is_list(class) do
-    ~H"""
-    <span class={["radio-card-icon", @name, @class]} />
-    """
-  end
-
-  defp icon(%{name: "hero-" <> _} = assigns) do
-    ~H"""
-    <span class={["radio-card-icon", @name, @class]} />
-    """
   end
 end

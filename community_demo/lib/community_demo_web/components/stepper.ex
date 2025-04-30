@@ -15,6 +15,8 @@ defmodule CommunityDemoWeb.Components.Stepper do
   """
 
   use Phoenix.Component
+  import CommunityDemoWeb.Components.Icon, only: [icon: 1]
+  use Gettext, backend: CommunityDemoWeb.Gettext
 
   @doc """
   Renders a customizable `stepper` component that visually represents a multi-step process.
@@ -51,7 +53,7 @@ defmodule CommunityDemoWeb.Components.Stepper do
     doc: "Determines custom class for the font weight"
 
   attr :max_width, :string, default: "", doc: "Determines the style of element max width"
-  attr :seperator_size, :string, default: "extra_small", doc: "Determines the seperator size"
+  attr :separator_size, :string, default: "extra_small", doc: "Determines the separator size"
   attr :variant, :string, default: "base", doc: "Determines the style"
   attr :vertical, :boolean, default: false, doc: "Determines whether element is vertical"
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
@@ -71,14 +73,15 @@ defmodule CommunityDemoWeb.Components.Stepper do
   def stepper(%{vertical: true} = assigns) do
     ~H"""
     <div
+      role="list"
       class={[
         "vertical-stepper relative flex flex-col",
-        "[&_.vertical-step:last-child_.stepper-seperator]:hidden",
+        "[&_.vertical-step:last-child_.stepper-separator]:hidden",
         step_visibility(),
         border_class(@border),
         space_class(@space),
         size_class(@size),
-        color_variant(@color, @variant),
+        color_variant(@variant, @color),
         @font_weight,
         @class
       ]}
@@ -92,17 +95,18 @@ defmodule CommunityDemoWeb.Components.Stepper do
   def stepper(assigns) do
     ~H"""
     <div
+      role="list"
       id={@id}
       class={[
         "group flex flex-row flex-start items-center flex-wrap gap-y-5",
-        "[&_.stepper-seperator:last-child]:hidden",
+        "[&_.stepper-separator:last-child]:hidden",
         step_visibility(),
         size_class(@size),
-        color_variant(@color, @variant),
+        color_variant(@variant, @color),
         border_class(@border),
         wrapper_width(@max_width),
-        seperator_margin(@margin),
-        seperator_size(@seperator_size),
+        separator_margin(@margin),
+        separator_size(@separator_size),
         col_step_position(@col_step_position),
         @col_step && "col-step",
         @col_step_position && "col-step-position",
@@ -140,6 +144,30 @@ defmodule CommunityDemoWeb.Components.Stepper do
 
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
 
+  attr :separator_class, :string,
+    default: nil,
+    doc: "Custom CSS class for additional styling to separator"
+
+  attr :icon_wrapper_class, :string,
+    default: nil,
+    doc: "Custom CSS class for additional styling to separator"
+
+  attr :number_wrapper_class, :string,
+    default: nil,
+    doc: "Custom CSS class for additional styling to separator"
+
+  attr :content_class, :string,
+    default: nil,
+    doc: "Custom CSS class for additional styling to content"
+
+  attr :description_class, :string,
+    default: nil,
+    doc: "Custom CSS class for additional styling to description"
+
+  attr :title_class, :string,
+    default: nil,
+    doc: "Custom CSS class for additional styling to title"
+
   attr :size, :string,
     default: "small",
     doc:
@@ -173,6 +201,10 @@ defmodule CommunityDemoWeb.Components.Stepper do
     ~H"""
     <button
       id={@id}
+      role="listitem"
+      aria-label={gettext("Step %{number}: %{title}", number: @step_number, title: @title)}
+      aria-disabled={!@clickable}
+      aria-current={@step == "current" && "step"}
       class={[
         "stepper-#{@step}-step",
         "vertical-step overflow-hidden flex flex-row text-start gap-4",
@@ -182,12 +214,14 @@ defmodule CommunityDemoWeb.Components.Stepper do
       {@rest}
     >
       <span class="block relative">
-        <span class="stepper-seperator block h-screen absolute start-1/2"></span>
+        <span class={["stepper-separator block h-screen absolute start-1/2", @separator_class]}>
+        </span>
         <span
           :if={@icon}
           class={[
             "stepper-step relative border-2 rounded-full flex justify-center items-center shrink-0",
-            "transition-all ease-in-out duration-400 delay-100"
+            "transition-all ease-in-out duration-400 delay-100",
+            @icon_wrapper_class
           ]}
         >
           <.icon name={@icon} class="step-symbol stepper-icon" />
@@ -206,7 +240,8 @@ defmodule CommunityDemoWeb.Components.Stepper do
           :if={!@icon}
           class={[
             "stepper-step relative border-2 rounded-full flex justify-center items-center shrink-0",
-            "transition-all ease-in-out duration-400 delay-100"
+            "transition-all ease-in-out duration-400 delay-100",
+            @number_wrapper_class
           ]}
         >
           <span class="step-symbol">{@step_number}</span>
@@ -222,14 +257,15 @@ defmodule CommunityDemoWeb.Components.Stepper do
         </span>
       </span>
 
-      <span class="block">
-        <span :if={@title} class="block font-bold text-wrap">
+      <span class={["stepper-content block", @content_class]}>
+        <span :if={@title} class={["block font-bold text-wrap", @title_class]}>
           {@title}
         </span>
 
-        <span :if={@description} class="block text-xs text-wrap">
+        <span :if={@description} class={["block text-xs text-wrap", @description_class]}>
           {@description}
         </span>
+
         {render_slot(@inner_block)}
       </span>
     </button>
@@ -240,6 +276,10 @@ defmodule CommunityDemoWeb.Components.Stepper do
     ~H"""
     <button
       id={@id}
+      role="listitem"
+      aria-label={gettext("Step %{number}: %{title}", number: @step_number, title: @title)}
+      aria-disabled={!@clickable}
+      aria-current={@step == "current" && "step"}
       class={[
         "stepper-#{@step}-step",
         "text-start flex flex-nowrap shrink-0",
@@ -256,7 +296,8 @@ defmodule CommunityDemoWeb.Components.Stepper do
         :if={@icon}
         class={[
           "stepper-step border-2 rounded-full flex justify-center items-center shrink-0",
-          "transition-all ease-in-out duration-400 delay-100"
+          "transition-all ease-in-out duration-400 delay-100",
+          @icon_wrapper_class
         ]}
       >
         <.icon name={@icon} class="step-symbol stepper-icon" />
@@ -275,7 +316,8 @@ defmodule CommunityDemoWeb.Components.Stepper do
         :if={!@icon}
         class={[
           "stepper-step border-2 rounded-full flex justify-center items-center shrink-0",
-          "transition-all ease-in-out duration-400 delay-100"
+          "transition-all ease-in-out duration-400 delay-100",
+          @number_wrapper_class
         ]}
       >
         <span class="step-symbol">{@step_number}</span>
@@ -291,20 +333,22 @@ defmodule CommunityDemoWeb.Components.Stepper do
       </span>
 
       <span class={[
-        "stepper-content block"
+        "stepper-content block",
+        @content_class
       ]}>
-        <span :if={@title} class="block font-bold text-wrap">
+        <span :if={@title} class={["block font-bold text-wrap", @title_class]}>
           {@title}
         </span>
 
-        <span :if={@description} class="block text-xs text-wrap">
+        <span :if={@description} class={["block text-xs text-wrap", @description_class]}>
           {@description}
         </span>
+
         {render_slot(@inner_block)}
       </span>
     </button>
 
-    <div class="stepper-seperator w-full flex-1"></div>
+    <div class="stepper-separator w-full flex-1"></div>
     """
   end
 
@@ -332,9 +376,6 @@ defmodule CommunityDemoWeb.Components.Stepper do
 
   defp step_visibility() do
     [
-      "[&_.stepper-icon]:hidden",
-      "[&_.stepper-icon]:invisible",
-      "[&_.stepper-icon]:opacity-0",
       "[&_.stepper-loading-icon]:block",
       "[&_.stepper-loading-icon]:visible",
       "[&_.stepper-loading-icon]:opacity-100",
@@ -403,81 +444,81 @@ defmodule CommunityDemoWeb.Components.Stepper do
     ]
   end
 
-  defp seperator_margin("none") do
+  defp separator_margin("none") do
     [
-      "[&_.stepper-seperator]:mx-0"
+      "[&_.stepper-separator]:mx-0"
     ]
   end
 
-  defp seperator_margin("extra_small") do
+  defp separator_margin("extra_small") do
     [
-      "[&_.stepper-seperator]:mx-1",
-      "xl:[&_.stepper-seperator]:mx-3"
+      "[&_.stepper-separator]:mx-1",
+      "xl:[&_.stepper-separator]:mx-3"
     ]
   end
 
-  defp seperator_margin("small") do
+  defp separator_margin("small") do
     [
-      "[&_.stepper-seperator]:mx-2",
-      "xl:[&_.stepper-seperator]:mx-4"
+      "[&_.stepper-separator]:mx-2",
+      "xl:[&_.stepper-separator]:mx-4"
     ]
   end
 
-  defp seperator_margin("medium") do
+  defp separator_margin("medium") do
     [
-      "[&_.stepper-seperator]:mx-2",
-      "xl:[&_.stepper-seperator]:mx-6"
+      "[&_.stepper-separator]:mx-2",
+      "xl:[&_.stepper-separator]:mx-6"
     ]
   end
 
-  defp seperator_margin("large") do
+  defp separator_margin("large") do
     [
-      "[&_.stepper-seperator]:mx-3",
-      "xl:[&_.stepper-seperator]:mx-8"
+      "[&_.stepper-separator]:mx-3",
+      "xl:[&_.stepper-separator]:mx-8"
     ]
   end
 
-  defp seperator_margin("extra_large") do
+  defp separator_margin("extra_large") do
     [
-      "[&_.stepper-seperator]:mx-3",
-      "xl:[&_.stepper-seperator]:mx-10"
+      "[&_.stepper-separator]:mx-3",
+      "xl:[&_.stepper-separator]:mx-10"
     ]
   end
 
-  defp seperator_margin(params) when is_binary(params), do: params
+  defp separator_margin(params) when is_binary(params), do: params
 
   defp border_class("extra_small") do
     [
-      "[&.vertical-stepper_.stepper-seperator]:border-s",
-      "[&:not(.vertical-stepper)_.stepper-seperator]:border-t"
+      "[&.vertical-stepper_.stepper-separator]:border-s",
+      "[&:not(.vertical-stepper)_.stepper-separator]:border-t"
     ]
   end
 
   defp border_class("small") do
     [
-      "[&.vertical-stepper_.stepper-seperator]:border-s-2",
-      "[&:not(.vertical-stepper)_.stepper-seperator]:border-t-2"
+      "[&.vertical-stepper_.stepper-separator]:border-s-2",
+      "[&:not(.vertical-stepper)_.stepper-separator]:border-t-2"
     ]
   end
 
   defp border_class("medium") do
     [
-      "[&.vertical-stepper_.stepper-seperator]:border-s-[3px]",
-      "[&:not(.vertical-stepper)_.stepper-seperator]:border-t-[3px]"
+      "[&.vertical-stepper_.stepper-separator]:border-s-[3px]",
+      "[&:not(.vertical-stepper)_.stepper-separator]:border-t-[3px]"
     ]
   end
 
   defp border_class("large") do
     [
-      "[&.vertical-stepper_.stepper-seperator]:border-s-4",
-      "[&:not(.vertical-stepper)_.stepper-seperator]:border-t-4"
+      "[&.vertical-stepper_.stepper-separator]:border-s-4",
+      "[&:not(.vertical-stepper)_.stepper-separator]:border-t-4"
     ]
   end
 
   defp border_class("extra_large") do
     [
-      "[&.vertical-stepper_.stepper-seperator]:border-s-[5px]",
-      "[&:not(.vertical-stepper)_.stepper-seperator]:border-t-[5px]"
+      "[&.vertical-stepper_.stepper-separator]:border-s-[5px]",
+      "[&:not(.vertical-stepper)_.stepper-separator]:border-t-[5px]"
     ]
   end
 
@@ -544,12 +585,12 @@ defmodule CommunityDemoWeb.Components.Stepper do
 
   defp size_class(params) when is_binary(params), do: params
 
-  defp seperator_size("extra_small"), do: "[&_.stepper-seperator]:h-px"
-  defp seperator_size("small"), do: "[&_.stepper-seperator]:h-0.5"
-  defp seperator_size("medium"), do: "[&_.stepper-seperator]:h-1"
-  defp seperator_size("large"), do: "[&_.stepper-seperator]:h-1.5"
-  defp seperator_size("extra_large"), do: "[&_.stepper-seperator]:h-2"
-  defp seperator_size(params) when is_binary(params), do: params
+  defp separator_size("extra_small"), do: "[&_.stepper-separator]:h-px"
+  defp separator_size("small"), do: "[&_.stepper-separator]:h-0.5"
+  defp separator_size("medium"), do: "[&_.stepper-separator]:h-1"
+  defp separator_size("large"), do: "[&_.stepper-separator]:h-1.5"
+  defp separator_size("extra_large"), do: "[&_.stepper-separator]:h-2"
+  defp separator_size(params) when is_binary(params), do: params
 
   # colors
   # stepper-loading-step, stepper-current-step, stepper-completed-step, stepper-canceled-step
@@ -570,14 +611,14 @@ defmodule CommunityDemoWeb.Components.Stepper do
       "[&_.stepper-canceled-step_.stepper-step]:text-white",
       "dark:[&_.stepper-canceled-step_.stepper-step]:bg-[#E03131] dark:[&_.stepper-canceled-step_.stepper-step]:border-[#E03131]",
       "dark:[&_.stepper-canceled-step_.stepper-step]:text-white",
-      "[&_.stepper-seperator]:border-[#e4e4e7] dark:[&_.stepper-seperator]:border-[#27272a]",
-      "[&_.stepper-completed-step+.stepper-seperator]:border-[#14B8A6] dark:[&_.stepper-completed-step+.stepper-seperator]:border-[#099268]",
-      "[&.vertical-stepper_.stepper-completed-step_.stepper-seperator]:border-[#14B8A6]",
-      "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-seperator]:border-[#099268]"
+      "[&_.stepper-separator]:border-[#e4e4e7] dark:[&_.stepper-separator]:border-[#27272a]",
+      "[&_.stepper-completed-step+.stepper-separator]:border-[#14B8A6] dark:[&_.stepper-completed-step+.stepper-separator]:border-[#099268]",
+      "[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-[#14B8A6]",
+      "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-[#099268]"
     ]
   end
 
-  defp color_variant("natural", "default") do
+  defp color_variant("default", "natural") do
     [
       "[&_.stepper-step]:bg-[#F3F3F3] [&_.stepper-step]:text-[#282828] [&_.stepper-loading-icon]:fill-[#374151]",
       "[&_.stepper-step]:border-transparent [&_.stepper-current-step_.stepper-step]:border-[#282828]",
@@ -589,14 +630,14 @@ defmodule CommunityDemoWeb.Components.Stepper do
       "[&_.stepper-canceled-step_.stepper-step]:text-white",
       "dark:[&_.stepper-canceled-step_.stepper-step]:bg-[#FFD2CD] dark:[&_.stepper-canceled-step_.stepper-step]:border-[#FFD2CD]",
       "dark:[&_.stepper-canceled-step_.stepper-step]:text-black",
-      "[&_.stepper-seperator]:border-[#282828] dark:[&_.stepper-seperator]:border-[#E8E8E8]",
-      "[&_.stepper-completed-step+.stepper-seperator]:border-black dark:[&_.stepper-completed-step+.stepper-seperator]:border-white",
-      "[&.vertical-stepper_.stepper-completed-step_.stepper-seperator]:border-black",
-      "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-seperator]:border-white"
+      "[&_.stepper-separator]:border-[#282828] dark:[&_.stepper-separator]:border-[#E8E8E8]",
+      "[&_.stepper-completed-step+.stepper-separator]:border-black dark:[&_.stepper-completed-step+.stepper-separator]:border-white",
+      "[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-black",
+      "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-white"
     ]
   end
 
-  defp color_variant("primary", "default") do
+  defp color_variant("default", "primary") do
     [
       "[&_.stepper-step]:bg-[#E2F8FB] [&_.stepper-step]:text-[#016974] [&_.stepper-loading-icon]:fill-[#374151]",
       "[&_.stepper-step]:border-transparent [&_.stepper-current-step_.stepper-step]:border-[#016974]",
@@ -608,14 +649,14 @@ defmodule CommunityDemoWeb.Components.Stepper do
       "[&_.stepper-canceled-step_.stepper-step]:text-white",
       "dark:[&_.stepper-canceled-step_.stepper-step]:bg-[#FFD2CD] dark:[&_.stepper-canceled-step_.stepper-step]:border-[#FFD2CD]",
       "dark:[&_.stepper-canceled-step_.stepper-step]:text-black",
-      "[&_.stepper-seperator]:border-[#016974] dark:[&_.stepper-seperator]:border-[#77D5E3]",
-      "[&_.stepper-completed-step+.stepper-seperator]:border-[#1A535A] dark:[&_.stepper-completed-step+.stepper-seperator]:border-[#B0E7EF]",
-      "[&.vertical-stepper_.stepper-completed-step_.stepper-seperator]:border-[#1A535A]",
-      "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-seperator]:border-[#B0E7EF]"
+      "[&_.stepper-separator]:border-[#016974] dark:[&_.stepper-separator]:border-[#77D5E3]",
+      "[&_.stepper-completed-step+.stepper-separator]:border-[#1A535A] dark:[&_.stepper-completed-step+.stepper-separator]:border-[#B0E7EF]",
+      "[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-[#1A535A]",
+      "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-[#B0E7EF]"
     ]
   end
 
-  defp color_variant("secondary", "default") do
+  defp color_variant("default", "secondary") do
     [
       "[&_.stepper-step]:bg-[#EFF4FE] [&_.stepper-step]:text-[#175BCC] [&_.stepper-loading-icon]:fill-[#374151]",
       "[&_.stepper-step]:border-transparent [&_.stepper-current-step_.stepper-step]:border-[#175BCC]",
@@ -627,14 +668,14 @@ defmodule CommunityDemoWeb.Components.Stepper do
       "[&_.stepper-canceled-step_.stepper-step]:text-white",
       "dark:[&_.stepper-canceled-step_.stepper-step]:bg-[#FFD2CD] dark:[&_.stepper-canceled-step_.stepper-step]:border-[#FFD2CD]",
       "dark:[&_.stepper-canceled-step_.stepper-step]:text-black",
-      "[&_.stepper-seperator]:border-[#175BCC] dark:[&_.stepper-seperator]:border-[#A9C9FF]",
-      "[&_.stepper-completed-step+.stepper-seperator]:border-[#1948A3] dark:[&_.stepper-completed-step+.stepper-seperator]:border-[#CDDEFF]",
-      "[&.vertical-stepper_.stepper-completed-step_.stepper-seperator]:border-[#1948A3]",
-      "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-seperator]:border-[#CDDEFF]"
+      "[&_.stepper-separator]:border-[#175BCC] dark:[&_.stepper-separator]:border-[#A9C9FF]",
+      "[&_.stepper-completed-step+.stepper-separator]:border-[#1948A3] dark:[&_.stepper-completed-step+.stepper-separator]:border-[#CDDEFF]",
+      "[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-[#1948A3]",
+      "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-[#CDDEFF]"
     ]
   end
 
-  defp color_variant("success", "default") do
+  defp color_variant("default", "success") do
     [
       "[&_.stepper-step]:bg-[#EAF6ED] [&_.stepper-step]:text-[#166C3B] [&_.stepper-loading-icon]:fill-[#374151]",
       "[&_.stepper-step]:border-transparent [&_.stepper-current-step_.stepper-step]:border-[#166C3B]",
@@ -646,14 +687,14 @@ defmodule CommunityDemoWeb.Components.Stepper do
       "[&_.stepper-canceled-step_.stepper-step]:text-white",
       "dark:[&_.stepper-canceled-step_.stepper-step]:bg-[#FFD2CD] dark:[&_.stepper-canceled-step_.stepper-step]:border-[#FFD2CD]",
       "dark:[&_.stepper-canceled-step_.stepper-step]:text-black",
-      "[&_.stepper-seperator]:border-[#166C3B] dark:[&_.stepper-seperator]:border-[#7FD99A]",
-      "[&_.stepper-completed-step+.stepper-seperator]:border-[#0D572D] dark:[&_.stepper-completed-step+.stepper-seperator]:border-[#B1EAC2]",
-      "[&.vertical-stepper_.stepper-completed-step_.stepper-seperator]:border-[#0D572D]",
-      "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-seperator]:border-[#B1EAC2]"
+      "[&_.stepper-separator]:border-[#166C3B] dark:[&_.stepper-separator]:border-[#7FD99A]",
+      "[&_.stepper-completed-step+.stepper-separator]:border-[#0D572D] dark:[&_.stepper-completed-step+.stepper-separator]:border-[#B1EAC2]",
+      "[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-[#0D572D]",
+      "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-[#B1EAC2]"
     ]
   end
 
-  defp color_variant("warning", "default") do
+  defp color_variant("default", "warning") do
     [
       "[&_.stepper-step]:bg-[#FFF7E6] [&_.stepper-step]:text-[#976A01] [&_.stepper-loading-icon]:fill-[#374151]",
       "[&_.stepper-step]:border-transparent [&_.stepper-current-step_.stepper-step]:border-[#976A01]",
@@ -665,14 +706,14 @@ defmodule CommunityDemoWeb.Components.Stepper do
       "[&_.stepper-canceled-step_.stepper-step]:text-white",
       "dark:[&_.stepper-canceled-step_.stepper-step]:bg-[#FFD2CD] dark:[&_.stepper-canceled-step_.stepper-step]:border-[#FFD2CD]",
       "dark:[&_.stepper-canceled-step_.stepper-step]:text-black",
-      "[&_.stepper-seperator]:border-[#976A01] dark:[&_.stepper-seperator]:border-[#FDD067]",
-      "[&_.stepper-completed-step+.stepper-seperator]:border-[#654600] dark:[&_.stepper-completed-step+.stepper-seperator]:border-[#FEDF99]",
-      "[&.vertical-stepper_.stepper-completed-step_.stepper-seperator]:border-[#654600]",
-      "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-seperator]:border-[#FEDF99]"
+      "[&_.stepper-separator]:border-[#976A01] dark:[&_.stepper-separator]:border-[#FDD067]",
+      "[&_.stepper-completed-step+.stepper-separator]:border-[#654600] dark:[&_.stepper-completed-step+.stepper-separator]:border-[#FEDF99]",
+      "[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-[#654600]",
+      "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-[#FEDF99]"
     ]
   end
 
-  defp color_variant("danger", "default") do
+  defp color_variant("default", "danger") do
     [
       "[&_.stepper-step]:bg-[#FFF0EE] [&_.stepper-step]:text-[#BB032A] [&_.stepper-loading-icon]:fill-[#374151]",
       "[&_.stepper-step]:border-transparent [&_.stepper-current-step_.stepper-step]:border-[#BB032A]",
@@ -684,14 +725,14 @@ defmodule CommunityDemoWeb.Components.Stepper do
       "[&_.stepper-canceled-step_.stepper-step]:text-white",
       "dark:[&_.stepper-canceled-step_.stepper-step]:bg-[#FFD2CD] dark:[&_.stepper-canceled-step_.stepper-step]:border-[#FFD2CD]",
       "dark:[&_.stepper-canceled-step_.stepper-step]:text-black",
-      "[&_.stepper-seperator]:border-[#BB032A] dark:[&_.stepper-seperator]:border-[#FFB2AB]",
-      "[&_.stepper-completed-step+.stepper-seperator]:border-[#950F22] dark:[&_.stepper-completed-step+.stepper-seperator]:border-[#FFD2CD]",
-      "[&.vertical-stepper_.stepper-completed-step_.stepper-seperator]:border-[#950F22]",
-      "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-seperator]:border-[#FFD2CD]"
+      "[&_.stepper-separator]:border-[#BB032A] dark:[&_.stepper-separator]:border-[#FFB2AB]",
+      "[&_.stepper-completed-step+.stepper-separator]:border-[#950F22] dark:[&_.stepper-completed-step+.stepper-separator]:border-[#FFD2CD]",
+      "[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-[#950F22]",
+      "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-[#FFD2CD]"
     ]
   end
 
-  defp color_variant("info", "default") do
+  defp color_variant("default", "info") do
     [
       "[&_.stepper-step]:bg-[#E7F6FD] [&_.stepper-step]:text-[#08638C] [&_.stepper-loading-icon]:fill-[#374151]",
       "[&_.stepper-step]:border-transparent [&_.stepper-current-step_.stepper-step]:border-[#08638C]",
@@ -703,14 +744,14 @@ defmodule CommunityDemoWeb.Components.Stepper do
       "[&_.stepper-canceled-step_.stepper-step]:text-white",
       "dark:[&_.stepper-canceled-step_.stepper-step]:bg-[#FFD2CD] dark:[&_.stepper-canceled-step_.stepper-step]:border-[#FFD2CD]",
       "dark:[&_.stepper-canceled-step_.stepper-step]:text-black",
-      "[&_.stepper-seperator]:border-[#08638C] dark:[&_.stepper-seperator]:border-[#6EC9F2]",
-      "[&_.stepper-completed-step+.stepper-seperator]:border-[#06425D] dark:[&_.stepper-completed-step+.stepper-seperator]:border-[#9FDBF6]",
-      "[&.vertical-stepper_.stepper-completed-step_.stepper-seperator]:border-[#06425D]",
-      "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-seperator]:border-[#9FDBF6]"
+      "[&_.stepper-separator]:border-[#08638C] dark:[&_.stepper-separator]:border-[#6EC9F2]",
+      "[&_.stepper-completed-step+.stepper-separator]:border-[#06425D] dark:[&_.stepper-completed-step+.stepper-separator]:border-[#9FDBF6]",
+      "[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-[#06425D]",
+      "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-[#9FDBF6]"
     ]
   end
 
-  defp color_variant("misc", "default") do
+  defp color_variant("default", "misc") do
     [
       "[&_.stepper-step]:bg-[#F6F0FE] [&_.stepper-step]:text-[#653C94] [&_.stepper-loading-icon]:fill-[#374151]",
       "[&_.stepper-step]:border-transparent [&_.stepper-current-step_.stepper-step]:border-[#653C94]",
@@ -722,14 +763,14 @@ defmodule CommunityDemoWeb.Components.Stepper do
       "[&_.stepper-canceled-step_.stepper-step]:text-white",
       "dark:[&_.stepper-canceled-step_.stepper-step]:bg-[#FFD2CD] dark:[&_.stepper-canceled-step_.stepper-step]:border-[#FFD2CD]",
       "dark:[&_.stepper-canceled-step_.stepper-step]:text-black",
-      "[&_.stepper-seperator]:border-[#653C94] dark:[&_.stepper-seperator]:border-[#CBA2FA]",
-      "[&_.stepper-completed-step+.stepper-seperator]:border-[#442863] dark:[&_.stepper-completed-step+.stepper-seperator]:border-[#DDC1FC]",
-      "[&.vertical-stepper_.stepper-completed-step_.stepper-seperator]:border-[#442863]",
-      "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-seperator]:border-[#DDC1FC]"
+      "[&_.stepper-separator]:border-[#653C94] dark:[&_.stepper-separator]:border-[#CBA2FA]",
+      "[&_.stepper-completed-step+.stepper-separator]:border-[#442863] dark:[&_.stepper-completed-step+.stepper-separator]:border-[#DDC1FC]",
+      "[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-[#442863]",
+      "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-[#DDC1FC]"
     ]
   end
 
-  defp color_variant("dawn", "default") do
+  defp color_variant("default", "dawn") do
     [
       "[&_.stepper-step]:bg-[#FBF2ED] [&_.stepper-step]:text-[#7E4B2A] [&_.stepper-loading-icon]:fill-[#374151]",
       "[&_.stepper-step]:border-transparent [&_.stepper-current-step_.stepper-step]:border-[#7E4B2A]",
@@ -741,14 +782,14 @@ defmodule CommunityDemoWeb.Components.Stepper do
       "[&_.stepper-canceled-step_.stepper-step]:text-white",
       "dark:[&_.stepper-canceled-step_.stepper-step]:bg-[#FFD2CD] dark:[&_.stepper-canceled-step_.stepper-step]:border-[#FFD2CD]",
       "dark:[&_.stepper-canceled-step_.stepper-step]:text-black",
-      "[&_.stepper-seperator]:border-[#7E4B2A] dark:[&_.stepper-seperator]:border-[#E4B190]",
-      "[&_.stepper-completed-step+.stepper-seperator]:border-[#54321C] dark:[&_.stepper-completed-step+.stepper-seperator]:border-[#EDCBB5]",
-      "[&.vertical-stepper_.stepper-completed-step_.stepper-seperator]:border-[#54321C]",
-      "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-seperator]:border-[#EDCBB5]"
+      "[&_.stepper-separator]:border-[#7E4B2A] dark:[&_.stepper-separator]:border-[#E4B190]",
+      "[&_.stepper-completed-step+.stepper-separator]:border-[#54321C] dark:[&_.stepper-completed-step+.stepper-separator]:border-[#EDCBB5]",
+      "[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-[#54321C]",
+      "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-[#EDCBB5]"
     ]
   end
 
-  defp color_variant("silver", "default") do
+  defp color_variant("default", "silver") do
     [
       "[&_.stepper-step]:bg-[#F3F3F3] [&_.stepper-step]:text-[#727272] [&_.stepper-loading-icon]:fill-[#374151]",
       "[&_.stepper-step]:border-transparent [&_.stepper-current-step_.stepper-step]:border-[#727272]",
@@ -760,14 +801,14 @@ defmodule CommunityDemoWeb.Components.Stepper do
       "[&_.stepper-canceled-step_.stepper-step]:text-white",
       "dark:[&_.stepper-canceled-step_.stepper-step]:bg-[#FFD2CD] dark:[&_.stepper-canceled-step_.stepper-step]:border-[#FFD2CD]",
       "dark:[&_.stepper-canceled-step_.stepper-step]:text-black",
-      "[&_.stepper-seperator]:border-[#727272] dark:[&_.stepper-seperator]:border-[#BBBBBB]",
-      "[&_.stepper-completed-step+.stepper-seperator]:border-[#5E5E5E] dark:[&_.stepper-completed-step+.stepper-seperator]:border-[#DDDDDD]",
-      "[&.vertical-stepper_.stepper-completed-step_.stepper-seperator]:border-[#5E5E5E]",
-      "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-seperator]:border-[#DDDDDD]"
+      "[&_.stepper-separator]:border-[#727272] dark:[&_.stepper-separator]:border-[#BBBBBB]",
+      "[&_.stepper-completed-step+.stepper-separator]:border-[#5E5E5E] dark:[&_.stepper-completed-step+.stepper-separator]:border-[#DDDDDD]",
+      "[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-[#5E5E5E]",
+      "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-[#DDDDDD]"
     ]
   end
 
-  defp color_variant("natural", "gradient") do
+  defp color_variant("gradient", "natural") do
     [
       "[&_.stepper-step]:bg-gradient-to-br from-[#282828] to-[#727272] [&_.stepper-step]:text-white",
       "dark:from-[#A6A6A6] dark:to-[#FFFFFF] dark:[&_.stepper-step]:text-black",
@@ -780,14 +821,14 @@ defmodule CommunityDemoWeb.Components.Stepper do
       "[&_.stepper-canceled-step_.stepper-step]:text-white",
       "dark:[&_.stepper-canceled-step_.stepper-step]:bg-[#FFD2CD] dark:[&_.stepper-canceled-step_.stepper-step]:border-[#FFD2CD]",
       "dark:[&_.stepper-canceled-step_.stepper-step]:text-black",
-      "[&_.stepper-seperator]:border-[#282828] dark:[&_.stepper-seperator]:border-[#E8E8E8]",
-      "[&_.stepper-completed-step+.stepper-seperator]:border-black dark:[&_.stepper-completed-step+.stepper-seperator]:border-white",
-      "[&.vertical-stepper_.stepper-completed-step_.stepper-seperator]:border-black",
-      "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-seperator]:border-white"
+      "[&_.stepper-separator]:border-[#282828] dark:[&_.stepper-separator]:border-[#E8E8E8]",
+      "[&_.stepper-completed-step+.stepper-separator]:border-black dark:[&_.stepper-completed-step+.stepper-separator]:border-white",
+      "[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-black",
+      "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-white"
     ]
   end
 
-  defp color_variant("primary", "gradient") do
+  defp color_variant("gradient", "primary") do
     [
       "[&_.stepper-step]:bg-gradient-to-br from-[#016974] to-[#01B8CA] [&_.stepper-step]:text-white",
       "dark:from-[#01B8CA] dark:to-[#B0E7EF] dark:[&_.stepper-step]:text-black",
@@ -800,14 +841,14 @@ defmodule CommunityDemoWeb.Components.Stepper do
       "[&_.stepper-canceled-step_.stepper-step]:text-white",
       "dark:[&_.stepper-canceled-step_.stepper-step]:bg-[#FFD2CD] dark:[&_.stepper-canceled-step_.stepper-step]:border-[#FFD2CD]",
       "dark:[&_.stepper-canceled-step_.stepper-step]:text-black",
-      "[&_.stepper-seperator]:border-[#016974] dark:[&_.stepper-seperator]:border-[#77D5E3]",
-      "[&_.stepper-completed-step+.stepper-seperator]:border-[#1A535A] dark:[&_.stepper-completed-step+.stepper-seperator]:border-[#B0E7EF]",
-      "[&.vertical-stepper_.stepper-completed-step_.stepper-seperator]:border-[#1A535A]",
-      "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-seperator]:border-[#B0E7EF]"
+      "[&_.stepper-separator]:border-[#016974] dark:[&_.stepper-separator]:border-[#77D5E3]",
+      "[&_.stepper-completed-step+.stepper-separator]:border-[#1A535A] dark:[&_.stepper-completed-step+.stepper-separator]:border-[#B0E7EF]",
+      "[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-[#1A535A]",
+      "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-[#B0E7EF]"
     ]
   end
 
-  defp color_variant("secondary", "gradient") do
+  defp color_variant("gradient", "secondary") do
     [
       "[&_.stepper-step]:bg-gradient-to-br from-[#175BCC] to-[#6DAAFB] [&_.stepper-step]:text-white",
       "dark:from-[#6DAAFB] dark:to-[#CDDEFF] dark:[&_.stepper-step]:text-black",
@@ -820,14 +861,14 @@ defmodule CommunityDemoWeb.Components.Stepper do
       "[&_.stepper-canceled-step_.stepper-step]:text-white",
       "dark:[&_.stepper-canceled-step_.stepper-step]:bg-[#FFD2CD] dark:[&_.stepper-canceled-step_.stepper-step]:border-[#FFD2CD]",
       "dark:[&_.stepper-canceled-step_.stepper-step]:text-black",
-      "[&_.stepper-seperator]:border-[#175BCC] dark:[&_.stepper-seperator]:border-[#A9C9FF]",
-      "[&_.stepper-completed-step+.stepper-seperator]:border-[#1948A3] dark:[&_.stepper-completed-step+.stepper-seperator]:border-[#CDDEFF]",
-      "[&.vertical-stepper_.stepper-completed-step_.stepper-seperator]:border-[#1948A3]",
-      "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-seperator]:border-[#CDDEFF]"
+      "[&_.stepper-separator]:border-[#175BCC] dark:[&_.stepper-separator]:border-[#A9C9FF]",
+      "[&_.stepper-completed-step+.stepper-separator]:border-[#1948A3] dark:[&_.stepper-completed-step+.stepper-separator]:border-[#CDDEFF]",
+      "[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-[#1948A3]",
+      "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-[#CDDEFF]"
     ]
   end
 
-  defp color_variant("success", "gradient") do
+  defp color_variant("gradient", "success") do
     [
       "[&_.stepper-step]:bg-gradient-to-br from-[#166C3B] to-[#06C167] [&_.stepper-step]:text-white",
       "dark:from-[#06C167] dark:to-[#B1EAC2] dark:[&_.stepper-step]:text-black",
@@ -840,14 +881,14 @@ defmodule CommunityDemoWeb.Components.Stepper do
       "[&_.stepper-canceled-step_.stepper-step]:text-white",
       "dark:[&_.stepper-canceled-step_.stepper-step]:bg-[#FFD2CD] dark:[&_.stepper-canceled-step_.stepper-step]:border-[#FFD2CD]",
       "dark:[&_.stepper-canceled-step_.stepper-step]:text-black",
-      "[&_.stepper-seperator]:border-[#166C3B] dark:[&_.stepper-seperator]:border-[#7FD99A]",
-      "[&_.stepper-completed-step+.stepper-seperator]:border-[#0D572D] dark:[&_.stepper-completed-step+.stepper-seperator]:border-[#B1EAC2]",
-      "[&.vertical-stepper_.stepper-completed-step_.stepper-seperator]:border-[#0D572D]",
-      "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-seperator]:border-[#B1EAC2]"
+      "[&_.stepper-separator]:border-[#166C3B] dark:[&_.stepper-separator]:border-[#7FD99A]",
+      "[&_.stepper-completed-step+.stepper-separator]:border-[#0D572D] dark:[&_.stepper-completed-step+.stepper-separator]:border-[#B1EAC2]",
+      "[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-[#0D572D]",
+      "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-[#B1EAC2]"
     ]
   end
 
-  defp color_variant("warning", "gradient") do
+  defp color_variant("gradient", "warning") do
     [
       "[&_.stepper-step]:bg-gradient-to-br from-[#976A01] to-[#FDC034] [&_.stepper-step]:text-white",
       "dark:from-[#FDC034] dark:to-[#FEDF99] dark:[&_.stepper-step]:text-black",
@@ -860,14 +901,14 @@ defmodule CommunityDemoWeb.Components.Stepper do
       "[&_.stepper-canceled-step_.stepper-step]:text-white",
       "dark:[&_.stepper-canceled-step_.stepper-step]:bg-[#FFD2CD] dark:[&_.stepper-canceled-step_.stepper-step]:border-[#FFD2CD]",
       "dark:[&_.stepper-canceled-step_.stepper-step]:text-black",
-      "[&_.stepper-seperator]:border-[#976A01] dark:[&_.stepper-seperator]:border-[#FDD067]",
-      "[&_.stepper-completed-step+.stepper-seperator]:border-[#654600] dark:[&_.stepper-completed-step+.stepper-seperator]:border-[#FEDF99]",
-      "[&.vertical-stepper_.stepper-completed-step_.stepper-seperator]:border-[#654600]",
-      "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-seperator]:border-[#FEDF99]"
+      "[&_.stepper-separator]:border-[#976A01] dark:[&_.stepper-separator]:border-[#FDD067]",
+      "[&_.stepper-completed-step+.stepper-separator]:border-[#654600] dark:[&_.stepper-completed-step+.stepper-separator]:border-[#FEDF99]",
+      "[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-[#654600]",
+      "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-[#FEDF99]"
     ]
   end
 
-  defp color_variant("danger", "gradient") do
+  defp color_variant("gradient", "danger") do
     [
       "[&_.stepper-step]:bg-gradient-to-br from-[#BB032A] to-[#FC7F79] [&_.stepper-step]:text-white",
       "dark:from-[#FC7F79] dark:to-[#FFD2CD] dark:[&_.stepper-step]:text-black",
@@ -880,14 +921,14 @@ defmodule CommunityDemoWeb.Components.Stepper do
       "[&_.stepper-canceled-step_.stepper-step]:text-white",
       "dark:[&_.stepper-canceled-step_.stepper-step]:bg-[#FFD2CD] dark:[&_.stepper-canceled-step_.stepper-step]:border-[#FFD2CD]",
       "dark:[&_.stepper-canceled-step_.stepper-step]:text-black",
-      "[&_.stepper-seperator]:border-[#BB032A] dark:[&_.stepper-seperator]:border-[#FFB2AB]",
-      "[&_.stepper-completed-step+.stepper-seperator]:border-[#950F22] dark:[&_.stepper-completed-step+.stepper-seperator]:border-[#FFD2CD]",
-      "[&.vertical-stepper_.stepper-completed-step_.stepper-seperator]:border-[#950F22]",
-      "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-seperator]:border-[#FFD2CD]"
+      "[&_.stepper-separator]:border-[#BB032A] dark:[&_.stepper-separator]:border-[#FFB2AB]",
+      "[&_.stepper-completed-step+.stepper-separator]:border-[#950F22] dark:[&_.stepper-completed-step+.stepper-separator]:border-[#FFD2CD]",
+      "[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-[#950F22]",
+      "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-[#FFD2CD]"
     ]
   end
 
-  defp color_variant("info", "gradient") do
+  defp color_variant("gradient", "info") do
     [
       "[&_.stepper-step]:bg-gradient-to-br from-[#08638C] to-[#3EB7ED] [&_.stepper-step]:text-white",
       "dark:from-[#3EB7ED] dark:to-[#9FDBF6] dark:[&_.stepper-step]:text-black",
@@ -900,14 +941,14 @@ defmodule CommunityDemoWeb.Components.Stepper do
       "[&_.stepper-canceled-step_.stepper-step]:text-white",
       "dark:[&_.stepper-canceled-step_.stepper-step]:bg-[#FFD2CD] dark:[&_.stepper-canceled-step_.stepper-step]:border-[#FFD2CD]",
       "dark:[&_.stepper-canceled-step_.stepper-step]:text-black",
-      "[&_.stepper-seperator]:border-[#08638C] dark:[&_.stepper-seperator]:border-[#6EC9F2]",
-      "[&_.stepper-completed-step+.stepper-seperator]:border-[#06425D] dark:[&_.stepper-completed-step+.stepper-seperator]:border-[#9FDBF6]",
-      "[&.vertical-stepper_.stepper-completed-step_.stepper-seperator]:border-[#06425D]",
-      "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-seperator]:border-[#9FDBF6]"
+      "[&_.stepper-separator]:border-[#08638C] dark:[&_.stepper-separator]:border-[#6EC9F2]",
+      "[&_.stepper-completed-step+.stepper-separator]:border-[#06425D] dark:[&_.stepper-completed-step+.stepper-separator]:border-[#9FDBF6]",
+      "[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-[#06425D]",
+      "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-[#9FDBF6]"
     ]
   end
 
-  defp color_variant("misc", "gradient") do
+  defp color_variant("gradient", "misc") do
     [
       "[&_.stepper-step]:bg-gradient-to-br from-[#653C94] to-[#BA83F9] [&_.stepper-step]:text-white",
       "dark:from-[#BA83F9] dark:to-[#DDC1FC] dark:[&_.stepper-step]:text-black",
@@ -920,14 +961,14 @@ defmodule CommunityDemoWeb.Components.Stepper do
       "[&_.stepper-canceled-step_.stepper-step]:text-white",
       "dark:[&_.stepper-canceled-step_.stepper-step]:bg-[#FFD2CD] dark:[&_.stepper-canceled-step_.stepper-step]:border-[#FFD2CD]",
       "dark:[&_.stepper-canceled-step_.stepper-step]:text-black",
-      "[&_.stepper-seperator]:border-[#653C94] dark:[&_.stepper-seperator]:border-[#CBA2FA]",
-      "[&_.stepper-completed-step+.stepper-seperator]:border-[#442863] dark:[&_.stepper-completed-step+.stepper-seperator]:border-[#DDC1FC]",
-      "[&.vertical-stepper_.stepper-completed-step_.stepper-seperator]:border-[#442863]",
-      "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-seperator]:border-[#DDC1FC]"
+      "[&_.stepper-separator]:border-[#653C94] dark:[&_.stepper-separator]:border-[#CBA2FA]",
+      "[&_.stepper-completed-step+.stepper-separator]:border-[#442863] dark:[&_.stepper-completed-step+.stepper-separator]:border-[#DDC1FC]",
+      "[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-[#442863]",
+      "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-[#DDC1FC]"
     ]
   end
 
-  defp color_variant("dawn", "gradient") do
+  defp color_variant("gradient", "dawn") do
     [
       "[&_.stepper-step]:bg-gradient-to-br from-[#7E4B2A] to-[#DB976B] [&_.stepper-step]:text-white",
       "dark:from-[#DB976B] dark:to-[#EDCBB5] dark:[&_.stepper-step]:text-black",
@@ -940,14 +981,14 @@ defmodule CommunityDemoWeb.Components.Stepper do
       "[&_.stepper-canceled-step_.stepper-step]:text-white",
       "dark:[&_.stepper-canceled-step_.stepper-step]:bg-[#FFD2CD] dark:[&_.stepper-canceled-step_.stepper-step]:border-[#FFD2CD]",
       "dark:[&_.stepper-canceled-step_.stepper-step]:text-black",
-      "[&_.stepper-seperator]:border-[#7E4B2A] dark:[&_.stepper-seperator]:border-[#E4B190]",
-      "[&_.stepper-completed-step+.stepper-seperator]:border-[#54321C] dark:[&_.stepper-completed-step+.stepper-seperator]:border-[#EDCBB5]",
-      "[&.vertical-stepper_.stepper-completed-step_.stepper-seperator]:border-[#54321C]",
-      "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-seperator]:border-[#EDCBB5]"
+      "[&_.stepper-separator]:border-[#7E4B2A] dark:[&_.stepper-separator]:border-[#E4B190]",
+      "[&_.stepper-completed-step+.stepper-separator]:border-[#54321C] dark:[&_.stepper-completed-step+.stepper-separator]:border-[#EDCBB5]",
+      "[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-[#54321C]",
+      "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-[#EDCBB5]"
     ]
   end
 
-  defp color_variant("silver", "gradient") do
+  defp color_variant("gradient", "silver") do
     [
       "[&_.stepper-step]:bg-gradient-to-br from-[#5E5E5E] to-[#A6A6A6] [&_.stepper-step]:text-white",
       "dark:from-[#868686] dark:to-[#BBBBBB] dark:[&_.stepper-step]:text-black",
@@ -960,27 +1001,12 @@ defmodule CommunityDemoWeb.Components.Stepper do
       "[&_.stepper-canceled-step_.stepper-step]:text-white",
       "dark:[&_.stepper-canceled-step_.stepper-step]:bg-[#FFD2CD] dark:[&_.stepper-canceled-step_.stepper-step]:border-[#FFD2CD]",
       "dark:[&_.stepper-canceled-step_.stepper-step]:text-black",
-      "[&_.stepper-seperator]:border-[#727272] dark:[&_.stepper-seperator]:border-[#BBBBBB]",
-      "[&_.stepper-completed-step+.stepper-seperator]:border-[#5E5E5E] dark:[&_.stepper-completed-step+.stepper-seperator]:border-[#DDDDDD]",
-      "[&.vertical-stepper_.stepper-completed-step_.stepper-seperator]:border-[#5E5E5E]",
-      "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-seperator]:border-[#DDDDDD]"
+      "[&_.stepper-separator]:border-[#727272] dark:[&_.stepper-separator]:border-[#BBBBBB]",
+      "[&_.stepper-completed-step+.stepper-separator]:border-[#5E5E5E] dark:[&_.stepper-completed-step+.stepper-separator]:border-[#DDDDDD]",
+      "[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-[#5E5E5E]",
+      "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-[#DDDDDD]"
     ]
   end
 
-  defp color_variant(_, params) when is_binary(params), do: params
-
-  attr :name, :string, required: true, doc: "Specifies the name of the element"
-  attr :class, :any, default: nil, doc: "Custom CSS class for additional styling"
-
-  defp icon(%{name: "hero-" <> _, class: class} = assigns) when is_list(class) do
-    ~H"""
-    <span class={[@name] ++ @class} />
-    """
-  end
-
-  defp icon(%{name: "hero-" <> _} = assigns) do
-    ~H"""
-    <span class={[@name, @class]} />
-    """
-  end
+  defp color_variant(params, _) when is_binary(params), do: params
 end

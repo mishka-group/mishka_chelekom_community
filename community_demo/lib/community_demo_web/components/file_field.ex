@@ -22,6 +22,8 @@ defmodule CommunityDemoWeb.Components.FileField do
   use Phoenix.Component
   import CommunityDemoWeb.Components.Progress, only: [progress: 1]
   import CommunityDemoWeb.Components.Spinner, only: [spinner: 1]
+  import CommunityDemoWeb.Components.Icon, only: [icon: 1]
+  use Gettext, backend: CommunityDemoWeb.Gettext
 
   @doc """
   Renders a `file_input` field with customizable styles, labels, and live upload capabilities.
@@ -115,6 +117,7 @@ defmodule CommunityDemoWeb.Components.FileField do
         ]}
         phx-drop-target={@upload.ref}
         for={@id}
+        {@rest}
       >
         <div class="flex flex-col gap-3 items-center justify-center pt-5 pb-6">
           <.icon name={@dropzone_icon} class="size-14" />
@@ -131,9 +134,13 @@ defmodule CommunityDemoWeb.Components.FileField do
 
       <.error :for={msg <- @errors} icon={@error_icon}>{msg}</.error>
 
-      <div class="mt-5 space-y-4">
+      <div aria-live="polite" class="mt-5 space-y-4">
         <%= for entry <- @entries do %>
-          <div class="upload-item border rounded relative p-3">
+          <div
+            class="upload-item border rounded relative p-3"
+            role="group"
+            aria-label={gettext("Uploading %{file}", file: entry.client_name)}
+          >
             <div class="flex justify-around gap-3">
               <.icon name="hero-document-arrow-up" class="size-8" />
               <div class="w-full space-y-3">
@@ -146,6 +153,12 @@ defmodule CommunityDemoWeb.Components.FileField do
                 </div>
 
                 <.progress value={entry.progress} color={@color} size="extra_small" />
+                <span class="sr-only">
+                  {gettext("Uploading %{file}: %{progress} percent",
+                    file: entry.client_name,
+                    progress: entry.progress
+                  )}
+                </span>
               </div>
             </div>
 
@@ -153,7 +166,7 @@ defmodule CommunityDemoWeb.Components.FileField do
               type="button"
               phx-click="cancel-upload"
               phx-value-ref={entry.ref}
-              aria-label="cancel"
+              aria-label={gettext("Cancel upload for %{file}", file: entry.client_name)}
               class="absolute top-2 right-2 text-custome-black-100/60 hover:text-custome-black-100"
             >
               <.icon name="hero-x-mark" class="size-4" />
@@ -197,6 +210,7 @@ defmodule CommunityDemoWeb.Components.FileField do
         ]}
         phx-drop-target={@upload.ref}
         for={@id}
+        {@rest}
       >
         <div class="flex flex-col gap-3 items-center justify-center pt-5 pb-6">
           <.icon name={@dropzone_icon} class="size-14" />
@@ -220,7 +234,11 @@ defmodule CommunityDemoWeb.Components.FileField do
       <div class="flex flex-wrap gap-3 my-3">
         <%= for entry <- @entries do %>
           <div>
-            <div class="relative">
+            <div
+              role="group"
+              aria-label={gettext("Uploading %{file}", file: entry.client_name)}
+              class="relative"
+            >
               <div class="rounded w-24 h-24 overflow-hidden">
                 <figure class="w-full h-full object-cover">
                   <.live_img_preview entry={entry} class="w-full h-full object-cover rounded" />
@@ -231,7 +249,7 @@ defmodule CommunityDemoWeb.Components.FileField do
                 type="button"
                 phx-click="cancel-upload"
                 phx-value-ref={entry.ref}
-                aria-label="cancel"
+                aria-label={gettext("Cancel upload for %{file}", file: entry.client_name)}
                 class="bg-black/30 rounded p-px text-white flex justify-center items-center absolute top-2 right-2 z-10"
               >
                 <.icon name="hero-x-mark" class="size-4" />
@@ -243,6 +261,7 @@ defmodule CommunityDemoWeb.Components.FileField do
                 class="absolute inset-0 bg-black/25 flex justify-center items-center"
               >
                 <.spinner color="base" />
+                <span class="sr-only">{gettext("Uploading %{file}", file: entry.client_name)}</span>
               </div>
             </div>
             <%= for err <- upload_errors(@upload_error, entry) do %>
@@ -918,20 +937,5 @@ defmodule CommunityDemoWeb.Components.FileField do
     else
       Gettext.dgettext(CommunityDemoWeb.Gettext, "errors", msg, opts)
     end
-  end
-
-  attr :name, :string, required: true, doc: "Specifies the name of the element"
-  attr :class, :any, default: nil, doc: "Custom CSS class for additional styling"
-
-  defp icon(%{name: "hero-" <> _, class: class} = assigns) when is_list(class) do
-    ~H"""
-    <span class={[@name] ++ @class} />
-    """
-  end
-
-  defp icon(%{name: "hero-" <> _} = assigns) do
-    ~H"""
-    <span class={[@name, @class]} />
-    """
   end
 end

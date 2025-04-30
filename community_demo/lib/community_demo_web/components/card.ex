@@ -26,6 +26,7 @@ defmodule CommunityDemoWeb.Components.Card do
   """
 
   use Phoenix.Component
+  import CommunityDemoWeb.Components.Icon, only: [icon: 1]
 
   @positions [
     "start",
@@ -112,6 +113,7 @@ defmodule CommunityDemoWeb.Components.Card do
     ~H"""
     <div
       id={@id}
+      role={@rest[:role] || "region"}
       class={[
         "overflow-hidden [&:has(.overlay)]:relative",
         space_class(@space),
@@ -189,7 +191,11 @@ defmodule CommunityDemoWeb.Components.Card do
       ]}
       {@rest}
     >
-      <div :if={@title || @icon} class="flex gap-2 items-center">
+      <div
+        :if={@title || @icon}
+        class="flex gap-2 items-center"
+        aria-labelledby={if @title && @id, do: "#{@id}-title"}
+      >
         <.icon :if={@icon} name={@icon} class="card-title-icon" />
         <h3 :if={@title}>{@title}</h3>
       </div>
@@ -215,7 +221,7 @@ defmodule CommunityDemoWeb.Components.Card do
     default: nil,
     doc: "A unique identifier is used to manage state and interaction"
 
-  attr :alt, :string, doc: "Media link description"
+  attr :alt, :string, default: nil, doc: "Media link description"
   attr :src, :string, required: true, doc: "Media link"
   attr :width, :string, default: "w-full", doc: "Media width"
   attr :rounded, :string, default: "", doc: "Determines the border radius"
@@ -233,6 +239,7 @@ defmodule CommunityDemoWeb.Components.Card do
       <img
         src={@src}
         alt={@alt}
+        role={if !is_nil(@alt) && @alt == "", do: "presentation"}
         class={[
           "max-w-full"
         ]}
@@ -858,19 +865,4 @@ defmodule CommunityDemoWeb.Components.Card do
   end
 
   defp color_variant(params, _) when is_binary(params), do: params
-
-  attr :name, :string, required: true, doc: "Specifies the name of the element"
-  attr :class, :any, default: nil, doc: "Custom CSS class for additional styling"
-
-  defp icon(%{name: "hero-" <> _, class: class} = assigns) when is_list(class) do
-    ~H"""
-    <span class={[@name] ++ @class} />
-    """
-  end
-
-  defp icon(%{name: "hero-" <> _} = assigns) do
-    ~H"""
-    <span class={[@name, @class]} />
-    """
-  end
 end

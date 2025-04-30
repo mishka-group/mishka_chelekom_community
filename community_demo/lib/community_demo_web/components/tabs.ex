@@ -27,6 +27,7 @@ defmodule CommunityDemoWeb.Components.Tabs do
   use Phoenix.Component
   alias Phoenix.LiveView.JS
   import CommunityDemoWeb.Components.Badge, only: [badge: 1]
+  import CommunityDemoWeb.Components.Icon, only: [icon: 1]
 
   @doc """
   The `tabs` component provides a set of clickable tabs for organizing content.
@@ -118,15 +119,15 @@ defmodule CommunityDemoWeb.Components.Tabs do
   end
 
   def tabs(%{vertical: true} = assigns) do
-    assigns =
-      assign_new(assigns, :mounted_active_tab, fn ->
-        Enum.find(assigns.tab, &Map.get(&1, :active))
-      end)
+    active_index =
+      Enum.find_index(assigns.tab, &Map.get(&1, :active)) || 0
+
+    assigns = assign(assigns, :active_index, active_index + 1)
 
     ~H"""
     <div
       id={@id}
-      phx-mounted={is_nil(@mounted_active_tab) && hide_tab(@id, length(@tab)) |> show_tab(@id, 1)}
+      phx-mounted={hide_tab(@id, length(@tab)) |> show_tab(@id, @active_index)}
       class={[
         "vertical-tab flex dark:text-gray-200",
         @placement == "end" && "flex-row-reverse",
@@ -168,6 +169,9 @@ defmodule CommunityDemoWeb.Components.Tabs do
           }
           phx-mounted={tab[:active] && JS.exec("phx-show-tab", to: "##{@id}-tab-header-#{index}")}
           role="tab"
+          aria-selected={@active_index == index}
+          aria-controls={"#{@id}-tab-panel-#{index}"}
+          tabindex={(@active_index == index && "0") || "-1"}
           class={[
             "tab-trigger flex flex-row flex-nowrap items-center gap-1.5 leading-5",
             "transition-all duration-400 delay-100 disabled:opacity-80",
@@ -197,6 +201,7 @@ defmodule CommunityDemoWeb.Components.Tabs do
           :for={{panel, index} <- Enum.with_index(@panel, 1)}
           id={"#{@id}-tab-panel-#{index}"}
           role="tabpanel"
+          aria-labelledby={"#{@id}-tab-header-#{index}"}
           class={[
             "tab-content",
             "[&:not(.active-tab-panel)]:hidden [&:not(.active-tab-panel)]:opacity-0 [&:not(.active-tab-panel)]:invisible",
@@ -212,15 +217,15 @@ defmodule CommunityDemoWeb.Components.Tabs do
   end
 
   def tabs(assigns) do
-    assigns =
-      assign_new(assigns, :mounted_active_tab, fn ->
-        Enum.find(assigns.tab, &Map.get(&1, :active))
-      end)
+    active_index =
+      Enum.find_index(assigns.tab, &Map.get(&1, :active)) || 0
+
+    assigns = assign(assigns, :active_index, active_index + 1)
 
     ~H"""
     <div
       id={@id}
-      phx-mounted={is_nil(@mounted_active_tab) && hide_tab(@id, length(@tab)) |> show_tab(@id, 1)}
+      phx-mounted={hide_tab(@id, length(@tab)) |> show_tab(@id, @active_index)}
       class={[
         "horizontal-tab dark:text-gray-200",
         content_position(@triggers_position),
@@ -259,6 +264,9 @@ defmodule CommunityDemoWeb.Components.Tabs do
             end
           }
           role="tab"
+          aria-selected={@active_index == index}
+          aria-controls={"#{@id}-tab-panel-#{index}"}
+          tabindex={(@active_index == index && "0") || "-1"}
           class={[
             "tab-trigger flex flex-row flex-nowrap justify-center items-center gap-1.5 leading-5",
             "transition-all duration-400 delay-100 disabled:opacity-80",
@@ -287,6 +295,7 @@ defmodule CommunityDemoWeb.Components.Tabs do
         <div
           :for={{panel, index} <- Enum.with_index(@panel, 1)}
           id={"#{@id}-tab-panel-#{index}"}
+          aria-labelledby={"#{@id}-tab-header-#{index}"}
           role="tabpanel"
           class={[
             "tab-content w-full",
@@ -826,8 +835,11 @@ defmodule CommunityDemoWeb.Components.Tabs do
   """
 
   def show_tab(js \\ %JS{}, id, count) when is_binary(id) do
-    JS.add_class(js, "active-tab", to: "##{id}-tab-header-#{count}")
+    js
+    |> JS.add_class("active-tab", to: "##{id}-tab-header-#{count}")
     |> JS.add_class("active-tab-panel", to: "##{id}-tab-panel-#{count}")
+    |> JS.set_attribute({"aria-selected", "true"}, to: "##{id}-tab-header-#{count}")
+    |> JS.set_attribute({"tabindex", "0"}, to: "##{id}-tab-header-#{count}")
   end
 
   @doc """
@@ -855,21 +867,8 @@ defmodule CommunityDemoWeb.Components.Tabs do
       acc
       |> JS.remove_class("active-tab", to: "##{id}-tab-header-#{item}")
       |> JS.remove_class("active-tab-panel", to: "##{id}-tab-panel-#{item}")
+      |> JS.set_attribute({"aria-selected", "false"}, to: "##{id}-tab-header-#{item}")
+      |> JS.set_attribute({"tabindex", "-1"}, to: "##{id}-tab-header-#{item}")
     end)
-  end
-
-  attr :name, :string, required: true, doc: "Specifies the name of the element"
-  attr :class, :any, default: nil, doc: "Custom CSS class for additional styling"
-
-  defp icon(%{name: "hero-" <> _, class: class} = assigns) when is_list(class) do
-    ~H"""
-    <span class={[@name] ++ @class} />
-    """
-  end
-
-  defp icon(%{name: "hero-" <> _} = assigns) do
-    ~H"""
-    <span class={[@name, @class]} />
-    """
   end
 end

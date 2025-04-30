@@ -20,6 +20,7 @@ defmodule CommunityDemoWeb.Components.Avatar do
   """
 
   use Phoenix.Component
+  import CommunityDemoWeb.Components.Icon, only: [icon: 1]
 
   @doc """
   The `avatar` component is used to display user avatars with various customization options,
@@ -89,7 +90,7 @@ defmodule CommunityDemoWeb.Components.Avatar do
   def avatar(%{src: src, rounded: "full"} = assigns) when not is_nil(src) do
     ~H"""
     <div class={[
-      "relative w-fit",
+      "relative w-fit select-none",
       size_class(@size, :image)
     ]}>
       <img
@@ -111,29 +112,31 @@ defmodule CommunityDemoWeb.Components.Avatar do
 
   def avatar(%{src: src, rounded: "full"} = assigns) when is_nil(src) do
     ~H"""
-    <div class={
-      default_classes() ++
-        [
-          color_class(@color),
-          rounded_size(@rounded),
-          size_class(@size, :text),
-          border_class(@border),
-          shadow_class(@shadow),
-          @font_weight,
-          @class
-        ]
-    }>
-      <div :for={icon <- @icon} class={[icon[:size], icon[:color], icon[:class]]}>
-        <.icon name={icon[:name]} class={icon[:icon_class] || size_class(@size, :icon)} />
+    <div
+      class={[
+        "relative overflow-hidden select-none",
+        color_class(@color),
+        rounded_size(@rounded),
+        border_class(@border),
+        shadow_class(@shadow),
+        @font_weight,
+        @class
+      ]}
+      {@rest}
+    >
+      <div class={["flex items-center justify-center", size_class(@size, :text)]}>
+        <div :for={icon <- @icon} class={[icon[:size], icon[:color], icon[:class]]}>
+          <.icon name={icon[:name]} class={icon[:icon_class] || size_class(@size, :icon)} />
+        </div>
+        {render_slot(@inner_block)}
       </div>
-      {render_slot(@inner_block)}
     </div>
     """
   end
 
   def avatar(%{src: src} = assigns) when not is_nil(src) do
     ~H"""
-    <div class="relative">
+    <div class="relative w-fit select-none">
       <img
         id={@id}
         src={@src}
@@ -154,22 +157,24 @@ defmodule CommunityDemoWeb.Components.Avatar do
 
   def avatar(assigns) do
     ~H"""
-    <div class={
-      default_classes() ++
-        [
-          color_class(@color),
-          rounded_size(@rounded),
-          size_class(@size),
-          border_class(@border),
-          shadow_class(@shadow),
-          @font_weight,
-          @class
-        ]
-    }>
-      <div :for={icon <- @icon} class={[icon[:size], icon[:color], icon[:class]]}>
-        <.icon name={icon[:name]} class={icon[:icon_class] || size_class(@size, :icon)} />
+    <div
+      class={[
+        "relative overflow-hidden select-none",
+        color_class(@color),
+        rounded_size(@rounded),
+        border_class(@border),
+        shadow_class(@shadow),
+        @font_weight,
+        @class
+      ]}
+      {@rest}
+    >
+      <div class={["flex items-center justify-center", size_class(@size, :text)]}>
+        <div :for={icon <- @icon} class={[icon[:size], icon[:color], icon[:class]]}>
+          <.icon name={icon[:name]} class={icon[:icon_class] || size_class(@size, :icon)} />
+        </div>
+        {render_slot(@inner_block)}
       </div>
-      {render_slot(@inner_block)}
     </div>
     """
   end
@@ -572,25 +577,4 @@ defmodule CommunityDemoWeb.Components.Avatar do
   defp space_class("none"), do: nil
 
   defp space_class(params) when is_binary(params), do: params
-
-  defp default_classes() do
-    [
-      "relative inline-flex items-center justify-center p-0.5 [&.border-avatar:has(.indicator)]:box-content"
-    ]
-  end
-
-  attr :name, :string, required: true, doc: "Specifies the name of the element"
-  attr :class, :any, default: nil, doc: "Custom CSS class for additional styling"
-
-  defp icon(%{name: "hero-" <> _, class: class} = assigns) when is_list(class) do
-    ~H"""
-    <span class={[@name] ++ @class} />
-    """
-  end
-
-  defp icon(%{name: "hero-" <> _} = assigns) do
-    ~H"""
-    <span class={[@name, @class]} />
-    """
-  end
 end

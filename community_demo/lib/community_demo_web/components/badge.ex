@@ -16,6 +16,8 @@ defmodule CommunityDemoWeb.Components.Badge do
 
   use Phoenix.Component
   alias Phoenix.LiveView.JS
+  import CommunityDemoWeb.Components.Icon, only: [icon: 1]
+  use Gettext, backend: CommunityDemoWeb.Gettext
 
   @icon_positions [
     "right_icon",
@@ -80,6 +82,11 @@ defmodule CommunityDemoWeb.Components.Badge do
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
   attr :icon_class, :string, default: nil, doc: "Custom CSS class for additional styling"
   attr :content_class, :string, default: nil, doc: "Custom CSS class for additional styling"
+
+  attr :dismiss_class, :string,
+    default: nil,
+    doc: "Custom CSS class for additional styling of dismiss button"
+
   attr :badge_position, :string, default: "", doc: "poistion of badge"
 
   attr :indicator_class, :string,
@@ -104,6 +111,7 @@ defmodule CommunityDemoWeb.Components.Badge do
     ~H"""
     <div
       id={@id}
+      role="status"
       class={
         default_classes(@rest[:pinging]) ++
           size_class(@size, @rest[:circle]) ++
@@ -119,21 +127,33 @@ defmodule CommunityDemoWeb.Components.Badge do
       }
       {drop_rest(@rest)}
     >
-      <.badge_dismiss :if={dismiss_position(@rest) == "left"} id={@id} params={@params} />
+      <.badge_dismiss
+        :if={dismiss_position(@rest) == "left"}
+        id={@id}
+        class={@dismiss_class}
+        params={@params}
+      />
       <.badge_indicator position="left" size={@indicator_size} class={@indicator_class} {@rest} />
       <.icon
         :if={icon_position(@icon, @rest) == "left"}
         name={@icon}
         class={["badge-icon", @icon_class]}
       />
-      <div class={["leading-5", @content_class]}>{render_slot(@inner_block)}</div>
+      <div class={["leading-5", @content_class]}>
+        {render_slot(@inner_block)}
+      </div>
       <.icon
         :if={icon_position(@icon, @rest) == "right"}
         name={@icon}
         class={["badge-icon", @icon_class]}
       />
       <.badge_indicator size={@indicator_size} class={@indicator_class} {@rest} />
-      <.badge_dismiss :if={dismiss_position(@rest) == "right"} id={@id} params={@params} />
+      <.badge_dismiss
+        :if={dismiss_position(@rest) == "right"}
+        id={@id}
+        class={@dismiss_class}
+        params={@params}
+      />
     </div>
     """
   end
@@ -148,6 +168,7 @@ defmodule CommunityDemoWeb.Components.Badge do
     doc: "Determines if the badge should include a dismiss button"
 
   attr :icon_class, :string, default: "size-4", doc: "Determines custom class for the icon"
+  attr :class, :string, default: "size-4", doc: "Determines custom class"
 
   attr :params, :map,
     default: %{kind: "badge"},
@@ -156,7 +177,8 @@ defmodule CommunityDemoWeb.Components.Badge do
   defp badge_dismiss(assigns) do
     ~H"""
     <button
-      class="dismmiss-button inline-flex justify-center items-center w-fit shrink-0"
+      class={["dismmiss-button inline-flex justify-center items-center w-fit shrink-0", @class]}
+      aria-label={gettext("close")}
       phx-click={JS.push("dismiss", value: Map.merge(%{id: @id}, @params)) |> hide_badge("##{@id}")}
     >
       <.icon name="hero-x-mark" class={"#{@icon_class}"} />
@@ -966,20 +988,5 @@ defmodule CommunityDemoWeb.Components.Badge do
          "opacity-100 translate-y-0 sm:scale-100",
          "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"}
     )
-  end
-
-  attr :name, :string, required: true, doc: "Specifies the name of the element"
-  attr :class, :any, default: nil, doc: "Custom CSS class for additional styling"
-
-  defp icon(%{name: "hero-" <> _, class: class} = assigns) when is_list(class) do
-    ~H"""
-    <span class={[@name] ++ @class} />
-    """
-  end
-
-  defp icon(%{name: "hero-" <> _} = assigns) do
-    ~H"""
-    <span class={[@name, @class]} />
-    """
   end
 end

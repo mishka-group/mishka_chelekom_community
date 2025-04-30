@@ -17,6 +17,7 @@ defmodule CommunityDemoWeb.Components.CheckboxField do
   use Phoenix.Component
   alias Phoenix.LiveView.Utils
   alias Phoenix.HTML.Form
+  import CommunityDemoWeb.Components.Icon, only: [icon: 1]
 
   @doc """
   The `checkbox_field` component is used to create customizable checkbox input elements with various
@@ -49,7 +50,9 @@ defmodule CommunityDemoWeb.Components.CheckboxField do
   attr :border, :string, default: "extra_small", doc: "Determines border style"
   attr :rounded, :string, default: "small", doc: "Determines the border radius"
   attr :space, :string, default: "medium", doc: "Space between items"
-  attr :label_class, :string, default: nil, doc: "Custom CSS class for the label styling"
+  attr :label_class, :string, default: "block", doc: "Custom CSS class for the label styling"
+  attr :wrapper_class, :string, default: nil, doc: "Custom CSS class for the wrapper"
+  attr :checkbox_class, :string, default: nil, doc: "Custom CSS class for the wrapper"
 
   attr :size, :string,
     default: "extra_large",
@@ -108,7 +111,7 @@ defmodule CommunityDemoWeb.Components.CheckboxField do
       @reverse && "[&_.checkbox-field-wrapper]:flex-row-reverse",
       @class
     ]}>
-      <.label class={["checkbox-field-wrapper flex items-center w-fit", @label_class]} for={@id}>
+      <.label class={["checkbox-field-wrapper flex items-center w-fit", @wrapper_class]} for={@id}>
         <%= if @value in ["true", "false"] do %>
           <input type="hidden" name={@name} value="false" disabled={@rest[:disabled]} />
         <% else %>
@@ -121,10 +124,10 @@ defmodule CommunityDemoWeb.Components.CheckboxField do
           value={@value}
           id={@id}
           checked={@checked}
-          class={["bg-white checkbox-input"]}
+          class={["bg-white dark:bg-[#18181B] checkbox-input", @checkbox_class]}
           {@rest}
         />
-        <span :if={@label} class="block">{@label}</span>
+        <span :if={@label} class={@label_class}>{@label}</span>
       </.label>
 
       <.error :for={msg <- @errors} icon={@error_icon}>{msg}</.error>
@@ -160,6 +163,10 @@ defmodule CommunityDemoWeb.Components.CheckboxField do
   attr :border, :string, default: "extra_small", doc: "Determines border style"
   attr :rounded, :string, default: "small", doc: "Determines the border radius"
   attr :space, :string, default: "medium", doc: "Space between items"
+  attr :label_class, :string, default: "block", doc: "Custom CSS class for the label styling"
+  attr :wrapper_class, :string, default: nil, doc: "Custom CSS class for the wrapper"
+  attr :checkbox_class, :string, default: nil, doc: "Custom CSS class for the wrapper"
+  attr :checkbox_wrapper_class, :string, default: nil, doc: "Custom CSS class for the wrapper"
 
   attr :variation, :string,
     default: "vertical",
@@ -169,8 +176,6 @@ defmodule CommunityDemoWeb.Components.CheckboxField do
     default: "extra_large",
     doc:
       "Determines the overall size of the elements, including padding, font size, and other items"
-
-  attr :label_class, :string, default: nil, doc: "Custom CSS class for the label styling"
 
   attr :ring, :boolean,
     default: true,
@@ -230,11 +235,12 @@ defmodule CommunityDemoWeb.Components.CheckboxField do
           size_class(@size),
           space_class(checkbox[:space] || "small"),
           @ring && "[&_.checkbox-field-wrapper_input]:focus-within:ring-1",
-          @reverse && "[&_.checkbox-field-wrapper]:flex-row-reverse"
+          @reverse && "[&_.checkbox-field-wrapper]:flex-row-reverse",
+          @wrapper_class
         ]}
       >
         <.label
-          class={["checkbox-field-wrapper flex items-center w-fit", @label_class]}
+          class={["checkbox-field-wrapper flex items-center w-fit", @checkbox_wrapper_class]}
           for={"#{@id}-#{index}"}
         >
           <input
@@ -243,10 +249,10 @@ defmodule CommunityDemoWeb.Components.CheckboxField do
             id={"#{@id}-#{index}"}
             value={checkbox[:value]}
             checked={checkbox[:checked]}
-            class={["bg-white checkbox-input"]}
+            class={["bg-white dark:bg-[#18181B] checkbox-input", @checkbox_class]}
             {@rest}
           />
-          <span class="block">{render_slot(checkbox)}</span>
+          <span class={@label_class}>{render_slot(checkbox)}</span>
         </.label>
       </div>
     </div>
@@ -271,7 +277,6 @@ defmodule CommunityDemoWeb.Components.CheckboxField do
     end
   end
 
-  @doc type: :component
   attr :class, :any, default: nil, doc: "Custom CSS class for additional styling"
   attr :for, :string, default: nil, doc: "Specifies the form which is associated with"
   slot :inner_block, required: true, doc: "Inner block that renders HEEx content"
@@ -288,7 +293,6 @@ defmodule CommunityDemoWeb.Components.CheckboxField do
     """
   end
 
-  @doc type: :component
   attr :icon, :string, default: nil, doc: "Icon displayed alongside of an item"
   slot :inner_block, required: true, doc: "Inner block that renders HEEx content"
 
@@ -501,21 +505,6 @@ defmodule CommunityDemoWeb.Components.CheckboxField do
   end
 
   defp color_class(params) when is_binary(params), do: params
-
-  attr :name, :string, required: true, doc: "Specifies the name of the element"
-  attr :class, :any, default: nil, doc: "Custom CSS class for additional styling"
-
-  defp icon(%{name: "hero-" <> _, class: class} = assigns) when is_list(class) do
-    ~H"""
-    <span class={[@name] ++ @class} />
-    """
-  end
-
-  defp icon(%{name: "hero-" <> _} = assigns) do
-    ~H"""
-    <span class={[@name, @class]} />
-    """
-  end
 
   defp translate_error({msg, opts}) do
     # When using gettext, we typically pass the strings we want

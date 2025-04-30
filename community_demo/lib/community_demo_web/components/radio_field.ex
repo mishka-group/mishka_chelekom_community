@@ -16,6 +16,7 @@ defmodule CommunityDemoWeb.Components.RadioField do
   """
   use Phoenix.Component
   alias Phoenix.HTML.Form
+  import CommunityDemoWeb.Components.Icon, only: [icon: 1]
 
   @doc """
   Renders a `radio_field` component. This component allows users to select a single option from
@@ -59,6 +60,8 @@ defmodule CommunityDemoWeb.Components.RadioField do
   attr :color, :string, default: "primary", doc: "Determines color theme"
   attr :border, :string, default: "extra_small", doc: "Determines border style"
   attr :space, :string, default: "medium", doc: "Space between items"
+  attr :wrapper_class, :string, default: nil, doc: "Custom CSS class for the wrapper"
+  attr :radio_class, :string, default: nil, doc: "Custom CSS class for the radio input"
 
   attr :size, :string,
     default: "extra_large",
@@ -109,7 +112,7 @@ defmodule CommunityDemoWeb.Components.RadioField do
       @reverse && "[&_.radio-field-wrapper]:flex-row-reverse",
       @class
     ]}>
-      <.label class={["radio-field-wrapper flex items-center w-fit", @label_class]} for={@id}>
+      <.label class={["radio-field-wrapper flex items-center w-fit", @wrapper_class]} for={@id}>
         <input
           type="radio"
           name={@name}
@@ -117,11 +120,12 @@ defmodule CommunityDemoWeb.Components.RadioField do
           value={@value}
           checked={@checked}
           class={[
-            "bg-white radio-input rounded-full"
+            "bg-white dark:bg-[#18181B] radio-input rounded-full",
+            @radio_class
           ]}
           {@rest}
         />
-        <span :if={@label} class="block">{@label}</span>
+        <span :if={@label} class={@label_class}>{@label}</span>
       </.label>
 
       <.error :for={msg <- @errors} icon={@error_icon}>{msg}</.error>
@@ -159,6 +163,9 @@ defmodule CommunityDemoWeb.Components.RadioField do
     doc: "Defines the layout orientation of the component"
 
   attr :label_class, :string, default: nil, doc: "Custom CSS class for the label styling"
+  attr :wrapper_class, :string, default: nil, doc: "Custom CSS class for the wrapper"
+  attr :radio_class, :string, default: nil, doc: "Custom CSS class for the wrapper"
+  attr :radio_wrapper_class, :string, default: nil, doc: "Custom CSS class for the wrapper"
 
   attr :size, :string,
     default: "extra_large",
@@ -222,11 +229,12 @@ defmodule CommunityDemoWeb.Components.RadioField do
           size_class(@size),
           space_class(radio[:space] || "small"),
           @ring && "[&_.radio-field-wrapper_input]:focus-within:ring-1",
-          @reverse && "[&_.radio-field-wrapper]:flex-row-reverse"
+          @reverse && "[&_.radio-field-wrapper]:flex-row-reverse",
+          @wrapper_class
         ]}
       >
         <.label
-          class={["radio-field-wrapper flex items-center w-fit", @label_class]}
+          class={["radio-field-wrapper flex items-center w-fit", @radio_wrapper_class]}
           for={"#{@id}-#{index}"}
         >
           <input
@@ -235,10 +243,10 @@ defmodule CommunityDemoWeb.Components.RadioField do
             id={"#{@id}-#{index}"}
             value={radio[:value]}
             checked={radio[:checked]}
-            class={["bg-white radio-input rounded-full"]}
+            class={["bg-white dark:bg-[#18181B] radio-input rounded-full", @radio_class]}
             {@rest}
           />
-          <span class="block">{render_slot(radio)}</span>
+          <span class={@label_class}>{render_slot(radio)}</span>
         </.label>
       </div>
     </div>
@@ -486,20 +494,5 @@ defmodule CommunityDemoWeb.Components.RadioField do
     else
       Gettext.dgettext(CommunityDemoWeb.Gettext, "errors", msg, opts)
     end
-  end
-
-  attr :name, :string, required: true, doc: "Specifies the name of the element"
-  attr :class, :any, default: nil, doc: "Custom CSS class for additional styling"
-
-  defp icon(%{name: "hero-" <> _, class: class} = assigns) when is_list(class) do
-    ~H"""
-    <span class={[@name] ++ @class} />
-    """
-  end
-
-  defp icon(%{name: "hero-" <> _} = assigns) do
-    ~H"""
-    <span class={[@name, @class]} />
-    """
   end
 end

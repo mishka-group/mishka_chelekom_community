@@ -23,6 +23,8 @@ defmodule CommunityDemoWeb.Components.Blockquote do
   """
 
   use Phoenix.Component
+  import CommunityDemoWeb.Components.Icon, only: [icon: 1]
+  use Gettext, backend: CommunityDemoWeb.Gettext
 
   @doc """
   The `blockquote` component is used to display stylized quotations with customizable attributes
@@ -105,10 +107,14 @@ defmodule CommunityDemoWeb.Components.Blockquote do
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
   attr :icon, :string, default: "hero-quote", doc: "Icon displayed alongside of an item"
   attr :icon_class, :string, default: nil, doc: "Determines custom class for the icon"
+  attr :blockquote_class, :string, default: nil, doc: "Determines custom class for the blockquote"
 
   slot :caption, required: false do
     attr :image, :string, doc: "Image displayed alongside of an item"
     attr :image_class, :string, doc: "Determines custom class for the image"
+    attr :alt, :string, doc: "Determines alt of image"
+    attr :class, :string, doc: "Determines custom class for caption wrapper"
+    attr :content_class, :string, doc: "Determines custom class for caption content"
 
     attr :position, :string,
       values: ["right", "left", "center"],
@@ -139,22 +145,26 @@ defmodule CommunityDemoWeb.Components.Blockquote do
         name={@icon}
         class={["quote-icon", @icon_class]}
       />
-      <blockquote class="p-2 italic">
-        {render_slot(@inner_block)}
+      <blockquote class={["p-2 italic", @blockquote_class]} cite={@rest[:cite] && @rest[:cite]}>
+        <p>
+          {render_slot(@inner_block)}
+        </p>
       </blockquote>
       <div
         :for={caption <- @caption}
         class={[
           "flex items-center space-x-3 rtl:space-x-reverse",
-          !is_nil(caption[:position]) && caption_position(caption[:position])
+          !is_nil(caption[:position]) && caption_position(caption[:position]),
+          caption[:class]
         ]}
       >
         <img
           :if={!is_nil(caption[:image])}
           class={["w-6 h-6 rounded-full", caption[:image_class]]}
           src={caption[:image]}
+          alt={caption[:alt] || gettext("Author image")}
         />
-        <div class="flex items-center divide-x-2 rtl:divide-x-reverse">
+        <div class={["flex items-center divide-x-2 rtl:divide-x-reverse", caption[:content_class]]}>
           {render_slot(caption)}
         </div>
       </div>
@@ -727,19 +737,4 @@ defmodule CommunityDemoWeb.Components.Blockquote do
   defp border_position(%{right_border: true}), do: "right"
   defp border_position(%{full_border: true}), do: "full"
   defp border_position(_), do: "left"
-
-  attr :name, :string, required: true, doc: "Specifies the name of the element"
-  attr :class, :any, default: nil, doc: "Custom CSS class for additional styling"
-
-  defp icon(%{name: "hero-" <> _, class: class} = assigns) when is_list(class) do
-    ~H"""
-    <span class={[@name] ++ @class} />
-    """
-  end
-
-  defp icon(%{name: "hero-" <> _} = assigns) do
-    ~H"""
-    <span class={[@name, @class]} />
-    """
-  end
 end

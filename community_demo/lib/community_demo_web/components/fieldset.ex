@@ -14,6 +14,7 @@ defmodule CommunityDemoWeb.Components.Fieldset do
   and visually appealing fieldsets that can be easily integrated into any LiveView application.
   """
   use Phoenix.Component
+  import CommunityDemoWeb.Components.Icon, only: [icon: 1]
 
   @doc """
   Renders a `fieldset` component that groups related form elements visually and semantically.
@@ -60,6 +61,9 @@ defmodule CommunityDemoWeb.Components.Fieldset do
   attr :padding, :string, default: "small", doc: "Determines padding for items"
   attr :variant, :string, default: "base", doc: "Determines the style"
   attr :space, :string, default: "medium", doc: "Space between items"
+  attr :fieldset_class, :string, default: nil, doc: "Custom class for fieldset"
+  attr :legend_class, :string, default: nil, doc: "Custom class for legend"
+  attr :fieldset_wrapper_class, :string, default: nil, doc: "Custom class for wrapper"
 
   attr :size, :string,
     default: "extra_large",
@@ -91,12 +95,20 @@ defmodule CommunityDemoWeb.Components.Fieldset do
       space_class(@space),
       @class
     ]}>
-      <fieldset class="fieldset-field">
-        <legend :if={@legend} class="fieldset-legend py-0.5 px-1 leading-7" for={@id}>
+      <fieldset class={["fieldset-field", @fieldset_class]}>
+        <legend
+          :if={@legend}
+          class={["fieldset-legend py-0.5 px-1 leading-7", @legend_class]}
+          for={@id}
+        >
           {@legend}
         </legend>
 
-        <div :for={{control, index} <- Enum.with_index(@control, 1)} id={"#{@id}-control-#{index}"}>
+        <div
+          :for={{control, index} <- Enum.with_index(@control, 1)}
+          id={"#{@id}-control-#{index}"}
+          class={@fieldset_wrapper_class}
+        >
           {render_slot(control)}
         </div>
       </fieldset>
@@ -672,19 +684,4 @@ defmodule CommunityDemoWeb.Components.Fieldset do
   end
 
   defp color_variant(params, _) when is_binary(params), do: params
-
-  attr :name, :string, required: true, doc: "Specifies the name of the element"
-  attr :class, :any, default: nil, doc: "Custom CSS class for additional styling"
-
-  defp icon(%{name: "hero-" <> _, class: class} = assigns) when is_list(class) do
-    ~H"""
-    <span class={[@name] ++ @class} />
-    """
-  end
-
-  defp icon(%{name: "hero-" <> _} = assigns) do
-    ~H"""
-    <span class={[@name, @class]} />
-    """
-  end
 end

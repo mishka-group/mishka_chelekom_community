@@ -88,9 +88,11 @@ defmodule CommunityDemoWeb.Components.Progress do
   def progress(assigns) do
     ~H"""
     <div
+      role="progressbar"
+      aria-valuenow={@value}
       class={[
         "bg-[#F4F4F4] dark:bg-[#B6B6B6] overflow-hidden",
-        @variation == "vertical" && "flex items-end vertical-progress",
+        @variation == "vertical" && "flex items-end vertical-progress overflow-y-hidden",
         size_class(@size, @variation),
         rounded_size(@rounded)
       ]}
@@ -101,11 +103,218 @@ defmodule CommunityDemoWeb.Components.Progress do
         :if={msg = render_slot(@inner_block)}
         class={[
           "flex",
-          (@variation == "horizontal" && "flex-row") || "flex-col"
+          (@variation == "horizontal" && "flex-row") || "flex-col flex-col-reverse w-full h-full"
         ]}
       >
         {msg}
       </div>
+    </div>
+    """
+  end
+
+  @doc """
+  Displays a semicircular progress indicator.
+
+  ## Attributes
+    - value: The progress value (0 to 100)
+    - size: The SVG size (width), default is 100
+    - thickness: The stroke width of the circle, default is 10
+    - color: Determines the color theme; default is "natural"
+  """
+  attr :id, :string, default: nil, doc: "HTML ID for the container"
+  attr :value, :integer, required: true, doc: "Progress value (0 to 100)"
+  attr :size, :integer, default: 200, doc: "Diameter of the circle in px"
+  attr :thickness, :integer, default: 12, doc: "Stroke width"
+  attr :orientation, :string, default: "up", doc: "'up' or 'down'"
+  attr :fill_direction, :string, default: "left-to-right", doc: "Direction of fill"
+  attr :transition_duration, :integer, default: 300, doc: "Transition duration in ms"
+  attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
+  attr :linecap, :string, default: nil, doc: "add radius to progress"
+  attr :color, :string, default: "natural", doc: "Determines color theme"
+
+  attr :label, :string, default: nil, doc: "Optional label"
+
+  attr :rest, :global,
+    doc:
+      "Global attributes can define defaults which are merged with attributes provided by the caller"
+
+  def semi_circle_progress(assigns) do
+    coordinate = assigns.size / 2
+    radius = (assigns.size - 2 * assigns.thickness) / 2
+    circumference = :math.pi() * radius
+    progress = clamp(assigns.value, 0, 100) * (circumference / 100)
+
+    assigns =
+      assigns
+      |> assign(:coordinate, coordinate)
+      |> assign(:radius, radius)
+      |> assign(:circumference, circumference)
+      |> assign(:progress, progress)
+
+    ~H"""
+    <div
+      id={@id}
+      role="progressbar"
+      aria-valuenow={@value}
+      class={[
+        "relative overflow-hidden w-fit",
+        color_variant(nil, @color),
+        @class
+      ]}
+      {@rest}
+    >
+      <svg
+        width={@size}
+        height={@size / 2}
+        viewBox={"0 0 #{@size} #{@size / 2}"}
+        class={["block", progress_rotation_class(@orientation, @fill_direction)]}
+      >
+        <circle
+          cx={@coordinate}
+          cy={@coordinate}
+          r={@radius}
+          fill="none"
+          class="semi-circle-progress-base stroke-[#f4f4f4] dark:stroke-[#b6b6b6]"
+          stroke-width={@thickness}
+          stroke-dasharray={@circumference}
+          stroke-dashoffset={@circumference}
+        />
+
+        <circle
+          cx={@coordinate}
+          cy={@coordinate}
+          r={@radius}
+          fill="none"
+          stroke-linecap={@linecap}
+          stroke-width={@thickness}
+          stroke-dasharray={@circumference}
+          stroke-dashoffset={@progress}
+          class={[
+            "semi-circle-progress-bar transition-all ease-in-out",
+            "duration-[#{@transition_duration}ms]",
+            @color
+          ]}
+        />
+      </svg>
+
+      <div
+        :if={@label || @value}
+        class={[
+          "z-10 absolute left-1/2 transform -translate-x-1/2 font-medium",
+          @orientation == "up" && "top-1/2",
+          @orientation == "down" && "top-0  translate-y-1/2"
+        ]}
+      >
+        {@label || "#{@value}%"}
+      </div>
+    </div>
+    """
+  end
+
+  @doc """
+  A function component that displays a ring progress bar.
+
+  Usage:
+      <.ring_progress id="example" value={50} />
+
+  Attributes:
+    - id: unique identifier (required)
+    - value: current progress value (required)
+    - max: maximum progress value (default is 100)
+    - size: size of the SVG (width and height, default is 120)
+    - thickness: width of the circle stroke (default is 10)
+    - progress_color: stroke color for the progress circle (default is "#00aaff")
+  """
+  @doc type: :component
+  attr :id, :string,
+    required: true,
+    doc: "A unique identifier used to manage state and interaction."
+
+  attr :color, :string, default: "natural", doc: "Determines color theme"
+
+  attr :value, :integer,
+    required: true,
+    doc: "The current value representing the progress completion (e.g., between 0 and max)."
+
+  attr :max, :integer,
+    default: 100,
+    doc: "The maximum value the progress can reach. Default is 100."
+
+  attr :size, :integer,
+    default: 120,
+    doc: "The overall size of the progress element, typically in pixels. Default is 120."
+
+  attr :thickness, :integer,
+    default: 10,
+    doc: "The thickness of the progress stroke in pixels. Default is 10."
+
+  attr :label, :string,
+    default: nil,
+    doc: "Optional label to be displayed along with the progress element."
+
+  attr :class, :string,
+    default: nil,
+    doc: "Custom CSS class for additional styling."
+
+  attr :linecap, :string,
+    default: nil,
+    doc: "Controls the shape of the stroke ends. Use 'round' for rounded corners."
+
+  attr :rest, :global,
+    doc:
+      "Global attributes can define defaults which are merged with attributes provided by the caller"
+
+  def ring_progress(assigns) do
+    radius = (assigns.size - assigns.thickness) / 2
+    circumference = 2 * :math.pi() * radius
+    progress_fraction = (assigns.max > 0 && assigns.value / assigns.max) || 0
+    dash_offset = circumference * (1 - progress_fraction)
+
+    assigns =
+      assigns
+      |> assign(:radius, radius)
+      |> assign(:circumference, circumference)
+      |> assign(:dash_offset, dash_offset)
+
+    ~H"""
+    <div
+      id={@id}
+      role="progressbar"
+      aria-valuenow={@value}
+      class={["circular-progress", color_variant(nil, @color), @class]}
+      {@rest}
+    >
+      <svg width={@size} height={@size} viewBox={"0 0 #{@size} #{@size}"}>
+        <circle
+          cx={@size / 2}
+          cy={@size / 2}
+          r={@radius}
+          class="semi-circle-progress-base stroke-[#F4F4F4] dark:stroke-[#B6B6B6]"
+          stroke-width={@thickness}
+          fill="none"
+        />
+        <circle
+          cx={@size / 2}
+          cy={@size / 2}
+          r={@radius}
+          stroke-width={@thickness}
+          class="semi-circle-progress-bar"
+          fill="none"
+          stroke-linecap={@linecap}
+          stroke-dasharray={@circumference}
+          stroke-dashoffset={@dash_offset}
+          transform={"rotate(-90, #{@size / 2}, #{@size / 2})"}
+        />
+        <text
+          x="50%"
+          y="50%"
+          dominant-baseline="central"
+          text-anchor="middle"
+          class="ring-progress-text font-semibold fill-current"
+        >
+          {@label || "#{@value}%"}
+        </text>
+      </svg>
     </div>
     """
   end
@@ -151,12 +360,27 @@ defmodule CommunityDemoWeb.Components.Progress do
     attr :class, :string, doc: "Custom CSS class for additional styling"
   end
 
+  slot :tooltip, required: false do
+    attr :label, :string, doc: "Determines element's text"
+    attr :position, :string, doc: "Determines element's position"
+    attr :clickable, :boolean, doc: "Determines element's click"
+    attr :class, :string, doc: "Custom CSS class for additional styling"
+  end
+
   def progress_section(assigns) do
     assigns =
       assigns
+      |> assign_new(:tooltip, fn -> [] end)
       |> assign(:value, (is_integer(assigns.value) && assigns.value) || 0)
       |> assign_new(:id, fn -> random_id() end)
 
+    ~H"""
+    <.progress_section_with_tooltip :if={is_list(@tooltip) and @tooltip != []} {assigns} />
+    <.progress_section_simple :if={@tooltip == [] or @tooltip == nil} {assigns} />
+    """
+  end
+
+  defp progress_section_with_tooltip(assigns) do
     ~H"""
     <style :if={@csp_nonce} nonce={@csp_nonce}>
       #<%= @id %> {
@@ -171,11 +395,93 @@ defmodule CommunityDemoWeb.Components.Progress do
     <div
       phx-mounted={
         is_nil(@csp_nonce) &&
-          JS.set_attribute(
-            {"style", (@variation == "horizontal" && "width: #{@value}%;") || "height: #{@value}%;"}
-          )
+          JS.set_attribute({"style", dimension_style(@variation, @value)})
       }
       id={@id}
+      role="presentation"
+      aria-hidden="true"
+      class={[
+        "progress-section cursor-pointer",
+        @variation == "vertical" && "progress-vertical",
+        @variation == "horizontal" && "flex justify-center items-center",
+        color_variant(@variant, @color),
+        @class
+      ]}
+      {@rest}
+    >
+      <div
+        :for={tooltip <- @tooltip}
+        id={"tooltip-wrapper-#{@id}"}
+        phx-hook="Floating"
+        data-floating-type="tooltip"
+        data-position={Map.get(tooltip, :position, "top")}
+        data-smart-position="false"
+        data-clickable={to_string(tooltip[:clickable])}
+        aria-describedby={"#{@id}-tooltip"}
+        class={[
+          "w-full h-full",
+          tooltip[:class]
+        ]}
+      >
+        <div
+          data-floating-trigger="true"
+          aria-describedby={"#{@id}-tooltip"}
+          class={[
+            "w-full h-full flex items-center justify-center",
+            @variation == "vertical" && "w-full"
+          ]}
+        >
+          {tooltip[:label]}
+        </div>
+
+        <div
+          id={"#{@id}-tooltip"}
+          role="tooltip"
+          data-floating-content="true"
+          aria-hidden="false"
+          role="tooltip"
+          tabindex="0"
+          aria-live="polite"
+          hidden
+          id={"#{@id}-tooltip"}
+          class={[
+            "absolute z-50 transition-all ease-in-out delay-100 duration-200 w-fit max-w-52",
+            "progress-tooltip p-1 text-center bg-[#4B4B4B] text-white dark:bg-[#DDDDDD] dark:text-black rounded",
+            tooltip[:class]
+          ]}
+        >
+          <span class={[
+            "block absolute size-[8px] bg-inherit rotate-45 -z-[1] tooltip-arrow",
+            position_class(tooltip[:position])
+          ]}>
+          </span>
+          {render_slot(tooltip)}
+        </div>
+      </div>
+    </div>
+    """
+  end
+
+  defp progress_section_simple(assigns) do
+    ~H"""
+    <style :if={@csp_nonce} nonce={@csp_nonce}>
+      #<%= @id %> {
+        <%= if @variation == "horizontal" do %>
+          width: <%= @value %>%;
+        <% else %>
+          height: <%= @value %>%;
+        <% end %>
+      }
+    </style>
+
+    <div
+      phx-mounted={
+        is_nil(@csp_nonce) &&
+          JS.set_attribute({"style", dimension_style(@variation, @value)})
+      }
+      id={@id}
+      role="presentation"
+      aria-hidden="true"
       class={[
         "w-full progress-section",
         if(@variation == "vertical", do: "progress-vertical"),
@@ -185,13 +491,43 @@ defmodule CommunityDemoWeb.Components.Progress do
         color_variant(@variant, @color),
         @class
       ]}
+      {@rest}
     >
-      <span :for={label <- @label} class={label[:class]}>
+      <span :for={label <- @label} class={label[:class]} aria-hidden="false">
         {render_slot(label)}
       </span>
     </div>
     """
   end
+
+  defp dimension_style("horizontal", value), do: "width: #{value}%;"
+  defp dimension_style("vertical", value), do: "height: #{value}%;"
+
+  defp position_class("top") do
+    [
+      "-bottom-[3px] -translate-x-1/2 left-1/2"
+    ]
+  end
+
+  defp position_class("bottom") do
+    [
+      "-top-[3px] -translate-x-1/2 left-1/2"
+    ]
+  end
+
+  defp position_class("left") do
+    [
+      "-right-[3px] -translate-y-1/2 top-1/2"
+    ]
+  end
+
+  defp position_class("right") do
+    [
+      "-left-[3px] -translate-y-1/2 top-1/2"
+    ]
+  end
+
+  defp position_class(_), do: position_class("top")
 
   defp rounded_size("extra_small") do
     "rounded-sm [&:not(.vertical-progress)_.progress-section:last-of-type]:rounded-e-sm"
@@ -431,5 +767,72 @@ defmodule CommunityDemoWeb.Components.Progress do
     ]
   end
 
+  defp color_variant(nil, "natural") do
+    [
+      "[&_.semi-circle-progress-bar]:stroke-[#4B4B4B] dark:[&_.semi-circle-progress-bar]:stroke-[#DDDDDD]"
+    ]
+  end
+
+  defp color_variant(nil, "primary") do
+    [
+      "[&_.semi-circle-progress-bar]:stroke-[#007F8C] dark:[&_.semi-circle-progress-bar]:stroke-[#01B8CA]"
+    ]
+  end
+
+  defp color_variant(nil, "secondary") do
+    [
+      "[&_.semi-circle-progress-bar]:stroke-[#266EF1] dark:[&_.semi-circle-progress-bar]:stroke-[#6DAAFB]"
+    ]
+  end
+
+  defp color_variant(nil, "success") do
+    [
+      "[&_.semi-circle-progress-bar]:stroke-[#0E8345] dark:[&_.semi-circle-progress-bar]:stroke-[#06C167]"
+    ]
+  end
+
+  defp color_variant(nil, "warning") do
+    [
+      "[&_.semi-circle-progress-bar]:stroke-[#CA8D01] dark:[&_.semi-circle-progress-bar]:stroke-[#FDC034]"
+    ]
+  end
+
+  defp color_variant(nil, "danger") do
+    [
+      "[&_.semi-circle-progress-bar]:stroke-[#DE1135] dark:[&_.semi-circle-progress-bar]:stroke-[#FC7F79]"
+    ]
+  end
+
+  defp color_variant(nil, "info") do
+    [
+      "[&_.semi-circle-progress-bar]:stroke-[#0B84BA] dark:[&_.semi-circle-progress-bar]:stroke-[#3EB7ED]"
+    ]
+  end
+
+  defp color_variant(nil, "misc") do
+    [
+      "[&_.semi-circle-progress-bar]:stroke-[#8750C5] dark:[&_.semi-circle-progress-bar]:stroke-[#BA83F9]"
+    ]
+  end
+
+  defp color_variant(nil, "dawn") do
+    [
+      "[&_.semi-circle-progress-bar]:stroke-[#A86438] dark:[&_.semi-circle-progress-bar]:stroke-[#DB976B]"
+    ]
+  end
+
+  defp color_variant(nil, "silver") do
+    [
+      "[&_.semi-circle-progress-bar]:stroke-[#868686] dark:[&_.semi-circle-progress-bar]:stroke-[#A6A6A6]"
+    ]
+  end
+
   defp color_variant(params, _) when is_binary(params), do: params
+
+  defp progress_rotation_class("down", "right-to-left"), do: "rotate-180 scale-x-[-1]"
+  defp progress_rotation_class("down", _), do: "rotate-180"
+  defp progress_rotation_class("up", "left-to-right"), do: "scale-x-[-1]"
+  defp progress_rotation_class(_, _), do: ""
+
+  defp clamp(val, min, max), do: max(min, min(val, max))
 end

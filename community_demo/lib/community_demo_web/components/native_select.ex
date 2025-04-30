@@ -15,6 +15,7 @@ defmodule CommunityDemoWeb.Components.NativeSelect do
   """
 
   use Phoenix.Component
+  import CommunityDemoWeb.Components.Icon, only: [icon: 1]
 
   @doc """
   Renders a customizable `native_select` input component with options for single or multiple selections.
@@ -65,6 +66,14 @@ defmodule CommunityDemoWeb.Components.NativeSelect do
   attr :description, :string, default: nil, doc: "Determines a short description"
   attr :space, :string, default: "medium", doc: "Space between items"
   attr :min_height, :string, default: nil, doc: "Determines min height style"
+  attr :description_class, :string, default: "text-[12px]", doc: "Custom classes for description"
+  attr :label_class, :string, default: nil, doc: "Custom CSS class for the label styling"
+  attr :field_wrapper_class, :string, default: nil, doc: "Custom CSS class field wrapper"
+  attr :select_class, :string, default: nil, doc: "Custom CSS class for additional styling"
+
+  attr :description_wrapper_class, :string,
+    default: nil,
+    doc: "Custom classes for description wrapper"
 
   attr :size, :string,
     default: "extra_large",
@@ -123,12 +132,12 @@ defmodule CommunityDemoWeb.Components.NativeSelect do
       border_class(@border, @variant),
       size_class(@size),
       space_class(@space),
-      @ring && "[&_.select-field]:focus-within:ring-[0.03rem]"
+      @ring && "[&_.select-field]:focus-within:ring-[0.03rem]",
+      @class
     ]}>
-      <div>
-        <.label for={@id}>{@label}</.label>
-
-        <div :if={!is_nil(@description)} class="text-xs">
+      <div :if={@label || @description} class={["select-label-wrapper", @description_wrapper_class]}>
+        <.label :if={@label} for={@id} class={@label_class}>{@label}</.label>
+        <div :if={@description} class={@description_class}>
           {@description}
         </div>
       </div>
@@ -142,7 +151,7 @@ defmodule CommunityDemoWeb.Components.NativeSelect do
           @multiple && "select-multiple-option",
           @errors != [] && "select-field-error",
           @min_height,
-          @class
+          @select_class
         ]}
         {@rest}
       >
@@ -207,20 +216,18 @@ defmodule CommunityDemoWeb.Components.NativeSelect do
     """
   end
 
-  @doc type: :component
   attr :for, :string, default: nil, doc: "Specifies the form which is associated with"
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
   slot :inner_block, required: true, doc: "Inner block that renders HEEx content"
 
   defp label(assigns) do
     ~H"""
-    <label for={@for} class={["block text-sm font-semibold leading-6", @class]}>
+    <label for={@for} class={["leading-5 font-semibold", @class]}>
       {render_slot(@inner_block)}
     </label>
     """
   end
 
-  @doc type: :component
   attr :icon, :string, default: nil, doc: "Icon displayed alongside of an item"
   slot :inner_block, required: true, doc: "Inner block that renders HEEx content"
 
@@ -235,31 +242,31 @@ defmodule CommunityDemoWeb.Components.NativeSelect do
 
   defp size_class("extra_small") do
     [
-      "text-xs [&_.select-field]:text-xs [&_.select-field:not(.select-multiple-option)]:h-9"
+      "text-xs [&_.select-field]:text-xs [&_.select-field:not(.select-multiple-option)]:h-8"
     ]
   end
 
   defp size_class("small") do
     [
-      "text-sm [&_.select-field]:text-sm [&_.select-field:not(.select-multiple-option)]:h-10"
+      "text-sm [&_.select-field]:text-sm [&_.select-field:not(.select-multiple-option)]:h-9"
     ]
   end
 
   defp size_class("medium") do
     [
-      "text-base [&_.select-field]:text-base [&_.select-field:not(.select-multiple-option)]:h-11"
+      "text-base [&_.select-field]:text-base [&_.select-field:not(.select-multiple-option)]:h-10"
     ]
   end
 
   defp size_class("large") do
     [
-      "text-lg [&_.select-field]:text-lg [&_.select-field:not(.select-multiple-option)]:h-12"
+      "text-lg [&_.select-field]:text-lg [&_.select-field:not(.select-multiple-option)]:h-11"
     ]
   end
 
   defp size_class("extra_large") do
     [
-      "text-xl [&_.select-field]:text-xl [&_.select-field:not(.select-multiple-option)]:h-14"
+      "text-xl [&_.select-field]:text-xl [&_.select-field:not(.select-multiple-option)]:h-12"
     ]
   end
 
@@ -504,7 +511,7 @@ defmodule CommunityDemoWeb.Components.NativeSelect do
     [
       "text-[#BB032A] dark:text-[#FFB2AB] [&_.select-field:not(:has(.select-field-error))]:border-[#BB032A]",
       "[&_.select-field:not(:has(.select-field-error))]:bg-[#FFF0EE]",
-      "dark:[&_.select-field:not(:has(.select-field-error))]:bg-[#221431]",
+      "dark:[&_.select-field:not(:has(.select-field-error))]:bg-[#520810]",
       "dark:[&_.select-field:not(:has(.select-field-error))]:border-[#FFB2AB]",
       "[&_.select-field.select-field-error]:bg-rose-700 [&_.select-field.select-field-error]:border-rose-700",
       "focus-within:[&_.select-field]:ring-[#DE1135] dark:focus-within:[&_.select-field]:ring-[#FC7F79]"
@@ -700,20 +707,5 @@ defmodule CommunityDemoWeb.Components.NativeSelect do
     else
       Gettext.dgettext(CommunityDemoWeb.Gettext, "errors", msg, opts)
     end
-  end
-
-  attr :name, :string, required: true, doc: "Specifies the name of the element"
-  attr :class, :any, default: nil, doc: "Custom CSS class for additional styling"
-
-  defp icon(%{name: "hero-" <> _, class: class} = assigns) when is_list(class) do
-    ~H"""
-    <span class={[@name] ++ @class} />
-    """
-  end
-
-  defp icon(%{name: "hero-" <> _} = assigns) do
-    ~H"""
-    <span class={[@name, @class]} />
-    """
   end
 end

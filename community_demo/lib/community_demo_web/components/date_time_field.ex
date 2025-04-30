@@ -15,6 +15,7 @@ defmodule CommunityDemoWeb.Components.DateTimeField do
   """
 
   use Phoenix.Component
+  import CommunityDemoWeb.Components.Icon, only: [icon: 1]
 
   @doc """
   The `date_time_field` component is used to create a customizable date, time, or datetime input field with various options such as `type`, `color`, and `size`. It supports floating labels, descriptions, and error messages, making it suitable for form validation and enhanced UX.
@@ -95,6 +96,19 @@ defmodule CommunityDemoWeb.Components.DateTimeField do
   attr :variant, :string, default: "base", doc: "Determines the style"
   attr :description, :string, default: nil, doc: "Determines a short description"
   attr :space, :string, default: "medium", doc: "Space between items"
+  attr :placeholder, :string, default: nil, doc: "Specifies text for placeholder"
+  attr :description_class, :string, default: "text-[12px]", doc: "Custom classes for description"
+  attr :label_class, :string, default: nil, doc: "Custom CSS class for the label styling"
+  attr :field_wrapper_class, :string, default: nil, doc: "Custom CSS class field wrapper"
+  attr :input_class, :string, default: nil, doc: "Custom CSS class for the input"
+
+  attr :flaoting_label_class, :string,
+    default: nil,
+    doc: "Custom CSS class for the flaoting label"
+
+  attr :description_wrapper_class, :string,
+    default: nil,
+    doc: "Custom classes for description wrapper"
 
   attr :size, :string,
     default: "extra_large",
@@ -154,12 +168,14 @@ defmodule CommunityDemoWeb.Components.DateTimeField do
       @ring && "[&_.date-time-field-wrapper]:focus-within:ring-[0.03rem]",
       @class
     ]}>
-      <div :if={!is_nil(@description)} class="text-xs pb-2">
+      <div :if={@description} class={@description_class}>
         {@description}
       </div>
+
       <div class={[
         "date-time-field-wrapper transition-all ease-in-out duration-200 w-full flex flex-nowrap",
-        @errors != [] && "date-time-field-error"
+        @errors != [] && "date-time-field-error",
+        @field_wrapper_class
       ]}>
         <div
           :if={@start_section}
@@ -178,16 +194,18 @@ defmodule CommunityDemoWeb.Components.DateTimeField do
             value={@value}
             class={[
               "disabled:opacity-80 block w-full z-[2] focus:ring-0 placeholder:text-transparent pb-1 pt-2.5 px-2",
-              "text-[16px] sm:font-inherit appearance-none bg-transparent border-0 focus:outline-none peer"
+              "text-[16px] sm:font-inherit appearance-none bg-transparent border-0 focus:outline-none peer",
+              @input_class
             ]}
-            placeholder="select a date "
+            placeholder=" "
             {@rest}
           />
 
           <label
             class={[
               "floating-label px-1 start-1 -z-[1] absolute text-xs duration-300 transform scale-75 origin-[0]",
-              variant_label_position(@floating)
+              variant_label_position(@floating),
+              @flaoting_label_class
             ]}
             for={@id}
           >
@@ -219,16 +237,20 @@ defmodule CommunityDemoWeb.Components.DateTimeField do
       @ring && "[&_.date-time-field-wrapper]:focus-within:ring-[0.03rem]",
       @class
     ]}>
-      <div>
-        <.label for={@id}>{@label}</.label>
-        <div :if={!is_nil(@description)} class="text-xs">
+      <div
+        :if={@label || @description}
+        class={["date-time-label-wrapper", @description_wrapper_class]}
+      >
+        <.label :if={@label} for={@id} class={@label_class}>{@label}</.label>
+        <div :if={@description} class={@description_class}>
           {@description}
         </div>
       </div>
 
       <div class={[
         "date-time-field-wrapper overflow-hidden transition-all ease-in-out duration-200 flex items-center flex-nowrap",
-        @errors != [] && "date-time-field-error"
+        @errors != [] && "date-time-field-error",
+        @field_wrapper_class
       ]}>
         <div
           :if={@start_section}
@@ -245,9 +267,11 @@ defmodule CommunityDemoWeb.Components.DateTimeField do
           name={@name}
           id={@id}
           value={@value}
+          placeholder={@placeholder}
           class={[
             "flex-1 py-1 px-2 text-sm disabled:opacity-80 block w-full appearance-none",
-            "bg-transparent border-0 focus:outline-none focus:ring-0"
+            "bg-transparent border-0 focus:outline-none focus:ring-0",
+            @input_class
           ]}
           {@rest}
         />
@@ -265,20 +289,18 @@ defmodule CommunityDemoWeb.Components.DateTimeField do
     """
   end
 
-  @doc type: :component
   attr :for, :string, default: nil, doc: "Specifies the form which is associated with"
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
   slot :inner_block, required: true, doc: "Inner block that renders HEEx content"
 
   defp label(assigns) do
     ~H"""
-    <label for={@for} class={["block text-sm font-semibold leading-6", @class]}>
+    <label for={@for} class={["leading-5 font-semibold", @class]}>
       {render_slot(@inner_block)}
     </label>
     """
   end
 
-  @doc type: :component
   attr :icon, :string, default: nil, doc: "Icon displayed alongside of an item"
   slot :inner_block, required: true, doc: "Inner block that renders HEEx content"
 
@@ -308,25 +330,25 @@ defmodule CommunityDemoWeb.Components.DateTimeField do
 
   defp size_class("extra_small") do
     [
-      "[&_.date-time-field-wrapper_input]:h-7 [&_.date-time-field-wrapper>.date-time-field-icon]:size-3.5"
+      "[&_.date-time-field-wrapper_input]:h-8 [&_.date-time-field-wrapper>.date-time-field-icon]:size-3.5"
     ]
   end
 
   defp size_class("small") do
     [
-      "[&_.date-time-field-wrapper_input]:h-8 [&_.date-time-field-wrapper>.date-time-field-icon]:size-4"
+      "[&_.date-time-field-wrapper_input]:h-9 [&_.date-time-field-wrapper>.date-time-field-icon]:size-4"
     ]
   end
 
   defp size_class("medium") do
     [
-      "[&_.date-time-field-wrapper_input]:h-9 [&_.date-time-field-wrapper>.date-time-field-icon]:size-5"
+      "[&_.date-time-field-wrapper_input]:h-10 [&_.date-time-field-wrapper>.date-time-field-icon]:size-5"
     ]
   end
 
   defp size_class("large") do
     [
-      "[&_.date-time-field-wrapper_input]:h-10 [&_.date-time-field-wrapper>.date-time-field-icon]:size-6"
+      "[&_.date-time-field-wrapper_input]:h-11 [&_.date-time-field-wrapper>.date-time-field-icon]:size-6"
     ]
   end
 
@@ -744,7 +766,7 @@ defmodule CommunityDemoWeb.Components.DateTimeField do
     [
       "text-[#BB032A] dark:text-[#FFB2AB] [&_.date-time-field-wrapper:not(:has(.date-time-field-error))]:border-[#BB032A]",
       "[&_.date-time-field-wrapper:not(:has(.date-time-field-error))]:bg-[#FFF0EE]",
-      "dark:[&_.date-time-field-wrapper:not(:has(.date-time-field-error))]:bg-[#221431]",
+      "dark:[&_.date-time-field-wrapper:not(:has(.date-time-field-error))]:bg-[#520810]",
       "dark:[&_.date-time-field-wrapper:not(:has(.date-time-field-error))]:border-[#FFB2AB]",
       "[&_.date-time-field-wrapper.date-time-field-error]:bg-rose-700",
       "[&_.date-time-field-wrapper>input]:placeholder:text-[#BB032A] dark:[&_.date-time-field-wrapper>input]:placeholder:text-[#FFB2AB]",
@@ -1076,20 +1098,5 @@ defmodule CommunityDemoWeb.Components.DateTimeField do
     else
       Gettext.dgettext(CommunityDemoWeb.Gettext, "errors", msg, opts)
     end
-  end
-
-  attr :name, :string, required: true, doc: "Specifies the name of the element"
-  attr :class, :any, default: nil, doc: "Custom CSS class for additional styling"
-
-  defp icon(%{name: "hero-" <> _, class: class} = assigns) when is_list(class) do
-    ~H"""
-    <span class={[@name] ++ @class} />
-    """
-  end
-
-  defp icon(%{name: "hero-" <> _} = assigns) do
-    ~H"""
-    <span class={[@name, @class]} />
-    """
   end
 end

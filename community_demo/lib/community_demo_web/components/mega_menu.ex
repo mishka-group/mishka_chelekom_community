@@ -20,6 +20,7 @@ defmodule CommunityDemoWeb.Components.MegaMenu do
 
   use Phoenix.Component
   alias Phoenix.LiveView.JS
+  import CommunityDemoWeb.Components.Icon, only: [icon: 1]
 
   @doc """
   Renders a customizable `mega_menu` component that can display various sections of content.
@@ -141,6 +142,7 @@ defmodule CommunityDemoWeb.Components.MegaMenu do
   attr :icon_class, :string, default: nil, doc: "Determines custom class for the icon"
   attr :title, :string, default: nil, doc: "Specifies the title of the element"
   attr :title_class, :string, default: nil, doc: "Determines custom class for the title"
+  attr :content_class, :string, default: nil, doc: "Determines custom class for the content"
   attr :border, :string, default: "extra_small", doc: "Determines border style"
   attr :top_gap, :string, default: "extra_small", doc: "Determines top gap of the element"
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
@@ -180,10 +182,13 @@ defmodule CommunityDemoWeb.Components.MegaMenu do
         @font_weight,
         @class
       ]}
+      role="navigation"
       {@rest}
     >
       <button
         :if={!is_nil(@title)}
+        role="button"
+        aria-haspopup="true"
         phx-click={@id && JS.exec("phx-open-mega", to: "##{@id}")}
         class={["flex items-center", @title_class]}
       >
@@ -210,8 +215,10 @@ defmodule CommunityDemoWeb.Components.MegaMenu do
         }
         class={[
           "mega-menu-content inset-x-0 top-full absolute z-20 transition-all ease-in-out delay-100 duratio-500 w-full",
-          "invisible opacity-0"
+          "invisible opacity-0",
+          @content_class
         ]}
+        role="menu"
       >
         {render_slot(@inner_block)}
       </div>
@@ -662,19 +669,4 @@ defmodule CommunityDemoWeb.Components.MegaMenu do
   end
 
   defp color_variant(params, _) when is_binary(params), do: params
-
-  attr :name, :string, required: true, doc: "Specifies the name of the element"
-  attr :class, :any, default: nil, doc: "Custom CSS class for additional styling"
-
-  defp icon(%{name: "hero-" <> _, class: class} = assigns) when is_list(class) do
-    ~H"""
-    <span class={[@name] ++ @class} />
-    """
-  end
-
-  defp icon(%{name: "hero-" <> _} = assigns) do
-    ~H"""
-    <span class={[@name, @class]} />
-    """
-  end
 end
