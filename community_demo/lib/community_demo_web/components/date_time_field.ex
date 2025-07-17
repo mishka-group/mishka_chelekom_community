@@ -122,7 +122,7 @@ defmodule CommunityDemoWeb.Components.DateTimeField do
 
   attr :floating, :string, default: "none", doc: "none, inner, outer"
   attr :error_icon, :string, default: nil, doc: "Icon to be displayed alongside error messages"
-  attr :label, :string, default: "Specifies text for the label"
+  attr :label, :string, doc: "Specifies text for the label"
 
   slot :start_section, required: false, doc: "Renders heex content in start of an element" do
     attr :class, :string, doc: "Custom CSS class for additional styling"

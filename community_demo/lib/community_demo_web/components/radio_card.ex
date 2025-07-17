@@ -189,7 +189,10 @@ defmodule CommunityDemoWeb.Components.RadioCard do
                 {radio[:description]}
               </p>
             </div>
-            <div class={["radio-card-content leading-[17px]", radio[:content_class]]}>
+            <div
+              :if={Map.get(radio, :inner_block)}
+              class={["radio-card-content leading-[17px]", radio[:content_class]]}
+            >
               {render_slot(radio)}
             </div>
           </div>

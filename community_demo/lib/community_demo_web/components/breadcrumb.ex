@@ -98,7 +98,10 @@ defmodule CommunityDemoWeb.Components.Breadcrumb do
     ~H"""
     <nav class={@class} id={@id} {@rest}>
       <ol class={[default_classes(), color_class(@color), size_class(@size), @items_wrapper_class]}>
-        <li :for={{item, _} <- Enum.with_index(@item, 1)} class={["flex items-center", item[:class]]}>
+        <li
+          :for={{item, index} <- Enum.with_index(@item, 1)}
+          class={["flex items-center", item[:class]]}
+        >
           <.icon
             :if={!is_nil(item[:icon])}
             name={item[:icon]}
@@ -116,12 +119,12 @@ defmodule CommunityDemoWeb.Components.Breadcrumb do
           <div :if={is_nil(item[:link])}>{render_slot(item)}</div>
 
           <.icon
-            :if={@separator_icon}
+            :if={@separator_icon && index < Enum.count(@item)}
             name={@separator_icon}
             class={["separator-icon", @separator_icon_class]}
           />
           <span
-            :if={@separator_text && !@separator_icon}
+            :if={@separator_text && !@separator_icon && index < Enum.count(@item)}
             class={["separator-text", @separator_text_class]}
           >
             {@separator_text}

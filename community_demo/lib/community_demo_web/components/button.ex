@@ -176,7 +176,8 @@ defmodule CommunityDemoWeb.Components.Button do
 
   attr :rest, :global,
     include:
-      ~w(disabled form name value right_icon left_icon pinging circle) ++ @indicator_positions,
+      ~w(disabled form name value right_icon left_icon pinging circle download) ++
+        @indicator_positions,
     doc:
       "Global attributes can define defaults which are merged with attributes provided by the caller"
 
@@ -379,7 +380,7 @@ defmodule CommunityDemoWeb.Components.Button do
 
   attr :rest, :global,
     include:
-      ~w(right_icon left_icon pinging circle download hreflang referrerpolicy rel target type csrf_token method replace) ++
+      ~w(right_icon left_icon pinging circle download hreflang referrerpolicy rel target type csrf_token method replace download) ++
         @indicator_positions,
     doc:
       "Global attributes can define defaults which are merged with attributes provided by the caller"
@@ -685,6 +686,7 @@ defmodule CommunityDemoWeb.Components.Button do
 
   defp button_indicator(assigns) do
     ~H"""
+
     """
   end
 
@@ -697,8 +699,7 @@ defmodule CommunityDemoWeb.Components.Button do
               "default_gradient",
               "outline_gradient",
               "inverted_gradient"
-            ],
-       do: nil
+            ], do: nil
 
   defp border_size("none", _), do: nil
   defp border_size("extra_small", _), do: "border"
@@ -1683,7 +1684,7 @@ defmodule CommunityDemoWeb.Components.Button do
       "from-[#282828] to-[#727272] text-[#4B4B4B] hover:text-white",
       "dark:from-[#A6A6A6] dark:to-[#FFFFFF] dark:text-[#DDDDDD] dark:hover:text-black",
       "before:bg-white dark:before:bg-[#282828] before:transition",
-      "before:ease-in-ou before:duration-100 duration before:absolute before:inset-[2px] before:z-0",
+      "before:ease-in-out before:duration-100 duration before:absolute before:inset-[2px] before:z-0",
       "hover:before:bg-transparent dark:hover:before:bg-transparent",
       "disabled:from-[#DDDDDD] disabled:to-[#DDDDDD] disabled:text-[#DDDDDD]",
       "dark:disabled:from-[#727272] dark:disabled:to-[#727272] dark:disabled:text-[#727272]",
@@ -1699,7 +1700,7 @@ defmodule CommunityDemoWeb.Components.Button do
       "from-[#016974] to-[#01B8CA] text-[#007F8C] hover:text-white",
       "dark:from-[#01B8CA] dark:to-[#B0E7EF] dark:text-[#01B8CA] dark:hover:text-black",
       "before:bg-white dark:before:bg-[#282828] before:transition",
-      "before:ease-in-ou before:duration-100 duration before:absolute before:inset-[2px] before:z-0",
+      "before:ease-in-out before:duration-100 duration before:absolute before:inset-[2px] before:z-0",
       "hover:before:bg-transparent dark:hover:before:bg-transparent",
       "disabled:from-[#DDDDDD] disabled:to-[#DDDDDD] disabled:text-[#DDDDDD]",
       "dark:disabled:from-[#727272] dark:disabled:to-[#727272] dark:disabled:text-[#727272]",
@@ -1715,7 +1716,7 @@ defmodule CommunityDemoWeb.Components.Button do
       "from-[#175BCC] to-[#6DAAFB] text-[#266EF1] hover:text-white",
       "dark:from-[#6DAAFB] dark:to-[#CDDEFF] dark:text-[#6DAAFB] dark:hover:text-black",
       "before:bg-white dark:before:bg-[#282828] before:transition",
-      "before:ease-in-ou before:duration-100 duration before:absolute before:inset-[2px] before:z-0",
+      "before:ease-in-out before:duration-100 duration before:absolute before:inset-[2px] before:z-0",
       "hover:before:bg-transparent dark:hover:before:bg-transparent",
       "disabled:from-[#DDDDDD] disabled:to-[#DDDDDD] disabled:text-[#DDDDDD]",
       "dark:disabled:from-[#727272] dark:disabled:to-[#727272] dark:disabled:text-[#727272]",
@@ -1731,7 +1732,7 @@ defmodule CommunityDemoWeb.Components.Button do
       "from-[#166C3B] to-[#06C167] text-[#0E8345] hover:text-white",
       "dark:from-[#06C167] dark:to-[#B1EAC2] dark:text-[#06C167] dark:hover:text-black",
       "before:bg-white dark:before:bg-[#282828] before:transition",
-      "before:ease-in-ou before:duration-100 duration before:absolute before:inset-[2px] before:z-0",
+      "before:ease-in-out before:duration-100 duration before:absolute before:inset-[2px] before:z-0",
       "hover:before:bg-transparent dark:hover:before:bg-transparent",
       "disabled:from-[#DDDDDD] disabled:to-[#DDDDDD] disabled:text-[#DDDDDD]",
       "dark:disabled:from-[#727272] dark:disabled:to-[#727272] dark:disabled:text-[#727272]",
@@ -1747,7 +1748,7 @@ defmodule CommunityDemoWeb.Components.Button do
       "from-[#976A01] to-[#FDC034] text-[#CA8D01] hover:text-white",
       "dark:from-[#FDC034] dark:to-[#FEDF99] dark:text-[#FDC034] dark:hover:text-black",
       "before:bg-white dark:before:bg-[#282828] before:transition",
-      "before:ease-in-ou before:duration-100 duration before:absolute before:inset-[2px] before:z-0",
+      "before:ease-in-out before:duration-100 duration before:absolute before:inset-[2px] before:z-0",
       "hover:before:bg-transparent dark:hover:before:bg-transparent",
       "disabled:from-[#DDDDDD] disabled:to-[#DDDDDD] disabled:text-[#DDDDDD]",
       "dark:disabled:from-[#727272] dark:disabled:to-[#727272] dark:disabled:text-[#727272]",
@@ -1763,7 +1764,7 @@ defmodule CommunityDemoWeb.Components.Button do
       "from-[#BB032A] to-[#FC7F79] text-[#DE1135] hover:text-white",
       "dark:from-[#FC7F79] dark:to-[#FFD2CD] dark:text-[#FC7F79] dark:hover:text-black",
       "before:bg-white dark:before:bg-[#282828] before:transition",
-      "before:ease-in-ou before:duration-100 duration before:absolute before:inset-[2px] before:z-0",
+      "before:ease-in-out before:duration-100 duration before:absolute before:inset-[2px] before:z-0",
       "hover:before:bg-transparent dark:hover:before:bg-transparent",
       "disabled:from-[#DDDDDD] disabled:to-[#DDDDDD] disabled:text-[#DDDDDD]",
       "dark:disabled:from-[#727272] dark:disabled:to-[#727272] dark:disabled:text-[#727272]",
@@ -1779,7 +1780,7 @@ defmodule CommunityDemoWeb.Components.Button do
       "from-[#08638C] to-[#3EB7ED] text-[#0B84BA] hover:text-white",
       "dark:from-[#3EB7ED] dark:to-[#9FDBF6] dark:text-[#3EB7ED] dark:hover:text-black",
       "before:bg-white dark:before:bg-[#282828] before:transition",
-      "before:ease-in-ou before:duration-100 duration before:absolute before:inset-[2px] before:z-0",
+      "before:ease-in-out before:duration-100 duration before:absolute before:inset-[2px] before:z-0",
       "hover:before:bg-transparent dark:hover:before:bg-transparent",
       "disabled:from-[#DDDDDD] disabled:to-[#DDDDDD] disabled:text-[#DDDDDD]",
       "dark:disabled:from-[#727272] dark:disabled:to-[#727272] dark:disabled:text-[#727272]",
@@ -1795,7 +1796,7 @@ defmodule CommunityDemoWeb.Components.Button do
       "from-[#653C94] to-[#BA83F9] text-[#8750C5] hover:text-white",
       "dark:from-[#BA83F9] dark:to-[#DDC1FC] dark:text-[#BA83F9] dark:hover:text-black",
       "before:bg-white dark:before:bg-[#282828] before:transition",
-      "before:ease-in-ou before:duration-100 duration before:absolute before:inset-[2px] before:z-0",
+      "before:ease-in-out before:duration-100 duration before:absolute before:inset-[2px] before:z-0",
       "hover:before:bg-transparent dark:hover:before:bg-transparent",
       "disabled:from-[#DDDDDD] disabled:to-[#DDDDDD] disabled:text-[#DDDDDD]",
       "dark:disabled:from-[#727272] dark:disabled:to-[#727272] dark:disabled:text-[#727272]",
@@ -1811,7 +1812,7 @@ defmodule CommunityDemoWeb.Components.Button do
       "from-[#7E4B2A] to-[#DB976B] text-[#A86438] hover:text-white",
       "dark:from-[#DB976B] dark:to-[#EDCBB5] dark:text-[#DB976B] dark:hover:text-black",
       "before:bg-white dark:before:bg-[#282828] before:transition",
-      "before:ease-in-ou before:duration-100 duration before:absolute before:inset-[2px] before:z-0",
+      "before:ease-in-out before:duration-100 duration before:absolute before:inset-[2px] before:z-0",
       "hover:before:bg-transparent dark:hover:before:bg-transparent",
       "disabled:from-[#DDDDDD] disabled:to-[#DDDDDD] disabled:text-[#DDDDDD]",
       "dark:disabled:from-[#727272] dark:disabled:to-[#727272] dark:disabled:text-[#727272]",
@@ -1827,7 +1828,7 @@ defmodule CommunityDemoWeb.Components.Button do
       "from-[#5E5E5E] to-[#A6A6A6] text-[#868686] hover:text-white",
       "dark:from-[#868686] dark:to-[#BBBBBB] dark:text-[#A6A6A6] dark:hover:text-black",
       "before:bg-white dark:before:bg-[#282828] before:transition",
-      "before:ease-in-ou before:duration-100 duration before:absolute before:inset-[2px] before:z-0",
+      "before:ease-in-out before:duration-100 duration before:absolute before:inset-[2px] before:z-0",
       "hover:before:bg-transparent dark:hover:before:bg-transparent",
       "disabled:from-[#DDDDDD] disabled:to-[#DDDDDD] disabled:text-[#DDDDDD]",
       "dark:disabled:from-[#727272] dark:disabled:to-[#727272] dark:disabled:text-[#727272]",

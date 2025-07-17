@@ -107,6 +107,8 @@ defmodule CommunityDemoWeb.Components.Badge do
 
   slot :inner_block, required: false, doc: "Inner block that renders HEEx content"
 
+  attr :type, :string, default: "button", doc: "Determines the type of the badge"
+
   def badge(assigns) do
     ~H"""
     <div
@@ -130,6 +132,7 @@ defmodule CommunityDemoWeb.Components.Badge do
       <.badge_dismiss
         :if={dismiss_position(@rest) == "left"}
         id={@id}
+        type={@type}
         class={@dismiss_class}
         params={@params}
       />
@@ -151,6 +154,7 @@ defmodule CommunityDemoWeb.Components.Badge do
       <.badge_dismiss
         :if={dismiss_position(@rest) == "right"}
         id={@id}
+        type={@type}
         class={@dismiss_class}
         params={@params}
       />
@@ -174,9 +178,12 @@ defmodule CommunityDemoWeb.Components.Badge do
     default: %{kind: "badge"},
     doc: "A map of additional parameters used for badge configuration, such as type or kind"
 
+  attr :type, :string, default: "button", doc: "Determines the type of the badge"
+
   defp badge_dismiss(assigns) do
     ~H"""
     <button
+      type={@type}
       class={["dismmiss-button inline-flex justify-center items-center w-fit shrink-0", @class]}
       aria-label={gettext("close")}
       phx-click={JS.push("dismiss", value: Map.merge(%{id: @id}, @params)) |> hide_badge("##{@id}")}
@@ -298,6 +305,7 @@ defmodule CommunityDemoWeb.Components.Badge do
 
   defp badge_indicator(assigns) do
     ~H"""
+
     """
   end
 
