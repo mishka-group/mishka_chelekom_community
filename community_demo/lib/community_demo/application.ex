@@ -12,8 +12,6 @@ defmodule CommunityDemo.Application do
       CommunityDemo.Repo,
       {DNSCluster, query: Application.get_env(:community_demo, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: CommunityDemo.PubSub},
-      # Start the Finch HTTP client for sending emails
-      {Finch, name: CommunityDemo.Finch},
       # Start a worker by calling: CommunityDemo.Worker.start_link(arg)
       # {CommunityDemo.Worker, arg},
       # Start to serve requests, typically the last entry
