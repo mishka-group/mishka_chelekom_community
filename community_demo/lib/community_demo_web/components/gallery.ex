@@ -52,8 +52,8 @@ defmodule CommunityDemoWeb.Components.Gallery do
   attr :type, :string, values: ["default", "masonry", "featured"], default: "default", doc: ""
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
   attr :cols, :string, default: "", doc: "Determines cols of elements"
-  attr :gap, :string, default: "", doc: "Determines gap between elements"
-  attr :animation, :string, default: "", doc: "Determines gap between elements"
+  attr :gap, :string, default: "", doc: "Determines animation type for gallery items"
+  attr :animation, :string, default: "", doc: "Determines animation intensity/size"
   attr :animation_size, :string, default: "extra_small", doc: "Determines gap between elements"
 
   attr :rest, :global,
@@ -152,11 +152,15 @@ defmodule CommunityDemoWeb.Components.Gallery do
   attr :media, :list, default: [], doc: "List of media items with :src, :alt, and :category"
   attr :cols, :string, default: "three", doc: "Determines cols of elements"
   attr :gap, :string, default: "small", doc: "Determines gap between elements"
-  attr :class, :string, default: nil, doc: "Add custom classe"
+  attr :class, :string, default: nil, doc: "Add custom class"
   attr :default_filter, :string, default: "All", doc: "Default Button to show all images"
   slot :filter, required: false, doc: "Slot for rendering each filter button with let={filter}"
-  attr :animation, :string, default: "", doc: "Determines gap between elements"
-  attr :animation_size, :string, default: "extra_small", doc: "Determines gap between elements"
+  attr :animation, :string, default: "", doc: "Determines animation type for gallery items"
+
+  attr :animation_size, :string,
+    default: "extra_small",
+    doc: "Determines animation intensity/size"
+
   attr :content_class, :string, default: nil, doc: "Add custom classe to content wrapper"
 
   attr :filters_wrapper_class, :string,
@@ -197,7 +201,7 @@ defmodule CommunityDemoWeb.Components.Gallery do
             :if={@filter == []}
             data-gallery-filter
             data-category={@default_filter}
-            class="filter-btn bg-white border rounded py-1.5 px-3 leading-5 text-[#09090b] border-[#e4e4e7] hover:bg-[#F8F9FA] dark:bg-[#18181B] dark:text-[#FAFAFA] dark:border-[#27272a] dark:hover:bg-[#242424] disabled:bg-[#f1f3f5] disabled:text-[#adb5bd] dark:disabled:bg-[#2e2e2e] dark:disabled:text-[#696969] disabled:border-[#dee2e6] dark:disabled:border-[#424242] shadow-sm"
+            class="filter-btn bg-white border rounded py-1.5 px-3 leading-5 text-base-text-light border-base-border-light hover:bg-base-hover-light dark:bg-base-bg-dark dark:text-base-text-dark dark:border-base-border-dark dark:hover:bg-base-hover-dark disabled:bg-base-disabled-bg-light disabled:text-base-disabled-text-light dark:disabled:bg-base-disabled-bg-dark dark:disabled:text-base-disabled-text-dark disabled:border-base-disabled-border-light dark:disabled:border-base-disabled-border-dark shadow-sm"
           >
             {@default_filter}
           </button>
@@ -212,7 +216,7 @@ defmodule CommunityDemoWeb.Components.Gallery do
             :if={@filter == []}
             data-gallery-filter
             data-category={filter}
-            class="filter-btn bg-white border rounded py-1.5 px-3 leading-5 text-[#09090b] border-[#e4e4e7] hover:bg-[#F8F9FA] dark:bg-[#18181B] dark:text-[#FAFAFA] dark:border-[#27272a] dark:hover:bg-[#242424] disabled:bg-[#f1f3f5] disabled:text-[#adb5bd] dark:disabled:bg-[#2e2e2e] dark:disabled:text-[#696969] disabled:border-[#dee2e6] dark:disabled:border-[#424242] shadow-sm"
+            class="filter-btn bg-white border rounded py-1.5 px-3 leading-5 text-base-text-light border-base-border-light hover:bg-base-hover-light dark:bg-base-bg-dark dark:text-base-text-dark dark:border-base-border-dark dark:hover:bg-base-hover-dark disabled:bg-base-disabled-bg-light disabled:text-base-disabled-text-light dark:disabled:bg-base-disabled-bg-dark dark:disabled:text-base-disabled-text-dark disabled:border-base-disabled-border-light dark:disabled:border-base-disabled-border-dark shadow-sm"
           >
             {filter}
           </button>
@@ -260,56 +264,56 @@ defmodule CommunityDemoWeb.Components.Gallery do
   defp shadow_class("none"), do: "shadow-none"
   defp shadow_class(params) when is_binary(params), do: params
 
-  defp animation("scale-down", "extra_small"), do: "hover:[&_.gallery-media-img]:scale-[0.99]"
-  defp animation("scale-down", "small"), do: "hover:[&_.gallery-media-img]:scale-[0.97]"
-  defp animation("scale-down", "medium"), do: "hover:[&_.gallery-media-img]:scale-[0.95]"
-  defp animation("scale-down", "large"), do: "hover:[&_.gallery-media-img]:scale-[0.93]"
-  defp animation("scale-down", "extra_large"), do: "hover:[&_.gallery-media-img]:scale-[0.91]"
+  defp animation("scale-down", "extra_small"), do: "[&_.gallery-media-img]:hover:scale-[0.99]"
+  defp animation("scale-down", "small"), do: "[&_.gallery-media-img]:hover:scale-[0.97]"
+  defp animation("scale-down", "medium"), do: "[&_.gallery-media-img]:hover:scale-[0.95]"
+  defp animation("scale-down", "large"), do: "[&_.gallery-media-img]:hover:scale-[0.93]"
+  defp animation("scale-down", "extra_large"), do: "[&_.gallery-media-img]:hover:scale-[0.91]"
 
-  defp animation("scale-up", "extra_small"), do: "hover:[&_.gallery-media-img]:scale-[1.02]"
-  defp animation("scale-up", "small"), do: "hover:[&_.gallery-media-img]:scale-[1.04]"
-  defp animation("scale-up", "medium"), do: "hover:[&_.gallery-media-img]:scale-[1.06]"
-  defp animation("scale-up", "large"), do: "hover:[&_.gallery-media-img]:scale-[1.08]"
-  defp animation("scale-up", "extra_large"), do: "hover:[&_.gallery-media-img]:scale-[1.1]"
+  defp animation("scale-up", "extra_small"), do: "[&_.gallery-media-img]:hover:scale-[1.02]"
+  defp animation("scale-up", "small"), do: "[&_.gallery-media-img]:hover:scale-[1.04]"
+  defp animation("scale-up", "medium"), do: "[&_.gallery-media-img]:hover:scale-[1.06]"
+  defp animation("scale-up", "large"), do: "[&_.gallery-media-img]:hover:scale-[1.08]"
+  defp animation("scale-up", "extra_large"), do: "[&_.gallery-media-img]:hover:scale-[1.1]"
 
-  defp animation("blur", "extra_small"), do: "hover:[&_.gallery-media-img]:blur-[0.05rem]"
-  defp animation("blur", "small"), do: "hover:[&_.gallery-media-img]:blur-[0.07rem]"
-  defp animation("blur", "medium"), do: "hover:[&_.gallery-media-img]:blur-[0.09rem]"
-  defp animation("blur", "large"), do: "hover:[&_.gallery-media-img]:blur-[0.1rem]"
-  defp animation("blur", "extra_large"), do: "hover:[&_.gallery-media-img]:blur-[0.12rem]"
+  defp animation("blur", "extra_small"), do: "[&_.gallery-media-img]:hover:blur-[0.05rem]"
+  defp animation("blur", "small"), do: "[&_.gallery-media-img]:hover:blur-[0.07rem]"
+  defp animation("blur", "medium"), do: "[&_.gallery-media-img]:hover:blur-[0.09rem]"
+  defp animation("blur", "large"), do: "[&_.gallery-media-img]:hover:blur-[0.1rem]"
+  defp animation("blur", "extra_large"), do: "[&_.gallery-media-img]:hover:blur-[0.12rem]"
 
   defp animation("backdrop", "extra_small") do
     [
-      "hover:[&_.gallery-media]:after:bg-[#4B4B4B]/30 dark:hover:[&_.gallery-media]:after:bg-[#DDDDDD]/30",
-      "[&_.gallery-media]:after:absolute [&_.gallery-media]:after:inset-0 hover:[&_.gallery-media]:after:backdrop-blur-[0.02rem]"
+      "[&_.gallery-media]:hover:after:bg-natural-light/30 dark:[&_.gallery-media]:hover:after:bg-natural-dark/30",
+      "[&_.gallery-media]:after:absolute [&_.gallery-media]:after:inset-0 [&_.gallery-media]:hover:after:backdrop-blur-[0.02rem]"
     ]
   end
 
   defp animation("backdrop", "small") do
     [
-      "hover:[&_.gallery-media]:after:bg-[#4B4B4B]/30 dark:hover:[&_.gallery-media]:after:bg-[#DDDDDD]/30",
-      "[&_.gallery-media]:after:absolute [&_.gallery-media]:after:inset-0 hover:[&_.gallery-media]:after:backdrop-blur-[0.04rem]"
+      "[&_.gallery-media]:hover:after:bg-natural-light/30 dark:[&_.gallery-media]:hover:after:bg-natural-dark/30",
+      "[&_.gallery-media]:after:absolute [&_.gallery-media]:after:inset-0 [&_.gallery-media]:hover:after:backdrop-blur-[0.04rem]"
     ]
   end
 
   defp animation("backdrop", "medium") do
     [
-      "hover:[&_.gallery-media]:after:bg-[#4B4B4B]/30 dark:hover:[&_.gallery-media]:after:bg-[#DDDDDD]/30",
-      "[&_.gallery-media]:after:absolute [&_.gallery-media]:after:inset-0 hover:[&_.gallery-media]:after:backdrop-blur-[0.06rem]"
+      "[&_.gallery-media]:hover:after:bg-natural-light/30 dark:[&_.gallery-media]:hover:after:bg-natural-dark/30",
+      "[&_.gallery-media]:after:absolute [&_.gallery-media]:after:inset-0 [&_.gallery-media]:hover:after:backdrop-blur-[0.06rem]"
     ]
   end
 
   defp animation("backdrop", "large") do
     [
-      "hover:[&_.gallery-media]:after:bg-[#4B4B4B]/30 dark:hover:[&_.gallery-media]:after:bg-[#DDDDDD]/30",
-      "[&_.gallery-media]:after:absolute [&_.gallery-media]:after:inset-0 hover:[&_.gallery-media]:after:backdrop-blur-[0.08rem]"
+      "[&_.gallery-media]:hover:after:bg-natural-light/30 dark:[&_.gallery-media]:hover:after:bg-natural-dark/30",
+      "[&_.gallery-media]:after:absolute [&_.gallery-media]:after:inset-0 [&_.gallery-media]:hover:after:backdrop-blur-[0.08rem]"
     ]
   end
 
   defp animation("backdrop", "extra_large") do
     [
-      "hover:[&_.gallery-media]:after:bg-[#4B4B4B]/30 dark:hover:[&_.gallery-media]:after:bg-[#DDDDDD]/30",
-      "[&_.gallery-media]:after:absolute [&_.gallery-media]:after:inset-0 hover:[&_.gallery-media]:after:backdrop-blur-[0.1rem]"
+      "[&_.gallery-media]:hover:after:bg-natural-light/30 dark:[&_.gallery-media]:hover:after:bg-natural-dark/30",
+      "[&_.gallery-media]:after:absolute [&_.gallery-media]:after:inset-0 [&_.gallery-media]:hover:after:backdrop-blur-[0.1rem]"
     ]
   end
 

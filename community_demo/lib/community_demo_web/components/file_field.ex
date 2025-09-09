@@ -144,7 +144,7 @@ defmodule CommunityDemoWeb.Components.FileField do
             <div class="flex justify-around gap-3">
               <.icon name="hero-document-arrow-up" class="size-8" />
               <div class="w-full space-y-3">
-                <div class="text-ellipsis	overflow-hidden w-44 whitespace-nowrap">
+                <div class="text-ellipsis overflow-hidden w-44 whitespace-nowrap">
                   {entry.client_name}
                 </div>
 
@@ -167,7 +167,7 @@ defmodule CommunityDemoWeb.Components.FileField do
               phx-click="cancel-upload"
               phx-value-ref={entry.ref}
               aria-label={gettext("Cancel upload for %{file}", file: entry.client_name)}
-              class="absolute top-2 right-2 text-custome-black-100/60 hover:text-custome-black-100"
+              class="absolute top-2 right-2 text-custom-black-100/60 hover:text-custome-black-100"
             >
               <.icon name="hero-x-mark" class="size-4" />
             </button>
@@ -400,88 +400,88 @@ defmodule CommunityDemoWeb.Components.FileField do
 
   defp color_class("base") do
     [
-      "[&_.file-field]:bg-white file:[&_.file-field]:text-[#09090b] [&_.file-field]:text-[#09090b] file:[&_.file-field]:bg-[#e4e4e7]",
-      "dark:[&_.file-field]:bg-[#27272a] dark:file:[&_.file-field]:bg-[#18181B]",
-      "dark:file:[&_.file-field]:text-[#FAFAFA] dark:[&_.file-field]:text-[#FAFAFA]"
+      "[&_.file-field]:bg-white file:[&_.file-field]:text-base-text-light [&_.file-field]:text-base-text-light file:[&_.file-field]:bg-base-border-light",
+      "dark:[&_.file-field]:bg-base-border-dark dark:file:[&_.file-field]:bg-base-bg-dark",
+      "dark:file:[&_.file-field]:text-base-text-dark dark:[&_.file-field]:text-base-text-dark"
     ]
   end
 
   defp color_class("natural") do
     [
-      "[&_.file-field]:bg-[#4B4B4B] file:[&_.file-field]:text-white [&_.file-field]:text-white file:[&_.file-field]:bg-[#282828]",
-      "dark:[&_.file-field]:bg-[#E8E8E8] dark:file:[&_.file-field]:bg-[#DDDDDD]",
+      "[&_.file-field]:bg-natural-light file:[&_.file-field]:text-white [&_.file-field]:text-white file:[&_.file-field]:bg-natural-bordered-text-light",
+      "dark:[&_.file-field]:bg-natural-hover-dark dark:file:[&_.file-field]:bg-natural-dark",
       "dark:file:[&_.file-field]:text-black dark:[&_.file-field]:text-black"
     ]
   end
 
   defp color_class("primary") do
     [
-      "[&_.file-field]:bg-[#007F8C] file:[&_.file-field]:text-white [&_.file-field]:text-white file:[&_.file-field]:bg-[#016974]",
-      "dark:[&_.file-field]:bg-[#77D5E3] dark:file:[&_.file-field]:bg-[#01B8CA]",
+      "[&_.file-field]:bg-primary-light file:[&_.file-field]:text-white [&_.file-field]:text-white file:[&_.file-field]:bg-primary-hover-light",
+      "dark:[&_.file-field]:bg-primary-hover-dark dark:file:[&_.file-field]:bg-primary-dark",
       "dark:file:[&_.file-field]:text-black dark:[&_.file-field]:text-black"
     ]
   end
 
   defp color_class("secondary") do
     [
-      "[&_.file-field]:bg-[#266EF1] file:[&_.file-field]:text-white [&_.file-field]:text-white file:[&_.file-field]:bg-[#175BCC]",
-      "dark:[&_.file-field]:bg-[#A9C9FF] dark:file:[&_.file-field]:bg-[#6DAAFB]",
+      "[&_.file-field]:bg-secondary-light file:[&_.file-field]:text-white [&_.file-field]:text-white file:[&_.file-field]:bg-secondary-hover-light",
+      "dark:[&_.file-field]:bg-secondary-hover-dark dark:file:[&_.file-field]:bg-secondary-dark",
       "dark:file:[&_.file-field]:text-black dark:[&_.file-field]:text-black"
     ]
   end
 
   defp color_class("success") do
     [
-      "[&_.file-field]:bg-[#0E8345] file:[&_.file-field]:text-white [&_.file-field]:text-white file:[&_.file-field]:bg-[#166C3B]",
-      "dark:[&_.file-field]:bg-[#7FD99A] dark:file:[&_.file-field]:bg-[#06C167]",
+      "[&_.file-field]:bg-success-light file:[&_.file-field]:text-white [&_.file-field]:text-white file:[&_.file-field]:bg-success-hover-light",
+      "dark:[&_.file-field]:bg-success-hover-dark dark:file:[&_.file-field]:bg-success-dark",
       "dark:file:[&_.file-field]:text-black dark:[&_.file-field]:text-black"
     ]
   end
 
   defp color_class("warning") do
     [
-      "[&_.file-field]:bg-[#CA8D01] file:[&_.file-field]:text-white [&_.file-field]:text-white file:[&_.file-field]:bg-[#976A01]",
-      "dark:[&_.file-field]:bg-[#FDD067] dark:file:[&_.file-field]:bg-[#FDC034]",
+      "[&_.file-field]:bg-warning-light file:[&_.file-field]:text-white [&_.file-field]:text-white file:[&_.file-field]:bg-warning-hover-light",
+      "dark:[&_.file-field]:bg-warning-hover-dark dark:file:[&_.file-field]:bg-warning-dark",
       "dark:file:[&_.file-field]:text-black dark:[&_.file-field]:text-black"
     ]
   end
 
   defp color_class("danger") do
     [
-      "[&_.file-field]:bg-[#DE1135] file:[&_.file-field]:text-white [&_.file-field]:text-white file:[&_.file-field]:bg-[#BB032A]",
-      "dark:[&_.file-field]:bg-[#FFB2AB] dark:file:[&_.file-field]:bg-[#FC7F79]",
+      "[&_.file-field]:bg-danger-light file:[&_.file-field]:text-white [&_.file-field]:text-white file:[&_.file-field]:bg-danger-hover-light",
+      "dark:[&_.file-field]:bg-danger-hover-dark dark:file:[&_.file-field]:bg-danger-dark",
       "dark:file:[&_.file-field]:text-black dark:[&_.file-field]:text-black"
     ]
   end
 
   defp color_class("info") do
     [
-      "[&_.file-field]:bg-[#0B84BA] file:[&_.file-field]:text-white [&_.file-field]:text-white file:[&_.file-field]:bg-[#08638C]",
-      "dark:[&_.file-field]:bg-[#6EC9F2] dark:file:[&_.file-field]:bg-[#3EB7ED]",
+      "[&_.file-field]:bg-info-light file:[&_.file-field]:text-white [&_.file-field]:text-white file:[&_.file-field]:bg-info-hover-light",
+      "dark:[&_.file-field]:bg-info-hover-dark dark:file:[&_.file-field]:bg-info-dark",
       "dark:file:[&_.file-field]:text-black dark:[&_.file-field]:text-black"
     ]
   end
 
   defp color_class("misc") do
     [
-      "[&_.file-field]:bg-[#8750C5] file:[&_.file-field]:text-white [&_.file-field]:text-white file:[&_.file-field]:bg-[#653C94]",
-      "dark:[&_.file-field]:bg-[#CBA2FA] dark:file:[&_.file-field]:bg-[#BA83F9]",
+      "[&_.file-field]:bg-misc-light file:[&_.file-field]:text-white [&_.file-field]:text-white file:[&_.file-field]:bg-misc-hover-light",
+      "dark:[&_.file-field]:bg-misc-hover-dark dark:file:[&_.file-field]:bg-misc-dark",
       "dark:file:[&_.file-field]:text-black dark:[&_.file-field]:text-black"
     ]
   end
 
   defp color_class("dawn") do
     [
-      "[&_.file-field]:bg-[#A86438] file:[&_.file-field]:text-white [&_.file-field]:text-white file:[&_.file-field]:bg-[#7E4B2A]",
-      "dark:[&_.file-field]:bg-[#E4B190] dark:file:[&_.file-field]:bg-[#DB976B]",
+      "[&_.file-field]:bg-dawn-light file:[&_.file-field]:text-white [&_.file-field]:text-white file:[&_.file-field]:bg-dawn-hover-light",
+      "dark:[&_.file-field]:bg-dawn-hover-dark dark:file:[&_.file-field]:bg-dawn-dark",
       "dark:file:[&_.file-field]:text-black dark:[&_.file-field]:text-black"
     ]
   end
 
   defp color_class("silver") do
     [
-      "[&_.file-field]:bg-[#868686] file:[&_.file-field]:text-white [&_.file-field]:text-white file:[&_.file-field]:bg-[#727272]",
-      "dark:[&_.file-field]:bg-[#BBBBBB] dark:file:[&_.file-field]:bg-[#A6A6A6]",
+      "[&_.file-field]:bg-silver-light file:[&_.file-field]:text-white [&_.file-field]:text-white file:[&_.file-field]:bg-silver-hover-light",
+      "dark:[&_.file-field]:bg-silver-hover-dark dark:file:[&_.file-field]:bg-silver-dark",
       "dark:file:[&_.file-field]:text-black dark:[&_.file-field]:text-black"
     ]
   end
@@ -490,8 +490,8 @@ defmodule CommunityDemoWeb.Components.FileField do
 
   defp color_variant("base", _) do
     [
-      "text-[#09090b] [&_.dropzone-wrapper]:border-[#e4e4e7] [&_.dropzone-wrapper]:bg-white shadow-sm",
-      "dark:text-[#FAFAFA] dark:[&_.dropzone-wrapper]:border-[#27272a] dark:[&_.dropzone-wrapper]:bg-[#18181B]"
+      "text-base-text-light [&_.dropzone-wrapper]:border-base-border-light [&_.dropzone-wrapper]:bg-white shadow-sm",
+      "dark:text-base-text-dark dark:[&_.dropzone-wrapper]:border-base-border-dark dark:[&_.dropzone-wrapper]:bg-base-bg-dark"
     ]
   end
 
@@ -503,419 +503,419 @@ defmodule CommunityDemoWeb.Components.FileField do
 
   defp color_variant("default", "dark") do
     [
-      "[&_.dropzone-wrapper]:bg-[#282828] text-white"
+      "[&_.dropzone-wrapper]:bg-default-dark-bg text-white"
     ]
   end
 
   defp color_variant("default", "natural") do
     [
-      "[&_.dropzone-wrapper]:bg-[#4B4B4B] text-white dark:[&_.dropzone-wrapper]:bg-[#DDDDDD] dark:text-black"
+      "[&_.dropzone-wrapper]:bg-natural-light text-white dark:[&_.dropzone-wrapper]:bg-natural-dark dark:text-black"
     ]
   end
 
   defp color_variant("default", "primary") do
     [
-      "[&_.dropzone-wrapper]:bg-[#007F8C] text-white dark:[&_.dropzone-wrapper]:bg-[#01B8CA] dark:text-black"
+      "[&_.dropzone-wrapper]:bg-primary-light text-white dark:[&_.dropzone-wrapper]:bg-primary-dark dark:text-black"
     ]
   end
 
   defp color_variant("default", "secondary") do
     [
-      "[&_.dropzone-wrapper]:bg-[#266EF1] text-white dark:[&_.dropzone-wrapper]:bg-[#6DAAFB] dark:text-black"
+      "[&_.dropzone-wrapper]:bg-secondary-light text-white dark:[&_.dropzone-wrapper]:bg-secondary-dark dark:text-black"
     ]
   end
 
   defp color_variant("default", "success") do
     [
-      "[&_.dropzone-wrapper]:bg-[#0E8345] text-white dark:[&_.dropzone-wrapper]:bg-[#06C167] dark:text-black"
+      "[&_.dropzone-wrapper]:bg-success-light text-white dark:[&_.dropzone-wrapper]:bg-success-dark dark:text-black"
     ]
   end
 
   defp color_variant("default", "warning") do
     [
-      "[&_.dropzone-wrapper]:bg-[#CA8D01] text-white dark:[&_.dropzone-wrapper]:bg-[#FDC034] dark:text-black"
+      "[&_.dropzone-wrapper]:bg-warning-light text-white dark:[&_.dropzone-wrapper]:bg-warning-dark dark:text-black"
     ]
   end
 
   defp color_variant("default", "danger") do
     [
-      "[&_.dropzone-wrapper]:bg-[#DE1135] text-white dark:[&_.dropzone-wrapper]:bg-[#FC7F79] dark:text-black"
+      "[&_.dropzone-wrapper]:bg-danger-light text-white dark:[&_.dropzone-wrapper]:bg-danger-dark dark:text-black"
     ]
   end
 
   defp color_variant("default", "info") do
     [
-      "[&_.dropzone-wrapper]:bg-[#0B84BA] text-white dark:[&_.dropzone-wrapper]:bg-[#3EB7ED] dark:text-black"
+      "[&_.dropzone-wrapper]:bg-info-light text-white dark:[&_.dropzone-wrapper]:bg-info-dark dark:text-black"
     ]
   end
 
   defp color_variant("default", "misc") do
     [
-      "[&_.dropzone-wrapper]:bg-[#8750C5] text-white dark:[&_.dropzone-wrapper]:bg-[#BA83F9] dark:text-black"
+      "[&_.dropzone-wrapper]:bg-misc-light text-white dark:[&_.dropzone-wrapper]:bg-misc-dark dark:text-black"
     ]
   end
 
   defp color_variant("default", "dawn") do
     [
-      "[&_.dropzone-wrapper]:bg-[#A86438] text-white dark:[&_.dropzone-wrapper]:bg-[#DB976B] dark:text-black"
+      "[&_.dropzone-wrapper]:bg-dawn-light text-white dark:[&_.dropzone-wrapper]:bg-dawn-dark dark:text-black"
     ]
   end
 
   defp color_variant("default", "silver") do
     [
-      "[&_.dropzone-wrapper]:bg-[#868686] text-white dark:[&_.dropzone-wrapper]:bg-[#A6A6A6] dark:text-black"
+      "[&_.dropzone-wrapper]:bg-silver-light text-white dark:[&_.dropzone-wrapper]:bg-silver-dark dark:text-black"
     ]
   end
 
   defp color_variant("outline", "natural") do
     [
-      "text-[#4B4B4B] [&_.dropzone-wrapper]:border-[#4B4B4B] dark:text-[#DDDDDD] dark:[&_.dropzone-wrapper]:border-[#DDDDDD]"
+      "text-natural-light [&_.dropzone-wrapper]:border-natural-light dark:text-natural-dark dark:[&_.dropzone-wrapper]:border-natural-dark"
     ]
   end
 
   defp color_variant("outline", "primary") do
     [
-      "text-[#007F8C] [&_.dropzone-wrapper]:border-[#007F8C]  dark:text-[#01B8CA] dark:[&_.dropzone-wrapper]:border-[#01B8CA]"
+      "text-primary-light [&_.dropzone-wrapper]:border-primary-light dark:text-primary-dark dark:[&_.dropzone-wrapper]:border-primary-dark"
     ]
   end
 
   defp color_variant("outline", "secondary") do
     [
-      "text-[#266EF1] [&_.dropzone-wrapper]:border-[#266EF1] dark:text-[#6DAAFB] dark:[&_.dropzone-wrapper]:border-[#6DAAFB]"
+      "text-secondary-light [&_.dropzone-wrapper]:border-secondary-light dark:text-secondary-dark dark:[&_.dropzone-wrapper]:border-secondary-dark"
     ]
   end
 
   defp color_variant("outline", "success") do
     [
-      "text-[#0E8345] [&_.dropzone-wrapper]:border-[#0E8345] dark:text-[#06C167] dark:[&_.dropzone-wrapper]:border-[#06C167]"
+      "text-success-light [&_.dropzone-wrapper]:border-success-light dark:text-success-dark dark:[&_.dropzone-wrapper]:border-success-dark"
     ]
   end
 
   defp color_variant("outline", "warning") do
     [
-      "text-[#CA8D01] [&_.dropzone-wrapper]:border-[#CA8D01] dark:text-[#FDC034] dark:[&_.dropzone-wrapper]:border-[#FDC034]"
+      "text-warning-light [&_.dropzone-wrapper]:border-warning-light dark:text-warning-dark dark:[&_.dropzone-wrapper]:border-warning-dark"
     ]
   end
 
   defp color_variant("outline", "danger") do
     [
-      "text-[#DE1135] [&_.dropzone-wrapper]:border-[#DE1135] dark:text-[#FC7F79] dark:[&_.dropzone-wrapper]:border-[#FC7F79]"
+      "text-danger-light [&_.dropzone-wrapper]:border-danger-light dark:text-danger-dark dark:[&_.dropzone-wrapper]:border-danger-dark"
     ]
   end
 
   defp color_variant("outline", "info") do
     [
-      "text-[#0B84BA] [&_.dropzone-wrapper]:border-[#0B84BA] dark:text-[#3EB7ED] dark:[&_.dropzone-wrapper]:border-[#3EB7ED]"
+      "text-info-light [&_.dropzone-wrapper]:border-info-light dark:text-info-dark dark:[&_.dropzone-wrapper]:border-info-dark"
     ]
   end
 
   defp color_variant("outline", "misc") do
     [
-      "text-[#8750C5] [&_.dropzone-wrapper]:border-[#8750C5] dark:text-[#BA83F9] dark:[&_.dropzone-wrapper]:border-[#BA83F9]"
+      "text-misc-light [&_.dropzone-wrapper]:border-misc-light dark:text-misc-dark dark:[&_.dropzone-wrapper]:border-misc-dark"
     ]
   end
 
   defp color_variant("outline", "dawn") do
     [
-      "text-[#A86438] [&_.dropzone-wrapper]:border-[#A86438] dark:text-[#DB976B] dark:[&_.dropzone-wrapper]:border-[#DB976B]"
+      "text-dawn-light [&_.dropzone-wrapper]:border-dawn-light dark:text-dawn-dark dark:[&_.dropzone-wrapper]:border-dawn-dark"
     ]
   end
 
   defp color_variant("outline", "silver") do
     [
-      "text-[#868686] [&_.dropzone-wrapper]:border-[#868686] dark:text-[#A6A6A6] dark:[&_.dropzone-wrapper]:border-[#A6A6A6]"
+      "text-silver-light [&_.dropzone-wrapper]:border-silver-light dark:text-silver-dark dark:[&_.dropzone-wrapper]:border-silver-dark"
     ]
   end
 
   defp color_variant("shadow", "natural") do
     [
-      "[&_.dropzone-wrapper]:bg-[#4B4B4B] text-white dark:[&_.dropzone-wrapper]:bg-[#DDDDDD] dark:text-black",
-      "[&_.dropzone-wrapper]:shadow-[0px_4px_6px_-4px_rgba(134,134,134,0.5)] [&_.dropzone-wrapper]:shadow-[0px_10px_15px_-3px_rgba(134,134,134,0.5)]",
+      "[&_.dropzone-wrapper]:bg-natural-light text-white dark:[&_.dropzone-wrapper]:bg-natural-dark dark:text-black",
+      "[&_.dropzone-wrapper]:shadow-[0px_4px_6px_-4px_var(--color-shadow-natural)] [&_.dropzone-wrapper]:shadow-[0px_10px_15px_-3px_var(--color-shadow-natural)]",
       "dark:[&_.dropzone-wrapper]:shadow-none"
     ]
   end
 
   defp color_variant("shadow", "primary") do
     [
-      "[&_.dropzone-wrapper]:bg-[#007F8C] text-white dark:[&_.dropzone-wrapper]:bg-[#01B8CA] dark:text-black",
-      "[&_.dropzone-wrapper]:shadow-[0px_4px_6px_-4px_rgba(0,149,164,0.5)] [&_.dropzone-wrapper]:shadow-[0px_10px_15px_-3px_rgba(0,149,164,0.5)]",
+      "[&_.dropzone-wrapper]:bg-primary-light text-white dark:[&_.dropzone-wrapper]:bg-primary-dark dark:text-black",
+      "[&_.dropzone-wrapper]:shadow-[0px_4px_6px_-4px_var(--color-shadow-primary)] [&_.dropzone-wrapper]:shadow-[0px_10px_15px_-3px_var(--color-shadow-primary)]",
       "dark:[&_.dropzone-wrapper]:shadow-none"
     ]
   end
 
   defp color_variant("shadow", "secondary") do
     [
-      "[&_.dropzone-wrapper]:bg-[#266EF1] text-white dark:[&_.dropzone-wrapper]:bg-[#6DAAFB] dark:text-black",
-      "[&_.dropzone-wrapper]:shadow-[0px_4px_6px_-4px_rgba(6,139,238,0.5)] [&_.dropzone-wrapper]:shadow-[0px_10px_15px_-3px_rgba(6,139,238,0.5)]",
+      "[&_.dropzone-wrapper]:bg-secondary-light text-white dark:[&_.dropzone-wrapper]:bg-secondary-dark dark:text-black",
+      "[&_.dropzone-wrapper]:shadow-[0px_4px_6px_-4px_var(--color-shadow-secondary)] [&_.dropzone-wrapper]:shadow-[0px_10px_15px_-3px_var(--color-shadow-secondary)]",
       "dark:[&_.dropzone-wrapper]:shadow-none"
     ]
   end
 
   defp color_variant("shadow", "success") do
     [
-      "[&_.dropzone-wrapper]:bg-[#0E8345] text-white hover:[&_.dropzone-wrapper]:bg-[#166C3B] dark:[&_.dropzone-wrapper]:bg-[#06C167] dark:text-black",
-      "[&_.dropzone-wrapper]:shadow-[0px_4px_6px_-4px_rgba(0,154,81,0.5)] [&_.dropzone-wrapper]:shadow-[0px_10px_15px_-3px_rgba(0,154,81,0.5)]",
+      "[&_.dropzone-wrapper]:bg-success-light text-white dark:[&_.dropzone-wrapper]:bg-success-dark dark:text-black",
+      "[&_.dropzone-wrapper]:shadow-[0px_4px_6px_-4px_var(--color-shadow-success)] [&_.dropzone-wrapper]:shadow-[0px_10px_15px_-3px_var(--color-shadow-success)]",
       "dark:[&_.dropzone-wrapper]:shadow-none"
     ]
   end
 
   defp color_variant("shadow", "warning") do
     [
-      "[&_.dropzone-wrapper]:bg-[#CA8D01] text-white dark:[&_.dropzone-wrapper]:bg-[#FDC034] dark:text-black",
-      "[&_.dropzone-wrapper]:shadow-[0px_4px_6px_-4px_rgba(252,176,1,0.5)] [&_.dropzone-wrapper]:shadow-[0px_10px_15px_-3px_rgba(252,176,1,0.5)]",
+      "[&_.dropzone-wrapper]:bg-warning-light text-white dark:[&_.dropzone-wrapper]:bg-warning-dark dark:text-black",
+      "[&_.dropzone-wrapper]:shadow-[0px_4px_6px_-4px_var(--color-shadow-warning)] [&_.dropzone-wrapper]:shadow-[0px_10px_15px_-3px_var(--color-shadow-warning)]",
       "dark:[&_.dropzone-wrapper]:shadow-none"
     ]
   end
 
   defp color_variant("shadow", "danger") do
     [
-      "[&_.dropzone-wrapper]:bg-[#DE1135] text-white dark:[&_.dropzone-wrapper]:bg-[#FC7F79] dark:text-black",
-      "[&_.dropzone-wrapper]:shadow-[0px_4px_6px_-4px_rgba(248,52,70,0.5)] [&_.dropzone-wrapper]:shadow-[0px_10px_15px_-3px_rgba(248,52,70,0.5)]",
+      "[&_.dropzone-wrapper]:bg-danger-light text-white dark:[&_.dropzone-wrapper]:bg-danger-dark dark:text-black",
+      "[&_.dropzone-wrapper]:shadow-[0px_4px_6px_-4px_var(--color-shadow-danger)] [&_.dropzone-wrapper]:shadow-[0px_10px_15px_-3px_var(--color-shadow-danger)]",
       "dark:[&_.dropzone-wrapper]:shadow-none"
     ]
   end
 
   defp color_variant("shadow", "info") do
     [
-      "[&_.dropzone-wrapper]:bg-[#0B84BA] text-white dark:[&_.dropzone-wrapper]:bg-[#3EB7ED] dark:text-black",
-      "[&_.dropzone-wrapper]:shadow-[0px_4px_6px_-4px_rgba(14,165,233,0.5)] [&_.dropzone-wrapper]:shadow-[0px_10px_15px_-3px_rgba(14,165,233,0.5)]",
+      "[&_.dropzone-wrapper]:bg-info-light text-white dark:[&_.dropzone-wrapper]:bg-info-dark dark:text-black",
+      "[&_.dropzone-wrapper]:shadow-[0px_4px_6px_-4px_var(--color-shadow-info)] [&_.dropzone-wrapper]:shadow-[0px_10px_15px_-3px_var(--color-shadow-info)]",
       "dark:[&_.dropzone-wrapper]:shadow-none"
     ]
   end
 
   defp color_variant("shadow", "misc") do
     [
-      "[&_.dropzone-wrapper]:bg-[#8750C5] text-white dark:[&_.dropzone-wrapper]:bg-[#BA83F9] dark:text-black",
-      "[&_.dropzone-wrapper]:shadow-[0px_4px_6px_-4px_rgba(169,100,247,0.5)] [&_.dropzone-wrapper]:shadow-[0px_10px_15px_-3px_rgba(169,100,247,0.5)]",
+      "[&_.dropzone-wrapper]:bg-misc-light text-white dark:[&_.dropzone-wrapper]:bg-misc-dark dark:text-black",
+      "[&_.dropzone-wrapper]:shadow-[0px_4px_6px_-4px_var(--color-shadow-misc)] [&_.dropzone-wrapper]:shadow-[0px_10px_15px_-3px_var(--color-shadow-misc)]",
       "dark:[&_.dropzone-wrapper]:shadow-none"
     ]
   end
 
   defp color_variant("shadow", "dawn") do
     [
-      "[&_.dropzone-wrapper]:bg-[#A86438] text-white dark:[&_.dropzone-wrapper]:bg-[#DB976B] dark:text-black",
-      "[&_.dropzone-wrapper]:shadow-[0px_4px_6px_-4px_rgba(210,125,70,0.5)] [&_.dropzone-wrapper]:shadow-[0px_10px_15px_-3px_rgba(210,125,70,0.5)]",
+      "[&_.dropzone-wrapper]:bg-dawn-light text-white dark:[&_.dropzone-wrapper]:bg-dawn-dark dark:text-black",
+      "[&_.dropzone-wrapper]:shadow-[0px_4px_6px_-4px_var(--color-shadow-dawn)] [&_.dropzone-wrapper]:shadow-[0px_10px_15px_-3px_var(--color-shadow-dawn)]",
       "dark:[&_.dropzone-wrapper]:shadow-none"
     ]
   end
 
   defp color_variant("shadow", "silver") do
     [
-      "[&_.dropzone-wrapper]:bg-[#868686] text-white dark:[&_.dropzone-wrapper]:bg-[#A6A6A6] dark:text-black",
-      "[&_.dropzone-wrapper]:shadow-[0px_4px_6px_-4px_rgba(134,134,134,0.5)] [&_.dropzone-wrapper]:shadow-[0px_10px_15px_-3px_rgba(134,134,134,0.5)]",
+      "[&_.dropzone-wrapper]:bg-silver-light text-white dark:[&_.dropzone-wrapper]:bg-silver-dark dark:text-black",
+      "[&_.dropzone-wrapper]:shadow-[0px_4px_6px_-4px_var(--color-shadow-silver)] [&_.dropzone-wrapper]:shadow-[0px_10px_15px_-3px_var(--color-shadow-silver)]",
       "dark:[&_.dropzone-wrapper]:shadow-none"
     ]
   end
 
   defp color_variant("bordered", "white") do
     [
-      "[&_.dropzone-wrapper]:bg-white text-black [&_.dropzone-wrapper]:border-[#DDDDDD]"
+      "[&_.dropzone-wrapper]:bg-white text-black [&_.dropzone-wrapper]:border-bordered-white-border"
     ]
   end
 
   defp color_variant("bordered", "dark") do
     [
-      "[&_.dropzone-wrapper]:bg-[#282828] text-white [&_.dropzone-wrapper]:border-[#727272]"
+      "[&_.dropzone-wrapper]:bg-default-dark-bg text-white [&_.dropzone-wrapper]:border-silver-hover-light"
     ]
   end
 
   defp color_variant("bordered", "natural") do
     [
-      "text-[#282828] [&_.dropzone-wrapper]:border-[#282828] [&_.dropzone-wrapper]:bg-[#F3F3F3]",
-      "dark:text-[#E8E8E8] dark:[&_.dropzone-wrapper]:border-[#E8E8E8] dark:[&_.dropzone-wrapper]:bg-[#4B4B4B]"
+      "text-natural-bordered-text-light [&_.dropzone-wrapper]:border-natural-bordered-text-light [&_.dropzone-wrapper]:bg-natural-bordered-bg-light",
+      "dark:text-natural-hover-dark dark:[&_.dropzone-wrapper]:border-natural-hover-dark dark:[&_.dropzone-wrapper]:bg-natural-bordered-bg-dark"
     ]
   end
 
   defp color_variant("bordered", "primary") do
     [
-      "text-[#016974] [&_.dropzone-wrapper]:border-[#016974] [&_.dropzone-wrapper]:bg-[#E2F8FB]",
-      "dark:text-[#77D5E3] dark:[&_.dropzone-wrapper]:border-[#77D5E3] dark:[&_.dropzone-wrapper]:bg-[#002D33]"
+      "text-primary-bordered-text-light [&_.dropzone-wrapper]:border-primary-bordered-text-light [&_.dropzone-wrapper]:bg-primary-bordered-bg-light",
+      "dark:text-primary-hover-dark dark:[&_.dropzone-wrapper]:border-primary-hover-dark dark:[&_.dropzone-wrapper]:bg-primary-bordered-bg-dark"
     ]
   end
 
   defp color_variant("bordered", "secondary") do
     [
-      "text-[#175BCC] [&_.dropzone-wrapper]:border-[#175BCC] [&_.dropzone-wrapper]:bg-[#EFF4FE]",
-      "dark:text-[#A9C9FF] dark:[&_.dropzone-wrapper]:border-[#A9C9FF] dark:[&_.dropzone-wrapper]:bg-[#002661]"
+      "text-secondary-bordered-text-light [&_.dropzone-wrapper]:border-secondary-bordered-text-light [&_.dropzone-wrapper]:bg-secondary-bordered-bg-light",
+      "dark:text-secondary-hover-dark dark:[&_.dropzone-wrapper]:border-secondary-hover-dark dark:[&_.dropzone-wrapper]:bg-secondary-bordered-bg-dark"
     ]
   end
 
   defp color_variant("bordered", "success") do
     [
-      "text-[#166C3B] [&_.dropzone-wrapper]:border-[#166C3B] [&_.dropzone-wrapper]:bg-[#EAF6ED]",
-      "dark:text-[#7FD99A] dark:[&_.dropzone-wrapper]:border-[#7FD99A] dark:[&_.dropzone-wrapper]:bg-[#002F14]"
+      "text-success-bordered-text-light [&_.dropzone-wrapper]:border-success-bordered-text-light [&_.dropzone-wrapper]:bg-success-bordered-bg-light",
+      "dark:text-success-hover-dark dark:[&_.dropzone-wrapper]:border-success-hover-dark dark:[&_.dropzone-wrapper]:bg-success-bordered-bg-dark"
     ]
   end
 
   defp color_variant("bordered", "warning") do
     [
-      "text-[#976A01] [&_.dropzone-wrapper]:border-[#976A01] [&_.dropzone-wrapper]:bg-[#FFF7E6]",
-      "dark:text-[#FDD067] dark:[&_.dropzone-wrapper]:border-[#FDD067] dark:[&_.dropzone-wrapper]:bg-[#322300]"
+      "text-warning-bordered-text-light [&_.dropzone-wrapper]:border-warning-bordered-text-light [&_.dropzone-wrapper]:bg-warning-bordered-bg-light",
+      "dark:text-warning-hover-dark dark:[&_.dropzone-wrapper]:border-warning-hover-dark dark:[&_.dropzone-wrapper]:bg-warning-bordered-bg-dark"
     ]
   end
 
   defp color_variant("bordered", "danger") do
     [
-      "text-[#BB032A] [&_.dropzone-wrapper]:border-[#BB032A] [&_.dropzone-wrapper]:bg-[#FFF0EE]",
-      "dark:text-[#FFB2AB] dark:[&_.dropzone-wrapper]:border-[#FFB2AB] dark:[&_.dropzone-wrapper]:bg-[#520810]"
+      "text-danger-bordered-text-light [&_.dropzone-wrapper]:border-danger-bordered-text-light [&_.dropzone-wrapper]:bg-danger-bordered-bg-light",
+      "dark:text-danger-hover-dark dark:[&_.dropzone-wrapper]:border-danger-hover-dark dark:[&_.dropzone-wrapper]:bg-danger-bordered-bg-dark"
     ]
   end
 
   defp color_variant("bordered", "info") do
     [
-      "text-[#0B84BA] [&_.dropzone-wrapper]:border-[#0B84BA] [&_.dropzone-wrapper]:bg-[#E7F6FD]",
-      "dark:text-[#6EC9F2] dark:[&_.dropzone-wrapper]:border-[#6EC9F2] dark:[&_.dropzone-wrapper]:bg-[#03212F]"
+      "text-info-bordered-text-light [&_.dropzone-wrapper]:border-info-bordered-text-light [&_.dropzone-wrapper]:bg-info-bordered-bg-light",
+      "dark:text-info-hover-dark dark:[&_.dropzone-wrapper]:border-info-hover-dark dark:[&_.dropzone-wrapper]:bg-info-bordered-bg-dark"
     ]
   end
 
   defp color_variant("bordered", "misc") do
     [
-      "text-[#653C94] [&_.dropzone-wrapper]:border-[#653C94] [&_.dropzone-wrapper]:bg-[#F6F0FE]",
-      "dark:text-[#CBA2FA] dark:[&_.dropzone-wrapper]:border-[#CBA2FA] dark:[&_.dropzone-wrapper]:bg-[#221431]"
+      "text-misc-bordered-text-light [&_.dropzone-wrapper]:border-misc-bordered-text-light [&_.dropzone-wrapper]:bg-misc-bordered-bg-light",
+      "dark:text-misc-hover-dark dark:[&_.dropzone-wrapper]:border-misc-hover-dark dark:[&_.dropzone-wrapper]:bg-misc-bordered-bg-dark"
     ]
   end
 
   defp color_variant("bordered", "dawn") do
     [
-      "text-[#7E4B2A] [&_.dropzone-wrapper]:border-[#7E4B2A] [&_.dropzone-wrapper]:bg-[#FBF2ED]",
-      "dark:text-[#E4B190] dark:[&_.dropzone-wrapper]:border-[#E4B190] dark:[&_.dropzone-wrapper]:bg-[#2A190E]"
+      "text-dawn-bordered-text-light [&_.dropzone-wrapper]:border-dawn-bordered-text-light [&_.dropzone-wrapper]:bg-dawn-bordered-bg-light",
+      "dark:text-dawn-hover-dark dark:[&_.dropzone-wrapper]:border-dawn-hover-dark dark:[&_.dropzone-wrapper]:bg-dawn-bordered-bg-dark"
     ]
   end
 
   defp color_variant("bordered", "silver") do
     [
-      "text-[#727272] [&_.dropzone-wrapper]:border-[#727272] [&_.dropzone-wrapper]:bg-[#F3F3F3]",
-      "dark:text-[#BBBBBB] dark:[&_.dropzone-wrapper]:border-[#BBBBBB] dark:[&_.dropzone-wrapper]:bg-[#4B4B4B]"
+      "text-silver-hover-light [&_.dropzone-wrapper]:border-silver-hover-light [&_.dropzone-wrapper]:bg-silver-bordered-bg-light",
+      "dark:text-silver-hover-dark dark:[&_.dropzone-wrapper]:border-silver-hover-dark dark:[&_.dropzone-wrapper]:bg-silver-bordered-bg-dark"
     ]
   end
 
   defp color_variant("transparent", "natural") do
     [
-      "text-[#4B4B4B] dark:text-[#DDDDDD]"
+      "text-natural-light dark:text-natural-dark"
     ]
   end
 
   defp color_variant("transparent", "primary") do
     [
-      "text-[#007F8C] dark:text-[#01B8CA]"
+      "text-primary-light dark:text-primary-dark"
     ]
   end
 
   defp color_variant("transparent", "secondary") do
     [
-      "text-[#266EF1] dark:text-[#6DAAFB]"
+      "text-secondary-light dark:text-secondary-dark"
     ]
   end
 
   defp color_variant("transparent", "success") do
     [
-      "text-[#0E8345] dark:text-[#06C167]"
+      "text-success-light dark:text-success-dark"
     ]
   end
 
   defp color_variant("transparent", "warning") do
     [
-      "text-[#CA8D01] dark:text-[#FDC034]"
+      "text-warning-light dark:text-warning-dark"
     ]
   end
 
   defp color_variant("transparent", "danger") do
     [
-      "text-[#DE1135] dark:text-[#FC7F79]"
+      "text-danger-light dark:text-danger-dark"
     ]
   end
 
   defp color_variant("transparent", "info") do
     [
-      "text-[#0B84BA] dark:text-[#3EB7ED]"
+      "text-info-light dark:text-info-dark"
     ]
   end
 
   defp color_variant("transparent", "misc") do
     [
-      "text-[#8750C5] dark:text-[#BA83F9]"
+      "text-misc-light dark:text-misc-dark"
     ]
   end
 
   defp color_variant("transparent", "dawn") do
     [
-      "text-[#A86438] dark:text-[#DB976B]"
+      "text-dawn-light dark:text-dawn-dark"
     ]
   end
 
   defp color_variant("transparent", "silver") do
     [
-      "text-[#868686] dark:text-[#A6A6A6]"
+      "text-silver-light dark:text-silver-dark"
     ]
   end
 
   defp color_variant("gradient", "natural") do
     [
-      "[&_.dropzone-wrapper]:bg-gradient-to-br from-[#282828] to-[#727272] text-white",
-      "dark:from-[#A6A6A6] dark:to-[#FFFFFF] dark:text-black"
+      "[&_.dropzone-wrapper]:bg-gradient-to-br from-gradient-natural-from-light to-gradient-natural-to-light text-white",
+      "dark:from-gradient-natural-from-dark dark:to-white dark:text-black"
     ]
   end
 
   defp color_variant("gradient", "primary") do
     [
-      "[&_.dropzone-wrapper]:bg-gradient-to-br from-[#016974] to-[#01B8CA] text-white",
-      "dark:from-[#01B8CA] dark:to-[#B0E7EF] dark:text-black"
+      "[&_.dropzone-wrapper]:bg-gradient-to-br from-gradient-primary-from-light to-gradient-primary-to-light text-white",
+      "dark:from-gradient-primary-from-dark dark:to-gradient-primary-to-dark dark:text-black"
     ]
   end
 
   defp color_variant("gradient", "secondary") do
     [
-      "[&_.dropzone-wrapper]:bg-gradient-to-br from-[#175BCC] to-[#6DAAFB] text-white",
-      "dark:from-[#6DAAFB] dark:to-[#CDDEFF] dark:text-black"
+      "[&_.dropzone-wrapper]:bg-gradient-to-br from-gradient-secondary-from-light to-gradient-secondary-to-light text-white",
+      "dark:from-gradient-secondary-from-dark dark:to-gradient-secondary-to-dark dark:text-black"
     ]
   end
 
   defp color_variant("gradient", "success") do
     [
-      "[&_.dropzone-wrapper]:bg-gradient-to-br from-[#166C3B] to-[#06C167] text-white",
-      "dark:from-[#06C167] dark:to-[#B1EAC2] dark:text-black"
+      "[&_.dropzone-wrapper]:bg-gradient-to-br from-gradient-success-from-light to-gradient-success-to-light text-white",
+      "dark:from-gradient-success-from-dark dark:to-gradient-success-to-dark dark:text-black"
     ]
   end
 
   defp color_variant("gradient", "warning") do
     [
-      "[&_.dropzone-wrapper]:bg-gradient-to-br from-[#976A01] to-[#FDC034] text-white",
-      "dark:from-[#FDC034] dark:to-[#FEDF99] dark:text-black"
+      "[&_.dropzone-wrapper]:bg-gradient-to-br from-gradient-warning-from-light to-gradient-warning-to-light text-white",
+      "dark:from-gradient-warning-from-dark dark:to-gradient-warning-to-dark dark:text-black"
     ]
   end
 
   defp color_variant("gradient", "danger") do
     [
-      "[&_.dropzone-wrapper]:bg-gradient-to-br from-[#BB032A] to-[#FC7F79] text-white",
-      "dark:from-[#FC7F79] dark:to-[#FFD2CD] dark:text-black"
+      "[&_.dropzone-wrapper]:bg-gradient-to-br from-gradient-danger-from-light to-gradient-danger-to-light text-white",
+      "dark:from-gradient-danger-from-dark dark:to-gradient-danger-to-dark dark:text-black"
     ]
   end
 
   defp color_variant("gradient", "info") do
     [
-      "[&_.dropzone-wrapper]:bg-gradient-to-br from-[#08638C] to-[#3EB7ED] text-white",
-      "dark:from-[#3EB7ED] dark:to-[#9FDBF6] dark:text-black"
+      "[&_.dropzone-wrapper]:bg-gradient-to-br from-gradient-info-from-light to-gradient-info-to-light text-white",
+      "dark:from-gradient-info-from-dark dark:to-gradient-info-to-dark dark:text-black"
     ]
   end
 
   defp color_variant("gradient", "misc") do
     [
-      "[&_.dropzone-wrapper]:bg-gradient-to-br from-[#653C94] to-[#BA83F9] text-white",
-      "dark:from-[#BA83F9] dark:to-[#DDC1FC] dark:text-black"
+      "[&_.dropzone-wrapper]:bg-gradient-to-br from-gradient-misc-from-light to-gradient-misc-to-light text-white",
+      "dark:from-gradient-misc-from-dark dark:to-gradient-misc-to-dark dark:text-black"
     ]
   end
 
   defp color_variant("gradient", "dawn") do
     [
-      "[&_.dropzone-wrapper]:bg-gradient-to-br from-[#7E4B2A] to-[#DB976B] text-white",
-      "dark:from-[#DB976B] dark:to-[#EDCBB5] dark:text-black"
+      "[&_.dropzone-wrapper]:bg-gradient-to-br from-gradient-dawn-from-light to-gradient-dawn-to-light text-white",
+      "dark:from-gradient-dawn-from-dark dark:to-gradient-dawn-to-dark dark:text-black"
     ]
   end
 
   defp color_variant("gradient", "silver") do
     [
-      "[&_.dropzone-wrapper]:bg-gradient-to-br from-[#5E5E5E] to-[#A6A6A6] text-white",
-      "dark:from-[#868686] dark:to-[#BBBBBB] dark:text-black"
+      "[&_.dropzone-wrapper]:bg-gradient-to-br from-gradient-silver-from-light to-gradient-silver-to-light text-white",
+      "dark:from-gradient-silver-from-dark dark:to-gradient-silver-to-dark dark:text-black"
     ]
   end
 

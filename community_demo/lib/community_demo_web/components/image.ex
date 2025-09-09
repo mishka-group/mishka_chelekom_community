@@ -47,7 +47,7 @@ defmodule CommunityDemoWeb.Components.Image do
     doc: "high, low, auto is default"
 
   attr :width, :integer, default: nil, doc: "Determines width style"
-  attr :height, :integer, default: nil, doc: "Determines width height"
+  attr :height, :integer, default: nil, doc: "Determines height style"
 
   attr :sizes, :string,
     default: nil,

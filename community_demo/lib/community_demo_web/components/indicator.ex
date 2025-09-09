@@ -99,7 +99,7 @@ defmodule CommunityDemoWeb.Components.Indicator do
       class={[
         indicator_size(@size),
         color_class(@color),
-        "indicator block rounded-full absolute -translate-y-1/2 translate-x-1/2 left-auto top-0 right-0  indicator-top-right",
+        "indicator block rounded-full absolute -translate-y-1/2 translate-x-1/2 left-auto top-0 right-0 indicator-top-right",
         !is_nil(@rest[:pinging]) && "animate-ping",
         @class
       ]}
@@ -147,7 +147,7 @@ defmodule CommunityDemoWeb.Components.Indicator do
       class={[
         indicator_size(@size),
         color_class(@color),
-        "indicator block rounded-full absolute translate-y-1/2 -translate-x-1/2 right-auto bottom-0 left-0  indicator-bottom-left",
+        "indicator block rounded-full absolute translate-y-1/2 -translate-x-1/2 right-auto bottom-0 left-0 indicator-bottom-left",
         !is_nil(@rest[:pinging]) && "animate-ping",
         @class
       ]}
@@ -179,7 +179,7 @@ defmodule CommunityDemoWeb.Components.Indicator do
       class={[
         indicator_size(@size),
         color_class(@color),
-        "indicator block rounded-full absolute translate-y-1/2 translate-x-1/2 left-auto bottom-0 right-0  indicator-bottom-right",
+        "indicator block rounded-full absolute translate-y-1/2 translate-x-1/2 left-auto bottom-0 right-0 indicator-bottom-right",
         !is_nil(@rest[:pinging]) && "animate-ping",
         @class
       ]}
@@ -216,31 +216,31 @@ defmodule CommunityDemoWeb.Components.Indicator do
 
   defp indicator_size(params) when is_binary(params), do: params
 
-  defp color_class("base"), do: "bg-[#e4e4e7] dark:bg-[#27272a]"
+  defp color_class("base"), do: "bg-base-border-light dark:bg-base-border-dark"
 
   defp color_class("white"), do: "bg-white"
 
-  defp color_class("natural"), do: "bg-[#4B4B4B] dark:bg-[#DDDDDD]"
+  defp color_class("natural"), do: "bg-natural-light dark:bg-natural-dark"
 
-  defp color_class("primary"), do: "bg-[#007F8C] dark:bg-[#01B8CA]"
+  defp color_class("primary"), do: "bg-primary-light dark:bg-primary-dark"
 
-  defp color_class("secondary"), do: "bg-[#266EF1] dark:bg-[#6DAAFB]"
+  defp color_class("secondary"), do: "bg-secondary-light dark:bg-secondary-dark"
 
-  defp color_class("success"), do: "bg-[#0E8345] dark:bg-[#06C167]"
+  defp color_class("success"), do: "bg-success-light dark:bg-success-dark"
 
-  defp color_class("warning"), do: "bg-[#CA8D01] dark:bg-[#FDC034]"
+  defp color_class("warning"), do: "bg-warning-light dark:bg-warning-dark"
 
-  defp color_class("danger"), do: "bg-[#DE1135] dark:bg-[#FC7F79]"
+  defp color_class("danger"), do: "bg-danger-light dark:bg-danger-dark"
 
-  defp color_class("info"), do: "bg-[#0B84BA] dark:bg-[#3EB7ED]"
+  defp color_class("info"), do: "bg-info-light dark:bg-info-dark"
 
-  defp color_class("misc"), do: "bg-[#8750C5] dark:bg-[#BA83F9]"
+  defp color_class("misc"), do: "bg-misc-light dark:bg-misc-dark"
 
-  defp color_class("dawn"), do: "bg-[#A86438] dark:bg-[#DB976B]"
+  defp color_class("dawn"), do: "bg-dawn-light dark:bg-dawn-dark"
 
-  defp color_class("silver"), do: "bg-[#868686] dark:bg-[#A6A6A6]"
+  defp color_class("silver"), do: "bg-silver-light dark:bg-silver-dark"
 
-  defp color_class("dark"), do: "bg-[#282828]"
+  defp color_class("dark"), do: "bg-default-dark-bg"
 
   defp color_class(params) when is_binary(params), do: params
 

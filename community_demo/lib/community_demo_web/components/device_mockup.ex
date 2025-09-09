@@ -130,7 +130,7 @@ defmodule CommunityDemoWeb.Components.DeviceMockup do
       <div class="mock-base relative mx-auto border-[10px] rounded-[2.5rem] h-[213px] w-[208px]">
         <div class="mock-base h-[41px] w-[6px] absolute -end-[16px] top-[40px] rounded-e-lg"></div>
         <div class="mock-base h-[32px] w-[6px] absolute -end-[16px] top-[88px] rounded-e-lg"></div>
-        <div class="bg-white dark:bg-[#404040] rounded-[2rem] overflow-hidden h-[193px] w-[188px]">
+        <div class="bg-white dark:bg-default-device-dark rounded-[2rem] overflow-hidden h-[193px] w-[188px]">
           <.image
             :if={!is_nil(@image)}
             class={@image_class || "h-[193px] w-[188px]"}
@@ -155,7 +155,7 @@ defmodule CommunityDemoWeb.Components.DeviceMockup do
         <div class="mock-base h-[46px] w-[3px] absolute -start-[17px] top-[124px] rounded-s-lg"></div>
         <div class="mock-base h-[46px] w-[3px] absolute -start-[17px] top-[178px] rounded-s-lg"></div>
         <div class="mock-base h-[64px] w-[3px] absolute -end-[17px] top-[142px] rounded-e-lg"></div>
-        <div class="rounded overflow-hidden w-[272px] h-[572px] bg-white dark:bg-[#404040]">
+        <div class="rounded overflow-hidden w-[272px] h-[572px] bg-white dark:bg-default-device-dark">
           <.image
             :if={!is_nil(@image)}
             class={@image_class || "w-[272px] h-[572px]"}
@@ -173,7 +173,7 @@ defmodule CommunityDemoWeb.Components.DeviceMockup do
     ~H"""
     <div class={["max-w-fit md:max-w-[512px]", color_class(@color), @class]}>
       <div class="mock-base relative mx-auto border-[8px] rounded-t-xl h-[172px] max-w-[301px] md:h-[294px] md:max-w-[512px]">
-        <div class="rounded overflow-hidden h-[156px] md:h-[278px] bg-white dark:bg-[#404040]">
+        <div class="rounded overflow-hidden h-[156px] md:h-[278px] bg-white dark:bg-default-device-dark">
           <.image
             :if={!is_nil(@image)}
             class={@image_class || "h-[140px] md:h-[262px] w-full"}
@@ -199,7 +199,7 @@ defmodule CommunityDemoWeb.Components.DeviceMockup do
         <div class="mock-base h-[46px] w-[3px] absolute -start-[17px] top-[124px] rounded-s-lg"></div>
         <div class="mock-base h-[46px] w-[3px] absolute -start-[17px] top-[178px] rounded-s-lg"></div>
         <div class="mock-base h-[64px] w-[3px] absolute -end-[17px] top-[142px] rounded-e-lg"></div>
-        <div class="dark:bg-[#404040] bg-white rounded-3xl overflow-hidden h-[426px] md:h-[654px]">
+        <div class="dark:bg-default-device-dark bg-white rounded-3xl overflow-hidden h-[426px] md:h-[654px]">
           <.image
             :if={!is_nil(@image)}
             class={@image_class || "h-[426px] md:h-[654px]"}
@@ -217,7 +217,7 @@ defmodule CommunityDemoWeb.Components.DeviceMockup do
     ~H"""
     <div class={["max-w-fit md:max-w-[512px]", color_class(@color), @class]}>
       <div class="mock-base relative mx-auto border-[16px] rounded-t-xl h-[172px] max-w-[301px] md:h-[294px] md:max-w-[512px]">
-        <div class="overflow-hidden h-[140px] md:h-[262px] bg-white dark:bg-[#404040]">
+        <div class="overflow-hidden h-[140px] md:h-[262px] bg-white dark:bg-default-device-dark">
           <.image
             :if={!is_nil(@image)}
             class={@image_class || "h-[140px] md:h-[262px] w-full"}
@@ -244,7 +244,7 @@ defmodule CommunityDemoWeb.Components.DeviceMockup do
         <div class="mock-base h-[46px] w-[3px] absolute -start-[17px] top-[124px] rounded-s-lg"></div>
         <div class="mock-base h-[46px] w-[3px] absolute -start-[17px] top-[178px] rounded-s-lg"></div>
         <div class="mock-base h-[64px] w-[3px] absolute -end-[17px] top-[142px] rounded-e-lg"></div>
-        <div class="bg-white dark:bg-[#404040] rounded-3xl overflow-hidden w-[272px] h-[572px]">
+        <div class="bg-white dark:bg-default-device-dark rounded-3xl overflow-hidden w-[272px] h-[572px]">
           <.image
             :if={!is_nil(@image)}
             class={@image_class || "w-[272px] h-[572px]"}
@@ -260,78 +260,78 @@ defmodule CommunityDemoWeb.Components.DeviceMockup do
 
   defp color_class("base") do
     [
-      "[&_.mock-base]:bg-[#f1f3f5] [&_.mock-darker-base]:bg-[#dee2e6] [&_.mock-base]:border-[#e4e4e7]",
-      "dark:[&_.mock-base]:bg-[#2e2e2e] dark:[&_.mock-darker-base]:bg-[#424242] dark:[&_.mock-base]:border-[#27272a]"
+      "[&_.mock-base]:bg-base-disabled-bg-light [&_.mock-darker-base]:bg-base-disabled-border-light [&_.mock-base]:border-base-border-light",
+      "dark:[&_.mock-base]:bg-base-disabled-bg-dark dark:[&_.mock-darker-base]:bg-base-disabled-border-dark dark:[&_.mock-base]:border-base-border-dark"
     ]
   end
 
   defp color_class("natural") do
     [
-      "[&_.mock-base]:bg-[#4B4B4B] [&_.mock-darker-base]:bg-black [&_.mock-base]:border-[#282828]",
-      "dark:[&_.mock-base]:bg-[#DDDDDD] dark:[&_.mock-darker-base]:bg-white dark:[&_.mock-base]:border-[#E8E8E8]"
+      "[&_.mock-base]:bg-natural-light [&_.mock-darker-base]:bg-black [&_.mock-base]:border-natural-border-light",
+      "dark:[&_.mock-base]:bg-natural-dark dark:[&_.mock-darker-base]:bg-white dark:[&_.mock-base]:border-natural-border-dark"
     ]
   end
 
   defp color_class("primary") do
     [
-      "[&_.mock-base]:bg-[#007F8C] [&_.mock-darker-base]:bg-[#1A535A] [&_.mock-base]:border-[#016974]",
-      "dark:[&_.mock-base]:bg-[#01B8CA] dark:[&_.mock-darker-base]:bg-[#B0E7EF] dark:[&_.mock-base]:border-[#77D5E3]"
+      "[&_.mock-base]:bg-primary-light [&_.mock-darker-base]:bg-primary-indicator-light [&_.mock-base]:border-primary-bordered-text-light",
+      "dark:[&_.mock-base]:bg-primary-dark dark:[&_.mock-darker-base]:bg-primary-indicator-dark dark:[&_.mock-base]:border-primary-bordered-text-dark"
     ]
   end
 
   defp color_class("secondary") do
     [
-      "[&_.mock-base]:bg-[#266EF1] [&_.mock-darker-base]:bg-[#1948A3] [&_.mock-base]:border-[#175BCC]",
-      "dark:[&_.mock-base]:bg-[#6DAAFB] dark:[&_.mock-darker-base]:bg-[#CDDEFF] dark:[&_.mock-base]:border-[#A8C8FE]"
+      "[&_.mock-base]:bg-secondary-light [&_.mock-darker-base]:bg-secondary-indicator-light [&_.mock-base]:border-secondary-bordered-text-light",
+      "dark:[&_.mock-base]:bg-secondary-dark dark:[&_.mock-darker-base]:bg-secondary-indicator-dark dark:[&_.mock-base]:border-secondary-bordered-text-dark"
     ]
   end
 
   defp color_class("success") do
     [
-      "[&_.mock-base]:bg-[#0E8345] [&_.mock-darker-base]:bg-[#0D572D] [&_.mock-base]:border-[#166C3B]",
-      "dark:[&_.mock-base]:bg-[#06C167] dark:[&_.mock-darker-base]:bg-[#B1EAC2] dark:[&_.mock-base]:border-[#7FD99A]"
+      "[&_.mock-base]:bg-success-light [&_.mock-darker-base]:bg-success-indicator-alt-light [&_.mock-base]:border-success-bordered-text-light",
+      "dark:[&_.mock-base]:bg-success-dark dark:[&_.mock-darker-base]:bg-success-indicator-dark dark:[&_.mock-base]:border-success-bordered-text-dark"
     ]
   end
 
   defp color_class("warning") do
     [
-      "[&_.mock-base]:bg-[#CA8D01] [&_.mock-darker-base]:bg-[#654600] [&_.mock-base]:border-[#976A01]",
-      "dark:[&_.mock-base]:bg-[#FDC034] dark:[&_.mock-darker-base]:bg-[#FEDF99] dark:[&_.mock-base]:border-[#FDD067]"
+      "[&_.mock-base]:bg-warning-light [&_.mock-darker-base]:bg-warning-indicator-alt-light [&_.mock-base]:border-warning-bordered-text-light",
+      "dark:[&_.mock-base]:bg-warning-dark dark:[&_.mock-darker-base]:bg-warning-indicator-dark dark:[&_.mock-base]:border-warning-bordered-text-dark"
     ]
   end
 
   defp color_class("danger") do
     [
-      "[&_.mock-base]:bg-[#DE1135] [&_.mock-darker-base]:bg-[#950F22] [&_.mock-base]:border-[#BB032A]",
-      "dark:[&_.mock-base]:bg-[#FC7F79] dark:[&_.mock-darker-base]:bg-[#FFD2CD] dark:[&_.mock-base]:border-[#FFB2AB]"
+      "[&_.mock-base]:bg-danger-light [&_.mock-darker-base]:bg-danger-indicator-alt-light [&_.mock-base]:border-danger-bordered-text-light",
+      "dark:[&_.mock-base]:bg-danger-dark dark:[&_.mock-darker-base]:bg-danger-indicator-dark dark:[&_.mock-base]:border-danger-bordered-text-dark"
     ]
   end
 
   defp color_class("info") do
     [
-      "[&_.mock-base]:bg-[#0B84BA] [&_.mock-darker-base]:bg-[#06425D] [&_.mock-base]:border-[#08638C]",
-      "dark:[&_.mock-base]:bg-[#3EB7ED] dark:[&_.mock-darker-base]:bg-[#9FDBF6] dark:[&_.mock-base]:border-[#6EC9F2]"
+      "[&_.mock-base]:bg-info-light [&_.mock-darker-base]:bg-info-indicator-alt-light [&_.mock-base]:border-info-hover-light",
+      "dark:[&_.mock-base]:bg-info-dark dark:[&_.mock-darker-base]:bg-info-indicator-dark dark:[&_.mock-base]:border-info-bordered-text-dark"
     ]
   end
 
   defp color_class("misc") do
     [
-      "[&_.mock-base]:bg-[#8750C5] [&_.mock-darker-base]:bg-[#442863] [&_.mock-base]:border-[#653C94]",
-      "dark:[&_.mock-base]:bg-[#BA83F9] dark:[&_.mock-darker-base]:bg-[#DDC1FC] dark:[&_.mock-base]:border-[#CBA2FA]"
+      "[&_.mock-base]:bg-misc-light [&_.mock-darker-base]:bg-misc-indicator-alt-light [&_.mock-base]:border-misc-bordered-text-light",
+      "dark:[&_.mock-base]:bg-misc-dark dark:[&_.mock-darker-base]:bg-misc-indicator-dark dark:[&_.mock-base]:border-misc-bordered-text-dark"
     ]
   end
 
   defp color_class("dawn") do
     [
-      "[&_.mock-base]:bg-[#A86438] [&_.mock-darker-base]:bg-[#54321C] [&_.mock-base]:border-[#7E4B2A]",
-      "dark:[&_.mock-base]:bg-[#DB976B] dark:[&_.mock-darker-base]:bg-[#EDCBB5] dark:[&_.mock-base]:border-[#E4B190]"
+      "[&_.mock-base]:bg-dawn-light [&_.mock-darker-base]:bg-dawn-indicator-alt-light [&_.mock-base]:border-dawn-bordered-text-light",
+      "dark:[&_.mock-base]:bg-dawn-dark dark:[&_.mock-darker-base]:bg-dawn-indicator-dark dark:[&_.mock-base]:border-dawn-bordered-text-dark"
     ]
   end
 
   defp color_class("silver") do
     [
-      "[&_.mock-base]:bg-[#868686] [&_.mock-darker-base]:bg-[#5E5E5E] [&_.mock-base]:border-[#727272]",
-      "dark:[&_.mock-base]:bg-[#A6A6A6] dark:[&_.mock-darker-base]:bg-[#DDDDDD] dark:[&_.mock-base]:border-[#BBBBBB]"
+      "[&_.mock-base]:bg-silver-light [&_.mock-darker-base]:bg-silver-indicator-alt-light [&_.mock-base]:border-silver-bordered-text-light",
+      "dark:[&_.mock-base]:bg-silver-dark dark:[&_.mock-darker-base]:bg-silver-indicator-dark dark:[&_.mock-base]:border-silver-bordered-text-dark"
     ]
   end
 end
