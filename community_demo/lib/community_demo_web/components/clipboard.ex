@@ -130,7 +130,7 @@ defmodule CommunityDemoWeb.Components.Clipboard do
 
   attr :content_class, :string,
     default: "block mb-2",
-    doc: "CSS class for styling the status message shown after a copy operation."
+    doc: "CSS class for styling the content shown in the clipboard container."
 
   attr :trigger_class, :string,
     default: nil,

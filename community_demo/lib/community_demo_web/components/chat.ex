@@ -312,10 +312,10 @@ defmodule CommunityDemoWeb.Components.Chat do
 
   defp color_variant("base", _) do
     [
-      "[&>.chat-section-bubble]:bg-white [&>.chat-section-bubble]:text-[#09090b]",
-      "[&>.chat-section-bubble]:border-[#e4e4e7] [&>.chat-section-bubble]:shadow-sm",
-      "dark:[&>.chat-section-bubble]:bg-[#18181B] dark:[&>.chat-section-bubble]:text-[#FAFAFA]",
-      "dark:[&>.chat-section-bubble]:border-[#27272a]"
+      "[&>.chat-section-bubble]:bg-white [&>.chat-section-bubble]:text-base-text-light",
+      "[&>.chat-section-bubble]:border-base-border-light [&>.chat-section-bubble]:shadow-sm",
+      "dark:[&>.chat-section-bubble]:bg-base-bg-dark dark:[&>.chat-section-bubble]:text-base-text-dark",
+      "dark:[&>.chat-section-bubble]:border-base-border-dark"
     ]
   end
 
@@ -327,449 +327,449 @@ defmodule CommunityDemoWeb.Components.Chat do
 
   defp color_variant("default", "dark") do
     [
-      "[&>.chat-section-bubble]:bg-[#282828] [&>.chat-section-bubble]:text-white"
+      "[&>.chat-section-bubble]:bg-default-dark-bg [&>.chat-section-bubble]:text-white"
     ]
   end
 
   defp color_variant("default", "natural") do
     [
-      "[&>.chat-section-bubble]:bg-[#4B4B4B] [&>.chat-section-bubble]:text-white",
-      "dark:[&>.chat-section-bubble]:bg-[#DDDDDD] dark:[&>.chat-section-bubble]:text-black"
+      "[&>.chat-section-bubble]:bg-natural-light [&>.chat-section-bubble]:text-white",
+      "dark:[&>.chat-section-bubble]:bg-natural-dark dark:[&>.chat-section-bubble]:text-black"
     ]
   end
 
   defp color_variant("default", "primary") do
     [
-      "[&>.chat-section-bubble]:bg-[#007F8C] [&>.chat-section-bubble]:text-white",
-      "dark:[&>.chat-section-bubble]:bg-[#01B8CA] dark:[&>.chat-section-bubble]:text-black"
+      "[&>.chat-section-bubble]:bg-primary-light [&>.chat-section-bubble]:text-white",
+      "dark:[&>.chat-section-bubble]:bg-primary-dark dark:[&>.chat-section-bubble]:text-black"
     ]
   end
 
   defp color_variant("default", "secondary") do
     [
-      "[&>.chat-section-bubble]:bg-[#266EF1] [&>.chat-section-bubble]:text-white",
-      "dark:[&>.chat-section-bubble]:bg-[#6DAAFB] dark:[&>.chat-section-bubble]:text-black"
+      "[&>.chat-section-bubble]:bg-secondary-light [&>.chat-section-bubble]:text-white",
+      "dark:[&>.chat-section-bubble]:bg-secondary-dark dark:[&>.chat-section-bubble]:text-black"
     ]
   end
 
   defp color_variant("default", "success") do
     [
-      "[&>.chat-section-bubble]:bg-[#0E8345] [&>.chat-section-bubble]:text-white",
-      "dark:[&>.chat-section-bubble]:bg-[#06C167] dark:[&>.chat-section-bubble]:text-black"
+      "[&>.chat-section-bubble]:bg-success-light [&>.chat-section-bubble]:text-white",
+      "dark:[&>.chat-section-bubble]:bg-success-dark dark:[&>.chat-section-bubble]:text-black"
     ]
   end
 
   defp color_variant("default", "warning") do
     [
-      "[&>.chat-section-bubble]:bg-[#CA8D01] [&>.chat-section-bubble]:text-white",
-      "dark:[&>.chat-section-bubble]:bg-[#FDC034] dark:[&>.chat-section-bubble]:text-black"
+      "[&>.chat-section-bubble]:bg-warning-light [&>.chat-section-bubble]:text-white",
+      "dark:[&>.chat-section-bubble]:bg-warning-dark dark:[&>.chat-section-bubble]:text-black"
     ]
   end
 
   defp color_variant("default", "danger") do
     [
-      "[&>.chat-section-bubble]:bg-[#DE1135] [&>.chat-section-bubble]:text-white",
-      "dark:[&>.chat-section-bubble]:bg-[#FC7F79] dark:[&>.chat-section-bubble]:text-black"
+      "[&>.chat-section-bubble]:bg-danger-light [&>.chat-section-bubble]:text-white",
+      "dark:[&>.chat-section-bubble]:bg-danger-dark dark:[&>.chat-section-bubble]:text-black"
     ]
   end
 
   defp color_variant("default", "info") do
     [
-      "[&>.chat-section-bubble]:bg-[#0B84BA] [&>.chat-section-bubble]:text-white",
-      "dark:[&>.chat-section-bubble]:bg-[#3EB7ED] dark:[&>.chat-section-bubble]:text-black"
+      "[&>.chat-section-bubble]:bg-info-light [&>.chat-section-bubble]:text-white",
+      "dark:[&>.chat-section-bubble]:bg-info-dark dark:[&>.chat-section-bubble]:text-black"
     ]
   end
 
   defp color_variant("default", "misc") do
     [
-      "[&>.chat-section-bubble]:bg-[#8750C5] [&>.chat-section-bubble]:text-white",
-      "dark:[&>.chat-section-bubble]:bg-[#BA83F9] dark:[&>.chat-section-bubble]:text-black"
+      "[&>.chat-section-bubble]:bg-misc-light [&>.chat-section-bubble]:text-white",
+      "dark:[&>.chat-section-bubble]:bg-misc-dark dark:[&>.chat-section-bubble]:text-black"
     ]
   end
 
   defp color_variant("default", "dawn") do
     [
-      "[&>.chat-section-bubble]:bg-[#A86438] [&>.chat-section-bubble]:text-white",
-      "dark:[&>.chat-section-bubble]:bg-[#DB976B] dark:[&>.chat-section-bubble]:text-black"
+      "[&>.chat-section-bubble]:bg-dawn-light [&>.chat-section-bubble]:text-white",
+      "dark:[&>.chat-section-bubble]:bg-dawn-dark dark:[&>.chat-section-bubble]:text-black"
     ]
   end
 
   defp color_variant("default", "silver") do
     [
-      "[&>.chat-section-bubble]:bg-[#868686] [&>.chat-section-bubble]:text-white",
-      "dark:[&>.chat-section-bubble]:bg-[#A6A6A6] dark:[&>.chat-section-bubble]:text-black"
+      "[&>.chat-section-bubble]:bg-silver-light [&>.chat-section-bubble]:text-white",
+      "dark:[&>.chat-section-bubble]:bg-silver-dark dark:[&>.chat-section-bubble]:text-black"
     ]
   end
 
   defp color_variant("outline", "natural") do
     [
-      "[&>.chat-section-bubble]:text-[#4B4B4B] [&>.chat-section-bubble]:border-[#4B4B4B]",
-      "dark:[&>.chat-section-bubble]:text-[#DDDDDD] dark:[&>.chat-section-bubble]:border-[#DDDDDD]"
+      "[&>.chat-section-bubble]:text-natural-light [&>.chat-section-bubble]:border-natural-light",
+      "dark:[&>.chat-section-bubble]:text-natural-dark dark:[&>.chat-section-bubble]:border-natural-dark"
     ]
   end
 
   defp color_variant("outline", "primary") do
     [
-      "[&>.chat-section-bubble]:text-[#007F8C] [&>.chat-section-bubble]:border-[#007F8C] ",
-      "dark:[&>.chat-section-bubble]:text-[#01B8CA] dark:[&>.chat-section-bubble]:border-[#01B8CA]"
+      "[&>.chat-section-bubble]:text-primary-light [&>.chat-section-bubble]:border-primary-light",
+      "dark:[&>.chat-section-bubble]:text-primary-dark dark:[&>.chat-section-bubble]:border-primary-dark"
     ]
   end
 
   defp color_variant("outline", "secondary") do
     [
-      "[&>.chat-section-bubble]:text-[#266EF1] [&>.chat-section-bubble]:border-[#266EF1]",
-      "dark:[&>.chat-section-bubble]:text-[#6DAAFB] dark:[&>.chat-section-bubble]:border-[#6DAAFB]"
+      "[&>.chat-section-bubble]:text-secondary-light [&>.chat-section-bubble]:border-secondary-light",
+      "dark:[&>.chat-section-bubble]:text-secondary-dark dark:[&>.chat-section-bubble]:border-secondary-dark"
     ]
   end
 
   defp color_variant("outline", "success") do
     [
-      "[&>.chat-section-bubble]:text-[#0E8345] [&>.chat-section-bubble]:border-[#0E8345]",
-      "dark:[&>.chat-section-bubble]:text-[#06C167] dark:[&>.chat-section-bubble]:border-[#06C167]"
+      "[&>.chat-section-bubble]:text-success-light [&>.chat-section-bubble]:border-success-light",
+      "dark:[&>.chat-section-bubble]:text-success-dark dark:[&>.chat-section-bubble]:border-success-dark"
     ]
   end
 
   defp color_variant("outline", "warning") do
     [
-      "[&>.chat-section-bubble]:text-[#CA8D01] [&>.chat-section-bubble]:border-[#CA8D01]",
-      "dark:[&>.chat-section-bubble]:text-[#FDC034] dark:[&>.chat-section-bubble]:border-[#FDC034]"
+      "[&>.chat-section-bubble]:text-warning-light [&>.chat-section-bubble]:border-warning-light",
+      "dark:[&>.chat-section-bubble]:text-warning-dark dark:[&>.chat-section-bubble]:border-warning-dark"
     ]
   end
 
   defp color_variant("outline", "danger") do
     [
-      "[&>.chat-section-bubble]:text-[#DE1135] [&>.chat-section-bubble]:border-[#DE1135]",
-      "dark:[&>.chat-section-bubble]:text-[#FC7F79] dark:[&>.chat-section-bubble]:border-[#FC7F79]"
+      "[&>.chat-section-bubble]:text-danger-light [&>.chat-section-bubble]:border-danger-light",
+      "dark:[&>.chat-section-bubble]:text-danger-dark dark:[&>.chat-section-bubble]:border-danger-dark"
     ]
   end
 
   defp color_variant("outline", "info") do
     [
-      "[&>.chat-section-bubble]:text-[#0B84BA] [&>.chat-section-bubble]:border-[#0B84BA]",
-      "dark:[&>.chat-section-bubble]:text-[#3EB7ED] dark:[&>.chat-section-bubble]:border-[#3EB7ED]"
+      "[&>.chat-section-bubble]:text-info-light [&>.chat-section-bubble]:border-info-light",
+      "dark:[&>.chat-section-bubble]:text-info-dark dark:[&>.chat-section-bubble]:border-info-dark"
     ]
   end
 
   defp color_variant("outline", "misc") do
     [
-      "[&>.chat-section-bubble]:text-[#8750C5] [&>.chat-section-bubble]:border-[#8750C5]",
-      "dark:[&>.chat-section-bubble]:text-[#BA83F9] dark:[&>.chat-section-bubble]:border-[#BA83F9]"
+      "[&>.chat-section-bubble]:text-misc-light [&>.chat-section-bubble]:border-misc-light",
+      "dark:[&>.chat-section-bubble]:text-misc-dark dark:[&>.chat-section-bubble]:border-misc-dark"
     ]
   end
 
   defp color_variant("outline", "dawn") do
     [
-      "[&>.chat-section-bubble]:text-[#A86438] [&>.chat-section-bubble]:border-[#A86438]",
-      "dark:[&>.chat-section-bubble]:text-[#DB976B] dark:[&>.chat-section-bubble]:border-[#DB976B]"
+      "[&>.chat-section-bubble]:text-dawn-light [&>.chat-section-bubble]:border-dawn-light",
+      "dark:[&>.chat-section-bubble]:text-dawn-dark dark:[&>.chat-section-bubble]:border-dawn-dark"
     ]
   end
 
   defp color_variant("outline", "silver") do
     [
-      "[&>.chat-section-bubble]:text-[#868686] [&>.chat-section-bubble]:border-[#868686]",
-      "dark:[&>.chat-section-bubble]:text-[#A6A6A6] dark:[&>.chat-section-bubble]:border-[#A6A6A6]"
+      "[&>.chat-section-bubble]:text-silver-light [&>.chat-section-bubble]:border-silver-light",
+      "dark:[&>.chat-section-bubble]:text-silver-dark dark:[&>.chat-section-bubble]:border-silver-dark"
     ]
   end
 
   defp color_variant("shadow", "natural") do
     [
-      "[&>.chat-section-bubble]:bg-[#4B4B4B] [&>.chat-section-bubble]:text-white",
-      "dark:[&>.chat-section-bubble]:bg-[#DDDDDD] dark:[&>.chat-section-bubble]:text-black",
-      "[&>.chat-section-bubble]:shadow-[0px_4px_6px_-4px_rgba(134,134,134,0.5)]",
-      "[&>.chat-section-bubble]:shadow-[0px_10px_15px_-3px_rgba(134,134,134,0.5)] [&>.chat-section-bubble]:dark:shadow-none"
+      "[&>.chat-section-bubble]:bg-natural-light [&>.chat-section-bubble]:text-white",
+      "dark:[&>.chat-section-bubble]:bg-natural-dark dark:[&>.chat-section-bubble]:text-black",
+      "[&>.chat-section-bubble]:shadow-[0px_4px_6px_-4px_var(--color-shadow-natural)]",
+      "[&>.chat-section-bubble]:shadow-[0px_10px_15px_-3px_var(--color-shadow-natural)] [&>.chat-section-bubble]:dark:shadow-none"
     ]
   end
 
   defp color_variant("shadow", "primary") do
     [
-      "[&>.chat-section-bubble]:bg-[#007F8C] [&>.chat-section-bubble]:text-white",
-      "dark:[&>.chat-section-bubble]:bg-[#01B8CA] dark:[&>.chat-section-bubble]:text-black",
-      "[&>.chat-section-bubble]:shadow-[0px_4px_6px_-4px_rgba(0,149,164,0.5)]",
-      "[&>.chat-section-bubble]:shadow-[0px_10px_15px_-3px_rgba(0,149,164,0.5)] [&>.chat-section-bubble]:dark:shadow-none"
+      "[&>.chat-section-bubble]:bg-primary-light [&>.chat-section-bubble]:text-white",
+      "dark:[&>.chat-section-bubble]:bg-primary-dark dark:[&>.chat-section-bubble]:text-black",
+      "[&>.chat-section-bubble]:shadow-[0px_4px_6px_-4px_var(--color-shadow-primary)]",
+      "[&>.chat-section-bubble]:shadow-[0px_10px_15px_-3px_var(--color-shadow-primary)] [&>.chat-section-bubble]:dark:shadow-none"
     ]
   end
 
   defp color_variant("shadow", "secondary") do
     [
-      "[&>.chat-section-bubble]:bg-[#266EF1] [&>.chat-section-bubble]:text-white",
-      "dark:[&>.chat-section-bubble]:bg-[#6DAAFB] dark:[&>.chat-section-bubble]:text-black",
-      "[&>.chat-section-bubble]:shadow-[0px_4px_6px_-4px_rgba(6,139,238,0.5)]",
-      "[&>.chat-section-bubble]:shadow-[0px_10px_15px_-3px_rgba(6,139,238,0.5)] [&>.chat-section-bubble]:dark:shadow-none"
+      "[&>.chat-section-bubble]:bg-secondary-light [&>.chat-section-bubble]:text-white",
+      "dark:[&>.chat-section-bubble]:bg-secondary-dark dark:[&>.chat-section-bubble]:text-black",
+      "[&>.chat-section-bubble]:shadow-[0px_4px_6px_-4px_var(--color-shadow-secondary)]",
+      "[&>.chat-section-bubble]:shadow-[0px_10px_15px_-3px_var(--color-shadow-secondary)] [&>.chat-section-bubble]:dark:shadow-none"
     ]
   end
 
   defp color_variant("shadow", "success") do
     [
-      "[&>.chat-section-bubble]:bg-[#0E8345] [&>.chat-section-bubble]:text-white",
-      "dark:[&>.chat-section-bubble]:bg-[#06C167] dark:[&>.chat-section-bubble]:text-black",
-      "[&>.chat-section-bubble]:shadow-[0px_4px_6px_-4px_rgba(0,154,81,0.5)]",
-      "[&>.chat-section-bubble]:shadow-[0px_10px_15px_-3px_rgba(0,154,81,0.5)] [&>.chat-section-bubble]:dark:shadow-none"
+      "[&>.chat-section-bubble]:bg-success-light [&>.chat-section-bubble]:text-white",
+      "dark:[&>.chat-section-bubble]:bg-success-dark dark:[&>.chat-section-bubble]:text-black",
+      "[&>.chat-section-bubble]:shadow-[0px_4px_6px_-4px_var(--color-shadow-success)]",
+      "[&>.chat-section-bubble]:shadow-[0px_10px_15px_-3px_var(--color-shadow-success)] [&>.chat-section-bubble]:dark:shadow-none"
     ]
   end
 
   defp color_variant("shadow", "warning") do
     [
-      "[&>.chat-section-bubble]:bg-[#CA8D01] [&>.chat-section-bubble]:text-white",
-      "dark:[&>.chat-section-bubble]:bg-[#FDC034] dark:[&>.chat-section-bubble]:text-black",
-      "[&>.chat-section-bubble]:shadow-[0px_4px_6px_-4px_rgba(252,176,1,0.5)]",
-      "[&>.chat-section-bubble]:shadow-[0px_10px_15px_-3px_rgba(252,176,1,0.5)] [&>.chat-section-bubble]:dark:shadow-none"
+      "[&>.chat-section-bubble]:bg-warning-light [&>.chat-section-bubble]:text-white",
+      "dark:[&>.chat-section-bubble]:bg-warning-dark dark:[&>.chat-section-bubble]:text-black",
+      "[&>.chat-section-bubble]:shadow-[0px_4px_6px_-4px_var(--color-shadow-warning)]",
+      "[&>.chat-section-bubble]:shadow-[0px_10px_15px_-3px_var(--color-shadow-warning)] [&>.chat-section-bubble]:dark:shadow-none"
     ]
   end
 
   defp color_variant("shadow", "danger") do
     [
-      "[&>.chat-section-bubble]:bg-[#DE1135] [&>.chat-section-bubble]:text-white",
-      "dark:[&>.chat-section-bubble]:bg-[#FC7F79] dark:[&>.chat-section-bubble]:text-black",
-      "[&>.chat-section-bubble]:shadow-[0px_4px_6px_-4px_rgba(248,52,70,0.5)]",
-      "[&>.chat-section-bubble]:shadow-[0px_10px_15px_-3px_rgba(248,52,70,0.5)] [&>.chat-section-bubble]:dark:shadow-none"
+      "[&>.chat-section-bubble]:bg-danger-light [&>.chat-section-bubble]:text-white",
+      "dark:[&>.chat-section-bubble]:bg-danger-dark dark:[&>.chat-section-bubble]:text-black",
+      "[&>.chat-section-bubble]:shadow-[0px_4px_6px_-4px_var(--color-shadow-danger)]",
+      "[&>.chat-section-bubble]:shadow-[0px_10px_15px_-3px_var(--color-shadow-danger)] [&>.chat-section-bubble]:dark:shadow-none"
     ]
   end
 
   defp color_variant("shadow", "info") do
     [
-      "[&>.chat-section-bubble]:bg-[#0B84BA] [&>.chat-section-bubble]:text-white",
-      "dark:[&>.chat-section-bubble]:bg-[#3EB7ED] dark:[&>.chat-section-bubble]:text-black",
-      "[&>.chat-section-bubble]:shadow-[0px_4px_6px_-4px_rgba(14,165,233,0.5)]",
-      "[&>.chat-section-bubble]:shadow-[0px_10px_15px_-3px_rgba(14,165,233,0.5)] [&>.chat-section-bubble]:dark:shadow-none"
+      "[&>.chat-section-bubble]:bg-info-light [&>.chat-section-bubble]:text-white",
+      "dark:[&>.chat-section-bubble]:bg-info-dark dark:[&>.chat-section-bubble]:text-black",
+      "[&>.chat-section-bubble]:shadow-[0px_4px_6px_-4px_var(--color-shadow-info)]",
+      "[&>.chat-section-bubble]:shadow-[0px_10px_15px_-3px_var(--color-shadow-info)] [&>.chat-section-bubble]:dark:shadow-none"
     ]
   end
 
   defp color_variant("shadow", "misc") do
     [
-      "[&>.chat-section-bubble]:bg-[#8750C5] [&>.chat-section-bubble]:text-white",
-      "dark:[&>.chat-section-bubble]:bg-[#BA83F9] dark:[&>.chat-section-bubble]:text-black",
-      "[&>.chat-section-bubble]:shadow-[0px_4px_6px_-4px_rgba(169,100,247,0.5)]",
-      "[&>.chat-section-bubble]:shadow-[0px_10px_15px_-3px_rgba(169,100,247,0.5)] [&>.chat-section-bubble]:dark:shadow-none"
+      "[&>.chat-section-bubble]:bg-misc-light [&>.chat-section-bubble]:text-white",
+      "dark:[&>.chat-section-bubble]:bg-misc-dark dark:[&>.chat-section-bubble]:text-black",
+      "[&>.chat-section-bubble]:shadow-[0px_4px_6px_-4px_var(--color-shadow-misc)]",
+      "[&>.chat-section-bubble]:shadow-[0px_10px_15px_-3px_var(--color-shadow-misc)] [&>.chat-section-bubble]:dark:shadow-none"
     ]
   end
 
   defp color_variant("shadow", "dawn") do
     [
-      "[&>.chat-section-bubble]:bg-[#A86438] [&>.chat-section-bubble]:text-white",
-      "dark:[&>.chat-section-bubble]:bg-[#DB976B] dark:[&>.chat-section-bubble]:text-black",
-      "[&>.chat-section-bubble]:shadow-[0px_4px_6px_-4px_rgba(210,125,70,0.5)]",
-      "[&>.chat-section-bubble]:shadow-[0px_10px_15px_-3px_rgba(210,125,70,0.5)] [&>.chat-section-bubble]:dark:shadow-none"
+      "[&>.chat-section-bubble]:bg-dawn-light [&>.chat-section-bubble]:text-white",
+      "dark:[&>.chat-section-bubble]:bg-dawn-dark dark:[&>.chat-section-bubble]:text-black",
+      "[&>.chat-section-bubble]:shadow-[0px_4px_6px_-4px_var(--color-shadow-dawn)]",
+      "[&>.chat-section-bubble]:shadow-[0px_10px_15px_-3px_var(--color-shadow-dawn)] [&>.chat-section-bubble]:dark:shadow-none"
     ]
   end
 
   defp color_variant("shadow", "silver") do
     [
-      "[&>.chat-section-bubble]:bg-[#868686] [&>.chat-section-bubble]:text-white",
-      "dark:[&>.chat-section-bubble]:bg-[#A6A6A6] dark:[&>.chat-section-bubble]:text-black",
-      "[&>.chat-section-bubble]:shadow-[0px_4px_6px_-4px_rgba(134,134,134,0.5)]",
-      "[&>.chat-section-bubble]:shadow-[0px_10px_15px_-3px_rgba(134,134,134,0.5)] [&>.chat-section-bubble]:dark:shadow-none"
+      "[&>.chat-section-bubble]:bg-silver-light [&>.chat-section-bubble]:text-white",
+      "dark:[&>.chat-section-bubble]:bg-silver-dark dark:[&>.chat-section-bubble]:text-black",
+      "[&>.chat-section-bubble]:shadow-[0px_4px_6px_-4px_var(--color-shadow-silver)]",
+      "[&>.chat-section-bubble]:shadow-[0px_10px_15px_-3px_var(--color-shadow-silver)] [&>.chat-section-bubble]:dark:shadow-none"
     ]
   end
 
   defp color_variant("bordered", "white") do
     [
-      "[&>.chat-section-bubble]:bg-white [&>.chat-section-bubble]:text-black [&>.chat-section-bubble]:border-[#DDDDDD]"
+      "[&>.chat-section-bubble]:bg-white [&>.chat-section-bubble]:text-black [&>.chat-section-bubble]:border-bordered-white-border"
     ]
   end
 
   defp color_variant("bordered", "dark") do
     [
-      "[&>.chat-section-bubble]:bg-[#282828] [&>.chat-section-bubble]:text-white [&>.chat-section-bubble]:border-[#727272]"
+      "[&>.chat-section-bubble]:bg-bordered-dark-bg [&>.chat-section-bubble]:text-white [&>.chat-section-bubble]:border-bordered-dark-border"
     ]
   end
 
   defp color_variant("bordered", "natural") do
     [
-      "[&>.chat-section-bubble]:text-[#282828] [&>.chat-section-bubble]:border-[#282828] [&>.chat-section-bubble]:bg-[#F3F3F3]",
-      "dark:[&>.chat-section-bubble]:text-[#E8E8E8] dark:[&>.chat-section-bubble]:border-[#E8E8E8] dark:[&>.chat-section-bubble]:bg-[#4B4B4B]"
+      "[&>.chat-section-bubble]:text-natural-bordered-text-light [&>.chat-section-bubble]:border-natural-bordered-text-light [&>.chat-section-bubble]:bg-natural-bordered-bg-light",
+      "dark:[&>.chat-section-bubble]:text-natural-bordered-text-dark dark:[&>.chat-section-bubble]:border-natural-bordered-text-dark dark:[&>.chat-section-bubble]:bg-natural-bordered-bg-dark"
     ]
   end
 
   defp color_variant("bordered", "primary") do
     [
-      "[&>.chat-section-bubble]:text-[#016974] [&>.chat-section-bubble]:border-[#016974] [&>.chat-section-bubble]:bg-[#E2F8FB]",
-      "dark:[&>.chat-section-bubble]:text-[#77D5E3] dark:[&>.chat-section-bubble]:border-[#77D5E3] dark:[&>.chat-section-bubble]:bg-[#002D33]"
+      "[&>.chat-section-bubble]:text-primary-bordered-text-light [&>.chat-section-bubble]:border-primary-bordered-text-light [&>.chat-section-bubble]:bg-primary-bordered-bg-light",
+      "dark:[&>.chat-section-bubble]:text-primary-bordered-text-dark dark:[&>.chat-section-bubble]:border-primary-bordered-text-dark dark:[&>.chat-section-bubble]:bg-primary-bordered-bg-dark"
     ]
   end
 
   defp color_variant("bordered", "secondary") do
     [
-      "[&>.chat-section-bubble]:text-[#175BCC] [&>.chat-section-bubble]:border-[#175BCC] [&>.chat-section-bubble]:bg-[#EFF4FE]",
-      "dark:[&>.chat-section-bubble]:text-[#A9C9FF] dark:[&>.chat-section-bubble]:border-[#A9C9FF] dark:[&>.chat-section-bubble]:bg-[#002661]"
+      "[&>.chat-section-bubble]:text-secondary-bordered-text-light [&>.chat-section-bubble]:border-secondary-bordered-text-light [&>.chat-section-bubble]:bg-secondary-bordered-bg-light",
+      "dark:[&>.chat-section-bubble]:text-secondary-bordered-text-dark dark:[&>.chat-section-bubble]:border-secondary-bordered-text-dark dark:[&>.chat-section-bubble]:bg-secondary-bordered-bg-dark"
     ]
   end
 
   defp color_variant("bordered", "success") do
     [
-      "[&>.chat-section-bubble]:text-[#166C3B] [&>.chat-section-bubble]:border-[#166C3B] [&>.chat-section-bubble]:bg-[#EAF6ED]",
-      "dark:[&>.chat-section-bubble]:text-[#7FD99A] dark:[&>.chat-section-bubble]:border-[#7FD99A] dark:[&>.chat-section-bubble]:bg-[#002F14]"
+      "[&>.chat-section-bubble]:text-success-bordered-text-light [&>.chat-section-bubble]:border-success-bordered-text-light [&>.chat-section-bubble]:bg-success-bordered-bg-light",
+      "dark:[&>.chat-section-bubble]:text-success-bordered-text-dark dark:[&>.chat-section-bubble]:border-success-bordered-text-dark dark:[&>.chat-section-bubble]:bg-success-bordered-bg-dark"
     ]
   end
 
   defp color_variant("bordered", "warning") do
     [
-      "[&>.chat-section-bubble]:text-[#976A01] [&>.chat-section-bubble]:border-[#976A01] [&>.chat-section-bubble]:bg-[#FFF7E6]",
-      "dark:[&>.chat-section-bubble]:text-[#FDD067] dark:[&>.chat-section-bubble]:border-[#FDD067] dark:[&>.chat-section-bubble]:bg-[#322300]"
+      "[&>.chat-section-bubble]:text-warning-bordered-text-light [&>.chat-section-bubble]:border-warning-bordered-text-light [&>.chat-section-bubble]:bg-warning-bordered-bg-light",
+      "dark:[&>.chat-section-bubble]:text-warning-bordered-text-dark dark:[&>.chat-section-bubble]:border-warning-bordered-text-dark dark:[&>.chat-section-bubble]:bg-warning-bordered-bg-dark"
     ]
   end
 
   defp color_variant("bordered", "danger") do
     [
-      "[&>.chat-section-bubble]:text-[#BB032A] [&>.chat-section-bubble]:border-[#BB032A] [&>.chat-section-bubble]:bg-[#FFF0EE]",
-      "dark:[&>.chat-section-bubble]:text-[#FFB2AB] dark:[&>.chat-section-bubble]:border-[#FFB2AB] dark:[&>.chat-section-bubble]:bg-[#520810]"
+      "[&>.chat-section-bubble]:text-danger-bordered-text-light [&>.chat-section-bubble]:border-danger-bordered-text-light [&>.chat-section-bubble]:bg-danger-bordered-bg-light",
+      "dark:[&>.chat-section-bubble]:text-danger-bordered-text-dark dark:[&>.chat-section-bubble]:border-danger-bordered-text-dark dark:[&>.chat-section-bubble]:bg-danger-bordered-bg-dark"
     ]
   end
 
   defp color_variant("bordered", "info") do
     [
-      "[&>.chat-section-bubble]:text-[#0B84BA] [&>.chat-section-bubble]:border-[#0B84BA] [&>.chat-section-bubble]:bg-[#E7F6FD]",
-      "dark:[&>.chat-section-bubble]:text-[#6EC9F2] dark:[&>.chat-section-bubble]:border-[#6EC9F2] dark:[&>.chat-section-bubble]:bg-[#03212F]"
+      "[&>.chat-section-bubble]:text-info-bordered-text-light [&>.chat-section-bubble]:border-info-bordered-text-light [&>.chat-section-bubble]:bg-info-bordered-bg-light",
+      "dark:[&>.chat-section-bubble]:text-info-bordered-text-dark dark:[&>.chat-section-bubble]:border-info-bordered-text-dark dark:[&>.chat-section-bubble]:bg-info-bordered-bg-dark"
     ]
   end
 
   defp color_variant("bordered", "misc") do
     [
-      "[&>.chat-section-bubble]:text-[#653C94] [&>.chat-section-bubble]:border-[#653C94] [&>.chat-section-bubble]:bg-[#F6F0FE]",
-      "dark:[&>.chat-section-bubble]:text-[#CBA2FA] dark:[&>.chat-section-bubble]:border-[#CBA2FA] dark:[&>.chat-section-bubble]:bg-[#221431]"
+      "[&>.chat-section-bubble]:text-misc-bordered-text-light [&>.chat-section-bubble]:border-misc-bordered-text-light [&>.chat-section-bubble]:bg-misc-bordered-bg-light",
+      "dark:[&>.chat-section-bubble]:text-misc-bordered-text-dark dark:[&>.chat-section-bubble]:border-misc-bordered-text-dark dark:[&>.chat-section-bubble]:bg-misc-bordered-bg-dark"
     ]
   end
 
   defp color_variant("bordered", "dawn") do
     [
-      "[&>.chat-section-bubble]:text-[#7E4B2A] [&>.chat-section-bubble]:border-[#7E4B2A] [&>.chat-section-bubble]:bg-[#FBF2ED]",
-      "dark:[&>.chat-section-bubble]:text-[#E4B190] dark:[&>.chat-section-bubble]:border-[#E4B190] dark:[&>.chat-section-bubble]:bg-[#2A190E]"
+      "[&>.chat-section-bubble]:text-dawn-bordered-text-light [&>.chat-section-bubble]:border-dawn-bordered-text-light [&>.chat-section-bubble]:bg-dawn-bordered-bg-light",
+      "dark:[&>.chat-section-bubble]:text-dawn-bordered-text-dark dark:[&>.chat-section-bubble]:border-dawn-bordered-text-dark dark:[&>.chat-section-bubble]:bg-dawn-bordered-bg-dark"
     ]
   end
 
   defp color_variant("bordered", "silver") do
     [
-      "[&>.chat-section-bubble]:text-[#727272] [&>.chat-section-bubble]:border-[#727272] [&>.chat-section-bubble]:bg-[#F3F3F3]",
-      "dark:[&>.chat-section-bubble]:text-[#BBBBBB] dark:[&>.chat-section-bubble]:border-[#BBBBBB] dark:[&>.chat-section-bubble]:bg-[#4B4B4B]"
+      "[&>.chat-section-bubble]:text-silver-bordered-text-light [&>.chat-section-bubble]:border-silver-bordered-text-light [&>.chat-section-bubble]:bg-silver-bordered-bg-light",
+      "dark:[&>.chat-section-bubble]:text-silver-bordered-text-dark dark:[&>.chat-section-bubble]:border-silver-bordered-text-dark dark:[&>.chat-section-bubble]:bg-silver-bordered-bg-dark"
     ]
   end
 
   defp color_variant("transparent", "natural") do
     [
-      "[&>.chat-section-bubble]:text-[#4B4B4B] dark:[&>.chat-section-bubble]:text-[#DDDDDD]"
+      "[&>.chat-section-bubble]:text-natural-light dark:[&>.chat-section-bubble]:text-natural-dark"
     ]
   end
 
   defp color_variant("transparent", "primary") do
     [
-      "[&>.chat-section-bubble]:text-[#007F8C] dark:[&>.chat-section-bubble]:text-[#01B8CA]"
+      "[&>.chat-section-bubble]:text-primary-light dark:[&>.chat-section-bubble]:text-primary-dark"
     ]
   end
 
   defp color_variant("transparent", "secondary") do
     [
-      "[&>.chat-section-bubble]:text-[#266EF1] dark:[&>.chat-section-bubble]:text-[#6DAAFB]"
+      "[&>.chat-section-bubble]:text-secondary-light dark:[&>.chat-section-bubble]:text-secondary-dark"
     ]
   end
 
   defp color_variant("transparent", "success") do
     [
-      "[&>.chat-section-bubble]:text-[#0E8345] dark:[&>.chat-section-bubble]:text-[#06C167]"
+      "[&>.chat-section-bubble]:text-success-light dark:[&>.chat-section-bubble]:text-success-dark"
     ]
   end
 
   defp color_variant("transparent", "warning") do
     [
-      "[&>.chat-section-bubble]:text-[#CA8D01] dark:[&>.chat-section-bubble]:text-[#FDC034]"
+      "[&>.chat-section-bubble]:text-warning-light dark:[&>.chat-section-bubble]:text-warning-dark"
     ]
   end
 
   defp color_variant("transparent", "danger") do
     [
-      "[&>.chat-section-bubble]:text-[#DE1135] dark:[&>.chat-section-bubble]:text-[#FC7F79]"
+      "[&>.chat-section-bubble]:text-danger-light dark:[&>.chat-section-bubble]:text-danger-dark"
     ]
   end
 
   defp color_variant("transparent", "info") do
     [
-      "[&>.chat-section-bubble]:text-[#0B84BA] dark:[&>.chat-section-bubble]:text-[#3EB7ED]"
+      "[&>.chat-section-bubble]:text-info-light dark:[&>.chat-section-bubble]:text-info-dark"
     ]
   end
 
   defp color_variant("transparent", "misc") do
     [
-      "[&>.chat-section-bubble]:text-[#8750C5] dark:[&>.chat-section-bubble]:text-[#BA83F9]"
+      "[&>.chat-section-bubble]:text-misc-light dark:[&>.chat-section-bubble]:text-misc-dark"
     ]
   end
 
   defp color_variant("transparent", "dawn") do
     [
-      "[&>.chat-section-bubble]:text-[#A86438] dark:[&>.chat-section-bubble]:text-[#DB976B]"
+      "[&>.chat-section-bubble]:text-dawn-light dark:[&>.chat-section-bubble]:text-dawn-dark"
     ]
   end
 
   defp color_variant("transparent", "silver") do
     [
-      "[&>.chat-section-bubble]:text-[#868686] dark:[&>.chat-section-bubble]:text-[#A6A6A6]"
+      "[&>.chat-section-bubble]:text-silver-light dark:[&>.chat-section-bubble]:text-silver-dark"
     ]
   end
 
   defp color_variant("gradient", "natural") do
     [
-      "[&>.chat-section-bubble]:bg-gradient-to-br from-[#282828] to-[#727272] [&>.chat-section-bubble]:text-white",
-      "dark:from-[#A6A6A6] dark:to-[#FFFFFF] dark:[&>.chat-section-bubble]:text-black"
+      "[&>.chat-section-bubble]:bg-gradient-to-br from-gradient-natural-from-light to-gradient-natural-to-light [&>.chat-section-bubble]:text-white",
+      "dark:from-gradient-natural-from-dark dark:to-white dark:[&>.chat-section-bubble]:text-black"
     ]
   end
 
   defp color_variant("gradient", "primary") do
     [
-      "[&>.chat-section-bubble]:bg-gradient-to-br from-[#016974] to-[#01B8CA] [&>.chat-section-bubble]:text-white",
-      "dark:from-[#01B8CA] dark:to-[#B0E7EF] dark:[&>.chat-section-bubble]:text-black"
+      "[&>.chat-section-bubble]:bg-gradient-to-br from-gradient-primary-from-light to-gradient-primary-to-light [&>.chat-section-bubble]:text-white",
+      "dark:from-gradient-primary-from-dark dark:to-gradient-primary-to-dark dark:[&>.chat-section-bubble]:text-black"
     ]
   end
 
   defp color_variant("gradient", "secondary") do
     [
-      "[&>.chat-section-bubble]:bg-gradient-to-br from-[#175BCC] to-[#6DAAFB] [&>.chat-section-bubble]:text-white",
-      "dark:from-[#6DAAFB] dark:to-[#CDDEFF] dark:[&>.chat-section-bubble]:text-black"
+      "[&>.chat-section-bubble]:bg-gradient-to-br from-gradient-secondary-from-light to-gradient-secondary-to-light [&>.chat-section-bubble]:text-white",
+      "dark:from-gradient-secondary-from-dark dark:to-gradient-secondary-to-dark dark:[&>.chat-section-bubble]:text-black"
     ]
   end
 
   defp color_variant("gradient", "success") do
     [
-      "[&>.chat-section-bubble]:bg-gradient-to-br from-[#166C3B] to-[#06C167] [&>.chat-section-bubble]:text-white",
-      "dark:from-[#06C167] dark:to-[#B1EAC2] dark:[&>.chat-section-bubble]:text-black"
+      "[&>.chat-section-bubble]:bg-gradient-to-br from-gradient-success-from-light to-gradient-success-to-light [&>.chat-section-bubble]:text-white",
+      "dark:from-gradient-success-from-dark dark:to-gradient-success-to-dark dark:[&>.chat-section-bubble]:text-black"
     ]
   end
 
   defp color_variant("gradient", "warning") do
     [
-      "[&>.chat-section-bubble]:bg-gradient-to-br from-[#976A01] to-[#FDC034] [&>.chat-section-bubble]:text-white",
-      "dark:from-[#FDC034] dark:to-[#FEDF99] dark:[&>.chat-section-bubble]:text-black"
+      "[&>.chat-section-bubble]:bg-gradient-to-br from-gradient-warning-from-light to-gradient-warning-to-light [&>.chat-section-bubble]:text-white",
+      "dark:from-gradient-warning-from-dark dark:to-gradient-warning-to-dark dark:[&>.chat-section-bubble]:text-black"
     ]
   end
 
   defp color_variant("gradient", "danger") do
     [
-      "[&>.chat-section-bubble]:bg-gradient-to-br from-[#BB032A] to-[#FC7F79] [&>.chat-section-bubble]:text-white",
-      "dark:from-[#FC7F79] dark:to-[#FFD2CD] dark:[&>.chat-section-bubble]:text-black"
+      "[&>.chat-section-bubble]:bg-gradient-to-br from-gradient-danger-from-light to-gradient-danger-to-light [&>.chat-section-bubble]:text-white",
+      "dark:from-gradient-danger-from-dark dark:to-gradient-danger-to-dark dark:[&>.chat-section-bubble]:text-black"
     ]
   end
 
   defp color_variant("gradient", "info") do
     [
-      "[&>.chat-section-bubble]:bg-gradient-to-br from-[#08638C] to-[#3EB7ED] [&>.chat-section-bubble]:text-white",
-      "dark:from-[#3EB7ED] dark:to-[#9FDBF6] dark:[&>.chat-section-bubble]:text-black"
+      "[&>.chat-section-bubble]:bg-gradient-to-br from-gradient-info-from-light to-gradient-info-to-light [&>.chat-section-bubble]:text-white",
+      "dark:from-gradient-info-from-dark dark:to-gradient-info-to-dark dark:[&>.chat-section-bubble]:text-black"
     ]
   end
 
   defp color_variant("gradient", "misc") do
     [
-      "[&>.chat-section-bubble]:bg-gradient-to-br from-[#653C94] to-[#BA83F9] [&>.chat-section-bubble]:text-white",
-      "dark:from-[#BA83F9] dark:to-[#DDC1FC] dark:[&>.chat-section-bubble]:text-black"
+      "[&>.chat-section-bubble]:bg-gradient-to-br from-gradient-misc-from-light to-gradient-misc-to-light [&>.chat-section-bubble]:text-white",
+      "dark:from-gradient-misc-from-dark dark:to-gradient-misc-to-dark dark:[&>.chat-section-bubble]:text-black"
     ]
   end
 
   defp color_variant("gradient", "dawn") do
     [
-      "[&>.chat-section-bubble]:bg-gradient-to-br from-[#7E4B2A] to-[#DB976B] [&>.chat-section-bubble]:text-white",
-      "dark:from-[#DB976B] dark:to-[#EDCBB5] dark:[&>.chat-section-bubble]:text-black"
+      "[&>.chat-section-bubble]:bg-gradient-to-br from-gradient-dawn-from-light to-gradient-dawn-to-light [&>.chat-section-bubble]:text-white",
+      "dark:from-gradient-dawn-from-dark dark:to-gradient-dawn-to-dark dark:[&>.chat-section-bubble]:text-black"
     ]
   end
 
   defp color_variant("gradient", "silver") do
     [
-      "[&>.chat-section-bubble]:bg-gradient-to-br from-[#5E5E5E] to-[#A6A6A6] [&>.chat-section-bubble]:text-white",
-      "dark:from-[#868686] dark:to-[#BBBBBB] dark:[&>.chat-section-bubble]:text-black"
+      "[&>.chat-section-bubble]:bg-gradient-to-br from-gradient-silver-from-light to-gradient-silver-to-light [&>.chat-section-bubble]:text-white",
+      "dark:from-gradient-silver-from-dark dark:to-gradient-silver-to-dark dark:[&>.chat-section-bubble]:text-black"
     ]
   end
 

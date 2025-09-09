@@ -231,7 +231,7 @@ defmodule CommunityDemoWeb.Components.Avatar do
   end
 
   defp image_color("base") do
-    "border-[#e4e4e7] dark:border-[#27272a]"
+    "border-base-border-light dark:border-base-border-dark"
   end
 
   defp image_color("white") do
@@ -239,133 +239,133 @@ defmodule CommunityDemoWeb.Components.Avatar do
   end
 
   defp image_color("dark") do
-    "border-[#282828]"
+    "border-bordered-dark-bg"
   end
 
   defp image_color("natural") do
-    "border-[#282828] dark:border-[#E8E8E8]"
+    "border-natural-hover-light dark:border-natural-hover-dark"
   end
 
   defp image_color("primary") do
-    "border-[#016974] dark:border-[#77D5E3]"
+    "border-primary-hover-light dark:border-primary-hover-dark"
   end
 
   defp image_color("secondary") do
-    "border-[#175BCC] dark:border-[#A9C9FF]"
+    "border-secondary-hover-light dark:border-secondary-hover-dark"
   end
 
   defp image_color("success") do
-    "border-[#166C3B] dark:border-[#7FD99A]"
+    "border-success-hover-light dark:border-success-hover-dark"
   end
 
   defp image_color("warning") do
-    "border-[#FFF7E6] dark:border-[#FDD067]"
+    "border-warning-bordered-bg-light dark:border-warning-hover-dark"
   end
 
   defp image_color("danger") do
-    "border-[#BB032A] dark:border-[#FFB2AB]"
+    "border-danger-hover-light dark:border-danger-hover-dark"
   end
 
   defp image_color("info") do
-    "border-[#08638C] dark:border-[#6EC9F2]"
+    "border-info-hover-light dark:border-info-hover-dark"
   end
 
   defp image_color("misc") do
-    "border-[#653C94] dark:border-[#653C94]"
+    "border-misc-hover-light dark:border-misc-hover-dark"
   end
 
   defp image_color("dawn") do
-    "border-[#7E4B2A] dark:border-[#E4B190]"
+    "border-dawn-hover-light dark:border-dawn-hover-dark"
   end
 
   defp image_color("silver") do
-    "border-[#727272] dark:border-[#BBBBBB]"
+    "border-silver-hover-light dark:border-silver-hover-dark"
   end
 
   defp image_color(params), do: params
 
   defp color_class("base") do
     [
-      "bg-white text-[#09090b] border-[#e4e4e7]",
-      "dark:bg-[#18181B] dark:text-[#FAFAFA] dark:border-[#27272a]"
+      "bg-white text-base-text-light border-base-border-light",
+      "dark:bg-base-bg-dark dark:text-base-text-dark dark:border-base-border-dark"
     ]
   end
 
   defp color_class("white") do
-    ["bg-white text-black border-[#DDDDDD]"]
+    ["bg-white text-black border-bordered-white-border"]
   end
 
   defp color_class("dark") do
-    ["bg-[#282828] text-white border-[#727272]"]
+    ["bg-bordered-dark-bg text-white border-bordered-dark-border"]
   end
 
   defp color_class("natural") do
     [
-      "text-[#282828] border-[#282828] bg-[#F3F3F3]",
-      "dark:text-[#E8E8E8] dark:border-[#E8E8E8] dark:bg-[#4B4B4B]"
+      "text-natural-bordered-text-light border-natural-bordered-text-light bg-natural-bordered-bg-light",
+      "dark:text-natural-bordered-text-dark dark:border-natural-bordered-text-dark dark:bg-natural-bordered-bg-dark"
     ]
   end
 
   defp color_class("primary") do
     [
-      "text-[#016974] border-[#016974] bg-[#E2F8FB]",
-      "dark:text-[#77D5E3] dark:border-[#77D5E3] dark:bg-[#002D33]"
+      "text-primary-bordered-text-light border-primary-bordered-text-light bg-primary-bordered-bg-light",
+      "dark:text-primary-bordered-text-dark dark:border-primary-bordered-text-dark dark:bg-primary-bordered-bg-dark"
     ]
   end
 
   defp color_class("secondary") do
     [
-      "text-[#175BCC] border-[#175BCC] bg-[#EFF4FE]",
-      "dark:text-[#A9C9FF] dark:border-[#A9C9FF] dark:bg-[#002661]"
+      "text-secondary-bordered-text-light border-secondary-bordered-text-light bg-secondary-bordered-bg-light",
+      "dark:text-secondary-bordered-text-dark dark:border-secondary-bordered-text-dark dark:bg-secondary-bordered-bg-dark"
     ]
   end
 
   defp color_class("success") do
     [
-      "text-[#166C3B] border-[#166C3B] bg-[#EAF6ED]",
-      "dark:text-[#7FD99A] dark:border-[#7FD99A] dark:bg-[#002F14]"
+      "text-success-bordered-text-light border-success-bordered-text-light bg-success-bordered-bg-light",
+      "dark:text-success-bordered-text-dark dark:border-success-bordered-text-dark dark:bg-success-bordered-bg-dark"
     ]
   end
 
   defp color_class("warning") do
     [
-      "text-[#976A01] border-[#976A01] bg-[#FFF7E6]",
-      "dark:text-[#FDD067] dark:border-[#FDD067] dark:bg-[#322300]"
+      "text-warning-bordered-text-light border-warning-bordered-text-light bg-warning-bordered-bg-light",
+      "dark:text-warning-bordered-text-dark dark:border-warning-bordered-text-dark dark:bg-warning-bordered-bg-dark"
     ]
   end
 
   defp color_class("danger") do
     [
-      "text-[#BB032A] border-[#BB032A] bg-[#FFF0EE]",
-      "dark:text-[#FFB2AB] dark:border-[#FFB2AB] dark:bg-[#520810]"
+      "text-danger-bordered-text-light border-danger-bordered-text-light bg-danger-bordered-bg-light",
+      "dark:text-danger-bordered-text-dark dark:border-danger-bordered-text-dark dark:bg-danger-bordered-bg-dark"
     ]
   end
 
   defp color_class("info") do
     [
-      "text-[#0B84BA] border-[#0B84BA] bg-[#E7F6FD]",
-      "dark:text-[#6EC9F2] dark:border-[#6EC9F2] dark:bg-[#03212F]"
+      "text-info-bordered-text-light border-info-bordered-text-light bg-info-bordered-bg-light",
+      "dark:text-info-bordered-text-dark dark:border-info-bordered-text-dark dark:bg-info-bordered-bg-dark"
     ]
   end
 
   defp color_class("misc") do
     [
-      "text-[#653C94] border-[#653C94] bg-[#F6F0FE]",
-      "dark:text-[#CBA2FA] dark:border-[#CBA2FA] dark:bg-[#221431]"
+      "text-misc-bordered-text-light border-misc-bordered-text-light bg-misc-bordered-bg-light",
+      "dark:text-misc-bordered-text-dark dark:border-misc-bordered-text-dark dark:bg-misc-bordered-bg-dark"
     ]
   end
 
   defp color_class("dawn") do
     [
-      "text-[#7E4B2A] border-[#7E4B2A] bg-[#FBF2ED]",
-      "dark:text-[#E4B190] dark:border-[#E4B190] dark:bg-[#2A190E]"
+      "text-dawn-bordered-text-light border-dawn-bordered-text-light bg-dawn-bordered-bg-light",
+      "dark:text-dawn-bordered-text-dark dark:border-dawn-bordered-text-dark dark:bg-dawn-bordered-bg-dark"
     ]
   end
 
   defp color_class("silver") do
     [
-      "text-[#727272] border-[#727272] bg-[#F3F3F3]",
-      "dark:text-[#BBBBBB] dark:border-[#BBBBBB] dark:bg-[#4B4B4B]"
+      "text-silver-bordered-text-light border-silver-bordered-text-light bg-silver-bordered-bg-light",
+      "dark:text-silver-bordered-text-dark dark:border-silver-bordered-text-dark dark:bg-silver-bordered-bg-dark"
     ]
   end
 

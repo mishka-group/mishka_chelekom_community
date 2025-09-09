@@ -67,7 +67,7 @@ defmodule CommunityDemoWeb.Components.Carousel do
       "Determines the overall size of the elements, including padding, font size, and other items"
 
   attr :padding, :string, default: "medium", doc: "Determines padding for items"
-  attr :text_position, :string, default: "center", doc: "Determines the element' text position"
+  attr :text_position, :string, default: "center", doc: "Determines the element's text position"
 
   attr :rest, :global,
     doc:
@@ -119,7 +119,7 @@ defmodule CommunityDemoWeb.Components.Carousel do
     assigns =
       assigns
       |> assign_new(:id, fn -> "carousel-#{random_id()}" end)
-      |> assign_new(:actived_carousel, fn ->
+      |> assign_new(:activated_carousel, fn ->
         Enum.find_index(assigns.slide, &(Map.get(&1, :active) == true)) || 0
       end)
 
@@ -166,7 +166,7 @@ defmodule CommunityDemoWeb.Components.Carousel do
         :for={{slide, index} <- Enum.with_index(@slide, 1)}
         id={"#{@id}-carousel-slide-#{index}"}
         class={["slide h-full", slide[:class]]}
-        aria-hidden={@actived_carousel + 1 != index}
+        aria-hidden={@activated_carousel + 1 != index}
       >
         <div class="relative w-full h-full">
           <.slide_image id={@id} index={index} {slide}>
@@ -388,87 +388,87 @@ defmodule CommunityDemoWeb.Components.Carousel do
 
   defp color_class("base") do
     [
-      "[&_.carousel-overlay]:bg-white/30 text-[#09090b] hover:[&_.carousel-controls]:bg-[#e4e4e7]/5",
-      "dark:[&_.carousel-overlay]:bg-[#18181B]/30 dark:text-[#FAFAFA] dark:hover:[&_.carousel-controls]:bg-[#27272a]/5"
+      "[&_.carousel-overlay]:bg-white/30 text-base-text-light [&_.carousel-controls]:hover:bg-base-border-light/5",
+      "dark:[&_.carousel-overlay]:bg-base-bg-dark/30 dark:text-base-text-dark dark:[&_.carousel-controls]:hover:bg-base-border-dark/5"
     ]
   end
 
   defp color_class("natural") do
     [
-      "[&_.carousel-overlay]:bg-[#4B4B4B]/30 text-white hover:[&_.carousel-controls]:bg-[#4B4B4B]/5",
-      "dark:[&_.carousel-overlay]:bg-[#DDDDDD]/30 text-black dark:hover:[&_.carousel-controls]:bg-[#DDDDDD]/5"
+      "[&_.carousel-overlay]:bg-natural-light/30 text-white [&_.carousel-controls]:hover:bg-natural-light/5",
+      "dark:[&_.carousel-overlay]:bg-natural-dark/30 text-black dark:[&_.carousel-controls]:hover:bg-natural-dark/5"
     ]
   end
 
   defp color_class("white") do
-    "[&_.carousel-overlay]:bg-white/30 text-[#3E3E3E] hover:[&_.carousel-controls]:bg-white/5"
+    "[&_.carousel-overlay]:bg-white/30 text-form-white-text [&_.carousel-controls]:hover:bg-white/5"
   end
 
   defp color_class("primary") do
     [
-      "[&_.carousel-overlay]:bg-[#007F8C]/30 text-white hover:[&_.carousel-controls]:bg-[#007F8C]/5",
-      "dark:[&_.carousel-overlay]:bg-[#01B8CA]/30 text-black dark:hover:[&_.carousel-controls]:bg-[#01B8CA]/5"
+      "[&_.carousel-overlay]:bg-primary-light/30 text-white [&_.carousel-controls]:hover:bg-primary-light/5",
+      "dark:[&_.carousel-overlay]:bg-primary-dark/30 text-black dark:[&_.carousel-controls]:hover:bg-primary-dark/5"
     ]
   end
 
   defp color_class("secondary") do
     [
-      "[&_.carousel-overlay]:bg-[#266EF1]/30 text-white hover:[&_.carousel-controls]:bg-[#266EF1]/5",
-      "dark:[&_.carousel-overlay]:bg-[#6DAAFB]/30 text-black dark:hover:[&_.carousel-controls]:bg-[#6DAAFB]/5"
+      "[&_.carousel-overlay]:bg-secondary-light/30 text-white [&_.carousel-controls]:hover:bg-secondary-light/5",
+      "dark:[&_.carousel-overlay]:bg-secondary-dark/30 text-black dark:[&_.carousel-controls]:hover:bg-secondary-dark/5"
     ]
   end
 
   defp color_class("success") do
     [
-      "[&_.carousel-overlay]:bg-[#0E8345]/30 text-white hover:[&_.carousel-controls]:bg-[#0E8345]/5",
-      "dark:[&_.carousel-overlay]:bg-[#06C167]/30 text-black dark:hover:[&_.carousel-controls]:bg-[#06C167]/5"
+      "[&_.carousel-overlay]:bg-success-light/30 text-white [&_.carousel-controls]:hover:bg-success-light/5",
+      "dark:[&_.carousel-overlay]:bg-success-dark/30 text-black dark:[&_.carousel-controls]:hover:bg-success-dark/5"
     ]
   end
 
   defp color_class("warning") do
     [
-      "[&_.carousel-overlay]:bg-[#CA8D01]/30 text-white hover:[&_.carousel-controls]:bg-[#CA8D01]/5",
-      "dark:[&_.carousel-overlay]:bg-[#FDC034]/30 text-black dark:hover:[&_.carousel-controls]:bg-[#FDC034]/5"
+      "[&_.carousel-overlay]:bg-warning-light/30 text-white [&_.carousel-controls]:hover:bg-warning-light/5",
+      "dark:[&_.carousel-overlay]:bg-warning-dark/30 text-black dark:[&_.carousel-controls]:hover:bg-warning-dark/5"
     ]
   end
 
   defp color_class("danger") do
     [
-      "[&_.carousel-overlay]:bg-[#DE1135]/30 text-white hover:[&_.carousel-controls]:bg-[#DE1135]/5",
-      "dark:[&_.carousel-overlay]:bg-[#FC7F79]/30 text-black dark:hover:[&_.carousel-controls]:bg-[#FC7F79]/5"
+      "[&_.carousel-overlay]:bg-danger-light/30 text-white [&_.carousel-controls]:hover:bg-danger-light/5",
+      "dark:[&_.carousel-overlay]:bg-danger-dark/30 text-black dark:[&_.carousel-controls]:hover:bg-danger-dark/5"
     ]
   end
 
   defp color_class("info") do
     [
-      "[&_.carousel-overlay]:bg-[#0B84BA]/30 text-white hover:[&_.carousel-controls]:bg-[#0B84BA]/5",
-      "dark:[&_.carousel-overlay]:bg-[#3EB7ED]/30 text-black dark:hover:[&_.carousel-controls]:bg-[#3EB7ED]/5"
+      "[&_.carousel-overlay]:bg-info-light/30 text-white [&_.carousel-controls]:hover:bg-info-light/5",
+      "dark:[&_.carousel-overlay]:bg-info-dark/30 text-black dark:[&_.carousel-controls]:hover:bg-info-dark/5"
     ]
   end
 
   defp color_class("misc") do
     [
-      "[&_.carousel-overlay]:bg-[#8750C5]/30 text-white hover:[&_.carousel-controls]:bg-[#8750C5]/5",
-      "dark:[&_.carousel-overlay]:bg-[#BA83F9]/30 text-black dark:hover:[&_.carousel-controls]:bg-[#BA83F9]/5"
+      "[&_.carousel-overlay]:bg-misc-light/30 text-white [&_.carousel-controls]:hover:bg-misc-light/5",
+      "dark:[&_.carousel-overlay]:bg-misc-dark/30 text-black dark:[&_.carousel-controls]:hover:bg-misc-dark/5"
     ]
   end
 
   defp color_class("dawn") do
     [
-      "[&_.carousel-overlay]:bg-[#A86438]/30 text-white hover:[&_.carousel-controls]:bg-[#A86438]/5",
-      "dark:[&_.carousel-overlay]:bg-[#DB976B]/30 text-black dark:hover:[&_.carousel-controls]:bg-[#DB976B]/5"
+      "[&_.carousel-overlay]:bg-dawn-light/30 text-white [&_.carousel-controls]:hover:bg-dawn-light/5",
+      "dark:[&_.carousel-overlay]:bg-dawn-dark/30 text-black dark:[&_.carousel-controls]:hover:bg-dawn-dark/5"
     ]
   end
 
   defp color_class("silver") do
     [
-      "[&_.carousel-overlay]:bg-[#868686]/30 text-white hover:[&_.carousel-controls]:bg-[#868686]/5",
-      "dark:[&_.carousel-overlay]:bg-[#A6A6A6]/30 text-black dark:hover:[&_.carousel-controls]:bg-[#A6A6A6]/5"
+      "[&_.carousel-overlay]:bg-silver-light/30 text-white [&_.carousel-controls]:hover:bg-silver-light/5",
+      "dark:[&_.carousel-overlay]:bg-silver-dark/30 text-black dark:[&_.carousel-controls]:hover:bg-silver-dark/5"
     ]
   end
 
   defp color_class("dark") do
-    "[&_.carousel-overlay]:bg-[#282828]/30 text-white hover:[&_.carousel-controls]:bg-[#282828]/5"
+    "[&_.carousel-overlay]:bg-default-dark-bg/30 text-white [&_.carousel-controls]:hover:bg-default-dark-bg/5"
   end
 
   defp color_class(params) when is_binary(params), do: params
