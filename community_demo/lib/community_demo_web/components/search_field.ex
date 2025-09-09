@@ -72,9 +72,9 @@ defmodule CommunityDemoWeb.Components.SearchField do
   attr :input_class, :string, default: nil, doc: "Custom CSS class for the input"
   attr :search_button_class, :string, default: nil, doc: "Custom CSS class for the show password"
 
-  attr :flaoting_label_class, :string,
+  attr :floating_label_class, :string,
     default: nil,
-    doc: "Custom CSS class for the flaoting label"
+    doc: "Custom CSS class for the floating label"
 
   attr :description_wrapper_class, :string,
     default: nil,
@@ -176,7 +176,7 @@ defmodule CommunityDemoWeb.Components.SearchField do
             class={[
               "floating-label px-1 start-1 -z-[1] absolute text-xs duration-300 transform scale-75 origin-[0]",
               variant_label_position(@floating),
-              @flaoting_label_class
+              @floating_label_class
             ]}
             for={@id}
           >
@@ -216,7 +216,10 @@ defmodule CommunityDemoWeb.Components.SearchField do
       @ring && "[&_.search-field-wrapper]:focus-within:ring-[0.03rem]",
       @class
     ]}>
-      <div :if={@label || @description} class={["search-label-wrapper", @description_wrapper_class]}>
+      <div
+        :if={@label || @description}
+        class={["search-label-wrapper", @description_wrapper_class]}
+      >
         <.label :if={@label} for={@id} class={@label_class}>{@label}</.label>
         <div :if={@description} class={@description_class}>
           {@description}
@@ -225,7 +228,7 @@ defmodule CommunityDemoWeb.Components.SearchField do
 
       <div class={[
         "search-field-wrapper overflow-hidden transition-all ease-in-out duration-200 flex items-center flex-nowrap",
-        @errors != [] && "text-field-error",
+        @errors != [] && "search-field-error",
         @field_wrapper_class
       ]}>
         <div
@@ -313,7 +316,7 @@ defmodule CommunityDemoWeb.Components.SearchField do
   end
 
   defp size_class("extra_small") do
-    "[&_.search-field-wrapper_inpendut]:h-8 [&_.search-field-wrapper_.search-field-icon]:size-3.5"
+    "[&_.search-field-wrapper_input]:h-8 [&_.search-field-wrapper_.search-field-icon]:size-3.5"
   end
 
   defp size_class("small") do
@@ -378,678 +381,678 @@ defmodule CommunityDemoWeb.Components.SearchField do
   defp color_variant("base", _, floating) do
     [
       "[&_.search-field-wrapper:not(:has(.search-field-error))]:bg-white",
-      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:bg-[#18181B]",
-      "text-[#09090b] dark:text-[#FAFAFA] [&_.search-field-wrapper:not(:has(.search-field-error))]:border-[#e4e4e7]",
-      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:border-[#27272a]",
+      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:bg-base-bg-dark",
+      "text-base-text-light dark:text-base-text-dark [&_.search-field-wrapper:not(:has(.search-field-error))]:border-base-border-light",
+      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:border-base-border-dark",
       "[&_.search-field-wrapper.search-field-error]:border-rose-700",
-      "[&_.search-field-wrapper>input]:placeholder:text-[#09090b] dark:[&_.search-field-wrapper>input]:placeholder:text-[#FAFAFA]",
-      "focus-within:[&_.search-field-wrapper]:ring-[#e4e4e7] dark:focus-within:[&_.search-field-wrapper]:ring-[#e4e4e7]",
+      "[&_.search-field-wrapper>input]:placeholder:text-base-text-light dark:[&_.search-field-wrapper>input]:placeholder:text-base-text-dark",
+      "focus-within:[&_.search-field-wrapper]:ring-base-border-light dark:focus-within:[&_.search-field-wrapper]:ring-base-border-light",
       "[&_.search-field-wrapper]:shadow-sm",
       floating == "outer" &&
-        "[&_.search-field-wrapper_.floating-label]:bg-white dark:[&_.search-field-wrapper_.floating-label]:bg-[#27272a]"
+        "[&_.search-field-wrapper_.floating-label]:bg-white dark:[&_.search-field-wrapper_.floating-label]:bg-base-border-dark"
     ]
   end
 
   defp color_variant("outline", "natural", floating) do
     [
-      "text-[#4B4B4B] dark:text-[#DDDDDD] [&_.search-field-wrapper:not(:has(.search-field-error))]:border-[#4B4B4B]",
-      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:border-[#DDDDDD]",
+      "text-natural-light dark:text-natural-dark [&_.search-field-wrapper:not(:has(.search-field-error))]:border-natural-light",
+      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:border-natural-dark",
       "[&_.search-field-wrapper.search-field-error]:border-rose-700",
-      "[&_.search-field-wrapper>input]:placeholder:text-[#4B4B4B] dark:[&_.search-field-wrapper>input]:placeholder:text-[#DDDDDD]",
-      "focus-within:[&_.search-field-wrapper]:ring-[#4B4B4B] dark:focus-within:[&_.search-field-wrapper]:ring-[#DDDDDD]",
+      "[&_.search-field-wrapper>input]:placeholder:text-natural-light dark:[&_.search-field-wrapper>input]:placeholder:text-natural-dark",
+      "focus-within:[&_.search-field-wrapper]:ring-natural-light dark:focus-within:[&_.search-field-wrapper]:ring-natural-dark",
       floating == "outer" &&
-        "[&_.search-field-wrapper_.floating-label]:bg-white dark:[&_.search-field-wrapper_.floating-label]:bg-[#282828]"
+        "[&_.search-field-wrapper_.floating-label]:bg-white dark:[&_.search-field-wrapper_.floating-label]:bg-default-dark-bg"
     ]
   end
 
   defp color_variant("outline", "primary", floating) do
     [
-      "text-[#007F8C] dark:text-[#01B8CA] [&_.search-field-wrapper:not(:has(.search-field-error))]:border-[#007F8C]",
-      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:border-[#01B8CA]",
+      "text-primary-light dark:text-primary-dark [&_.search-field-wrapper:not(:has(.search-field-error))]:border-primary-light",
+      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:border-primary-dark",
       "[&_.search-field-wrapper.search-field-error]:border-rose-700",
-      "[&_.search-field-wrapper>input]:placeholder:text-[#007F8C] dark:[&_.search-field-wrapper>input]:placeholder:text-[#01B8CA]",
-      "focus-within:[&_.search-field-wrapper]:ring-[#007F8C] dark:focus-within:[&_.search-field-wrapper]:ring-[#01B8CA]",
+      "[&_.search-field-wrapper>input]:placeholder:text-primary-light dark:[&_.search-field-wrapper>input]:placeholder:text-primary-dark",
+      "focus-within:[&_.search-field-wrapper]:ring-primary-light dark:focus-within:[&_.search-field-wrapper]:ring-primary-dark",
       floating == "outer" &&
-        "[&_.search-field-wrapper_.floating-label]:bg-white dark:[&_.search-field-wrapper_.floating-label]:bg-[#282828]"
+        "[&_.search-field-wrapper_.floating-label]:bg-white dark:[&_.search-field-wrapper_.floating-label]:bg-default-dark-bg"
     ]
   end
 
   defp color_variant("outline", "secondary", floating) do
     [
-      "text-[#266EF1] dark:text-[#6DAAFB] [&_.search-field-wrapper:not(:has(.search-field-error))]:border-[#266EF1]",
-      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:border-[#6DAAFB]",
+      "text-secondary-light dark:text-secondary-dark [&_.search-field-wrapper:not(:has(.search-field-error))]:border-secondary-light",
+      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:border-secondary-dark",
       "[&_.search-field-wrapper.search-field-error]:border-rose-700",
-      "[&_.search-field-wrapper>input]:placeholder:text-[#266EF1] dark:[&_.search-field-wrapper>input]:placeholder:text-[#6DAAFB]",
-      "focus-within:[&_.search-field-wrapper]:ring-[#266EF1] dark:focus-within:[&_.search-field-wrapper]:ring-[#6DAAFB]",
+      "[&_.search-field-wrapper>input]:placeholder:text-secondary-light dark:[&_.search-field-wrapper>input]:placeholder:text-secondary-dark",
+      "focus-within:[&_.search-field-wrapper]:ring-secondary-light dark:focus-within:[&_.search-field-wrapper]:ring-secondary-dark",
       floating == "outer" &&
-        "[&_.search-field-wrapper_.floating-label]:bg-white dark:[&_.search-field-wrapper_.floating-label]:bg-[#282828]"
+        "[&_.search-field-wrapper_.floating-label]:bg-white dark:[&_.search-field-wrapper_.floating-label]:bg-default-dark-bg"
     ]
   end
 
   defp color_variant("outline", "success", floating) do
     [
-      "text-[#0E8345] dark:text-[#06C167] [&_.search-field-wrapper:not(:has(.search-field-error))]:border-[#0E8345]",
-      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:border-[#06C167]",
+      "text-success-light dark:text-success-dark [&_.search-field-wrapper:not(:has(.search-field-error))]:border-success-light",
+      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:border-success-dark",
       "[&_.search-field-wrapper.search-field-error]:border-rose-700",
-      "[&_.search-field-wrapper>input]:placeholder:text-[#0E8345] dark:[&_.search-field-wrapper>input]:placeholder:text-[#06C167]",
-      "focus-within:[&_.search-field-wrapper]:ring-[#0E8345] dark:focus-within:[&_.search-field-wrapper]:ring-[#06C167]",
+      "[&_.search-field-wrapper>input]:placeholder:text-success-light dark:[&_.search-field-wrapper>input]:placeholder:text-success-dark",
+      "focus-within:[&_.search-field-wrapper]:ring-success-light dark:focus-within:[&_.search-field-wrapper]:ring-success-dark",
       floating == "outer" &&
-        "[&_.search-field-wrapper_.floating-label]:bg-white dark:[&_.search-field-wrapper_.floating-label]:bg-[#282828]"
+        "[&_.search-field-wrapper_.floating-label]:bg-white dark:[&_.search-field-wrapper_.floating-label]:bg-default-dark-bg"
     ]
   end
 
   defp color_variant("outline", "warning", floating) do
     [
-      "text-[#CA8D01] dark:text-[#FDC034] [&_.search-field-wrapper:not(:has(.search-field-error))]:border-[#CA8D01]",
-      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:border-[#FDC034]",
+      "text-warning-light dark:text-warning-dark [&_.search-field-wrapper:not(:has(.search-field-error))]:border-warning-light",
+      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:border-warning-dark",
       "[&_.search-field-wrapper.search-field-error]:border-rose-700",
-      "[&_.search-field-wrapper>input]:placeholder:text-[#CA8D01] dark:[&_.search-field-wrapper>input]:placeholder:text-[#FDC034]",
-      "focus-within:[&_.search-field-wrapper]:ring-[#CA8D01] dark:focus-within:[&_.search-field-wrapper]:ring-[#FDC034]",
+      "[&_.search-field-wrapper>input]:placeholder:text-warning-light dark:[&_.search-field-wrapper>input]:placeholder:text-warning-dark",
+      "focus-within:[&_.search-field-wrapper]:ring-warning-light dark:focus-within:[&_.search-field-wrapper]:ring-warning-dark",
       floating == "outer" &&
-        "[&_.search-field-wrapper_.floating-label]:bg-white dark:[&_.search-field-wrapper_.floating-label]:bg-[#282828]"
+        "[&_.search-field-wrapper_.floating-label]:bg-white dark:[&_.search-field-wrapper_.floating-label]:bg-default-dark-bg"
     ]
   end
 
   defp color_variant("outline", "danger", floating) do
     [
-      "text-[#CA8D01] dark:text-[#FC7F79] [&_.search-field-wrapper:not(:has(.search-field-error))]:border-[#CA8D01]",
-      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:border-[#FC7F79]",
+      "text-danger-light dark:text-danger-dark [&_.search-field-wrapper:not(:has(.search-field-error))]:border-danger-light",
+      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:border-danger-dark",
       "[&_.search-field-wrapper.search-field-error]:border-rose-700",
-      "[&_.search-field-wrapper>input]:placeholder:text-[#CA8D01] dark:[&_.search-field-wrapper>input]:placeholder:text-[#FC7F79]",
-      "focus-within:[&_.search-field-wrapper]:ring-[#DE1135] dark:focus-within:[&_.search-field-wrapper]:ring-[#FC7F79]",
+      "[&_.search-field-wrapper>input]:placeholder:text-danger-light dark:[&_.search-field-wrapper>input]:placeholder:text-danger-dark",
+      "focus-within:[&_.search-field-wrapper]:ring-danger-light dark:focus-within:[&_.search-field-wrapper]:ring-danger-dark",
       floating == "outer" &&
-        "[&_.search-field-wrapper_.floating-label]:bg-white dark:[&_.search-field-wrapper_.floating-label]:bg-[#282828]"
+        "[&_.search-field-wrapper_.floating-label]:bg-white dark:[&_.search-field-wrapper_.floating-label]:bg-default-dark-bg"
     ]
   end
 
   defp color_variant("outline", "info", floating) do
     [
-      "text-[#0B84BA] dark:text-[#3EB7ED] [&_.search-field-wrapper:not(:has(.search-field-error))]:border-[#0B84BA]",
-      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:border-[#3EB7ED]",
+      "text-info-light dark:text-info-dark [&_.search-field-wrapper:not(:has(.search-field-error))]:border-info-light",
+      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:border-info-dark",
       "[&_.search-field-wrapper.search-field-error]:border-rose-700",
-      "[&_.search-field-wrapper>input]:placeholder:text-[#0B84BA] dark:[&_.search-field-wrapper>input]:placeholder:text-[#3EB7ED]",
-      "focus-within:[&_.search-field-wrapper]:ring-[#0B84BA] dark:focus-within:[&_.search-field-wrapper]:ring-[#3EB7ED]",
+      "[&_.search-field-wrapper>input]:placeholder:text-info-light dark:[&_.search-field-wrapper>input]:placeholder:text-info-dark",
+      "focus-within:[&_.search-field-wrapper]:ring-info-light dark:focus-within:[&_.search-field-wrapper]:ring-info-dark",
       floating == "outer" &&
-        "[&_.search-field-wrapper_.floating-label]:bg-white dark:[&_.search-field-wrapper_.floating-label]:bg-[#282828]"
+        "[&_.search-field-wrapper_.floating-label]:bg-white dark:[&_.search-field-wrapper_.floating-label]:bg-default-dark-bg"
     ]
   end
 
   defp color_variant("outline", "misc", floating) do
     [
-      "text-[#8750C5] dark:text-[#BA83F9] [&_.search-field-wrapper:not(:has(.search-field-error))]:border-[#8750C5]",
-      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:border-[#BA83F9]",
+      "text-misc-light dark:text-misc-dark [&_.search-field-wrapper:not(:has(.search-field-error))]:border-misc-light",
+      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:border-misc-dark",
       "[&_.search-field-wrapper.search-field-error]:border-rose-700",
-      "[&_.search-field-wrapper>input]:placeholder:text-[#8750C5] dark:[&_.search-field-wrapper>input]:placeholder:text-[#BA83F9]",
-      "focus-within:[&_.search-field-wrapper]:ring-[#8750C5] dark:focus-within:[&_.search-field-wrapper]:ring-[#BA83F9]",
+      "[&_.search-field-wrapper>input]:placeholder:text-misc-light dark:[&_.search-field-wrapper>input]:placeholder:text-misc-dark",
+      "focus-within:[&_.search-field-wrapper]:ring-misc-light dark:focus-within:[&_.search-field-wrapper]:ring-misc-dark",
       floating == "outer" &&
-        "[&_.search-field-wrapper_.floating-label]:bg-white dark:[&_.search-field-wrapper_.floating-label]:bg-[#282828]"
+        "[&_.search-field-wrapper_.floating-label]:bg-white dark:[&_.search-field-wrapper_.floating-label]:bg-default-dark-bg"
     ]
   end
 
   defp color_variant("outline", "dawn", floating) do
     [
-      "text-[#A86438] dark:text-[#DB976B] [&_.search-field-wrapper:not(:has(.search-field-error))]:border-[#A86438]",
-      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:border-[#DB976B]",
+      "text-dawn-light dark:text-dawn-dark [&_.search-field-wrapper:not(:has(.search-field-error))]:border-dawn-light",
+      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:border-dawn-dark",
       "[&_.search-field-wrapper.search-field-error]:border-rose-700",
-      "[&_.search-field-wrapper>input]:placeholder:text-[#A86438] dark:[&_.search-field-wrapper>input]:placeholder:text-[#DB976B]",
-      "focus-within:[&_.search-field-wrapper]:ring-[#A86438] dark:focus-within:[&_.search-field-wrapper]:ring-[#DB976B]",
+      "[&_.search-field-wrapper>input]:placeholder:text-dawn-light dark:[&_.search-field-wrapper>input]:placeholder:text-dawn-dark",
+      "focus-within:[&_.search-field-wrapper]:ring-dawn-light dark:focus-within:[&_.search-field-wrapper]:ring-dawn-dark",
       floating == "outer" &&
-        "[&_.search-field-wrapper_.floating-label]:bg-white dark:[&_.search-field-wrapper_.floating-label]:bg-[#282828]"
+        "[&_.search-field-wrapper_.floating-label]:bg-white dark:[&_.search-field-wrapper_.floating-label]:bg-default-dark-bg"
     ]
   end
 
   defp color_variant("outline", "silver", floating) do
     [
-      "text-[#868686] dark:text-[#A6A6A6] [&_.search-field-wrapper:not(:has(.search-field-error))]:border-[#868686]",
-      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:border-[#A6A6A6]",
+      "text-silver-light dark:text-silver-dark [&_.search-field-wrapper:not(:has(.search-field-error))]:border-silver-light",
+      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:border-silver-dark",
       "[&_.search-field-wrapper.search-field-error]:border-rose-700",
-      "[&_.search-field-wrapper>input]:placeholder:text-[#868686] dark:[&_.search-field-wrapper>input]:placeholder:text-[#A6A6A6]",
-      "focus-within:[&_.search-field-wrapper]:ring-[#868686] dark:focus-within:[&_.search-field-wrapper]:ring-[#A6A6A6]",
+      "[&_.search-field-wrapper>input]:placeholder:text-silver-light dark:[&_.search-field-wrapper>input]:placeholder:text-silver-dark",
+      "focus-within:[&_.search-field-wrapper]:ring-silver-light dark:focus-within:[&_.search-field-wrapper]:ring-silver-dark",
       floating == "outer" &&
-        "[&_.search-field-wrapper_.floating-label]:bg-white dark:[&_.search-field-wrapper_.floating-label]:bg-[#282828]"
+        "[&_.search-field-wrapper_.floating-label]:bg-white dark:[&_.search-field-wrapper_.floating-label]:bg-default-dark-bg"
     ]
   end
 
   defp color_variant("default", "white", floating) do
     [
-      "[&_.search-field-wrapper]:bg-white text-[#3E3E3E]",
+      "[&_.search-field-wrapper]:bg-white text-form-white-text",
       "[&_.search-field-wrapper.search-field-error]:border-rose-700",
-      "[&_.search-field-wrapper>input]:placeholder:text-[#3E3E3E] focus-within:[&_.search-field-wrapper]:ring-[#DADADA]",
+      "[&_.search-field-wrapper>input]:placeholder:text-form-white-text focus-within:[&_.search-field-wrapper]:ring-form-white-focus",
       floating == "outer" && "[&_.search-field-wrapper_.floating-label]:bg-white"
     ]
   end
 
   defp color_variant("default", "natural", floating) do
     [
-      "text-black dark:text-white [&_.search-field-wrapper:not(:has(.search-field-error))]:bg-[#4B4B4B]",
-      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:bg-[#DDDDDD]",
+      "text-black dark:text-white [&_.search-field-wrapper:not(:has(.search-field-error))]:bg-natural-light",
+      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:bg-natural-dark",
       "[&_.search-field-wrapper.search-field-error]:bg-rose-700",
       "[&_.search-field-wrapper>input]:placeholder:text-white dark:[&_.search-field-wrapper>input]:placeholder:text-black",
       "[&_.search-field-wrapper>input]:text-white dark:[&_.search-field-wrapper>input]:text-black",
-      "focus-within:[&_.search-field-wrapper]:ring-[#4B4B4B] dark:focus-within:[&_.search-field-wrapper]:ring-[#DDDDDD]",
+      "focus-within:[&_.search-field-wrapper]:ring-natural-light dark:focus-within:[&_.search-field-wrapper]:ring-natural-dark",
       floating == "outer" &&
-        "[&_.search-field-wrapper_.floating-label]:bg-[#4B4B4B] dark:[&_.search-field-wrapper_.floating-label]:bg-[#DDDDDD]"
+        "[&_.search-field-wrapper_.floating-label]:bg-natural-light dark:[&_.search-field-wrapper_.floating-label]:bg-natural-dark"
     ]
   end
 
   defp color_variant("default", "primary", floating) do
     [
-      "text-black dark:text-white [&_.search-field-wrapper:not(:has(.search-field-error))]:bg-[#007F8C]",
-      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:bg-[#01B8CA]",
+      "text-black dark:text-white [&_.search-field-wrapper:not(:has(.search-field-error))]:bg-primary-light",
+      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:bg-primary-dark",
       "[&_.search-field-wrapper.search-field-error]:bg-rose-700",
       "[&_.search-field-wrapper>input]:placeholder:text-white dark:[&_.search-field-wrapper>input]:placeholder:text-black",
       "[&_.search-field-wrapper>input]:text-white dark:[&_.search-field-wrapper>input]:text-black",
-      "focus-within:[&_.search-field-wrapper]:ring-[#007F8C] dark:focus-within:[&_.search-field-wrapper]:ring-[#01B8CA]",
+      "focus-within:[&_.search-field-wrapper]:ring-primary-light dark:focus-within:[&_.search-field-wrapper]:ring-primary-dark",
       floating == "outer" &&
-        "[&_.search-field-wrapper_.floating-label]:bg-[#007F8C] dark:[&_.search-field-wrapper_.floating-label]:bg-[#01B8CA]"
+        "[&_.search-field-wrapper_.floating-label]:bg-primary-light dark:[&_.search-field-wrapper_.floating-label]:bg-primary-dark"
     ]
   end
 
   defp color_variant("default", "secondary", floating) do
     [
-      "text-black dark:text-white [&_.search-field-wrapper:not(:has(.search-field-error))]:bg-[#266EF1]",
-      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:bg-[#6DAAFB]",
+      "text-black dark:text-white [&_.search-field-wrapper:not(:has(.search-field-error))]:bg-secondary-light",
+      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:bg-secondary-dark",
       "[&_.search-field-wrapper.search-field-error]:bg-rose-700",
       "[&_.search-field-wrapper>input]:placeholder:text-white dark:[&_.search-field-wrapper>input]:placeholder:text-black",
       "[&_.search-field-wrapper>input]:text-white dark:[&_.search-field-wrapper>input]:text-black",
-      "focus-within:[&_.search-field-wrapper]:ring-[#266EF1] dark:focus-within:[&_.search-field-wrapper]:ring-[#6DAAFB]",
+      "focus-within:[&_.search-field-wrapper]:ring-secondary-light dark:focus-within:[&_.search-field-wrapper]:ring-secondary-dark",
       floating == "outer" &&
-        "[&_.search-field-wrapper_.floating-label]:bg-[#266EF1] dark:[&_.search-field-wrapper_.floating-label]:bg-[#6DAAFB]"
+        "[&_.search-field-wrapper_.floating-label]:bg-secondary-light dark:[&_.search-field-wrapper_.floating-label]:bg-secondary-dark"
     ]
   end
 
   defp color_variant("default", "success", floating) do
     [
-      "text-black dark:text-white [&_.search-field-wrapper:not(:has(.search-field-error))]:bg-[#0E8345]",
-      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:bg-[#06C167]",
+      "text-black dark:text-white [&_.search-field-wrapper:not(:has(.search-field-error))]:bg-success-light",
+      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:bg-success-dark",
       "[&_.search-field-wrapper.search-field-error]:bg-rose-700",
       "[&_.search-field-wrapper>input]:placeholder:text-white dark:[&_.search-field-wrapper>input]:placeholder:text-black",
       "[&_.search-field-wrapper>input]:text-white dark:[&_.search-field-wrapper>input]:text-black",
-      "focus-within:[&_.search-field-wrapper]:ring-[#0E8345] dark:focus-within:[&_.search-field-wrapper]:ring-[#06C167]",
+      "focus-within:[&_.search-field-wrapper]:ring-success-light dark:focus-within:[&_.search-field-wrapper]:ring-success-dark",
       floating == "outer" &&
-        "[&_.search-field-wrapper_.floating-label]:bg-[#0E8345] dark:[&_.search-field-wrapper_.floating-label]:bg-[#06C167]"
+        "[&_.search-field-wrapper_.floating-label]:bg-success-light dark:[&_.search-field-wrapper_.floating-label]:bg-success-dark"
     ]
   end
 
   defp color_variant("default", "warning", floating) do
     [
-      "text-black dark:text-white [&_.search-field-wrapper:not(:has(.search-field-error))]:bg-[#CA8D01]",
-      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:bg-[#FDC034]",
+      "text-black dark:text-white [&_.search-field-wrapper:not(:has(.search-field-error))]:bg-warning-light",
+      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:bg-warning-dark",
       "[&_.search-field-wrapper.search-field-error]:bg-rose-700",
       "[&_.search-field-wrapper>input]:placeholder:text-white dark:[&_.search-field-wrapper>input]:placeholder:text-black",
       "[&_.search-field-wrapper>input]:text-white dark:[&_.search-field-wrapper>input]:text-black",
-      "focus-within:[&_.search-field-wrapper]:ring-[#CA8D01] dark:focus-within:[&_.search-field-wrapper]:ring-[#FDC034]",
+      "focus-within:[&_.search-field-wrapper]:ring-warning-light dark:focus-within:[&_.search-field-wrapper]:ring-warning-dark",
       floating == "outer" &&
-        "[&_.search-field-wrapper_.floating-label]:bg-[#CA8D01] dark:[&_.search-field-wrapper_.floating-label]:bg-[#FDC034]"
+        "[&_.search-field-wrapper_.floating-label]:bg-warning-light dark:[&_.search-field-wrapper_.floating-label]:bg-warning-dark"
     ]
   end
 
   defp color_variant("default", "danger", floating) do
     [
-      "text-black dark:text-white [&_.search-field-wrapper:not(:has(.search-field-error))]:bg-[#DE1135]",
-      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:bg-[#FC7F79]",
+      "text-black dark:text-white [&_.search-field-wrapper:not(:has(.search-field-error))]:bg-danger-light",
+      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:bg-danger-dark",
       "[&_.search-field-wrapper.search-field-error]:bg-rose-700",
       "[&_.search-field-wrapper>input]:placeholder:text-white dark:[&_.search-field-wrapper>input]:placeholder:text-black",
       "[&_.search-field-wrapper>input]:text-white dark:[&_.search-field-wrapper>input]:text-black",
-      "focus-within:[&_.search-field-wrapper]:ring-[#DE1135] dark:focus-within:[&_.search-field-wrapper]:ring-[#FC7F79]",
+      "focus-within:[&_.search-field-wrapper]:ring-danger-light dark:focus-within:[&_.search-field-wrapper]:ring-danger-dark",
       floating == "outer" &&
-        "[&_.search-field-wrapper_.floating-label]:bg-[#DE1135] dark:[&_.search-field-wrapper_.floating-label]:bg-[#FC7F79]"
+        "[&_.search-field-wrapper_.floating-label]:bg-danger-light dark:[&_.search-field-wrapper_.floating-label]:bg-danger-dark"
     ]
   end
 
   defp color_variant("default", "info", floating) do
     [
-      "text-black dark:text-white [&_.search-field-wrapper:not(:has(.search-field-error))]:bg-[#0B84BA]",
-      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:bg-[#3EB7ED]",
+      "text-black dark:text-white [&_.search-field-wrapper:not(:has(.search-field-error))]:bg-info-light",
+      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:bg-info-dark",
       "[&_.search-field-wrapper.search-field-error]:bg-rose-700",
       "[&_.search-field-wrapper>input]:placeholder:text-white dark:[&_.search-field-wrapper>input]:placeholder:text-black",
       "[&_.search-field-wrapper>input]:text-white dark:[&_.search-field-wrapper>input]:text-black",
-      "focus-within:[&_.search-field-wrapper]:ring-[#0B84BA] dark:focus-within:[&_.search-field-wrapper]:ring-[#3EB7ED]",
+      "focus-within:[&_.search-field-wrapper]:ring-info-light dark:focus-within:[&_.search-field-wrapper]:ring-info-dark",
       floating == "outer" &&
-        "[&_.search-field-wrapper_.floating-label]:bg-[#0B84BA] dark:[&_.search-field-wrapper_.floating-label]:bg-[#3EB7ED]"
+        "[&_.search-field-wrapper_.floating-label]:bg-info-light dark:[&_.search-field-wrapper_.floating-label]:bg-info-dark"
     ]
   end
 
   defp color_variant("default", "misc", floating) do
     [
-      "text-black dark:text-white [&_.search-field-wrapper:not(:has(.search-field-error))]:bg-[#8750C5]",
-      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:bg-[#BA83F9]",
+      "text-black dark:text-white [&_.search-field-wrapper:not(:has(.search-field-error))]:bg-misc-light",
+      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:bg-misc-dark",
       "[&_.search-field-wrapper.search-field-error]:bg-rose-700",
       "[&_.search-field-wrapper>input]:placeholder:text-white dark:[&_.search-field-wrapper>input]:placeholder:text-black",
       "[&_.search-field-wrapper>input]:text-white dark:[&_.search-field-wrapper>input]:text-black",
-      "focus-within:[&_.search-field-wrapper]:ring-[#8750C5] dark:focus-within:[&_.search-field-wrapper]:ring-[#BA83F9]",
+      "focus-within:[&_.search-field-wrapper]:ring-misc-light dark:focus-within:[&_.search-field-wrapper]:ring-misc-dark",
       floating == "outer" &&
-        "[&_.search-field-wrapper_.floating-label]:bg-[#8750C5] dark:[&_.search-field-wrapper_.floating-label]:bg-[#BA83F9]"
+        "[&_.search-field-wrapper_.floating-label]:bg-misc-light dark:[&_.search-field-wrapper_.floating-label]:bg-misc-dark"
     ]
   end
 
   defp color_variant("default", "dawn", floating) do
     [
-      "text-black dark:text-white [&_.search-field-wrapper:not(:has(.search-field-error))]:bg-[#A86438]",
-      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:bg-[#DB976B]",
+      "text-black dark:text-white [&_.search-field-wrapper:not(:has(.search-field-error))]:bg-dawn-light",
+      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:bg-dawn-dark",
       "[&_.search-field-wrapper.search-field-error]:bg-rose-700",
       "[&_.search-field-wrapper>input]:placeholder:text-white dark:[&_.search-field-wrapper>input]:placeholder:text-black",
       "[&_.search-field-wrapper>input]:text-white dark:[&_.search-field-wrapper>input]:text-black",
-      "focus-within:[&_.search-field-wrapper]:ring-[#A86438] dark:focus-within:[&_.search-field-wrapper]:ring-[#DB976B]",
+      "focus-within:[&_.search-field-wrapper]:ring-dawn-light dark:focus-within:[&_.search-field-wrapper]:ring-dawn-dark",
       floating == "outer" &&
-        "[&_.search-field-wrapper_.floating-label]:bg-[#A86438] dark:[&_.search-field-wrapper_.floating-label]:bg-[#DB976B]"
+        "[&_.search-field-wrapper_.floating-label]:bg-dawn-light dark:[&_.search-field-wrapper_.floating-label]:bg-dawn-dark"
     ]
   end
 
   defp color_variant("default", "silver", floating) do
     [
-      "text-black dark:text-white [&_.search-field-wrapper:not(:has(.search-field-error))]:bg-[#868686]",
-      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:bg-[#A6A6A6]",
+      "text-black dark:text-white [&_.search-field-wrapper:not(:has(.search-field-error))]:bg-silver-light",
+      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:bg-silver-dark",
       "[&_.search-field-wrapper.search-field-error]:bg-rose-700",
       "[&_.search-field-wrapper>input]:placeholder:text-white dark:[&_.search-field-wrapper>input]:placeholder:text-black",
       "[&_.search-field-wrapper>input]:text-white dark:[&_.search-field-wrapper>input]:text-black",
-      "focus-within:[&_.search-field-wrapper]:ring-[#868686] dark:focus-within:[&_.search-field-wrapper]:ring-[#A6A6A6]",
+      "focus-within:[&_.search-field-wrapper]:ring-silver-light dark:focus-within:[&_.search-field-wrapper]:ring-silver-dark",
       floating == "outer" &&
-        "[&_.search-field-wrapper_.floating-label]:bg-[#868686] dark:[&_.search-field-wrapper_.floating-label]:bg-[#A6A6A6]"
+        "[&_.search-field-wrapper_.floating-label]:bg-silver-light dark:[&_.search-field-wrapper_.floating-label]:bg-silver-dark"
     ]
   end
 
   defp color_variant("default", "dark", floating) do
     [
-      "[&_.search-field-wrapper]:bg-[#282828] text-[#282828] [&_.search-field-wrapper]:text-white",
+      "[&_.search-field-wrapper]:bg-default-dark-bg text-default-dark-bg [&_.search-field-wrapper]:text-base-text-dark",
       "[&_.search-field-wrapper.search-field-error]:border-rose-700",
-      "[&_.search-field-wrapper>input]:placeholder:text-white focus-within:[&_.search-field-wrapper]:ring-[#727272]",
-      floating == "outer" && "[&_.search-field-wrapper_.floating-label]:bg-[#282828]"
+      "[&_.search-field-wrapper>input]:placeholder:text-base-text-dark focus-within:[&_.search-field-wrapper]:ring-bordered-dark-border",
+      floating == "outer" && "[&_.search-field-wrapper_.floating-label]:bg-default-dark-bg"
     ]
   end
 
   defp color_variant("bordered", "white", floating) do
     [
-      "[&_.search-field-wrapper]:bg-white [&_.search-field-wrapper]:border-transparent text-[#3E3E3E]",
-      "[&_.search-field-wrapper>input]:placeholder:text-[#3E3E3E]",
+      "[&_.search-field-wrapper]:bg-white [&_.search-field-wrapper]:border-transparent text-form-white-text",
+      "[&_.search-field-wrapper>input]:placeholder:text-form-white-text",
       floating == "outer" && "[&_.search-field-wrapper_.floating-label]:bg-white"
     ]
   end
 
   defp color_variant("bordered", "natural", floating) do
     [
-      "text-[#282828] dark:text-[#E8E8E8] [&_.search-field-wrapper:not(:has(.search-field-error))]:border-[#282828]",
-      "[&_.search-field-wrapper:not(:has(.search-field-error))]:bg-[#F3F3F3]",
-      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:bg-[#4B4B4B]",
-      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:border-[#868686]",
+      "text-natural-bordered-text-light dark:text-natural-bordered-text-dark [&_.search-field-wrapper:not(:has(.search-field-error))]:border-natural-bordered-text-light",
+      "[&_.search-field-wrapper:not(:has(.search-field-error))]:bg-natural-bordered-bg-light",
+      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:bg-natural-bordered-bg-dark",
+      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:border-silver-light",
       "[&_.search-field-wrapper.search-field-error]:bg-rose-700",
-      "[&_.search-field-wrapper>input]:placeholder:text-[#282828] dark:[&_.search-field-wrapper>input]:placeholder:text-[#E8E8E8]",
-      "focus-within:[&_.search-field-wrapper]:ring-[#4B4B4B] dark:focus-within:[&_.search-field-wrapper]:ring-[#DDDDDD]",
+      "[&_.search-field-wrapper>input]:placeholder:text-natural-bordered-text-light dark:[&_.search-field-wrapper>input]:placeholder:text-natural-bordered-text-dark",
+      "focus-within:[&_.search-field-wrapper]:ring-natural-light dark:focus-within:[&_.search-field-wrapper]:ring-natural-dark",
       floating == "outer" &&
-        "[&_.search-field-wrapper_.floating-label]:bg-[#868686] dark:[&_.search-field-wrapper_.floating-label]:bg-[#A6A6A6]"
+        "[&_.search-field-wrapper_.floating-label]:bg-silver-light dark:[&_.search-field-wrapper_.floating-label]:bg-silver-dark"
     ]
   end
 
   defp color_variant("bordered", "primary", floating) do
     [
-      "text-[#016974] dark:text-[#77D5E3] [&_.search-field-wrapper:not(:has(.search-field-error))]:border-[#016974]",
-      "[&_.search-field-wrapper:not(:has(.search-field-error))]:bg-[#E2F8FB]",
-      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:bg-[#4B4B4B]",
-      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:border-[#77D5E3]",
+      "text-primary-bordered-text-light dark:text-primary-bordered-text-dark [&_.search-field-wrapper:not(:has(.search-field-error))]:border-primary-bordered-text-light",
+      "[&_.search-field-wrapper:not(:has(.search-field-error))]:bg-primary-bordered-bg-light",
+      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:bg-natural-bordered-bg-dark",
+      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:border-primary-bordered-text-dark",
       "[&_.search-field-wrapper.search-field-error]:bg-rose-700",
-      "[&_.search-field-wrapper>input]:placeholder:text-[#016974] dark:[&_.search-field-wrapper>input]:placeholder:text-[#77D5E3]",
-      "focus-within:[&_.search-field-wrapper]:ring-[#007F8C] dark:focus-within:[&_.search-field-wrapper]:ring-[#01B8CA]",
+      "[&_.search-field-wrapper>input]:placeholder:text-primary-bordered-text-light dark:[&_.search-field-wrapper>input]:placeholder:text-primary-bordered-text-dark",
+      "focus-within:[&_.search-field-wrapper]:ring-primary-light dark:focus-within:[&_.search-field-wrapper]:ring-primary-dark",
       floating == "outer" &&
-        "[&_.search-field-wrapper_.floating-label]:bg-[#868686] dark:[&_.search-field-wrapper_.floating-label]:bg-[#A6A6A6]"
+        "[&_.search-field-wrapper_.floating-label]:bg-silver-light dark:[&_.search-field-wrapper_.floating-label]:bg-silver-dark"
     ]
   end
 
   defp color_variant("bordered", "secondary", floating) do
     [
-      "text-[#175BCC] dark:text-[#A9C9FF] [&_.search-field-wrapper:not(:has(.search-field-error))]:border-[#175BCC]",
-      "[&_.search-field-wrapper:not(:has(.search-field-error))]:bg-[#EFF4FE]",
-      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:bg-[#002661]",
-      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:border-[#A9C9FF]",
+      "text-secondary-bordered-text-light dark:text-secondary-bordered-text-dark [&_.search-field-wrapper:not(:has(.search-field-error))]:border-secondary-bordered-text-light",
+      "[&_.search-field-wrapper:not(:has(.search-field-error))]:bg-secondary-bordered-bg-light",
+      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:bg-secondary-bordered-bg-dark",
+      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:border-secondary-bordered-text-dark",
       "[&_.search-field-wrapper.search-field-error]:bg-rose-700",
-      "[&_.search-field-wrapper>input]:placeholder:text-[#175BCC] dark:[&_.search-field-wrapper>input]:placeholder:text-[#A9C9FF]",
-      "focus-within:[&_.search-field-wrapper]:ring-[#266EF1] dark:focus-within:[&_.search-field-wrapper]:ring-[#6DAAFB]",
+      "[&_.search-field-wrapper>input]:placeholder:text-secondary-bordered-text-light dark:[&_.search-field-wrapper>input]:placeholder:text-secondary-bordered-text-dark",
+      "focus-within:[&_.search-field-wrapper]:ring-secondary-light dark:focus-within:[&_.search-field-wrapper]:ring-secondary-dark",
       floating == "outer" &&
-        "[&_.search-field-wrapper_.floating-label]:bg-[#868686] dark:[&_.search-field-wrapper_.floating-label]:bg-[#A6A6A6]"
+        "[&_.search-field-wrapper_.floating-label]:bg-silver-light dark:[&_.search-field-wrapper_.floating-label]:bg-silver-dark"
     ]
   end
 
   defp color_variant("bordered", "success", floating) do
     [
-      "text-[#166C3B] dark:text-[#7FD99A] [&_.search-field-wrapper:not(:has(.search-field-error))]:border-[#166C3B]",
-      "[&_.search-field-wrapper:not(:has(.search-field-error))]:bg-[#EAF6ED]",
-      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:bg-[#002F14]",
-      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:border-[#7FD99A]",
+      "text-success-bordered-text-light dark:text-success-bordered-text-dark [&_.search-field-wrapper:not(:has(.search-field-error))]:border-success-bordered-text-light",
+      "[&_.search-field-wrapper:not(:has(.search-field-error))]:bg-success-bordered-bg-light",
+      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:bg-success-bordered-bg-dark",
+      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:border-success-bordered-text-dark",
       "[&_.search-field-wrapper.search-field-error]:bg-rose-700",
-      "[&_.search-field-wrapper>input]:placeholder:text-[#166C3B] dark:[&_.search-field-wrapper>input]:placeholder:text-[#7FD99A]",
-      "focus-within:[&_.search-field-wrapper]:ring-[#0E8345] dark:focus-within:[&_.search-field-wrapper]:ring-[#06C167]",
+      "[&_.search-field-wrapper>input]:placeholder:text-success-bordered-text-light dark:[&_.search-field-wrapper>input]:placeholder:text-success-bordered-text-dark",
+      "focus-within:[&_.search-field-wrapper]:ring-success-light dark:focus-within:[&_.search-field-wrapper]:ring-success-dark",
       floating == "outer" &&
-        "[&_.search-field-wrapper_.floating-label]:bg-[#868686] dark:[&_.search-field-wrapper_.floating-label]:bg-[#A6A6A6]"
+        "[&_.search-field-wrapper_.floating-label]:bg-silver-light dark:[&_.search-field-wrapper_.floating-label]:bg-silver-dark"
     ]
   end
 
   defp color_variant("bordered", "warning", floating) do
     [
-      "text-[#976A01] dark:text-[#FDD067] [&_.search-field-wrapper:not(:has(.search-field-error))]:border-[#976A01]",
-      "[&_.search-field-wrapper:not(:has(.search-field-error))]:bg-[#FFF7E6]",
-      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:bg-[#322300]",
-      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:border-[#FDD067]",
+      "text-warning-bordered-text-light dark:text-warning-bordered-text-dark [&_.search-field-wrapper:not(:has(.search-field-error))]:border-warning-bordered-text-light",
+      "[&_.search-field-wrapper:not(:has(.search-field-error))]:bg-warning-bordered-bg-light",
+      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:bg-warning-bordered-bg-dark",
+      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:border-warning-bordered-text-dark",
       "[&_.search-field-wrapper.search-field-error]:bg-rose-700",
-      "[&_.search-field-wrapper>input]:placeholder:text-[#976A01] dark:[&_.search-field-wrapper>input]:placeholder:text-[#FDD067]",
-      "focus-within:[&_.search-field-wrapper]:ring-[#CA8D01] dark:focus-within:[&_.search-field-wrapper]:ring-[#FDC034]",
+      "[&_.search-field-wrapper>input]:placeholder:text-warning-bordered-text-light dark:[&_.search-field-wrapper>input]:placeholder:text-warning-bordered-text-dark",
+      "focus-within:[&_.search-field-wrapper]:ring-warning-light dark:focus-within:[&_.search-field-wrapper]:ring-warning-dark",
       floating == "outer" &&
-        "[&_.search-field-wrapper_.floating-label]:bg-[#868686] dark:[&_.search-field-wrapper_.floating-label]:bg-[#A6A6A6]"
+        "[&_.search-field-wrapper_.floating-label]:bg-silver-light dark:[&_.search-field-wrapper_.floating-label]:bg-silver-dark"
     ]
   end
 
   defp color_variant("bordered", "danger", floating) do
     [
-      "text-[#BB032A] dark:text-[#FFB2AB] [&_.search-field-wrapper:not(:has(.search-field-error))]:border-[#BB032A]",
-      "[&_.search-field-wrapper:not(:has(.search-field-error))]:bg-[#FFF0EE]",
-      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:bg-[#520810]",
-      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:border-[#FFB2AB]",
+      "text-danger-bordered-text-light dark:text-danger-bordered-text-dark [&_.search-field-wrapper:not(:has(.search-field-error))]:border-danger-bordered-text-light",
+      "[&_.search-field-wrapper:not(:has(.search-field-error))]:bg-danger-bordered-bg-light",
+      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:bg-danger-bordered-bg-dark",
+      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:border-danger-bordered-text-dark",
       "[&_.search-field-wrapper.search-field-error]:bg-rose-700",
-      "[&_.search-field-wrapper>input]:placeholder:text-[#BB032A] dark:[&_.search-field-wrapper>input]:placeholder:text-[#FFB2AB]",
-      "focus-within:[&_.search-field-wrapper]:ring-[#DE1135] dark:focus-within:[&_.search-field-wrapper]:ring-[#FC7F79]",
+      "[&_.search-field-wrapper>input]:placeholder:text-danger-bordered-text-light dark:[&_.search-field-wrapper>input]:placeholder:text-danger-bordered-text-dark",
+      "focus-within:[&_.search-field-wrapper]:ring-danger-light dark:focus-within:[&_.search-field-wrapper]:ring-danger-dark",
       floating == "outer" &&
-        "[&_.search-field-wrapper_.floating-label]:bg-[#868686] dark:[&_.search-field-wrapper_.floating-label]:bg-[#A6A6A6]"
+        "[&_.search-field-wrapper_.floating-label]:bg-silver-light dark:[&_.search-field-wrapper_.floating-label]:bg-silver-dark"
     ]
   end
 
   defp color_variant("bordered", "info", floating) do
     [
-      "text-[#0B84BA] dark:text-[#6EC9F2] [&_.search-field-wrapper:not(:has(.search-field-error))]:border-[#0B84BA]",
-      "[&_.search-field-wrapper:not(:has(.search-field-error))]:bg-[#E7F6FD]",
-      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:bg-[#03212F]",
-      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:border-[#6EC9F2]",
+      "text-info-light dark:text-info-hover-dark [&_.search-field-wrapper:not(:has(.search-field-error))]:border-info-light",
+      "[&_.search-field-wrapper:not(:has(.search-field-error))]:bg-info-bordered-bg-light",
+      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:bg-info-bordered-bg-dark",
+      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:border-info-hover-dark",
       "[&_.search-field-wrapper.search-field-error]:bg-rose-700",
-      "[&_.search-field-wrapper>input]:placeholder:text-[#0B84BA] dark:[&_.search-field-wrapper>input]:placeholder:text-[#6EC9F2]",
-      "focus-within:[&_.search-field-wrapper]:ring-[#0B84BA] dark:focus-within:[&_.search-field-wrapper]:ring-[#3EB7ED]",
+      "[&_.search-field-wrapper>input]:placeholder:text-info-light dark:[&_.search-field-wrapper>input]:placeholder:text-info-hover-dark",
+      "focus-within:[&_.search-field-wrapper]:ring-info-light dark:focus-within:[&_.search-field-wrapper]:ring-info-dark",
       floating == "outer" &&
-        "[&_.search-field-wrapper_.floating-label]:bg-[#868686] dark:[&_.search-field-wrapper_.floating-label]:bg-[#A6A6A6]"
+        "[&_.search-field-wrapper_.floating-label]:bg-silver-light dark:[&_.search-field-wrapper_.floating-label]:bg-silver-dark"
     ]
   end
 
   defp color_variant("bordered", "misc", floating) do
     [
-      "text-[#653C94] dark:text-[#CBA2FA] [&_.search-field-wrapper:not(:has(.search-field-error))]:border-[#653C94]",
-      "[&_.search-field-wrapper:not(:has(.search-field-error))]:bg-[#F6F0FE]",
-      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:bg-[#221431]",
-      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:border-[#CBA2FA]",
+      "text-misc-bordered-text-light dark:text-misc-bordered-text-dark [&_.search-field-wrapper:not(:has(.search-field-error))]:border-misc-bordered-text-light",
+      "[&_.search-field-wrapper:not(:has(.search-field-error))]:bg-misc-bordered-bg-light",
+      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:bg-misc-bordered-bg-dark",
+      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:border-misc-bordered-text-dark",
       "[&_.search-field-wrapper.search-field-error]:bg-rose-700",
-      "[&_.search-field-wrapper>input]:placeholder:text-[#653C94] dark:[&_.search-field-wrapper>input]:placeholder:text-[#CBA2FA]",
-      "focus-within:[&_.search-field-wrapper]:ring-[#8750C5] dark:focus-within:[&_.search-field-wrapper]:ring-[#BA83F9]",
+      "[&_.search-field-wrapper>input]:placeholder:text-misc-bordered-text-light dark:[&_.search-field-wrapper>input]:placeholder:text-misc-bordered-text-dark",
+      "focus-within:[&_.search-field-wrapper]:ring-misc-light dark:focus-within:[&_.search-field-wrapper]:ring-misc-dark",
       floating == "outer" &&
-        "[&_.search-field-wrapper_.floating-label]:bg-[#868686] dark:[&_.search-field-wrapper_.floating-label]:bg-[#A6A6A6]"
+        "[&_.search-field-wrapper_.floating-label]:bg-silver-light dark:[&_.search-field-wrapper_.floating-label]:bg-silver-dark"
     ]
   end
 
   defp color_variant("bordered", "dawn", floating) do
     [
-      "text-[#7E4B2A] dark:text-[#E4B190] [&_.search-field-wrapper:not(:has(.search-field-error))]:border-[#7E4B2A]",
-      "[&_.search-field-wrapper:not(:has(.search-field-error))]:bg-[#FBF2ED]",
-      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:bg-[#2A190E]",
-      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:border-[#E4B190]",
+      "text-dawn-bordered-text-light dark:text-dawn-bordered-text-dark [&_.search-field-wrapper:not(:has(.search-field-error))]:border-dawn-bordered-text-light",
+      "[&_.search-field-wrapper:not(:has(.search-field-error))]:bg-dawn-bordered-bg-light",
+      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:bg-dawn-bordered-bg-dark",
+      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:border-dawn-bordered-text-dark",
       "[&_.search-field-wrapper.search-field-error]:bg-rose-700",
-      "[&_.search-field-wrapper>input]:placeholder:text-[#7E4B2A] dark:[&_.search-field-wrapper>input]:placeholder:text-[#E4B190]",
-      "focus-within:[&_.search-field-wrapper]:ring-[#A86438] dark:focus-within:[&_.search-field-wrapper]:ring-[#DB976B]",
+      "[&_.search-field-wrapper>input]:placeholder:text-dawn-bordered-text-light dark:[&_.search-field-wrapper>input]:placeholder:text-dawn-bordered-text-dark",
+      "focus-within:[&_.search-field-wrapper]:ring-dawn-light dark:focus-within:[&_.search-field-wrapper]:ring-dawn-dark",
       floating == "outer" &&
-        "[&_.search-field-wrapper_.floating-label]:bg-[#868686] dark:[&_.search-field-wrapper_.floating-label]:bg-[#A6A6A6]"
+        "[&_.search-field-wrapper_.floating-label]:bg-silver-light dark:[&_.search-field-wrapper_.floating-label]:bg-silver-dark"
     ]
   end
 
   defp color_variant("bordered", "silver", floating) do
     [
-      "text-[#727272] dark:text-[#BBBBBB] [&_.search-field-wrapper:not(:has(.search-field-error))]:border-[#727272]",
-      "[&_.search-field-wrapper:not(:has(.search-field-error))]:bg-[#F3F3F3]",
-      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:bg-[#4B4B4B]",
-      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:border-[#BBBBBB]",
+      "text-silver-bordered-text-light dark:text-silver-bordered-text-dark [&_.search-field-wrapper:not(:has(.search-field-error))]:border-silver-bordered-text-light",
+      "[&_.search-field-wrapper:not(:has(.search-field-error))]:bg-silver-bordered-bg-light",
+      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:bg-silver-bordered-bg-dark",
+      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:border-silver-bordered-text-dark",
       "[&_.search-field-wrapper.search-field-error]:bg-rose-700",
-      "[&_.search-field-wrapper>input]:placeholder:text-[#727272] dark:[&_.search-field-wrapper>input]:placeholder:text-[#BBBBBB]",
-      "focus-within:[&_.search-field-wrapper]:ring-[#868686] dark:focus-within:[&_.search-field-wrapper]:ring-[#A6A6A6]",
+      "[&_.search-field-wrapper>input]:placeholder:text-silver-bordered-text-light dark:[&_.search-field-wrapper>input]:placeholder:text-silver-bordered-text-dark",
+      "focus-within:[&_.search-field-wrapper]:ring-silver-light dark:focus-within:[&_.search-field-wrapper]:ring-silver-dark",
       floating == "outer" &&
-        "[&_.search-field-wrapper_.floating-label]:bg-[#868686] dark:[&_.search-field-wrapper_.floating-label]:bg-[#A6A6A6]"
+        "[&_.search-field-wrapper_.floating-label]:bg-silver-light dark:[&_.search-field-wrapper_.floating-label]:bg-silver-dark"
     ]
   end
 
   defp color_variant("bordered", "dark", floating) do
     [
-      "[&_.search-field-wrapper]:bg-[#282828] text-[#282828] [&_.search-field-wrapper]:border-[#727272] text-white",
-      "[&_.search-field-wrapper>input]:placeholder:text-white focus-within:[&_.search-field-wrapper]:ring-[#727272]",
-      floating == "outer" && "[&_.search-field-wrapper_.floating-label]:bg-[#282828]"
+      "[&_.search-field-wrapper]:bg-default-dark-bg text-default-dark-bg [&_.search-field-wrapper]:border-bordered-dark-border text-base-text-dark",
+      "[&_.search-field-wrapper>input]:placeholder:text-base-text-dark focus-within:[&_.search-field-wrapper]:ring-bordered-dark-border",
+      floating == "outer" && "[&_.search-field-wrapper_.floating-label]:bg-default-dark-bg"
     ]
   end
 
   defp color_variant("shadow", "natural", floating) do
     [
-      "text-black dark:text-white [&_.search-field-wrapper:not(:has(.search-field-error))]:bg-[#4B4B4B]",
-      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:bg-[#DDDDDD]",
+      "text-black dark:text-white [&_.search-field-wrapper:not(:has(.search-field-error))]:bg-natural-light",
+      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:bg-natural-dark",
       "[&_.search-field-wrapper.search-field-error]:bg-rose-700",
       "[&_.search-field-wrapper>input]:placeholder:text-white dark:[&_.search-field-wrapper>input]:placeholder:text-black",
       "[&_.search-field-wrapper>input]:text-white dark:[&_.search-field-wrapper>input]:text-black",
-      "focus-within:[&_.search-field-wrapper]:ring-[#4B4B4B] dark:focus-within:[&_.search-field-wrapper]:ring-[#DDDDDD]",
-      "[&_.search-field-wrapper]:shadow-[0px_4px_6px_-4px_rgba(134,134,134,0.5)] [&_.search-field-wrapper]:shadow-[0px_10px_15px_-3px_rgba(134,134,134,0.5)]",
+      "focus-within:[&_.search-field-wrapper]:ring-natural-light dark:focus-within:[&_.search-field-wrapper]:ring-natural-dark",
+      "[&_.search-field-wrapper]:shadow-[0px_4px_6px_-4px_var(--color-shadow-natural)] [&_.search-field-wrapper]:shadow-[0px_10px_15px_-3px_var(--color-shadow-natural)]",
       "dark:[&_.search-field-wrapper]:shadow-none",
       floating == "outer" &&
-        "[&_.search-field-wrapper_.floating-label]:bg-[#4B4B4B] dark:[&_.search-field-wrapper_.floating-label]:bg-[#DDDDDD]"
+        "[&_.search-field-wrapper_.floating-label]:bg-natural-light dark:[&_.search-field-wrapper_.floating-label]:bg-natural-dark"
     ]
   end
 
   defp color_variant("shadow", "primary", floating) do
     [
-      "text-black dark:text-white [&_.search-field-wrapper:not(:has(.search-field-error))]:bg-[#007F8C]",
-      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:bg-[#01B8CA]",
+      "text-black dark:text-white [&_.search-field-wrapper:not(:has(.search-field-error))]:bg-primary-light",
+      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:bg-primary-dark",
       "[&_.search-field-wrapper.search-field-error]:bg-rose-700",
       "[&_.search-field-wrapper>input]:placeholder:text-white dark:[&_.search-field-wrapper>input]:placeholder:text-black",
       "[&_.search-field-wrapper>input]:text-white dark:[&_.search-field-wrapper>input]:text-black",
-      "focus-within:[&_.search-field-wrapper]:ring-[#007F8C] dark:focus-within:[&_.search-field-wrapper]:ring-[#01B8CA]",
-      "[&_.search-field-wrapper]:shadow-[0px_4px_6px_-4px_rgba(0,149,164,0.5)] [&_.search-field-wrapper]:shadow-[0px_10px_15px_-3px_rgba(0,149,164,0.5)]",
+      "focus-within:[&_.search-field-wrapper]:ring-primary-light dark:focus-within:[&_.search-field-wrapper]:ring-primary-dark",
+      "[&_.search-field-wrapper]:shadow-[0px_4px_6px_-4px_var(--color-shadow-primary)] [&_.search-field-wrapper]:shadow-[0px_10px_15px_-3px_var(--color-shadow-primary)]",
       "dark:[&_.search-field-wrapper]:shadow-none",
       floating == "outer" &&
-        "[&_.search-field-wrapper_.floating-label]:bg-[#007F8C] dark:[&_.search-field-wrapper_.floating-label]:bg-[#01B8CA]"
+        "[&_.search-field-wrapper_.floating-label]:bg-primary-light dark:[&_.search-field-wrapper_.floating-label]:bg-primary-dark"
     ]
   end
 
   defp color_variant("shadow", "secondary", floating) do
     [
-      "text-black dark:text-white [&_.search-field-wrapper:not(:has(.search-field-error))]:bg-[#266EF1]",
-      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:bg-[#6DAAFB]",
+      "text-black dark:text-white [&_.search-field-wrapper:not(:has(.search-field-error))]:bg-secondary-light",
+      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:bg-secondary-dark",
       "[&_.search-field-wrapper.search-field-error]:bg-rose-700",
       "[&_.search-field-wrapper>input]:placeholder:text-white dark:[&_.search-field-wrapper>input]:placeholder:text-black",
       "[&_.search-field-wrapper>input]:text-white dark:[&_.search-field-wrapper>input]:text-black",
-      "focus-within:[&_.search-field-wrapper]:ring-[#266EF1] dark:focus-within:[&_.search-field-wrapper]:ring-[#6DAAFB]",
-      "[&_.search-field-wrapper]:shadow-[0px_4px_6px_-4px_rgba(6,139,238,0.5)] [&_.search-field-wrapper]:shadow-[0px_10px_15px_-3px_rgba(6,139,238,0.5)]",
+      "focus-within:[&_.search-field-wrapper]:ring-secondary-light dark:focus-within:[&_.search-field-wrapper]:ring-secondary-dark",
+      "[&_.search-field-wrapper]:shadow-[0px_4px_6px_-4px_var(--color-shadow-secondary)] [&_.search-field-wrapper]:shadow-[0px_10px_15px_-3px_var(--color-shadow-secondary)]",
       "dark:[&_.search-field-wrapper]:shadow-none",
       floating == "outer" &&
-        "[&_.search-field-wrapper_.floating-label]:bg-[#266EF1] dark:[&_.search-field-wrapper_.floating-label]:bg-[#6DAAFB]"
+        "[&_.search-field-wrapper_.floating-label]:bg-secondary-light dark:[&_.search-field-wrapper_.floating-label]:bg-secondary-dark"
     ]
   end
 
   defp color_variant("shadow", "success", floating) do
     [
-      "text-black dark:text-white [&_.search-field-wrapper:not(:has(.search-field-error))]:bg-[#0E8345]",
-      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:bg-[#06C167]",
+      "text-black dark:text-white [&_.search-field-wrapper:not(:has(.search-field-error))]:bg-success-light",
+      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:bg-success-dark",
       "[&_.search-field-wrapper.search-field-error]:bg-rose-700",
       "[&_.search-field-wrapper>input]:placeholder:text-white dark:[&_.search-field-wrapper>input]:placeholder:text-black",
       "[&_.search-field-wrapper>input]:text-white dark:[&_.search-field-wrapper>input]:text-black",
-      "focus-within:[&_.search-field-wrapper]:ring-[#0E8345] dark:focus-within:[&_.search-field-wrapper]:ring-[#06C167]",
-      "[&_.search-field-wrapper]:shadow-[0px_4px_6px_-4px_rgba(0,154,81,0.5)] [&_.search-field-wrapper]:shadow-[0px_10px_15px_-3px_rgba(0,154,81,0.5)]",
+      "focus-within:[&_.search-field-wrapper]:ring-success-light dark:focus-within:[&_.search-field-wrapper]:ring-success-dark",
+      "[&_.search-field-wrapper]:shadow-[0px_4px_6px_-4px_var(--color-shadow-success)] [&_.search-field-wrapper]:shadow-[0px_10px_15px_-3px_var(--color-shadow-success)]",
       "dark:[&_.search-field-wrapper]:shadow-none",
       floating == "outer" &&
-        "[&_.search-field-wrapper_.floating-label]:bg-[#0E8345] dark:[&_.search-field-wrapper_.floating-label]:bg-[#06C167]"
+        "[&_.search-field-wrapper_.floating-label]:bg-success-light dark:[&_.search-field-wrapper_.floating-label]:bg-success-dark"
     ]
   end
 
   defp color_variant("shadow", "warning", floating) do
     [
-      "text-black dark:text-white [&_.search-field-wrapper:not(:has(.search-field-error))]:bg-[#CA8D01]",
-      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:bg-[#FDC034]",
+      "text-black dark:text-white [&_.search-field-wrapper:not(:has(.search-field-error))]:bg-warning-light",
+      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:bg-warning-dark",
       "[&_.search-field-wrapper.search-field-error]:bg-rose-700",
       "[&_.search-field-wrapper>input]:placeholder:text-white dark:[&_.search-field-wrapper>input]:placeholder:text-black",
       "[&_.search-field-wrapper>input]:text-white dark:[&_.search-field-wrapper>input]:text-black",
-      "focus-within:[&_.search-field-wrapper]:ring-[#CA8D01] dark:focus-within:[&_.search-field-wrapper]:ring-[#FDC034]",
-      "[&_.search-field-wrapper]:shadow-[0px_4px_6px_-4px_rgba(252,176,1,0.5)] [&_.search-field-wrapper]:shadow-[0px_10px_15px_-3px_rgba(252,176,1,0.5)]",
+      "focus-within:[&_.search-field-wrapper]:ring-warning-light dark:focus-within:[&_.search-field-wrapper]:ring-warning-dark",
+      "[&_.search-field-wrapper]:shadow-[0px_4px_6px_-4px_var(--color-shadow-warning)] [&_.search-field-wrapper]:shadow-[0px_10px_15px_-3px_var(--color-shadow-warning)]",
       "dark:[&_.search-field-wrapper]:shadow-none",
       floating == "outer" &&
-        "[&_.search-field-wrapper_.floating-label]:bg-[#CA8D01] dark:[&_.search-field-wrapper_.floating-label]:bg-[#FDC034]"
+        "[&_.search-field-wrapper_.floating-label]:bg-warning-light dark:[&_.search-field-wrapper_.floating-label]:bg-warning-dark"
     ]
   end
 
   defp color_variant("shadow", "danger", floating) do
     [
-      "text-black dark:text-white [&_.search-field-wrapper:not(:has(.search-field-error))]:bg-[#DE1135]",
-      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:bg-[#FC7F79]",
+      "text-black dark:text-white [&_.search-field-wrapper:not(:has(.search-field-error))]:bg-danger-light",
+      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:bg-danger-dark",
       "[&_.search-field-wrapper.search-field-error]:bg-rose-700",
       "[&_.search-field-wrapper>input]:placeholder:text-white dark:[&_.search-field-wrapper>input]:placeholder:text-black",
       "[&_.search-field-wrapper>input]:text-white dark:[&_.search-field-wrapper>input]:text-black",
-      "focus-within:[&_.search-field-wrapper]:ring-[#DE1135] dark:focus-within:[&_.search-field-wrapper]:ring-[#FC7F79]",
-      "[&_.search-field-wrapper]:shadow-[0px_4px_6px_-4px_rgba(248,52,70,0.5)] [&_.search-field-wrapper]:shadow-[0px_10px_15px_-3px_rgba(248,52,70,0.5)]",
+      "focus-within:[&_.search-field-wrapper]:ring-danger-light dark:focus-within:[&_.search-field-wrapper]:ring-danger-dark",
+      "[&_.search-field-wrapper]:shadow-[0px_4px_6px_-4px_var(--color-shadow-danger)] [&_.search-field-wrapper]:shadow-[0px_10px_15px_-3px_var(--color-shadow-danger)]",
       "dark:[&_.search-field-wrapper]:shadow-none",
       floating == "outer" &&
-        "[&_.search-field-wrapper_.floating-label]:bg-[#DE1135] dark:[&_.search-field-wrapper_.floating-label]:bg-[#FC7F79]"
+        "[&_.search-field-wrapper_.floating-label]:bg-danger-light dark:[&_.search-field-wrapper_.floating-label]:bg-danger-dark"
     ]
   end
 
   defp color_variant("shadow", "info", floating) do
     [
-      "text-black dark:text-white [&_.search-field-wrapper:not(:has(.search-field-error))]:bg-[#0B84BA]",
-      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:bg-[#3EB7ED]",
+      "text-black dark:text-white [&_.search-field-wrapper:not(:has(.search-field-error))]:bg-info-light",
+      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:bg-info-dark",
       "[&_.search-field-wrapper.search-field-error]:bg-rose-700",
       "[&_.search-field-wrapper>input]:placeholder:text-white dark:[&_.search-field-wrapper>input]:placeholder:text-black",
       "[&_.search-field-wrapper>input]:text-white dark:[&_.search-field-wrapper>input]:text-black",
-      "focus-within:[&_.search-field-wrapper]:ring-[#0B84BA] dark:focus-within:[&_.search-field-wrapper]:ring-[#3EB7ED]",
-      "[&_.search-field-wrapper]:shadow-[0px_4px_6px_-4px_rgba(14,165,233,0.5)] [&_.search-field-wrapper]:shadow-[0px_10px_15px_-3px_rgba(14,165,233,0.5)]",
+      "focus-within:[&_.search-field-wrapper]:ring-info-light dark:focus-within:[&_.search-field-wrapper]:ring-info-dark",
+      "[&_.search-field-wrapper]:shadow-[0px_4px_6px_-4px_var(--color-shadow-info)] [&_.search-field-wrapper]:shadow-[0px_10px_15px_-3px_var(--color-shadow-info)]",
       "dark:[&_.search-field-wrapper]:shadow-none",
       floating == "outer" &&
-        "[&_.search-field-wrapper_.floating-label]:bg-[#0B84BA] dark:[&_.search-field-wrapper_.floating-label]:bg-[#3EB7ED]"
+        "[&_.search-field-wrapper_.floating-label]:bg-info-light dark:[&_.search-field-wrapper_.floating-label]:bg-info-dark"
     ]
   end
 
   defp color_variant("shadow", "misc", floating) do
     [
-      "text-black dark:text-white [&_.search-field-wrapper:not(:has(.search-field-error))]:bg-[#8750C5]",
-      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:bg-[#BA83F9]",
+      "text-black dark:text-white [&_.search-field-wrapper:not(:has(.search-field-error))]:bg-misc-light",
+      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:bg-misc-dark",
       "[&_.search-field-wrapper.search-field-error]:bg-rose-700",
       "[&_.search-field-wrapper>input]:placeholder:text-white dark:[&_.search-field-wrapper>input]:placeholder:text-black",
       "[&_.search-field-wrapper>input]:text-white dark:[&_.search-field-wrapper>input]:text-black",
-      "focus-within:[&_.search-field-wrapper]:ring-[#8750C5] dark:focus-within:[&_.search-field-wrapper]:ring-[#BA83F9]",
-      "[&_.search-field-wrapper]:shadow-[0px_4px_6px_-4px_rgba(169,100,247,0.5)] [&_.search-field-wrapper]:shadow-[0px_10px_15px_-3px_rgba(169,100,247,0.5)]",
+      "focus-within:[&_.search-field-wrapper]:ring-misc-light dark:focus-within:[&_.search-field-wrapper]:ring-misc-dark",
+      "[&_.search-field-wrapper]:shadow-[0px_4px_6px_-4px_var(--color-shadow-misc)] [&_.search-field-wrapper]:shadow-[0px_10px_15px_-3px_var(--color-shadow-misc)]",
       "dark:[&_.search-field-wrapper]:shadow-none",
       floating == "outer" &&
-        "[&_.search-field-wrapper_.floating-label]:bg-[#8750C5] dark:[&_.search-field-wrapper_.floating-label]:bg-[#BA83F9]"
+        "[&_.search-field-wrapper_.floating-label]:bg-misc-light dark:[&_.search-field-wrapper_.floating-label]:bg-misc-dark"
     ]
   end
 
   defp color_variant("shadow", "dawn", floating) do
     [
-      "text-black dark:text-white [&_.search-field-wrapper:not(:has(.search-field-error))]:bg-[#A86438]",
-      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:bg-[#DB976B]",
+      "text-black dark:text-white [&_.search-field-wrapper:not(:has(.search-field-error))]:bg-dawn-light",
+      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:bg-dawn-dark",
       "[&_.search-field-wrapper.search-field-error]:bg-rose-700",
       "[&_.search-field-wrapper>input]:placeholder:text-white dark:[&_.search-field-wrapper>input]:placeholder:text-black",
       "[&_.search-field-wrapper>input]:text-white dark:[&_.search-field-wrapper>input]:text-black",
-      "focus-within:[&_.search-field-wrapper]:ring-[#A86438] dark:focus-within:[&_.search-field-wrapper]:ring-[#DB976B]",
-      "[&_.search-field-wrapper]:shadow-[0px_4px_6px_-4px_rgba(210,125,70,0.5)] [&_.search-field-wrapper]:shadow-[0px_10px_15px_-3px_rgba(210,125,70,0.5)]",
+      "focus-within:[&_.search-field-wrapper]:ring-dawn-light dark:focus-within:[&_.search-field-wrapper]:ring-dawn-dark",
+      "[&_.search-field-wrapper]:shadow-[0px_4px_6px_-4px_var(--color-shadow-dawn)] [&_.search-field-wrapper]:shadow-[0px_10px_15px_-3px_var(--color-shadow-dawn)]",
       "dark:[&_.search-field-wrapper]:shadow-none",
       floating == "outer" &&
-        "[&_.search-field-wrapper_.floating-label]:bg-[#A86438] dark:[&_.search-field-wrapper_.floating-label]:bg-[#DB976B]"
+        "[&_.search-field-wrapper_.floating-label]:bg-dawn-light dark:[&_.search-field-wrapper_.floating-label]:bg-dawn-dark"
     ]
   end
 
   defp color_variant("shadow", "silver", floating) do
     [
-      "text-black dark:text-white [&_.search-field-wrapper:not(:has(.search-field-error))]:bg-[#868686]",
-      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:bg-[#A6A6A6]",
+      "text-black dark:text-white [&_.search-field-wrapper:not(:has(.search-field-error))]:bg-silver-light",
+      "dark:[&_.search-field-wrapper:not(:has(.search-field-error))]:bg-silver-dark",
       "[&_.search-field-wrapper.search-field-error]:bg-rose-700",
       "[&_.search-field-wrapper>input]:placeholder:text-white dark:[&_.search-field-wrapper>input]:placeholder:text-black",
       "[&_.search-field-wrapper>input]:text-white dark:[&_.search-field-wrapper>input]:text-black",
-      "focus-within:[&_.search-field-wrapper]:ring-[#868686] dark:focus-within:[&_.search-field-wrapper]:ring-[#A6A6A6]",
-      "[&_.search-field-wrapper]:shadow-[0px_4px_6px_-4px_rgba(134,134,134,0.5)] [&_.search-field-wrapper]:shadow-[0px_10px_15px_-3px_rgba(134,134,134,0.5)]",
+      "focus-within:[&_.search-field-wrapper]:ring-silver-light dark:focus-within:[&_.search-field-wrapper]:ring-silver-dark",
+      "[&_.search-field-wrapper]:shadow-[0px_4px_6px_-4px_var(--color-shadow-silver)] [&_.search-field-wrapper]:shadow-[0px_10px_15px_-3px_var(--color-shadow-silver)]",
       "dark:[&_.search-field-wrapper]:shadow-none",
       floating == "outer" &&
-        "[&_.search-field-wrapper_.floating-label]:bg-[#868686] dark:[&_.search-field-wrapper_.floating-label]:bg-[#A6A6A6]"
+        "[&_.search-field-wrapper_.floating-label]:bg-silver-light dark:[&_.search-field-wrapper_.floating-label]:bg-silver-dark"
     ]
   end
 
   defp color_variant("transparent", "natural", _) do
     [
-      "text-[#4B4B4B] dark:text-[#DDDDDD]",
-      "[&_.search-field-wrapper>input]:placeholder:text-[#4B4B4B]",
-      "dark:[&_.search-field-wrapper>input]:placeholder:text-[#4363EC]",
+      "text-natural-light dark:text-natural-dark",
+      "[&_.search-field-wrapper>input]:placeholder:text-natural-light",
+      "dark:[&_.search-field-wrapper>input]:placeholder:text-natural-dark",
       "focus-within:[&_.search-field-wrapper]:ring-transparent"
     ]
   end
 
   defp color_variant("transparent", "primary", _) do
     [
-      "text-[#007F8C] dark:text-[#01B8CA]",
-      "[&_.search-field-wrapper>input]:placeholder:text-[#007F8C]",
-      "dark:[&_.search-field-wrapper>input]:placeholder:text-[#01B8CA]",
+      "text-primary-light dark:text-primary-dark",
+      "[&_.search-field-wrapper>input]:placeholder:text-primary-light",
+      "dark:[&_.search-field-wrapper>input]:placeholder:text-primary-dark",
       "focus-within:[&_.search-field-wrapper]:ring-transparent"
     ]
   end
 
   defp color_variant("transparent", "secondary", _) do
     [
-      "text-[#266EF1] dark:text-[#6DAAFB]",
-      "[&_.search-field-wrapper>input]:placeholder:text-[#266EF1]",
-      "dark:[&_.search-field-wrapper>input]:placeholder:text-[#6DAAFB]",
+      "text-secondary-light dark:text-secondary-dark",
+      "[&_.search-field-wrapper>input]:placeholder:text-secondary-light",
+      "dark:[&_.search-field-wrapper>input]:placeholder:text-secondary-dark",
       "focus-within:[&_.search-field-wrapper]:ring-transparent"
     ]
   end
 
   defp color_variant("transparent", "success", _) do
     [
-      "text-[#0E8345] dark:text-[#06C167]",
-      "[&_.search-field-wrapper>input]:placeholder:text-[#0E8345]",
-      "dark:[&_.search-field-wrapper>input]:placeholder:text-[#06C167]",
+      "text-success-light dark:text-success-dark",
+      "[&_.search-field-wrapper>input]:placeholder:text-success-light",
+      "dark:[&_.search-field-wrapper>input]:placeholder:text-success-dark",
       "focus-within:[&_.search-field-wrapper]:ring-transparent"
     ]
   end
 
   defp color_variant("transparent", "warning", _) do
     [
-      "text-[#CA8D01] dark:text-[#FDC034]",
-      "[&_.search-field-wrapper>input]:placeholder:text-[#CA8D01]",
-      "dark:[&_.search-field-wrapper>input]:placeholder:text-[#FDC034]",
+      "text-warning-light dark:text-warning-dark",
+      "[&_.search-field-wrapper>input]:placeholder:text-warning-light",
+      "dark:[&_.search-field-wrapper>input]:placeholder:text-warning-dark",
       "focus-within:[&_.search-field-wrapper]:ring-transparent"
     ]
   end
 
   defp color_variant("transparent", "danger", _) do
     [
-      "text-[#DE1135] dark:text-[#FC7F79]",
-      "[&_.search-field-wrapper>input]:placeholder:text-[#DE1135]",
-      "dark:[&_.search-field-wrapper>input]:placeholder:text-[#FC7F79]",
+      "text-danger-light dark:text-danger-dark",
+      "[&_.search-field-wrapper>input]:placeholder:text-danger-light",
+      "dark:[&_.search-field-wrapper>input]:placeholder:text-danger-dark",
       "focus-within:[&_.search-field-wrapper]:ring-transparent"
     ]
   end
 
   defp color_variant("transparent", "info", _) do
     [
-      "text-[#0B84BA] dark:text-[#3EB7ED]",
-      "[&_.search-field-wrapper>input]:placeholder:text-[#0B84BA]",
-      "dark:[&_.search-field-wrapper>input]:placeholder:text-[#3EB7ED]",
+      "text-info-light dark:text-info-dark",
+      "[&_.search-field-wrapper>input]:placeholder:text-info-light",
+      "dark:[&_.search-field-wrapper>input]:placeholder:text-info-dark",
       "focus-within:[&_.search-field-wrapper]:ring-transparent"
     ]
   end
 
   defp color_variant("transparent", "misc", _) do
     [
-      "text-[#8750C5] dark:text-[#BA83F9]",
-      "[&_.search-field-wrapper>input]:placeholder:text-[#8750C5]",
-      "dark:[&_.search-field-wrapper>input]:placeholder:text-[#BA83F9]",
+      "text-misc-light dark:text-misc-dark",
+      "[&_.search-field-wrapper>input]:placeholder:text-misc-light",
+      "dark:[&_.search-field-wrapper>input]:placeholder:text-misc-dark",
       "focus-within:[&_.search-field-wrapper]:ring-transparent"
     ]
   end
 
   defp color_variant("transparent", "dawn", _) do
     [
-      "text-[#A86438] dark:text-[#DB976B]",
-      "[&_.search-field-wrapper>input]:placeholder:text-[#A86438]",
-      "dark:[&_.search-field-wrapper>input]:placeholder:text-[#DB976B]",
+      "text-dawn-light dark:text-dawn-dark",
+      "[&_.search-field-wrapper>input]:placeholder:text-dawn-light",
+      "dark:[&_.search-field-wrapper>input]:placeholder:text-dawn-dark",
       "focus-within:[&_.search-field-wrapper]:ring-transparent"
     ]
   end
 
   defp color_variant("transparent", "silver", _) do
     [
-      "text-[#868686] dark:text-[#A6A6A6]",
-      "[&_.search-field-wrapper>input]:placeholder:text-[#868686]",
-      "dark:[&_.search-field-wrapper>input]:placeholder:text-[#A6A6A6]",
+      "text-silver-light dark:text-silver-dark",
+      "[&_.search-field-wrapper>input]:placeholder:text-silver-light",
+      "dark:[&_.search-field-wrapper>input]:placeholder:text-silver-dark",
       "focus-within:[&_.search-field-wrapper]:ring-transparent"
     ]
   end

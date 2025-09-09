@@ -75,7 +75,6 @@ defmodule CommunityDemoWeb.Components.Tabs do
 
   attr :size, :string,
     default: "small",
-    doc: "",
     doc:
       "Determines the overall size of the elements, including padding, font size, and other items"
 
@@ -88,9 +87,17 @@ defmodule CommunityDemoWeb.Components.Tabs do
 
   attr :padding, :string, default: "extra_small", doc: "Determines padding for items"
   attr :content_padding, :string, default: "extra_small", doc: "Determines padding for items"
-  attr :triggers_position, :string, default: "extra_small", doc: ""
+
+  attr :triggers_position, :string,
+    default: "extra_small",
+    doc: "Determines the positioning of tab triggers"
+
   attr :vertical, :boolean, default: false, doc: "Determines whether element is vertical"
-  attr :placement, :string, default: "start", doc: ""
+
+  attr :placement, :string,
+    default: "start",
+    doc: "Determines placement of vertical tabs (start, end)"
+
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
 
   attr :rest, :global,
@@ -110,7 +117,7 @@ defmodule CommunityDemoWeb.Components.Tabs do
     attr :badge_color, :string, doc: "badge color"
     attr :badge_position, :string, doc: "badge position"
     attr :badge_size, :string, doc: "badge size"
-    attr :badge_variant, :string, doc: "badge color varinat"
+    attr :badge_variant, :string, doc: "badge color variant"
     attr :on_select, :any, doc: "Custom JS module for on_select action"
   end
 
@@ -149,11 +156,11 @@ defmodule CommunityDemoWeb.Components.Tabs do
         role="tablist"
         tabindex="0"
         class={[
-          "tab-trigger-list flex flex-col shrink-0 text-[#4B4B4B] dark:text-[#DDDDDD]",
+          "tab-trigger-list flex flex-col shrink-0 text-natural-light dark:text-natural-dark",
           @variant == "default" &&
-            "border-[#e8e8e8] dark:border-[#5e5e5e] [&:not(.active-tab)_.tab-trigger]:border-[#e8e8e8] dark:[&:not(.active-tab)_.tab-trigger]:border-[#5e5e5e]",
+            "border-natural-hover-dark dark:border-silver-indicator-alt-light [&:not(.active-tab)_.tab-trigger]:border-natural-hover-dark dark:[&:not(.active-tab)_.tab-trigger]:border-silver-indicator-alt-light",
           @variant == "base" &&
-            "border-[#e4e4e7] dark:border-[#27272A] [&:not(.active-tab)_.tab-trigger]:border-[#e4e4e7] dark:[&:not(.active-tab)_.tab-trigger]:border-[#27272a]"
+            "border-base-border-light dark:border-base-border-dark [&:not(.active-tab)_.tab-trigger]:border-base-border-light dark:[&:not(.active-tab)_.tab-trigger]:border-base-border-dark"
         ]}
       >
         <button
@@ -190,7 +197,7 @@ defmodule CommunityDemoWeb.Components.Tabs do
           >
             {tab[:badge]}
           </.badge>
-          <span class="block tab-button_contnet">
+          <span class="block tab-button_content">
             {render_slot(tab)}
           </span>
         </button>
@@ -248,8 +255,8 @@ defmodule CommunityDemoWeb.Components.Tabs do
         role="tablist"
         tabindex="0"
         class={[
-          "tab-trigger-list flex flex-wrap flex-wrap",
-          @variant == "nav_pills" && "tab-nav-pills bg-[#F4F4F5] dark:bg-[#27272A]",
+          "tab-trigger-list flex flex-wrap",
+          @variant == "nav_pills" && "tab-nav-pills bg-base-tab-bg-light dark:bg-base-border-dark",
           @variant == "nav_pills" && !@full_width_tab && "w-fit"
         ]}
       >
@@ -285,7 +292,7 @@ defmodule CommunityDemoWeb.Components.Tabs do
           >
             {tab[:badge]}
           </.badge>
-          <span class="block tab-button_contnet">
+          <span class="block tab-button_content">
             {render_slot(tab)}
           </span>
         </button>
@@ -450,7 +457,7 @@ defmodule CommunityDemoWeb.Components.Tabs do
 
   defp tab_border("medium", false) do
     [
-      "[&_.tab-trigger]:border-b-[3px]  [&_.tab-trigger]:-mb-1",
+      "[&_.tab-trigger]:border-b-[3px] [&_.tab-trigger]:-mb-1",
       "[&:not(.no-border-tabs-list)_.tab-trigger-list]:border-b-[3px]"
     ]
   end
@@ -522,294 +529,294 @@ defmodule CommunityDemoWeb.Components.Tabs do
 
   defp color_variant("base", _) do
     [
-      "[&_.tab-trigger.active-tab]:bg-[#e4e4e7] [&_.tab-trigger.active-tab]:text-[#09090b]",
-      "[&_.tab-trigger.active-tab]:border-[#e4e4e7]",
-      "hover:[&_.tab-trigger]:text-[#09090b] hover:[&_.tab-trigger]:border-[#e4e4e7]",
-      "[&_.tab-trigger]:border-[#e4e4e7] dark:[&_.tab-trigger]:border-[#27272a]",
-      "dark:[&_.tab-trigger.active-tab]:bg-[#27272a] dark:[&_.tab-trigger.active-tab]:text-[#FAFAFA]",
-      "dark:[&_.tab-trigger.active-tab]:border-[#27272a] ",
-      "dark:hover:[&_.tab-trigger]:text-[#FAFAFA] dark:hover:[&_.tab-trigger]:border-[#27272a]",
-      "hover:[&_.tab-trigger]:bg-[#e4e4e7] dark:hover:[&_.tab-trigger]:bg-[#27272a]",
-      "dark:[&_.tab-trigger-list]:border-[#27272A] [&_.tab-trigger-list]:border-[#e4e4e7]"
+      "[&_.tab-trigger.active-tab]:bg-base-border-light [&_.tab-trigger.active-tab]:text-base-text-light",
+      "[&_.tab-trigger.active-tab]:border-base-border-light",
+      "[&_.tab-trigger]:hover:text-base-text-light [&_.tab-trigger]:hover:border-base-border-light",
+      "[&_.tab-trigger]:border-base-border-light dark:[&_.tab-trigger]:border-base-border-dark",
+      "dark:[&_.tab-trigger.active-tab]:bg-base-border-dark dark:[&_.tab-trigger.active-tab]:text-base-text-dark",
+      "dark:[&_.tab-trigger.active-tab]:border-base-border-dark",
+      "dark:[&_.tab-trigger]:hover:text-base-text-dark dark:[&_.tab-trigger]:hover:border-base-border-dark",
+      "[&_.tab-trigger]:hover:bg-base-border-light dark:[&_.tab-trigger]:hover:bg-base-border-dark",
+      "dark:[&_.tab-trigger-list]:border-base-border-dark [&_.tab-trigger-list]:border-base-border-light"
     ]
   end
 
   defp color_variant("default", "natural") do
     [
-      "[&_.tab-trigger.active-tab]:text-[#282828] [&_.tab-trigger.active-tab]:border-[#282828]",
-      "hover:[&_.tab-trigger]:text-[#282828] hover:[&_.tab-trigger]:border-[#282828]",
+      "[&_.tab-trigger.active-tab]:text-natural-hover-light [&_.tab-trigger.active-tab]:border-natural-hover-light",
+      "[&_.tab-trigger]:hover:text-natural-hover-light [&_.tab-trigger]:hover:border-natural-hover-light",
       "dark:[&_.tab-trigger.active-tab]:text-white dark:[&_.tab-trigger.active-tab]:border-white ",
-      "dark:hover:[&_.tab-trigger]:text-white dark:hover:[&_.tab-trigger]:border-white"
+      "dark:[&_.tab-trigger]:hover:text-white dark:[&_.tab-trigger]:hover:border-white"
     ]
   end
 
   defp color_variant("default", "primary") do
     [
-      "[&_.tab-trigger.active-tab]:text-[#016974] [&_.tab-trigger.active-tab]:border-[#016974]",
-      "hover:[&_.tab-trigger]:text-[#016974] hover:[&_.tab-trigger]:border-[#016974]",
-      "dark:[&_.tab-trigger.active-tab]:text-[#77D5E3] dark:[&_.tab-trigger.active-tab]:border-[#77D5E3]",
-      "dark:hover:[&_.tab-trigger]:text-[#77D5E3] dark:hover:[&_.tab-trigger]:border-[#77D5E3]"
+      "[&_.tab-trigger.active-tab]:text-primary-hover-light [&_.tab-trigger.active-tab]:border-primary-hover-light",
+      "[&_.tab-trigger]:hover:text-primary-hover-light [&_.tab-trigger]:hover:border-primary-hover-light",
+      "dark:[&_.tab-trigger.active-tab]:text-primary-hover-dark dark:[&_.tab-trigger.active-tab]:border-primary-hover-dark",
+      "dark:[&_.tab-trigger]:hover:text-primary-hover-dark dark:[&_.tab-trigger]:hover:border-primary-hover-dark"
     ]
   end
 
   defp color_variant("default", "secondary") do
     [
-      "[&_.tab-trigger.active-tab]:text-[#175BCC] [&_.tab-trigger.active-tab]:border-[#175BCC]",
-      "hover:[&_.tab-trigger]:text-[#175BCC] hover:[&_.tab-trigger]:border-[#175BCC]",
-      "dark:[&_.tab-trigger.active-tab]:text-[#A9C9FF] dark:[&_.tab-trigger.active-tab]:border-[#A9C9FF]",
-      "dark:hover:[&_.tab-trigger]:text-[#A9C9FF] dark:hover:[&_.tab-trigger]:border-[#A9C9FF]"
+      "[&_.tab-trigger.active-tab]:text-secondary-hover-light [&_.tab-trigger.active-tab]:border-secondary-hover-light",
+      "[&_.tab-trigger]:hover:text-secondary-hover-light [&_.tab-trigger]:hover:border-secondary-hover-light",
+      "dark:[&_.tab-trigger.active-tab]:text-secondary-hover-dark dark:[&_.tab-trigger.active-tab]:border-secondary-hover-dark",
+      "dark:[&_.tab-trigger]:hover:text-secondary-hover-dark dark:[&_.tab-trigger]:hover:border-secondary-hover-dark"
     ]
   end
 
   defp color_variant("default", "success") do
     [
-      "[&_.tab-trigger.active-tab]:text-[#166C3B] [&_.tab-trigger.active-tab]:border-[#166C3B]",
-      "hover:[&_.tab-trigger]:text-[#166C3B] hover:[&_.tab-trigger]:border-[#166C3B]",
-      "dark:[&_.tab-trigger.active-tab]:text-[#7FD99A] dark:[&_.tab-trigger.active-tab]:border-[#7FD99A]",
-      "dark:hover:[&_.tab-trigger]:text-[#7FD99A] dark:hover:[&_.tab-trigger]:border-[#7FD99A]"
+      "[&_.tab-trigger.active-tab]:text-success-hover-light [&_.tab-trigger.active-tab]:border-success-hover-light",
+      "[&_.tab-trigger]:hover:text-success-hover-light [&_.tab-trigger]:hover:border-success-hover-light",
+      "dark:[&_.tab-trigger.active-tab]:text-success-hover-dark dark:[&_.tab-trigger.active-tab]:border-success-hover-dark",
+      "dark:[&_.tab-trigger]:hover:text-success-hover-dark dark:[&_.tab-trigger]:hover:border-success-hover-dark"
     ]
   end
 
   defp color_variant("default", "warning") do
     [
-      "[&_.tab-trigger.active-tab]:text-[#976A01] [&_.tab-trigger.active-tab]:border-[#976A01]",
-      "hover:[&_.tab-trigger]:text-[#976A01] hover:[&_.tab-trigger]:border-[#976A01]",
-      "dark:[&_.tab-trigger.active-tab]:text-[#FDD067] dark:[&_.tab-trigger.active-tab]:border-[#FDD067]",
-      "dark:hover:[&_.tab-trigger]:text-[#FDD067] dark:hover:[&_.tab-trigger]:border-[#FDD067]"
+      "[&_.tab-trigger.active-tab]:text-warning-hover-light [&_.tab-trigger.active-tab]:border-warning-hover-light",
+      "[&_.tab-trigger]:hover:text-warning-hover-light [&_.tab-trigger]:hover:border-warning-hover-light",
+      "dark:[&_.tab-trigger.active-tab]:text-warning-hover-dark dark:[&_.tab-trigger.active-tab]:border-warning-hover-dark",
+      "dark:[&_.tab-trigger]:hover:text-warning-hover-dark dark:[&_.tab-trigger]:hover:border-warning-hover-dark"
     ]
   end
 
   defp color_variant("default", "danger") do
     [
-      "[&_.tab-trigger.active-tab]:text-[#BB032A] [&_.tab-trigger.active-tab]:border-[#BB032A]",
-      "hover:[&_.tab-trigger]:text-[#BB032A] hover:[&_.tab-trigger]:border-[#BB032A]",
-      "dark:[&_.tab-trigger.active-tab]:text-[#FFB2AB] dark:[&_.tab-trigger.active-tab]:border-[#FFB2AB]",
-      "dark:hover:[&_.tab-trigger]:text-[#FFB2AB] dark:hover:[&_.tab-trigger]:border-[#FFB2AB]"
+      "[&_.tab-trigger.active-tab]:text-danger-hover-light [&_.tab-trigger.active-tab]:border-danger-hover-light",
+      "[&_.tab-trigger]:hover:text-danger-hover-light [&_.tab-trigger]:hover:border-danger-hover-light",
+      "dark:[&_.tab-trigger.active-tab]:text-danger-hover-dark dark:[&_.tab-trigger.active-tab]:border-danger-hover-dark",
+      "dark:[&_.tab-trigger]:hover:text-danger-hover-dark dark:[&_.tab-trigger]:hover:border-danger-hover-dark"
     ]
   end
 
   defp color_variant("default", "info") do
     [
-      "[&_.tab-trigger.active-tab]:text-[#08638C] [&_.tab-trigger.active-tab]:border-[#08638C]",
-      "hover:[&_.tab-trigger]:text-[#08638C] hover:[&_.tab-trigger]:border-[#08638C]",
-      "dark:[&_.tab-trigger.active-tab]:text-[#6EC9F2] dark:[&_.tab-trigger.active-tab]:border-[#6EC9F2]",
-      "dark:hover:[&_.tab-trigger]:text-[#6EC9F2] dark:hover:[&_.tab-trigger]:border-[#6EC9F2]"
+      "[&_.tab-trigger.active-tab]:text-info-hover-light [&_.tab-trigger.active-tab]:border-info-hover-light",
+      "[&_.tab-trigger]:hover:text-info-hover-light [&_.tab-trigger]:hover:border-info-hover-light",
+      "dark:[&_.tab-trigger.active-tab]:text-info-hover-dark dark:[&_.tab-trigger.active-tab]:border-info-hover-dark",
+      "dark:[&_.tab-trigger]:hover:text-info-hover-dark dark:[&_.tab-trigger]:hover:border-info-hover-dark"
     ]
   end
 
   defp color_variant("default", "misc") do
     [
-      "[&_.tab-trigger.active-tab]:text-[#653C94] [&_.tab-trigger.active-tab]:border-[#653C94]",
-      "hover:[&_.tab-trigger]:text-[#653C94] hover:[&_.tab-trigger]:border-[#653C94]",
-      "dark:[&_.tab-trigger.active-tab]:text-[#CBA2FA] dark:[&_.tab-trigger.active-tab]:border-[#CBA2FA]",
-      "dark:hover:[&_.tab-trigger]:text-[#CBA2FA] dark:hover:[&_.tab-trigger]:border-[#CBA2FA]"
+      "[&_.tab-trigger.active-tab]:text-misc-hover-light [&_.tab-trigger.active-tab]:border-misc-hover-light",
+      "[&_.tab-trigger]:hover:text-misc-hover-light [&_.tab-trigger]:hover:border-misc-hover-light",
+      "dark:[&_.tab-trigger.active-tab]:text-misc-hover-dark dark:[&_.tab-trigger.active-tab]:border-misc-hover-dark",
+      "dark:[&_.tab-trigger]:hover:text-misc-hover-dark dark:[&_.tab-trigger]:hover:border-misc-hover-dark"
     ]
   end
 
   defp color_variant("default", "dawn") do
     [
-      "[&_.tab-trigger.active-tab]:text-[#7E4B2A] [&_.tab-trigger.active-tab]:border-[#7E4B2A]",
-      "hover:[&_.tab-trigger]:text-[#7E4B2A] hover:[&_.tab-trigger]:border-[#7E4B2A]",
-      "dark:[&_.tab-trigger.active-tab]:text-[#E4B190] dark:[&_.tab-trigger.active-tab]:border-[#E4B190]",
-      "dark:hover:[&_.tab-trigger]:text-[#E4B190] dark:hover:[&_.tab-trigger]:border-[#E4B190]"
+      "[&_.tab-trigger.active-tab]:text-dawn-hover-light [&_.tab-trigger.active-tab]:border-dawn-hover-light",
+      "[&_.tab-trigger]:hover:text-dawn-hover-light [&_.tab-trigger]:hover:border-dawn-hover-light",
+      "dark:[&_.tab-trigger.active-tab]:text-dawn-hover-dark dark:[&_.tab-trigger.active-tab]:border-dawn-hover-dark",
+      "dark:[&_.tab-trigger]:hover:text-dawn-hover-dark dark:[&_.tab-trigger]:hover:border-dawn-hover-dark"
     ]
   end
 
   defp color_variant("default", "silver") do
     [
-      "[&_.tab-trigger.active-tab]:text-[#727272] [&_.tab-trigger.active-tab]:border-[#727272]",
-      "hover:[&_.tab-trigger]:text-[#727272] hover:[&_.tab-trigger]:border-[#727272]",
-      "dark:[&_.tab-trigger.active-tab]:text-[#BBBBBB] dark:[&_.tab-trigger.active-tab]:border-[#BBBBBB]",
-      "dark:hover:[&_.tab-trigger]:text-[#BBBBBB] dark:hover:[&_.tab-trigger]:border-[#BBBBBB]"
+      "[&_.tab-trigger.active-tab]:text-silver-hover-light [&_.tab-trigger.active-tab]:border-silver-hover-light",
+      "[&_.tab-trigger]:hover:text-silver-hover-light [&_.tab-trigger]:hover:border-silver-hover-light",
+      "dark:[&_.tab-trigger.active-tab]:text-silver-hover-dark dark:[&_.tab-trigger.active-tab]:border-silver-hover-dark",
+      "dark:[&_.tab-trigger]:hover:text-silver-hover-dark dark:[&_.tab-trigger]:hover:border-silver-hover-dark"
     ]
   end
 
   defp color_variant("pills", "natural") do
     [
-      "hover:[&_.tab-trigger]:text-white hover:[&_.tab-trigger]:bg-[#282828]",
-      "[&_.tab-trigger.active-tab]:text-white [&_.tab-trigger.active-tab]:bg-[#4B4B4B]",
-      "dark:hover:[&_.tab-trigger]:text-black dark:hover:[&_.tab-trigger]:bg-[#E8E8E8]",
-      "dark:[&_.tab-trigger.active-tab]:text-black dark:[&_.tab-trigger.active-tab]:bg-[#DDDDDD]"
+      "[&_.tab-trigger]:hover:text-white [&_.tab-trigger]:hover:bg-natural-hover-light",
+      "[&_.tab-trigger.active-tab]:text-white [&_.tab-trigger.active-tab]:bg-natural-bg-dark",
+      "dark:[&_.tab-trigger]:hover:text-black dark:[&_.tab-trigger]:hover:bg-natural-hover-dark",
+      "dark:[&_.tab-trigger.active-tab]:text-black dark:[&_.tab-trigger.active-tab]:bg-natural-dark"
     ]
   end
 
   defp color_variant("pills", "primary") do
     [
-      "hover:[&_.tab-trigger]:text-white hover:[&_.tab-trigger]:bg-[#016974]",
-      "[&_.tab-trigger.active-tab]:text-white [&_.tab-trigger.active-tab]:bg-[#007F8C]",
-      "dark:hover:[&_.tab-trigger]:text-black dark:hover:[&_.tab-trigger]:bg-[#77D5E3]",
-      "dark:[&_.tab-trigger.active-tab]:text-black dark:[&_.tab-trigger.active-tab]:bg-[#01B8CA]"
+      "[&_.tab-trigger]:hover:text-white [&_.tab-trigger]:hover:bg-primary-hover-light",
+      "[&_.tab-trigger.active-tab]:text-white [&_.tab-trigger.active-tab]:bg-primary-light",
+      "dark:[&_.tab-trigger]:hover:text-black dark:[&_.tab-trigger]:hover:bg-primary-hover-dark",
+      "dark:[&_.tab-trigger.active-tab]:text-black dark:[&_.tab-trigger.active-tab]:bg-primary-dark"
     ]
   end
 
   defp color_variant("pills", "secondary") do
     [
-      "hover:[&_.tab-trigger]:text-white hover:[&_.tab-trigger]:bg-[#175BCC]",
-      "[&_.tab-trigger.active-tab]:text-white [&_.tab-trigger.active-tab]:bg-[#266EF1]",
-      "dark:hover:[&_.tab-trigger]:text-black dark:hover:[&_.tab-trigger]:bg-[#A9C9FF]",
-      "dark:[&_.tab-trigger.active-tab]:text-black dark:[&_.tab-trigger.active-tab]:bg-[#6DAAFB]"
+      "[&_.tab-trigger]:hover:text-white [&_.tab-trigger]:hover:bg-secondary-hover-light",
+      "[&_.tab-trigger.active-tab]:text-white [&_.tab-trigger.active-tab]:bg-secondary-light",
+      "dark:[&_.tab-trigger]:hover:text-black dark:[&_.tab-trigger]:hover:bg-secondary-hover-dark",
+      "dark:[&_.tab-trigger.active-tab]:text-black dark:[&_.tab-trigger.active-tab]:bg-secondary-dark"
     ]
   end
 
   defp color_variant("pills", "success") do
     [
-      "hover:[&_.tab-trigger]:text-white hover:[&_.tab-trigger]:bg-[#166C3B]",
-      "[&_.tab-trigger.active-tab]:text-white [&_.tab-trigger.active-tab]:bg-[#0E8345]",
-      "dark:hover:[&_.tab-trigger]:text-black dark:hover:[&_.tab-trigger]:bg-[#7FD99A]",
-      "dark:[&_.tab-trigger.active-tab]:text-black dark:[&_.tab-trigger.active-tab]:bg-[#06C167]"
+      "[&_.tab-trigger]:hover:text-white [&_.tab-trigger]:hover:bg-success-hover-light",
+      "[&_.tab-trigger.active-tab]:text-white [&_.tab-trigger.active-tab]:bg-success-light",
+      "dark:[&_.tab-trigger]:hover:text-black dark:[&_.tab-trigger]:hover:bg-success-hover-dark",
+      "dark:[&_.tab-trigger.active-tab]:text-black dark:[&_.tab-trigger.active-tab]:bg-success-dark"
     ]
   end
 
   defp color_variant("pills", "warning") do
     [
-      "hover:[&_.tab-trigger]:text-white hover:[&_.tab-trigger]:bg-[#976A01]",
-      "[&_.tab-trigger.active-tab]:text-white [&_.tab-trigger.active-tab]:bg-[#CA8D01]",
-      "dark:hover:[&_.tab-trigger]:text-black dark:hover:[&_.tab-trigger]:bg-[#FDD067]",
-      "dark:[&_.tab-trigger.active-tab]:text-black dark:[&_.tab-trigger.active-tab]:bg-[#FDC034]"
+      "[&_.tab-trigger]:hover:text-white [&_.tab-trigger]:hover:bg-warning-hover-light",
+      "[&_.tab-trigger.active-tab]:text-white [&_.tab-trigger.active-tab]:bg-warning-light",
+      "dark:[&_.tab-trigger]:hover:text-black dark:[&_.tab-trigger]:hover:bg-warning-hover-dark",
+      "dark:[&_.tab-trigger.active-tab]:text-black dark:[&_.tab-trigger.active-tab]:bg-warning-dark"
     ]
   end
 
   defp color_variant("pills", "danger") do
     [
-      "hover:[&_.tab-trigger]:text-white hover:[&_.tab-trigger]:bg-[#BB032A]",
-      "[&_.tab-trigger.active-tab]:text-white [&_.tab-trigger.active-tab]:bg-[#DE1135]",
-      "dark:hover:[&_.tab-trigger]:text-black dark:hover:[&_.tab-trigger]:bg-[#FFB2AB]",
-      "dark:[&_.tab-trigger.active-tab]:text-black dark:[&_.tab-trigger.active-tab]:bg-[#FC7F79]"
+      "[&_.tab-trigger]:hover:text-white [&_.tab-trigger]:hover:bg-danger-hover-light",
+      "[&_.tab-trigger.active-tab]:text-white [&_.tab-trigger.active-tab]:bg-danger-light",
+      "dark:[&_.tab-trigger]:hover:text-black dark:[&_.tab-trigger]:hover:bg-danger-hover-dark",
+      "dark:[&_.tab-trigger.active-tab]:text-black dark:[&_.tab-trigger.active-tab]:bg-danger-dark"
     ]
   end
 
   defp color_variant("pills", "info") do
     [
-      "hover:[&_.tab-trigger]:text-white hover:[&_.tab-trigger]:bg-[#08638C]",
-      "[&_.tab-trigger.active-tab]:text-white [&_.tab-trigger.active-tab]:bg-[#0B84BA]",
-      "dark:hover:[&_.tab-trigger]:text-black dark:hover:[&_.tab-trigger]:bg-[#6EC9F2]",
-      "dark:[&_.tab-trigger.active-tab]:text-black dark:[&_.tab-trigger.active-tab]:bg-[#3EB7ED]"
+      "[&_.tab-trigger]:hover:text-white [&_.tab-trigger]:hover:bg-info-hover-light",
+      "[&_.tab-trigger.active-tab]:text-white [&_.tab-trigger.active-tab]:bg-info-light",
+      "dark:[&_.tab-trigger]:hover:text-black dark:[&_.tab-trigger]:hover:bg-info-hover-dark",
+      "dark:[&_.tab-trigger.active-tab]:text-black dark:[&_.tab-trigger.active-tab]:bg-info-dark"
     ]
   end
 
   defp color_variant("pills", "misc") do
     [
-      "hover:[&_.tab-trigger]:text-white hover:[&_.tab-trigger]:bg-[#653C94]",
-      "[&_.tab-trigger.active-tab]:text-white [&_.tab-trigger.active-tab]:bg-[#8750C5]",
-      "dark:hover:[&_.tab-trigger]:text-black dark:hover:[&_.tab-trigger]:bg-[#CBA2FA]",
-      "dark:[&_.tab-trigger.active-tab]:text-black dark:[&_.tab-trigger.active-tab]:bg-[#BA83F9]"
+      "[&_.tab-trigger]:hover:text-white [&_.tab-trigger]:hover:bg-misc-hover-light",
+      "[&_.tab-trigger.active-tab]:text-white [&_.tab-trigger.active-tab]:bg-misc-light",
+      "dark:[&_.tab-trigger]:hover:text-black dark:[&_.tab-trigger]:hover:bg-misc-hover-dark",
+      "dark:[&_.tab-trigger.active-tab]:text-black dark:[&_.tab-trigger.active-tab]:bg-misc-dark"
     ]
   end
 
   defp color_variant("pills", "dawn") do
     [
-      "hover:[&_.tab-trigger]:text-white hover:[&_.tab-trigger]:bg-[#7E4B2A]",
-      "[&_.tab-trigger.active-tab]:text-white [&_.tab-trigger.active-tab]:bg-[#A86438]",
-      "dark:hover:[&_.tab-trigger]:text-black dark:hover:[&_.tab-trigger]:bg-[#E4B190]",
-      "dark:[&_.tab-trigger.active-tab]:text-black dark:[&_.tab-trigger.active-tab]:bg-[#DB976B]"
+      "[&_.tab-trigger]:hover:text-white [&_.tab-trigger]:hover:bg-dawn-hover-light",
+      "[&_.tab-trigger.active-tab]:text-white [&_.tab-trigger.active-tab]:bg-dawn-light",
+      "dark:[&_.tab-trigger]:hover:text-black dark:[&_.tab-trigger]:hover:bg-dawn-hover-dark",
+      "dark:[&_.tab-trigger.active-tab]:text-black dark:[&_.tab-trigger.active-tab]:bg-dawn-dark"
     ]
   end
 
   defp color_variant("pills", "silver") do
     [
-      "hover:[&_.tab-trigger]:text-white hover:[&_.tab-trigger]:bg-[#727272]",
-      "[&_.tab-trigger.active-tab]:text-white [&_.tab-trigger.active-tab]:bg-[#868686]",
-      "dark:hover:[&_.tab-trigger]:text-black dark:hover:[&_.tab-trigger]:bg-[#BBBBBB]",
-      "dark:[&_.tab-trigger.active-tab]:text-black dark:[&_.tab-trigger.active-tab]:bg-[#A6A6A6]"
+      "[&_.tab-trigger]:hover:text-white [&_.tab-trigger]:hover:bg-silver-hover-light",
+      "[&_.tab-trigger.active-tab]:text-white [&_.tab-trigger.active-tab]:bg-silver-light",
+      "dark:[&_.tab-trigger]:hover:text-black dark:[&_.tab-trigger]:hover:bg-silver-hover-dark",
+      "dark:[&_.tab-trigger.active-tab]:text-black dark:[&_.tab-trigger.active-tab]:bg-silver-dark"
     ]
   end
 
   defp color_variant("nav_pills", "base") do
     [
-      "hover:[&_.tab-trigger]:text-[#09090b] hover:[&_.tab-trigger]:bg-[#e4e4e7]",
-      "[&_.tab-trigger.active-tab]:text-[#09090b] [&_.tab-trigger.active-tab]:bg-white",
-      "dark:hover:[&_.tab-trigger]:text-[#FAFAFA] dark:hover:[&_.tab-trigger]:bg-[#18181B]",
-      "dark:[&_.tab-trigger.active-tab]:text-[#FAFAFA] dark:[&_.tab-trigger.active-tab]:bg-[#18181B]"
+      "[&_.tab-trigger]:hover:text-base-text-light [&_.tab-trigger]:hover:bg-base-border-light",
+      "[&_.tab-trigger.active-tab]:text-base-text-light [&_.tab-trigger.active-tab]:bg-white",
+      "dark:[&_.tab-trigger]:hover:text-base-text-dark dark:[&_.tab-trigger]:hover:bg-base-bg-dark",
+      "dark:[&_.tab-trigger.active-tab]:text-base-text-dark dark:[&_.tab-trigger.active-tab]:bg-base-bg-dark"
     ]
   end
 
   defp color_variant("nav_pills", "natural") do
     [
-      "hover:[&_.tab-trigger]:text-white hover:[&_.tab-trigger]:bg-[#282828]",
-      "[&_.tab-trigger.active-tab]:text-white [&_.tab-trigger.active-tab]:bg-[#4B4B4B]",
-      "dark:hover:[&_.tab-trigger]:text-black dark:hover:[&_.tab-trigger]:bg-[#E8E8E8]",
-      "dark:[&_.tab-trigger.active-tab]:text-black dark:[&_.tab-trigger.active-tab]:bg-[#DDDDDD]"
+      "[&_.tab-trigger]:hover:text-white [&_.tab-trigger]:hover:bg-natural-hover-light",
+      "[&_.tab-trigger.active-tab]:text-white [&_.tab-trigger.active-tab]:bg-natural-bg-dark",
+      "dark:[&_.tab-trigger]:hover:text-black dark:[&_.tab-trigger]:hover:bg-natural-hover-dark",
+      "dark:[&_.tab-trigger.active-tab]:text-black dark:[&_.tab-trigger.active-tab]:bg-natural-dark"
     ]
   end
 
   defp color_variant("nav_pills", "primary") do
     [
-      "hover:[&_.tab-trigger]:text-white hover:[&_.tab-trigger]:bg-[#016974]",
-      "[&_.tab-trigger.active-tab]:text-white [&_.tab-trigger.active-tab]:bg-[#007F8C]",
-      "dark:hover:[&_.tab-trigger]:text-black dark:hover:[&_.tab-trigger]:bg-[#77D5E3]",
-      "dark:[&_.tab-trigger.active-tab]:text-black dark:[&_.tab-trigger.active-tab]:bg-[#01B8CA]"
+      "[&_.tab-trigger]:hover:text-white [&_.tab-trigger]:hover:bg-primary-hover-light",
+      "[&_.tab-trigger.active-tab]:text-white [&_.tab-trigger.active-tab]:bg-primary-light",
+      "dark:[&_.tab-trigger]:hover:text-black dark:[&_.tab-trigger]:hover:bg-primary-hover-dark",
+      "dark:[&_.tab-trigger.active-tab]:text-black dark:[&_.tab-trigger.active-tab]:bg-primary-dark"
     ]
   end
 
   defp color_variant("nav_pills", "secondary") do
     [
-      "hover:[&_.tab-trigger]:text-white hover:[&_.tab-trigger]:bg-[#175BCC]",
-      "[&_.tab-trigger.active-tab]:text-white [&_.tab-trigger.active-tab]:bg-[#266EF1]",
-      "dark:hover:[&_.tab-trigger]:text-black dark:hover:[&_.tab-trigger]:bg-[#A9C9FF]",
-      "dark:[&_.tab-trigger.active-tab]:text-black dark:[&_.tab-trigger.active-tab]:bg-[#6DAAFB]"
+      "[&_.tab-trigger]:hover:text-white [&_.tab-trigger]:hover:bg-secondary-hover-light",
+      "[&_.tab-trigger.active-tab]:text-white [&_.tab-trigger.active-tab]:bg-secondary-light",
+      "dark:[&_.tab-trigger]:hover:text-black dark:[&_.tab-trigger]:hover:bg-secondary-hover-dark",
+      "dark:[&_.tab-trigger.active-tab]:text-black dark:[&_.tab-trigger.active-tab]:bg-secondary-dark"
     ]
   end
 
   defp color_variant("nav_pills", "success") do
     [
-      "hover:[&_.tab-trigger]:text-white hover:[&_.tab-trigger]:bg-[#166C3B]",
-      "[&_.tab-trigger.active-tab]:text-white [&_.tab-trigger.active-tab]:bg-[#0E8345]",
-      "dark:hover:[&_.tab-trigger]:text-black dark:hover:[&_.tab-trigger]:bg-[#7FD99A]",
-      "dark:[&_.tab-trigger.active-tab]:text-black dark:[&_.tab-trigger.active-tab]:bg-[#06C167]"
+      "[&_.tab-trigger]:hover:text-white [&_.tab-trigger]:hover:bg-success-hover-light",
+      "[&_.tab-trigger.active-tab]:text-white [&_.tab-trigger.active-tab]:bg-success-light",
+      "dark:[&_.tab-trigger]:hover:text-black dark:[&_.tab-trigger]:hover:bg-success-hover-dark",
+      "dark:[&_.tab-trigger.active-tab]:text-black dark:[&_.tab-trigger.active-tab]:bg-success-dark"
     ]
   end
 
   defp color_variant("nav_pills", "warning") do
     [
-      "hover:[&_.tab-trigger]:text-white hover:[&_.tab-trigger]:bg-[#976A01]",
-      "[&_.tab-trigger.active-tab]:text-white [&_.tab-trigger.active-tab]:bg-[#CA8D01]",
-      "dark:hover:[&_.tab-trigger]:text-black dark:hover:[&_.tab-trigger]:bg-[#FDD067]",
-      "dark:[&_.tab-trigger.active-tab]:text-black dark:[&_.tab-trigger.active-tab]:bg-[#FDC034]"
+      "[&_.tab-trigger]:hover:text-white [&_.tab-trigger]:hover:bg-warning-hover-light",
+      "[&_.tab-trigger.active-tab]:text-white [&_.tab-trigger.active-tab]:bg-warning-light",
+      "dark:[&_.tab-trigger]:hover:text-black dark:[&_.tab-trigger]:hover:bg-warning-hover-dark",
+      "dark:[&_.tab-trigger.active-tab]:text-black dark:[&_.tab-trigger.active-tab]:bg-warning-dark"
     ]
   end
 
   defp color_variant("nav_pills", "danger") do
     [
-      "hover:[&_.tab-trigger]:text-white hover:[&_.tab-trigger]:bg-[#BB032A]",
-      "[&_.tab-trigger.active-tab]:text-white [&_.tab-trigger.active-tab]:bg-[#DE1135]",
-      "dark:hover:[&_.tab-trigger]:text-black dark:hover:[&_.tab-trigger]:bg-[#FFB2AB]",
-      "dark:[&_.tab-trigger.active-tab]:text-black dark:[&_.tab-trigger.active-tab]:bg-[#FC7F79]"
+      "[&_.tab-trigger]:hover:text-white [&_.tab-trigger]:hover:bg-danger-hover-light",
+      "[&_.tab-trigger.active-tab]:text-white [&_.tab-trigger.active-tab]:bg-danger-light",
+      "dark:[&_.tab-trigger]:hover:text-black dark:[&_.tab-trigger]:hover:bg-danger-hover-dark",
+      "dark:[&_.tab-trigger.active-tab]:text-black dark:[&_.tab-trigger.active-tab]:bg-danger-dark"
     ]
   end
 
   defp color_variant("nav_pills", "info") do
     [
-      "hover:[&_.tab-trigger]:text-white hover:[&_.tab-trigger]:bg-[#08638C]",
-      "[&_.tab-trigger.active-tab]:text-white [&_.tab-trigger.active-tab]:bg-[#0B84BA]",
-      "dark:hover:[&_.tab-trigger]:text-black dark:hover:[&_.tab-trigger]:bg-[#6EC9F2]",
-      "dark:[&_.tab-trigger.active-tab]:text-black dark:[&_.tab-trigger.active-tab]:bg-[#3EB7ED]"
+      "[&_.tab-trigger]:hover:text-white [&_.tab-trigger]:hover:bg-info-hover-light",
+      "[&_.tab-trigger.active-tab]:text-white [&_.tab-trigger.active-tab]:bg-info-light",
+      "dark:[&_.tab-trigger]:hover:text-black dark:[&_.tab-trigger]:hover:bg-info-hover-dark",
+      "dark:[&_.tab-trigger.active-tab]:text-black dark:[&_.tab-trigger.active-tab]:bg-info-dark"
     ]
   end
 
   defp color_variant("nav_pills", "misc") do
     [
-      "hover:[&_.tab-trigger]:text-white hover:[&_.tab-trigger]:bg-[#653C94]",
-      "[&_.tab-trigger.active-tab]:text-white [&_.tab-trigger.active-tab]:bg-[#8750C5]",
-      "dark:hover:[&_.tab-trigger]:text-black dark:hover:[&_.tab-trigger]:bg-[#CBA2FA]",
-      "dark:[&_.tab-trigger.active-tab]:text-black dark:[&_.tab-trigger.active-tab]:bg-[#BA83F9]"
+      "[&_.tab-trigger]:hover:text-white [&_.tab-trigger]:hover:bg-misc-hover-light",
+      "[&_.tab-trigger.active-tab]:text-white [&_.tab-trigger.active-tab]:bg-misc-light",
+      "dark:[&_.tab-trigger]:hover:text-black dark:[&_.tab-trigger]:hover:bg-misc-hover-dark",
+      "dark:[&_.tab-trigger.active-tab]:text-black dark:[&_.tab-trigger.active-tab]:bg-misc-dark"
     ]
   end
 
   defp color_variant("nav_pills", "dawn") do
     [
-      "hover:[&_.tab-trigger]:text-white hover:[&_.tab-trigger]:bg-[#7E4B2A]",
-      "[&_.tab-trigger.active-tab]:text-white [&_.tab-trigger.active-tab]:bg-[#A86438]",
-      "dark:hover:[&_.tab-trigger]:text-black dark:hover:[&_.tab-trigger]:bg-[#E4B190]",
-      "dark:[&_.tab-trigger.active-tab]:text-black dark:[&_.tab-trigger.active-tab]:bg-[#DB976B]"
+      "[&_.tab-trigger]:hover:text-white [&_.tab-trigger]:hover:bg-dawn-hover-light",
+      "[&_.tab-trigger.active-tab]:text-white [&_.tab-trigger.active-tab]:bg-dawn-light",
+      "dark:[&_.tab-trigger]:hover:text-black dark:[&_.tab-trigger]:hover:bg-dawn-hover-dark",
+      "dark:[&_.tab-trigger.active-tab]:text-black dark:[&_.tab-trigger.active-tab]:bg-dawn-dark"
     ]
   end
 
   defp color_variant("nav_pills", "silver") do
     [
-      "hover:[&_.tab-trigger]:text-white hover:[&_.tab-trigger]:bg-[#727272]",
-      "[&_.tab-trigger.active-tab]:text-white [&_.tab-trigger.active-tab]:bg-[#868686]",
-      "dark:hover:[&_.tab-trigger]:text-black dark:hover:[&_.tab-trigger]:bg-[#BBBBBB]",
-      "dark:[&_.tab-trigger.active-tab]:text-black dark:[&_.tab-trigger.active-tab]:bg-[#A6A6A6]"
+      "[&_.tab-trigger]:hover:text-white [&_.tab-trigger]:hover:bg-silver-hover-light",
+      "[&_.tab-trigger.active-tab]:text-white [&_.tab-trigger.active-tab]:bg-silver-light",
+      "dark:[&_.tab-trigger]:hover:text-black dark:[&_.tab-trigger]:hover:bg-silver-hover-dark",
+      "dark:[&_.tab-trigger.active-tab]:text-black dark:[&_.tab-trigger.active-tab]:bg-silver-dark"
     ]
   end
 

@@ -197,11 +197,11 @@ defmodule CommunityDemoWeb.Components.Menu do
   ### It can be used as list of map
 
   ```elixir
-  list_menues = [
+  list_menus = [
     %{
-      id: "Dashaboard",
+      id: "Dashboard",
       navigate: "/",
-      title: "Dashaboard",
+      title: "Dashboard",
       size: "extra_small",
       color: "misc",
       variant: "unbordered",
@@ -325,7 +325,7 @@ defmodule CommunityDemoWeb.Components.Menu do
     }
   ]
 
-  <.menu menu_items={@list_menues} />
+  <.menu menu_items={@list_menus} />
   ```
   """
   @doc type: :component

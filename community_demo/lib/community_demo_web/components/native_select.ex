@@ -99,7 +99,7 @@ defmodule CommunityDemoWeb.Components.NativeSelect do
 
   slot :option, required: false do
     attr :value, :string, doc: "Value of each select option"
-    attr :selected, :boolean, required: false, doc: "Specifies this option is seleted"
+    attr :selected, :boolean, required: false, doc: "Specifies this option is selected"
     attr :disabled, :string, required: false, doc: "Specifies this option is disabled"
   end
 
@@ -135,7 +135,10 @@ defmodule CommunityDemoWeb.Components.NativeSelect do
       @ring && "[&_.select-field]:focus-within:ring-[0.03rem]",
       @class
     ]}>
-      <div :if={@label || @description} class={["select-label-wrapper", @description_wrapper_class]}>
+      <div
+        :if={@label || @description}
+        class={["select-label-wrapper", @description_wrapper_class]}
+      >
         <.label :if={@label} for={@id} class={@label_class}>{@label}</.label>
         <div :if={@description} class={@description_class}>
           {@description}
@@ -195,7 +198,7 @@ defmodule CommunityDemoWeb.Components.NativeSelect do
 
   slot :option, required: false, doc: "Option slot for select" do
     attr :value, :string, doc: "Value of each select option"
-    attr :selected, :boolean, required: false, doc: "Specifies this option is seleted"
+    attr :selected, :boolean, required: false, doc: "Specifies this option is selected"
     attr :disabled, :string, required: false, doc: "Specifies this option is disabled"
   end
 
@@ -212,7 +215,6 @@ defmodule CommunityDemoWeb.Components.NativeSelect do
         {render_slot(option)}
       </option>
     </optgroup>
-    <hr />
     """
   end
 
@@ -320,371 +322,371 @@ defmodule CommunityDemoWeb.Components.NativeSelect do
 
   defp color_variant("base", _) do
     [
-      "text-[#09090b] dark:text-[#FAFAFA] [&_.select-field:not(:has(.select-field-error))]:border-[#e4e4e7] [&_.select-field]:shadow-sm",
+      "text-base-text-light dark:text-base-text-dark [&_.select-field:not(:has(.select-field-error))]:border-base-border-light [&_.select-field]:shadow-sm",
       "[&_.select-field:not(:has(.select-field-error))]:bg-white",
-      "dark:[&_.select-field:not(:has(.select-field-error))]:bg-[#18181B]",
-      "dark:[&_.select-field:not(:has(.select-field-error))]:border-[#27272a]",
+      "dark:[&_.select-field:not(:has(.select-field-error))]:bg-base-bg-dark",
+      "dark:[&_.select-field:not(:has(.select-field-error))]:border-base-border-dark",
       "[&_.select-field.select-field-error]:bg-rose-700 [&_.select-field.select-field-error]:border-rose-700",
-      "focus-within:[&_.select-field]:ring-[#F8F9FA] dark:focus-within:[&_.select-field]:ring-[#242424]"
+      "focus-within:[&_.select-field]:ring-base-hover-light dark:focus-within:[&_.select-field]:ring-base-hover-dark"
     ]
   end
 
   defp color_variant("default", "white") do
     [
-      "[&_..select-field]:bg-white text-[#3E3E3E]",
+      "[&_.select-field]:bg-white text-form-white-text",
       "[&_.select-field.select-field-error]:border-rose-700",
-      "focus-within:[&_.select-field]:ring-[#DADADA]"
+      "focus-within:[&_.select-field]:ring-form-white-focus"
     ]
   end
 
   defp color_variant("default", "natural") do
     [
-      "text-black dark:text-white [&_.select-field:not(:has(.select-field-error))]:bg-[#4B4B4B]",
-      "dark:[&_.select-field:not(:has(.select-field-error))]:bg-[#DDDDDD]",
+      "text-black dark:text-white [&_.select-field:not(:has(.select-field-error))]:bg-natural-light",
+      "dark:[&_.select-field:not(:has(.select-field-error))]:bg-natural-dark",
       "[&_.select-field.select-field-error]:bg-rose-700",
       "[&_.select-field]:text-white dark:[&_.select-field]:text-black",
-      "focus-within:[&_.select-field]:ring-[#4B4B4B] dark:focus-within:[&_.select-field]:ring-[#DDDDDD]"
+      "focus-within:[&_.select-field]:ring-natural-light dark:focus-within:[&_.select-field]:ring-natural-dark"
     ]
   end
 
   defp color_variant("default", "primary") do
     [
-      "text-black dark:text-white [&_.select-field:not(:has(.select-field-error))]:bg-[#007F8C]",
-      "dark:[&_.select-field:not(:has(.select-field-error))]:bg-[#01B8CA]",
+      "text-black dark:text-white [&_.select-field:not(:has(.select-field-error))]:bg-primary-light",
+      "dark:[&_.select-field:not(:has(.select-field-error))]:bg-primary-dark",
       "[&_.select-field.select-field-error]:bg-rose-700",
       "[&_.select-field]:text-white dark:[&_.select-field]:text-black",
-      "focus-within:[&_.select-field]:ring-[#007F8C] dark:focus-within:[&_.select-field]:ring-[#01B8CA]"
+      "focus-within:[&_.select-field]:ring-primary-light dark:focus-within:[&_.select-field]:ring-primary-dark"
     ]
   end
 
   defp color_variant("default", "secondary") do
     [
-      "text-black dark:text-white [&_.select-field:not(:has(.select-field-error))]:bg-[#266EF1]",
-      "dark:[&_.select-field:not(:has(.select-field-error))]:bg-[#6DAAFB]",
+      "text-black dark:text-white [&_.select-field:not(:has(.select-field-error))]:bg-secondary-light",
+      "dark:[&_.select-field:not(:has(.select-field-error))]:bg-secondary-dark",
       "[&_.select-field.select-field-error]:bg-rose-700",
       "[&_.select-field]:text-white dark:[&_.select-field]:text-black",
-      "focus-within:[&_.select-field]:ring-[#266EF1] dark:focus-within:[&_.select-field]:ring-[#6DAAFB]"
+      "focus-within:[&_.select-field]:ring-secondary-light dark:focus-within:[&_.select-field]:ring-secondary-dark"
     ]
   end
 
   defp color_variant("default", "success") do
     [
-      "text-black dark:text-white [&_.select-field:not(:has(.select-field-error))]:bg-[#0E8345]",
-      "dark:[&_.select-field:not(:has(.select-field-error))]:bg-[#06C167]",
+      "text-black dark:text-white [&_.select-field:not(:has(.select-field-error))]:bg-success-light",
+      "dark:[&_.select-field:not(:has(.select-field-error))]:bg-success-dark",
       "[&_.select-field.select-field-error]:bg-rose-700",
       "[&_.select-field]:text-white dark:[&_.select-field]:text-black",
-      "focus-within:[&_.select-field]:ring-[#0E8345] dark:focus-within:[&_.select-field]:ring-[#06C167]"
+      "focus-within:[&_.select-field]:ring-success-light dark:focus-within:[&_.select-field]:ring-success-dark"
     ]
   end
 
   defp color_variant("default", "warning") do
     [
-      "text-black dark:text-white [&_.select-field:not(:has(.select-field-error))]:bg-[#CA8D01]",
-      "dark:[&_.select-field:not(:has(.select-field-error))]:bg-[#FDC034]",
+      "text-black dark:text-white [&_.select-field:not(:has(.select-field-error))]:bg-warning-light",
+      "dark:[&_.select-field:not(:has(.select-field-error))]:bg-warning-dark",
       "[&_.select-field.select-field-error]:bg-rose-700",
       "[&_.select-field]:text-white dark:[&_.select-field]:text-black",
-      "focus-within:[&_.select-field]:ring-[#CA8D01] dark:focus-within:[&_.select-field]:ring-[#FDC034]"
+      "focus-within:[&_.select-field]:ring-warning-light dark:focus-within:[&_.select-field]:ring-warning-dark"
     ]
   end
 
   defp color_variant("default", "danger") do
     [
-      "text-black dark:text-white [&_.select-field:not(:has(.select-field-error))]:bg-[#DE1135]",
-      "dark:[&_.select-field:not(:has(.select-field-error))]:bg-[#FC7F79]",
+      "text-black dark:text-white [&_.select-field:not(:has(.select-field-error))]:bg-danger-light",
+      "dark:[&_.select-field:not(:has(.select-field-error))]:bg-danger-dark",
       "[&_.select-field.select-field-error]:bg-rose-700",
       "[&_.select-field]:text-white dark:[&_.select-field]:text-black",
-      "focus-within:[&_.select-field]:ring-[#DE1135] dark:focus-within:[&_.select-field]:ring-[#FC7F79]"
+      "focus-within:[&_.select-field]:ring-danger-light dark:focus-within:[&_.select-field]:ring-danger-dark"
     ]
   end
 
   defp color_variant("default", "info") do
     [
-      "text-black dark:text-white [&_.select-field:not(:has(.select-field-error))]:bg-[#0B84BA]",
-      "dark:[&_.select-field:not(:has(.select-field-error))]:bg-[#3EB7ED]",
+      "text-black dark:text-white [&_.select-field:not(:has(.select-field-error))]:bg-info-light",
+      "dark:[&_.select-field:not(:has(.select-field-error))]:bg-info-dark",
       "[&_.select-field.select-field-error]:bg-rose-700",
       "[&_.select-field]:text-white dark:[&_.select-field]:text-black",
-      "focus-within:[&_.select-field]:ring-[#0B84BA] dark:focus-within:[&_.select-field]:ring-[#3EB7ED]"
+      "focus-within:[&_.select-field]:ring-info-light dark:focus-within:[&_.select-field]:ring-info-dark"
     ]
   end
 
   defp color_variant("default", "misc") do
     [
-      "text-black dark:text-white [&_.select-field:not(:has(.select-field-error))]:bg-[#8750C5]",
-      "dark:[&_.select-field:not(:has(.select-field-error))]:bg-[#BA83F9]",
+      "text-black dark:text-white [&_.select-field:not(:has(.select-field-error))]:bg-misc-light",
+      "dark:[&_.select-field:not(:has(.select-field-error))]:bg-misc-dark",
       "[&_.select-field.select-field-error]:bg-rose-700",
       "[&_.select-field]:text-white dark:[&_.select-field]:text-black",
-      "focus-within:[&_.select-field]:ring-[#8750C5] dark:focus-within:[&_.select-field]:ring-[#BA83F9]"
+      "focus-within:[&_.select-field]:ring-misc-light dark:focus-within:[&_.select-field]:ring-misc-dark"
     ]
   end
 
   defp color_variant("default", "dawn") do
     [
-      "text-black dark:text-white [&_.select-field:not(:has(.select-field-error))]:bg-[#A86438]",
-      "dark:[&_.select-field:not(:has(.select-field-error))]:bg-[#DB976B]",
+      "text-black dark:text-white [&_.select-field:not(:has(.select-field-error))]:bg-dawn-light",
+      "dark:[&_.select-field:not(:has(.select-field-error))]:bg-dawn-dark",
       "[&_.select-field.select-field-error]:bg-rose-700",
       "[&_.select-field]:text-white dark:[&_.select-field]:text-black",
-      "focus-within:[&_.select-field]:ring-[#A86438] dark:focus-within:[&_.select-field]:ring-[#DB976B]"
+      "focus-within:[&_.select-field]:ring-dawn-light dark:focus-within:[&_.select-field]:ring-dawn-dark"
     ]
   end
 
   defp color_variant("default", "silver") do
     [
-      "text-black dark:text-white [&_.select-field:not(:has(.select-field-error))]:bg-[#868686]",
-      "dark:[&_.select-field:not(:has(.select-field-error))]:bg-[#A6A6A6]",
+      "text-black dark:text-white [&_.select-field:not(:has(.select-field-error))]:bg-silver-light",
+      "dark:[&_.select-field:not(:has(.select-field-error))]:bg-silver-dark",
       "[&_.select-field.select-field-error]:bg-rose-700",
       "[&_.select-field]:text-white dark:[&_.select-field]:text-black",
-      "focus-within:[&_.select-field]:ring-[#868686] dark:focus-within:[&_.select-field]:ring-[#A6A6A6]"
+      "focus-within:[&_.select-field]:ring-silver-light dark:focus-within:[&_.select-field]:ring-silver-dark"
     ]
   end
 
   defp color_variant("default", "dark") do
     [
-      "[&_.select-field]:bg-[#282828] text-[#282828] [&_.select-field]:text-white",
+      "[&_.select-field]:bg-default-dark-bg text-default-dark-bg [&_.select-field]:text-white",
       "[&_.select-field.select-field-error]:bg-rose-700",
-      "focus-within:[&_.select-field]:ring-[#727272]"
+      "focus-within:[&_.select-field]:ring-silver-hover-light"
     ]
   end
 
   defp color_variant("bordered", "white") do
     [
-      "[&_.select-field]:bg-white [&_.select-field]:border-transparent text-[#3E3E3E]",
-      "[&_.select-field>input]:placeholder:text-[#3E3E3E]"
+      "[&_.select-field]:bg-white [&_.select-field]:border-transparent text-form-white-text",
+      "[&_.select-field>input]:placeholder:text-form-white-text"
     ]
   end
 
   defp color_variant("bordered", "natural") do
     [
-      "text-[#282828] dark:text-[#E8E8E8] [&_.select-field:not(:has(.select-field-error))]:border-[#282828]",
-      "[&_.select-field:not(:has(.select-field-error))]:bg-[#F3F3F3]",
-      "dark:[&_.select-field:not(:has(.select-field-error))]:bg-[#4B4B4B]",
-      "dark:[&_.select-field:not(:has(.select-field-error))]:border-[#868686]",
+      "text-natural-bordered-text-light dark:text-natural-hover-dark [&_.select-field:not(:has(.select-field-error))]:border-natural-bordered-text-light",
+      "[&_.select-field:not(:has(.select-field-error))]:bg-natural-bordered-bg-light",
+      "dark:[&_.select-field:not(:has(.select-field-error))]:bg-natural-bordered-bg-dark",
+      "dark:[&_.select-field:not(:has(.select-field-error))]:border-silver-light",
       "[&_.select-field.select-field-error]:bg-rose-700 [&_.select-field.select-field-error]:border-rose-700",
-      "focus-within:[&_.select-field]:ring-[#4B4B4B] dark:focus-within:[&_.select-field]:ring-[#DDDDDD]"
+      "focus-within:[&_.select-field]:ring-natural-light dark:focus-within:[&_.select-field]:ring-natural-dark"
     ]
   end
 
   defp color_variant("bordered", "primary") do
     [
-      "text-[#016974] dark:text-[#77D5E3] [&_.select-field:not(:has(.select-field-error))]:border-[#016974]",
-      "[&_.select-field:not(:has(.select-field-error))]:bg-[#E2F8FB]",
-      "dark:[&_.select-field:not(:has(.select-field-error))]:bg-[#4B4B4B]",
-      "dark:[&_.select-field:not(:has(.select-field-error))]:border-[#77D5E3]",
+      "text-primary-bordered-text-light dark:text-primary-hover-dark [&_.select-field:not(:has(.select-field-error))]:border-primary-bordered-text-light",
+      "[&_.select-field:not(:has(.select-field-error))]:bg-primary-bordered-bg-light",
+      "dark:[&_.select-field:not(:has(.select-field-error))]:bg-natural-bordered-bg-dark",
+      "dark:[&_.select-field:not(:has(.select-field-error))]:border-primary-hover-dark",
       "[&_.select-field.select-field-error]:bg-rose-700 [&_.select-field.select-field-error]:border-rose-700",
-      "focus-within:[&_.select-field]:ring-[#007F8C] dark:focus-within:[&_.select-field]:ring-[#01B8CA]"
+      "focus-within:[&_.select-field]:ring-primary-light dark:focus-within:[&_.select-field]:ring-primary-dark"
     ]
   end
 
   defp color_variant("bordered", "secondary") do
     [
-      "text-[#175BCC] dark:text-[#A9C9FF] [&_.select-field:not(:has(.select-field-error))]:border-[#175BCC]",
-      "[&_.select-field:not(:has(.select-field-error))]:bg-[#EFF4FE]",
-      "dark:[&_.select-field:not(:has(.select-field-error))]:bg-[#002661]",
-      "dark:[&_.select-field:not(:has(.select-field-error))]:border-[#A9C9FF]",
+      "text-secondary-bordered-text-light dark:text-secondary-hover-dark [&_.select-field:not(:has(.select-field-error))]:border-secondary-bordered-text-light",
+      "[&_.select-field:not(:has(.select-field-error))]:bg-secondary-bordered-bg-light",
+      "dark:[&_.select-field:not(:has(.select-field-error))]:bg-secondary-bordered-bg-dark",
+      "dark:[&_.select-field:not(:has(.select-field-error))]:border-secondary-hover-dark",
       "[&_.select-field.select-field-error]:bg-rose-700 [&_.select-field.select-field-error]:border-rose-700",
-      "focus-within:[&_.select-field]:ring-[#266EF1] dark:focus-within:[&_.select-field]:ring-[#6DAAFB]"
+      "focus-within:[&_.select-field]:ring-secondary-light dark:focus-within:[&_.select-field]:ring-secondary-dark"
     ]
   end
 
   defp color_variant("bordered", "success") do
     [
-      "text-[#166C3B] dark:text-[#7FD99A] [&_.select-field:not(:has(.select-field-error))]:border-[#166C3B]",
-      "[&_.select-field:not(:has(.select-field-error))]:bg-[#EAF6ED]",
-      "dark:[&_.select-field:not(:has(.select-field-error))]:bg-[#002F14]",
-      "dark:[&_.select-field:not(:has(.select-field-error))]:border-[#7FD99A]",
+      "text-success-bordered-text-light dark:text-success-hover-dark [&_.select-field:not(:has(.select-field-error))]:border-success-bordered-text-light",
+      "[&_.select-field:not(:has(.select-field-error))]:bg-success-bordered-bg-light",
+      "dark:[&_.select-field:not(:has(.select-field-error))]:bg-success-bordered-bg-dark",
+      "dark:[&_.select-field:not(:has(.select-field-error))]:border-success-hover-dark",
       "[&_.select-field.select-field-error]:bg-rose-700 [&_.select-field.select-field-error]:border-rose-700",
-      "focus-within:[&_.select-field]:ring-[#0E8345] dark:focus-within:[&_.select-field]:ring-[#06C167]"
+      "focus-within:[&_.select-field]:ring-success-light dark:focus-within:[&_.select-field]:ring-success-dark"
     ]
   end
 
   defp color_variant("bordered", "warning") do
     [
-      "text-[#976A01] dark:text-[#FDD067] [&_.select-field:not(:has(.select-field-error))]:border-[#976A01]",
-      "[&_.select-field:not(:has(.select-field-error))]:bg-[#FFF7E6]",
-      "dark:[&_.select-field:not(:has(.select-field-error))]:bg-[#322300]",
-      "dark:[&_.select-field:not(:has(.select-field-error))]:border-[#FDD067]",
+      "text-warning-bordered-text-light dark:text-warning-hover-dark [&_.select-field:not(:has(.select-field-error))]:border-warning-bordered-text-light",
+      "[&_.select-field:not(:has(.select-field-error))]:bg-warning-bordered-bg-light",
+      "dark:[&_.select-field:not(:has(.select-field-error))]:bg-warning-bordered-bg-dark",
+      "dark:[&_.select-field:not(:has(.select-field-error))]:border-warning-hover-dark",
       "[&_.select-field.select-field-error]:bg-rose-700 [&_.select-field.select-field-error]:border-rose-700",
-      "focus-within:[&_.select-field]:ring-[#CA8D01] dark:focus-within:[&_.select-field]:ring-[#FDC034]"
+      "focus-within:[&_.select-field]:ring-warning-light dark:focus-within:[&_.select-field]:ring-warning-dark"
     ]
   end
 
   defp color_variant("bordered", "danger") do
     [
-      "text-[#BB032A] dark:text-[#FFB2AB] [&_.select-field:not(:has(.select-field-error))]:border-[#BB032A]",
-      "[&_.select-field:not(:has(.select-field-error))]:bg-[#FFF0EE]",
-      "dark:[&_.select-field:not(:has(.select-field-error))]:bg-[#520810]",
-      "dark:[&_.select-field:not(:has(.select-field-error))]:border-[#FFB2AB]",
+      "text-danger-bordered-text-light dark:text-danger-hover-dark [&_.select-field:not(:has(.select-field-error))]:border-danger-bordered-text-light",
+      "[&_.select-field:not(:has(.select-field-error))]:bg-danger-bordered-bg-light",
+      "dark:[&_.select-field:not(:has(.select-field-error))]:bg-danger-bordered-bg-dark",
+      "dark:[&_.select-field:not(:has(.select-field-error))]:border-danger-hover-dark",
       "[&_.select-field.select-field-error]:bg-rose-700 [&_.select-field.select-field-error]:border-rose-700",
-      "focus-within:[&_.select-field]:ring-[#DE1135] dark:focus-within:[&_.select-field]:ring-[#FC7F79]"
+      "focus-within:[&_.select-field]:ring-danger-light dark:focus-within:[&_.select-field]:ring-danger-dark"
     ]
   end
 
   defp color_variant("bordered", "info") do
     [
-      "text-[#0B84BA] dark:text-[#6EC9F2] [&_.select-field:not(:has(.select-field-error))]:border-[#0B84BA]",
-      "[&_.select-field:not(:has(.select-field-error))]:bg-[#E7F6FD]",
-      "dark:[&_.select-field:not(:has(.select-field-error))]:bg-[#03212F]",
-      "dark:[&_.select-field:not(:has(.select-field-error))]:border-[#6EC9F2]",
+      "text-info-bordered-text-light dark:text-info-hover-dark [&_.select-field:not(:has(.select-field-error))]:border-info-bordered-text-light",
+      "[&_.select-field:not(:has(.select-field-error))]:bg-info-bordered-bg-light",
+      "dark:[&_.select-field:not(:has(.select-field-error))]:bg-info-bordered-bg-dark",
+      "dark:[&_.select-field:not(:has(.select-field-error))]:border-info-hover-dark",
       "[&_.select-field.select-field-error]:bg-rose-700 [&_.select-field.select-field-error]:border-rose-700",
-      "focus-within:[&_.select-field]:ring-[#0B84BA] dark:focus-within:[&_.select-field]:ring-[#3EB7ED]"
+      "focus-within:[&_.select-field]:ring-info-light dark:focus-within:[&_.select-field]:ring-info-dark"
     ]
   end
 
   defp color_variant("bordered", "misc") do
     [
-      "text-[#653C94] dark:text-[#CBA2FA] [&_.select-field:not(:has(.select-field-error))]:border-[#653C94]",
-      "[&_.select-field:not(:has(.select-field-error))]:bg-[#F6F0FE]",
-      "dark:[&_.select-field:not(:has(.select-field-error))]:bg-[#221431]",
-      "dark:[&_.select-field:not(:has(.select-field-error))]:border-[#CBA2FA]",
+      "text-misc-bordered-text-light dark:text-misc-hover-dark [&_.select-field:not(:has(.select-field-error))]:border-misc-bordered-text-light",
+      "[&_.select-field:not(:has(.select-field-error))]:bg-misc-bordered-bg-light",
+      "dark:[&_.select-field:not(:has(.select-field-error))]:bg-misc-bordered-bg-dark",
+      "dark:[&_.select-field:not(:has(.select-field-error))]:border-misc-hover-dark",
       "[&_.select-field.select-field-error]:bg-rose-700 [&_.select-field.select-field-error]:border-rose-700",
-      "focus-within:[&_.select-field]:ring-[#8750C5] dark:focus-within:[&_.select-field]:ring-[#BA83F9]"
+      "focus-within:[&_.select-field]:ring-misc-light dark:focus-within:[&_.select-field]:ring-misc-dark"
     ]
   end
 
   defp color_variant("bordered", "dawn") do
     [
-      "text-[#7E4B2A] dark:text-[#E4B190] [&_.select-field:not(:has(.select-field-error))]:border-[#7E4B2A]",
-      "[&_.select-field:not(:has(.select-field-error))]:bg-[#FBF2ED]",
-      "dark:[&_.select-field:not(:has(.select-field-error))]:bg-[#2A190E]",
-      "dark:[&_.select-field:not(:has(.select-field-error))]:border-[#E4B190]",
+      "text-dawn-bordered-text-light dark:text-dawn-hover-dark [&_.select-field:not(:has(.select-field-error))]:border-dawn-bordered-text-light",
+      "[&_.select-field:not(:has(.select-field-error))]:bg-dawn-bordered-bg-light",
+      "dark:[&_.select-field:not(:has(.select-field-error))]:bg-dawn-bordered-bg-dark",
+      "dark:[&_.select-field:not(:has(.select-field-error))]:border-dawn-hover-dark",
       "[&_.select-field.select-field-error]:bg-rose-700 [&_.select-field.select-field-error]:border-rose-700",
-      "focus-within:[&_.select-field]:ring-[#A86438] dark:focus-within:[&_.select-field]:ring-[#DB976B]"
+      "focus-within:[&_.select-field]:ring-dawn-light dark:focus-within:[&_.select-field]:ring-dawn-dark"
     ]
   end
 
   defp color_variant("bordered", "silver") do
     [
-      "text-[#727272] dark:text-[#BBBBBB] [&_.select-field:not(:has(.select-field-error))]:border-[#727272]",
-      "[&_.select-field:not(:has(.select-field-error))]:bg-[#F3F3F3]",
-      "dark:[&_.select-field:not(:has(.select-field-error))]:bg-[#4B4B4B]",
-      "dark:[&_.select-field:not(:has(.select-field-error))]:border-[#BBBBBB]",
+      "text-silver-hover-light dark:text-silver-hover-dark [&_.select-field:not(:has(.select-field-error))]:border-silver-hover-light",
+      "[&_.select-field:not(:has(.select-field-error))]:bg-silver-bordered-bg-light",
+      "dark:[&_.select-field:not(:has(.select-field-error))]:bg-silver-bordered-bg-dark",
+      "dark:[&_.select-field:not(:has(.select-field-error))]:border-silver-hover-dark",
       "[&_.select-field.select-field-error]:bg-rose-700 [&_.select-field.select-field-error]:border-rose-700",
-      "focus-within:[&_.select-field]:ring-[#868686] dark:focus-within:[&_.select-field]:ring-[#A6A6A6]"
+      "focus-within:[&_.select-field]:ring-silver-light dark:focus-within:[&_.select-field]:ring-silver-dark"
     ]
   end
 
   defp color_variant("bordered", "dark") do
     [
-      "[&_.select-field]:bg-[#282828] text-[#282828] [&_.select-field]:border-[#727272] text-white",
-      "focus-within:[&_.select-field]:ring-[#050404]"
+      "[&_.select-field]:bg-default-dark-bg text-default-dark-bg [&_.select-field]:border-silver-hover-light text-base-text-dark",
+      "focus-within:[&_.select-field]:ring-ring-dark"
     ]
   end
 
   defp color_variant("shadow", "natural") do
     [
-      "text-black dark:text-white [&_.select-field:not(:has(.select-field-error))]:bg-[#4B4B4B]",
-      "dark:[&_.select-field:not(:has(.select-field-error))]:bg-[#DDDDDD]",
+      "text-black dark:text-white [&_.select-field:not(:has(.select-field-error))]:bg-natural-light",
+      "dark:[&_.select-field:not(:has(.select-field-error))]:bg-natural-dark",
       "[&_.select-field.select-field-error]:bg-rose-700",
       "[&_.select-field]:text-white dark:[&_.select-field]:text-black",
-      "focus-within:[&_.select-field]:ring-[#4B4B4B] dark:focus-within:[&_.select-field]:ring-[#DDDDDD]",
-      "[&_.select-field]:shadow-[0px_4px_6px_-4px_rgba(134,134,134,0.5)] [&_.select-field]:shadow-[0px_10px_15px_-3px_rgba(134,134,134,0.5)]",
+      "focus-within:[&_.select-field]:ring-natural-light dark:focus-within:[&_.select-field]:ring-natural-dark",
+      "[&_.select-field]:shadow-[0px_4px_6px_-4px_var(--color-shadow-natural)] [&_.select-field]:shadow-[0px_10px_15px_-3px_var(--color-shadow-natural)]",
       "dark:[&_.select-field]:shadow-none"
     ]
   end
 
   defp color_variant("shadow", "primary") do
     [
-      "text-black dark:text-white [&_.select-field:not(:has(.select-field-error))]:bg-[#007F8C]",
-      "dark:[&_.select-field:not(:has(.select-field-error))]:bg-[#01B8CA]",
+      "text-black dark:text-white [&_.select-field:not(:has(.select-field-error))]:bg-primary-light",
+      "dark:[&_.select-field:not(:has(.select-field-error))]:bg-primary-dark",
       "[&_.select-field.select-field-error]:bg-rose-700",
       "[&_.select-field]:text-white dark:[&_.select-field]:text-black",
-      "focus-within:[&_.select-field]:ring-[#007F8C] dark:focus-within:[&_.select-field]:ring-[#01B8CA]",
-      "[&_.select-field]:shadow-[0px_4px_6px_-4px_rgba(0,149,164,0.5)] [&_.select-field]:shadow-[0px_10px_15px_-3px_rgba(0,149,164,0.5)]",
+      "focus-within:[&_.select-field]:ring-primary-light dark:focus-within:[&_.select-field]:ring-primary-dark",
+      "[&_.select-field]:shadow-[0px_4px_6px_-4px_var(--color-shadow-primary)] [&_.select-field]:shadow-[0px_10px_15px_-3px_var(--color-shadow-primary)]",
       "dark:[&_.select-field]:shadow-none"
     ]
   end
 
   defp color_variant("shadow", "secondary") do
     [
-      "text-black dark:text-white [&_.select-field:not(:has(.select-field-error))]:bg-[#266EF1]",
-      "dark:[&_.select-field:not(:has(.select-field-error))]:bg-[#6DAAFB]",
+      "text-black dark:text-white [&_.select-field:not(:has(.select-field-error))]:bg-secondary-light",
+      "dark:[&_.select-field:not(:has(.select-field-error))]:bg-secondary-dark",
       "[&_.select-field.select-field-error]:bg-rose-700",
       "[&_.select-field]:text-white dark:[&_.select-field]:text-black",
-      "focus-within:[&_.select-field]:ring-[#266EF1] dark:focus-within:[&_.select-field]:ring-[#6DAAFB]",
-      "[&_.select-field]:shadow-[0px_4px_6px_-4px_rgba(6,139,238,0.5)] [&_.select-field]:shadow-[0px_10px_15px_-3px_rgba(6,139,238,0.5)]",
+      "focus-within:[&_.select-field]:ring-secondary-light dark:focus-within:[&_.select-field]:ring-secondary-dark",
+      "[&_.select-field]:shadow-[0px_4px_6px_-4px_var(--color-shadow-secondary)] [&_.select-field]:shadow-[0px_10px_15px_-3px_var(--color-shadow-secondary)]",
       "dark:[&_.select-field]:shadow-none"
     ]
   end
 
   defp color_variant("shadow", "success") do
     [
-      "text-black dark:text-white [&_.select-field:not(:has(.select-field-error))]:bg-[#0E8345]",
-      "dark:[&_.select-field:not(:has(.select-field-error))]:bg-[#06C167]",
+      "text-black dark:text-white [&_.select-field:not(:has(.select-field-error))]:bg-success-light",
+      "dark:[&_.select-field:not(:has(.select-field-error))]:bg-success-dark",
       "[&_.select-field.select-field-error]:bg-rose-700",
       "[&_.select-field]:text-white dark:[&_.select-field]:text-black",
-      "focus-within:[&_.select-field]:ring-[#0E8345] dark:focus-within:[&_.select-field]:ring-[#06C167]",
-      "[&_.select-field]:shadow-[0px_4px_6px_-4px_rgba(0,154,81,0.5)] [&_.select-field]:shadow-[0px_10px_15px_-3px_rgba(0,154,81,0.5)]",
+      "focus-within:[&_.select-field]:ring-success-light dark:focus-within:[&_.select-field]:ring-success-dark",
+      "[&_.select-field]:shadow-[0px_4px_6px_-4px_var(--color-shadow-success)] [&_.select-field]:shadow-[0px_10px_15px_-3px_var(--color-shadow-success)]",
       "dark:[&_.select-field]:shadow-none"
     ]
   end
 
   defp color_variant("shadow", "warning") do
     [
-      "text-black dark:text-white [&_.select-field:not(:has(.select-field-error))]:bg-[#CA8D01]",
-      "dark:[&_.select-field:not(:has(.select-field-error))]:bg-[#FDC034]",
+      "text-black dark:text-white [&_.select-field:not(:has(.select-field-error))]:bg-warning-light",
+      "dark:[&_.select-field:not(:has(.select-field-error))]:bg-warning-dark",
       "[&_.select-field.select-field-error]:bg-rose-700",
       "[&_.select-field]:text-white dark:[&_.select-field]:text-black",
-      "focus-within:[&_.select-field]:ring-[#CA8D01] dark:focus-within:[&_.select-field]:ring-[#FDC034]",
-      "[&_.select-field]:shadow-[0px_4px_6px_-4px_rgba(252,176,1,0.5)] [&_.select-field]:shadow-[0px_10px_15px_-3px_rgba(252,176,1,0.5)]",
+      "focus-within:[&_.select-field]:ring-warning-light dark:focus-within:[&_.select-field]:ring-warning-dark",
+      "[&_.select-field]:shadow-[0px_4px_6px_-4px_var(--color-shadow-warning)] [&_.select-field]:shadow-[0px_10px_15px_-3px_var(--color-shadow-warning)]",
       "dark:[&_.select-field]:shadow-none"
     ]
   end
 
   defp color_variant("shadow", "danger") do
     [
-      "text-black dark:text-white [&_.select-field:not(:has(.select-field-error))]:bg-[#DE1135]",
-      "dark:[&_.select-field:not(:has(.select-field-error))]:bg-[#FC7F79]",
+      "text-black dark:text-white [&_.select-field:not(:has(.select-field-error))]:bg-danger-light",
+      "dark:[&_.select-field:not(:has(.select-field-error))]:bg-danger-dark",
       "[&_.select-field.select-field-error]:bg-rose-700",
       "[&_.select-field]:text-white dark:[&_.select-field]:text-black",
-      "focus-within:[&_.select-field]:ring-[#DE1135] dark:focus-within:[&_.select-field]:ring-[#FC7F79]",
-      "[&_.select-field]:shadow-[0px_4px_6px_-4px_rgba(248,52,70,0.5)] [&_.select-field]:shadow-[0px_10px_15px_-3px_rgba(248,52,70,0.5)]",
+      "focus-within:[&_.select-field]:ring-danger-light dark:focus-within:[&_.select-field]:ring-danger-dark",
+      "[&_.select-field]:shadow-[0px_4px_6px_-4px_var(--color-shadow-danger)] [&_.select-field]:shadow-[0px_10px_15px_-3px_var(--color-shadow-danger)]",
       "dark:[&_.select-field]:shadow-none"
     ]
   end
 
   defp color_variant("shadow", "info") do
     [
-      "text-black dark:text-white [&_.select-field:not(:has(.select-field-error))]:bg-[#0B84BA]",
-      "dark:[&_.select-field:not(:has(.select-field-error))]:bg-[#3EB7ED]",
+      "text-black dark:text-white [&_.select-field:not(:has(.select-field-error))]:bg-info-light",
+      "dark:[&_.select-field:not(:has(.select-field-error))]:bg-info-dark",
       "[&_.select-field.select-field-error]:bg-rose-700",
       "[&_.select-field]:text-white dark:[&_.select-field]:text-black",
-      "focus-within:[&_.select-field]:ring-[#0B84BA] dark:focus-within:[&_.select-field]:ring-[#3EB7ED]",
-      "[&_.select-field]:shadow-[0px_4px_6px_-4px_rgba(14,165,233,0.5)] [&_.select-field]:shadow-[0px_10px_15px_-3px_rgba(14,165,233,0.5)]",
+      "focus-within:[&_.select-field]:ring-info-light dark:focus-within:[&_.select-field]:ring-info-dark",
+      "[&_.select-field]:shadow-[0px_4px_6px_-4px_var(--color-shadow-info)] [&_.select-field]:shadow-[0px_10px_15px_-3px_var(--color-shadow-info)]",
       "dark:[&_.select-field]:shadow-none"
     ]
   end
 
   defp color_variant("shadow", "misc") do
     [
-      "text-black dark:text-white [&_.select-field:not(:has(.select-field-error))]:bg-[#8750C5]",
-      "dark:[&_.select-field:not(:has(.select-field-error))]:bg-[#BA83F9]",
+      "text-black dark:text-white [&_.select-field:not(:has(.select-field-error))]:bg-misc-light",
+      "dark:[&_.select-field:not(:has(.select-field-error))]:bg-misc-dark",
       "[&_.select-field.select-field-error]:bg-rose-700",
       "[&_.select-field]:text-white dark:[&_.select-field]:text-black",
-      "focus-within:[&_.select-field]:ring-[#8750C5] dark:focus-within:[&_.select-field]:ring-[#BA83F9]",
-      "[&_.select-field]:shadow-[0px_4px_6px_-4px_rgba(169,100,247,0.5)] [&_.select-field]:shadow-[0px_10px_15px_-3px_rgba(169,100,247,0.5)]",
+      "focus-within:[&_.select-field]:ring-misc-light dark:focus-within:[&_.select-field]:ring-misc-dark",
+      "[&_.select-field]:shadow-[0px_4px_6px_-4px_var(--color-shadow-misc)] [&_.select-field]:shadow-[0px_10px_15px_-3px_var(--color-shadow-misc)]",
       "dark:[&_.select-field]:shadow-none"
     ]
   end
 
   defp color_variant("shadow", "dawn") do
     [
-      "text-black dark:text-white [&_.select-field:not(:has(.select-field-error))]:bg-[#A86438]",
-      "dark:[&_.select-field:not(:has(.select-field-error))]:bg-[#DB976B]",
+      "text-black dark:text-white [&_.select-field:not(:has(.select-field-error))]:bg-dawn-light",
+      "dark:[&_.select-field:not(:has(.select-field-error))]:bg-dawn-dark",
       "[&_.select-field.select-field-error]:bg-rose-700",
       "[&_.select-field]:text-white dark:[&_.select-field]:text-black",
-      "focus-within:[&_.select-field]:ring-[#A86438] dark:focus-within:[&_.select-field]:ring-[#DB976B]",
-      "[&_.select-field]:shadow-[0px_4px_6px_-4px_rgba(210,125,70,0.5)] [&_.select-field]:shadow-[0px_10px_15px_-3px_rgba(210,125,70,0.5)]",
+      "focus-within:[&_.select-field]:ring-dawn-light dark:focus-within:[&_.select-field]:ring-dawn-dark",
+      "[&_.select-field]:shadow-[0px_4px_6px_-4px_var(--color-shadow-dawn)] [&_.select-field]:shadow-[0px_10px_15px_-3px_var(--color-shadow-dawn)]",
       "dark:[&_.select-field]:shadow-none"
     ]
   end
 
   defp color_variant("shadow", "silver") do
     [
-      "text-black dark:text-white [&_.select-field:not(:has(.select-field-error))]:bg-[#868686]",
-      "dark:[&_.select-field:not(:has(.select-field-error))]:bg-[#A6A6A6]",
+      "text-black dark:text-white [&_.select-field:not(:has(.select-field-error))]:bg-silver-light",
+      "dark:[&_.select-field:not(:has(.select-field-error))]:bg-silver-dark",
       "[&_.select-field.select-field-error]:bg-rose-700",
       "[&_.select-field]:text-white dark:[&_.select-field]:text-black",
-      "focus-within:[&_.select-field]:ring-[#868686] dark:focus-within:[&_.select-field]:ring-[#A6A6A6]",
-      "[&_.select-field]:shadow-[0px_4px_6px_-4px_rgba(134,134,134,0.5)] [&_.select-field]:shadow-[0px_10px_15px_-3px_rgba(134,134,134,0.5)]",
+      "focus-within:[&_.select-field]:ring-silver-light dark:focus-within:[&_.select-field]:ring-silver-dark",
+      "[&_.select-field]:shadow-[0px_4px_6px_-4px_var(--color-shadow-silver)] [&_.select-field]:shadow-[0px_10px_15px_-3px_var(--color-shadow-silver)]",
       "dark:[&_.select-field]:shadow-none"
     ]
   end

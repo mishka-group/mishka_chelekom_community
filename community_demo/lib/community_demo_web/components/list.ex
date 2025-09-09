@@ -415,7 +415,7 @@ defmodule CommunityDemoWeb.Components.List do
     do: "[&:not(.list-items-gap)]:rounded-xl [&.list-items-gap>li]:rounded-xl"
 
   defp rounded_size("full"),
-    do: "[&:not(.list-items-gap)]:rounded-full [&.list-items-gap>li]:rounded:full"
+    do: "[&:not(.list-items-gap)]:rounded-full [&.list-items-gap>li]:rounded-full"
 
   defp rounded_size("none"),
     do: "[&:not(.list-items-gap)]:rounded-none [&.list-items-gap>li]:rounded-none"
@@ -553,718 +553,745 @@ defmodule CommunityDemoWeb.Components.List do
 
   defp color_variant("base", _, hoverable) do
     [
-      "bg-white text-[#09090b] border-[#e4e4e7] shadow-sm",
-      "dark:bg-[#18181B] dark:text-[#FAFAFA] dark:border-[#27272a]",
-      "[&>li:not(:last-child)]:border-[#e4e4e7] dark:[&>li:not(:last-child)]:border-[#27272a]",
-      hoverable && "hover:[&_li]:bg-[#F8F9FA] dark:hover:[&_li]:bg-[#242424]"
+      "bg-white text-base-text-light border-base-border-light shadow-sm",
+      "dark:bg-base-bg-dark dark:text-base-text-dark dark:border-base-border-dark",
+      "[&>li:not(:last-child)]:border-base-border-light dark:[&>li:not(:last-child)]:border-base-border-dark",
+      hoverable && "[&_li]:hover:bg-base-hover-light dark:[&_li]:hover:bg-base-hover-dark"
     ]
   end
 
   defp color_variant("base_separated", _, hoverable) do
     [
-      "[&>li]:text-[#09090b] [&>li]:border-[#e4e4e7] [&>li]:bg-white",
-      "dark:[&>li]:text-[#FAFAFA] dark:[&>li]:border-[#27272a] dark:[&>li]:bg-[#18181B]",
-      hoverable && "hover:[&_li]:bg-[#F8F9FA] dark:hover:[&_li]:bg-[#242424]"
+      "[&>li]:text-base-text-light [&>li]:border-base-border-light [&>li]:bg-white",
+      "dark:[&>li]:text-base-text-dark dark:[&>li]:border-base-border-dark dark:[&>li]:bg-base-bg-dark",
+      hoverable && "[&_li]:hover:bg-base-hover-light dark:[&_li]:hover:bg-base-hover-dark"
     ]
   end
 
   defp color_variant("default", "white", hoverable) do
     [
       "bg-white text-black",
-      hoverable && "hover:[&_li]:bg-[#f1f1f1]"
+      hoverable && "[&_li]:hover:bg-base-disabled-bg-light"
     ]
   end
 
   defp color_variant("default", "dark", hoverable) do
     [
-      "bg-[#282828] text-white",
-      hoverable && "hover:[&_li]:bg-[#4b4b4b]"
+      "bg-default-dark-bg text-white",
+      hoverable && "[&_li]:hover:bg-natural-bg-dark"
     ]
   end
 
   defp color_variant("default", "natural", hoverable) do
     [
-      "bg-[#4B4B4B] text-white dark:bg-[#DDDDDD] dark:text-black",
-      hoverable && "hover:[&_li]:bg-black dark:hover:[&_li]:bg-white"
+      "bg-natural-light text-white dark:bg-natural-dark dark:text-black",
+      hoverable && "[&_li]:hover:bg-black dark:[&_li]:hover:bg-white"
     ]
   end
 
   defp color_variant("default", "primary", hoverable) do
     [
-      "bg-[#007F8C] text-white dark:bg-[#01B8CA] dark:text-black",
-      hoverable && "hover:[&_li]:bg-[#1A535A] dark:hover:[&_li]:bg-[#B0E7EF]"
+      "bg-primary-light text-white dark:bg-primary-dark dark:text-black",
+      hoverable &&
+        "[&_li]:hover:bg-primary-indicator-light dark:[&_li]:hover:bg-primary-indicator-dark"
     ]
   end
 
   defp color_variant("default", "secondary", hoverable) do
     [
-      "bg-[#266EF1] text-white dark:bg-[#6DAAFB] dark:text-black",
-      hoverable && "hover:[&_li]:bg-[#1948A3] dark:hover:[&_li]:bg-[#CDDEFF]"
+      "bg-secondary-light text-white dark:bg-secondary-dark dark:text-black",
+      hoverable &&
+        "[&_li]:hover:bg-secondary-indicator-light dark:[&_li]:hover:bg-secondary-indicator-dark"
     ]
   end
 
   defp color_variant("default", "success", hoverable) do
     [
-      "bg-[#0E8345] text-white dark:bg-[#06C167] dark:text-black",
-      hoverable && "hover:[&_li]:bg-[#0D572D] dark:hover:[&_li]:bg-[#B1EAC2]"
+      "bg-success-light text-white dark:bg-success-dark dark:text-black",
+      hoverable &&
+        "[&_li]:hover:bg-success-indicator-alt-light dark:[&_li]:hover:bg-success-indicator-dark"
     ]
   end
 
   defp color_variant("default", "warning", hoverable) do
     [
-      "bg-[#CA8D01] text-white dark:bg-[#FDC034] dark:text-black",
-      hoverable && "hover:[&_li]:bg-[#654600] dark:hover:[&_li]:bg-[#FEDF99]"
+      "bg-warning-light text-white dark:bg-warning-dark dark:text-black",
+      hoverable &&
+        "[&_li]:hover:bg-warning-indicator-alt-light dark:[&_li]:hover:bg-warning-indicator-dark"
     ]
   end
 
   defp color_variant("default", "danger", hoverable) do
     [
-      "bg-[#DE1135] text-white dark:bg-[#FC7F79] dark:text-black",
-      hoverable && "hover:[&_li]:bg-[#950F22] dark:hover:[&_li]:bg-[#FFD2CD]"
+      "bg-danger-light text-white dark:bg-danger-dark dark:text-black",
+      hoverable &&
+        "[&_li]:hover:bg-danger-indicator-alt-light dark:[&_li]:hover:bg-danger-indicator-dark"
     ]
   end
 
   defp color_variant("default", "info", hoverable) do
     [
-      "bg-[#0B84BA] text-white dark:bg-[#3EB7ED] dark:text-black",
-      hoverable && "hover:[&_li]:bg-[#06425D] dark:hover:[&_li]:bg-[#9FDBF6]"
+      "bg-info-light text-white dark:bg-info-dark dark:text-black",
+      hoverable &&
+        "[&_li]:hover:bg-info-indicator-alt-light dark:[&_li]:hover:bg-info-indicator-dark"
     ]
   end
 
   defp color_variant("default", "misc", hoverable) do
     [
-      "bg-[#8750C5] text-white dark:bg-[#BA83F9] dark:text-black",
-      hoverable && "hover:[&_li]:bg-[#442863] dark:hover:[&_li]:bg-[#DDC1FC]"
+      "bg-misc-light text-white dark:bg-misc-dark dark:text-black",
+      hoverable &&
+        "[&_li]:hover:bg-misc-indicator-alt-light dark:[&_li]:hover:bg-misc-indicator-dark"
     ]
   end
 
   defp color_variant("default", "dawn", hoverable) do
     [
-      "bg-[#A86438] text-white dark:bg-[#DB976B] dark:text-black",
-      hoverable && "hover:[&_li]:bg-[#54321C] dark:hover:[&_li]:bg-[#EDCBB5]"
+      "bg-dawn-light text-white dark:bg-dawn-dark dark:text-black",
+      hoverable &&
+        "[&_li]:hover:bg-dawn-indicator-alt-light dark:[&_li]:hover:bg-dawn-indicator-dark"
     ]
   end
 
   defp color_variant("default", "silver", hoverable) do
     [
-      "bg-[#868686] text-white dark:bg-[#A6A6A6] dark:text-black",
-      hoverable && "hover:[&_li]:bg-[#5E5E5E] dark:hover:[&_li]:bg-[#DDDDDD]"
+      "bg-silver-light text-white dark:bg-silver-dark dark:text-black",
+      hoverable &&
+        "[&_li]:hover:bg-silver-indicator-alt-light dark:[&_li]:hover:bg-silver-indicator-dark"
     ]
   end
 
   defp color_variant("outline", "natural", hoverable) do
     [
-      "text-[#4B4B4B] border-[#4B4B4B] dark:text-[#DDDDDD] dark:border-[#DDDDDD]",
-      "[&>li:not(:last-child)]:border-[#4B4B4B] dark:[&>li:not(:last-child)]:border-[#DDDDDD]",
+      "text-natural-light border-natural-light dark:text-natural-dark dark:border-natural-dark",
+      "[&>li:not(:last-child)]:border-natural-light dark:[&>li:not(:last-child)]:border-natural-dark",
       hoverable &&
-        "hover:[&_li]:text-white dark:hover:[&_li]:text-black hover:[&_li]:bg-black dark:hover:[&_li]:bg-white"
+        "[&_li]:hover:text-white dark:[&_li]:hover:text-black [&_li]:hover:bg-black dark:[&_li]:hover:bg-white"
     ]
   end
 
   defp color_variant("outline", "primary", hoverable) do
     [
-      "text-[#007F8C] border-[#007F8C]  dark:text-[#01B8CA] dark:border-[#01B8CA]",
-      "[&>li:not(:last-child)]:border-[#007F8C] dark:[&>li:not(:last-child)]:border-[#01B8CA]",
+      "text-primary-light border-primary-light dark:text-primary-dark dark:border-primary-dark",
+      "[&>li:not(:last-child)]:border-primary-light dark:[&>li:not(:last-child)]:border-primary-dark",
       hoverable &&
-        "hover:[&_li]:text-white dark:hover:[&_li]:text-black hover:[&_li]:bg-[#1A535A] dark:hover:[&_li]:bg-[#B0E7EF]"
+        "[&_li]:hover:text-white dark:[&_li]:hover:text-black [&_li]:hover:bg-primary-indicator-light dark:[&_li]:hover:bg-primary-indicator-dark"
     ]
   end
 
   defp color_variant("outline", "secondary", hoverable) do
     [
-      "text-[#266EF1] border-[#266EF1] dark:text-[#6DAAFB] dark:border-[#6DAAFB]",
-      "[&>li:not(:last-child)]:border-[#266EF1] dark:[&>li:not(:last-child)]:border-[#6DAAFB]",
+      "text-secondary-light border-secondary-light dark:text-secondary-dark dark:border-secondary-dark",
+      "[&>li:not(:last-child)]:border-secondary-light dark:[&>li:not(:last-child)]:border-secondary-dark",
       hoverable &&
-        "hover:[&_li]:text-white dark:hover:[&_li]:text-black hover:[&_li]:bg-[#1948A3] dark:hover:[&_li]:bg-[#CDDEFF]"
+        "[&_li]:hover:text-white dark:[&_li]:hover:text-black [&_li]:hover:bg-secondary-indicator-light dark:[&_li]:hover:bg-secondary-indicator-dark"
     ]
   end
 
   defp color_variant("outline", "success", hoverable) do
     [
-      "text-[#0E8345] border-[#0E8345] dark:text-[#06C167] dark:border-[#06C167]",
-      "[&>li:not(:last-child)]:border-[#0E8345] dark:[&>li:not(:last-child)]:border-[#06C167]",
+      "text-success-light border-success-light dark:text-success-dark dark:border-success-dark",
+      "[&>li:not(:last-child)]:border-success-light dark:[&>li:not(:last-child)]:border-success-dark",
       hoverable &&
-        "hover:[&_li]:text-white dark:hover:[&_li]:text-black hover:[&_li]:bg-[#0D572D] dark:hover:[&_li]:bg-[#B1EAC2]"
+        "[&_li]:hover:text-white dark:[&_li]:hover:text-black [&_li]:hover:bg-success-indicator-alt-light dark:[&_li]:hover:bg-success-indicator-dark"
     ]
   end
 
   defp color_variant("outline", "warning", hoverable) do
     [
-      "text-[#CA8D01] border-[#CA8D01] dark:text-[#FDC034] dark:border-[#FDC034]",
-      "[&>li:not(:last-child)]:border-[#CA8D01] dark:[&>li:not(:last-child)]:border-[#FDC034]",
+      "text-warning-light border-warning-light dark:text-warning-dark dark:border-warning-dark",
+      "[&>li:not(:last-child)]:border-warning-light dark:[&>li:not(:last-child)]:border-warning-dark",
       hoverable &&
-        "hover:[&_li]:text-white dark:hover:[&_li]:text-black hover:[&_li]:bg-[#654600] dark:hover:[&_li]:bg-[#FEDF99]"
+        "[&_li]:hover:text-white dark:[&_li]:hover:text-black [&_li]:hover:bg-warning-indicator-alt-light dark:[&_li]:hover:bg-warning-indicator-dark"
     ]
   end
 
   defp color_variant("outline", "danger", hoverable) do
     [
-      "text-[#DE1135] border-[#DE1135] dark:text-[#FC7F79] dark:border-[#FC7F79]",
-      "[&>li:not(:last-child)]:border-[#DE1135] dark:[&>li:not(:last-child)]:border-[#FC7F79]",
+      "text-danger-light border-danger-light dark:text-danger-dark dark:border-danger-dark",
+      "[&>li:not(:last-child)]:border-danger-light dark:[&>li:not(:last-child)]:border-danger-dark",
       hoverable &&
-        "hover:[&_li]:text-white dark:hover:[&_li]:text-black hover:[&_li]:bg-[#950F22] dark:hover:[&_li]:bg-[#FFD2CD]"
+        "[&_li]:hover:text-white dark:[&_li]:hover:text-black [&_li]:hover:bg-danger-indicator-alt-light dark:[&_li]:hover:bg-danger-indicator-dark"
     ]
   end
 
   defp color_variant("outline", "info", hoverable) do
     [
-      "text-[#0B84BA] border-[#0B84BA] dark:text-[#3EB7ED] dark:border-[#3EB7ED]",
-      "[&>li:not(:last-child)]:border-[#0B84BA] dark:[&>li:not(:last-child)]:border-[#3EB7ED]",
+      "text-info-light border-info-light dark:text-info-dark dark:border-info-dark",
+      "[&>li:not(:last-child)]:border-info-light dark:[&>li:not(:last-child)]:border-info-dark",
       hoverable &&
-        "hover:[&_li]:text-white dark:hover:[&_li]:text-black hover:[&_li]:bg-[#06425D] dark:hover:[&_li]:bg-[#9FDBF6]"
+        "[&_li]:hover:text-white dark:[&_li]:hover:text-black [&_li]:hover:bg-info-indicator-alt-light dark:[&_li]:hover:bg-info-indicator-dark"
     ]
   end
 
   defp color_variant("outline", "misc", hoverable) do
     [
-      "text-[#8750C5] border-[#8750C5] dark:text-[#BA83F9] dark:border-[#BA83F9]",
-      "[&>li:not(:last-child)]:border-[#8750C5] dark:[&>li:not(:last-child)]:border-[#BA83F9]",
+      "text-misc-light border-misc-light dark:text-misc-dark dark:border-misc-dark",
+      "[&>li:not(:last-child)]:border-misc-light dark:[&>li:not(:last-child)]:border-misc-dark",
       hoverable &&
-        "hover:[&_li]:text-white dark:hover:[&_li]:text-black hover:[&_li]:bg-[#442863] dark:hover:[&_li]:bg-[#DDC1FC]"
+        "[&_li]:hover:text-white dark:[&_li]:hover:text-black [&_li]:hover:bg-misc-indicator-alt-light dark:[&_li]:hover:bg-misc-indicator-dark"
     ]
   end
 
   defp color_variant("outline", "dawn", hoverable) do
     [
-      "text-[#A86438] border-[#A86438] dark:text-[#DB976B] dark:border-[#DB976B]",
-      "[&>li:not(:last-child)]:border-[#A86438] dark:[&>li:not(:last-child)]:border-[#DB976B]",
+      "text-dawn-light border-dawn-light dark:text-dawn-dark dark:border-dawn-dark",
+      "[&>li:not(:last-child)]:border-dawn-light dark:[&>li:not(:last-child)]:border-dawn-dark",
       hoverable &&
-        "hover:[&_li]:text-white dark:hover:[&_li]:text-black hover:[&_li]:bg-[#54321C] dark:hover:[&_li]:bg-[#EDCBB5]"
+        "[&_li]:hover:text-white dark:[&_li]:hover:text-black [&_li]:hover:bg-dawn-indicator-alt-light dark:[&_li]:hover:bg-dawn-indicator-dark"
     ]
   end
 
   defp color_variant("outline", "silver", hoverable) do
     [
-      "text-[#868686] border-[#868686] dark:text-[#A6A6A6] dark:border-[#A6A6A6]",
-      "[&>li:not(:last-child)]:border-[#868686] dark:[&>li:not(:last-child)]:border-[#A6A6A6]",
+      "text-silver-light border-silver-light dark:text-silver-dark dark:border-silver-dark",
+      "[&>li:not(:last-child)]:border-silver-light dark:[&>li:not(:last-child)]:border-silver-dark",
       hoverable &&
-        "hover:[&_li]:text-white dark:hover:[&_li]:text-black hover:[&_li]:bg-[#5E5E5E] dark:hover:[&_li]:bg-[#DDDDDD]"
+        "[&_li]:hover:text-white dark:[&_li]:hover:text-black [&_li]:hover:bg-silver-indicator-alt-light dark:[&_li]:hover:bg-silver-indicator-dark"
     ]
   end
 
   defp color_variant("shadow", "natural", hoverable) do
     [
-      "bg-[#4B4B4B] text-white dark:bg-[#DDDDDD] dark:text-black",
-      "shadow-[0px_4px_6px_-4px_rgba(134,134,134,0.5)] shadow-[0px_10px_15px_-3px_rgba(134,134,134,0.5)] dark:shadow-none",
-      hoverable && "hover:[&_li]:bg-black dark:hover:[&_li]:bg-white"
+      "bg-natural-light text-white dark:bg-natural-dark dark:text-black",
+      "shadow-[0px_4px_6px_-4px_var(--color-shadow-natural)] shadow-[0px_10px_15px_-3px_var(--color-shadow-natural)] dark:shadow-none",
+      hoverable && "[&_li]:hover:bg-black dark:[&_li]:hover:bg-white"
     ]
   end
 
   defp color_variant("shadow", "primary", hoverable) do
     [
-      "bg-[#007F8C] text-white dark:bg-[#01B8CA] dark:text-black",
-      "shadow-[0px_4px_6px_-4px_rgba(0,149,164,0.5)] shadow-[0px_10px_15px_-3px_rgba(0,149,164,0.5)] dark:shadow-none",
-      hoverable && "hover:[&_li]:bg-[#1A535A] dark:hover:[&_li]:bg-[#B0E7EF]"
+      "bg-primary-light text-white dark:bg-primary-dark dark:text-black",
+      "shadow-[0px_4px_6px_-4px_var(--color-shadow-primary)] shadow-[0px_10px_15px_-3px_var(--color-shadow-primary)] dark:shadow-none",
+      hoverable &&
+        "[&_li]:hover:bg-primary-indicator-light dark:[&_li]:hover:bg-primary-indicator-dark"
     ]
   end
 
   defp color_variant("shadow", "secondary", hoverable) do
     [
-      "bg-[#266EF1] text-white dark:bg-[#6DAAFB] dark:text-black",
-      "shadow-[0px_4px_6px_-4px_rgba(6,139,238,0.5)] shadow-[0px_10px_15px_-3px_rgba(6,139,238,0.5)] dark:shadow-none",
-      hoverable && "hover:[&_li]:bg-[#1948A3] dark:hover:[&_li]:bg-[#CDDEFF]"
+      "bg-secondary-light text-white dark:bg-secondary-dark dark:text-black",
+      "shadow-[0px_4px_6px_-4px_var(--color-shadow-secondary)] shadow-[0px_10px_15px_-3px_var(--color-shadow-secondary)] dark:shadow-none",
+      hoverable &&
+        "[&_li]:hover:bg-secondary-indicator-light dark:[&_li]:hover:bg-secondary-indicator-dark"
     ]
   end
 
   defp color_variant("shadow", "success", hoverable) do
     [
-      "bg-[#0E8345] text-white hover:bg-[#166C3B] dark:bg-[#06C167] dark:text-black",
-      "shadow-[0px_4px_6px_-4px_rgba(0,154,81,0.5)] shadow-[0px_10px_15px_-3px_rgba(0,154,81,0.5)] dark:shadow-none",
-      hoverable && "hover:[&_li]:bg-[#0D572D] dark:hover:[&_li]:bg-[#B1EAC2]"
+      "bg-success-light text-white dark:bg-success-dark dark:text-black",
+      "shadow-[0px_4px_6px_-4px_var(--color-shadow-success)] shadow-[0px_10px_15px_-3px_var(--color-shadow-success)] dark:shadow-none",
+      hoverable &&
+        "[&_li]:hover:bg-success-indicator-alt-light dark:[&_li]:hover:bg-success-indicator-dark"
     ]
   end
 
   defp color_variant("shadow", "warning", hoverable) do
     [
-      "bg-[#CA8D01] text-white dark:bg-[#FDC034] dark:text-black",
-      "shadow-[0px_4px_6px_-4px_rgba(252,176,1,0.5)] shadow-[0px_10px_15px_-3px_rgba(252,176,1,0.5)] dark:shadow-none",
-      hoverable && "hover:[&_li]:bg-[#654600] dark:hover:[&_li]:bg-[#FEDF99]"
+      "bg-warning-light text-white dark:bg-warning-dark dark:text-black",
+      "shadow-[0px_4px_6px_-4px_var(--color-shadow-warning)] shadow-[0px_10px_15px_-3px_var(--color-shadow-warning)] dark:shadow-none",
+      hoverable &&
+        "[&_li]:hover:bg-warning-indicator-alt-light dark:[&_li]:hover:bg-warning-indicator-dark"
     ]
   end
 
   defp color_variant("shadow", "danger", hoverable) do
     [
-      "bg-[#DE1135] text-white dark:bg-[#FC7F79] dark:text-black",
-      "shadow-[0px_4px_6px_-4px_rgba(248,52,70,0.5)] shadow-[0px_10px_15px_-3px_rgba(248,52,70,0.5)] dark:shadow-none",
-      hoverable && "hover:[&_li]:bg-[#950F22] dark:hover:[&_li]:bg-[#FFD2CD]"
+      "bg-danger-light text-white dark:bg-danger-dark dark:text-black",
+      "shadow-[0px_4px_6px_-4px_var(--color-shadow-danger)] shadow-[0px_10px_15px_-3px_var(--color-shadow-danger)] dark:shadow-none",
+      hoverable &&
+        "[&_li]:hover:bg-danger-indicator-alt-light dark:[&_li]:hover:bg-danger-indicator-dark"
     ]
   end
 
   defp color_variant("shadow", "info", hoverable) do
     [
-      "bg-[#0B84BA] text-white dark:bg-[#3EB7ED] dark:text-black",
-      "shadow-[0px_4px_6px_-4px_rgba(14,165,233,0.5)] shadow-[0px_10px_15px_-3px_rgba(14,165,233,0.5)] dark:shadow-none",
-      hoverable && "hover:[&_li]:bg-[#06425D] dark:hover:[&_li]:bg-[#9FDBF6]"
+      "bg-info-light text-white dark:bg-info-dark dark:text-black",
+      "shadow-[0px_4px_6px_-4px_var(--color-shadow-info)] shadow-[0px_10px_15px_-3px_var(--color-shadow-info)] dark:shadow-none",
+      hoverable &&
+        "[&_li]:hover:bg-info-indicator-alt-light dark:[&_li]:hover:bg-info-indicator-dark"
     ]
   end
 
   defp color_variant("shadow", "misc", hoverable) do
     [
-      "bg-[#8750C5] text-white dark:bg-[#BA83F9] dark:text-black",
-      "shadow-[0px_4px_6px_-4px_rgba(169,100,247,0.5)] shadow-[0px_10px_15px_-3px_rgba(169,100,247,0.5)] dark:shadow-none",
-      hoverable && "hover:[&_li]:bg-[#442863] dark:hover:[&_li]:bg-[#DDC1FC]"
+      "bg-misc-light text-white dark:bg-misc-dark dark:text-black",
+      "shadow-[0px_4px_6px_-4px_var(--color-shadow-misc)] shadow-[0px_10px_15px_-3px_var(--color-shadow-misc)] dark:shadow-none",
+      hoverable &&
+        "[&_li]:hover:bg-misc-indicator-alt-light dark:[&_li]:hover:bg-misc-indicator-dark"
     ]
   end
 
   defp color_variant("shadow", "dawn", hoverable) do
     [
-      "bg-[#A86438] text-white dark:bg-[#DB976B] dark:text-black",
-      "shadow-[0px_4px_6px_-4px_rgba(210,125,70,0.5)] shadow-[0px_10px_15px_-3px_rgba(210,125,70,0.5)] dark:shadow-none",
-      hoverable && "hover:[&_li]:bg-[#54321C] dark:hover:[&_li]:bg-[#EDCBB5]"
+      "bg-dawn-light text-white dark:bg-dawn-dark dark:text-black",
+      "shadow-[0px_4px_6px_-4px_var(--color-shadow-dawn)] shadow-[0px_10px_15px_-3px_var(--color-shadow-dawn)] dark:shadow-none",
+      hoverable &&
+        "[&_li]:hover:bg-dawn-indicator-alt-light dark:[&_li]:hover:bg-dawn-indicator-dark"
     ]
   end
 
   defp color_variant("shadow", "silver", hoverable) do
     [
-      "bg-[#868686] text-white dark:bg-[#A6A6A6] dark:text-black",
-      "shadow-[0px_4px_6px_-4px_rgba(134,134,134,0.5)] shadow-[0px_10px_15px_-3px_rgba(134,134,134,0.5)] dark:shadow-none",
-      hoverable && "hover:[&_li]:bg-[#5E5E5E] dark:hover:[&_li]:bg-[#DDDDDD]"
+      "bg-silver-light text-white dark:bg-silver-dark dark:text-black",
+      "shadow-[0px_4px_6px_-4px_var(--color-shadow-silver)] shadow-[0px_10px_15px_-3px_var(--color-shadow-silver)] dark:shadow-none",
+      hoverable &&
+        "[&_li]:hover:bg-silver-indicator-alt-light dark:[&_li]:hover:bg-silver-indicator-dark"
     ]
   end
 
   defp color_variant("bordered", "white", hoverable) do
     [
-      "bg-white text-black border-[#DDDDDD]",
-      "[&>li:not(:last-child)]:border-[#DDDDDD]",
-      hoverable && "hover:[&_li]:text-black hover:[&_li]:bg-[#4b4b4b]"
+      "bg-white text-black border-bordered-white-border",
+      "[&>li:not(:last-child)]:border-bordered-white-border",
+      hoverable && "[&_li]:hover:text-black [&_li]:hover:bg-natural-bg-dark"
     ]
   end
 
   defp color_variant("bordered", "dark", hoverable) do
     [
-      "bg-[#282828] text-white border-[#727272]",
-      "[&>li:not(:last-child)]:border-[#727272]",
-      hoverable && "hover:[&_li]:text-white hover:[&_li]:bg-[#4b4b4b]"
+      "bg-bordered-dark-bg text-white border-bordered-dark-border",
+      "[&>li:not(:last-child)]:border-bordered-dark-border",
+      hoverable && "[&_li]:hover:text-white [&_li]:hover:bg-natural-bg-dark"
     ]
   end
 
   defp color_variant("bordered", "natural", hoverable) do
     [
-      "text-[#282828] border-[#282828] bg-[#F3F3F3]",
-      "dark:text-[#E8E8E8] dark:border-[#E8E8E8] dark:bg-[#4B4B4B]",
-      "[&>li:not(:last-child)]:border-[#282828] dark:[&>li:not(:last-child)]:border-[#E8E8E8]",
+      "text-natural-bordered-text-light border-natural-bordered-text-light bg-natural-bordered-bg-light",
+      "dark:text-natural-bordered-text-dark dark:border-natural-bordered-text-dark dark:bg-natural-bordered-bg-dark",
+      "[&>li:not(:last-child)]:border-natural-bordered-text-light dark:[&>li:not(:last-child)]:border-natural-bordered-text-dark",
       hoverable &&
-        "hover:[&_li]:text-white dark:hover:[&_li]:text-black hover:[&_li]:bg-black dark:hover:[&_li]:bg-white"
+        "[&_li]:hover:text-white dark:[&_li]:hover:text-black [&_li]:hover:bg-black dark:[&_li]:hover:bg-white"
     ]
   end
 
   defp color_variant("bordered", "primary", hoverable) do
     [
-      "text-[#016974] border-[#016974] bg-[#E2F8FB]",
-      "dark:text-[#77D5E3] dark:border-[#77D5E3] dark:bg-[#002D33]",
-      "[&>li:not(:last-child)]:border-[#016974] dark:[&>li:not(:last-child)]:border-[#77D5E3]",
+      "text-primary-bordered-text-light border-primary-bordered-text-light bg-primary-bordered-bg-light",
+      "dark:text-primary-bordered-text-dark dark:border-primary-bordered-text-dark dark:bg-primary-bordered-bg-dark",
+      "[&>li:not(:last-child)]:border-primary-bordered-text-light dark:[&>li:not(:last-child)]:border-primary-bordered-text-dark",
       hoverable &&
-        "hover:[&_li]:text-white dark:hover:[&_li]:text-black hover:[&_li]:bg-[#1A535A] dark:hover:[&_li]:bg-[#B0E7EF]"
+        "[&_li]:hover:text-white dark:[&_li]:hover:text-black [&_li]:hover:bg-primary-indicator-light dark:[&_li]:hover:bg-primary-indicator-dark"
     ]
   end
 
   defp color_variant("bordered", "secondary", hoverable) do
     [
-      "text-[#175BCC] border-[#175BCC] bg-[#EFF4FE]",
-      "dark:text-[#A9C9FF] dark:border-[#A9C9FF] dark:bg-[#002661]",
-      "[&>li:not(:last-child)]:border-[#175BCC] dark:[&>li:not(:last-child)]:border-[#A9C9FF]",
+      "text-secondary-bordered-text-light border-secondary-bordered-text-light bg-secondary-bordered-bg-light",
+      "dark:text-secondary-bordered-text-dark dark:border-secondary-bordered-text-dark dark:bg-secondary-bordered-bg-dark",
+      "[&>li:not(:last-child)]:border-secondary-bordered-text-light dark:[&>li:not(:last-child)]:border-secondary-bordered-text-dark",
       hoverable &&
-        "hover:[&_li]:text-white dark:hover:[&_li]:text-black hover:[&_li]:bg-[#1948A3] dark:hover:[&_li]:bg-[#CDDEFF]"
+        "[&_li]:hover:text-white dark:[&_li]:hover:text-black [&_li]:hover:bg-secondary-indicator-light dark:[&_li]:hover:bg-secondary-indicator-dark"
     ]
   end
 
   defp color_variant("bordered", "success", hoverable) do
     [
-      "text-[#166C3B] border-[#166C3B] bg-[#EAF6ED]",
-      "dark:text-[#7FD99A] dark:border-[#7FD99A] dark:bg-[#002F14]",
-      "[&>li:not(:last-child)]:border-[#166C3B] dark:[&>li:not(:last-child)]:border-[#7FD99A]",
+      "text-success-bordered-text-light border-success-bordered-text-light bg-success-bordered-bg-light",
+      "dark:text-success-bordered-text-dark dark:border-success-bordered-text-dark dark:bg-success-bordered-bg-dark",
+      "[&>li:not(:last-child)]:border-success-bordered-text-light dark:[&>li:not(:last-child)]:border-success-bordered-text-dark",
       hoverable &&
-        "hover:[&_li]:text-white dark:hover:[&_li]:text-black hover:[&_li]:bg-[#0D572D] dark:hover:[&_li]:bg-[#B1EAC2]"
+        "[&_li]:hover:text-white dark:[&_li]:hover:text-black [&_li]:hover:bg-success-indicator-alt-light dark:[&_li]:hover:bg-success-indicator-dark"
     ]
   end
 
   defp color_variant("bordered", "warning", hoverable) do
     [
-      "text-[#976A01] border-[#976A01] bg-[#FFF7E6]",
-      "dark:text-[#FDD067] dark:border-[#FDD067] dark:bg-[#322300]",
-      "[&>li:not(:last-child)]:border-[#976A01] dark:[&>li:not(:last-child)]:border-[#FDD067]",
+      "text-warning-bordered-text-light border-warning-bordered-text-light bg-warning-bordered-bg-light",
+      "dark:text-warning-bordered-text-dark dark:border-warning-bordered-text-dark dark:bg-warning-bordered-bg-dark",
+      "[&>li:not(:last-child)]:border-warning-bordered-text-light dark:[&>li:not(:last-child)]:border-warning-bordered-text-dark",
       hoverable &&
-        "hover:[&_li]:text-white dark:hover:[&_li]:text-black hover:[&_li]:bg-[#654600] dark:hover:[&_li]:bg-[#FEDF99]"
+        "[&_li]:hover:text-white dark:[&_li]:hover:text-black [&_li]:hover:bg-warning-indicator-alt-light dark:[&_li]:hover:bg-warning-indicator-dark"
     ]
   end
 
   defp color_variant("bordered", "danger", hoverable) do
     [
-      "text-[#BB032A] border-[#BB032A] bg-[#FFF0EE]",
-      "dark:text-[#FFB2AB] dark:border-[#FFB2AB] dark:bg-[#520810]",
-      "[&>li:not(:last-child)]:border-[#BB032A] dark:[&>li:not(:last-child)]:border-[#FFB2AB]",
+      "text-danger-bordered-text-light border-danger-bordered-text-light bg-danger-bordered-bg-light",
+      "dark:text-danger-bordered-text-dark dark:border-danger-bordered-text-dark dark:bg-danger-bordered-bg-dark",
+      "[&>li:not(:last-child)]:border-danger-bordered-text-light dark:[&>li:not(:last-child)]:border-danger-bordered-text-dark",
       hoverable &&
-        "hover:[&_li]:text-white dark:hover:[&_li]:text-black hover:[&_li]:bg-[#950F22] dark:hover:[&_li]:bg-[#FFD2CD]"
+        "[&_li]:hover:text-white dark:[&_li]:hover:text-black [&_li]:hover:bg-danger-indicator-alt-light dark:[&_li]:hover:bg-danger-indicator-dark"
     ]
   end
 
   defp color_variant("bordered", "info", hoverable) do
     [
-      "text-[#0B84BA] border-[#0B84BA] bg-[#E7F6FD]",
-      "dark:text-[#6EC9F2] dark:border-[#6EC9F2] dark:bg-[#03212F]",
-      "[&>li:not(:last-child)]:border-[#0B84BA] dark:[&>li:not(:last-child)]:border-[#6EC9F2]",
+      "text-info-bordered-text-light border-info-bordered-text-light bg-info-bordered-bg-light",
+      "dark:text-info-bordered-text-dark dark:border-info-bordered-text-dark dark:bg-info-bordered-bg-dark",
+      "[&>li:not(:last-child)]:border-info-bordered-text-light dark:[&>li:not(:last-child)]:border-info-bordered-text-dark",
       hoverable &&
-        "hover:[&_li]:text-white dark:hover:[&_li]:text-black hover:[&_li]:bg-[#06425D] dark:hover:[&_li]:bg-[#9FDBF6]"
+        "[&_li]:hover:text-white dark:[&_li]:hover:text-black [&_li]:hover:bg-info-indicator-alt-light dark:[&_li]:hover:bg-info-indicator-dark"
     ]
   end
 
   defp color_variant("bordered", "misc", hoverable) do
     [
-      "text-[#653C94] border-[#653C94] bg-[#F6F0FE]",
-      "dark:text-[#CBA2FA] dark:border-[#CBA2FA] dark:bg-[#221431]",
-      "[&>li:not(:last-child)]:border-[#653C94] dark:[&>li:not(:last-child)]:border-[#CBA2FA]",
+      "text-misc-bordered-text-light border-misc-bordered-text-light bg-misc-bordered-bg-light",
+      "dark:text-misc-bordered-text-dark dark:border-misc-bordered-text-dark dark:bg-misc-bordered-bg-dark",
+      "[&>li:not(:last-child)]:border-misc-bordered-text-light dark:[&>li:not(:last-child)]:border-misc-bordered-text-dark",
       hoverable &&
-        "hover:[&_li]:text-white dark:hover:[&_li]:text-black hover:[&_li]:bg-[#442863] dark:hover:[&_li]:bg-[#DDC1FC]"
+        "[&_li]:hover:text-white dark:[&_li]:hover:text-black [&_li]:hover:bg-misc-indicator-alt-light dark:[&_li]:hover:bg-misc-indicator-dark"
     ]
   end
 
   defp color_variant("bordered", "dawn", hoverable) do
     [
-      "text-[#7E4B2A] border-[#7E4B2A] bg-[#FBF2ED]",
-      "dark:text-[#E4B190] dark:border-[#E4B190] dark:bg-[#2A190E]",
-      "[&>li:not(:last-child)]:border-[#7E4B2A] dark:[&>li:not(:last-child)]:border-[#E4B190]",
+      "text-dawn-bordered-text-light border-dawn-bordered-text-light bg-dawn-bordered-bg-light",
+      "dark:text-dawn-bordered-text-dark dark:border-dawn-bordered-text-dark dark:bg-dawn-bordered-bg-dark",
+      "[&>li:not(:last-child)]:border-dawn-bordered-text-light dark:[&>li:not(:last-child)]:border-dawn-bordered-text-dark",
       hoverable &&
-        "hover:[&_li]:text-white dark:hover:[&_li]:text-black hover:[&_li]:bg-[#54321C] dark:hover:[&_li]:bg-[#EDCBB5]"
+        "[&_li]:hover:text-white dark:[&_li]:hover:text-black [&_li]:hover:bg-dawn-indicator-alt-light dark:[&_li]:hover:bg-dawn-indicator-dark"
     ]
   end
 
   defp color_variant("bordered", "silver", hoverable) do
     [
-      "text-[#727272] border-[#727272] bg-[#F3F3F3]",
-      "dark:text-[#BBBBBB] dark:border-[#BBBBBB] dark:bg-[#4B4B4B]",
-      "[&>li:not(:last-child)]:border-[#727272] dark:[&>li:not(:last-child)]:border-[#BBBBBB]",
+      "text-silver-bordered-text-light border-silver-bordered-text-light bg-silver-bordered-bg-light",
+      "dark:text-silver-bordered-text-dark dark:border-silver-bordered-text-dark dark:bg-silver-bordered-bg-dark",
+      "[&>li:not(:last-child)]:border-silver-bordered-text-light dark:[&>li:not(:last-child)]:border-silver-bordered-text-dark",
       hoverable &&
-        "hover:[&_li]:text-white dark:hover:[&_li]:text-black hover:[&_li]:bg-[#5E5E5E] dark:hover:[&_li]:bg-[#DDDDDD]"
+        "[&_li]:hover:text-white dark:[&_li]:hover:text-black [&_li]:hover:bg-silver-indicator-alt-light dark:[&_li]:hover:bg-silver-indicator-dark"
     ]
   end
 
   defp color_variant("transparent", "natural", hoverable) do
     [
-      "text-[#4B4B4B] dark:text-[#DDDDDD]",
+      "text-natural-light dark:text-natural-dark",
       hoverable &&
-        "hover:[&_li]:text-white dark:hover:[&_li]:text-black hover:[&_li]:bg-black dark:hover:[&_li]:bg-white"
+        "[&_li]:hover:text-white dark:[&_li]:hover:text-black [&_li]:hover:bg-black dark:[&_li]:hover:bg-white"
     ]
   end
 
   defp color_variant("transparent", "primary", hoverable) do
     [
-      "text-[#007F8C] dark:text-[#01B8CA]",
+      "text-primary-light dark:text-primary-dark",
       hoverable &&
-        "hover:[&_li]:text-white dark:hover:[&_li]:text-black hover:[&_li]:bg-[#1A535A] dark:hover:[&_li]:bg-[#B0E7EF]"
+        "[&_li]:hover:text-white dark:[&_li]:hover:text-black [&_li]:hover:bg-primary-indicator-light dark:[&_li]:hover:bg-primary-indicator-dark"
     ]
   end
 
   defp color_variant("transparent", "secondary", hoverable) do
     [
-      "text-[#266EF1] dark:text-[#6DAAFB]",
+      "text-secondary-light dark:text-secondary-dark",
       hoverable &&
-        "hover:[&_li]:text-white dark:hover:[&_li]:text-black hover:[&_li]:bg-[#1948A3] dark:hover:[&_li]:bg-[#CDDEFF]"
+        "[&_li]:hover:text-white dark:[&_li]:hover:text-black [&_li]:hover:bg-secondary-indicator-light dark:[&_li]:hover:bg-secondary-indicator-dark"
     ]
   end
 
   defp color_variant("transparent", "success", hoverable) do
     [
-      "text-[#0E8345] dark:text-[#06C167]",
+      "text-success-light dark:text-success-dark",
       hoverable &&
-        "hover:[&_li]:text-white dark:hover:[&_li]:text-black hover:[&_li]:bg-[#0D572D] dark:hover:[&_li]:bg-[#B1EAC2]"
+        "[&_li]:hover:text-white dark:[&_li]:hover:text-black [&_li]:hover:bg-success-indicator-alt-light dark:[&_li]:hover:bg-success-indicator-dark"
     ]
   end
 
   defp color_variant("transparent", "warning", hoverable) do
     [
-      "text-[#CA8D01] dark:text-[#FDC034]",
+      "text-warning-light dark:text-warning-dark",
       hoverable &&
-        "hover:[&_li]:text-white dark:hover:[&_li]:text-black hover:[&_li]:bg-[#654600] dark:hover:[&_li]:bg-[#FEDF99]"
+        "[&_li]:hover:text-white dark:[&_li]:hover:text-black [&_li]:hover:bg-warning-indicator-alt-light dark:[&_li]:hover:bg-warning-indicator-dark"
     ]
   end
 
   defp color_variant("transparent", "danger", hoverable) do
     [
-      "text-[#DE1135] dark:text-[#FC7F79]",
+      "text-danger-light dark:text-danger-dark",
       hoverable &&
-        "hover:[&_li]:text-white dark:hover:[&_li]:text-black hover:[&_li]:bg-[#950F22] dark:hover:[&_li]:bg-[#FFD2CD]"
+        "[&_li]:hover:text-white dark:[&_li]:hover:text-black [&_li]:hover:bg-danger-indicator-alt-light dark:[&_li]:hover:bg-danger-indicator-dark"
     ]
   end
 
   defp color_variant("transparent", "info", hoverable) do
     [
-      "text-[#0B84BA] dark:text-[#3EB7ED]",
+      "text-info-light dark:text-info-dark",
       hoverable &&
-        "hover:[&_li]:text-white dark:hover:[&_li]:text-black hover:[&_li]:bg-[#06425D] dark:hover:[&_li]:bg-[#9FDBF6]"
+        "[&_li]:hover:text-white dark:[&_li]:hover:text-black [&_li]:hover:bg-info-indicator-alt-light dark:[&_li]:hover:bg-info-indicator-dark"
     ]
   end
 
   defp color_variant("transparent", "misc", hoverable) do
     [
-      "text-[#8750C5] dark:text-[#BA83F9]",
+      "text-misc-light dark:text-misc-dark",
       hoverable &&
-        "hover:[&_li]:text-white dark:hover:[&_li]:text-black hover:[&_li]:bg-[#442863] dark:hover:[&_li]:bg-[#DDC1FC]"
+        "[&_li]:hover:text-white dark:[&_li]:hover:text-black [&_li]:hover:bg-misc-indicator-alt-light dark:[&_li]:hover:bg-misc-indicator-dark"
     ]
   end
 
   defp color_variant("transparent", "dawn", hoverable) do
     [
-      "text-[#A86438] dark:text-[#DB976B]",
+      "text-dawn-light dark:text-dawn-dark",
       hoverable &&
-        "hover:[&_li]:text-white dark:hover:[&_li]:text-black hover:[&_li]:bg-[#54321C] dark:hover:[&_li]:bg-[#EDCBB5]"
+        "[&_li]:hover:text-white dark:[&_li]:hover:text-black [&_li]:hover:bg-dawn-indicator-alt-light dark:[&_li]:hover:bg-dawn-indicator-dark"
     ]
   end
 
   defp color_variant("transparent", "silver", hoverable) do
     [
-      "text-[#868686] dark:text-[#A6A6A6]",
+      "text-silver-light dark:text-silver-dark",
       hoverable &&
-        "hover:[&_li]:text-white dark:hover:[&_li]:text-black hover:[&_li]:bg-[#5E5E5E] dark:hover:[&_li]:bg-[#DDDDDD]"
+        "[&_li]:hover:text-white dark:[&_li]:hover:text-black [&_li]:hover:bg-silver-indicator-alt-light dark:[&_li]:hover:bg-silver-indicator-dark"
     ]
   end
 
   defp color_variant("gradient", "natural", hoverable) do
     [
-      "bg-gradient-to-br from-[#282828] to-[#727272] text-white",
-      "dark:from-[#A6A6A6] dark:to-[#FFFFFF] dark:text-black",
-      hoverable && "hover:[&_li]:bg-black dark:hover:[&_li]:bg-white"
+      "bg-gradient-to-br from-gradient-natural-from-light to-gradient-natural-to-light text-white",
+      "dark:from-gradient-natural-from-dark dark:to-white dark:text-black",
+      hoverable && "[&_li]:hover:bg-black dark:[&_li]:hover:bg-white"
     ]
   end
 
   defp color_variant("gradient", "primary", hoverable) do
     [
-      "bg-gradient-to-br from-[#016974] to-[#01B8CA] text-white",
-      "dark:from-[#01B8CA] dark:to-[#B0E7EF] dark:text-black",
-      hoverable && "hover:[&_li]:bg-[#1A535A] dark:hover:[&_li]:bg-[#B0E7EF]"
+      "bg-gradient-to-br from-gradient-primary-from-light to-gradient-primary-to-light text-white",
+      "dark:from-gradient-primary-from-dark dark:to-gradient-primary-to-dark dark:text-black",
+      hoverable &&
+        "[&_li]:hover:bg-primary-indicator-light dark:[&_li]:hover:bg-primary-indicator-dark"
     ]
   end
 
   defp color_variant("gradient", "secondary", hoverable) do
     [
-      "bg-gradient-to-br from-[#175BCC] to-[#6DAAFB] text-white",
-      "dark:from-[#6DAAFB] dark:to-[#CDDEFF] dark:text-black",
-      hoverable && "hover:[&_li]:bg-[#1948A3] dark:hover:[&_li]:bg-[#CDDEFF]"
+      "bg-gradient-to-br from-gradient-secondary-from-light to-gradient-secondary-to-light text-white",
+      "dark:from-gradient-secondary-from-dark dark:to-gradient-secondary-to-dark dark:text-black",
+      hoverable &&
+        "[&_li]:hover:bg-secondary-indicator-light dark:[&_li]:hover:bg-secondary-indicator-dark"
     ]
   end
 
   defp color_variant("gradient", "success", hoverable) do
     [
-      "bg-gradient-to-br from-[#166C3B] to-[#06C167] text-white",
-      "dark:from-[#06C167] dark:to-[#B1EAC2] dark:text-black",
-      hoverable && "hover:[&_li]:bg-[#0D572D] dark:hover:[&_li]:bg-[#B1EAC2]"
+      "bg-gradient-to-br from-gradient-success-from-light to-gradient-success-to-light text-white",
+      "dark:from-gradient-success-from-dark dark:to-gradient-success-to-dark dark:text-black",
+      hoverable &&
+        "[&_li]:hover:bg-success-indicator-alt-light dark:[&_li]:hover:bg-success-indicator-dark"
     ]
   end
 
   defp color_variant("gradient", "warning", hoverable) do
     [
-      "bg-gradient-to-br from-[#976A01] to-[#FDC034] text-white",
-      "dark:from-[#FDC034] dark:to-[#FEDF99] dark:text-black",
-      hoverable && "hover:[&_li]:bg-[#654600] dark:hover:[&_li]:bg-[#FEDF99]"
+      "bg-gradient-to-br from-gradient-warning-from-light to-gradient-warning-to-light text-white",
+      "dark:from-gradient-warning-from-dark dark:to-gradient-warning-to-dark dark:text-black",
+      hoverable &&
+        "[&_li]:hover:bg-warning-indicator-alt-light dark:[&_li]:hover:bg-warning-indicator-dark"
     ]
   end
 
   defp color_variant("gradient", "danger", hoverable) do
     [
-      "bg-gradient-to-br from-[#BB032A] to-[#FC7F79] text-white",
-      "dark:from-[#FC7F79] dark:to-[#FFD2CD] dark:text-black",
-      hoverable && "hover:[&_li]:bg-[#950F22] dark:hover:[&_li]:bg-[#FFD2CD]"
+      "bg-gradient-to-br from-gradient-danger-from-light to-gradient-danger-to-light text-white",
+      "dark:from-gradient-danger-from-dark dark:to-gradient-danger-to-dark dark:text-black",
+      hoverable &&
+        "[&_li]:hover:bg-danger-indicator-alt-light dark:[&_li]:hover:bg-danger-indicator-dark"
     ]
   end
 
   defp color_variant("gradient", "info", hoverable) do
     [
-      "bg-gradient-to-br from-[#08638C] to-[#3EB7ED] text-white",
-      "dark:from-[#3EB7ED] dark:to-[#9FDBF6] dark:text-black",
-      hoverable && "hover:[&_li]:bg-[#06425D] dark:hover:[&_li]:bg-[#9FDBF6]"
+      "bg-gradient-to-br from-gradient-info-from-light to-gradient-info-to-light text-white",
+      "dark:from-gradient-info-from-dark dark:to-gradient-info-to-dark dark:text-black",
+      hoverable &&
+        "[&_li]:hover:bg-info-indicator-alt-light dark:[&_li]:hover:bg-info-indicator-dark"
     ]
   end
 
   defp color_variant("gradient", "misc", hoverable) do
     [
-      "bg-gradient-to-br from-[#653C94] to-[#BA83F9] text-white",
-      "dark:from-[#BA83F9] dark:to-[#DDC1FC] dark:text-black",
-      hoverable && "hover:[&_li]:bg-[#442863] dark:hover:[&_li]:bg-[#DDC1FC]"
+      "bg-gradient-to-br from-gradient-misc-from-light to-gradient-misc-to-light text-white",
+      "dark:from-gradient-misc-from-dark dark:to-gradient-misc-to-dark dark:text-black",
+      hoverable &&
+        "[&_li]:hover:bg-misc-indicator-alt-light dark:[&_li]:hover:bg-misc-indicator-dark"
     ]
   end
 
   defp color_variant("gradient", "dawn", hoverable) do
     [
-      "bg-gradient-to-br from-[#7E4B2A] to-[#DB976B] text-white",
-      "dark:from-[#DB976B] dark:to-[#EDCBB5] dark:text-black",
-      hoverable && "hover:[&_li]:bg-[#54321C] dark:hover:[&_li]:bg-[#EDCBB5]"
+      "bg-gradient-to-br from-gradient-dawn-from-light to-gradient-dawn-to-light text-white",
+      "dark:from-gradient-dawn-from-dark dark:to-gradient-dawn-to-dark dark:text-black",
+      hoverable &&
+        "[&_li]:hover:bg-dawn-indicator-alt-light dark:[&_li]:hover:bg-dawn-indicator-dark"
     ]
   end
 
   defp color_variant("gradient", "silver", hoverable) do
     [
-      "bg-gradient-to-br from-[#5E5E5E] to-[#A6A6A6] text-white",
-      "dark:from-[#868686] dark:to-[#BBBBBB] dark:text-black",
-      hoverable && "hover:[&_li]:bg-[#5E5E5E] dark:hover:[&_li]:bg-[#DDDDDD]"
+      "bg-gradient-to-br from-gradient-silver-from-light to-gradient-silver-to-light text-white",
+      "dark:from-gradient-silver-from-dark dark:to-gradient-silver-to-dark dark:text-black",
+      hoverable &&
+        "[&_li]:hover:bg-silver-indicator-alt-light dark:[&_li]:hover:bg-silver-indicator-dark"
     ]
   end
 
   defp color_variant("bordered_separated", "natural", hoverable) do
     [
-      "[&>li]:text-[#282828] [&>li]:border-[#282828] [&>li]:bg-[#F3F3F3]",
-      "dark:[&>li]:text-[#E8E8E8] dark:[&>li]:border-[#E8E8E8] dark:[&>li]:bg-[#4B4B4B]",
+      "[&>li]:text-natural-bordered-text-light [&>li]:border-natural-border-light [&>li]:bg-natural-bordered-bg-light",
+      "dark:[&>li]:text-natural-bordered-text-dark dark:[&>li]:border-natural-border-dark dark:[&>li]:bg-natural-bordered-bg-dark",
       hoverable &&
-        "hover:[&_li]:text-white dark:hover:[&_li]:text-black hover:[&_li]:bg-black dark:hover:[&_li]:bg-white"
+        "[&_li]:hover:text-white dark:[&_li]:hover:text-black [&_li]:hover:bg-black dark:[&_li]:hover:bg-white"
     ]
   end
 
   defp color_variant("bordered_separated", "primary", hoverable) do
     [
-      "[&>li]:text-[#016974] [&>li]:border-[#016974] [&>li]:bg-[#E2F8FB]",
-      "dark:[&>li]:text-[#77D5E3] dark:[&>li]:border-[#77D5E3] dark:[&>li]:bg-[#002D33]",
+      "[&>li]:text-primary-bordered-text-light [&>li]:border-primary-bordered-text-light [&>li]:bg-primary-bordered-bg-light",
+      "dark:[&>li]:text-primary-bordered-text-dark dark:[&>li]:border-primary-bordered-text-dark dark:[&>li]:bg-primary-bordered-bg-dark",
       hoverable &&
-        "hover:[&_li]:text-white dark:hover:[&_li]:text-black hover:[&_li]:bg-[#1A535A] dark:hover:[&_li]:bg-[#B0E7EF]"
+        "[&_li]:hover:text-white dark:[&_li]:hover:text-black [&_li]:hover:bg-primary-indicator-light dark:[&_li]:hover:bg-primary-indicator-dark"
     ]
   end
 
   defp color_variant("bordered_separated", "secondary", hoverable) do
     [
-      "[&>li]:text-[#175BCC] [&>li]:border-[#175BCC] [&>li]:bg-[#EFF4FE]",
-      "dark:[&>li]:text-[#A9C9FF] dark:[&>li]:border-[#A9C9FF] dark:[&>li]:bg-[#002661]",
+      "[&>li]:text-secondary-bordered-text-light [&>li]:border-secondary-bordered-text-light [&>li]:bg-secondary-bordered-bg-light",
+      "dark:[&>li]:text-secondary-bordered-text-dark dark:[&>li]:border-secondary-bordered-text-dark dark:[&>li]:bg-secondary-bordered-bg-dark",
       hoverable &&
-        "hover:[&_li]:text-white dark:hover:[&_li]:text-black hover:[&_li]:bg-[#1948A3] dark:hover:[&_li]:bg-[#CDDEFF]"
+        "[&_li]:hover:text-white dark:[&_li]:hover:text-black [&_li]:hover:bg-secondary-indicator-light dark:[&_li]:hover:bg-secondary-indicator-dark"
     ]
   end
 
   defp color_variant("bordered_separated", "success", hoverable) do
     [
-      "[&>li]:text-[#166C3B] [&>li]:border-[#166C3B] [&>li]:bg-[#EAF6ED]",
-      "dark:[&>li]:text-[#7FD99A] dark:[&>li]:border-[#7FD99A] dark:[&>li]:bg-[#002F14]",
+      "[&>li]:text-success-bordered-text-light [&>li]:border-success-bordered-text-light [&>li]:bg-success-bordered-bg-light",
+      "dark:[&>li]:text-success-bordered-text-dark dark:[&>li]:border-success-bordered-text-dark dark:[&>li]:bg-success-bordered-bg-dark",
       hoverable &&
-        "hover:[&_li]:text-white dark:hover:[&_li]:text-black hover:[&_li]:bg-[#0D572D] dark:hover:[&_li]:bg-[#B1EAC2]"
+        "[&_li]:hover:text-white dark:[&_li]:hover:text-black [&_li]:hover:bg-success-indicator-alt-light dark:[&_li]:hover:bg-success-indicator-dark"
     ]
   end
 
   defp color_variant("bordered_separated", "warning", hoverable) do
     [
-      "[&>li]:text-[#976A01] [&>li]:border-[#976A01] [&>li]:bg-[#FFF7E6]",
-      "dark:[&>li]:text-[#FDD067] dark:[&>li]:border-[#FDD067] dark:[&>li]:bg-[#322300]",
+      "[&>li]:text-warning-bordered-text-light [&>li]:border-warning-bordered-text-light [&>li]:bg-warning-bordered-bg-light",
+      "dark:[&>li]:text-warning-bordered-text-dark dark:[&>li]:border-warning-bordered-text-dark dark:[&>li]:bg-warning-bordered-bg-dark",
       hoverable &&
-        "hover:[&_li]:text-white dark:hover:[&_li]:text-black hover:[&_li]:bg-[#654600] dark:hover:[&_li]:bg-[#FEDF99]"
+        "[&_li]:hover:text-white dark:[&_li]:hover:text-black [&_li]:hover:bg-warning-indicator-alt-light dark:[&_li]:hover:bg-warning-indicator-dark"
     ]
   end
 
   defp color_variant("bordered_separated", "danger", hoverable) do
     [
-      "[&>li]:text-[#BB032A] [&>li]:border-[#BB032A] [&>li]:bg-[#FFF0EE]",
-      "dark:[&>li]:text-[#FFB2AB] dark:[&>li]:border-[#FFB2AB] dark:[&>li]:bg-[#520810]",
+      "[&>li]:text-danger-bordered-text-light [&>li]:border-danger-bordered-text-light [&>li]:bg-danger-bordered-bg-light",
+      "dark:[&>li]:text-danger-bordered-text-dark dark:[&>li]:border-danger-bordered-text-dark dark:[&>li]:bg-danger-bordered-bg-dark",
       hoverable &&
-        "hover:[&_li]:text-white dark:hover:[&_li]:text-black hover:[&_li]:bg-[#950F22] dark:hover:[&_li]:bg-[#FFD2CD]"
+        "[&_li]:hover:text-white dark:[&_li]:hover:text-black [&_li]:hover:bg-danger-indicator-alt-light dark:[&_li]:hover:bg-danger-indicator-dark"
     ]
   end
 
   defp color_variant("bordered_separated", "info", hoverable) do
     [
-      "[&>li]:text-[#0B84BA] [&>li]:border-[#0B84BA] [&>li]:bg-[#E7F6FD]",
-      "dark:[&>li]:text-[#6EC9F2] dark:[&>li]:border-[#6EC9F2] dark:[&>li]:bg-[#03212F]",
+      "[&>li]:text-info-bordered-text-light [&>li]:border-info-bordered-text-light [&>li]:bg-info-bordered-bg-light",
+      "dark:[&>li]:text-info-bordered-text-dark dark:[&>li]:border-info-bordered-text-dark dark:[&>li]:bg-info-bordered-bg-dark",
       hoverable &&
-        "hover:[&_li]:text-white dark:hover:[&_li]:text-black hover:[&_li]:bg-[#06425D] dark:hover:[&_li]:bg-[#9FDBF6]"
+        "[&_li]:hover:text-white dark:[&_li]:hover:text-black [&_li]:hover:bg-info-indicator-alt-light dark:[&_li]:hover:bg-info-indicator-dark"
     ]
   end
 
   defp color_variant("bordered_separated", "misc", hoverable) do
     [
-      "[&>li]:text-[#653C94] [&>li]:border-[#653C94] [&>li]:bg-[#F6F0FE]",
-      "dark:[&>li]:text-[#CBA2FA] dark:[&>li]:border-[#CBA2FA] dark:[&>li]:bg-[#221431]",
+      "[&>li]:text-misc-bordered-text-light [&>li]:border-misc-bordered-text-light [&>li]:bg-misc-bordered-bg-light",
+      "dark:[&>li]:text-misc-bordered-text-dark dark:[&>li]:border-misc-bordered-text-dark dark:[&>li]:bg-misc-bordered-bg-dark",
       hoverable &&
-        "hover:[&_li]:text-white dark:hover:[&_li]:text-black hover:[&_li]:bg-[#442863] dark:hover:[&_li]:bg-[#DDC1FC]"
+        "[&_li]:hover:text-white dark:[&_li]:hover:text-black [&_li]:hover:bg-misc-indicator-alt-light dark:[&_li]:hover:bg-misc-indicator-dark"
     ]
   end
 
   defp color_variant("bordered_separated", "dawn", hoverable) do
     [
-      "[&>li]:text-[#7E4B2A] [&>li]:border-[#7E4B2A] [&>li]:bg-[#FBF2ED]",
-      "dark:[&>li]:text-[#E4B190] dark:[&>li]:border-[#E4B190] dark:[&>li]:bg-[#2A190E]",
+      "[&>li]:text-dawn-bordered-text-light [&>li]:border-dawn-bordered-text-light [&>li]:bg-dawn-bordered-bg-light",
+      "dark:[&>li]:text-dawn-bordered-text-dark dark:[&>li]:border-dawn-bordered-text-dark dark:[&>li]:bg-dawn-bordered-bg-dark",
       hoverable &&
-        "hover:[&_li]:text-white dark:hover:[&_li]:text-black hover:[&_li]:bg-[#54321C] dark:hover:[&_li]:bg-[#EDCBB5]"
+        "[&_li]:hover:text-white dark:[&_li]:hover:text-black [&_li]:hover:bg-dawn-indicator-alt-light dark:[&_li]:hover:bg-dawn-indicator-dark"
     ]
   end
 
   defp color_variant("bordered_separated", "silver", hoverable) do
     [
-      "[&>li]:text-[#727272] [&>li]:border-[#727272] [&>li]:bg-[#F3F3F3]",
-      "dark:[&>li]:text-[#BBBBBB] dark:[&>li]:border-[#BBBBBB] dark:[&>li]:bg-[#4B4B4B]",
+      "[&>li]:text-silver-bordered-text-light [&>li]:border-silver-bordered-text-light [&>li]:bg-silver-bordered-bg-light",
+      "dark:[&>li]:text-silver-bordered-text-dark dark:[&>li]:border-silver-bordered-text-dark dark:[&>li]:bg-silver-bordered-bg-dark",
       hoverable &&
-        "hover:[&_li]:text-white dark:hover:[&_li]:text-black hover:[&_li]:bg-[#5E5E5E] dark:hover:[&_li]:bg-[#DDDDDD]"
+        "[&_li]:hover:text-white dark:[&_li]:hover:text-black [&_li]:hover:bg-silver-indicator-alt-light dark:[&_li]:hover:bg-silver-indicator-dark"
     ]
   end
 
   defp color_variant("outline_separated", "natural", hoverable) do
     [
-      "[&>li]:text-[#4B4B4B] [&>li]:border-[#4B4B4B] dark:[&>li]:text-[#DDDDDD] dark:[&>li]:border-[#DDDDDD]",
+      "[&>li]:text-natural-light [&>li]:border-natural-light dark:[&>li]:text-natural-dark dark:[&>li]:border-natural-dark",
       hoverable &&
-        "hover:[&_li]:text-white dark:hover:[&_li]:text-black hover:[&_li]:bg-black dark:hover:[&_li]:bg-white"
+        "[&_li]:hover:text-white dark:[&_li]:hover:text-black [&_li]:hover:bg-black dark:[&_li]:hover:bg-white"
     ]
   end
 
   defp color_variant("outline_separated", "primary", hoverable) do
     [
-      "[&>li]:text-[#007F8C] [&>li]:border-[#007F8C]  dark:[&>li]:text-[#01B8CA] dark:[&>li]:border-[#01B8CA]",
+      "[&>li]:text-primary-light [&>li]:border-primary-light dark:[&>li]:text-primary-dark dark:[&>li]:border-primary-dark",
       hoverable &&
-        "hover:[&_li]:text-white dark:hover:[&_li]:text-black hover:[&_li]:bg-[#1A535A] dark:hover:[&_li]:bg-[#B0E7EF]"
+        "[&_li]:hover:text-white dark:[&_li]:hover:text-black [&_li]:hover:bg-primary-indicator-light dark:[&_li]:hover:bg-primary-indicator-dark"
     ]
   end
 
   defp color_variant("outline_separated", "secondary", hoverable) do
     [
-      "[&>li]:text-[#266EF1] [&>li]:border-[#266EF1] dark:[&>li]:text-[#6DAAFB] dark:[&>li]:border-[#6DAAFB]",
+      "[&>li]:text-secondary-light [&>li]:border-secondary-light dark:[&>li]:text-secondary-dark dark:[&>li]:border-secondary-dark",
       hoverable &&
-        "hover:[&_li]:text-white dark:hover:[&_li]:text-black hover:[&_li]:bg-[#1948A3] dark:hover:[&_li]:bg-[#CDDEFF]"
+        "[&_li]:hover:text-white dark:[&_li]:hover:text-black [&_li]:hover:bg-secondary-indicator-light dark:[&_li]:hover:bg-secondary-indicator-dark"
     ]
   end
 
   defp color_variant("outline_separated", "success", hoverable) do
     [
-      "[&>li]:text-[#0E8345] [&>li]:border-[#0E8345] dark:[&>li]:text-[#06C167] dark:[&>li]:border-[#06C167]",
+      "[&>li]:text-success-light [&>li]:border-success-light dark:[&>li]:text-success-dark dark:[&>li]:border-success-dark",
       hoverable &&
-        "hover:[&_li]:text-white dark:hover:[&_li]:text-black hover:[&_li]:bg-[#0D572D] dark:hover:[&_li]:bg-[#B1EAC2]"
+        "[&_li]:hover:text-white dark:[&_li]:hover:text-black [&_li]:hover:bg-success-indicator-alt-light dark:[&_li]:hover:bg-success-indicator-dark"
     ]
   end
 
   defp color_variant("outline_separated", "warning", hoverable) do
     [
-      "[&>li]:text-[#CA8D01] [&>li]:border-[#CA8D01] dark:[&>li]:text-[#FDC034] dark:[&>li]:border-[#FDC034]",
+      "[&>li]:text-warning-light [&>li]:border-warning-light dark:[&>li]:text-warning-dark dark:[&>li]:border-warning-dark",
       hoverable &&
-        "hover:[&_li]:text-white dark:hover:[&_li]:text-black hover:[&_li]:bg-[#654600] dark:hover:[&_li]:bg-[#FEDF99]"
+        "[&_li]:hover:text-white dark:[&_li]:hover:text-black [&_li]:hover:bg-warning-indicator-alt-light dark:[&_li]:hover:bg-warning-indicator-dark"
     ]
   end
 
   defp color_variant("outline_separated", "danger", hoverable) do
     [
-      "[&>li]:text-[#DE1135] [&>li]:border-[#DE1135] dark:[&>li]:text-[#FC7F79] dark:[&>li]:border-[#FC7F79]",
+      "[&>li]:text-danger-light [&>li]:border-danger-light dark:[&>li]:text-danger-dark dark:[&>li]:border-danger-dark",
       hoverable &&
-        "hover:[&_li]:text-white dark:hover:[&_li]:text-black hover:[&_li]:bg-[#950F22] dark:hover:[&_li]:bg-[#FFD2CD]"
+        "[&_li]:hover:text-white dark:[&_li]:hover:text-black [&_li]:hover:bg-danger-indicator-alt-light dark:[&_li]:hover:bg-danger-indicator-dark"
     ]
   end
 
   defp color_variant("outline_separated", "info", hoverable) do
     [
-      "[&>li]:text-[#0B84BA] [&>li]:border-[#0B84BA] dark:[&>li]:text-[#3EB7ED] dark:[&>li]:border-[#3EB7ED]",
+      "[&>li]:text-info-light [&>li]:border-info-light dark:[&>li]:text-info-dark dark:[&>li]:border-info-dark",
       hoverable &&
-        "hover:[&_li]:text-white dark:hover:[&_li]:text-black hover:[&_li]:bg-[#06425D] dark:hover:[&_li]:bg-[#9FDBF6]"
+        "[&_li]:hover:text-white dark:[&_li]:hover:text-black [&_li]:hover:bg-info-indicator-alt-light dark:[&_li]:hover:bg-info-indicator-dark"
     ]
   end
 
   defp color_variant("outline_separated", "misc", hoverable) do
     [
-      "[&>li]:text-[#8750C5] [&>li]:border-[#8750C5] dark:[&>li]:text-[#BA83F9] dark:[&>li]:border-[#BA83F9]",
+      "[&>li]:text-misc-light [&>li]:border-misc-light dark:[&>li]:text-misc-dark dark:[&>li]:border-misc-dark",
       hoverable &&
-        "hover:[&_li]:text-white dark:hover:[&_li]:text-black hover:[&_li]:bg-[#442863] dark:hover:[&_li]:bg-[#DDC1FC]"
+        "[&_li]:hover:text-white dark:[&_li]:hover:text-black [&_li]:hover:bg-misc-indicator-alt-light dark:[&_li]:hover:bg-misc-indicator-dark"
     ]
   end
 
   defp color_variant("outline_separated", "dawn", hoverable) do
     [
-      "[&>li]:text-[#A86438] [&>li]:border-[#A86438] dark:[&>li]:text-[#DB976B] dark:[&>li]:border-[#DB976B]",
+      "[&>li]:text-dawn-light [&>li]:border-dawn-light dark:[&>li]:text-dawn-dark dark:[&>li]:border-dawn-dark",
       hoverable &&
-        "hover:[&_li]:text-white dark:hover:[&_li]:text-black hover:[&_li]:bg-[#54321C] dark:hover:[&_li]:bg-[#EDCBB5]"
+        "[&_li]:hover:text-white dark:[&_li]:hover:text-black [&_li]:hover:bg-dawn-indicator-alt-light dark:[&_li]:hover:bg-dawn-indicator-dark"
     ]
   end
 
   defp color_variant("outline_separated", "silver", hoverable) do
     [
-      "[&>li]:text-[#868686] [&>li]:border-[#868686] dark:[&>li]:text-[#A6A6A6] dark:[&>li]:border-[#A6A6A6]",
+      "[&>li]:text-silver-light [&>li]:border-silver-light dark:[&>li]:text-silver-dark dark:[&>li]:border-silver-dark",
       hoverable &&
-        "hover:[&_li]:text-white dark:hover:[&_li]:text-black hover:[&_li]:bg-[#5E5E5E] dark:hover:[&_li]:bg-[#DDDDDD]"
+        "[&_li]:hover:text-white dark:[&_li]:hover:text-black [&_li]:hover:bg-silver-indicator-alt-light dark:[&_li]:hover:bg-silver-indicator-dark"
     ]
   end
 

@@ -78,12 +78,12 @@ defmodule CommunityDemoWeb.Components.Video do
   attr :thumbnail, :string, default: nil, doc: "Determines thumbnail for video"
   attr :width, :string, default: "full", doc: "Determines the element width"
   attr :rounded, :string, default: "", doc: "Determines the border radius"
-  attr :height, :string, default: "auto", doc: "Determines the element width"
+  attr :height, :string, default: "auto", doc: "Determines the element height"
   attr :caption_size, :string, default: "extra_small", doc: "Determines the video caption size"
 
   attr :caption_background, :string,
     default: "dark",
-    doc: "Determines the video caption bakcground"
+    doc: "Determines the video caption background"
 
   attr :caption_opacity, :string, default: "solid", doc: "Determines the video caption opacity"
   attr :ratio, :string, default: "auto", doc: "Determines the video ratio"
@@ -101,7 +101,7 @@ defmodule CommunityDemoWeb.Components.Video do
 
   slot :track, required: false, doc: "Determines media subtitle" do
     attr :src, :string, required: true, doc: "Subtitle link"
-    attr :label, :string, doc: "Subtitle Lable"
+    attr :label, :string, doc: "Subtitle Label"
     attr :kind, :string, doc: "Subtitle Kind"
     attr :srclang, :string, doc: "Subtitle language link or symbol"
     attr :default, :boolean, doc: "Determines whether this subtitle is default"
@@ -190,43 +190,54 @@ defmodule CommunityDemoWeb.Components.Video do
   defp caption_size(params) when is_binary(params), do: params
 
   defp caption_background("base"),
-    do: "[&::cue]:bg-[linear-gradient(#fff,#fff)] [&::cue]:text-[#09090b]"
+    do: "[&::cue]:bg-[linear-gradient(white,white)] [&::cue]:text-base-text-light"
 
   defp caption_background("white"),
-    do: "[&::cue]:bg-[linear-gradient(#fff,#fff)] [&::cue]:text-[#282828]"
+    do: "[&::cue]:bg-[linear-gradient(white,white)] [&::cue]:text-default-dark-bg"
 
   defp caption_background("natural"),
-    do: "[&::cue]:bg-[linear-gradient(#4B4B4B,#4B4B4B)] [&::cue]:text-white"
+    do:
+      "[&::cue]:bg-[linear-gradient(var(--color-natural-light),var(--color-natural-light))] [&::cue]:text-white"
 
   defp caption_background("primary"),
-    do: "[&::cue]:bg-[linear-gradient(#007F8C,#007F8C)] [&::cue]:text-white"
+    do:
+      "[&::cue]:bg-[linear-gradient(var(--color-primary-light),var(--color-primary-light))] [&::cue]:text-white"
 
   defp caption_background("secondary"),
-    do: "[&::cue]:bg-[linear-gradient(#266EF1,#266EF1)] [&::cue]:text-white"
+    do:
+      "[&::cue]:bg-[linear-gradient(var(--color-secondary-light),var(--color-secondary-light))] [&::cue]:text-white"
 
   defp caption_background("success"),
-    do: "[&::cue]:bg-[linear-gradient(#0E8345,#0E8345)] [&::cue]:text-[#282828]"
+    do:
+      "[&::cue]:bg-[linear-gradient(var(--color-success-light),var(--color-success-light))] [&::cue]:text-default-dark-bg"
 
   defp caption_background("warning"),
-    do: "[&::cue]:bg-[linear-gradient(#CA8D01,#CA8D01)] [&::cue]:text-[#282828]"
+    do:
+      "[&::cue]:bg-[linear-gradient(var(--color-warning-light),var(--color-warning-light))] [&::cue]:text-default-dark-bg"
 
   defp caption_background("danger"),
-    do: "[&::cue]:bg-[linear-gradient(#DE1135,#DE1135)] [&::cue]:text-[#282828]"
+    do:
+      "[&::cue]:bg-[linear-gradient(var(--color-danger-light),var(--color-danger-light))] [&::cue]:text-default-dark-bg"
 
   defp caption_background("info"),
-    do: "[&::cue]:bg-[linear-gradient(#0B84BA,#0B84BA)] [&::cue]:text-[#282828]"
+    do:
+      "[&::cue]:bg-[linear-gradient(var(--color-info-light),var(--color-info-light))] [&::cue]:text-default-dark-bg"
 
   defp caption_background("misc"),
-    do: "[&::cue]:bg-[linear-gradient(#8750C5,#8750C5)] [&::cue]:text-[#282828]"
+    do:
+      "[&::cue]:bg-[linear-gradient(var(--color-misc-light),var(--color-misc-light))] [&::cue]:text-default-dark-bg"
 
   defp caption_background("dawn"),
-    do: "[&::cue]:bg-[linear-gradient(#A86438,#A86438)] [&::cue]:text-[#282828]"
+    do:
+      "[&::cue]:bg-[linear-gradient(var(--color-dawn-light),var(--color-dawn-light))] [&::cue]:text-default-dark-bg"
 
   defp caption_background("silver"),
-    do: "[&::cue]:bg-[linear-gradient(#868686,#868686)] [&::cue]:text-[#282828]"
+    do:
+      "[&::cue]:bg-[linear-gradient(var(--color-silver-light),var(--color-silver-light))] [&::cue]:text-default-dark-bg"
 
   defp caption_background("dark"),
-    do: "[&::cue]:bg-[linear-gradient(#282828,#282828)] [&::cue]:text-white"
+    do:
+      "[&::cue]:bg-[linear-gradient(var(--color-default-dark-bg),var(--color-default-dark-bg))] [&::cue]:text-white"
 
   defp caption_background(params) when is_binary(params), do: params
 
@@ -235,7 +246,7 @@ defmodule CommunityDemoWeb.Components.Video do
   end
 
   defp caption_opacity("translucent") do
-    "bg-opacity-20"
+    "[&::cue]:bg-opacity-20"
   end
 
   defp caption_opacity("semi_transparent") do

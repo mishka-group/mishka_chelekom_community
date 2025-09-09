@@ -12,15 +12,7 @@ defmodule CommunityDemoWeb.Components.MishkaComponents do
         ]
 
       import CommunityDemoWeb.Components.Alert,
-        only: [
-          flash: 1,
-          flash_group: 1,
-          alert: 1,
-          show_alert: 1,
-          show_alert: 2,
-          hide_alert: 1,
-          hide_alert: 2
-        ]
+        only: [flash: 1, alert: 1, show_alert: 1, show_alert: 2, hide_alert: 1, hide_alert: 2]
 
       import CommunityDemoWeb.Components.Avatar, only: [avatar: 1, avatar_group: 1]
 

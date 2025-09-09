@@ -272,8 +272,8 @@ defmodule CommunityDemoWeb.Components.Sidebar do
 
   defp color_variant("base", _) do
     [
-      "bg-white text-[#09090b] border-[#e4e4e7]",
-      "dark:bg-[#18181B] dark:text-[#FAFAFA] dark:border-[#27272a]"
+      "bg-white text-base-text-light border-base-border-light",
+      "dark:bg-base-bg-dark dark:text-base-text-dark dark:border-base-border-dark"
     ]
   end
 
@@ -285,369 +285,369 @@ defmodule CommunityDemoWeb.Components.Sidebar do
 
   defp color_variant("default", "dark") do
     [
-      "bg-[#282828] text-white"
+      "bg-default-dark-bg text-white"
     ]
   end
 
   defp color_variant("default", "natural") do
     [
-      "bg-[#4B4B4B] text-white",
-      "dark:bg-[#DDDDDD] dark:text-black"
+      "bg-natural-light text-white",
+      "dark:bg-natural-dark dark:text-black"
     ]
   end
 
   defp color_variant("default", "primary") do
     [
-      "bg-[#007F8C] text-white",
-      "dark:bg-[#01B8CA] dark:text-black"
+      "bg-primary-light text-white",
+      "dark:bg-primary-dark dark:text-black"
     ]
   end
 
   defp color_variant("default", "secondary") do
     [
-      "bg-[#266EF1] text-white",
-      "dark:bg-[#6DAAFB] dark:text-black"
+      "bg-secondary-light text-white",
+      "dark:bg-secondary-dark dark:text-black"
     ]
   end
 
   defp color_variant("default", "success") do
     [
-      "bg-[#0E8345] text-white",
-      "dark:bg-[#06C167] dark:text-black"
+      "bg-success-light text-white",
+      "dark:bg-success-dark dark:text-black"
     ]
   end
 
   defp color_variant("default", "warning") do
     [
-      "bg-[#DE1135] text-white",
-      "dark:bg-[#FC7F79] dark:text-black"
+      "bg-danger-light text-white",
+      "dark:bg-danger-dark dark:text-black"
     ]
   end
 
   defp color_variant("default", "danger") do
     [
-      "bg-[#DE1135] text-white",
-      "dark:bg-[#FC7F79] dark:text-black"
+      "bg-danger-light text-white",
+      "dark:bg-danger-dark dark:text-black"
     ]
   end
 
   defp color_variant("default", "info") do
     [
-      "bg-[#0B84BA] text-white",
-      "dark:bg-[#3EB7ED] dark:text-black"
+      "bg-info-light text-white",
+      "dark:bg-info-dark dark:text-black"
     ]
   end
 
   defp color_variant("default", "misc") do
     [
-      "bg-[#8750C5] text-white",
-      "dark:bg-[#BA83F9] dark:text-black"
+      "bg-misc-light text-white",
+      "dark:bg-misc-dark dark:text-black"
     ]
   end
 
   defp color_variant("default", "dawn") do
     [
-      "bg-[#A86438] text-white",
-      "dark:bg-[#DB976B] dark:text-black"
+      "bg-dawn-light text-white",
+      "dark:bg-dawn-dark dark:text-black"
     ]
   end
 
   defp color_variant("default", "silver") do
     [
-      "bg-[#868686] text-white",
-      "dark:bg-[#A6A6A6] dark:text-black"
+      "bg-silver-light text-white",
+      "dark:bg-silver-dark dark:text-black"
     ]
   end
 
   defp color_variant("outline", "natural") do
     [
-      "bg-transparent text-[#4B4B4B] border-[#4B4B4B]",
-      "dark:text-[#DDDDDD] dark:border-[#DDDDDD]"
+      "bg-transparent text-natural-light border-natural-light",
+      "dark:text-natural-dark dark:border-natural-dark"
     ]
   end
 
   defp color_variant("outline", "primary") do
     [
-      "bg-transparent text-[#007F8C] border-[#007F8C]",
-      "dark:text-[#01B8CA] dark:border-[#01B8CA]"
+      "bg-transparent text-primary-light border-primary-light",
+      "dark:text-primary-dark dark:border-primary-dark"
     ]
   end
 
   defp color_variant("outline", "secondary") do
     [
-      "bg-transparent text-[#266EF1] border-[#266EF1]",
-      "dark:text-[#6DAAFB] dark:border-[#6DAAFB]"
+      "bg-transparent text-secondary-light border-secondary-light",
+      "dark:text-secondary-dark dark:border-secondary-dark"
     ]
   end
 
   defp color_variant("outline", "success") do
     [
-      "bg-transparent text-[#0E8345] border-[#0E8345]",
-      "dark:text-[#06C167] dark:border-[#06C167]"
+      "bg-transparent text-success-light border-success-light",
+      "dark:text-success-dark dark:border-success-dark"
     ]
   end
 
   defp color_variant("outline", "warning") do
     [
-      "bg-transparent text-[#CA8D01] border-[#CA8D01]",
-      "dark:text-[#FDC034] dark:border-[#FDC034]"
+      "bg-transparent text-warning-light border-warning-light",
+      "dark:text-warning-dark dark:border-warning-dark"
     ]
   end
 
   defp color_variant("outline", "danger") do
     [
-      "bg-transparent text-[#DE1135] border-[#DE1135]",
-      "dark:text-[#FC7F79] dark:border-[#FC7F79]"
+      "bg-transparent text-danger-light border-danger-light",
+      "dark:text-danger-dark dark:border-danger-dark"
     ]
   end
 
   defp color_variant("outline", "info") do
     [
-      "bg-transparent text-[#0B84BA] border-[#0B84BA]",
-      "dark:text-[#3EB7ED] dark:border-[#3EB7ED]"
+      "bg-transparent text-info-light border-info-light",
+      "dark:text-info-dark dark:border-info-dark"
     ]
   end
 
   defp color_variant("outline", "misc") do
     [
-      "bg-transparent text-[#8750C5] border-[#8750C5]",
-      "dark:text-[#BA83F9] dark:border-[#BA83F9]"
+      "bg-transparent text-misc-light border-misc-light",
+      "dark:text-misc-dark dark:border-misc-dark"
     ]
   end
 
   defp color_variant("outline", "dawn") do
     [
-      "bg-transparent text-[#A86438] border-[#A86438]",
-      "dark:text-[#DB976B] dark:border-[#DB976B]"
+      "bg-transparent text-dawn-light border-dawn-light",
+      "dark:text-dawn-dark dark:border-dawn-dark"
     ]
   end
 
   defp color_variant("outline", "silver") do
     [
-      "bg-transparent text-[#868686] border-[#868686]",
-      "dark:text-[#A6A6A6] dark:border-[#A6A6A6]"
+      "bg-transparent text-silver-light border-silver-light",
+      "dark:text-silver-dark dark:border-silver-dark"
     ]
   end
 
   defp color_variant("transparent", "natural") do
     [
-      "bg-transparent text-[#4B4B4B]",
-      "dark:text-[#DDDDDD] border-transparent"
+      "bg-transparent text-natural-light",
+      "dark:text-natural-dark border-transparent"
     ]
   end
 
   defp color_variant("transparent", "primary") do
     [
-      "bg-transparent text-[#007F8C]",
-      "dark:text-[#01B8CA] border-transparent"
+      "bg-transparent text-primary-light",
+      "dark:text-primary-dark border-transparent"
     ]
   end
 
   defp color_variant("transparent", "secondary") do
     [
-      "bg-transparent text-[#266EF1]",
-      "dark:text-[#6DAAFB] border-transparent"
+      "bg-transparent text-secondary-light",
+      "dark:text-secondary-dark border-transparent"
     ]
   end
 
   defp color_variant("transparent", "success") do
     [
-      "bg-transparent text-[#0E8345]",
-      "dark:text-[#06C167] border-transparent"
+      "bg-transparent text-success-light",
+      "dark:text-success-dark border-transparent"
     ]
   end
 
   defp color_variant("transparent", "warning") do
     [
-      "bg-transparent text-[#CA8D01]",
-      "dark:text-[#FDC034] border-transparent"
+      "bg-transparent text-warning-light",
+      "dark:text-warning-dark border-transparent"
     ]
   end
 
   defp color_variant("transparent", "danger") do
     [
-      "bg-transparent text-[#DE1135]",
-      "dark:text-[#FC7F79] border-transparent"
+      "bg-transparent text-danger-light",
+      "dark:text-danger-dark border-transparent"
     ]
   end
 
   defp color_variant("transparent", "info") do
     [
-      "bg-transparent text-[#0B84BA]",
-      "dark:text-[#3EB7ED] border-transparent"
+      "bg-transparent text-info-light",
+      "dark:text-info-dark border-transparent"
     ]
   end
 
   defp color_variant("transparent", "misc") do
     [
-      "bg-transparent text-[#8750C5]",
-      "dark:text-[#BA83F9] border-transparent"
+      "bg-transparent text-misc-light",
+      "dark:text-misc-dark border-transparent"
     ]
   end
 
   defp color_variant("transparent", "dawn") do
     [
-      "bg-transparent text-[#A86438]",
-      "dark:text-[#DB976B] border-transparent"
+      "bg-transparent text-dawn-light",
+      "dark:text-dawn-dark border-transparent"
     ]
   end
 
   defp color_variant("transparent", "silver") do
     [
-      "bg-transparent text-[#868686]",
-      "dark:text-[#A6A6A6] border-transparent"
+      "bg-transparent text-silver-light",
+      "dark:text-silver-dark border-transparent"
     ]
   end
 
   defp color_variant("bordered", "white") do
     [
-      "bg-white text-black border-[#DDDDDD]"
+      "bg-white text-black border-bordered-white-border"
     ]
   end
 
   defp color_variant("bordered", "dark") do
     [
-      "bg-[#282828] text-white border-[#727272]"
+      "bg-bordered-dark-bg text-white border-bordered-dark-border"
     ]
   end
 
   defp color_variant("bordered", "natural") do
     [
-      "text-[#282828] border-[#282828] bg-[#F3F3F3]",
-      "dark:text-[#E8E8E8] dark:border-[#E8E8E8] dark:bg-[#4B4B4B]"
+      "text-natural-bordered-text-light border-natural-bordered-text-light bg-natural-bordered-bg-light",
+      "dark:text-natural-bordered-text-dark dark:border-natural-bordered-text-dark dark:bg-natural-bordered-bg-dark"
     ]
   end
 
   defp color_variant("bordered", "primary") do
     [
-      "text-[#016974] border-[#016974] bg-[#E2F8FB]",
-      "dark:text-[#77D5E3] dark:border-[#77D5E3] dark:bg-[#002D33]"
+      "text-primary-bordered-text-light border-primary-bordered-text-light bg-primary-bordered-bg-light",
+      "dark:text-primary-bordered-text-dark dark:border-primary-bordered-text-dark dark:bg-primary-bordered-bg-dark"
     ]
   end
 
   defp color_variant("bordered", "secondary") do
     [
-      "text-[#175BCC] border-[#175BCC] bg-[#EFF4FE]",
-      "dark:text-[#A9C9FF] dark:border-[#A9C9FF] dark:bg-[#002661]"
+      "text-secondary-bordered-text-light border-secondary-bordered-text-light bg-secondary-bordered-bg-light",
+      "dark:text-secondary-bordered-text-dark dark:border-secondary-bordered-text-dark dark:bg-secondary-bordered-bg-dark"
     ]
   end
 
   defp color_variant("bordered", "success") do
     [
-      "text-[#166C3B] border-[#166C3B] bg-[#EAF6ED]",
-      "dark:text-[#7FD99A] dark:border-[#7FD99A] dark:bg-[#002F14]"
+      "text-success-bordered-text-light border-success-bordered-text-light bg-success-bordered-bg-light",
+      "dark:text-success-bordered-text-dark dark:border-success-bordered-text-dark dark:bg-success-bordered-bg-dark"
     ]
   end
 
   defp color_variant("bordered", "warning") do
     [
-      "text-[#976A01] border-[#976A01] bg-[#FFF7E6]",
-      "dark:text-[#FDD067] dark:border-[#FDD067] dark:bg-[#322300]"
+      "text-warning-bordered-text-light border-warning-bordered-text-light bg-warning-bordered-bg-light",
+      "dark:text-warning-bordered-text-dark dark:border-warning-bordered-text-dark dark:bg-warning-bordered-bg-dark"
     ]
   end
 
   defp color_variant("bordered", "danger") do
     [
-      "text-[#BB032A] border-[#BB032A] bg-[#FFF0EE]",
-      "dark:text-[#FFB2AB] dark:border-[#FFB2AB] dark:bg-[#520810]"
+      "text-danger-bordered-text-light border-danger-bordered-text-light bg-danger-bordered-bg-light",
+      "dark:text-danger-bordered-text-dark dark:border-danger-bordered-text-dark dark:bg-danger-bordered-bg-dark"
     ]
   end
 
   defp color_variant("bordered", "info") do
     [
-      "text-[#0B84BA] border-[#0B84BA] bg-[#E7F6FD]",
-      "dark:text-[#6EC9F2] dark:border-[#6EC9F2] dark:bg-[#03212F]"
+      "text-info-bordered-text-light border-info-bordered-text-light bg-info-bordered-bg-light",
+      "dark:text-info-bordered-text-dark dark:border-info-bordered-text-dark dark:bg-info-bordered-bg-dark"
     ]
   end
 
   defp color_variant("bordered", "misc") do
     [
-      "text-[#653C94] border-[#653C94] bg-[#F6F0FE]",
-      "dark:text-[#CBA2FA] dark:border-[#CBA2FA] dark:bg-[#221431]"
+      "text-misc-bordered-text-light border-misc-bordered-text-light bg-misc-bordered-bg-light",
+      "dark:text-misc-bordered-text-dark dark:border-misc-bordered-text-dark dark:bg-misc-bordered-bg-dark"
     ]
   end
 
   defp color_variant("bordered", "dawn") do
     [
-      "text-[#7E4B2A] border-[#7E4B2A] bg-[#FBF2ED]",
-      "dark:text-[#E4B190] dark:border-[#E4B190] dark:bg-[#2A190E]"
+      "text-dawn-bordered-text-light border-dawn-bordered-text-light bg-dawn-bordered-bg-light",
+      "dark:text-dawn-bordered-text-dark dark:border-dawn-bordered-text-dark dark:bg-dawn-bordered-bg-dark"
     ]
   end
 
   defp color_variant("bordered", "silver") do
     [
-      "text-[#727272] border-[#727272] bg-[#F3F3F3]",
-      "dark:text-[#BBBBBB] dark:border-[#BBBBBB] dark:bg-[#4B4B4B]"
+      "text-silver-bordered-text-light border-silver-bordered-text-light bg-silver-bordered-bg-light",
+      "dark:text-silver-bordered-text-dark dark:border-silver-bordered-text-dark dark:bg-silver-bordered-bg-dark"
     ]
   end
 
   defp color_variant("gradient", "natural") do
     [
-      "bg-gradient-to-br from-[#282828] to-[#727272] text-white",
-      "dark:from-[#A6A6A6] dark:to-[#FFFFFF] dark:text-black"
+      "bg-gradient-to-br from-gradient-natural-from-light to-gradient-natural-to-light text-white",
+      "dark:from-gradient-natural-from-dark dark:to-white dark:text-black"
     ]
   end
 
   defp color_variant("gradient", "primary") do
     [
-      "bg-gradient-to-br from-[#016974] to-[#01B8CA] text-white",
-      "dark:from-[#01B8CA] dark:to-[#B0E7EF] dark:text-black"
+      "bg-gradient-to-br from-gradient-primary-from-light to-gradient-primary-to-light text-white",
+      "dark:from-gradient-primary-from-dark dark:to-gradient-primary-to-dark dark:text-black"
     ]
   end
 
   defp color_variant("gradient", "secondary") do
     [
-      "bg-gradient-to-br from-[#175BCC] to-[#6DAAFB] text-white",
-      "dark:from-[#6DAAFB] dark:to-[#CDDEFF] dark:text-black"
+      "bg-gradient-to-br from-gradient-secondary-from-light to-gradient-secondary-to-light text-white",
+      "dark:from-gradient-secondary-from-dark dark:to-gradient-secondary-to-dark dark:text-black"
     ]
   end
 
   defp color_variant("gradient", "success") do
     [
-      "bg-gradient-to-br from-[#166C3B] to-[#06C167] text-white",
-      "dark:from-[#06C167] dark:to-[#B1EAC2] dark:text-black"
+      "bg-gradient-to-br from-gradient-success-from-light to-gradient-success-to-light text-white",
+      "dark:from-gradient-success-from-dark dark:to-gradient-success-to-dark dark:text-black"
     ]
   end
 
   defp color_variant("gradient", "warning") do
     [
-      "bg-gradient-to-br from-[#976A01] to-[#FDC034] text-white",
-      "dark:from-[#FDC034] dark:to-[#FEDF99] dark:text-black"
+      "bg-gradient-to-br from-gradient-warning-from-light to-gradient-warning-to-light text-white",
+      "dark:from-gradient-warning-from-dark dark:to-gradient-warning-to-dark dark:text-black"
     ]
   end
 
   defp color_variant("gradient", "danger") do
     [
-      "bg-gradient-to-br from-[#BB032A] to-[#FC7F79] text-white",
-      "dark:from-[#FC7F79] dark:to-[#FFD2CD] dark:text-black"
+      "bg-gradient-to-br from-gradient-danger-from-light to-gradient-danger-to-light text-white",
+      "dark:from-gradient-danger-from-dark dark:to-gradient-danger-to-dark dark:text-black"
     ]
   end
 
   defp color_variant("gradient", "info") do
     [
-      "bg-gradient-to-br from-[#08638C] to-[#3EB7ED] text-white",
-      "dark:from-[#3EB7ED] dark:to-[#9FDBF6] dark:text-black"
+      "bg-gradient-to-br from-gradient-info-from-light to-gradient-info-to-light text-white",
+      "dark:from-gradient-info-from-dark dark:to-gradient-info-to-dark dark:text-black"
     ]
   end
 
   defp color_variant("gradient", "misc") do
     [
-      "bg-gradient-to-br from-[#653C94] to-[#BA83F9] text-white",
-      "dark:from-[#BA83F9] dark:to-[#DDC1FC] dark:text-black"
+      "bg-gradient-to-br from-gradient-misc-from-light to-gradient-misc-to-light text-white",
+      "dark:from-gradient-misc-from-dark dark:to-gradient-misc-to-dark dark:text-black"
     ]
   end
 
   defp color_variant("gradient", "dawn") do
     [
-      "bg-gradient-to-br from-[#7E4B2A] to-[#DB976B] text-white",
-      "dark:from-[#DB976B] dark:to-[#EDCBB5] dark:text-black"
+      "bg-gradient-to-br from-gradient-dawn-from-light to-gradient-dawn-to-light text-white",
+      "dark:from-gradient-dawn-from-dark dark:to-gradient-dawn-to-dark dark:text-black"
     ]
   end
 
   defp color_variant("gradient", "silver") do
     [
-      "bg-gradient-to-br from-[#5E5E5E] to-[#A6A6A6] text-white",
-      "dark:from-[#868686] dark:to-[#BBBBBB] dark:text-black"
+      "bg-gradient-to-br from-gradient-silver-from-light to-gradient-silver-to-light text-white",
+      "dark:from-gradient-silver-from-dark dark:to-gradient-silver-to-dark dark:text-black"
     ]
   end
 

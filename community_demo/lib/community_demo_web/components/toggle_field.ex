@@ -57,7 +57,7 @@ defmodule CommunityDemoWeb.Components.ToggleField do
     doc:
       "Determines the overall size of the elements, including padding, font size, and other items"
 
-  attr :checked, :boolean, doc: ""
+  attr :checked, :boolean, doc: "Determines if the toggle is initially checked"
 
   attr :ring, :boolean,
     default: true,
@@ -104,7 +104,7 @@ defmodule CommunityDemoWeb.Components.ToggleField do
       @class
     ]}>
       <div class={@label_wrapper_class}>
-        <.label for={@id} class={@label_class}>{@label}</.label>
+        <.label :if={@label} for={@id} class={@label_class}>{@label}</.label>
         <div :if={!is_nil(@description)} class={@description_class}>
           {@description}
         </div>
@@ -133,7 +133,7 @@ defmodule CommunityDemoWeb.Components.ToggleField do
           ]}>
           </div>
           <div class={[
-            "bg-[#F4F4F4] dark:bg-[#4B4B4B] transition-all ease-in-out duration-500 toggle-field-base",
+            "bg-default-light-gray dark:bg-natural-light transition-all ease-in-out duration-500 toggle-field-base",
             color_class(@color),
             @toggle_base_class
           ]}>
@@ -234,7 +234,7 @@ defmodule CommunityDemoWeb.Components.ToggleField do
 
   defp color_class("base") do
     [
-      "peer-checked:bg-[#e4e4e7] dark:peer-checked:bg-[#27272a]"
+      "peer-checked:bg-base-border-light dark:peer-checked:bg-base-border-dark"
     ]
   end
 
@@ -246,67 +246,67 @@ defmodule CommunityDemoWeb.Components.ToggleField do
 
   defp color_class("natural") do
     [
-      "peer-checked:bg-[#4B4B4B] dark:peer-checked:bg-[#DDDDDD]"
+      "peer-checked:bg-natural-light dark:peer-checked:bg-natural-dark"
     ]
   end
 
   defp color_class("primary") do
     [
-      "peer-checked:bg-[#007F8C] dark:peer-checked:bg-[#01B8CA]"
+      "peer-checked:bg-primary-light dark:peer-checked:bg-primary-dark"
     ]
   end
 
   defp color_class("secondary") do
     [
-      "peer-checked:bg-[#266EF1] dark:peer-checked:bg-[#6DAAFB]"
+      "peer-checked:bg-secondary-light dark:peer-checked:bg-secondary-dark"
     ]
   end
 
   defp color_class("success") do
     [
-      "peer-checked:bg-[#0E8345] dark:peer-checked:bg-[#06C167]"
+      "peer-checked:bg-success-light dark:peer-checked:bg-success-dark"
     ]
   end
 
   defp color_class("warning") do
     [
-      "peer-checked:bg-[#CA8D01] dark:peer-checked:bg-[#FDC034]"
+      "peer-checked:bg-warning-light dark:peer-checked:bg-warning-dark"
     ]
   end
 
   defp color_class("danger") do
     [
-      "peer-checked:bg-[#DE1135] dark:peer-checked:bg-[#FC7F79]"
+      "peer-checked:bg-danger-light dark:peer-checked:bg-danger-dark"
     ]
   end
 
   defp color_class("info") do
     [
-      "peer-checked:bg-[#0B84BA] dark:peer-checked:bg-[#3EB7ED]"
+      "peer-checked:bg-info-light dark:peer-checked:bg-info-dark"
     ]
   end
 
   defp color_class("misc") do
     [
-      "peer-checked:bg-[#8750C5] dark:peer-checked:bg-[#BA83F9]"
+      "peer-checked:bg-misc-light dark:peer-checked:bg-misc-dark"
     ]
   end
 
   defp color_class("dawn") do
     [
-      "peer-checked:bg-[#A86438] dark:peer-checked:bg-[#DB976B]"
+      "peer-checked:bg-dawn-light dark:peer-checked:bg-dawn-dark"
     ]
   end
 
   defp color_class("silver") do
     [
-      "peer-checked:bg-[#868686] dark:peer-checked:bg-[#A6A6A6]"
+      "peer-checked:bg-silver-light dark:peer-checked:bg-silver-dark"
     ]
   end
 
   defp color_class("dark") do
     [
-      "peer-checked:bg-[#282828]"
+      "peer-checked:bg-default-dark-bg"
     ]
   end
 

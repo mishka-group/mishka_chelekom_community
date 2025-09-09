@@ -37,8 +37,8 @@ defmodule CommunityDemoWeb.Components.Overlay do
     doc: "A unique identifier is used to manage state and interaction"
 
   attr :color, :string, default: "base", doc: "Determines color theme"
-  attr :opacity, :string, default: "", doc: ""
-  attr :backdrop, :string, default: "", doc: ""
+  attr :opacity, :string, default: "", doc: "Determines the opacity level of the overlay"
+  attr :backdrop, :string, default: "", doc: "Determines backdrop effects for the overlay"
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
 
   attr :z_index, :string,
@@ -76,7 +76,7 @@ defmodule CommunityDemoWeb.Components.Overlay do
   end
 
   defp color_class("base") do
-    ["bg-white dark:bg-[#18181B]"]
+    ["bg-white dark:bg-base-bg-dark"]
   end
 
   defp color_class("white") do
@@ -84,47 +84,47 @@ defmodule CommunityDemoWeb.Components.Overlay do
   end
 
   defp color_class("dark") do
-    ["bg-[#282828] text-white"]
+    ["bg-default-dark-bg text-white"]
   end
 
   defp color_class("natural") do
-    ["bg-[#4B4B4B] dark:bg-[#DDDDDD]"]
+    ["bg-natural-light dark:bg-natural-dark"]
   end
 
   defp color_class("primary") do
-    ["bg-[#007F8C] dark:bg-[#01B8CA]"]
+    ["bg-primary-light dark:bg-primary-dark"]
   end
 
   defp color_class("secondary") do
-    ["bg-[#266EF1] dark:bg-[#6DAAFB]"]
+    ["bg-secondary-light dark:bg-secondary-dark"]
   end
 
   defp color_class("success") do
-    ["bg-[#0E8345] dark:bg-[#06C167]"]
+    ["bg-success-light dark:bg-success-dark"]
   end
 
   defp color_class("warning") do
-    ["bg-[#CA8D01] dark:bg-[#FDC034]"]
+    ["bg-warning-light dark:bg-warning-dark"]
   end
 
   defp color_class("danger") do
-    ["bg-[#DE1135] dark:bg-[#FC7F79]"]
+    ["bg-danger-light dark:bg-danger-dark"]
   end
 
   defp color_class("info") do
-    ["bg-[#0B84BA] dark:bg-[#3EB7ED]"]
+    ["bg-info-light dark:bg-info-dark"]
   end
 
   defp color_class("misc") do
-    ["bg-[#8750C5] dark:bg-[#BA83F9]"]
+    ["bg-misc-light dark:bg-misc-dark"]
   end
 
   defp color_class("dawn") do
-    ["bg-[#A86438] dark:bg-[#DB976B]"]
+    ["bg-dawn-light dark:bg-dawn-dark"]
   end
 
   defp color_class("silver") do
-    ["bg-[#868686] dark:bg-[#A6A6A6]"]
+    ["bg-silver-light dark:bg-silver-dark"]
   end
 
   defp color_class(params) when is_binary(params), do: params
@@ -172,23 +172,23 @@ defmodule CommunityDemoWeb.Components.Overlay do
   defp opacity_class(params) when is_binary(params), do: params
 
   defp backdrop_class("extra_small") do
-    "backdrop-backdrop-[1px]"
+    "backdrop-blur-[1px]"
   end
 
   defp backdrop_class("small") do
-    "backdrop-backdrop-[2px]"
+    "backdrop-blur-[2px]"
   end
 
   defp backdrop_class("medium") do
-    "backdrop-backdrop-[3px]"
+    "backdrop-blur-[3px]"
   end
 
   defp backdrop_class("large") do
-    "backdrop-backdrop-[4px]"
+    "backdrop-blur-[4px]"
   end
 
   defp backdrop_class("extra_large") do
-    "backdrop-backdrop-[5px]"
+    "backdrop-blur-[5px]"
   end
 
   defp backdrop_class(params) when is_binary(params), do: params

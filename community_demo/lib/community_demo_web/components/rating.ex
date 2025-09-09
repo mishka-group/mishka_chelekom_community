@@ -68,7 +68,7 @@ defmodule CommunityDemoWeb.Components.Rating do
       id={@id}
       role="radiogroup"
       class={[
-        "flex flex-nowrap text-[#F4F4F4] dark:text-[#4B4B4B]",
+        "flex flex-nowrap text-default-light-gray dark:text-natural-light",
         gap_class(@gap),
         size_class(@size),
         color_class(@color),
@@ -217,103 +217,103 @@ defmodule CommunityDemoWeb.Components.Rating do
 
   defp color_class("base") do
     [
-      "[&_.rated]:text-[#e4e4e7] dark:[&_.rated]:text-[#27272a]",
-      "hover:[&_.rating-button]:text-[#e4e4e7] [&_.rating-button:has(~.rating-button:hover)]:text-[#e4e4e7]",
-      "dark:hover:[&_.rating-button]:text-[#27272a] dark:[&_.rating-button:has(~.rating-button:hover)]:text-[#27272a]"
+      "[&_.rated]:text-base-border-light dark:[&_.rated]:text-base-border-dark",
+      "[&_.rating-button]:hover:text-base-border-light [&_.rating-button:has(~.rating-button:hover)]:text-base-border-light",
+      "dark:[&_.rating-button]:hover:text-base-border-dark dark:[&_.rating-button:has(~.rating-button:hover)]:text-base-border-dark"
     ]
   end
 
   defp color_class("white") do
     [
-      "[&_.rated]:text-white hover:[&_.rating-button]:text-white",
+      "[&_.rated]:text-white [&_.rating-button]:hover:text-white",
       "[&_.rating-button:has(~.rating-button:hover)]:text-white"
     ]
   end
 
   defp color_class("natural") do
     [
-      "[&_.rated]:text-[#4B4B4B] dark:[&_.rated]:text-[#DDDDDD]",
-      "hover:[&_.rating-button]:text-[#4B4B4B] [&_.rating-button:has(~.rating-button:hover)]:text-[#4B4B4B]",
-      "dark:hover:[&_.rating-button]:text-[#DDDDDD] dark:[&_.rating-button:has(~.rating-button:hover)]:text-[#DDDDDD]"
+      "[&_.rated]:text-natural-light dark:[&_.rated]:text-natural-dark",
+      "[&_.rating-button]:hover:text-natural-light [&_.rating-button:has(~.rating-button:hover)]:text-natural-light",
+      "dark:[&_.rating-button]:hover:text-natural-dark dark:[&_.rating-button:has(~.rating-button:hover)]:text-natural-dark"
     ]
   end
 
   defp color_class("primary") do
     [
-      "[&_.rated]:text-[#007F8C] dark:[&_.rated]:text-[#01B8CA]",
-      "hover:[&_.rating-button]:text-[#007F8C] [&_.rating-button:has(~.rating-button:hover)]:text-[#007F8C]",
-      "dark:hover:[&_.rating-button]:text-[#01B8CA] dark:[&_.rating-button:has(~.rating-button:hover)]:text-[#01B8CA]"
+      "[&_.rated]:text-primary-light dark:[&_.rated]:text-primary-dark",
+      "[&_.rating-button]:hover:text-primary-light [&_.rating-button:has(~.rating-button:hover)]:text-primary-light",
+      "dark:[&_.rating-button]:hover:text-primary-dark dark:[&_.rating-button:has(~.rating-button:hover)]:text-primary-dark"
     ]
   end
 
   defp color_class("secondary") do
     [
-      "[&_.rated]:text-[#266EF1] dark:[&_.rated]:text-[#6DAAFB]",
-      "hover:[&_.rating-button]:text-[#266EF1] [&_.rating-button:has(~.rating-button:hover)]:text-[#266EF1]",
-      "dark:hover:[&_.rating-button]:text-[#6DAAFB] dark:[&_.rating-button:has(~.rating-button:hover)]:text-[#6DAAFB]"
+      "[&_.rated]:text-secondary-light dark:[&_.rated]:text-secondary-dark",
+      "[&_.rating-button]:hover:text-secondary-light [&_.rating-button:has(~.rating-button:hover)]:text-secondary-light",
+      "dark:[&_.rating-button]:hover:text-secondary-dark dark:[&_.rating-button:has(~.rating-button:hover)]:text-secondary-dark"
     ]
   end
 
   defp color_class("success") do
     [
-      "[&_.rated]:text-[#0E8345] dark:[&_.rated]:text-[#06C167]",
-      "hover:[&_.rating-button]:text-[#0E8345] [&_.rating-button:has(~.rating-button:hover)]:text-[#0E8345]",
-      "dark:hover:[&_.rating-button]:text-[#06C167] dark:[&_.rating-button:has(~.rating-button:hover)]:text-[#06C167]"
+      "[&_.rated]:text-success-light dark:[&_.rated]:text-success-dark",
+      "[&_.rating-button]:hover:text-success-light [&_.rating-button:has(~.rating-button:hover)]:text-success-light",
+      "dark:[&_.rating-button]:hover:text-success-dark dark:[&_.rating-button:has(~.rating-button:hover)]:text-success-dark"
     ]
   end
 
   defp color_class("warning") do
     [
-      "[&_.rated]:text-[#CA8D01] dark:[&_.rated]:text-[#FDC034]",
-      "hover:[&_.rating-button]:text-[#CA8D01] [&_.rating-button:has(~.rating-button:hover)]:text-[#CA8D01]",
-      "dark:hover:[&_.rating-button]:text-[#FDC034] dark:[&_.rating-button:has(~.rating-button:hover)]:text-[#FDC034]"
+      "[&_.rated]:text-warning-light dark:[&_.rated]:text-warning-dark",
+      "[&_.rating-button]:hover:text-warning-light [&_.rating-button:has(~.rating-button:hover)]:text-warning-light",
+      "dark:[&_.rating-button]:hover:text-warning-dark dark:[&_.rating-button:has(~.rating-button:hover)]:text-warning-dark"
     ]
   end
 
   defp color_class("danger") do
     [
-      "[&_.rated]:text-[#DE1135] dark:[&_.rated]:text-[#FC7F79]",
-      "hover:[&_.rating-button]:text-[#DE1135] [&_.rating-button:has(~.rating-button:hover)]:text-[#DE1135]",
-      "dark:hover:[&_.rating-button]:text-[#FC7F79] dark:[&_.rating-button:has(~.rating-button:hover)]:text-[#FC7F79]"
+      "[&_.rated]:text-danger-light dark:[&_.rated]:text-danger-dark",
+      "[&_.rating-button]:hover:text-danger-light [&_.rating-button:has(~.rating-button:hover)]:text-danger-light",
+      "dark:[&_.rating-button]:hover:text-danger-dark dark:[&_.rating-button:has(~.rating-button:hover)]:text-danger-dark"
     ]
   end
 
   defp color_class("info") do
     [
-      "[&_.rated]:text-[#0B84BA] dark:[&_.rated]:text-[#3EB7ED]",
-      "hover:[&_.rating-button]:text-[#0B84BA] [&_.rating-button:has(~.rating-button:hover)]:text-[#0B84BA]",
-      "dark:hover:[&_.rating-button]:text-[#3EB7ED] dark:[&_.rating-button:has(~.rating-button:hover)]:text-[#3EB7ED]"
+      "[&_.rated]:text-info-light dark:[&_.rated]:text-info-dark",
+      "[&_.rating-button]:hover:text-info-light [&_.rating-button:has(~.rating-button:hover)]:text-info-light",
+      "dark:[&_.rating-button]:hover:text-info-dark dark:[&_.rating-button:has(~.rating-button:hover)]:text-info-dark"
     ]
   end
 
   defp color_class("misc") do
     [
-      "[&_.rated]:text-[#8750C5] dark:[&_.rated]:text-[#BA83F9]",
-      "hover:[&_.rating-button]:text-[#8750C5] [&_.rating-button:has(~.rating-button:hover)]:text-[#8750C5]",
-      "dark:hover:[&_.rating-button]:text-[#BA83F9] dark:[&_.rating-button:has(~.rating-button:hover)]:text-[#BA83F9]"
+      "[&_.rated]:text-misc-light dark:[&_.rated]:text-misc-dark",
+      "[&_.rating-button]:hover:text-misc-light [&_.rating-button:has(~.rating-button:hover)]:text-misc-light",
+      "dark:[&_.rating-button]:hover:text-misc-dark dark:[&_.rating-button:has(~.rating-button:hover)]:text-misc-dark"
     ]
   end
 
   defp color_class("dawn") do
     [
-      "[&_.rated]:text-[#A86438] dark:[&_.rated]:text-[#DB976B]",
-      "hover:[&_.rating-button]:text-[#A86438] [&_.rating-button:has(~.rating-button:hover)]:text-[#A86438]",
-      "dark:hover:[&_.rating-button]:text-[#DB976B] dark:[&_.rating-button:has(~.rating-button:hover)]:text-[#DB976B]"
+      "[&_.rated]:text-dawn-light dark:[&_.rated]:text-dawn-dark",
+      "[&_.rating-button]:hover:text-dawn-light [&_.rating-button:has(~.rating-button:hover)]:text-dawn-light",
+      "dark:[&_.rating-button]:hover:text-dawn-dark dark:[&_.rating-button:has(~.rating-button:hover)]:text-dawn-dark"
     ]
   end
 
   defp color_class("silver") do
     [
-      "[&_.rated]:text-[#868686] dark:[&_.rated]:text-[#A6A6A6]",
-      "hover:[&_.rating-button]:text-[#868686] [&_.rating-button:has(~.rating-button:hover)]:text-[#868686]",
-      "dark:hover:[&_.rating-button]:text-[#A6A6A6] dark:[&_.rating-button:has(~.rating-button:hover)]:text-[#A6A6A6]"
+      "[&_.rated]:text-silver-light dark:[&_.rated]:text-silver-dark",
+      "[&_.rating-button]:hover:text-silver-light [&_.rating-button:has(~.rating-button:hover)]:text-silver-light",
+      "dark:[&_.rating-button]:hover:text-silver-dark dark:[&_.rating-button:has(~.rating-button:hover)]:text-silver-dark"
     ]
   end
 
   defp color_class("dark") do
     [
-      "[&_.rated]:text-[#282828]",
-      "hover:[&_.rating-button]:text-[#282828] [&_.rating-button:has(~.rating-button:hover)]:text-[#282828]"
+      "[&_.rated]:text-default-dark-bg",
+      "[&_.rating-button]:hover:text-default-dark-bg [&_.rating-button:has(~.rating-button:hover)]:text-default-dark-bg"
     ]
   end
 
