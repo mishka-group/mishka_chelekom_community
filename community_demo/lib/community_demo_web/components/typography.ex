@@ -10,6 +10,8 @@ defmodule CommunityDemoWeb.Components.Typography do
 
   The components are designed to work seamlessly with HEEx templates, supporting slots for
   rendering dynamic content.
+
+  **Documentation:** https://mishka.tools/chelekom/docs/typography
   """
   use Phoenix.Component
 

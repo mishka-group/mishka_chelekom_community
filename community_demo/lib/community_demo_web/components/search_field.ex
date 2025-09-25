@@ -11,6 +11,8 @@ defmodule CommunityDemoWeb.Components.SearchField do
   The `SearchField` component is ideal for implementing search forms, filters, or any other
   user interface elements where search functionality is needed. Its flexibility and ease of
   integration make it a powerful tool for enhancing user experiences in Phoenix LiveView applications.
+
+  **Documentation:** https://mishka.tools/chelekom/docs/forms/search-field
   """
   use Phoenix.Component
   import CommunityDemoWeb.Components.Icon, only: [icon: 1]
@@ -137,7 +139,7 @@ defmodule CommunityDemoWeb.Components.SearchField do
       border_class(@border, @variant),
       size_class(@size),
       space_class(@space),
-      @ring && "[&_.search-field-wrapper]:focus-within:ring-[0.03rem]",
+      @ring && "[&_.search-field-wrapper]:focus-within:ring-[0.03rem] leading-6",
       @class
     ]}>
       <div :if={@description} class={@description_class}>
@@ -213,7 +215,7 @@ defmodule CommunityDemoWeb.Components.SearchField do
       border_class(@border, @variant),
       size_class(@size),
       space_class(@space),
-      @ring && "[&_.search-field-wrapper]:focus-within:ring-[0.03rem]",
+      @ring && "[&_.search-field-wrapper]:focus-within:ring-[0.03rem] leading-6",
       @class
     ]}>
       <div
@@ -282,7 +284,7 @@ defmodule CommunityDemoWeb.Components.SearchField do
 
   defp label(assigns) do
     ~H"""
-    <label for={@for} class={["leading-5 font-semibold", @class]}>
+    <label for={@for} class={["font-semibold", @class]}>
       {render_slot(@inner_block)}
     </label>
     """
@@ -293,7 +295,7 @@ defmodule CommunityDemoWeb.Components.SearchField do
 
   defp error(assigns) do
     ~H"""
-    <p class="mt-3 flex items-center gap-3 text-sm leading-6 text-rose-700">
+    <p class="mt-3 flex items-center gap-3 text-sm text-rose-700">
       <.icon :if={!is_nil(@icon)} name={@icon} class="shrink-0" />
       {render_slot(@inner_block)}
     </p>
@@ -389,7 +391,7 @@ defmodule CommunityDemoWeb.Components.SearchField do
       "focus-within:[&_.search-field-wrapper]:ring-base-border-light dark:focus-within:[&_.search-field-wrapper]:ring-base-border-light",
       "[&_.search-field-wrapper]:shadow-sm",
       floating == "outer" &&
-        "[&_.search-field-wrapper_.floating-label]:bg-white dark:[&_.search-field-wrapper_.floating-label]:bg-base-border-dark"
+        "[&_.search-field-wrapper_.floating-label]:bg-white dark:[&_.search-field-wrapper_.floating-label]:bg-base-bg-dark"
     ]
   end
 

@@ -12,6 +12,8 @@ defmodule CommunityDemoWeb.Components.NativeSelect do
   With built-in error handling and custom error messages, `CommunityDemoWeb.Components.NativeSelect`
   enhances the user experience by providing clear feedback and interaction states,
   ensuring a polished and user-friendly interface for form-based applications.
+
+  **Documentation:** https://mishka.tools/chelekom/docs/forms/native-select
   """
 
   use Phoenix.Component
@@ -132,7 +134,7 @@ defmodule CommunityDemoWeb.Components.NativeSelect do
       border_class(@border, @variant),
       size_class(@size),
       space_class(@space),
-      @ring && "[&_.select-field]:focus-within:ring-[0.03rem]",
+      @ring && "[&_.select-field]:focus-within:ring-[0.03rem] leading-6",
       @class
     ]}>
       <div
@@ -150,7 +152,7 @@ defmodule CommunityDemoWeb.Components.NativeSelect do
         id={@id}
         multiple={@multiple}
         class={[
-          "select-field appearance-none block w-full text-[16px] sm:font-inherit",
+          "select-field appearance-none block w-full text-[16px] sm:font-inherit py-1 px-2",
           @multiple && "select-multiple-option",
           @errors != [] && "select-field-error",
           @min_height,
@@ -224,7 +226,7 @@ defmodule CommunityDemoWeb.Components.NativeSelect do
 
   defp label(assigns) do
     ~H"""
-    <label for={@for} class={["leading-5 font-semibold", @class]}>
+    <label for={@for} class={["font-semibold", @class]}>
       {render_slot(@inner_block)}
     </label>
     """
@@ -235,7 +237,7 @@ defmodule CommunityDemoWeb.Components.NativeSelect do
 
   defp error(assigns) do
     ~H"""
-    <p class="mt-3 flex items-center gap-3 text-sm leading-6 text-rose-700">
+    <p class="mt-3 flex items-center gap-3 text-sm text-rose-700">
       <.icon :if={!is_nil(@icon)} name={@icon} class="shrink-0" />
       {render_slot(@inner_block)}
     </p>

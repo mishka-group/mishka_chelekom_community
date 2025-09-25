@@ -14,9 +14,11 @@ defmodule CommunityDemoWeb.Components.Popover do
 
   By utilizing `slots`, it allows developers to include custom content within the popover and
   trigger elements, enhancing its flexibility and usability for complex UI scenarios.
+
+  **Documentation:** https://mishka.tools/chelekom/docs/popover
   """
   use Phoenix.Component
-  alias Phoenix.LiveView.JS
+  import Phoenix.LiveView.Utils, only: [random_id: 0]
 
   @doc """
   Renders a customizable `popover` component that can display additional information when an element is
@@ -30,7 +32,7 @@ defmodule CommunityDemoWeb.Components.Popover do
   <p>
     Due to its central geographic location in Southern Europe,
     <.popover inline clickable>
-      <:trigger trigger_id="popover-1" inline class="text-blue-400">Italy</:trigger>
+      <:trigger inline class="text-blue-400">Italy</:trigger>
       <:content
         id="popover-1"
         rounded="large"
@@ -83,30 +85,27 @@ defmodule CommunityDemoWeb.Components.Popover do
     doc: "Determines if the element can be activated on click"
 
   attr :position, :string, default: "top", doc: "Determines the element position"
+  attr :show_delay, :integer, default: 0, doc: "Delay before showing (ms)"
+  attr :hide_delay, :integer, default: 200, doc: "Delay before hiding (ms)"
   attr :variant, :string, default: "base", doc: "Determines the style"
   attr :color, :string, default: "natural", doc: "Determines color theme"
-  attr :rounded, :string, default: "", doc: "Determines the border radius"
+  attr :rounded, :string, default: "medium", doc: "Determines the border radius"
   attr :show_arrow, :boolean, default: true, doc: "Show or hide arrow of popover"
   attr :border, :string, default: "extra_small", doc: "Determines border style"
-
-  attr :size, :string,
-    default: "",
-    doc:
-      "Determines the overall size of the elements, including padding, font size, and other items"
-
+  attr :size, :string, default: "small", doc: "Determines the overall size of the elements"
   attr :space, :string, default: "", doc: "Space between items"
-  attr :width, :string, default: "extra_large", doc: "Determines the element width"
+  attr :width, :string, default: "fit", doc: "Determines the element width"
   attr :text_position, :string, default: "start", doc: "Determines the element's text position"
 
   attr :font_weight, :string,
     default: "font-normal",
     doc: "Determines custom class for the font weight"
 
-  attr :padding, :string, default: "", doc: "Determines padding for items"
-
-  attr :rest, :global,
-    doc:
-      "Global attributes can define defaults which are merged with attributes provided by the caller"
+  attr :padding, :string, default: "small", doc: "Determines padding for items"
+  attr :content_class, :string, default: "", doc: "Additional CSS classes for popover content"
+  attr :trigger_class, :string, default: "", doc: "Additional CSS classes for popover content"
+  attr :arrow_class, :string, default: "", doc: "Additional CSS classes for arrow"
+  attr :rest, :global, doc: "Global attributes"
 
   slot :inner_block, required: false, doc: "Inner block that renders HEEx content"
 
@@ -119,372 +118,149 @@ defmodule CommunityDemoWeb.Components.Popover do
   end
 
   def popover(assigns) do
+    assigns =
+      assigns
+      |> assign_new(:id, fn -> "popover-#{random_id()}" end)
+
     ~H"""
     <span
       :if={@inline}
       id={@id}
-      class={[
-        "inline-block relative w-fit",
-        "[&_.popover-content]:invisible [&_.popover-content]:opacity-0",
-        "[&_.popover-content.show-popover]:visible [&_.popover-content.show-popover]:opacity-100",
-        !@clickable && trigger_popover(),
-        @class
-      ]}
+      phx-hook="Floating"
+      data-position={@position}
+      data-smart-position="false"
+      data-clickable={to_string(@clickable)}
+      data-show-delay={@show_delay}
+      data-hide-delay={@hide_delay}
+      data-enable-aria="true"
+      data-floating-type="popover"
+      class={@class}
       {@rest}
     >
-      <span
-        :for={trigger <- @trigger}
-        phx-click={show_popover(@id)}
-        phx-click-away={hide_popover(@id)}
-        class={["inline-block cursor-pointer popover-trigger", trigger[:class]]}
-        role="button"
-        aria-haspopup="tooltip"
-        id={"#{@id}-popover-trigger"}
-        aria-expanded="false"
-        aria-controls={"#{@id}-popover-content"}
-        tabindex="0"
-        {@rest}
-      >
-        {render_slot(trigger)}
+      <span data-floating-trigger class={@trigger_class}>
+        <span :for={trigger <- @trigger} :if={@trigger != []} class={trigger[:class]}>
+          {render_slot(trigger)}
+        </span>
+        <span :if={@trigger == [] && @inner_block != []}>
+          {render_slot(@inner_block)}
+        </span>
       </span>
 
       <span
-        :for={content <- @content}
-        id={"#{@id}-popover-content"}
-        role="tooltip"
-        aria-labelledby={"#{@id}-popover-trigger"}
-        tabindex="-1"
+        id={"#{@id}-content"}
+        role="dialog"
+        data-floating-content
+        aria-hidden="true"
+        tabindex="0"
+        hidden
         class={[
-          "popover-content absolute z-10 w-full",
-          "transition-all ease-in-out delay-100 duration-500",
-          space_class(@space),
+          "absolute z-50 transition-all ease-in-out duration-200",
           color_variant(@variant, @color),
           rounded_size(@rounded),
           size_class(@size),
-          position_class(@position),
-          text_position(@text_position),
-          @variant == "bordered" || (@variant == "base" && border_class(@border)),
-          width_class(@width),
           wrapper_padding(@padding),
+          border_class(@border, @variant),
+          text_position(@text_position),
+          width_class(@width),
+          space_class(@space),
           @font_weight,
-          content[:class]
+          @content_class
         ]}
-        {@rest}
       >
-        {render_slot(content)}
         <span
-          :if={@show_arrow && @variant != "bordered" && @variant != "base"}
-          class={["block absolute size-[8px] bg-inherit rotate-45 -z-[1] popover-arrow"]}
+          :if={@show_arrow && @variant not in ~w(bordered base)}
+          class={[
+            "absolute w-2 h-2 bg-inherit rotate-45 -z-10",
+            arrow_position_class(@position),
+            @arrow_class
+          ]}
         >
         </span>
+
+        <span :for={content <- @content} :if={@content != []} class={content[:class]}>
+          {render_slot(content)}
+        </span>
       </span>
-      {render_slot(@inner_block)}
     </span>
 
     <div
       :if={!@inline}
       id={@id}
-      class={[
-        "relative w-fit",
-        "[&_.popover-content]:invisible [&_.popover-content]:opacity-0",
-        "[&_.popover-content.show-popover]:visible [&_.popover-content.show-popover]:opacity-100",
-        !@clickable && trigger_popover(),
-        @class
-      ]}
+      phx-hook="Floating"
+      data-position={@position}
+      data-smart-position="false"
+      data-clickable={to_string(@clickable)}
+      data-show-delay={@show_delay}
+      data-hide-delay={@hide_delay}
+      data-enable-aria="true"
+      data-floating-type="popover"
+      class={@class}
       {@rest}
     >
-      <div
-        :for={trigger <- @trigger}
-        phx-click={show_popover(@id)}
-        phx-click-away={hide_popover(@id)}
-        id={"#{@id}-popover-trigger"}
-        class={["cursor-pointer popover-trigger", trigger[:class]]}
-        role="button"
-        aria-haspopup="tooltip"
-        aria-expanded="false"
-        aria-controls={"#{@id}-popover-content"}
-        {@rest}
-      >
-        {render_slot(trigger)}
+      <div data-floating-trigger class={@trigger_class}>
+        <span :for={trigger <- @trigger} :if={@trigger != []} class={trigger[:class]}>
+          {render_slot(trigger)}
+        </span>
+        <span :if={@trigger == [] && @inner_block != []}>
+          {render_slot(@inner_block)}
+        </span>
       </div>
 
       <div
-        :for={content <- @content}
-        role="tooltip"
-        aria-labelledby={"#{@id}-popover-trigger"}
-        tabindex="-1"
-        id={"#{@id}-popover-content"}
+        id={"#{@id}-content"}
+        role="dialog"
+        data-floating-content
+        aria-hidden="true"
+        tabindex="0"
+        hidden
         class={[
-          "popover-content absolute z-10 w-full",
-          "transition-all ease-in-out delay-100 duration-500",
-          space_class(@space),
+          "absolute z-50 transition-all ease-in-out duration-200",
           color_variant(@variant, @color),
           rounded_size(@rounded),
           size_class(@size),
-          position_class(@position),
-          text_position(@text_position),
-          @variant == "bordered" || (@variant == "base" && border_class(@border)),
-          width_class(@width),
           wrapper_padding(@padding),
+          border_class(@border, @variant),
+          text_position(@text_position),
+          width_class(@width),
+          space_class(@space),
           @font_weight,
-          content[:class]
+          @content_class
         ]}
-        {@rest}
       >
-        {render_slot(content)}
         <span
-          :if={@show_arrow && @variant != "bordered" && @variant != "base"}
-          class={["block absolute size-[8px] bg-inherit rotate-45 -z-[1] popover-arrow"]}
+          :if={@show_arrow && @variant not in ~w(bordered base)}
+          class={[
+            "absolute w-2 h-2 bg-inherit rotate-45 -z-10",
+            arrow_position_class(@position),
+            @arrow_class
+          ]}
         >
         </span>
-      </div>
-      {render_slot(@inner_block)}
-    </div>
-    """
-  end
 
-  @doc """
-  Renders a `popover_trigger` element, which is used to show or hide a popover content element.
-  The trigger can be rendered as either an inline or block element. When the trigger is clicked,
-  it toggles the visibility of the associated popover content.
-
-  ## Examples
-
-  ```elixir
-  <p>
-    Discover more about
-    <.popover_trigger trigger_id="popover-1" inline class="text-blue-400">Italy</.popover_trigger>
-    by clicking on the name.
-    <.popover_content
-      id="popover-1"
-      inline
-      rounded="large"
-      width="quadruple_large"
-      color="light"
-      padding="none"
-      class="grid grid-cols-5"
-    >
-      <span class="block p-2 space-y-5 col-span-3">
-        <span class="font-semibold block">About Italy</span>
-        <span class="block">
-          Italy is located in the middle of the Mediterranean Sea, in Southern Europe, and it is also considered part of Western Europe. It is a unitary parliamentary republic with Rome as its capital and largest city.
+        <span :for={content <- @content} :if={@content != []} class={content[:class]}>
+          {render_slot(content)}
         </span>
-        <a href="/" class="block text-blue-400">Read more <.icon name="hero-link" /></a>
-      </span>
-      <img
-        src="https://flowbite.com/docs/images/popovers/italy.png"
-        class="h-full w-full col-span-2"
-        alt="Map of Italy"
-      />
-    </.popover_content>
-  </p>
-
-  <.popover_trigger trigger_id="popover-2" class="text-blue-400">
-    Hover or Click here to show the popover
-  </.popover_trigger>
-  <.popover_content id="popover-2" color="light" rounded="large" padding="medium">
-    <div class="p-4">
-      <h4 class="text-lg font-semibold">Popover Title</h4>
-      <p class="mt-2">This is a simple popover example with content that can be customized.</p>
-    </div>
-  </.popover_content>
-  ```
-  """
-  @doc type: :component
-  attr :id, :string,
-    default: nil,
-    doc: "A unique identifier is used to manage state and interaction"
-
-  attr :trigger_id, :string, required: true, doc: "Identifies what is the triggered element id"
-  attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
-  attr :inline, :boolean, default: false, doc: "Determines whether this element is inline"
-  slot :inner_block, required: false, doc: "Inner block that renders HEEx content"
-
-  attr :rest, :global,
-    doc:
-      "Global attributes can define defaults which are merged with attributes provided by the caller"
-
-  def popover_trigger(%{inline: true} = assigns) do
-    ~H"""
-    <span
-      id={"#{@trigger_id}-popover-trigger"}
-      phx-click-away={@trigger_id && hide_popover(@trigger_id)}
-      phx-click={@trigger_id && show_popover(@trigger_id)}
-      class={["inline-block cursor-pointer popover-trigger", @class]}
-      role="button"
-      aria-haspopup="tooltip"
-      aria-expanded="false"
-      aria-controls={"#{@trigger_id}-popover-content"}
-      tabindex="0"
-      {@rest}
-    >
-      {render_slot(@inner_block)}
-    </span>
-    """
-  end
-
-  def popover_trigger(assigns) do
-    ~H"""
-    <div
-      id={"#{@trigger_id}-popover-trigger"}
-      phx-click-away={@trigger_id && hide_popover(@trigger_id)}
-      phx-click={@trigger_id && show_popover(@trigger_id)}
-      class={["cursor-pointer popover-trigger", @class]}
-      role="button"
-      aria-haspopup="tooltip"
-      aria-expanded="false"
-      aria-controls={"#{@trigger_id}-popover-content"}
-      tabindex="0"
-      {@rest}
-    >
-      {render_slot(@inner_block)}
+      </div>
     </div>
     """
   end
 
-  @doc """
-  Renders a `popover_content` element, which displays additional information when the associated
-  popover trigger is activated.
+  defp arrow_position_class("top"), do: "bottom-[-4px] left-1/2 -translate-x-1/2"
+  defp arrow_position_class("bottom"), do: "top-[-4px] left-1/2 -translate-x-1/2"
+  defp arrow_position_class("left"), do: "right-[-4px] top-1/2 -translate-y-1/2"
+  defp arrow_position_class("right"), do: "left-[-4px] top-1/2 -translate-y-1/2"
+  defp arrow_position_class(_), do: arrow_position_class("top")
 
-  The content can be positioned relative to the trigger and customized with various styles,
-  such as color, padding, and size.
+  defp border_class(_, variant) when variant in ["default", "shadow", "gradient"],
+    do: nil
 
-  ## Examples
-
-  ```elixir
-  <.popover_content id="popover-3" inline position="top" color="dark" rounded="small" padding="small">
-    <span class="block text-white p-2">This is a tooltip message!</span>
-  </.popover_content>
-  ```
-  """
-  @doc type: :component
-  attr :trigger_id, :string, required: true, doc: "Identifies what is the triggered element id"
-  attr :inline, :boolean, default: false, doc: "Determines whether this element is inline"
-  attr :position, :string, default: "top", doc: "Determines the element position"
-  attr :variant, :string, default: "base", doc: "Determines the style"
-  attr :color, :string, default: "natural", doc: "Determines color theme"
-  attr :rounded, :string, default: "", doc: "Determines the border radius"
-  attr :show_arrow, :boolean, default: true, doc: "Show or hide arrow of popover"
-  attr :border, :string, default: "extra_small", doc: "Determines border style"
-
-  attr :size, :string,
-    default: "",
-    doc:
-      "Determines the overall size of the elements, including padding, font size, and other items"
-
-  attr :space, :string, default: "", doc: "Space between items"
-  attr :width, :string, default: "extra_large", doc: "Determines the element width"
-  attr :text_position, :string, default: "start", doc: "Determines the element's text position"
-
-  attr :font_weight, :string,
-    default: "font-normal",
-    doc: "Determines custom class for the font weight"
-
-  attr :padding, :string, default: "", doc: "Determines padding for items"
-  attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
-
-  attr :rest, :global,
-    doc:
-      "Global attributes can define defaults which are merged with attributes provided by the caller"
-
-  slot :inner_block, required: false, doc: "Inner block that renders HEEx content"
-
-  def popover_content(%{inline: true} = assigns) do
-    ~H"""
-    <span
-      role="tooltip"
-      aria-labelledby={"#{@trigger_id}-popover-trigger"}
-      tabindex="-1"
-      id={"#{@trigger_id}-popover-content"}
-      class={[
-        "popover-content absolute z-10 w-full",
-        "transition-all ease-in-out delay-100 duration-500",
-        space_class(@space),
-        color_variant(@variant, @color),
-        rounded_size(@rounded),
-        size_class(@size),
-        position_class(@position),
-        text_position(@text_position),
-        @variant == "bordered" && border_class(@border),
-        width_class(@width),
-        wrapper_padding(@padding),
-        @font_weight,
-        @class
-      ]}
-      {@rest}
-    >
-      <span
-        :if={@show_arrow && @variant != "bordered" && @variant != "base"}
-        class={["block absolute size-[8px] bg-inherit rotate-45 -z-[1] popover-arrow"]}
-      >
-      </span>
-      {render_slot(@inner_block)}
-    </span>
-    """
-  end
-
-  def popover_content(assigns) do
-    ~H"""
-    <div
-      role="tooltip"
-      aria-labelledby={"#{@trigger_id}-popover-trigger"}
-      tabindex="-1"
-      id={"#{@trigger_id}-popover-content"}
-      class={[
-        "popover-content absolute z-10 w-full",
-        "transition-all ease-in-out delay-100 duration-500",
-        space_class(@space),
-        color_variant(@variant, @color),
-        rounded_size(@rounded),
-        size_class(@size),
-        position_class(@position),
-        text_position(@text_position),
-        @variant == "bordered" && border_class(@border),
-        width_class(@width),
-        wrapper_padding(@padding),
-        @font_weight,
-        @class
-      ]}
-      {@rest}
-    >
-      <span
-        :if={@show_arrow && @variant != "bordered" && @variant != "base"}
-        class={["block absolute size-[8px] bg-inherit rotate-45 -z-[1] popover-arrow"]}
-      >
-      </span>
-      {render_slot(@inner_block)}
-    </div>
-    """
-  end
-
-  defp show_popover(js \\ %JS{}, id) when is_binary(id) do
-    js
-    |> JS.add_class("show-popover", to: "##{id}-popover-content")
-    |> JS.set_attribute({"aria-expanded", "true"}, to: "##{id}-trigger")
-  end
-
-  defp hide_popover(js \\ %JS{}, id) when is_binary(id) do
-    js
-    |> JS.remove_class("show-popover", to: "##{id}-popover-content")
-    |> JS.set_attribute({"aria-expanded", "false"}, to: "##{id}-trigger")
-  end
-
-  defp trigger_popover(),
-    do: "[&_.popover-content]:hover:visible [&_.popover-content]:hover:opacity-100"
-
-  defp border_class("extra_small"), do: "border"
-
-  defp border_class("small"), do: "border-2"
-
-  defp border_class("medium"), do: "border-[3px]"
-
-  defp border_class("large"), do: "border-4"
-
-  defp border_class("extra_large"), do: "border-[5px]"
-
-  defp border_class("none"), do: nil
-
-  defp border_class(params) when is_binary(params), do: params
+  defp border_class("extra_small", _), do: "border"
+  defp border_class("small", _), do: "border-2"
+  defp border_class("medium", _), do: "border-[3px]"
+  defp border_class("large", _), do: "border-4"
+  defp border_class("extra_large", _), do: "border-[5px]"
+  defp border_class("none", _), do: nil
+  defp border_class(params, _) when is_binary(params), do: params
 
   defp rounded_size("extra_small"), do: "rounded-sm"
 
@@ -498,43 +274,15 @@ defmodule CommunityDemoWeb.Components.Popover do
 
   defp rounded_size(params) when is_binary(params), do: params
 
-  defp position_class("top") do
-    [
-      "bottom-full left-1/2 -translate-x-1/2 -translate-y-[6px]",
-      "[&>.popover-arrow]:-bottom-[4px] [&>.popover-arrow]:-translate-x-1/2 [&>.popover-arrow]:left-1/2"
-    ]
-  end
+  defp size_class("extra_small"), do: "text-xs max-w-60"
 
-  defp position_class("bottom") do
-    [
-      "top-full left-1/2 -translate-x-1/2 translate-y-[6px]",
-      "[&>.popover-arrow]:-top-[4px] [&>.popover-arrow]:-translate-x-1/2 [&>.popover-arrow]:left-1/2"
-    ]
-  end
+  defp size_class("small"), do: "text-sm max-w-64.5"
 
-  defp position_class("left") do
-    [
-      "right-full top-1/2 -translate-y-1/2 -translate-x-[6px]",
-      "[&>.popover-arrow]:-right-[4px] [&>.popover-arrow]:translate-y-1/2 [&>.popover-arrow]:top-1/3"
-    ]
-  end
+  defp size_class("medium"), do: "text-base max-w-72"
 
-  defp position_class("right") do
-    [
-      "left-full top-1/2 -translate-y-1/2 translate-x-[6px]",
-      "[&>.popover-arrow]:-left-[4px] [&>.popover-arrow]:translate-y-1/2 [&>.popover-arrow]:top-1/3"
-    ]
-  end
+  defp size_class("large"), do: "text-lg max-w-80"
 
-  defp size_class("extra_small"), do: "text-xs max-w-60 [&_.popover-title-icon]:size-3"
-
-  defp size_class("small"), do: "text-sm max-w-64 [&_.popover-title-icon]:size-3.5"
-
-  defp size_class("medium"), do: "text-base max-w-72 [&_.popover-title-icon]:size-4"
-
-  defp size_class("large"), do: "text-lg max-w-80 [&_.popover-title-icon]:size-5"
-
-  defp size_class("extra_large"), do: "text-xl max-w-96 [&_.popover-title-icon]:size-6"
+  defp size_class("extra_large"), do: "text-xl max-w-96"
 
   defp size_class(params) when is_binary(params), do: params
 
@@ -556,26 +304,17 @@ defmodule CommunityDemoWeb.Components.Popover do
   defp width_class("quadruple_large"), do: "min-w-96"
   defp width_class(params) when is_binary(params), do: params
 
-  defp wrapper_padding("extra_small") do
-    "[&:has(.popover-section)>.popover-section]:p-1 [&:not(:has(.popover-section))]:p-1"
-  end
+  defp wrapper_padding("extra_small"), do: "p-1"
 
-  defp wrapper_padding("small") do
-    "[&:has(.popover-section)>.popover-section]:p-2 [&:not(:has(.popover-section))]:p-2"
-  end
+  defp wrapper_padding("small"), do: "p-2"
 
-  defp wrapper_padding("medium") do
-    "[&:has(.popover-section)>.popover-section]:p-3 [&:not(:has(.popover-section))]:p-3"
-  end
+  defp wrapper_padding("medium"), do: "p-3"
 
-  defp wrapper_padding("large") do
-    "[&:has(.popover-section)>.popover-section]:p-4 [&:not(:has(.popover-section))]:p-4"
-  end
+  defp wrapper_padding("large"), do: "p-4"
 
-  defp wrapper_padding("extra_large") do
-    "[&:has(.popover-section)>.popover-section]:p-5 [&:not(:has(.popover-section))]:p-5"
-  end
+  defp wrapper_padding("extra_large"), do: "p-5"
 
+  defp wrapper_padding("none"), do: nil
   defp wrapper_padding(params) when is_binary(params), do: params
 
   defp space_class("extra_small"), do: "space-y-2"

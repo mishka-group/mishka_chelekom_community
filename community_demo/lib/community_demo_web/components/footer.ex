@@ -12,6 +12,8 @@ defmodule CommunityDemoWeb.Components.Footer do
   - **Global Attributes Support:** Allows for additional attributes to be merged with component defaults.
 
   This component is designed to enhance the appearance and functionality of footers in web applications.
+
+  **Documentation:** https://mishka.tools/chelekom/docs/footer
   """
 
   use Phoenix.Component

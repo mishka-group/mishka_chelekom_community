@@ -2,6 +2,8 @@
 /* Do not change this file, if you want to override it, call :root inside your app.css */
 /* For more information, visit https://mishka.tools/chelekom/docs */
 :root {
+    --opacity-base: 10;
+    --overlay-opacity: 100%;
     --base-border-light: #e4e4e7;
     --base-border-dark: #27272a;
     --base-text-light: #09090b;
@@ -30,6 +32,8 @@
     --natural-dark: #dddddd;
     --natural-hover-light: #282828;
     --natural-hover-dark: #e8e8e8;
+    --natural-bordered-hover-light: #e8e8e8;
+    --natural-bordered-hover-dark: #5e5e5e;
     --natural-bg-light: #f3f3f3;
     --natural-bg-dark: #4b4b4b;
     --natural-border-light: #282828;
@@ -139,6 +143,8 @@
     --silver-dark: #a6a6a6;
     --silver-hover-light: #727272;
     --silver-hover-dark: #bbbbbb;
+    --silver-hover-bordered-light: #e8e8e8;
+    --silver-hover-bordered-dark: #5e5e5e;
     --silver-bordered-text-light: #727272;
     --silver-bordered-text-dark: #bbbbbb;
     --silver-bordered-bg-light: #f3f3f3;
@@ -263,4 +269,62 @@
     --checkbox-misc-checked: #a964f7;
     --checkbox-dawn-checked: #d27d46;
     --checkbox-silver-checked: #a6a6a6;
+
+    /* Stepper specific colors - only NEW colors not covered by existing system */
+    --stepper-loading-icon-fill: #2563eb;
+    --stepper-current-step-text-light: #2563eb;
+    --stepper-current-step-text-dark: #1971c2;
+    --stepper-current-step-border-light: #2563eb;
+    --stepper-current-step-border-dark: #1971c2;
+    --stepper-completed-step-bg-light: #14b8a6;
+    --stepper-completed-step-bg-dark: #099268;
+    --stepper-completed-step-border-light: #14b8a6;
+    --stepper-completed-step-border-dark: #099268;
+    --stepper-canceled-step-bg-light: #fa5252;
+    --stepper-canceled-step-bg-dark: #e03131;
+    --stepper-canceled-step-border-light: #fa5252;
+    --stepper-canceled-step-border-dark: #e03131;
+    --stepper-separator-completed-border-light: #14b8a6;
+    --stepper-separator-completed-border-dark: #099268;
+}
+
+/* 10% */
+[data-opacity="transparent"] {
+    --overlay-opacity: calc(var(--opacity-base) * 1%);
+}
+/* 20% */
+[data-opacity="translucent"] {
+    --overlay-opacity: calc(var(--opacity-base) * 2%);
+}
+/* 30% */
+[data-opacity="semi_transparent"] {
+    --overlay-opacity: calc(var(--opacity-base) * 3%);
+}
+/* 40% */
+[data-opacity="lightly_tinted"] {
+    --overlay-opacity: calc(var(--opacity-base) * 4%);
+}
+/* 50% */
+[data-opacity="tinted"] {
+    --overlay-opacity: calc(var(--opacity-base) * 5%);
+}
+/* 60% */
+[data-opacity="semi_opaque"] {
+    --overlay-opacity: calc(var(--opacity-base) * 6%);
+}
+/* 70% */
+[data-opacity="opaque"] {
+    --overlay-opacity: calc(var(--opacity-base) * 7%);
+}
+/* 80% */
+[data-opacity="heavily_tinted"] {
+    --overlay-opacity: calc(var(--opacity-base) * 8%);
+}
+/* 90% */
+[data-opacity="almost_solid"] {
+    --overlay-opacity: calc(var(--opacity-base) * 9%);
+}
+/* 100% */
+[data-opacity="solid"] {
+    --overlay-opacity: calc(var(--opacity-base) * 10%);
 }

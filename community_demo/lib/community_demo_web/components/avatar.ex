@@ -17,6 +17,8 @@ defmodule CommunityDemoWeb.Components.Avatar do
   - **Avatar Group (`avatar_group/1`)**: Renders a group of avatar elements arranged in a flex container.
   You can control the spacing between avatars and provide custom styling using the
   available attributes and slots.
+
+  **Documentation:** https://mishka.tools/chelekom/docs/avatar
   """
 
   use Phoenix.Component

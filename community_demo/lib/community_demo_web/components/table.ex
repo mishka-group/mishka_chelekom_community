@@ -10,6 +10,8 @@ defmodule CommunityDemoWeb.Components.Table do
 
   By utilizing slots, the module allows for the inclusion of dynamic content in the table's header and
   footer sections, with the ability to embed icons and custom classes for a polished and interactive interface.
+
+  **Documentation:** https://mishka.tools/chelekom/docs/table
   """
 
   use Phoenix.Component

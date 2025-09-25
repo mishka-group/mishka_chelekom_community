@@ -19,6 +19,8 @@ defmodule CommunityDemoWeb.Components.TextField do
 
   This component is designed to integrate seamlessly into your Phoenix LiveView forms and provides
   a wide range of customization options to suit different design needs.
+
+  **Documentation:** https://mishka.tools/chelekom/docs/forms/text-field
   """
 
   use Phoenix.Component
@@ -143,7 +145,7 @@ defmodule CommunityDemoWeb.Components.TextField do
       border_class(@border, @variant),
       size_class(@size),
       space_class(@space),
-      @ring && "[&_.text-field-wrapper]:focus-within:ring-[0.03rem]",
+      @ring && "[&_.text-field-wrapper]:focus-within:ring-[0.03rem] leading-6",
       @class
     ]}>
       <div :if={@description} class={@description_class}>
@@ -211,7 +213,7 @@ defmodule CommunityDemoWeb.Components.TextField do
       border_class(@border, @variant),
       size_class(@size),
       space_class(@space),
-      @ring && "[&_.text-field-wrapper]:focus-within:ring-[0.03rem]",
+      @ring && "[&_.text-field-wrapper]:focus-within:ring-[0.03rem] leading-6",
       @class
     ]}>
       <div
@@ -272,7 +274,7 @@ defmodule CommunityDemoWeb.Components.TextField do
 
   defp label(assigns) do
     ~H"""
-    <label for={@for} class={["leading-5 font-semibold", @class]}>
+    <label for={@for} class={["font-semibold", @class]}>
       {render_slot(@inner_block)}
     </label>
     """
@@ -283,7 +285,7 @@ defmodule CommunityDemoWeb.Components.TextField do
 
   defp error(assigns) do
     ~H"""
-    <p class="mt-3 flex items-center gap-3 text-sm leading-6 text-rose-700">
+    <p class="mt-3 flex items-center gap-3 text-sm text-rose-700">
       <.icon :if={!is_nil(@icon)} name={@icon} class="shrink-0" />
       {render_slot(@inner_block)}
     </p>
@@ -379,7 +381,7 @@ defmodule CommunityDemoWeb.Components.TextField do
       "focus-within:[&_.text-field-wrapper]:ring-base-border-light dark:focus-within:[&_.text-field-wrapper]:ring-base-border-light",
       "[&_.text-field-wrapper]:shadow-sm",
       floating == "outer" &&
-        "[&_.text-field-wrapper_.floating-label]:bg-white dark:[&_.text-field-wrapper_.floating-label]:bg-base-border-dark"
+        "[&_.text-field-wrapper_.floating-label]:bg-white dark:[&_.text-field-wrapper_.floating-label]:bg-base-bg-dark"
     ]
   end
 

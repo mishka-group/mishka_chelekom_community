@@ -5,6 +5,8 @@ defmodule CommunityDemoWeb.Components.Image do
 
   This module simplifies the use of images with various configurations and styling
   options in a Phoenix application.
+
+  **Documentation:** https://mishka.tools/chelekom/docs/image
   """
 
   use Phoenix.Component

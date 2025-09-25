@@ -82,6 +82,8 @@
     --color-natural-bordered-bg-dark: var(--natural-bordered-bg-dark);
     --color-natural-disabled-light: var(--natural-disabled-light);
     --color-natural-disabled-dark: var(--natural-disabled-dark);
+    --color-natural-bordered-hover-light: var(--natural-bordered-hover-light);
+    --color-natural-bordered-hover-dark: var(--natural-bordered-hover-dark);
 
     --color-primary-light: var(--primary-light);
     --color-primary-dark: var(--primary-dark);
@@ -181,6 +183,8 @@
     --color-silver-dark: var(--silver-dark);
     --color-silver-hover-light: var(--silver-hover-light);
     --color-silver-hover-dark: var(--silver-hover-dark);
+    --color-silver-hover-bordered-light: var(--silver-hover-bordered-light);
+    --color-silver-hover-bordered-dark: var(--silver-hover-bordered-dark);
     --color-silver-bordered-text-light: var(--silver-bordered-text-light);
     --color-silver-bordered-text-dark: var(--silver-bordered-text-dark);
     --color-silver-bordered-bg-light: var(--silver-bordered-bg-light);
@@ -314,4 +318,47 @@
     --color-checkbox-misc-checked: var(--checkbox-misc-checked);
     --color-checkbox-dawn-checked: var(--checkbox-dawn-checked);
     --color-checkbox-silver-checked: var(--checkbox-silver-checked);
+
+    /* Stepper specific colors - only NEW colors not covered by existing system */
+    --color-stepper-loading-icon-fill: var(--stepper-loading-icon-fill);
+    --color-stepper-current-step-text-light: var(
+        --stepper-current-step-text-light
+    );
+    --color-stepper-current-step-text-dark: var(
+        --stepper-current-step-text-dark
+    );
+    --color-stepper-current-step-border-light: var(
+        --stepper-current-step-border-light
+    );
+    --color-stepper-current-step-border-dark: var(
+        --stepper-current-step-border-dark
+    );
+    --color-stepper-completed-step-bg-light: var(
+        --stepper-completed-step-bg-light
+    );
+    --color-stepper-completed-step-bg-dark: var(
+        --stepper-completed-step-bg-dark
+    );
+    --color-stepper-completed-step-border-light: var(
+        --stepper-completed-step-border-light
+    );
+    --color-stepper-completed-step-border-dark: var(
+        --stepper-completed-step-border-dark
+    );
+    --color-stepper-canceled-step-bg-light: var(
+        --stepper-canceled-step-bg-light
+    );
+    --color-stepper-canceled-step-bg-dark: var(--stepper-canceled-step-bg-dark);
+    --color-stepper-canceled-step-border-light: var(
+        --stepper-canceled-step-border-light
+    );
+    --color-stepper-canceled-step-border-dark: var(
+        --stepper-canceled-step-border-dark
+    );
+    --color-stepper-separator-completed-border-light: var(
+        --stepper-separator-completed-border-light
+    );
+    --color-stepper-separator-completed-border-dark: var(
+        --stepper-separator-completed-border-dark
+    );
 }

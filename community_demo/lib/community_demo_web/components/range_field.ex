@@ -14,6 +14,8 @@ defmodule CommunityDemoWeb.Components.RangeField do
   such as sliders for adjusting numerical values or settings. It ensures a visually consistent
   and user-friendly experience across different parts of the application, while maintaining a
   high level of customization and control.
+
+  **Documentation:** https://mishka.tools/chelekom/docs/forms/range-field
   """
   use Phoenix.Component
   import CommunityDemoWeb.Components.Icon, only: [icon: 1]

@@ -25,6 +25,8 @@ defmodule CommunityDemoWeb.Components.SpeedDial do
 
   This component is perfect for implementing quick action menus in applications where users need
   to perform frequent operations from a single access point.
+
+  **Documentation:** https://mishka.tools/chelekom/docs/speed-dial
   """
 
   use Phoenix.Component

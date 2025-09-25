@@ -22,6 +22,8 @@ defmodule CommunityDemoWeb.Components.Tabs do
   The component uses Phoenix.LiveView.JS to manage the visibility and active state of the tabs dynamically.
   It provides utility functions like show_tab/3 and hide_tab/3 for controlling the visibility of specific
   tabs and panels programmatically.
+
+  **Documentation:** https://mishka.tools/chelekom/docs/tabs
   """
 
   use Phoenix.Component

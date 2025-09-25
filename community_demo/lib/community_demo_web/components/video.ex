@@ -12,6 +12,8 @@ defmodule CommunityDemoWeb.Components.Video do
 
   By leveraging this module, developers can efficiently integrate video playback into their
   Phoenix applications while maintaining flexibility in design and functionality.
+
+  **Documentation:** https://mishka.tools/chelekom/docs/video
   """
   use Phoenix.Component
   use Gettext, backend: CommunityDemoWeb.Gettext

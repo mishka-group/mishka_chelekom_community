@@ -12,6 +12,8 @@ defmodule CommunityDemoWeb.Components.Fieldset do
 
   This component is designed to enhance the user interface of forms by providing consistent
   and visually appealing fieldsets that can be easily integrated into any LiveView application.
+
+  **Documentation:** https://mishka.tools/chelekom/docs/forms/fieldset
   """
   use Phoenix.Component
   import CommunityDemoWeb.Components.Icon, only: [icon: 1]

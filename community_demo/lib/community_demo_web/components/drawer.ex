@@ -15,6 +15,8 @@ defmodule CommunityDemoWeb.Components.Drawer do
   interaction management.
   - **Slots Support:** Includes slots for adding a custom header and inner content,
   with full HEEx support for dynamic rendering.
+
+  **Documentation:** https://mishka.tools/chelekom/docs/drawer
   """
   use Phoenix.Component
   alias Phoenix.LiveView.JS

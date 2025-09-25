@@ -13,6 +13,8 @@ defmodule CommunityDemoWeb.Components.PasswordField do
   label positioning, and visual feedback on user interaction. The module is intended to be integrated
   seamlessly with Phoenix forms and is ideal for applications that require an interactive and
   user-friendly password field.
+
+  **Documentation:** https://mishka.tools/chelekom/docs/forms/password-field
   """
   use Phoenix.Component
   alias Phoenix.LiveView.JS
@@ -140,7 +142,7 @@ defmodule CommunityDemoWeb.Components.PasswordField do
       border_class(@border, @variant),
       size_class(@size),
       space_class(@space),
-      @ring && "[&_.password-field-wrapper]:focus-within:ring-[0.03rem]",
+      @ring && "[&_.password-field-wrapper]:focus-within:ring-[0.03rem] leading-6",
       @class
     ]}>
       <div :if={@description} class={@description_class}>
@@ -224,7 +226,7 @@ defmodule CommunityDemoWeb.Components.PasswordField do
       border_class(@border, @variant),
       size_class(@size),
       space_class(@space),
-      @ring && "[&_.password-field-wrapper]:focus-within:ring-[0.03rem]",
+      @ring && "[&_.password-field-wrapper]:focus-within:ring-[0.03rem] leading-6",
       @class
     ]}>
       <div :if={@label || @description} class={["password-label-wrapper", @description_wrapper_class]}>
@@ -296,7 +298,7 @@ defmodule CommunityDemoWeb.Components.PasswordField do
 
   defp label(assigns) do
     ~H"""
-    <label for={@for} class={["leading-5 font-semibold", @class]}>
+    <label for={@for} class={["font-semibold", @class]}>
       {render_slot(@inner_block)}
     </label>
     """
@@ -307,7 +309,7 @@ defmodule CommunityDemoWeb.Components.PasswordField do
 
   defp error(assigns) do
     ~H"""
-    <p class="mt-3 flex items-center gap-3 text-sm leading-6 text-rose-700">
+    <p class="mt-3 flex items-center gap-3 text-sm text-rose-700">
       <.icon :if={!is_nil(@icon)} name={@icon} class="shrink-0" />
       {render_slot(@inner_block)}
     </p>
@@ -403,7 +405,7 @@ defmodule CommunityDemoWeb.Components.PasswordField do
       "focus-within:[&_.password-field-wrapper]:ring-base-border-light dark:focus-within:[&_.password-field-wrapper]:ring-base-border-light",
       "[&_.password-field-wrapper]:shadow-sm",
       floating == "outer" &&
-        "[&_.password-field-wrapper_.floating-label]:bg-white dark:[&_.password-field-wrapper_.floating-label]:bg-base-border-dark"
+        "[&_.password-field-wrapper_.floating-label]:bg-white dark:[&_.password-field-wrapper_.floating-label]:bg-base-bg-dark"
     ]
   end
 

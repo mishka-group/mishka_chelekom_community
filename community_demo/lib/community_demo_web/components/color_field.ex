@@ -10,6 +10,8 @@ defmodule CommunityDemoWeb.Components.ColorField do
   - Flexible error handling with support for custom error icons and messages.
   - Configurable size and layout options for various use cases.
   - Support for Phoenix form field integration.
+
+  **Documentation:** https://mishka.tools/chelekom/docs/forms/color-field
   """
 
   use Phoenix.Component

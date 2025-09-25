@@ -18,6 +18,8 @@ defmodule CommunityDemoWeb.Components.Keyboard do
 
   This component is ideal for visually representing keyboard shortcuts or commands,
   making it easy for users to understand and remember key combinations.
+
+  **Documentation:** https://mishka.tools/chelekom/docs/keyboard
   """
   use Phoenix.Component
 

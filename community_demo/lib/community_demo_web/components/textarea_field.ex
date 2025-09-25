@@ -20,6 +20,8 @@ defmodule CommunityDemoWeb.Components.TextareaField do
 
   This component integrates smoothly into Phoenix LiveView forms, providing a user-friendly interface
   for text input with extensive customization options.
+
+  **Documentation:** https://mishka.tools/chelekom/docs/forms/textarea-field
   """
 
   use Phoenix.Component
@@ -141,7 +143,7 @@ defmodule CommunityDemoWeb.Components.TextareaField do
       border_class(@border, @variant),
       height_size(@size),
       space_class(@space),
-      @ring && "[&_.textarea-field-wrapper]:focus-within:ring-[0.03rem]",
+      @ring && "[&_.textarea-field-wrapper]:focus-within:ring-[0.03rem] leading-6",
       @class
     ]}>
       <div :if={@description} class={@description_class}>
@@ -193,7 +195,7 @@ defmodule CommunityDemoWeb.Components.TextareaField do
       border_class(@border, @variant),
       height_size(@size),
       space_class(@space),
-      @ring && "[&_.textarea-field-wrapper]:focus-within:ring-[0.03rem]",
+      @ring && "[&_.textarea-field-wrapper]:focus-within:ring-[0.03rem] leading-6",
       @class
     ]}>
       <div
@@ -239,7 +241,7 @@ defmodule CommunityDemoWeb.Components.TextareaField do
 
   defp label(assigns) do
     ~H"""
-    <label for={@for} class={["leading-5 font-semibold", @class]}>
+    <label for={@for} class={["font-semibold", @class]}>
       {render_slot(@inner_block)}
     </label>
     """
@@ -250,7 +252,7 @@ defmodule CommunityDemoWeb.Components.TextareaField do
 
   defp error(assigns) do
     ~H"""
-    <p class="mt-3 flex items-center gap-3 text-sm leading-6 text-rose-700">
+    <p class="mt-3 flex items-center gap-3 text-sm text-rose-700">
       <.icon :if={!is_nil(@icon)} name={@icon} class="shrink-0" />
       {render_slot(@inner_block)}
     </p>
@@ -338,7 +340,7 @@ defmodule CommunityDemoWeb.Components.TextareaField do
       "focus-within:[&_.textarea-field-wrapper]:ring-base-border-light dark:focus-within:[&_.textarea-field-wrapper]:ring-base-border-light",
       "[&_.textarea-field-wrapper]:shadow-sm",
       floating == "outer" &&
-        "[&_.textarea-field-wrapper_.floating-label]:bg-white dark:[&_.textarea-field-wrapper_.floating-label]:bg-base-border-dark"
+        "[&_.textarea-field-wrapper_.floating-label]:bg-white dark:[&_.textarea-field-wrapper_.floating-label]:bg-base-bg-dark"
     ]
   end
 

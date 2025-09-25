@@ -12,6 +12,8 @@ defmodule CommunityDemoWeb.Components.Badge do
 
   This module is designed to be highly customizable, enabling you to create badges
   that fit your application's needs seamlessly.
+
+  **Documentation:** https://mishka.tools/chelekom/docs/badge
   """
 
   use Phoenix.Component

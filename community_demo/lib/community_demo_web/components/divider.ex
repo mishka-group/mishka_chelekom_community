@@ -12,6 +12,8 @@ defmodule CommunityDemoWeb.Components.Divider do
   - Customizable size, width, height, and margin for precise control over the appearance.
   - Includes slots for adding text or icons with individual styling and positioning options.
   - Global attributes and custom CSS classes can be applied for additional customization.
+
+  **Documentation:** https://mishka.tools/chelekom/docs/divider
   """
   use Phoenix.Component
   import CommunityDemoWeb.Components.Icon, only: [icon: 1]

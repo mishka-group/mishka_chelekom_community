@@ -12,6 +12,8 @@ defmodule CommunityDemoWeb.Components.Navbar do
 
   With built-in support for icons and images, the `Navbar` module makes it easy to create
   visually appealing and interactive navigation bars that enhance the user experience.
+
+  **Documentation:** https://mishka.tools/chelekom/docs/navbar
   """
   use Phoenix.Component
   import CommunityDemoWeb.Components.Icon, only: [icon: 1]

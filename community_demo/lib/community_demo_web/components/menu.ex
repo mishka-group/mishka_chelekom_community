@@ -14,10 +14,12 @@ defmodule CommunityDemoWeb.Components.Menu do
   library, such as `accordion` and `button_link`, to offer a consistent and cohesive
   UI experience. It also includes support for various padding and spacing options to
   control the layout and appearance of the menu.
+
+  **Documentation:** https://mishka.tools/chelekom/docs/menu
   """
   use Phoenix.Component
-  import CommunityDemoWeb.Components.Accordion, only: [accordion: 1]
   import CommunityDemoWeb.Components.Button, only: [button_link: 1]
+  import CommunityDemoWeb.Components.Collapse, only: [collapse: 1]
 
   @doc """
   Renders a customizable `menu` component that can include menu items as a list of maps or use
@@ -371,20 +373,24 @@ defmodule CommunityDemoWeb.Components.Menu do
           class={@link_class}
           {menu_item}
         />
-        <.accordion
+        <.collapse
           :if={Map.get(menu_item, :sub_items, []) != []}
-          padding="none"
-          {Map.drop(menu_item, [:sub_items, :padding])}
+          id={menu_item[:id] || "menu-item-#{System.unique_integer([:positive])}"}
           class={@accordion_class}
         >
-          <:item title={menu_item[:title]} icon_class={menu_item[:icon_class]} icon={menu_item[:icon]}>
-            <.menu
-              id={menu_item[:id]}
-              class={menu_item[:padding]}
-              menu_items={Map.get(menu_item, :sub_items, [])}
+          <:trigger>
+            <.button_link
+              font_weight={menu_item[:active] && "font-bold"}
+              class={@link_class}
+              {Map.drop(menu_item, [:sub_items, :padding])}
             />
-          </:item>
-        </.accordion>
+          </:trigger>
+          <.menu
+            id={menu_item[:id]}
+            class={menu_item[:padding]}
+            menu_items={Map.get(menu_item, :sub_items, [])}
+          />
+        </.collapse>
       </li>
       {render_slot(@inner_block)}
     </ul>

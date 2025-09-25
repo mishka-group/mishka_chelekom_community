@@ -20,6 +20,8 @@ defmodule CommunityDemoWeb.Components.Button do
 
   > This module makes it easy to render buttons with consistent styling and behavior
   > across your application while offering the flexibility needed for various use cases.
+
+  **Documentation:** https://mishka.tools/chelekom/docs/button
   """
 
   use Phoenix.Component

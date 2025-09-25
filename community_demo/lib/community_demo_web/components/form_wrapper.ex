@@ -12,6 +12,8 @@ defmodule CommunityDemoWeb.Components.FormWrapper do
   and more to be merged with component defaults.
 
   This component is ideal for wrapping forms with consistent styles and structure across an application.
+
+  **Documentation:** https://mishka.tools/chelekom/docs/forms
   """
 
   use Phoenix.Component

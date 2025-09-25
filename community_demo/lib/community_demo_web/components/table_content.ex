@@ -11,6 +11,8 @@ defmodule CommunityDemoWeb.Components.TableContent do
   font weights, and active states, making it easy to build interactive and visually appealing
   layouts within tables. The module leverages slots to enable dynamic content rendering,
   offering high flexibility in the design of complex table layouts.
+
+  **Documentation:** https://mishka.tools/chelekom/docs/table-content
   """
 
   use Phoenix.Component

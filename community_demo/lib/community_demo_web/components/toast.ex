@@ -15,6 +15,8 @@ defmodule CommunityDemoWeb.Components.Toast do
 
   > You can create a toast notification with various styles and
   > configurations to suit your application's needs.
+
+  **Documentation:** https://mishka.tools/chelekom/docs/toast
   """
   use Phoenix.Component
   alias Phoenix.LiveView.JS

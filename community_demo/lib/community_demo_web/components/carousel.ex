@@ -18,6 +18,8 @@ defmodule CommunityDemoWeb.Components.Carousel do
   This module offers an easy-to-use interface for building carousels with consistent
   styling and behavior across your application, while providing the flexibility to
   meet various design requirements.
+
+  **Documentation:** https://mishka.tools/chelekom/docs/carousel
   """
 
   use Phoenix.Component

@@ -67,8 +67,7 @@ defmodule CommunityDemo.MixProject do
       {:dns_cluster, "~> 0.2.0"},
       {:bandit, "~> 1.5"},
       # {:mishka_chelekom, "~> 0.0.8", only: :dev},
-      {:mishka_chelekom,
-       github: "mishka-group/mishka_chelekom", beranch: "Tailwind-4-Phoenix-1.8", only: :dev}
+      {:mishka_chelekom, github: "mishka-group/mishka_chelekom", beranch: "master", only: :dev}
     ]
   end
 

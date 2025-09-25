@@ -13,6 +13,8 @@ defmodule CommunityDemoWeb.Components.Indicator do
   The indicator can be used in diverse scenarios, such as showing the number of unread messages,
   indicating active states, or displaying connectivity status. It is customizable with different
   styles, making it adaptable to various design needs.
+
+  **Documentation:** https://mishka.tools/chelekom/docs/indicator
   """
 
   use Phoenix.Component

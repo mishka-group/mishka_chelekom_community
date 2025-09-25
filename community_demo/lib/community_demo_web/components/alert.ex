@@ -24,6 +24,8 @@ defmodule CommunityDemoWeb.Components.Alert do
   fine-grained control over the appearance and behavior of alerts. Attributes like `variant`,
   `kind`, `position`, and `rounded` can be used to modify the styling, while slots provide
   flexibility in rendering custom content within alerts.
+
+  **Documentation:** https://mishka.tools/chelekom/docs/alert
   """
   use Phoenix.Component
   use Gettext, backend: CommunityDemoWeb.Gettext

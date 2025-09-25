@@ -23,6 +23,8 @@ defmodule CommunityDemoWeb.Components.Card do
 
   This module offers a powerful and easy-to-use way to create cards with consistent
   styling and behavior while providing the flexibility to adapt to various use cases.
+
+  **Documentation:** https://mishka.tools/chelekom/docs/card
   """
 
   use Phoenix.Component
@@ -650,7 +652,7 @@ defmodule CommunityDemoWeb.Components.Card do
 
   defp color_variant("bordered", "white") do
     [
-      "[&:not(:has(.overlay))]:bg-white text-bordered-white-text border-bordered-white-border"
+      "[&:not(:has(.overlay))]:bg-white text-black border-bordered-white-border"
     ]
   end
 

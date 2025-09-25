@@ -23,6 +23,8 @@ defmodule CommunityDemoWeb.Components.Timeline do
 
   This component integrates seamlessly into Phoenix LiveView applications, providing a rich
   and interactive way to visualize timelines, events, or progressions.
+
+  **Documentation:** https://mishka.tools/chelekom/docs/timeline
   """
 
   use Phoenix.Component

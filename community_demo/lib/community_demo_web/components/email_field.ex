@@ -13,6 +13,8 @@ defmodule CommunityDemoWeb.Components.EmailField do
   This component is designed to simplify the creation of styled and functional email
   input fields in Phoenix LiveView applications, providing developers with the flexibility
   to customize appearance and behavior according to their application's needs.
+
+  **Documentation:** https://mishka.tools/chelekom/docs/forms/email-field
   """
 
   use Phoenix.Component
@@ -139,7 +141,7 @@ defmodule CommunityDemoWeb.Components.EmailField do
       border_class(@border, @variant),
       size_class(@size),
       space_class(@space),
-      @ring && "[&_.email-field-wrapper]:focus-within:ring-[0.03rem]",
+      @ring && "[&_.email-field-wrapper]:focus-within:ring-[0.03rem] leading-6",
       @class
     ]}>
       <div :if={@description} class={@description_class}>
@@ -207,7 +209,7 @@ defmodule CommunityDemoWeb.Components.EmailField do
       border_class(@border, @variant),
       size_class(@size),
       space_class(@space),
-      @ring && "[&_.email-field-wrapper]:focus-within:ring-[0.03rem]",
+      @ring && "[&_.email-field-wrapper]:focus-within:ring-[0.03rem] leading-6",
       @class
     ]}>
       <div
@@ -268,7 +270,7 @@ defmodule CommunityDemoWeb.Components.EmailField do
 
   defp label(assigns) do
     ~H"""
-    <label for={@for} class={["leading-5 font-semibold", @class]}>
+    <label for={@for} class={["font-semibold", @class]}>
       {render_slot(@inner_block)}
     </label>
     """
@@ -279,7 +281,7 @@ defmodule CommunityDemoWeb.Components.EmailField do
 
   defp error(assigns) do
     ~H"""
-    <p class="mt-3 flex items-center gap-3 text-sm leading-6 text-rose-700">
+    <p class="mt-3 flex items-center gap-3 text-sm text-rose-700">
       <.icon :if={!is_nil(@icon)} name={@icon} class="shrink-0" />
       {render_slot(@inner_block)}
     </p>
@@ -370,7 +372,7 @@ defmodule CommunityDemoWeb.Components.EmailField do
       "focus-within:[&_.email-field-wrapper]:ring-base-border-light dark:focus-within:[&_.email-field-wrapper]:ring-base-border-light",
       "[&_.email-field-wrapper]:shadow-sm",
       floating == "outer" &&
-        "[&_.email-field-wrapper_.floating-label]:bg-white dark:[&_.email-field-wrapper_.floating-label]:bg-base-border-dark"
+        "[&_.email-field-wrapper_.floating-label]:bg-white dark:[&_.email-field-wrapper_.floating-label]:bg-base-bg-dark"
     ]
   end
 

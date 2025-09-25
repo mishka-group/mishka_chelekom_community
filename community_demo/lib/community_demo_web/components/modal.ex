@@ -14,6 +14,8 @@ defmodule CommunityDemoWeb.Components.Modal do
 
   This module can be integrated with other components and tailored for various use cases
   in web applications, making it a powerful tool for enhancing user interfaces and interaction workflows.
+
+  **Documentation:** https://mishka.tools/chelekom/docs/modal
   """
 
   use Phoenix.Component

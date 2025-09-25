@@ -17,6 +17,12 @@ const Floating = {
     this.clickable = this.el.getAttribute("data-clickable") === "true";
     this.position = this.el.getAttribute("data-position") || "bottom";
 
+    this.showDelay = parseInt(this.el.getAttribute("data-show-delay")) || 0;
+    this.hideDelay = parseInt(this.el.getAttribute("data-hide-delay")) || 400;
+
+    this.showTimeout = null;
+    this.hideTimeout = null;
+
     this.floatingType = this.getFloatingType();
 
     this.isRTL = getComputedStyle(document.documentElement).direction === "rtl";
@@ -42,9 +48,7 @@ const Floating = {
         ) {
           try {
             document.body.removeChild(duplicate);
-          } catch (e) {
-            // element might have already been removed so ignore it
-          }
+          } catch (e) {}
         }
       });
     }
@@ -77,6 +81,15 @@ const Floating = {
   },
 
   beforeUpdate() {
+    if (this.showTimeout) {
+      clearTimeout(this.showTimeout);
+      this.showTimeout = null;
+    }
+    if (this.hideTimeout) {
+      clearTimeout(this.hideTimeout);
+      this.hideTimeout = null;
+    }
+
     if (
       this.floatingContent &&
       this.movedToBody &&
@@ -173,6 +186,8 @@ const Floating = {
       } else {
         this.trigger.addEventListener("mouseenter", this.boundHandleMouseEnter);
         this.trigger.addEventListener("mouseleave", this.boundHandleMouseLeave);
+        this.trigger.addEventListener("focusin", this.boundHandleMouseEnter);
+        this.trigger.addEventListener("focusout", this.boundHandleMouseLeave);
         this.floatingContent?.addEventListener(
           "mouseenter",
           this.boundHandleMouseEnter,
@@ -207,7 +222,6 @@ const Floating = {
   setupAria() {
     if (!this.trigger || !this.floatingContent) return;
 
-    // generate a unique id that includes timestamp to avoid collisions
     const timestamp = Date.now();
     const random = Math.random().toString(36).slice(2, 8);
     const id = this.floatingContent.id || `floating-${timestamp}-${random}`;
@@ -259,11 +273,45 @@ const Floating = {
   },
 
   handleMouseEnter() {
-    this.show();
+    if (this.hideTimeout) {
+      clearTimeout(this.hideTimeout);
+      this.hideTimeout = null;
+    }
+
+    if (this.showTimeout) {
+      clearTimeout(this.showTimeout);
+      this.showTimeout = null;
+    }
+
+    if (this.showDelay > 0) {
+      this.showTimeout = setTimeout(() => {
+        this.show();
+        this.showTimeout = null;
+      }, this.showDelay);
+    } else {
+      this.show();
+    }
   },
 
   handleMouseLeave() {
-    this.hide();
+    if (this.showTimeout) {
+      clearTimeout(this.showTimeout);
+      this.showTimeout = null;
+    }
+
+    if (this.hideTimeout) {
+      clearTimeout(this.hideTimeout);
+      this.hideTimeout = null;
+    }
+
+    if (this.hideDelay > 0) {
+      this.hideTimeout = setTimeout(() => {
+        this.hide();
+        this.hideTimeout = null;
+      }, this.hideDelay);
+    } else {
+      this.hide();
+    }
   },
 
   handleOutsideClick(e) {
@@ -319,9 +367,16 @@ const Floating = {
   updatePosition() {
     if (!this.trigger || !this.floatingContent) return;
 
+    const originalDisplay = this.trigger.style.display;
+    const isSpan = this.trigger.tagName.toLowerCase() === "span";
+
+    if (isSpan && (!originalDisplay || originalDisplay === "inline")) {
+      this.trigger.style.display = "inline-block";
+    }
+
     const rect = this.trigger.getBoundingClientRect();
     const content = this.floatingContent;
-    const gap = 4;
+    const gap = 5;
     let pos = this.position;
 
     if (this.smartPositioning && content.offsetHeight) {
@@ -374,6 +429,10 @@ const Floating = {
     content.style.position = "absolute";
     content.style.top = `${top}px`;
     content.style.left = `${left}px`;
+
+    if (isSpan && originalDisplay !== "inline-block") {
+      this.trigger.style.display = originalDisplay || "";
+    }
   },
 
   show() {
@@ -400,8 +459,11 @@ const Floating = {
     content.offsetHeight;
     content.style.transition = transition;
 
-    if (this.enableAria && this.trigger && this.floatingType === "dropdown") {
-      this.trigger.setAttribute("aria-expanded", "true");
+    if (this.enableAria) {
+      content.removeAttribute("aria-hidden");
+      if (this.trigger && this.floatingType === "dropdown") {
+        this.trigger.setAttribute("aria-expanded", "true");
+      }
     }
 
     if (this.floatingType === "dropdown") {
@@ -446,6 +508,15 @@ const Floating = {
   },
 
   destroyed() {
+    if (this.showTimeout) {
+      clearTimeout(this.showTimeout);
+      this.showTimeout = null;
+    }
+    if (this.hideTimeout) {
+      clearTimeout(this.hideTimeout);
+      this.hideTimeout = null;
+    }
+
     if (this.updatePositionDebounced) {
       this.updatePositionDebounced.cancel?.();
     }
@@ -474,6 +545,8 @@ const Floating = {
         "mouseleave",
         this.boundHandleMouseLeave,
       );
+      this.trigger.removeEventListener("focusin", this.boundHandleMouseEnter);
+      this.trigger.removeEventListener("focusout", this.boundHandleMouseLeave);
     }
 
     if (!this.clickable && this.floatingContent) {

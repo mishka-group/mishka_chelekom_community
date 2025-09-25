@@ -12,6 +12,8 @@ defmodule CommunityDemoWeb.Components.Spinner do
   With its flexible design, the `CommunityDemoWeb.Components.Spinner` module enables developers to provide
   visual feedback for asynchronous operations, enhancing user experience and maintaining engagement
   during content loading or background processes.
+
+  **Documentation:** https://mishka.tools/chelekom/docs/spinner
   """
 
   use Phoenix.Component

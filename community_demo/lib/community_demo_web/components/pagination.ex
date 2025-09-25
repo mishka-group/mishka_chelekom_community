@@ -14,6 +14,8 @@ defmodule CommunityDemoWeb.Components.Pagination do
 
   These features enable developers to integrate pagination seamlessly into their UI,
   enhancing user experience and interaction.
+
+  **Documentation:** https://mishka.tools/chelekom/docs/pagination
   """
 
   use Phoenix.Component

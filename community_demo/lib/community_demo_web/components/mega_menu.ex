@@ -16,6 +16,8 @@ defmodule CommunityDemoWeb.Components.MegaMenu do
   flexibility in interaction.
   - **Customizable Slots:** Utilize the `trigger` and `inner_block` slots to define custom content
   and layout within the mega menu.
+
+  **Documentation:** https://mishka.tools/chelekom/docs/mega-menu
   """
 
   use Phoenix.Component

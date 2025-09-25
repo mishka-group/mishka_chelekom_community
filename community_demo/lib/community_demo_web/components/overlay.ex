@@ -9,6 +9,8 @@ defmodule CommunityDemoWeb.Components.Overlay do
   opacity variations, and backdrop sizes to match the needs of different interface designs.
   The `CommunityDemoWeb.Components.Overlay` is perfect for creating modal backgrounds, loading screens,
   and other interactive elements that require content layering.
+
+  **Documentation:** https://mishka.tools/chelekom/docs/overlay
   """
 
   use Phoenix.Component
@@ -57,13 +59,13 @@ defmodule CommunityDemoWeb.Components.Overlay do
     ~H"""
     <div
       id={@id}
+      data-opacity={@opacity}
       aria-hidden="true"
       role="presentation"
       tabindex="-1"
       class={[
         "overlay absolute inset-0",
         color_class(@color),
-        opacity_class(@opacity),
         backdrop_class(@backdrop),
         @z_index,
         @class
@@ -76,100 +78,60 @@ defmodule CommunityDemoWeb.Components.Overlay do
   end
 
   defp color_class("base") do
-    ["bg-white dark:bg-base-bg-dark"]
+    ["bg-white/[var(--overlay-opacity)] dark:bg-base-bg-dark/[var(--overlay-opacity)]"]
   end
 
   defp color_class("white") do
-    ["bg-white text-black"]
+    ["bg-white/[var(--overlay-opacity)] text-black"]
   end
 
   defp color_class("dark") do
-    ["bg-default-dark-bg text-white"]
+    ["bg-default-dark-bg/[var(--overlay-opacity)] text-white"]
   end
 
   defp color_class("natural") do
-    ["bg-natural-light dark:bg-natural-dark"]
+    ["bg-natural-light[var(--overlay-opacity)]dark:bg-natural-dark/[var(--overlay-opacity)]"]
   end
 
   defp color_class("primary") do
-    ["bg-primary-light dark:bg-primary-dark"]
+    ["bg-primary-light/[var(--overlay-opacity)] dark:bg-primary-dark/[var(--overlay-opacity)]"]
   end
 
   defp color_class("secondary") do
-    ["bg-secondary-light dark:bg-secondary-dark"]
+    [
+      "bg-secondary-light/[var(--overlay-opacity)] dark:bg-secondary-dark/[var(--overlay-opacity)]"
+    ]
   end
 
   defp color_class("success") do
-    ["bg-success-light dark:bg-success-dark"]
+    ["bg-success-light/[var(--overlay-opacity)] dark:bg-success-dark/[var(--overlay-opacity)]"]
   end
 
   defp color_class("warning") do
-    ["bg-warning-light dark:bg-warning-dark"]
+    ["bg-warning-light/[var(--overlay-opacity)] dark:bg-warning-dark/[var(--overlay-opacity)]"]
   end
 
   defp color_class("danger") do
-    ["bg-danger-light dark:bg-danger-dark"]
+    ["bg-danger-light/[var(--overlay-opacity)] dark:bg-danger-dark/[var(--overlay-opacity)]"]
   end
 
   defp color_class("info") do
-    ["bg-info-light dark:bg-info-dark"]
+    ["bg-info-light/[var(--overlay-opacity)] dark:bg-info-dark/[var(--overlay-opacity)]"]
   end
 
   defp color_class("misc") do
-    ["bg-misc-light dark:bg-misc-dark"]
+    ["bg-misc-light/[var(--overlay-opacity)] dark:bg-misc-dark/[var(--overlay-opacity)]"]
   end
 
   defp color_class("dawn") do
-    ["bg-dawn-light dark:bg-dawn-dark"]
+    ["bg-dawn-light/[var(--overlay-opacity)] dark:bg-dawn-dark/[var(--overlay-opacity)]"]
   end
 
   defp color_class("silver") do
-    ["bg-silver-light dark:bg-silver-dark"]
+    ["bg-silver-light/[var(--overlay-opacity)] dark:bg-silver-dark/[var(--overlay-opacity)]"]
   end
 
   defp color_class(params) when is_binary(params), do: params
-
-  defp opacity_class("transparent") do
-    "bg-opacity-10"
-  end
-
-  defp opacity_class("translucent") do
-    "bg-opacity-20"
-  end
-
-  defp opacity_class("semi_transparent") do
-    "bg-opacity-30"
-  end
-
-  defp opacity_class("lightly_tinted") do
-    "bg-opacity-40"
-  end
-
-  defp opacity_class("tinted") do
-    "bg-opacity-50"
-  end
-
-  defp opacity_class("semi_opaque") do
-    "bg-opacity-60"
-  end
-
-  defp opacity_class("opaque") do
-    "bg-opacity-70"
-  end
-
-  defp opacity_class("heavily_tinted") do
-    "bg-opacity-80"
-  end
-
-  defp opacity_class("almost_solid") do
-    "bg-opacity-90"
-  end
-
-  defp opacity_class("solid") do
-    "bg-opacity-100"
-  end
-
-  defp opacity_class(params) when is_binary(params), do: params
 
   defp backdrop_class("extra_small") do
     "backdrop-blur-[1px]"

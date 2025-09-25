@@ -28,6 +28,8 @@ defmodule CommunityDemoWeb.Components.CheckboxCard do
 
   The component handles form integration automatically when used with Phoenix.HTML.Form fields
   and includes built-in error handling and validation display.
+
+  **Documentation:** https://mishka.tools/chelekom/docs/forms/checkbox-card
   """
   use Phoenix.Component
   alias Phoenix.HTML.Form
@@ -397,11 +399,11 @@ defmodule CommunityDemoWeb.Components.CheckboxCard do
       "bg-white text-base-text-light border-base-border-light shadow-sm",
       "dark:bg-base-bg-dark dark:text-base-text-dark dark:border-base-border-dark",
       "checked:[&_.checkbox-card-input]:text-base-text-light",
-      "dark:checked:[&_.checkbox-card-input]:text-[var(--color-base-disabled-text-dark)]",
+      "dark:checked:[&_.checkbox-card-input]:text-base-disabled-text-dark",
       "[&_.checkbox-card-input]:border-base-border-light dark:[&_.checkbox-card-input]:border-base-border-dark",
       "[&_.checkbox-card-input:checked]:border-base-text-light dark:[&_.checkbox-card-input:checked]:border-base-border-dark",
       "has-[:checked]:bg-base-hover-light dark:has-[:checked]:bg-base-hover-dark",
-      "has-[:checked]:border-base-text-light dark:has-[:checked]:border-[var(--color-base-disabled-text-dark)]",
+      "has-[:checked]:border-base-text-light dark:has-[:checked]:border-base-disabled-text-dark",
       "[&_.checkbox-card-input:not(:checked)]:bg-white dark:[&_.checkbox-card-input:not(:checked)]:bg-checkbox-unchecked-dark"
     ]
   end

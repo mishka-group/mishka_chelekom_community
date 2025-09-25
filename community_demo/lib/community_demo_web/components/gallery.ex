@@ -15,6 +15,8 @@ defmodule CommunityDemoWeb.Components.Gallery do
 
   This component is ideal for showcasing images, videos, or other media content in a grid
   or masonry layout, offering a clean and flexible way to present visual elements on a web page.
+
+  **Documentation:** https://mishka.tools/chelekom/docs/gallery
   """
 
   use Phoenix.Component

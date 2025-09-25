@@ -28,6 +28,8 @@ defmodule CommunityDemoWeb.Components.RadioCard do
 
   The component handles form integration automatically when used with Phoenix.HTML.Form fields
   and includes built-in error handling and validation display.
+
+  **Documentation:** https://mishka.tools/chelekom/docs/forms/radio-card
   """
   use Phoenix.Component
   alias Phoenix.HTML.Form
@@ -393,8 +395,8 @@ defmodule CommunityDemoWeb.Components.RadioCard do
     [
       "bg-white text-base-text-light border-base-border-light shadow-sm",
       "dark:bg-base-bg-dark dark:text-base-text-dark dark:border-base-border-dark",
-      "checked:[&_.radio-card-input]:text-base-text-light",
-      "dark:checked:[&_.radio-card-input]:text-base-disabled-text-dark",
+      "[&_.radio-card-input]:checked:accent-base-text-light",
+      "dark:[&_.radio-card-input]:checked:accent-base-disabled-text-dark",
       "[&_.radio-card-input]:border-base-border-light dark:[&_.radio-card-input]:border-base-border-dark",
       "[&_.radio-card-input:checked]:border-base-text-light dark:[&_.radio-card-input:checked]:border-base-border-dark",
       "has-[:checked]:bg-base-hover-light dark:has-[:checked]:bg-base-hover-dark",
@@ -406,7 +408,7 @@ defmodule CommunityDemoWeb.Components.RadioCard do
   defp color_variant("default", "white") do
     [
       "bg-white text-black",
-      "checked:[&_.radio-card-input]:text-black",
+      "[&_.radio-card-input]:checked:accent-black",
       "[&_.radio-card-input]:border-black",
       "has-[:checked]:bg-[var(--color-checkbox-white-checked)]"
     ]
@@ -415,7 +417,7 @@ defmodule CommunityDemoWeb.Components.RadioCard do
   defp color_variant("default", "dark") do
     [
       "bg-[var(--color-default-dark-bg)] text-white",
-      "checked:[&_.radio-card-input]:text-white",
+      "[&_.radio-card-input]:checked:accent-white",
       "[&_.radio-card-input]:border-white",
       "has-[:checked]:bg-[var(--color-checkbox-dark-checked)]"
     ]
@@ -424,8 +426,8 @@ defmodule CommunityDemoWeb.Components.RadioCard do
   defp color_variant("default", "natural") do
     [
       "bg-natural-light text-white dark:bg-natural-dark dark:text-black",
-      "checked:[&_.radio-card-input]:text-silver-light",
-      "dark:checked:[&_.radio-card-input]:text-silver-hover-dark",
+      "[&_.radio-card-input]:checked:accent-silver-light",
+      "dark:[&_.radio-card-input]:checked:accent-silver-hover-dark",
       "[&_.radio-card-input]:border-base-border-light dark:[&_.radio-card-input]:border-base-border-dark",
       "has-[:checked]:bg-natural-hover-light dark:has-[:checked]:bg-natural-hover-dark"
     ]
@@ -434,7 +436,7 @@ defmodule CommunityDemoWeb.Components.RadioCard do
   defp color_variant("default", "primary") do
     [
       "bg-primary-light text-white dark:bg-primary-dark dark:text-black",
-      "checked:[&_.radio-card-input]:text-[var(--color-checkbox-primary-checked)]",
+      "[&_.radio-card-input]:checked:accent-[var(--color-checkbox-primary-checked)]",
       "[&_.radio-card-input]:border-[var(--color-checkbox-primary-checked)]",
       "has-[:checked]:bg-primary-hover-dark dark:has-[:checked]:bg-primary-hover-light"
     ]
@@ -443,7 +445,7 @@ defmodule CommunityDemoWeb.Components.RadioCard do
   defp color_variant("default", "secondary") do
     [
       "bg-secondary-light text-white dark:bg-secondary-dark dark:text-black",
-      "checked:[&_.radio-card-input]:text-[var(--color-checkbox-secondary-checked)]",
+      "[&_.radio-card-input]:checked:accent-[var(--color-checkbox-secondary-checked)]",
       "[&_.radio-card-input]:border-[var(--color-checkbox-secondary-checked)]",
       "has-[:checked]:bg-secondary-hover-light dark:has-[:checked]:bg-secondary-hover-dark"
     ]
@@ -452,7 +454,7 @@ defmodule CommunityDemoWeb.Components.RadioCard do
   defp color_variant("default", "success") do
     [
       "bg-success-light text-white dark:bg-success-dark dark:text-black",
-      "checked:[&_.radio-card-input]:text-[var(--color-checkbox-success-checked)]",
+      "[&_.radio-card-input]:checked:accent-[var(--color-checkbox-success-checked)]",
       "[&_.radio-card-input]:border-[var(--color-checkbox-success-checked)]",
       "has-[:checked]:bg-success-hover-light dark:has-[:checked]:bg-success-hover-dark"
     ]
@@ -461,7 +463,7 @@ defmodule CommunityDemoWeb.Components.RadioCard do
   defp color_variant("default", "warning") do
     [
       "bg-warning-light text-white dark:bg-warning-dark dark:text-black",
-      "checked:[&_.radio-card-input]:text-[var(--color-checkbox-warning-checked)]",
+      "[&_.radio-card-input]:checked:accent-[var(--color-checkbox-warning-checked)]",
       "[&_.radio-card-input]:border-[var(--color-checkbox-warning-checked)]",
       "has-[:checked]:bg-warning-hover-light dark:has-[:checked]:bg-warning-hover-dark"
     ]
@@ -470,7 +472,7 @@ defmodule CommunityDemoWeb.Components.RadioCard do
   defp color_variant("default", "danger") do
     [
       "bg-danger-light text-white dark:bg-danger-dark dark:text-black",
-      "checked:[&_.radio-card-input]:text-[var(--color-checkbox-danger-checked)]",
+      "[&_.radio-card-input]:checked:accent-[var(--color-checkbox-danger-checked)]",
       "[&_.radio-card-input]:border-[var(--color-checkbox-danger-checked)]",
       "has-[:checked]:bg-danger-hover-light dark:has-[:checked]:bg-danger-hover-dark"
     ]
@@ -479,7 +481,7 @@ defmodule CommunityDemoWeb.Components.RadioCard do
   defp color_variant("default", "info") do
     [
       "bg-info-light text-white dark:bg-info-dark dark:text-black",
-      "checked:[&_.radio-card-input]:text-[var(--color-checkbox-info-checked)]",
+      "[&_.radio-card-input]:checked:accent-[var(--color-checkbox-info-checked)]",
       "[&_.radio-card-input]:border-[var(--color-checkbox-info-checked)]",
       "has-[:checked]:bg-info-hover-light dark:has-[:checked]:bg-info-hover-dark"
     ]
@@ -488,7 +490,7 @@ defmodule CommunityDemoWeb.Components.RadioCard do
   defp color_variant("default", "misc") do
     [
       "bg-misc-light text-white dark:bg-misc-dark dark:text-black",
-      "checked:[&_.radio-card-input]:text-[var(--color-checkbox-misc-checked)]",
+      "[&_.radio-card-input]:checked:accent-[var(--color-checkbox-misc-checked)]",
       "[&_.radio-card-input]:border-[var(--color-checkbox-misc-checked)]",
       "has-[:checked]:bg-misc-hover-light dark:has-[:checked]:bg-misc-hover-dark"
     ]
@@ -497,7 +499,7 @@ defmodule CommunityDemoWeb.Components.RadioCard do
   defp color_variant("default", "dawn") do
     [
       "bg-dawn-light text-white dark:bg-dawn-dark dark:text-black",
-      "checked:[&_.radio-card-input]:text-[var(--color-checkbox-dawn-checked)]",
+      "[&_.radio-card-input]:checked:accent-[var(--color-checkbox-dawn-checked)]",
       "[&_.radio-card-input]:border-[var(--color-checkbox-dawn-checked)]",
       "has-[:checked]:bg-dawn-hover-light dark:has-[:checked]:bg-dawn-hover-dark"
     ]
@@ -506,7 +508,7 @@ defmodule CommunityDemoWeb.Components.RadioCard do
   defp color_variant("default", "silver") do
     [
       "bg-silver-light text-white dark:bg-silver-dark dark:text-black",
-      "checked:[&_.radio-card-input]:text-silver-dark",
+      "[&_.radio-card-input]:checked:accent-silver-dark",
       "[&_.radio-card-input]:border-silver-dark",
       "has-[:checked]:bg-silver-hover-light dark:has-[:checked]:bg-silver-hover-dark"
     ]
@@ -515,9 +517,9 @@ defmodule CommunityDemoWeb.Components.RadioCard do
   defp color_variant("outline", "natural") do
     [
       "text-natural-light border-natural-light dark:text-natural-dark dark:border-natural-dark",
-      "checked:[&_.radio-card-input]:text-natural-dark",
+      "[&_.radio-card-input]:checked:accent-natural-dark",
       "[&_.radio-card-input]:border-natural-dark",
-      "dark:checked:[&_.radio-card-input]:text-natural-light",
+      "dark:[&_.radio-card-input]:checked:accent-natural-light",
       "dark:[&_.radio-card-input]:border-natural-light",
       "has-[:checked]:border-black dark:has-[:checked]:border-white"
     ]
@@ -526,9 +528,9 @@ defmodule CommunityDemoWeb.Components.RadioCard do
   defp color_variant("outline", "primary") do
     [
       "text-primary-light border-primary-light dark:text-primary-dark dark:border-primary-dark",
-      "checked:[&_.radio-card-input]:text-primary-light",
+      "[&_.radio-card-input]:checked:accent-primary-light",
       "[&_.radio-card-input]:border-primary-light",
-      "dark:checked:[&_.radio-card-input]:text-primary-dark",
+      "dark:[&_.radio-card-input]:checked:accent-primary-dark",
       "dark:[&_.radio-card-input]:border-primary-dark",
       "has-[:checked]:border-primary-indicator-light dark:has-[:checked]:border-primary-indicator-dark"
     ]
@@ -537,9 +539,9 @@ defmodule CommunityDemoWeb.Components.RadioCard do
   defp color_variant("outline", "secondary") do
     [
       "text-secondary-light border-secondary-light dark:text-secondary-dark dark:border-secondary-dark",
-      "checked:[&_.radio-card-input]:text-secondary-light",
+      "[&_.radio-card-input]:checked:accent-secondary-light",
       "[&_.radio-card-input]:border-secondary-light",
-      "dark:checked:[&_.radio-card-input]:text-secondary-dark",
+      "dark:[&_.radio-card-input]:checked:accent-secondary-dark",
       "dark:[&_.radio-card-input]:border-secondary-dark",
       "has-[:checked]:border-secondary-indicator-light dark:has-[:checked]:border-secondary-indicator-dark"
     ]
@@ -548,9 +550,9 @@ defmodule CommunityDemoWeb.Components.RadioCard do
   defp color_variant("outline", "success") do
     [
       "text-success-light border-success-light dark:text-success-dark dark:border-success-dark",
-      "checked:[&_.radio-card-input]:text-success-light",
+      "[&_.radio-card-input]:checked:accent-success-light",
       "[&_.radio-card-input]:border-success-light",
-      "dark:checked:[&_.radio-card-input]:text-success-dark",
+      "dark:[&_.radio-card-input]:checked:accent-success-dark",
       "dark:[&_.radio-card-input]:border-success-dark",
       "has-[:checked]:border-success-indicator-alt-light dark:has-[:checked]:border-success-indicator-dark"
     ]
@@ -559,9 +561,9 @@ defmodule CommunityDemoWeb.Components.RadioCard do
   defp color_variant("outline", "warning") do
     [
       "text-warning-light border-warning-light dark:text-warning-dark dark:border-warning-dark",
-      "checked:[&_.radio-card-input]:text-warning-light",
+      "[&_.radio-card-input]:checked:accent-warning-light",
       "[&_.radio-card-input]:border-warning-light",
-      "dark:checked:[&_.radio-card-input]:text-warning-dark",
+      "dark:[&_.radio-card-input]:checked:accent-warning-dark",
       "dark:[&_.radio-card-input]:border-warning-dark",
       "has-[:checked]:border-warning-indicator-alt-light dark:has-[:checked]:border-warning-indicator-dark"
     ]
@@ -570,9 +572,9 @@ defmodule CommunityDemoWeb.Components.RadioCard do
   defp color_variant("outline", "danger") do
     [
       "text-danger-light border-danger-light dark:text-danger-dark dark:border-danger-dark",
-      "checked:[&_.radio-card-input]:text-danger-light",
+      "[&_.radio-card-input]:checked:accent-danger-light",
       "[&_.radio-card-input]:border-danger-light",
-      "dark:checked:[&_.radio-card-input]:text-danger-dark",
+      "dark:[&_.radio-card-input]:checked:accent-danger-dark",
       "dark:[&_.radio-card-input]:border-danger-dark",
       "has-[:checked]:border-danger-indicator-alt-light dark:has-[:checked]:border-danger-indicator-dark"
     ]
@@ -581,9 +583,9 @@ defmodule CommunityDemoWeb.Components.RadioCard do
   defp color_variant("outline", "info") do
     [
       "text-info-light border-info-light dark:text-info-dark dark:border-info-dark",
-      "checked:[&_.radio-card-input]:text-info-light",
+      "[&_.radio-card-input]:checked:accent-info-light",
       "[&_.radio-card-input]:border-info-light",
-      "dark:checked:[&_.radio-card-input]:text-info-dark",
+      "dark:[&_.radio-card-input]:checked:accent-info-dark",
       "dark:[&_.radio-card-input]:border-info-dark",
       "has-[:checked]:border-info-indicator-alt-light dark:has-[:checked]:border-info-indicator-dark"
     ]
@@ -592,9 +594,9 @@ defmodule CommunityDemoWeb.Components.RadioCard do
   defp color_variant("outline", "misc") do
     [
       "text-misc-light border-misc-light dark:text-misc-dark dark:border-misc-dark",
-      "checked:[&_.radio-card-input]:text-misc-light",
+      "[&_.radio-card-input]:checked:accent-misc-light",
       "[&_.radio-card-input]:border-misc-light",
-      "dark:checked:[&_.radio-card-input]:text-misc-dark",
+      "dark:[&_.radio-card-input]:checked:accent-misc-dark",
       "dark:[&_.radio-card-input]:border-misc-dark",
       "has-[:checked]:border-misc-indicator-alt-light dark:has-[:checked]:border-misc-indicator-dark"
     ]
@@ -603,9 +605,9 @@ defmodule CommunityDemoWeb.Components.RadioCard do
   defp color_variant("outline", "dawn") do
     [
       "text-dawn-light border-dawn-light dark:text-dawn-dark dark:border-dawn-dark",
-      "checked:[&_.radio-card-input]:text-dawn-light",
+      "[&_.radio-card-input]:checked:accent-dawn-light",
       "[&_.radio-card-input]:border-dawn-light",
-      "dark:checked:[&_.radio-card-input]:text-dawn-dark",
+      "dark:[&_.radio-card-input]:checked:accent-dawn-dark",
       "dark:[&_.radio-card-input]:border-dawn-dark",
       "has-[:checked]:border-dawn-indicator-alt-light dark:has-[:checked]:border-dawn-indicator-dark"
     ]
@@ -614,9 +616,9 @@ defmodule CommunityDemoWeb.Components.RadioCard do
   defp color_variant("outline", "silver") do
     [
       "text-silver-light border-silver-light dark:text-silver-dark dark:border-silver-dark",
-      "checked:[&_.radio-card-input]:text-silver-light",
+      "[&_.radio-card-input]:checked:accent-silver-light",
       "[&_.radio-card-input]:border-silver-light",
-      "dark:checked:[&_.radio-card-input]:text-silver-dark",
+      "dark:[&_.radio-card-input]:checked:accent-silver-dark",
       "dark:[&_.radio-card-input]:border-silver-dark",
       "has-[:checked]:border-silver-indicator-alt-light dark:has-[:checked]:border-silver-indicator-dark"
     ]
@@ -626,8 +628,8 @@ defmodule CommunityDemoWeb.Components.RadioCard do
     [
       "bg-natural-light text-white dark:bg-natural-dark dark:text-black",
       "shadow-[0px_4px_6px_-4px_var(--color-shadow-natural)] shadow-[0px_10px_15px_-3px_var(--color-shadow-natural)] dark:shadow-none",
-      "checked:[&_.radio-card-input]:text-silver-light",
-      "dark:checked:[&_.radio-card-input]:text-silver-hover-dark",
+      "[&_.radio-card-input]:checked:accent-silver-light",
+      "dark:[&_.radio-card-input]:checked:accent-silver-hover-dark",
       "[&_.radio-card-input]:border-base-border-light dark:[&_.radio-card-input]:border-base-border-dark",
       "has-[:checked]:bg-natural-hover-light dark:has-[:checked]:bg-natural-hover-dark"
     ]
@@ -637,7 +639,7 @@ defmodule CommunityDemoWeb.Components.RadioCard do
     [
       "bg-primary-light text-white dark:bg-primary-dark dark:text-black",
       "shadow-[0px_4px_6px_-4px_var(--color-shadow-primary)] shadow-[0px_10px_15px_-3px_var(--color-shadow-primary)] dark:shadow-none",
-      "checked:[&_.radio-card-input]:text-[var(--color-checkbox-primary-checked)]",
+      "[&_.radio-card-input]:checked:accent-[var(--color-checkbox-primary-checked)]",
       "[&_.radio-card-input]:border-[var(--color-checkbox-primary-checked)]",
       "has-[:checked]:bg-primary-hover-dark dark:has-[:checked]:bg-primary-hover-light"
     ]
@@ -647,7 +649,7 @@ defmodule CommunityDemoWeb.Components.RadioCard do
     [
       "bg-secondary-light text-white dark:bg-secondary-dark dark:text-black",
       "shadow-[0px_4px_6px_-4px_var(--color-shadow-secondary)] shadow-[0px_10px_15px_-3px_var(--color-shadow-secondary)] dark:shadow-none",
-      "checked:[&_.radio-card-input]:text-[var(--color-checkbox-secondary-checked)]",
+      "[&_.radio-card-input]:checked:accent-[var(--color-checkbox-secondary-checked)]",
       "[&_.radio-card-input]:border-[var(--color-checkbox-secondary-checked)]",
       "has-[:checked]:bg-secondary-hover-light dark:has-[:checked]:bg-primary-hover-light"
     ]
@@ -657,7 +659,7 @@ defmodule CommunityDemoWeb.Components.RadioCard do
     [
       "bg-success-light text-white dark:bg-success-dark dark:text-black",
       "shadow-[0px_4px_6px_-4px_var(--color-shadow-success)] shadow-[0px_10px_15px_-3px_var(--color-shadow-success)] dark:shadow-none",
-      "checked:[&_.radio-card-input]:text-[var(--color-checkbox-success-checked)]",
+      "[&_.radio-card-input]:checked:accent-[var(--color-checkbox-success-checked)]",
       "[&_.radio-card-input]:border-[var(--color-checkbox-success-checked)]",
       "has-[:checked]:bg-success-hover-light dark:has-[:checked]:bg-success-hover-dark"
     ]
@@ -667,7 +669,7 @@ defmodule CommunityDemoWeb.Components.RadioCard do
     [
       "bg-warning-light text-white dark:bg-warning-dark dark:text-black",
       "shadow-[0px_4px_6px_-4px_var(--color-shadow-warning)] shadow-[0px_10px_15px_-3px_var(--color-shadow-warning)] dark:shadow-none",
-      "checked:[&_.radio-card-input]:text-[var(--color-checkbox-warning-checked)]",
+      "[&_.radio-card-input]:checked:accent-[var(--color-checkbox-warning-checked)]",
       "[&_.radio-card-input]:border-[var(--color-checkbox-warning-checked)]",
       "has-[:checked]:bg-warning-hover-light dark:has-[:checked]:bg-warning-hover-dark"
     ]
@@ -677,7 +679,7 @@ defmodule CommunityDemoWeb.Components.RadioCard do
     [
       "bg-danger-light text-white dark:bg-danger-dark dark:text-black",
       "shadow-[0px_4px_6px_-4px_var(--color-shadow-danger)] shadow-[0px_10px_15px_-3px_var(--color-shadow-danger)] dark:shadow-none",
-      "checked:[&_.radio-card-input]:text-[var(--color-checkbox-danger-checked)]",
+      "[&_.radio-card-input]:checked:accent-[var(--color-checkbox-danger-checked)]",
       "[&_.radio-card-input]:border-[var(--color-checkbox-danger-checked)]",
       "has-[:checked]:bg-danger-hover-light dark:has-[:checked]:bg-danger-hover-dark"
     ]
@@ -687,7 +689,7 @@ defmodule CommunityDemoWeb.Components.RadioCard do
     [
       "bg-info-light text-white dark:bg-info-dark dark:text-black",
       "shadow-[0px_4px_6px_-4px_var(--color-shadow-info)] shadow-[0px_10px_15px_-3px_var(--color-shadow-info)] dark:shadow-none",
-      "checked:[&_.radio-card-input]:text-[var(--color-checkbox-info-checked)]",
+      "[&_.radio-card-input]:checked:accent-[var(--color-checkbox-info-checked)]",
       "[&_.radio-card-input]:border-[var(--color-checkbox-info-checked)]",
       "has-[:checked]:bg-info-hover-light dark:has-[:checked]:bg-info-hover-dark"
     ]
@@ -697,7 +699,7 @@ defmodule CommunityDemoWeb.Components.RadioCard do
     [
       "bg-misc-dark text-white dark:bg-misc-dark dark:text-black",
       "shadow-[0px_4px_6px_-4px_var(--color-shadow-misc)] shadow-[0px_10px_15px_-3px_var(--color-shadow-misc)] dark:shadow-none",
-      "checked:[&_.radio-card-input]:text-[var(--color-checkbox-misc-checked)]",
+      "[&_.radio-card-input]:checked:accent-[var(--color-checkbox-misc-checked)]",
       "[&_.radio-card-input]:border-[var(--color-checkbox-misc-checked)]",
       "has-[:checked]:bg-misc-hover-light dark:has-[:checked]:bg-misc-hover-dark"
     ]
@@ -707,7 +709,7 @@ defmodule CommunityDemoWeb.Components.RadioCard do
     [
       "bg-dawn-light text-white dark:bg-dawn-dark dark:text-black",
       "shadow-[0px_4px_6px_-4px_var(--color-shadow-dawn)] shadow-[0px_10px_15px_-3px_var(--color-shadow-dawn)] dark:shadow-none",
-      "checked:[&_.radio-card-input]:text-[var(--color-checkbox-dawn-checked)]",
+      "[&_.radio-card-input]:checked:accent-[var(--color-checkbox-dawn-checked)]",
       "[&_.radio-card-input]:border-[var(--color-checkbox-dawn-checked)]",
       "has-[:checked]:bg-dawn-hover-light dark:has-[:checked]:bg-dawn-hover-dark"
     ]
@@ -717,7 +719,7 @@ defmodule CommunityDemoWeb.Components.RadioCard do
     [
       "bg-silver-light text-white dark:bg-silver-dark dark:text-black",
       "shadow-[0px_4px_6px_-4px_var(--color-shadow-silver)] shadow-[0px_10px_15px_-3px_var(--color-shadow-silver)] dark:shadow-none",
-      "checked:[&_.radio-card-input]:text-silver-dark",
+      "[&_.radio-card-input]:checked:accent-silver-dark",
       "[&_.radio-card-input]:border-silver-dark",
       "has-[:checked]:bg-silver-hover-light dark:has-[:checked]:bg-silver-hover-dark"
     ]
@@ -726,7 +728,7 @@ defmodule CommunityDemoWeb.Components.RadioCard do
   defp color_variant("bordered", "white") do
     [
       "bg-white text-black border-[var(--color-bordered-white-border)]",
-      "checked:[&_.radio-card-input]:text-black",
+      "[&_.radio-card-input]:checked:accent-black",
       "[&_.radio-card-input]:border-black",
       "has-[:checked]:bg-[var(--color-checkbox-white-checked)]"
     ]
@@ -735,7 +737,7 @@ defmodule CommunityDemoWeb.Components.RadioCard do
   defp color_variant("bordered", "dark") do
     [
       "bg-[var(--color-bordered-dark-bg)] text-white border-[var(--color-bordered-dark-border)]",
-      "checked:[&_.radio-card-input]:text-white",
+      "[&_.radio-card-input]:checked:accent-white",
       "[&_.radio-card-input]:border-white",
       "has-[:checked]:bg-[var(--color-checkbox-dark-checked)]"
     ]
@@ -745,8 +747,8 @@ defmodule CommunityDemoWeb.Components.RadioCard do
     [
       "text-natural-bordered-text-light border-natural-bordered-text-light bg-natural-bordered-bg-light",
       "dark:text-natural-bordered-text-dark dark:border-natural-bordered-text-dark dark:bg-natural-bordered-bg-dark",
-      "checked:[&_.radio-card-input]:text-black",
-      "dark:checked:[&_.radio-card-input]:text-white",
+      "[&_.radio-card-input]:checked:accent-black",
+      "dark:[&_.radio-card-input]:checked:accent-white",
       "[&_.radio-card-input]:border-natural-bordered-text-light dark:[&_.radio-card-input]:border-natural-bordered-text-dark",
       "has-[:checked]:border-black dark:has-[:checked]:border-white",
       "has-[:checked]:bg-natural-hover-dark dark:has-[:checked]:bg-silver-light"
@@ -757,8 +759,8 @@ defmodule CommunityDemoWeb.Components.RadioCard do
     [
       "text-primary-bordered-text-light border-primary-bordered-text-light bg-primary-bordered-bg-light",
       "dark:text-primary-bordered-text-dark dark:border-primary-bordered-text-dark dark:bg-primary-bordered-bg-dark",
-      "checked:[&_.radio-card-input]:text-primary-bordered-text-light",
-      "dark:checked:[&_.radio-card-input]:text-primary-bordered-text-dark",
+      "[&_.radio-card-input]:checked:accent-primary-bordered-text-light",
+      "dark:[&_.radio-card-input]:checked:accent-primary-bordered-text-dark",
       "[&_.radio-card-input]:border-primary-bordered-text-light dark:[&_.radio-card-input]:border-primary-bordered-text-dark",
       "has-[:checked]:border-primary-indicator-light dark:has-[:checked]:border-primary-indicator-dark",
       "has-[:checked]:bg-[var(--color-primary-gradient-indicator-dark)] dark:has-[:checked]:bg-primary-indicator-light"
@@ -769,8 +771,8 @@ defmodule CommunityDemoWeb.Components.RadioCard do
     [
       "text-secondary-bordered-text-light border-secondary-bordered-text-light bg-secondary-bordered-bg-light",
       "dark:text-secondary-bordered-text-dark dark:border-secondary-bordered-text-dark dark:bg-secondary-bordered-bg-dark",
-      "checked:[&_.radio-card-input]:text-secondary-bordered-text-light",
-      "dark:checked:[&_.radio-card-input]:text-secondary-bordered-text-dark",
+      "[&_.radio-card-input]:checked:accent-secondary-bordered-text-light",
+      "dark:[&_.radio-card-input]:checked:accent-secondary-bordered-text-dark",
       "[&_.radio-card-input]:border-secondary-bordered-text-light dark:[&_.radio-card-input]:border-secondary-bordered-text-dark",
       "has-[:checked]:border-secondary-indicator-light dark:has-[:checked]:border-secondary-indicator-dark",
       "has-[:checked]:bg-[var(--color-secondary-gradient-indicator-dark)] dark:has-[:checked]:bg-secondary-indicator-light"
@@ -781,8 +783,8 @@ defmodule CommunityDemoWeb.Components.RadioCard do
     [
       "text-success-bordered-text-light border-success-bordered-text-light bg-success-bordered-bg-light",
       "dark:text-success-bordered-text-dark dark:border-success-bordered-text-dark dark:bg-success-bordered-bg-dark",
-      "checked:[&_.radio-card-input]:text-success-bordered-text-light",
-      "dark:checked:[&_.radio-card-input]:text-success-bordered-text-dark",
+      "[&_.radio-card-input]:checked:accent-success-bordered-text-light",
+      "dark:[&_.radio-card-input]:checked:accent-success-bordered-text-dark",
       "[&_.radio-card-input]:border-success-bordered-text-light dark:[&_.radio-card-input]:border-success-bordered-text-dark",
       "has-[:checked]:border-success-indicator-alt-light dark:has-[:checked]:border-success-indicator-dark",
       "has-[:checked]:bg-[var(--color-success-gradient-indicator-dark)] dark:has-[:checked]:bg-success-indicator-alt-light"
@@ -793,8 +795,8 @@ defmodule CommunityDemoWeb.Components.RadioCard do
     [
       "text-warning-bordered-text-light border-warning-bordered-text-light bg-warning-bordered-bg-light",
       "dark:text-warning-bordered-text-dark dark:border-warning-bordered-text-dark dark:bg-warning-bordered-bg-dark",
-      "checked:[&_.radio-card-input]:text-warning-bordered-text-light",
-      "dark:checked:[&_.radio-card-input]:text-warning-bordered-text-dark",
+      "[&_.radio-card-input]:checked:accent-warning-bordered-text-light",
+      "dark:[&_.radio-card-input]:checked:accent-warning-bordered-text-dark",
       "[&_.radio-card-input]:border-warning-bordered-text-light dark:[&_.radio-card-input]:border-warning-bordered-text-dark",
       "has-[:checked]:border-warning-indicator-alt-light dark:has-[:checked]:border-warning-indicator-dark",
       "has-[:checked]:bg-[var(--color-warning-gradient-indicator-dark)] dark:has-[:checked]:bg-warning-indicator-alt-light"
@@ -805,8 +807,8 @@ defmodule CommunityDemoWeb.Components.RadioCard do
     [
       "text-danger-bordered-text-light border-danger-bordered-text-light bg-danger-bordered-bg-light",
       "dark:text-danger-bordered-text-dark dark:border-danger-bordered-text-dark dark:bg-danger-bordered-bg-dark",
-      "checked:[&_.radio-card-input]:text-danger-bordered-text-light",
-      "dark:checked:[&_.radio-card-input]:text-danger-bordered-text-dark",
+      "[&_.radio-card-input]:checked:accent-danger-bordered-text-light",
+      "dark:[&_.radio-card-input]:checked:accent-danger-bordered-text-dark",
       "[&_.radio-card-input]:border-danger-bordered-text-light dark:[&_.radio-card-input]:border-danger-bordered-text-dark",
       "has-[:checked]:border-danger-indicator-alt-light dark:has-[:checked]:border-danger-indicator-dark",
       "has-[:checked]:bg-[var(--color-danger-gradient-indicator-dark)] dark:has-[:checked]:bg-danger-indicator-alt-light"
@@ -817,8 +819,8 @@ defmodule CommunityDemoWeb.Components.RadioCard do
     [
       "text-info-bordered-text-light border-info-bordered-text-light bg-info-bordered-bg-light",
       "dark:text-info-hover-dark dark:border-info-hover-dark dark:bg-info-bordered-bg-dark",
-      "checked:[&_.radio-card-input]:text-info-bordered-text-light",
-      "dark:checked:[&_.radio-card-input]:text-info--bordered-text-dark",
+      "[&_.radio-card-input]:checked:accent-info-bordered-text-light",
+      "dark:[&_.radio-card-input]:checked:accent-info--bordered-text-dark",
       "[&_.radio-card-input]:border-info-bordered-text-light dark:[&_.radio-card-input]:border-info-bordered-text-dark",
       "has-[:checked]:border-info-indicator-alt-light dark:has-[:checked]:border-info-indicator-dark",
       "has-[:checked]:bg-[var(--color-info-gradient-indicator-dark)] dark:has-[:checked]:bg-info-indicator-alt-light"
@@ -829,8 +831,8 @@ defmodule CommunityDemoWeb.Components.RadioCard do
     [
       "text-misc-bordered-text-light border-misc-bordered-text-light bg-misc-bordered-bg-light",
       "dark:text-misc-bordered-text-dark dark:border-misc-bordered-text-dark dark:bg-misc-bordered-bg-dark",
-      "checked:[&_.radio-card-input]:text-misc-bordered-text-light",
-      "dark:checked:[&_.radio-card-input]:text-misc-bordered-text-dark",
+      "[&_.radio-card-input]:checked:accent-misc-bordered-text-light",
+      "dark:[&_.radio-card-input]:checked:accent-misc-bordered-text-dark",
       "[&_.radio-card-input]:border-misc-bordered-text-light dark:[&_.radio-card-input]:border-misc-bordered-text-dark",
       "has-[:checked]:border-misc-indicator-alt-light dark:has-[:checked]:border-misc-indicator-dark",
       "has-[:checked]:bg-[var(--color-misc-gradient-indicator-dark)] dark:has-[:checked]:bg-misc-indicator-alt-light"
@@ -841,8 +843,8 @@ defmodule CommunityDemoWeb.Components.RadioCard do
     [
       "text-dawn-bordered-text-light border-dawn-bordered-text-light bg-dawn-bordered-bg-light",
       "dark:text-dawn-bordered-text-dark dark:border-dawn-bordered-text-dark dark:bg-dawn-bordered-bg-dark",
-      "checked:[&_.radio-card-input]:text-dawn-bordered-text-light",
-      "dark:checked:[&_.radio-card-input]:text-dawn-bordered-text-dark",
+      "[&_.radio-card-input]:checked:accent-dawn-bordered-text-light",
+      "dark:[&_.radio-card-input]:checked:accent-dawn-bordered-text-dark",
       "[&_.radio-card-input]:border-dawn-bordered-text-light dark:[&_.radio-card-input]:border-dawn-bordered-text-dark",
       "has-[:checked]:border-dawn-indicator-alt-light dark:has-[:checked]:border-dawn-indicator-dark",
       "has-[:checked]:bg-[var(--color-dawn-gradient-indicator-dark)] dark:has-[:checked]:bg-dawn-indicator-alt-light"
@@ -853,8 +855,8 @@ defmodule CommunityDemoWeb.Components.RadioCard do
     [
       "text-silver-bordered-text-light border-silver-bordered-text-light bg-silver-bordered-bg-light",
       "dark:text-silver-bordered-text-dark dark:border-silver-bordered-text-dark dark:bg-silver-bordered-bg-dark",
-      "checked:[&_.radio-card-input]:text-silver-bordered-text-light",
-      "dark:checked:[&_.radio-card-input]:text-silver-bordered-text-dark",
+      "[&_.radio-card-input]:checked:accent-silver-bordered-text-light",
+      "dark:[&_.radio-card-input]:checked:accent-silver-bordered-text-dark",
       "[&_.radio-card-input]:border-silver-bordered-text-light dark:[&_.radio-card-input]:border-silver-bordered-text-dark",
       "has-[:checked]:border-silver-indicator-alt-light dark:has-[:checked]:border-silver-indicator-dark",
       "has-[:checked]:bg-natural-hover-dark dark:has-[:checked]:bg-silver-indicator-alt-light"

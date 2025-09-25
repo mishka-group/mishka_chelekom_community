@@ -18,6 +18,8 @@ defmodule CommunityDemoWeb.Components.List do
 
   This module is ideal for creating well-structured and visually appealing lists in
   your Phoenix LiveView applications.
+
+  **Documentation:** https://mishka.tools/chelekom/docs/list
   """
 
   use Phoenix.Component

@@ -21,6 +21,8 @@ defmodule CommunityDemoWeb.Components.Skeleton do
 
   This component is ideal for providing visual feedback during data fetching or other asynchronous
   operations, making the UI more responsive and engaging for users.
+
+  **Documentation:** https://mishka.tools/chelekom/docs/skeleton
   """
 
   use Phoenix.Component

@@ -12,6 +12,8 @@ defmodule CommunityDemoWeb.Components.DeviceMockup do
   - Flexible layout options, allowing you to include images or custom content within the device frame.
   - Easily integrable with other components for displaying responsive media content or
   application previews.
+
+  **Documentation:** https://mishka.tools/chelekom/docs/device-mockup
   """
   use Phoenix.Component
   import CommunityDemoWeb.Components.Image, only: [image: 1]

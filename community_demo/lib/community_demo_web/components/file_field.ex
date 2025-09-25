@@ -17,6 +17,8 @@ defmodule CommunityDemoWeb.Components.FileField do
 
   This component is designed to simplify file handling in forms and offers a visually
   appealing and user-friendly experience for uploading files in LiveView applications.
+
+  **Documentation:** https://mishka.tools/chelekom/docs/forms/file-field
   """
 
   use Phoenix.Component
@@ -400,89 +402,89 @@ defmodule CommunityDemoWeb.Components.FileField do
 
   defp color_class("base") do
     [
-      "[&_.file-field]:bg-white file:[&_.file-field]:text-base-text-light [&_.file-field]:text-base-text-light file:[&_.file-field]:bg-base-border-light",
-      "dark:[&_.file-field]:bg-base-border-dark dark:file:[&_.file-field]:bg-base-bg-dark",
-      "dark:file:[&_.file-field]:text-base-text-dark dark:[&_.file-field]:text-base-text-dark"
+      "[&_.file-field]:bg-white [&_.file-field]:file:text-base-text-light [&_.file-field]:text-base-text-light [&_.file-field]:file:bg-base-border-light",
+      "dark:[&_.file-field]:bg-base-border-dark dark:[&_.file-field]:file:bg-base-bg-dark",
+      "dark:[&_.file-field]:file:text-base-text-dark dark:[&_.file-field]:text-base-text-dark"
     ]
   end
 
   defp color_class("natural") do
     [
-      "[&_.file-field]:bg-natural-light file:[&_.file-field]:text-white [&_.file-field]:text-white file:[&_.file-field]:bg-natural-bordered-text-light",
-      "dark:[&_.file-field]:bg-natural-hover-dark dark:file:[&_.file-field]:bg-natural-dark",
-      "dark:file:[&_.file-field]:text-black dark:[&_.file-field]:text-black"
+      "[&_.file-field]:bg-natural-light [&_.file-field]:file:text-white [&_.file-field]:text-white [&_.file-field]:file:bg-natural-bordered-text-light",
+      "dark:[&_.file-field]:bg-natural-hover-dark dark:[&_.file-field]:file:bg-natural-dark",
+      "dark:[&_.file-field]:file:text-black dark:[&_.file-field]:text-black"
     ]
   end
 
   defp color_class("primary") do
     [
-      "[&_.file-field]:bg-primary-light file:[&_.file-field]:text-white [&_.file-field]:text-white file:[&_.file-field]:bg-primary-hover-light",
-      "dark:[&_.file-field]:bg-primary-hover-dark dark:file:[&_.file-field]:bg-primary-dark",
-      "dark:file:[&_.file-field]:text-black dark:[&_.file-field]:text-black"
+      "[&_.file-field]:bg-primary-light [&_.file-field]:file:text-white [&_.file-field]:text-white [&_.file-field]:file:bg-primary-hover-light",
+      "dark:[&_.file-field]:bg-primary-hover-dark dark:[&_.file-field]:file:bg-primary-dark",
+      "dark:[&_.file-field]:file:text-black dark:[&_.file-field]:text-black"
     ]
   end
 
   defp color_class("secondary") do
     [
-      "[&_.file-field]:bg-secondary-light file:[&_.file-field]:text-white [&_.file-field]:text-white file:[&_.file-field]:bg-secondary-hover-light",
-      "dark:[&_.file-field]:bg-secondary-hover-dark dark:file:[&_.file-field]:bg-secondary-dark",
-      "dark:file:[&_.file-field]:text-black dark:[&_.file-field]:text-black"
+      "[&_.file-field]:bg-secondary-light [&_.file-field]:file:text-white [&_.file-field]:text-white [&_.file-field]:file:bg-secondary-hover-light",
+      "dark:[&_.file-field]:bg-secondary-hover-dark dark:[&_.file-field]:file:bg-secondary-dark",
+      "dark:[&_.file-field]:file:text-black dark:[&_.file-field]:text-black"
     ]
   end
 
   defp color_class("success") do
     [
-      "[&_.file-field]:bg-success-light file:[&_.file-field]:text-white [&_.file-field]:text-white file:[&_.file-field]:bg-success-hover-light",
-      "dark:[&_.file-field]:bg-success-hover-dark dark:file:[&_.file-field]:bg-success-dark",
-      "dark:file:[&_.file-field]:text-black dark:[&_.file-field]:text-black"
+      "[&_.file-field]:bg-success-light [&_.file-field]:file:text-white [&_.file-field]:text-white [&_.file-field]:file:bg-success-hover-light",
+      "dark:[&_.file-field]:bg-success-hover-dark dark:[&_.file-field]:file:bg-success-dark",
+      "dark:[&_.file-field]:file:text-black dark:[&_.file-field]:text-black"
     ]
   end
 
   defp color_class("warning") do
     [
-      "[&_.file-field]:bg-warning-light file:[&_.file-field]:text-white [&_.file-field]:text-white file:[&_.file-field]:bg-warning-hover-light",
-      "dark:[&_.file-field]:bg-warning-hover-dark dark:file:[&_.file-field]:bg-warning-dark",
-      "dark:file:[&_.file-field]:text-black dark:[&_.file-field]:text-black"
+      "[&_.file-field]:bg-warning-light [&_.file-field]:file:text-white [&_.file-field]:text-white [&_.file-field]:file:bg-warning-hover-light",
+      "dark:[&_.file-field]:bg-warning-hover-dark dark:[&_.file-field]:file:bg-warning-dark",
+      "dark:[&_.file-field]:file:text-black dark:[&_.file-field]:text-black"
     ]
   end
 
   defp color_class("danger") do
     [
-      "[&_.file-field]:bg-danger-light file:[&_.file-field]:text-white [&_.file-field]:text-white file:[&_.file-field]:bg-danger-hover-light",
-      "dark:[&_.file-field]:bg-danger-hover-dark dark:file:[&_.file-field]:bg-danger-dark",
-      "dark:file:[&_.file-field]:text-black dark:[&_.file-field]:text-black"
+      "[&_.file-field]:bg-danger-light [&_.file-field]:file:text-white [&_.file-field]:text-white [&_.file-field]:file:bg-danger-hover-light",
+      "dark:[&_.file-field]:bg-danger-hover-dark dark:[&_.file-field]:file:bg-danger-dark",
+      "dark:[&_.file-field]:file:text-black dark:[&_.file-field]:text-black"
     ]
   end
 
   defp color_class("info") do
     [
-      "[&_.file-field]:bg-info-light file:[&_.file-field]:text-white [&_.file-field]:text-white file:[&_.file-field]:bg-info-hover-light",
-      "dark:[&_.file-field]:bg-info-hover-dark dark:file:[&_.file-field]:bg-info-dark",
-      "dark:file:[&_.file-field]:text-black dark:[&_.file-field]:text-black"
+      "[&_.file-field]:bg-info-light [&_.file-field]:file:text-white [&_.file-field]:text-white [&_.file-field]:file:bg-info-hover-light",
+      "dark:[&_.file-field]:bg-info-hover-dark dark:[&_.file-field]:file:bg-info-dark",
+      "dark:[&_.file-field]:file:text-black dark:[&_.file-field]:text-black"
     ]
   end
 
   defp color_class("misc") do
     [
-      "[&_.file-field]:bg-misc-light file:[&_.file-field]:text-white [&_.file-field]:text-white file:[&_.file-field]:bg-misc-hover-light",
-      "dark:[&_.file-field]:bg-misc-hover-dark dark:file:[&_.file-field]:bg-misc-dark",
-      "dark:file:[&_.file-field]:text-black dark:[&_.file-field]:text-black"
+      "[&_.file-field]:bg-misc-light [&_.file-field]:file:text-white [&_.file-field]:text-white [&_.file-field]:file:bg-misc-hover-light",
+      "dark:[&_.file-field]:bg-misc-hover-dark dark:[&_.file-field]:file:bg-misc-dark",
+      "dark:[&_.file-field]:file:text-black dark:[&_.file-field]:text-black"
     ]
   end
 
   defp color_class("dawn") do
     [
-      "[&_.file-field]:bg-dawn-light file:[&_.file-field]:text-white [&_.file-field]:text-white file:[&_.file-field]:bg-dawn-hover-light",
-      "dark:[&_.file-field]:bg-dawn-hover-dark dark:file:[&_.file-field]:bg-dawn-dark",
-      "dark:file:[&_.file-field]:text-black dark:[&_.file-field]:text-black"
+      "[&_.file-field]:bg-dawn-light [&_.file-field]:file:text-white [&_.file-field]:text-white [&_.file-field]:file:bg-dawn-hover-light",
+      "dark:[&_.file-field]:bg-dawn-hover-dark dark:[&_.file-field]:file:bg-dawn-dark",
+      "dark:[&_.file-field]:file:text-black dark:[&_.file-field]:text-black"
     ]
   end
 
   defp color_class("silver") do
     [
-      "[&_.file-field]:bg-silver-light file:[&_.file-field]:text-white [&_.file-field]:text-white file:[&_.file-field]:bg-silver-hover-light",
-      "dark:[&_.file-field]:bg-silver-hover-dark dark:file:[&_.file-field]:bg-silver-dark",
-      "dark:file:[&_.file-field]:text-black dark:[&_.file-field]:text-black"
+      "[&_.file-field]:bg-silver-light [&_.file-field]:file:text-white [&_.file-field]:text-white [&_.file-field]:file:bg-silver-hover-light",
+      "dark:[&_.file-field]:bg-silver-hover-dark dark:[&_.file-field]:file:bg-silver-dark",
+      "dark:[&_.file-field]:file:text-black dark:[&_.file-field]:text-black"
     ]
   end
 

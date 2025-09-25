@@ -6,6 +6,8 @@ defmodule CommunityDemoWeb.Components.Dropdown do
 
   This module facilitates creating and managing dropdown components in a
   Phoenix LiveView application with flexible customization options.
+
+  **Documentation:** https://mishka.tools/chelekom/docs/dropdown
   """
 
   use Phoenix.Component

@@ -9,6 +9,8 @@ defmodule CommunityDemoWeb.Components.ToggleField do
   The toggle field includes support for accessibility features and can display
   error messages when validation fails. It is designed to be used within
   Phoenix LiveView applications, enabling dynamic interactions.
+
+  **Documentation:** https://mishka.tools/chelekom/docs/forms/toggle
   """
   use Phoenix.Component
   alias Phoenix.HTML.Form

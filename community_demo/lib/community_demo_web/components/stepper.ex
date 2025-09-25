@@ -12,6 +12,8 @@ defmodule CommunityDemoWeb.Components.Stepper do
 
   The `CommunityDemoWeb.Components.Stepper` enhances user experience by providing a clear and concise representation
   of step-by-step workflows, ensuring users can easily track their position and progress within the application.
+
+  **Documentation:** https://mishka.tools/chelekom/docs/stepper
   """
 
   use Phoenix.Component
@@ -199,14 +201,14 @@ defmodule CommunityDemoWeb.Components.Stepper do
 
   def stepper_section(%{vertical: true} = assigns) do
     ~H"""
-    <button
+    <div
       id={@id}
-      role="listitem"
+      role="button"
       aria-label={gettext("Step %{number}: %{title}", number: @step_number, title: @title)}
       aria-disabled={!@clickable}
       aria-current={@step == "current" && "step"}
       class={[
-        "stepper-#{@step}-step",
+        "stepper-#{@step}-step cursor-pointer",
         "vertical-step overflow-hidden flex flex-row text-start gap-4",
         @class
       ]}
@@ -268,22 +270,21 @@ defmodule CommunityDemoWeb.Components.Stepper do
 
         {render_slot(@inner_block)}
       </span>
-    </button>
+    </div>
     """
   end
 
   def stepper_section(assigns) do
     ~H"""
-    <button
+    <div
       id={@id}
-      role="listitem"
+      role="button"
       aria-label={gettext("Step %{number}: %{title}", number: @step_number, title: @title)}
       aria-disabled={!@clickable}
       aria-current={@step == "current" && "step"}
       class={[
-        "stepper-#{@step}-step",
-        "text-start flex flex-nowrap shrink-0",
-        "group-[:not(.col-step)]:justify-center group-[:not(.col-step)]:items-center",
+        "stepper-#{@step}-step cursor-pointer",
+        "text-start flex flex-nowrap shrink-0 items-center",
         @reverse && "flex-row-reverse text-end",
         "group-[.col-step]:flex-col group-[.col-step]:gap-3",
         content_space(@space, @reverse),
@@ -346,7 +347,7 @@ defmodule CommunityDemoWeb.Components.Stepper do
 
         {render_slot(@inner_block)}
       </span>
-    </button>
+    </div>
 
     <div class="stepper-separator w-full flex-1"></div>
     """
@@ -393,36 +394,31 @@ defmodule CommunityDemoWeb.Components.Stepper do
 
   defp content_space("extra_small", reverse?) do
     [
-      (reverse? && "group-[:not(.col-step)_.stepper-content]:me-1") ||
-        "group-[:not(.col-step)_.stepper-content]:ms-1"
+      (reverse? && "me-1") || "[&_.stepper-content]:ms-1"
     ]
   end
 
   defp content_space("small", reverse?) do
     [
-      (reverse? && "group-[:not(.col-step)_.stepper-content]:me-2") ||
-        "group-[:not(.col-step)_.stepper-content]:ms-2"
+      (reverse? && "[&_.stepper-content]:me-2") || "[&_.stepper-content]:ms-2"
     ]
   end
 
   defp content_space("medium", reverse?) do
     [
-      (reverse? && "group-[:not(.col-step)_.stepper-content]:me-3") ||
-        "group-[:not(.col-step)_.stepper-content]:ms-3"
+      (reverse? && "[&_.stepper-content]:me-3") || "[&_.stepper-content]:ms-3"
     ]
   end
 
   defp content_space("large", reverse?) do
     [
-      (reverse? && "group-[:not(.col-step)_.stepper-content]:me-4") ||
-        "group-[:not(.col-step)_.stepper-content]:ms-4"
+      (reverse? && "[&_.stepper-content]:me-4") || "[&_.stepper-content]:ms-4"
     ]
   end
 
   defp content_space("extra_large", reverse?) do
     [
-      (reverse? && "group-[:not(.col-step)_.stepper-content]:me-5") ||
-        "group-[:not(.col-step)_.stepper-content]:ms-5"
+      (reverse? && "[&_.stepper-content]:me-5") || "[&_.stepper-content]:ms-5"
     ]
   end
 
@@ -597,35 +593,35 @@ defmodule CommunityDemoWeb.Components.Stepper do
 
   defp color_variant("base", _) do
     [
-      "[&_.stepper-step]:bg-white [&_.stepper-step]:text-base-text-light [&_.stepper-loading-icon]:fill-stepper-current-light",
-      "[&_.stepper-step]:border-base-border-light [&_.stepper-current-step_.stepper-step]:border-stepper-current-light",
-      "[&_.stepper-current-step_.stepper-step]:text-stepper-current-light",
-      "[&_.stepper-completed-step_.stepper-step]:bg-stepper-completed-light [&_.stepper-completed-step_.stepper-step]:border-stepper-completed-light",
+      "[&_.stepper-step]:bg-white [&_.stepper-step]:text-base-text-light [&_.stepper-loading-icon]:fill-stepper-current-step-text-light",
+      "[&_.stepper-step]:border-base-border-light [&_.stepper-current-step_.stepper-step]:border-stepper-current-step-border-light",
+      "[&_.stepper-current-step_.stepper-step]:text-stepper-current-step-text-light",
+      "[&_.stepper-completed-step_.stepper-step]:bg-stepper-completed-step-bg-light [&_.stepper-completed-step_.stepper-step]:border-stepper-completed-step-border-light",
       "[&_.stepper-completed-step_.stepper-step]:text-white",
       "dark:[&_.stepper-step]:bg-base-bg-dark dark:[&_.stepper-step]:text-base-text-dark dark:[&_.stepper-step]:border-base-border-dark",
-      "dark:[&_.stepper-current-step_.stepper-step]:text-stepper-current-dark",
-      "dark:[&_.stepper-current-step_.stepper-step]:border-stepper-current-dark",
-      "dark:[&_.stepper-completed-step_.stepper-step]:bg-stepper-completed-dark dark:[&_.stepper-completed-step_.stepper-step]:border-stepper-completed-dark",
+      "dark:[&_.stepper-current-step_.stepper-step]:text-stepper-current-step-text-dark",
+      "dark:[&_.stepper-current-step_.stepper-step]:border-stepper-current-step-border-dark",
+      "dark:[&_.stepper-completed-step_.stepper-step]:bg-stepper-completed-step-bg-dark dark:[&_.stepper-completed-step_.stepper-step]:border-stepper-completed-step-border-dark",
       "dark:[&_.stepper-completed-step_.stepper-step]:text-white",
-      "[&_.stepper-canceled-step_.stepper-step]:bg-stepper-canceled-light [&_.stepper-canceled-step_.stepper-step]:border-stepper-canceled-light",
+      "[&_.stepper-canceled-step_.stepper-step]:bg-stepper-canceled-step-bg-light [&_.stepper-canceled-step_.stepper-step]:border-stepper-canceled-step-border-light",
       "[&_.stepper-canceled-step_.stepper-step]:text-white",
-      "dark:[&_.stepper-canceled-step_.stepper-step]:bg-stepper-canceled-dark dark:[&_.stepper-canceled-step_.stepper-step]:border-stepper-canceled-dark",
+      "dark:[&_.stepper-canceled-step_.stepper-step]:bg-stepper-canceled-step-bg-dark dark:[&_.stepper-canceled-step_.stepper-step]:border-stepper-canceled-step-border-dark",
       "dark:[&_.stepper-canceled-step_.stepper-step]:text-white",
       "[&_.stepper-separator]:border-base-border-light dark:[&_.stepper-separator]:border-base-border-dark",
-      "[&_.stepper-completed-step+.stepper-separator]:border-stepper-completed-light dark:[&_.stepper-completed-step+.stepper-separator]:border-stepper-completed-dark",
-      "[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-stepper-completed-light",
-      "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-stepper-completed-dark"
+      "[&_.stepper-completed-step+.stepper-separator]:border-stepper-separator-completed-border-light dark:[&_.stepper-completed-step+.stepper-separator]:border-stepper-separator-completed-border-dark",
+      "[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-stepper-separator-completed-border-light",
+      "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-stepper-separator-completed-border-dark"
     ]
   end
 
   defp color_variant("default", "natural") do
     [
-      "[&_.stepper-step]:bg-natural-bordered-bg-light [&_.stepper-step]:text-natural-bordered-text-light [&_.stepper-loading-icon]:fill-stepper-loading",
+      "[&_.stepper-step]:bg-natural-bordered-bg-light [&_.stepper-step]:text-natural-bordered-text-light [&_.stepper-loading-icon]:fill-stepper-loading-icon-fill",
       "[&_.stepper-step]:border-transparent [&_.stepper-current-step_.stepper-step]:border-natural-bordered-text-light",
-      "[&_.stepper-completed-step_.stepper-step]:bg-natural-hover-dark [&_.stepper-completed-step_.stepper-step]:border-black",
+      "[&_.stepper-completed-step_.stepper-step]:bg-natural-bordered-hover-light [&_.stepper-completed-step_.stepper-step]:border-black",
       "dark:[&_.stepper-step]:bg-natural-bordered-bg-dark dark:[&_.stepper-step]:text-natural-bordered-text-dark",
       "dark:[&_.stepper-current-step_.stepper-step]:border-natural-bordered-text-dark",
-      "dark:[&_.stepper-completed-step_.stepper-step]:bg-stepper-natural-completed-dark dark:[&_.stepper-completed-step_.stepper-step]:border-white",
+      "dark:[&_.stepper-completed-step_.stepper-step]:bg-natural-bordered-hover-dark dark:[&_.stepper-completed-step_.stepper-step]:border-white",
       "[&_.stepper-canceled-step_.stepper-step]:bg-danger-indicator-alt-light [&_.stepper-canceled-step_.stepper-step]:border-danger-indicator-alt-light",
       "[&_.stepper-canceled-step_.stepper-step]:text-white",
       "dark:[&_.stepper-canceled-step_.stepper-step]:bg-danger-indicator-dark dark:[&_.stepper-canceled-step_.stepper-step]:border-danger-indicator-dark",
@@ -639,7 +635,7 @@ defmodule CommunityDemoWeb.Components.Stepper do
 
   defp color_variant("default", "primary") do
     [
-      "[&_.stepper-step]:bg-primary-bordered-bg-light [&_.stepper-step]:text-primary-bordered-text-light [&_.stepper-loading-icon]:fill-stepper-loading",
+      "[&_.stepper-step]:bg-primary-bordered-bg-light [&_.stepper-step]:text-primary-bordered-text-light [&_.stepper-loading-icon]:fill-stepper-loading-icon-fill",
       "[&_.stepper-step]:border-transparent [&_.stepper-current-step_.stepper-step]:border-primary-bordered-text-light",
       "[&_.stepper-completed-step_.stepper-step]:bg-primary-gradient-indicator-dark [&_.stepper-completed-step_.stepper-step]:border-primary-indicator-light",
       "dark:[&_.stepper-step]:bg-primary-bordered-bg-dark dark:[&_.stepper-step]:text-primary-bordered-text-dark",
@@ -658,7 +654,7 @@ defmodule CommunityDemoWeb.Components.Stepper do
 
   defp color_variant("default", "secondary") do
     [
-      "[&_.stepper-step]:bg-secondary-bordered-bg-light [&_.stepper-step]:text-secondary-bordered-text-light [&_.stepper-loading-icon]:fill-stepper-loading",
+      "[&_.stepper-step]:bg-secondary-bordered-bg-light [&_.stepper-step]:text-secondary-bordered-text-light [&_.stepper-loading-icon]:fill-stepper-loading-icon-fill",
       "[&_.stepper-step]:border-transparent [&_.stepper-current-step_.stepper-step]:border-secondary-bordered-text-light",
       "[&_.stepper-completed-step_.stepper-step]:bg-secondary-gradient-indicator-dark [&_.stepper-completed-step_.stepper-step]:border-secondary-indicator-light",
       "dark:[&_.stepper-step]:bg-secondary-bordered-bg-dark dark:[&_.stepper-step]:text-secondary-bordered-text-dark",
@@ -677,7 +673,7 @@ defmodule CommunityDemoWeb.Components.Stepper do
 
   defp color_variant("default", "success") do
     [
-      "[&_.stepper-step]:bg-success-bordered-bg-light [&_.stepper-step]:text-success-bordered-text-light [&_.stepper-loading-icon]:fill-stepper-loading",
+      "[&_.stepper-step]:bg-success-bordered-bg-light [&_.stepper-step]:text-success-bordered-text-light [&_.stepper-loading-icon]:fill-stepper-loading-icon-fill",
       "[&_.stepper-step]:border-transparent [&_.stepper-current-step_.stepper-step]:border-success-bordered-text-light",
       "[&_.stepper-completed-step_.stepper-step]:bg-success-gradient-indicator-dark [&_.stepper-completed-step_.stepper-step]:border-success-indicator-alt-light",
       "dark:[&_.stepper-step]:bg-success-bordered-bg-dark dark:[&_.stepper-step]:text-success-bordered-text-dark",
@@ -696,7 +692,7 @@ defmodule CommunityDemoWeb.Components.Stepper do
 
   defp color_variant("default", "warning") do
     [
-      "[&_.stepper-step]:bg-warning-bordered-bg-light [&_.stepper-step]:text-warning-bordered-text-light [&_.stepper-loading-icon]:fill-stepper-loading",
+      "[&_.stepper-step]:bg-warning-bordered-bg-light [&_.stepper-step]:text-warning-bordered-text-light [&_.stepper-loading-icon]:fill-stepper-loading-icon-fill",
       "[&_.stepper-step]:border-transparent [&_.stepper-current-step_.stepper-step]:border-warning-bordered-text-light",
       "[&_.stepper-completed-step_.stepper-step]:bg-warning-gradient-indicator-dark [&_.stepper-completed-step_.stepper-step]:border-warning-indicator-alt-light",
       "dark:[&_.stepper-step]:bg-warning-bordered-bg-dark dark:[&_.stepper-step]:text-warning-bordered-text-dark",
@@ -715,7 +711,7 @@ defmodule CommunityDemoWeb.Components.Stepper do
 
   defp color_variant("default", "danger") do
     [
-      "[&_.stepper-step]:bg-danger-bordered-bg-light [&_.stepper-step]:text-danger-bordered-text-light [&_.stepper-loading-icon]:fill-stepper-loading",
+      "[&_.stepper-step]:bg-danger-bordered-bg-light [&_.stepper-step]:text-danger-bordered-text-light [&_.stepper-loading-icon]:fill-stepper-loading-icon-fill",
       "[&_.stepper-step]:border-transparent [&_.stepper-current-step_.stepper-step]:border-danger-bordered-text-light",
       "[&_.stepper-completed-step_.stepper-step]:bg-danger-gradient-indicator-dark [&_.stepper-completed-step_.stepper-step]:border-danger-indicator-alt-light",
       "dark:[&_.stepper-step]:bg-danger-bordered-bg-dark dark:[&_.stepper-step]:text-danger-bordered-text-dark",
@@ -734,7 +730,7 @@ defmodule CommunityDemoWeb.Components.Stepper do
 
   defp color_variant("default", "info") do
     [
-      "[&_.stepper-step]:bg-info-bordered-bg-light [&_.stepper-step]:text-info-bordered-text-light [&_.stepper-loading-icon]:fill-stepper-loading",
+      "[&_.stepper-step]:bg-info-bordered-bg-light [&_.stepper-step]:text-info-bordered-text-light [&_.stepper-loading-icon]:fill-stepper-loading-icon-fill",
       "[&_.stepper-step]:border-transparent [&_.stepper-current-step_.stepper-step]:border-info-bordered-text-light",
       "[&_.stepper-completed-step_.stepper-step]:bg-info-gradient-indicator-dark [&_.stepper-completed-step_.stepper-step]:border-info-indicator-alt-light",
       "dark:[&_.stepper-step]:bg-info-bordered-bg-dark dark:[&_.stepper-step]:text-info-bordered-text-dark",
@@ -753,7 +749,7 @@ defmodule CommunityDemoWeb.Components.Stepper do
 
   defp color_variant("default", "misc") do
     [
-      "[&_.stepper-step]:bg-misc-bordered-bg-light [&_.stepper-step]:text-misc-bordered-text-light [&_.stepper-loading-icon]:fill-stepper-loading",
+      "[&_.stepper-step]:bg-misc-bordered-bg-light [&_.stepper-step]:text-misc-bordered-text-light [&_.stepper-loading-icon]:fill-stepper-loading-icon-fill",
       "[&_.stepper-step]:border-transparent [&_.stepper-current-step_.stepper-step]:border-misc-bordered-text-light",
       "[&_.stepper-completed-step_.stepper-step]:bg-misc-gradient-indicator-dark [&_.stepper-completed-step_.stepper-step]:border-misc-indicator-alt-light",
       "dark:[&_.stepper-step]:bg-misc-bordered-bg-dark dark:[&_.stepper-step]:text-misc-bordered-text-dark",
@@ -772,7 +768,7 @@ defmodule CommunityDemoWeb.Components.Stepper do
 
   defp color_variant("default", "dawn") do
     [
-      "[&_.stepper-step]:bg-dawn-bordered-bg-light [&_.stepper-step]:text-dawn-bordered-text-light [&_.stepper-loading-icon]:fill-stepper-loading",
+      "[&_.stepper-step]:bg-dawn-bordered-bg-light [&_.stepper-step]:text-dawn-bordered-text-light [&_.stepper-loading-icon]:fill-stepper-loading-icon-fill",
       "[&_.stepper-step]:border-transparent [&_.stepper-current-step_.stepper-step]:border-dawn-bordered-text-light",
       "[&_.stepper-completed-step_.stepper-step]:bg-dawn-gradient-indicator-dark [&_.stepper-completed-step_.stepper-step]:border-dawn-indicator-alt-light",
       "dark:[&_.stepper-step]:bg-dawn-bordered-bg-dark dark:[&_.stepper-step]:text-dawn-bordered-text-dark",
@@ -791,9 +787,9 @@ defmodule CommunityDemoWeb.Components.Stepper do
 
   defp color_variant("default", "silver") do
     [
-      "[&_.stepper-step]:bg-silver-bordered-bg-light [&_.stepper-step]:text-silver-bordered-text-light [&_.stepper-loading-icon]:fill-stepper-loading",
+      "[&_.stepper-step]:bg-silver-bordered-bg-light [&_.stepper-step]:text-silver-bordered-text-light [&_.stepper-loading-icon]:fill-stepper-loading-icon-fill",
       "[&_.stepper-step]:border-transparent [&_.stepper-current-step_.stepper-step]:border-silver-bordered-text-light",
-      "[&_.stepper-completed-step_.stepper-step]:bg-stepper-silver-completed-light [&_.stepper-completed-step_.stepper-step]:border-silver-indicator-alt-light",
+      "[&_.stepper-completed-step_.stepper-step]:bg-silver-hover-bordered-light [&_.stepper-completed-step_.stepper-step]:border-silver-indicator-alt-light",
       "dark:[&_.stepper-step]:bg-silver-bordered-bg-dark dark:[&_.stepper-step]:text-silver-bordered-text-dark",
       "dark:[&_.stepper-current-step_.stepper-step]:border-silver-bordered-text-dark",
       "dark:[&_.stepper-completed-step_.stepper-step]:bg-silver-indicator-alt-light dark:[&_.stepper-completed-step_.stepper-step]:border-silver-indicator-dark",
@@ -810,13 +806,13 @@ defmodule CommunityDemoWeb.Components.Stepper do
 
   defp color_variant("gradient", "natural") do
     [
-      "[&_.stepper-step]:bg-gradient-to-br from-gradient-natural-from-light to-gradient-natural-to-light [&_.stepper-step]:text-white",
-      "dark:from-gradient-natural-from-dark dark:to-white dark:[&_.stepper-step]:text-black",
-      "[&_.stepper-step]:text-natural-bordered-text-light [&_.stepper-loading-icon]:fill-stepper-loading",
+      "[&_.stepper-step]:bg-gradient-to-br [&_.stepper-step]:from-gradient-natural-from-light [&_.stepper-step]:to-gradient-natural-to-light [&_.stepper-step]:text-white",
+      "dark:[&_.stepper-step]:from-gradient-natural-from-dark dark:[&_.stepper-step]:to-natural-dark dark:[&_.stepper-step]:text-black",
+      "[&_.stepper-step]:text-natural-bordered-text-light [&_.stepper-loading-icon]:fill-stepper-loading-icon-fill",
       "[&_.stepper-step]:border-transparent [&_.stepper-current-step_.stepper-step]:border-natural-bordered-text-light",
-      "[&_.stepper-completed-step_.stepper-step]:bg-natural-hover-dark [&_.stepper-completed-step_.stepper-step]:border-black",
+      "[&_.stepper-completed-step_.stepper-step]:bg-natural-bordered-hover-light [&_.stepper-completed-step_.stepper-step]:border-black",
       "dark:[&_.stepper-current-step_.stepper-step]:border-natural-bordered-text-dark",
-      "dark:[&_.stepper-completed-step_.stepper-step]:bg-stepper-natural-completed-dark dark:[&_.stepper-completed-step_.stepper-step]:border-white",
+      "dark:[&_.stepper-completed-step_.stepper-step]:bg-natural-bordered-hover-dark dark:[&_.stepper-completed-step_.stepper-step]:border-white",
       "[&_.stepper-canceled-step_.stepper-step]:bg-danger-indicator-alt-light [&_.stepper-canceled-step_.stepper-step]:border-danger-indicator-alt-light",
       "[&_.stepper-canceled-step_.stepper-step]:text-white",
       "dark:[&_.stepper-canceled-step_.stepper-step]:bg-danger-indicator-dark dark:[&_.stepper-canceled-step_.stepper-step]:border-danger-indicator-dark",
@@ -830,9 +826,9 @@ defmodule CommunityDemoWeb.Components.Stepper do
 
   defp color_variant("gradient", "primary") do
     [
-      "[&_.stepper-step]:bg-gradient-to-br from-gradient-primary-from-light to-gradient-primary-to-light [&_.stepper-step]:text-white",
-      "dark:from-gradient-primary-from-dark dark:to-gradient-primary-to-dark dark:[&_.stepper-step]:text-black",
-      "[&_.stepper-loading-icon]:fill-stepper-loading",
+      "[&_.stepper-step]:bg-gradient-to-br [&_.stepper-step]:from-gradient-primary-from-light [&_.stepper-step]:to-gradient-primary-to-light [&_.stepper-step]:text-white",
+      "dark:[&_.stepper-step]:from-gradient-primary-from-dark dark:[&_.stepper-step]:to-gradient-primary-to-dark dark:[&_.stepper-step]:text-black",
+      "[&_.stepper-loading-icon]:fill-stepper-loading-icon-fill",
       "[&_.stepper-step]:border-transparent [&_.stepper-current-step_.stepper-step]:border-primary-bordered-text-light",
       "[&_.stepper-completed-step_.stepper-step]:bg-primary-gradient-indicator-dark [&_.stepper-completed-step_.stepper-step]:border-primary-indicator-light",
       "dark:[&_.stepper-current-step_.stepper-step]:border-primary-bordered-text-dark",
@@ -850,9 +846,9 @@ defmodule CommunityDemoWeb.Components.Stepper do
 
   defp color_variant("gradient", "secondary") do
     [
-      "[&_.stepper-step]:bg-gradient-to-br from-gradient-secondary-from-light to-gradient-secondary-to-light [&_.stepper-step]:text-white",
-      "dark:from-gradient-secondary-from-dark dark:to-gradient-secondary-to-dark dark:[&_.stepper-step]:text-black",
-      "[&_.stepper-loading-icon]:fill-stepper-loading",
+      "[&_.stepper-step]:bg-gradient-to-br [&_.stepper-step]:from-gradient-secondary-from-light [&_.stepper-step]:to-gradient-secondary-to-light [&_.stepper-step]:text-white",
+      "dark:[&_.stepper-step]:from-gradient-secondary-from-dark dark:[&_.stepper-step]:to-gradient-secondary-to-dark dark:[&_.stepper-step]:text-black",
+      "[&_.stepper-loading-icon]:fill-stepper-loading-icon-fill",
       "[&_.stepper-step]:border-transparent [&_.stepper-current-step_.stepper-step]:border-secondary-bordered-text-light",
       "[&_.stepper-completed-step_.stepper-step]:bg-secondary-gradient-indicator-dark [&_.stepper-completed-step_.stepper-step]:border-secondary-indicator-light",
       "dark:[&_.stepper-current-step_.stepper-step]:border-secondary-bordered-text-dark",
@@ -870,9 +866,9 @@ defmodule CommunityDemoWeb.Components.Stepper do
 
   defp color_variant("gradient", "success") do
     [
-      "[&_.stepper-step]:bg-gradient-to-br from-gradient-success-from-light to-gradient-success-to-light [&_.stepper-step]:text-white",
-      "dark:from-gradient-success-from-dark dark:to-gradient-success-to-dark dark:[&_.stepper-step]:text-black",
-      "[&_.stepper-loading-icon]:fill-stepper-loading",
+      "[&_.stepper-step]:bg-gradient-to-br [&_.stepper-step]:from-gradient-success-from-light [&_.stepper-step]:to-gradient-success-to-light [&_.stepper-step]:text-white",
+      "dark:[&_.stepper-step]:from-gradient-success-from-dark dark:[&_.stepper-step]:to-gradient-success-to-dark dark:[&_.stepper-step]:text-black",
+      "[&_.stepper-loading-icon]:fill-stepper-loading-icon-fill",
       "[&_.stepper-step]:border-transparent [&_.stepper-current-step_.stepper-step]:border-success-bordered-text-light",
       "[&_.stepper-completed-step_.stepper-step]:bg-success-gradient-indicator-dark [&_.stepper-completed-step_.stepper-step]:border-success-indicator-alt-light",
       "dark:[&_.stepper-current-step_.stepper-step]:border-success-bordered-text-dark",
@@ -890,9 +886,9 @@ defmodule CommunityDemoWeb.Components.Stepper do
 
   defp color_variant("gradient", "warning") do
     [
-      "[&_.stepper-step]:bg-gradient-to-br from-gradient-warning-from-light to-gradient-warning-to-light [&_.stepper-step]:text-white",
-      "dark:from-gradient-warning-from-dark dark:to-gradient-warning-to-dark dark:[&_.stepper-step]:text-black",
-      "[&_.stepper-loading-icon]:fill-stepper-loading",
+      "[&_.stepper-step]:bg-gradient-to-br [&_.stepper-step]:from-gradient-warning-from-light [&_.stepper-step]:to-gradient-warning-to-light [&_.stepper-step]:text-white",
+      "dark:[&_.stepper-step]:from-gradient-warning-from-dark dark:[&_.stepper-step]:to-gradient-warning-to-dark dark:[&_.stepper-step]:text-black",
+      "[&_.stepper-loading-icon]:fill-stepper-loading-icon-fill",
       "[&_.stepper-step]:border-transparent [&_.stepper-current-step_.stepper-step]:border-warning-bordered-text-light",
       "[&_.stepper-completed-step_.stepper-step]:bg-warning-gradient-indicator-dark [&_.stepper-completed-step_.stepper-step]:border-warning-indicator-alt-light",
       "dark:[&_.stepper-current-step_.stepper-step]:border-warning-bordered-text-dark",
@@ -910,9 +906,9 @@ defmodule CommunityDemoWeb.Components.Stepper do
 
   defp color_variant("gradient", "danger") do
     [
-      "[&_.stepper-step]:bg-gradient-to-br from-gradient-danger-from-light to-gradient-danger-to-light [&_.stepper-step]:text-white",
-      "dark:from-gradient-danger-from-dark dark:to-gradient-danger-to-dark dark:[&_.stepper-step]:text-black",
-      "[&_.stepper-loading-icon]:fill-stepper-loading",
+      "[&_.stepper-step]:bg-gradient-to-br [&_.stepper-step]:from-gradient-danger-from-light [&_.stepper-step]:to-gradient-danger-to-light [&_.stepper-step]:text-white",
+      "dark:[&_.stepper-step]:from-gradient-danger-from-dark dark:[&_.stepper-step]:to-gradient-danger-to-dark dark:[&_.stepper-step]:text-black",
+      "[&_.stepper-loading-icon]:fill-stepper-loading-icon-fill",
       "[&_.stepper-step]:border-transparent [&_.stepper-current-step_.stepper-step]:border-danger-bordered-text-light",
       "[&_.stepper-completed-step_.stepper-step]:bg-danger-gradient-indicator-dark [&_.stepper-completed-step_.stepper-step]:border-danger-indicator-alt-light",
       "dark:[&_.stepper-current-step_.stepper-step]:border-danger-bordered-text-dark",
@@ -930,9 +926,9 @@ defmodule CommunityDemoWeb.Components.Stepper do
 
   defp color_variant("gradient", "info") do
     [
-      "[&_.stepper-step]:bg-gradient-to-br from-gradient-info-from-light to-gradient-info-to-light [&_.stepper-step]:text-white",
-      "dark:from-gradient-info-from-dark dark:to-gradient-info-to-dark dark:[&_.stepper-step]:text-black",
-      "[&_.stepper-loading-icon]:fill-stepper-loading",
+      "[&_.stepper-step]:bg-gradient-to-br [&_.stepper-step]:from-gradient-info-from-light [&_.stepper-step]:to-gradient-info-to-light [&_.stepper-step]:text-white",
+      "dark:[&_.stepper-step]:from-gradient-info-from-dark dark:[&_.stepper-step]:to-gradient-info-to-dark dark:[&_.stepper-step]:text-black",
+      "[&_.stepper-loading-icon]:fill-stepper-loading-icon-fill",
       "[&_.stepper-step]:border-transparent [&_.stepper-current-step_.stepper-step]:border-info-bordered-text-light",
       "[&_.stepper-completed-step_.stepper-step]:bg-info-gradient-indicator-dark [&_.stepper-completed-step_.stepper-step]:border-info-indicator-alt-light",
       "dark:[&_.stepper-current-step_.stepper-step]:border-info-bordered-text-dark",
@@ -950,9 +946,9 @@ defmodule CommunityDemoWeb.Components.Stepper do
 
   defp color_variant("gradient", "misc") do
     [
-      "[&_.stepper-step]:bg-gradient-to-br from-gradient-misc-from-light to-gradient-misc-to-light [&_.stepper-step]:text-white",
-      "dark:from-gradient-misc-from-dark dark:to-gradient-misc-to-dark dark:[&_.stepper-step]:text-black",
-      "[&_.stepper-loading-icon]:fill-stepper-loading",
+      "[&_.stepper-step]:bg-gradient-to-br [&_.stepper-step]:from-gradient-misc-from-light [&_.stepper-step]:to-gradient-misc-to-light [&_.stepper-step]:text-white",
+      "dark:[&_.stepper-step]:from-gradient-misc-from-dark dark:[&_.stepper-step]:to-gradient-misc-to-dark dark:[&_.stepper-step]:text-black",
+      "[&_.stepper-loading-icon]:fill-stepper-loading-icon-fill",
       "[&_.stepper-step]:border-transparent [&_.stepper-current-step_.stepper-step]:border-misc-bordered-text-light",
       "[&_.stepper-completed-step_.stepper-step]:bg-misc-gradient-indicator-dark [&_.stepper-completed-step_.stepper-step]:border-misc-indicator-alt-light",
       "dark:[&_.stepper-current-step_.stepper-step]:border-misc-bordered-text-dark",
@@ -970,9 +966,9 @@ defmodule CommunityDemoWeb.Components.Stepper do
 
   defp color_variant("gradient", "dawn") do
     [
-      "[&_.stepper-step]:bg-gradient-to-br from-gradient-dawn-from-light to-gradient-dawn-to-light [&_.stepper-step]:text-white",
-      "dark:from-gradient-dawn-from-dark dark:to-gradient-dawn-to-dark dark:[&_.stepper-step]:text-black",
-      "[&_.stepper-loading-icon]:fill-stepper-loading",
+      "[&_.stepper-step]:bg-gradient-to-br [&_.stepper-step]:from-gradient-dawn-from-light [&_.stepper-step]:to-gradient-dawn-to-light [&_.stepper-step]:text-white",
+      "dark:[&_.stepper-step]:from-gradient-dawn-from-dark dark:[&_.stepper-step]:to-gradient-dawn-to-dark dark:[&_.stepper-step]:text-black",
+      "[&_.stepper-loading-icon]:fill-stepper-loading-icon-fill",
       "[&_.stepper-step]:border-transparent [&_.stepper-current-step_.stepper-step]:border-dawn-bordered-text-light",
       "[&_.stepper-completed-step_.stepper-step]:bg-dawn-gradient-indicator-dark [&_.stepper-completed-step_.stepper-step]:border-dawn-indicator-alt-light",
       "dark:[&_.stepper-current-step_.stepper-step]:border-dawn-bordered-text-dark",
@@ -990,11 +986,11 @@ defmodule CommunityDemoWeb.Components.Stepper do
 
   defp color_variant("gradient", "silver") do
     [
-      "[&_.stepper-step]:bg-gradient-to-br from-gradient-silver-from-light to-gradient-silver-to-light [&_.stepper-step]:text-white",
-      "dark:from-gradient-silver-from-dark dark:to-gradient-silver-to-dark dark:[&_.stepper-step]:text-black",
-      "[&_.stepper-loading-icon]:fill-stepper-loading",
+      "[&_.stepper-step]:bg-gradient-to-br [&_.stepper-step]:from-gradient-silver-from-light [&_.stepper-step]:to-gradient-silver-to-light [&_.stepper-step]:text-white",
+      "dark:[&_.stepper-step]:from-gradient-silver-from-dark dark:[&_.stepper-step]:to-gradient-silver-to-dark dark:[&_.stepper-step]:text-black",
+      "[&_.stepper-loading-icon]:fill-stepper-loading-icon-fill",
       "[&_.stepper-step]:border-transparent [&_.stepper-current-step_.stepper-step]:border-silver-bordered-text-light",
-      "[&_.stepper-completed-step_.stepper-step]:bg-stepper-silver-completed-light [&_.stepper-completed-step_.stepper-step]:border-silver-indicator-alt-light",
+      "[&_.stepper-completed-step_.stepper-step]:bg-silver-hover-bordered-light [&_.stepper-completed-step_.stepper-step]:border-silver-indicator-alt-light",
       "dark:[&_.stepper-current-step_.stepper-step]:border-silver-bordered-text-dark",
       "dark:[&_.stepper-completed-step_.stepper-step]:bg-silver-indicator-alt-light dark:[&_.stepper-completed-step_.stepper-step]:border-silver-indicator-dark",
       "[&_.stepper-canceled-step_.stepper-step]:bg-danger-indicator-alt-light [&_.stepper-canceled-step_.stepper-step]:border-danger-indicator-alt-light",

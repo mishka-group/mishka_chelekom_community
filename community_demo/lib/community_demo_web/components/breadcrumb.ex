@@ -12,6 +12,8 @@ defmodule CommunityDemoWeb.Components.Breadcrumb do
   links, and custom separators.
   - **Global Attributes**: Utilize global attributes to customize and extend the component's
   behavior and appearance.
+
+  **Documentation:** https://mishka.tools/chelekom/docs/breadcrumb
   """
   use Phoenix.Component
   import CommunityDemoWeb.Components.Icon, only: [icon: 1]

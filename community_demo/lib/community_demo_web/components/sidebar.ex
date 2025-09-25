@@ -13,6 +13,8 @@ defmodule CommunityDemoWeb.Components.Sidebar do
   The `Sidebar` component is ideal for building dynamic user interfaces that require collapsible
   navigation or content panels, and it integrates seamlessly with other Phoenix LiveView components
   for a cohesive and interactive application experience.
+
+  **Documentation:** https://mishka.tools/chelekom/docs/sidebar
   """
   use Phoenix.Component
   use Gettext, backend: CommunityDemoWeb.Gettext

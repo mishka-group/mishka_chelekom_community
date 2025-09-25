@@ -17,6 +17,8 @@ defmodule CommunityDemoWeb.Components.Jumbotron do
 
   This component is designed to provide a visually appealing and prominent section for
   highlighting key content on your pages.
+
+  **Documentation:** https://mishka.tools/chelekom/docs/jumbotron
   """
   use Phoenix.Component
 

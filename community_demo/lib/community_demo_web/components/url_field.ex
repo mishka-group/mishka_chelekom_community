@@ -12,6 +12,8 @@ defmodule CommunityDemoWeb.Components.UrlField do
 
   Additionally, helper functions for rendering labels and error messages are provided
   to enhance usability and accessibility.
+
+  **Documentation:** https://mishka.tools/chelekom/docs/forms/url-field
   """
   use Phoenix.Component
   import CommunityDemoWeb.Components.Icon, only: [icon: 1]
@@ -127,7 +129,7 @@ defmodule CommunityDemoWeb.Components.UrlField do
       border_class(@border, @variant),
       size_class(@size),
       space_class(@space),
-      @ring && "[&_.url-field-wrapper]:focus-within:ring-[0.03rem]",
+      @ring && "[&_.url-field-wrapper]:focus-within:ring-[0.03rem] leading-6",
       @class
     ]}>
       <div :if={@description} class={@description_class}>
@@ -195,7 +197,7 @@ defmodule CommunityDemoWeb.Components.UrlField do
       border_class(@border, @variant),
       size_class(@size),
       space_class(@space),
-      @ring && "[&_.url-field-wrapper]:focus-within:ring-[0.03rem]",
+      @ring && "[&_.url-field-wrapper]:focus-within:ring-[0.03rem] leading-6",
       @class
     ]}>
       <div
@@ -256,7 +258,7 @@ defmodule CommunityDemoWeb.Components.UrlField do
 
   defp label(assigns) do
     ~H"""
-    <label for={@for} class={["leading-5 font-semibold", @class]}>
+    <label for={@for} class={["font-semibold", @class]}>
       {render_slot(@inner_block)}
     </label>
     """
@@ -267,7 +269,7 @@ defmodule CommunityDemoWeb.Components.UrlField do
 
   defp error(assigns) do
     ~H"""
-    <p class="mt-3 flex items-center gap-3 text-sm leading-6 text-rose-700">
+    <p class="mt-3 flex items-center gap-3 text-sm text-rose-700">
       <.icon :if={!is_nil(@icon)} name={@icon} class="shrink-0" />
       {render_slot(@inner_block)}
     </p>
@@ -363,7 +365,7 @@ defmodule CommunityDemoWeb.Components.UrlField do
       "focus-within:[&_.url-field-wrapper]:ring-base-border-light dark:focus-within:[&_.url-field-wrapper]:ring-base-border-light",
       "[&_.url-field-wrapper]:shadow-sm",
       floating == "outer" &&
-        "[&_.url-field-wrapper_.floating-label]:bg-white dark:[&_.url-field-wrapper_.floating-label]:bg-base-border-dark"
+        "[&_.url-field-wrapper_.floating-label]:bg-white dark:[&_.url-field-wrapper_.floating-label]:bg-base-bg-dark"
     ]
   end
 

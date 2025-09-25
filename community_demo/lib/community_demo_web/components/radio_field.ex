@@ -13,6 +13,8 @@ defmodule CommunityDemoWeb.Components.RadioField do
   In addition, the module includes support for grouped radio buttons with the `group_radio`
   component, enabling the creation of sets of related radio inputs. This facilitates the
   development of dynamic and interactive form elements in a clean and organized manner.
+
+  **Documentation:** https://mishka.tools/chelekom/docs/forms/radio-field
   """
   use Phoenix.Component
   alias Phoenix.HTML.Form
@@ -342,8 +344,8 @@ defmodule CommunityDemoWeb.Components.RadioField do
   defp color_class("base") do
     [
       "text-base-text-light dark:text-base-text-dark",
-      "checked:[&_.radio-field-wrapper_.radio-input]:text-base-form-border-light",
-      "dark:checked:[&_.radio-field-wrapper_.radio-input]:text-base-form-border-dark",
+      "[&_.radio-field-wrapper_.radio-input]:checked:accent-base-form-border-light",
+      "dark:[&_.radio-field-wrapper_.radio-input]:checked:accent-base-form-border-dark",
       "[&_.radio-field-wrapper_.radio-input]:border-base-form-border-light",
       "dark:[&_.radio-field-wrapper_.radio-input]:border-base-form-border-dark",
       "focus-within:[&_.radio-field-wrapper_.radio-input]:ring-base-hover-light dark:focus-within:[&_.radio-field-wrapper_.radio-input]:ring-base-hover-dark"
@@ -361,8 +363,8 @@ defmodule CommunityDemoWeb.Components.RadioField do
   defp color_class("natural") do
     [
       "text-natural-hover-light dark:text-natural-border-dark",
-      "checked:[&_.radio-field-wrapper_.radio-input]:text-natural-hover-light",
-      "dark:checked:[&_.radio-field-wrapper_.radio-input]:text-natural-hover-dark",
+      "[&_.radio-field-wrapper_.radio-input]:checked:accent-natural-hover-light",
+      "dark:[&_.radio-field-wrapper_.radio-input]:checked:accent-natural-hover-dark",
       "[&_.radio-field-wrapper_.radio-input]:border-natural-hover-light",
       "dark:[&_.radio-field-wrapper_.radio-input]:border-silver-light",
       "focus-within:[&_.radio-field-wrapper_.radio-input]:ring-natural-light dark:focus-within:[&_.radio-field-wrapper_.radio-input]:ring-natural-dark"
@@ -372,8 +374,8 @@ defmodule CommunityDemoWeb.Components.RadioField do
   defp color_class("primary") do
     [
       "text-primary-hover-light dark:text-primary-hover-dark",
-      "checked:[&_.radio-field-wrapper_.radio-input]:text-primary-hover-light",
-      "dark:checked:[&_.radio-field-wrapper_.radio-input]:text-primary-hover-dark",
+      "[&_.radio-field-wrapper_.radio-input]:checked:accent-primary-hover-light",
+      "dark:[&_.radio-field-wrapper_.radio-input]:checked:accent-primary-hover-dark",
       "[&_.radio-field-wrapper_.radio-input]:border-primary-hover-light",
       "dark:[&_.radio-field-wrapper_.radio-input]:border-primary-hover-dark",
       "focus-within:[&_.radio-field-wrapper_.radio-input]:ring-primary-light dark:focus-within:[&_.radio-field-wrapper_.radio-input]:ring-primary-dark"
@@ -383,8 +385,8 @@ defmodule CommunityDemoWeb.Components.RadioField do
   defp color_class("secondary") do
     [
       "text-secondary-hover-light dark:text-secondary-hover-dark",
-      "checked:[&_.radio-field-wrapper_.radio-input]:text-secondary-hover-light",
-      "dark:checked:[&_.radio-field-wrapper_.radio-input]:text-secondary-hover-dark",
+      "[&_.radio-field-wrapper_.radio-input]:checked:accent-secondary-hover-light",
+      "dark:[&_.radio-field-wrapper_.radio-input]:checked:accent-secondary-hover-dark",
       "[&_.radio-field-wrapper_.radio-input]:border-secondary-hover-light",
       "dark:[&_.radio-field-wrapper_.radio-input]:border-secondary-hover-dark",
       "focus-within:[&_.radio-field-wrapper_.radio-input]:ring-secondary-light dark:focus-within:[&_.radio-field-wrapper_.radio-input]:ring-secondary-dark"
@@ -394,8 +396,8 @@ defmodule CommunityDemoWeb.Components.RadioField do
   defp color_class("success") do
     [
       "text-success-hover-light dark:text-success-hover-dark",
-      "checked:[&_.radio-field-wrapper_.radio-input]:text-success-hover-light",
-      "dark:checked:[&_.radio-field-wrapper_.radio-input]:text-success-hover-dark",
+      "[&_.radio-field-wrapper_.radio-input]:checked:accent-success-hover-light",
+      "dark:[&_.radio-field-wrapper_.radio-input]:checked:accent-success-hover-dark",
       "[&_.radio-field-wrapper_.radio-input]:border-success-hover-light",
       "dark:[&_.radio-field-wrapper_.radio-input]:border-success-hover-dark",
       "focus-within:[&_.radio-field-wrapper_.radio-input]:ring-success-light dark:focus-within:[&_.radio-field-wrapper_.radio-input]:ring-success-dark"
@@ -405,8 +407,8 @@ defmodule CommunityDemoWeb.Components.RadioField do
   defp color_class("warning") do
     [
       "text-warning-hover-light dark:text-warning-hover-dark",
-      "checked:[&_.radio-field-wrapper_.radio-input]:text-warning-hover-light",
-      "dark:checked:[&_.radio-field-wrapper_.radio-input]:text-warning-hover-dark",
+      "[&_.radio-field-wrapper_.radio-input]:checked:accent-warning-hover-light",
+      "dark:[&_.radio-field-wrapper_.radio-input]:checked:accent-warning-hover-dark",
       "[&_.radio-field-wrapper_.radio-input]:border-warning-hover-light",
       "dark:[&_.radio-field-wrapper_.radio-input]:border-warning-hover-dark",
       "focus-within:[&_.radio-field-wrapper_.radio-input]:ring-warning-light dark:focus-within:[&_.radio-field-wrapper_.radio-input]:ring-warning-dark"
@@ -416,8 +418,8 @@ defmodule CommunityDemoWeb.Components.RadioField do
   defp color_class("danger") do
     [
       "text-danger-hover-light dark:text-danger-hover-dark",
-      "checked:[&_.radio-field-wrapper_.radio-input]:text-danger-hover-light",
-      "dark:checked:[&_.radio-field-wrapper_.radio-input]:text-danger-hover-dark",
+      "[&_.radio-field-wrapper_.radio-input]:checked:accent-danger-hover-light",
+      "dark:[&_.radio-field-wrapper_.radio-input]:checked:accent-danger-hover-dark",
       "[&_.radio-field-wrapper_.radio-input]:border-danger-hover-light",
       "dark:[&_.radio-field-wrapper_.radio-input]:border-danger-hover-dark",
       "focus-within:[&_.radio-field-wrapper_.radio-input]:ring-danger-light dark:focus-within:[&_.radio-field-wrapper_.radio-input]:ring-danger-dark"
@@ -427,8 +429,8 @@ defmodule CommunityDemoWeb.Components.RadioField do
   defp color_class("info") do
     [
       "text-info-hover-light dark:text-info-hover-dark",
-      "checked:[&_.radio-field-wrapper_.radio-input]:text-info-hover-light",
-      "dark:checked:[&_.radio-field-wrapper_.radio-input]:text-info-hover-dark",
+      "[&_.radio-field-wrapper_.radio-input]:checked:accent-info-hover-light",
+      "dark:[&_.radio-field-wrapper_.radio-input]:checked:accent-info-hover-dark",
       "[&_.radio-field-wrapper_.radio-input]:border-info-hover-light",
       "dark:[&_.radio-field-wrapper_.radio-input]:border-info-hover-dark",
       "focus-within:[&_.radio-field-wrapper_.radio-input]:ring-info-light dark:focus-within:[&_.radio-field-wrapper_.radio-input]:ring-info-dark"
@@ -438,8 +440,8 @@ defmodule CommunityDemoWeb.Components.RadioField do
   defp color_class("misc") do
     [
       "text-misc-hover-light dark:text-misc-hover-dark",
-      "checked:[&_.radio-field-wrapper_.radio-input]:text-misc-hover-light",
-      "dark:checked:[&_.radio-field-wrapper_.radio-input]:text-misc-hover-dark",
+      "[&_.radio-field-wrapper_.radio-input]:checked:accent-misc-hover-light",
+      "dark:[&_.radio-field-wrapper_.radio-input]:checked:accent-misc-hover-dark",
       "[&_.radio-field-wrapper_.radio-input]:border-misc-hover-light",
       "dark:[&_.radio-field-wrapper_.radio-input]:border-misc-hover-dark",
       "focus-within:[&_.radio-field-wrapper_.radio-input]:ring-misc-light dark:focus-within:[&_.radio-field-wrapper_.radio-input]:ring-misc-dark"
@@ -449,8 +451,8 @@ defmodule CommunityDemoWeb.Components.RadioField do
   defp color_class("dawn") do
     [
       "text-dawn-hover-light dark:text-dawn-hover-dark",
-      "checked:[&_.radio-field-wrapper_.radio-input]:text-dawn-hover-light",
-      "dark:checked:[&_.radio-field-wrapper_.radio-input]:text-dawn-hover-dark",
+      "[&_.radio-field-wrapper_.radio-input]:checked:accent-dawn-hover-light",
+      "dark:[&_.radio-field-wrapper_.radio-input]:checked:accent-dawn-hover-dark",
       "[&_.radio-field-wrapper_.radio-input]:border-dawn-hover-light",
       "dark:[&_.radio-field-wrapper_.radio-input]:border-dawn-hover-dark",
       "focus-within:[&_.radio-field-wrapper_.radio-input]:ring-dawn-light dark:focus-within:[&_.radio-field-wrapper_.radio-input]:ring-dawn-dark"
@@ -460,8 +462,8 @@ defmodule CommunityDemoWeb.Components.RadioField do
   defp color_class("silver") do
     [
       "text-silver-hover-light dark:text-silver-hover-dark",
-      "checked:[&_.radio-field-wrapper_.radio-input]:text-silver-hover-light",
-      "dark:checked:[&_.radio-field-wrapper_.radio-input]:text-silver-hover-dark",
+      "[&_.radio-field-wrapper_.radio-input]:checked:accent-silver-hover-light",
+      "dark:[&_.radio-field-wrapper_.radio-input]:checked:accent-silver-hover-dark",
       "[&_.radio-field-wrapper_.radio-input]:border-silver-hover-light",
       "dark:[&_.radio-field-wrapper_.radio-input]:border-silver-hover-dark",
       "focus-within:[&_.radio-field-wrapper_.radio-input]:ring-silver-light dark:focus-within:[&_.radio-field-wrapper_.radio-input]:ring-silver-dark"
@@ -472,6 +474,7 @@ defmodule CommunityDemoWeb.Components.RadioField do
     [
       "[&_.radio-field-wrapper_.radio-input]:text-natural-hover-light text-natural-hover-light",
       "[&_.radio-field-wrapper_.radio-input]:border-silver-hover-light",
+      "[&_.radio-field-wrapper_.radio-input]:checked:accent-default-dark-bg",
       "focus-within:[&_.radio-field-wrapper_.radio-input]:ring-natural-hover-light"
     ]
   end

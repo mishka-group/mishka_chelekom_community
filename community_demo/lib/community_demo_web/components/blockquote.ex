@@ -20,6 +20,8 @@ defmodule CommunityDemoWeb.Components.Blockquote do
 
   Use this module to create visually appealing and content-rich blockquotes that enhance
   the readability and aesthetics of your LiveView applications.
+
+  **Documentation:** https://mishka.tools/chelekom/docs/blockquote
   """
 
   use Phoenix.Component

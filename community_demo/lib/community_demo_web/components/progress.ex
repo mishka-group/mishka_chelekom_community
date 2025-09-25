@@ -14,6 +14,8 @@ defmodule CommunityDemoWeb.Components.Progress do
   The module's flexibility is further enhanced by its use of `slots`, enabling developers
   to include custom label within the progress bar, making it a versatile choice for building
   interactive and dynamic UIs.
+
+  **Documentation:** https://mishka.tools/chelekom/docs/progress
   """
   use Phoenix.Component
   alias Phoenix.LiveView.JS

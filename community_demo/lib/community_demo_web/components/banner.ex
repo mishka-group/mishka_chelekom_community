@@ -24,6 +24,8 @@ defmodule CommunityDemoWeb.Components.Banner do
 
   Use this module to create interactive and aesthetically pleasing banner elements for
   your **LiveView** applications.
+
+  **Documentation:** https://mishka.tools/chelekom/docs/banner
   """
 
   use Phoenix.Component

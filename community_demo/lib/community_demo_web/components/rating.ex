@@ -12,6 +12,8 @@ defmodule CommunityDemoWeb.Components.Rating do
   This component is ideal for implementing user reviews, feedback forms, and any other scenario where
   a visual rating system is needed. Its flexibility and ease of integration make it a powerful
   tool for enhancing the user experience in Phoenix LiveView applications.
+
+  **Documentation:** https://mishka.tools/chelekom/docs/rating
   """
   use Phoenix.Component
   alias Phoenix.LiveView.JS
@@ -85,7 +87,7 @@ defmodule CommunityDemoWeb.Components.Rating do
             tabindex={if item == @select, do: "0", else: "-1"}
             aria-label={"#{item} star#{if item > 1, do: "s", else: ""}"}
             class={[
-              "rating-button",
+              "rating-button cursor-pointer",
               "leading-5",
               "group",
               "[&:has(~.rating-button:hover)_.fraction-path]:opacity-0 [&:has(~.rating-button:hover)_.full-path]:opacity-100"

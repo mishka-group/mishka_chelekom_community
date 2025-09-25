@@ -1,15 +1,7 @@
 defmodule CommunityDemoWeb.Components.MishkaComponents do
   defmacro __using__(_) do
     quote do
-      import CommunityDemoWeb.Components.Accordion,
-        only: [
-          accordion: 1,
-          native_accordion: 1,
-          show_accordion_content: 1,
-          show_accordion_content: 2,
-          hide_accordion_content: 1,
-          hide_accordion_content: 2
-        ]
+      import CommunityDemoWeb.Components.Accordion, only: [accordion: 1]
 
       import CommunityDemoWeb.Components.Alert,
         only: [flash: 1, alert: 1, show_alert: 1, show_alert: 2, hide_alert: 1, hide_alert: 2]
@@ -41,6 +33,7 @@ defmodule CommunityDemoWeb.Components.MishkaComponents do
         only: [checkbox_field: 1, group_checkbox: 1, checkbox_check: 3]
 
       import CommunityDemoWeb.Components.Clipboard, only: [clipboard: 1]
+      import CommunityDemoWeb.Components.Collapse, only: [collapse: 1]
       import CommunityDemoWeb.Components.ColorField, only: [color_field: 1]
       import CommunityDemoWeb.Components.Combobox, only: [combobox: 1]
       import CommunityDemoWeb.Components.DateTimeField, only: [date_time_field: 1]
@@ -94,9 +87,7 @@ defmodule CommunityDemoWeb.Components.MishkaComponents do
       import CommunityDemoWeb.Components.Overlay, only: [overlay: 1]
       import CommunityDemoWeb.Components.Pagination, only: [pagination: 1]
       import CommunityDemoWeb.Components.PasswordField, only: [password_field: 1]
-
-      import CommunityDemoWeb.Components.Popover,
-        only: [popover: 1, popover_trigger: 1, popover_content: 1]
+      import CommunityDemoWeb.Components.Popover, only: [popover: 1]
 
       import CommunityDemoWeb.Components.Progress,
         only: [progress: 1, progress_section: 1, semi_circle_progress: 1, ring_progress: 1]

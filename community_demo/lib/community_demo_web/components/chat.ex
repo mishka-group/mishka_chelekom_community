@@ -6,6 +6,8 @@ defmodule CommunityDemoWeb.Components.Chat do
   sizes, and configurations. The main component, `chat/1`, acts as a container for chat
   messages, and `chat_section/1` is used to render individual chat messages with optional
   metadata and status information.
+
+  **Documentation:** https://mishka.tools/chelekom/docs/chat
   """
   use Phoenix.Component
   use Gettext, backend: CommunityDemoWeb.Gettext
@@ -170,7 +172,7 @@ defmodule CommunityDemoWeb.Components.Chat do
       role="group"
       tabindex="0"
       class={[
-        "chat-section-bubble leading-1.5 overflow-hidden",
+        "chat-section-bubble overflow-hidden",
         @font_weight,
         @class
       ]}
@@ -705,71 +707,71 @@ defmodule CommunityDemoWeb.Components.Chat do
 
   defp color_variant("gradient", "natural") do
     [
-      "[&>.chat-section-bubble]:bg-gradient-to-br from-gradient-natural-from-light to-gradient-natural-to-light [&>.chat-section-bubble]:text-white",
-      "dark:from-gradient-natural-from-dark dark:to-white dark:[&>.chat-section-bubble]:text-black"
+      "[&>.chat-section-bubble]:bg-gradient-to-br [&>.chat-section-bubble]:from-gradient-natural-from-light [&>.chat-section-bubble]:to-gradient-natural-to-light [&>.chat-section-bubble]:text-white",
+      "dark:[&>.chat-section-bubble]:from-gradient-natural-from-dark dark:[&>.chat-section-bubble]:to-white dark:[&>.chat-section-bubble]:text-black"
     ]
   end
 
   defp color_variant("gradient", "primary") do
     [
-      "[&>.chat-section-bubble]:bg-gradient-to-br from-gradient-primary-from-light to-gradient-primary-to-light [&>.chat-section-bubble]:text-white",
-      "dark:from-gradient-primary-from-dark dark:to-gradient-primary-to-dark dark:[&>.chat-section-bubble]:text-black"
+      "[&>.chat-section-bubble]:bg-gradient-to-br [&>.chat-section-bubble]:from-gradient-primary-from-light [&>.chat-section-bubble]:to-gradient-primary-to-light [&>.chat-section-bubble]:text-white",
+      "dark:[&>.chat-section-bubble]:from-gradient-primary-from-dark dark:[&>.chat-section-bubble]:to-gradient-primary-to-dark dark:[&>.chat-section-bubble]:text-black"
     ]
   end
 
   defp color_variant("gradient", "secondary") do
     [
-      "[&>.chat-section-bubble]:bg-gradient-to-br from-gradient-secondary-from-light to-gradient-secondary-to-light [&>.chat-section-bubble]:text-white",
-      "dark:from-gradient-secondary-from-dark dark:to-gradient-secondary-to-dark dark:[&>.chat-section-bubble]:text-black"
+      "[&>.chat-section-bubble]:bg-gradient-to-br [&>.chat-section-bubble]:from-gradient-secondary-from-light [&>.chat-section-bubble]:to-gradient-secondary-to-light [&>.chat-section-bubble]:text-white",
+      "dark:[&>.chat-section-bubble]:from-gradient-secondary-from-dark dark:[&>.chat-section-bubble]:to-gradient-secondary-to-dark dark:[&>.chat-section-bubble]:text-black"
     ]
   end
 
   defp color_variant("gradient", "success") do
     [
-      "[&>.chat-section-bubble]:bg-gradient-to-br from-gradient-success-from-light to-gradient-success-to-light [&>.chat-section-bubble]:text-white",
-      "dark:from-gradient-success-from-dark dark:to-gradient-success-to-dark dark:[&>.chat-section-bubble]:text-black"
+      "[&>.chat-section-bubble]:bg-gradient-to-br [&>.chat-section-bubble]:from-gradient-success-from-light [&>.chat-section-bubble]:to-gradient-success-to-light [&>.chat-section-bubble]:text-white",
+      "dark:[&>.chat-section-bubble]:from-gradient-success-from-dark dark:[&>.chat-section-bubble]:to-gradient-success-to-dark dark:[&>.chat-section-bubble]:text-black"
     ]
   end
 
   defp color_variant("gradient", "warning") do
     [
-      "[&>.chat-section-bubble]:bg-gradient-to-br from-gradient-warning-from-light to-gradient-warning-to-light [&>.chat-section-bubble]:text-white",
-      "dark:from-gradient-warning-from-dark dark:to-gradient-warning-to-dark dark:[&>.chat-section-bubble]:text-black"
+      "[&>.chat-section-bubble]:bg-gradient-to-br [&>.chat-section-bubble]:from-gradient-warning-from-light [&>.chat-section-bubble]:to-gradient-warning-to-light [&>.chat-section-bubble]:text-white",
+      "dark:[&>.chat-section-bubble]:from-gradient-warning-from-dark dark:[&>.chat-section-bubble]:to-gradient-warning-to-dark dark:[&>.chat-section-bubble]:text-black"
     ]
   end
 
   defp color_variant("gradient", "danger") do
     [
-      "[&>.chat-section-bubble]:bg-gradient-to-br from-gradient-danger-from-light to-gradient-danger-to-light [&>.chat-section-bubble]:text-white",
-      "dark:from-gradient-danger-from-dark dark:to-gradient-danger-to-dark dark:[&>.chat-section-bubble]:text-black"
+      "[&>.chat-section-bubble]:bg-gradient-to-br [&>.chat-section-bubble]:from-gradient-danger-from-light [&>.chat-section-bubble]:to-gradient-danger-to-light [&>.chat-section-bubble]:text-white",
+      "dark:[&>.chat-section-bubble]:from-gradient-danger-from-dark dark:[&>.chat-section-bubble]:to-gradient-danger-to-dark dark:[&>.chat-section-bubble]:text-black"
     ]
   end
 
   defp color_variant("gradient", "info") do
     [
-      "[&>.chat-section-bubble]:bg-gradient-to-br from-gradient-info-from-light to-gradient-info-to-light [&>.chat-section-bubble]:text-white",
-      "dark:from-gradient-info-from-dark dark:to-gradient-info-to-dark dark:[&>.chat-section-bubble]:text-black"
+      "[&>.chat-section-bubble]:bg-gradient-to-br [&>.chat-section-bubble]:from-gradient-info-from-light [&>.chat-section-bubble]:to-gradient-info-to-light [&>.chat-section-bubble]:text-white",
+      "dark:[&>.chat-section-bubble]:from-gradient-info-from-dark dark:[&>.chat-section-bubble]:to-gradient-info-to-dark dark:[&>.chat-section-bubble]:text-black"
     ]
   end
 
   defp color_variant("gradient", "misc") do
     [
-      "[&>.chat-section-bubble]:bg-gradient-to-br from-gradient-misc-from-light to-gradient-misc-to-light [&>.chat-section-bubble]:text-white",
-      "dark:from-gradient-misc-from-dark dark:to-gradient-misc-to-dark dark:[&>.chat-section-bubble]:text-black"
+      "[&>.chat-section-bubble]:bg-gradient-to-br [&>.chat-section-bubble]:from-gradient-misc-from-light [&>.chat-section-bubble]:to-gradient-misc-to-light [&>.chat-section-bubble]:text-white",
+      "dark:[&>.chat-section-bubble]:from-gradient-misc-from-dark dark:[&>.chat-section-bubble]:to-gradient-misc-to-dark dark:[&>.chat-section-bubble]:text-black"
     ]
   end
 
   defp color_variant("gradient", "dawn") do
     [
-      "[&>.chat-section-bubble]:bg-gradient-to-br from-gradient-dawn-from-light to-gradient-dawn-to-light [&>.chat-section-bubble]:text-white",
-      "dark:from-gradient-dawn-from-dark dark:to-gradient-dawn-to-dark dark:[&>.chat-section-bubble]:text-black"
+      "[&>.chat-section-bubble]:bg-gradient-to-br [&>.chat-section-bubble]:from-gradient-dawn-from-light [&>.chat-section-bubble]:to-gradient-dawn-to-light [&>.chat-section-bubble]:text-white",
+      "dark:[&>.chat-section-bubble]:from-gradient-dawn-from-dark dark:[&>.chat-section-bubble]:to-gradient-dawn-to-dark dark:[&>.chat-section-bubble]:text-black"
     ]
   end
 
   defp color_variant("gradient", "silver") do
     [
-      "[&>.chat-section-bubble]:bg-gradient-to-br from-gradient-silver-from-light to-gradient-silver-to-light [&>.chat-section-bubble]:text-white",
-      "dark:from-gradient-silver-from-dark dark:to-gradient-silver-to-dark dark:[&>.chat-section-bubble]:text-black"
+      "[&>.chat-section-bubble]:bg-gradient-to-br [&>.chat-section-bubble]:from-gradient-silver-from-light [&>.chat-section-bubble]:to-gradient-silver-to-light [&>.chat-section-bubble]:text-white",
+      "dark:[&>.chat-section-bubble]:from-gradient-silver-from-dark dark:[&>.chat-section-bubble]:to-gradient-silver-to-dark dark:[&>.chat-section-bubble]:text-black"
     ]
   end
 

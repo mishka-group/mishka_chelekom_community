@@ -10,6 +10,8 @@ defmodule CommunityDemoWeb.Components.Clipboard do
   - Customizable styling for visual indicators
   - Accessibility enhancements through ARIA attributes
   - Flexible content rendering through slots
+
+  **Documentation:** https://mishka.tools/chelekom/docs/clipboard
   """
   use Phoenix.Component
   use Gettext, backend: CommunityDemoWeb.Gettext

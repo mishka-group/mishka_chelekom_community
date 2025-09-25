@@ -14,8 +14,11 @@ defmodule CommunityDemoWeb.Components.Tooltip do
   - Support for additional CSS classes to further customize appearance.
 
   Use this component to enhance user experience by providing contextual information without cluttering the interface.
+
+  **Documentation:** https://mishka.tools/chelekom/docs/tooltip
   """
   use Phoenix.Component
+  import Phoenix.LiveView.Utils, only: [random_id: 0]
 
   @doc """
   The `tooltip` component is used to display additional information when users hover over an element.
@@ -26,99 +29,227 @@ defmodule CommunityDemoWeb.Components.Tooltip do
   ## Examples
 
   ```elixir
-  <.tooltip text="This is text" position="bottom">
-    <button class="p-2 bg-orange-700">
-      This is Tooltip a long text for bottom tooltip
-    </button>
+  <.tooltip position="bottom">
+    <:trigger>
+      <button class="p-2 bg-orange-700">
+        This is Tooltip a long text for bottom tooltip
+      </button>
+    </:trigger>
+    <:content>This is text</:content>
   </.tooltip>
 
-  <.tooltip text="This is text" color="warning" position="left">
-    <button class="p-2 bg-orange-700">This is Tooltip left</button>
+  <.tooltip color="warning" position="left">
+    <:trigger>
+      <button class="p-2 bg-orange-700">This is Tooltip left</button>
+    </:trigger>
+    <:content>This is text</:content>
   </.tooltip>
 
-  <.tooltip text="Delete" color="light" position="left">
-    <button class="p-2 bg-red-500 text-white">
-      <.icon name="hero-trash" />
-    </button>
+  <.tooltip color="light" position="left">
+    <:trigger>
+      <button class="p-2 bg-red-500 text-white">
+        <.icon name="hero-trash" />
+      </button>
+    </:trigger>
+    <:content>Delete</:content>
   </.tooltip>
 
-  <.tooltip text="This is text" color="dark" position="right">
-    <button class="p-2 bg-orange-700">This is Tooltip right</button>
+  <.tooltip color="dark" position="right">
+    <:trigger>
+      <button class="p-2 bg-orange-700">This is Tooltip right</button>
+    </:trigger>
+    <:content>This is text</:content>
   </.tooltip>
   ```
   """
   @doc type: :component
-  attr :id, :string,
-    default: nil,
-    doc: "A unique identifier is used to manage state and interaction"
+  attr :id, :string, required: false, doc: "Unique identifier for the tooltip"
 
-  attr :position, :string, default: "top", doc: "Determines the element position"
-  attr :variant, :string, default: "base", doc: "Determines the style"
-  attr :color, :string, default: "natural", doc: "Determines color theme"
-  attr :rounded, :string, default: "", doc: "Determines the border radius"
-  attr :border, :string, default: "extra_small", doc: "Determines border style"
-  attr :show_arrow, :boolean, default: true, doc: "Show or hide arrow of popover"
-
-  attr :size, :string,
+  attr :text, :string,
     default: "",
-    doc:
-      "Determines the overall size of the elements, including padding, font size, and other items"
+    doc: "Simple text content for the tooltip (alternative to content slot)"
 
-  attr :space, :string, default: "", doc: "Space between items"
+  attr :position, :string,
+    default: "top",
+    values: ~w(top bottom left right),
+    doc: "Tooltip position"
 
-  attr :font_weight, :string,
-    default: "font-normal",
-    doc: "Determines custom class for the font weight"
+  attr :clickable, :boolean,
+    default: false,
+    doc: "Whether tooltip is triggered by click instead of hover"
 
-  attr :width, :string, default: "fit", doc: "Determines the element width"
-  attr :wrapper_width, :string, default: "w-fit", doc: "Determines the parent element width"
-  attr :wrapper_class, :string, default: "w-fit", doc: "Determines the parent element class"
-  attr :arrow_class, :string, default: nil, doc: "Determines arrow class"
-  attr :padding, :string, default: "small", doc: "Determines padding for items"
-  attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
-  attr :text_position, :string, default: "center", doc: "Determines the element's text position"
-  attr :text, :string, default: "", doc: "Determines element's text"
+  attr :show_delay, :integer, default: 0, doc: "Delay before showing (ms)"
+  attr :hide_delay, :integer, default: 400, doc: "Delay before hiding (ms)"
+  attr :inline, :boolean, default: false, doc: "Whether tooltip should display inline"
 
-  attr :rest, :global,
-    doc:
-      "Global attributes can define defaults which are merged with attributes provided by the caller"
+  attr :variant, :string, default: "base", doc: "Determines the style variant"
+  attr :color, :string, default: "natural", doc: "Determines color theme"
+  attr :rounded, :string, default: "medium", doc: "Determines border radius"
+  attr :border, :string, default: "extra_small", doc: "Determines border style"
+  attr :size, :string, default: "small", doc: "Determines overall size"
+  attr :padding, :string, default: "small", doc: "Determines padding"
+  attr :font_weight, :string, default: "font-normal", doc: "Font weight class"
+  attr :width, :string, default: "fit", doc: "Tooltip width"
+  attr :text_position, :string, default: "center", doc: "Text alignment"
+  attr :show_arrow, :boolean, default: true, doc: "Show tooltip arrow"
 
-  slot :inner_block, required: false, doc: "Inner block that renders HEEx content"
+  attr :class, :string, default: "", doc: "Additional CSS classes for wrapper"
+  attr :content_class, :string, default: "", doc: "Additional CSS classes for tooltip content"
+  attr :trigger_class, :string, default: "", doc: "Additional CSS classes for tooltip content"
+  attr :arrow_class, :string, default: "", doc: "Additional CSS classes for arrow"
+  attr :rest, :global, doc: "Global attributes"
+
+  slot :trigger, required: false, doc: "Custom trigger element (alternative to inner_block)"
+
+  slot :content, required: false, doc: "Custom tooltip content (alternative to text attr)" do
+    attr :class, :string, doc: "Additional CSS classes for this content"
+  end
+
+  slot :inner_block, required: false, doc: "Default trigger content (when not using trigger slot)"
 
   def tooltip(assigns) do
+    assigns =
+      assigns
+      |> assign_new(:id, fn -> "tooltip-#{random_id()}" end)
+
     ~H"""
-    <span class={["relative group", @wrapper_width, @wrapper_class]}>
-      {render_slot(@inner_block)}
+    <span
+      :if={@inline}
+      id={@id}
+      phx-hook="Floating"
+      data-position={@position}
+      data-smart-position="false"
+      data-clickable={to_string(@clickable)}
+      data-show-delay={@show_delay}
+      data-hide-delay={@hide_delay}
+      data-enable-aria="true"
+      data-floating-type="tooltip"
+      class={@class}
+      {@rest}
+    >
       <span
+        data-floating-trigger="true"
+        class={@trigger_class}
+      >
+        <span :for={trigger <- @trigger} :if={@trigger != []}>{render_slot(trigger)}</span>
+      </span>
+      <span
+        id={"#{@id}-content"}
         role="tooltip"
-        id={@id}
+        data-floating-content="true"
+        aria-hidden="true"
+        tabindex="0"
+        hidden
         class={[
-          "absolute z-10 transition-all ease-in-out delay-100 duration-500 w-full",
-          "invisible opacity-0 group-hover:visible group-hover:opacity-100",
-          space_class(@space),
+          "absolute z-50 transition-all ease-in-out duration-200",
           color_variant(@variant, @color),
           rounded_size(@rounded),
           size_class(@size),
           padding_size(@padding),
-          @variant == "bordered" || (@variant == "base" && border_class(@border)),
-          position_class(@position),
+          border_class(@border, @variant),
           text_position(@text_position),
           width_class(@width),
           @font_weight,
-          @class
+          @content_class
         ]}
-        {@rest}
       >
         <span
-          :if={@show_arrow && @variant != "bordered" && @variant != "base"}
-          class={["block absolute size-[8px] bg-inherit rotate-45 -z-[1] tooltip-arrow", @arrow_class]}
+          :if={@show_arrow && @variant not in ~w(bordered base)}
+          class={[
+            "absolute w-2 h-2 bg-inherit rotate-45 -z-10",
+            arrow_position_class(@position),
+            @arrow_class
+          ]}
         >
         </span>
-        {@text}
+        <span :for={content <- @content} :if={@content != []} class={content[:class]}>
+          {render_slot(content)}
+        </span>
+        <span :if={@content == [] && @text != ""}>{@text}</span>
+        <span :if={@trigger == [] && @inner_block != []}>
+          {render_slot(@inner_block)}
+        </span>
       </span>
     </span>
+
+    <div
+      :if={!@inline}
+      id={@id}
+      phx-hook="Floating"
+      data-position={@position}
+      data-smart-position="false"
+      data-clickable={to_string(@clickable)}
+      data-show-delay={@show_delay}
+      data-hide-delay={@hide_delay}
+      data-enable-aria="true"
+      data-floating-type="tooltip"
+      class={@class}
+      {@rest}
+    >
+      <div
+        data-floating-trigger="true"
+        class={@trigger_class}
+      >
+        <div :for={trigger <- @trigger} :if={@trigger != []}>{render_slot(trigger)}</div>
+      </div>
+      <div
+        id={"#{@id}-content"}
+        role="tooltip"
+        data-floating-content="true"
+        aria-hidden="true"
+        tabindex="0"
+        hidden
+        class={[
+          "absolute z-50 transition-all ease-in-out duration-200",
+          color_variant(@variant, @color),
+          rounded_size(@rounded),
+          size_class(@size),
+          padding_size(@padding),
+          border_class(@border, @variant),
+          text_position(@text_position),
+          width_class(@width),
+          @font_weight,
+          @content_class
+        ]}
+      >
+        <div
+          :if={@show_arrow && @variant not in ~w(bordered base)}
+          class={[
+            "absolute w-2 h-2 bg-inherit rotate-45 -z-10",
+            arrow_position_class(@position),
+            @arrow_class
+          ]}
+        >
+        </div>
+        <div :for={content <- @content} :if={@content != []} class={content[:class]}>
+          {render_slot(content)}
+        </div>
+        <div :if={@content == [] && @text != ""}>{@text}</div>
+        <div :if={@trigger == [] && @inner_block != []}>
+          {render_slot(@inner_block)}
+        </div>
+      </div>
+    </div>
     """
   end
+
+  defp arrow_position_class("top") do
+    "bottom-[-4px] left-1/2 -translate-x-1/2"
+  end
+
+  defp arrow_position_class("bottom") do
+    "top-[-4px] left-1/2 -translate-x-1/2"
+  end
+
+  defp arrow_position_class("left") do
+    "right-[-4px] top-1/2 -translate-y-1/2"
+  end
+
+  defp arrow_position_class("right") do
+    "left-[-4px] top-1/2 -translate-y-1/2"
+  end
+
+  defp arrow_position_class(_), do: arrow_position_class("top")
 
   defp rounded_size("extra_small"), do: "rounded-sm"
 
@@ -132,47 +263,15 @@ defmodule CommunityDemoWeb.Components.Tooltip do
 
   defp rounded_size(params) when is_binary(params), do: params
 
-  defp position_class("top") do
-    [
-      "bottom-full left-1/2 -translate-x-1/2 -translate-y-[4px]",
-      "[&>.tooltip-arrow]:-bottom-[4px] [&>.tooltip-arrow]:-translate-x-1/2 [&>.tooltip-arrow]:left-1/2"
-    ]
-  end
+  defp border_class(_, variant) when variant in ["default", "shadow", "gradient"],
+    do: nil
 
-  defp position_class("bottom") do
-    [
-      "top-full left-1/2 -translate-x-1/2 translate-y-[4px]",
-      "[&>.tooltip-arrow]:-top-[4px] [&>.tooltip-arrow]:-translate-x-1/2 [&>.tooltip-arrow]:left-1/2"
-    ]
-  end
-
-  defp position_class("left") do
-    [
-      "right-full top-1/2 -translate-y-1/2 -translate-x-[6px]",
-      "[&>.tooltip-arrow]:-right-[4px] [&>.tooltip-arrow]:translate-y-1/2 [&>.tooltip-arrow]:top-1/3"
-    ]
-  end
-
-  defp position_class("right") do
-    [
-      "left-full top-1/2 -translate-y-1/2 translate-x-[6px]",
-      "[&>.tooltip-arrow]:-left-[4px] [&>.tooltip-arrow]:translate-y-1/2 [&>.tooltip-arrow]:top-1/3"
-    ]
-  end
-
-  defp border_class("extra_small"), do: "border"
-
-  defp border_class("small"), do: "border-2"
-
-  defp border_class("medium"), do: "border-[3px]"
-
-  defp border_class("large"), do: "border-4"
-
-  defp border_class("extra_large"), do: "border-[5px]"
-
-  defp border_class("none"), do: nil
-
-  defp border_class(params) when is_binary(params), do: params
+  defp border_class("extra_small", _), do: "border"
+  defp border_class("small", _), do: "border-2"
+  defp border_class("medium", _), do: "border-[3px]"
+  defp border_class("large", _), do: "border-4"
+  defp border_class("extra_large", _), do: "border-[5px]"
+  defp border_class(params, _) when is_binary(params), do: params
 
   defp size_class("extra_small"), do: "text-xs max-w-40"
 
@@ -218,18 +317,6 @@ defmodule CommunityDemoWeb.Components.Tooltip do
   defp padding_size("none"), do: "p-0"
 
   defp padding_size(params) when is_binary(params), do: params
-
-  defp space_class("extra_small"), do: "space-y-2"
-
-  defp space_class("small"), do: "space-y-3"
-
-  defp space_class("medium"), do: "space-y-4"
-
-  defp space_class("large"), do: "space-y-5"
-
-  defp space_class("extra_large"), do: "space-y-6"
-
-  defp space_class(params) when is_binary(params), do: params
 
   defp color_variant("base", _) do
     [

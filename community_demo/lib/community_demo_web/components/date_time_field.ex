@@ -12,6 +12,8 @@ defmodule CommunityDemoWeb.Components.DateTimeField do
   - Flexible error handling with the ability to display custom error messages and icons.
   - Optional floating label support, allowing labels to animate based on user interaction.
   - Integration with Phoenix form fields for seamless form data management.
+
+  **Documentation:** https://mishka.tools/chelekom/docs/forms/date-time-field
   """
 
   use Phoenix.Component
@@ -165,7 +167,7 @@ defmodule CommunityDemoWeb.Components.DateTimeField do
       border_class(@border, @variant),
       size_class(@size),
       space_class(@space),
-      @ring && "[&_.date-time-field-wrapper]:focus-within:ring-[0.03rem]",
+      @ring && "[&_.date-time-field-wrapper]:focus-within:ring-[0.03rem] leading-6",
       @class
     ]}>
       <div :if={@description} class={@description_class}>
@@ -195,6 +197,7 @@ defmodule CommunityDemoWeb.Components.DateTimeField do
             class={[
               "disabled:opacity-80 block w-full z-[2] focus:ring-0 placeholder:text-transparent pb-1 pt-2.5 px-2",
               "text-[16px] sm:font-inherit appearance-none bg-transparent border-0 focus:outline-none peer",
+              "[&::-webkit-calendar-picker-indicator]:hidden",
               @input_class
             ]}
             placeholder=" "
@@ -219,6 +222,9 @@ defmodule CommunityDemoWeb.Components.DateTimeField do
         >
           {render_slot(@end_section)}
         </div>
+        <div class={["flex items-center justify-center shrink-0 pe-2"]}>
+          <.icon name="hero-calendar" class="size-[18px]" />
+        </div>
       </div>
 
       <.error :for={msg <- @errors} icon={@error_icon}>{msg}</.error>
@@ -234,7 +240,7 @@ defmodule CommunityDemoWeb.Components.DateTimeField do
       border_class(@border, @variant),
       size_class(@size),
       space_class(@space),
-      @ring && "[&_.date-time-field-wrapper]:focus-within:ring-[0.03rem]",
+      @ring && "[&_.date-time-field-wrapper]:focus-within:ring-[0.03rem] leading-6",
       @class
     ]}>
       <div
@@ -271,6 +277,7 @@ defmodule CommunityDemoWeb.Components.DateTimeField do
           class={[
             "flex-1 py-1 px-2 text-sm disabled:opacity-80 block w-full appearance-none",
             "bg-transparent border-0 focus:outline-none focus:ring-0",
+            "[&::-webkit-calendar-picker-indicator]:hidden",
             @input_class
           ]}
           {@rest}
@@ -281,6 +288,9 @@ defmodule CommunityDemoWeb.Components.DateTimeField do
           class={["flex items-center justify-center shrink-0 pe-2", @end_section[:class]]}
         >
           {render_slot(@end_section)}
+        </div>
+        <div class={["flex items-center justify-center shrink-0 pe-2"]}>
+          <.icon name="hero-calendar" class="size-[18px]" />
         </div>
       </div>
 
@@ -295,7 +305,7 @@ defmodule CommunityDemoWeb.Components.DateTimeField do
 
   defp label(assigns) do
     ~H"""
-    <label for={@for} class={["leading-5 font-semibold", @class]}>
+    <label for={@for} class={["font-semibold", @class]}>
       {render_slot(@inner_block)}
     </label>
     """
@@ -306,7 +316,7 @@ defmodule CommunityDemoWeb.Components.DateTimeField do
 
   defp error(assigns) do
     ~H"""
-    <p class="mt-3 flex items-center gap-3 text-sm leading-6 text-rose-700">
+    <p class="mt-3 flex items-center gap-3 text-sm text-rose-700">
       <.icon :if={!is_nil(@icon)} name={@icon} class="shrink-0" />
       {render_slot(@inner_block)}
     </p>
@@ -412,7 +422,7 @@ defmodule CommunityDemoWeb.Components.DateTimeField do
       "focus-within:[&_.date-time-field-wrapper]:ring-base-border-light dark:focus-within:[&_.date-time-field-wrapper]:ring-base-border-light",
       "[&_.date-time-field-wrapper]:shadow-sm",
       floating == "outer" &&
-        "[&_.date-time-field-wrapper_.floating-label]:bg-white dark:[&_.date-time-field-wrapper_.floating-label]:bg-base-border-dark"
+        "[&_.date-time-field-wrapper_.floating-label]:bg-white dark:[&_.date-time-field-wrapper_.floating-label]:bg-base-bg-dark"
     ]
   end
 
