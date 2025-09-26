@@ -12,6 +12,8 @@ defmodule CommunityDemoWeb.Components.Breadcrumb do
   links, and custom separators.
   - **Global Attributes**: Utilize global attributes to customize and extend the component's
   behavior and appearance.
+
+  **Documentation:** https://mishka.tools/chelekom/docs/breadcrumb
   """
   use Phoenix.Component
   import CommunityDemoWeb.Components.Icon, only: [icon: 1]
@@ -110,7 +112,7 @@ defmodule CommunityDemoWeb.Components.Breadcrumb do
           <.link
             :if={!is_nil(item[:link])}
             navigate={item[:link]}
-            title={item[:tile]}
+            title={item[:title]}
             class={item[:link_class]}
           >
             {render_slot(item)}
@@ -138,90 +140,90 @@ defmodule CommunityDemoWeb.Components.Breadcrumb do
 
   defp color_class("base") do
     [
-      "text-[#09090b] hover:[&>li_a]:text-[#1b1b1f]",
-      "dark:text-[#FAFAFA] dark:hover:[&>li_a]:text-[#ededed]"
+      "text-base-text-light [&>li_a]:hover:text-base-text-hover-light",
+      "dark:text-base-text-dark dark:[&>li_a]:hover:text-base-text-hover-dark"
     ]
   end
 
   defp color_class("white") do
     [
-      "text-white hover:[&>li_a]:text-[#DDDDDD]"
+      "text-white [&>li_a]:hover:text-natural-disabled-light"
     ]
   end
 
   defp color_class("dark") do
     [
-      "text-[#282828] hover:[&>li_a]:text-[#727272]"
+      "text-bordered-dark-bg [&>li_a]:hover:text-natural-disabled-dark"
     ]
   end
 
   defp color_class("natural") do
     [
-      "text-[#4B4B4B] hover:[&>li_a]:text-[#282828]",
-      "dark:text-[#DDDDDD] dark:hover:[&>li_a]:text-[#E8E8E8]"
+      "text-natural-light [&>li_a]:hover:text-natural-hover-light",
+      "dark:text-natural-dark dark:[&>li_a]:hover:text-natural-hover-dark"
     ]
   end
 
   defp color_class("primary") do
     [
-      "text-[#007F8C] hover:[&>li_a]:text-[#016974]",
-      "dark:text-[#01B8CA] dark:hover:[&>li_a]:text-[#77D5E3]"
+      "text-primary-light [&>li_a]:hover:text-primary-hover-light",
+      "dark:text-primary-dark dark:[&>li_a]:hover:text-primary-hover-dark"
     ]
   end
 
   defp color_class("secondary") do
     [
-      "text-[#266EF1] hover:[&>li_a]:text-[#175BCC]",
-      "dark:text-[#6DAAFB] dark:hover:[&>li_a]:text-[#A9C9FF]"
+      "text-secondary-light [&>li_a]:hover:text-secondary-hover-light",
+      "dark:text-secondary-dark dark:[&>li_a]:hover:text-secondary-hover-dark"
     ]
   end
 
   defp color_class("success") do
     [
-      "text-[#0E8345] hover:[&>li_a]:text-[#166C3B]",
-      "dark:text-[#06C167] dark:hover:[&>li_a]:text-[#7FD99A]"
+      "text-success-light [&>li_a]:hover:text-success-hover-light",
+      "dark:text-success-dark dark:[&>li_a]:hover:text-success-hover-dark"
     ]
   end
 
   defp color_class("warning") do
     [
-      "text-[#CA8D01] hover:[&>li_a]:text-[#CA8D01]",
-      "dark:text-[#FDC034] dark:hover:[&>li_a]:text-[#FDD067]"
+      "text-warning-light [&>li_a]:hover:text-warning-hover-light",
+      "dark:text-warning-dark dark:[&>li_a]:hover:text-warning-hover-dark"
     ]
   end
 
   defp color_class("danger") do
     [
-      "text-[#DE1135] hover:[&>li_a]:text-[#BB032A]",
-      "dark:text-[#FC7F79] dark:hover:[&>li_a]:text-[#FFB2AB]"
+      "text-danger-light [&>li_a]:hover:text-danger-hover-light",
+      "dark:text-danger-dark dark:[&>li_a]:hover:text-danger-hover-dark"
     ]
   end
 
   defp color_class("info") do
     [
-      "text-[#0B84BA] hover:[&>li_a]:text-[#08638C]",
-      "dark:text-[#3EB7ED] dark:hover:[&>li_a]:text-[#6EC9F2]"
+      "text-info-light [&>li_a]:hover:text-info-hover-light",
+      "dark:text-info-dark dark:[&>li_a]:hover:text-info-hover-dark"
     ]
   end
 
   defp color_class("misc") do
     [
-      "text-[#8750C5] hover:[&>li_a]:text-[#653C94]",
-      "dark:text-[#BA83F9] dark:hover:[&>li_a]:text-[#CBA2FA]"
+      "text-misc-light [&>li_a]:hover:text-misc-hover-light",
+      "dark:text-misc-dark dark:[&>li_a]:hover:text-misc-hover-dark"
     ]
   end
 
   defp color_class("dawn") do
     [
-      "text-[#A86438] hover:[&>li_a]:text-[#7E4B2A]",
-      "dark:text-[#DB976B] dark:hover:[&>li_a]:text-[#E4B190]"
+      "text-dawn-light [&>li_a]:hover:text-dawn-hover-light",
+      "dark:text-dawn-dark dark:[&>li_a]:hover:text-dawn-hover-dark"
     ]
   end
 
   defp color_class("silver") do
     [
-      "text-[#868686] hover:[&>li_a]:text-[#727272]",
-      "dark:text-[#A6A6A6] dark:hover:[&>li_a]:text-[#BBBBBB]"
+      "text-silver-light [&>li_a]:hover:text-silver-hover-light",
+      "dark:text-silver-dark dark:[&>li_a]:hover:text-silver-hover-dark"
     ]
   end
 
@@ -251,7 +253,7 @@ defmodule CommunityDemoWeb.Components.Breadcrumb do
 
   defp default_classes() do
     [
-      "flex items-center transition-all ease-in-ou duration-100 group"
+      "flex items-center transition-all ease-in-out duration-100 group"
     ]
   end
 end

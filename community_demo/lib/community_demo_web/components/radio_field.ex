@@ -13,6 +13,8 @@ defmodule CommunityDemoWeb.Components.RadioField do
   In addition, the module includes support for grouped radio buttons with the `group_radio`
   component, enabling the creation of sets of related radio inputs. This facilitates the
   development of dynamic and interactive form elements in a clean and organized manner.
+
+  **Documentation:** https://mishka.tools/chelekom/docs/forms/radio-field
   """
   use Phoenix.Component
   alias Phoenix.HTML.Form
@@ -120,7 +122,7 @@ defmodule CommunityDemoWeb.Components.RadioField do
           value={@value}
           checked={@checked}
           class={[
-            "bg-white dark:bg-[#18181B] radio-input rounded-full",
+            "bg-white dark:bg-base-bg-dark radio-input rounded-full",
             @radio_class
           ]}
           {@rest}
@@ -243,7 +245,7 @@ defmodule CommunityDemoWeb.Components.RadioField do
             id={"#{@id}-#{index}"}
             value={radio[:value]}
             checked={radio[:checked]}
-            class={["bg-white dark:bg-[#18181B] radio-input rounded-full", @radio_class]}
+            class={["bg-white dark:bg-base-bg-dark radio-input rounded-full", @radio_class]}
             {@rest}
           />
           <span class={@label_class}>{render_slot(radio)}</span>
@@ -341,138 +343,139 @@ defmodule CommunityDemoWeb.Components.RadioField do
 
   defp color_class("base") do
     [
-      "text-[#09090b] dark:text-[#FAFAFA]",
-      "checked:[&_.radio-field-wrapper_.radio-input]:text-[#8B8B8D]",
-      "dark:checked:[&_.radio-field-wrapper_.radio-input]:text-[#818182]",
-      "[&_.radio-field-wrapper_.radio-input]:border-[#8B8B8D]",
-      "dark:[&_.radio-field-wrapper_.radio-input]:border-[#818182]",
-      "focus-within:[&_.radio-field-wrapper_.radio-input]:ring-[#F8F9FA] dark:focus-within:[&_.radio-field-wrapper_.radio-input]:ring-[#242424]"
+      "text-base-text-light dark:text-base-text-dark",
+      "[&_.radio-field-wrapper_.radio-input]:checked:accent-base-form-border-light",
+      "dark:[&_.radio-field-wrapper_.radio-input]:checked:accent-base-form-border-dark",
+      "[&_.radio-field-wrapper_.radio-input]:border-base-form-border-light",
+      "dark:[&_.radio-field-wrapper_.radio-input]:border-base-form-border-dark",
+      "focus-within:[&_.radio-field-wrapper_.radio-input]:ring-base-hover-light dark:focus-within:[&_.radio-field-wrapper_.radio-input]:ring-base-hover-dark"
     ]
   end
 
   defp color_class("white") do
     [
-      "[&_.radio-field-wrapper_.radio-input]:text-white text-[#DDDDDD]",
-      "[&_.radio-field-wrapper_.radio-input]:border-[#DDDDDD]",
-      "focus-within:[&_.radio-field-wrapper_.radio-input_.radio-input]:ring-[#DDDDDD]"
+      "[&_.radio-field-wrapper_.radio-input]:text-white text-bordered-white-border",
+      "[&_.radio-field-wrapper_.radio-input]:border-bordered-white-border",
+      "focus-within:[&_.radio-field-wrapper_.radio-input_.radio-input]:ring-bordered-white-border"
     ]
   end
 
   defp color_class("natural") do
     [
-      "text-[#282828] dark:text-[#E8E8E8]",
-      "checked:[&_.radio-field-wrapper_.radio-input]:text-[#282828]",
-      "dark:checked:[&_.radio-field-wrapper_.radio-input]:text-[#E8E8E8]",
-      "[&_.radio-field-wrapper_.radio-input]:border-[#282828]",
-      "dark:[&_.radio-field-wrapper_.radio-input]:border-[#868686]",
-      "focus-within:[&_.radio-field-wrapper_.radio-input]:ring-[#4B4B4B] dark:focus-within:[&_.radio-field-wrapper_.radio-input]:ring-[#DDDDDD]"
+      "text-natural-hover-light dark:text-natural-border-dark",
+      "[&_.radio-field-wrapper_.radio-input]:checked:accent-natural-hover-light",
+      "dark:[&_.radio-field-wrapper_.radio-input]:checked:accent-natural-hover-dark",
+      "[&_.radio-field-wrapper_.radio-input]:border-natural-hover-light",
+      "dark:[&_.radio-field-wrapper_.radio-input]:border-silver-light",
+      "focus-within:[&_.radio-field-wrapper_.radio-input]:ring-natural-light dark:focus-within:[&_.radio-field-wrapper_.radio-input]:ring-natural-dark"
     ]
   end
 
   defp color_class("primary") do
     [
-      "text-[#016974] dark:text-[#77D5E3]",
-      "checked:[&_.radio-field-wrapper_.radio-input]:text-[#016974]",
-      "dark:checked:[&_.radio-field-wrapper_.radio-input]:text-[#77D5E3]",
-      "[&_.radio-field-wrapper_.radio-input]:border-[#016974]",
-      "dark:[&_.radio-field-wrapper_.radio-input]:border-[#77D5E3]",
-      "focus-within:[&_.radio-field-wrapper_.radio-input]:ring-[#007F8C] dark:focus-within:[&_.radio-field-wrapper_.radio-input]:ring-[#01B8CA]"
+      "text-primary-hover-light dark:text-primary-hover-dark",
+      "[&_.radio-field-wrapper_.radio-input]:checked:accent-primary-hover-light",
+      "dark:[&_.radio-field-wrapper_.radio-input]:checked:accent-primary-hover-dark",
+      "[&_.radio-field-wrapper_.radio-input]:border-primary-hover-light",
+      "dark:[&_.radio-field-wrapper_.radio-input]:border-primary-hover-dark",
+      "focus-within:[&_.radio-field-wrapper_.radio-input]:ring-primary-light dark:focus-within:[&_.radio-field-wrapper_.radio-input]:ring-primary-dark"
     ]
   end
 
   defp color_class("secondary") do
     [
-      "text-[#175BCC] dark:text-[#A9C9FF]",
-      "checked:[&_.radio-field-wrapper_.radio-input]:text-[#175BCC]",
-      "dark:checked:[&_.radio-field-wrapper_.radio-input]:text-[#A9C9FF]",
-      "[&_.radio-field-wrapper_.radio-input]:border-[#175BCC]",
-      "dark:[&_.radio-field-wrapper_.radio-input]:border-[#A9C9FF]",
-      "focus-within:[&_.radio-field-wrapper_.radio-input]:ring-[#266EF1] dark:focus-within:[&_.radio-field-wrapper_.radio-input]:ring-[#6DAAFB]"
+      "text-secondary-hover-light dark:text-secondary-hover-dark",
+      "[&_.radio-field-wrapper_.radio-input]:checked:accent-secondary-hover-light",
+      "dark:[&_.radio-field-wrapper_.radio-input]:checked:accent-secondary-hover-dark",
+      "[&_.radio-field-wrapper_.radio-input]:border-secondary-hover-light",
+      "dark:[&_.radio-field-wrapper_.radio-input]:border-secondary-hover-dark",
+      "focus-within:[&_.radio-field-wrapper_.radio-input]:ring-secondary-light dark:focus-within:[&_.radio-field-wrapper_.radio-input]:ring-secondary-dark"
     ]
   end
 
   defp color_class("success") do
     [
-      "text-[#166C3B] dark:text-[#7FD99A]",
-      "checked:[&_.radio-field-wrapper_.radio-input]:text-[#166C3B]",
-      "dark:checked:[&_.radio-field-wrapper_.radio-input]:text-[#7FD99A]",
-      "[&_.radio-field-wrapper_.radio-input]:border-[#166C3B]",
-      "dark:[&_.radio-field-wrapper_.radio-input]:border-[#7FD99A]",
-      "focus-within:[&_.radio-field-wrapper_.radio-input]:ring-[#0E8345] dark:focus-within:[&_.radio-field-wrapper_.radio-input]:ring-[#06C167]"
+      "text-success-hover-light dark:text-success-hover-dark",
+      "[&_.radio-field-wrapper_.radio-input]:checked:accent-success-hover-light",
+      "dark:[&_.radio-field-wrapper_.radio-input]:checked:accent-success-hover-dark",
+      "[&_.radio-field-wrapper_.radio-input]:border-success-hover-light",
+      "dark:[&_.radio-field-wrapper_.radio-input]:border-success-hover-dark",
+      "focus-within:[&_.radio-field-wrapper_.radio-input]:ring-success-light dark:focus-within:[&_.radio-field-wrapper_.radio-input]:ring-success-dark"
     ]
   end
 
   defp color_class("warning") do
     [
-      "text-[#976A01] dark:text-[#FDD067]",
-      "checked:[&_.radio-field-wrapper_.radio-input]:text-[#976A01]",
-      "dark:checked:[&_.radio-field-wrapper_.radio-input]:text-[#FDD067]",
-      "[&_.radio-field-wrapper_.radio-input]:border-[#976A01]",
-      "dark:[&_.radio-field-wrapper_.radio-input]:border-[#FDD067]",
-      "focus-within:[&_.radio-field-wrapper_.radio-input]:ring-[#CA8D01] dark:focus-within:[&_.radio-field-wrapper_.radio-input]:ring-[#FDC034]"
+      "text-warning-hover-light dark:text-warning-hover-dark",
+      "[&_.radio-field-wrapper_.radio-input]:checked:accent-warning-hover-light",
+      "dark:[&_.radio-field-wrapper_.radio-input]:checked:accent-warning-hover-dark",
+      "[&_.radio-field-wrapper_.radio-input]:border-warning-hover-light",
+      "dark:[&_.radio-field-wrapper_.radio-input]:border-warning-hover-dark",
+      "focus-within:[&_.radio-field-wrapper_.radio-input]:ring-warning-light dark:focus-within:[&_.radio-field-wrapper_.radio-input]:ring-warning-dark"
     ]
   end
 
   defp color_class("danger") do
     [
-      "text-[#BB032A] dark:text-[#FFB2AB]",
-      "checked:[&_.radio-field-wrapper_.radio-input]:text-[#BB032A]",
-      "dark:checked:[&_.radio-field-wrapper_.radio-input]:text-[#FFB2AB]",
-      "[&_.radio-field-wrapper_.radio-input]:border-[#BB032A]",
-      "dark:[&_.radio-field-wrapper_.radio-input]:border-[#FFB2AB]",
-      "focus-within:[&_.radio-field-wrapper_.radio-input]:ring-[#DE1135] dark:focus-within:[&_.radio-field-wrapper_.radio-input]:ring-[#FC7F79]"
+      "text-danger-hover-light dark:text-danger-hover-dark",
+      "[&_.radio-field-wrapper_.radio-input]:checked:accent-danger-hover-light",
+      "dark:[&_.radio-field-wrapper_.radio-input]:checked:accent-danger-hover-dark",
+      "[&_.radio-field-wrapper_.radio-input]:border-danger-hover-light",
+      "dark:[&_.radio-field-wrapper_.radio-input]:border-danger-hover-dark",
+      "focus-within:[&_.radio-field-wrapper_.radio-input]:ring-danger-light dark:focus-within:[&_.radio-field-wrapper_.radio-input]:ring-danger-dark"
     ]
   end
 
   defp color_class("info") do
     [
-      "text-[#0B84BA] dark:text-[#6EC9F2]",
-      "checked:[&_.radio-field-wrapper_.radio-input]:text-[#0B84BA]",
-      "dark:checked:[&_.radio-field-wrapper_.radio-input]:text-[#6EC9F2]",
-      "[&_.radio-field-wrapper_.radio-input]:border-[#0B84BA]",
-      "dark:[&_.radio-field-wrapper_.radio-input]:border-[#6EC9F2]",
-      "focus-within:[&_.radio-field-wrapper_.radio-input]:ring-[#0B84BA] dark:focus-within:[&_.radio-field-wrapper_.radio-input]:ring-[#3EB7ED]"
+      "text-info-hover-light dark:text-info-hover-dark",
+      "[&_.radio-field-wrapper_.radio-input]:checked:accent-info-hover-light",
+      "dark:[&_.radio-field-wrapper_.radio-input]:checked:accent-info-hover-dark",
+      "[&_.radio-field-wrapper_.radio-input]:border-info-hover-light",
+      "dark:[&_.radio-field-wrapper_.radio-input]:border-info-hover-dark",
+      "focus-within:[&_.radio-field-wrapper_.radio-input]:ring-info-light dark:focus-within:[&_.radio-field-wrapper_.radio-input]:ring-info-dark"
     ]
   end
 
   defp color_class("misc") do
     [
-      "text-[#653C94] dark:text-[#CBA2FA]",
-      "checked:[&_.radio-field-wrapper_.radio-input]:text-[#653C94]",
-      "dark:checked:[&_.radio-field-wrapper_.radio-input]:text-[#CBA2FA]",
-      "[&_.radio-field-wrapper_.radio-input]:border-[#653C94]",
-      "dark:[&_.radio-field-wrapper_.radio-input]:border-[#CBA2FA]",
-      "focus-within:[&_.radio-field-wrapper_.radio-input]:ring-[#8750C5] dark:focus-within:[&_.radio-field-wrapper_.radio-input]:ring-[#BA83F9]"
+      "text-misc-hover-light dark:text-misc-hover-dark",
+      "[&_.radio-field-wrapper_.radio-input]:checked:accent-misc-hover-light",
+      "dark:[&_.radio-field-wrapper_.radio-input]:checked:accent-misc-hover-dark",
+      "[&_.radio-field-wrapper_.radio-input]:border-misc-hover-light",
+      "dark:[&_.radio-field-wrapper_.radio-input]:border-misc-hover-dark",
+      "focus-within:[&_.radio-field-wrapper_.radio-input]:ring-misc-light dark:focus-within:[&_.radio-field-wrapper_.radio-input]:ring-misc-dark"
     ]
   end
 
   defp color_class("dawn") do
     [
-      "text-[#7E4B2A] dark:text-[#E4B190]",
-      "checked:[&_.radio-field-wrapper_.radio-input]:text-[#7E4B2A]",
-      "dark:checked:[&_.radio-field-wrapper_.radio-input]:text-[#E4B190]",
-      "[&_.radio-field-wrapper_.radio-input]:border-[#7E4B2A]",
-      "dark:[&_.radio-field-wrapper_.radio-input]:border-[#E4B190]",
-      "focus-within:[&_.radio-field-wrapper_.radio-input]:ring-[#A86438] dark:focus-within:[&_.radio-field-wrapper_.radio-input]:ring-[#DB976B]"
+      "text-dawn-hover-light dark:text-dawn-hover-dark",
+      "[&_.radio-field-wrapper_.radio-input]:checked:accent-dawn-hover-light",
+      "dark:[&_.radio-field-wrapper_.radio-input]:checked:accent-dawn-hover-dark",
+      "[&_.radio-field-wrapper_.radio-input]:border-dawn-hover-light",
+      "dark:[&_.radio-field-wrapper_.radio-input]:border-dawn-hover-dark",
+      "focus-within:[&_.radio-field-wrapper_.radio-input]:ring-dawn-light dark:focus-within:[&_.radio-field-wrapper_.radio-input]:ring-dawn-dark"
     ]
   end
 
   defp color_class("silver") do
     [
-      "text-[#727272] dark:text-[#BBBBBB]",
-      "checked:[&_.radio-field-wrapper_.radio-input]:text-[#727272]",
-      "dark:checked:[&_.radio-field-wrapper_.radio-input]:text-[#BBBBBB]",
-      "[&_.radio-field-wrapper_.radio-input]:border-[#727272]",
-      "dark:[&_.radio-field-wrapper_.radio-input]:border-[#BBBBBB]",
-      "focus-within:[&_.radio-field-wrapper_.radio-input]:ring-[#868686] dark:focus-within:[&_.radio-field-wrapper_.radio-input]:ring-[#A6A6A6]"
+      "text-silver-hover-light dark:text-silver-hover-dark",
+      "[&_.radio-field-wrapper_.radio-input]:checked:accent-silver-hover-light",
+      "dark:[&_.radio-field-wrapper_.radio-input]:checked:accent-silver-hover-dark",
+      "[&_.radio-field-wrapper_.radio-input]:border-silver-hover-light",
+      "dark:[&_.radio-field-wrapper_.radio-input]:border-silver-hover-dark",
+      "focus-within:[&_.radio-field-wrapper_.radio-input]:ring-silver-light dark:focus-within:[&_.radio-field-wrapper_.radio-input]:ring-silver-dark"
     ]
   end
 
   defp color_class("dark") do
     [
-      "[&_.radio-field-wrapper_.radio-input]:text-[#282828] text-[#282828]",
-      "[&_.radio-field-wrapper_.radio-input]:border-[#727272]",
-      "focus-within:[&_.radio-field-wrapper_.radio-input]:ring-[#282828]"
+      "[&_.radio-field-wrapper_.radio-input]:text-natural-hover-light text-natural-hover-light",
+      "[&_.radio-field-wrapper_.radio-input]:border-silver-hover-light",
+      "[&_.radio-field-wrapper_.radio-input]:checked:accent-default-dark-bg",
+      "focus-within:[&_.radio-field-wrapper_.radio-input]:ring-natural-hover-light"
     ]
   end
 

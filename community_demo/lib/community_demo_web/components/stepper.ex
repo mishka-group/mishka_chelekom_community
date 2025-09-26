@@ -12,6 +12,8 @@ defmodule CommunityDemoWeb.Components.Stepper do
 
   The `CommunityDemoWeb.Components.Stepper` enhances user experience by providing a clear and concise representation
   of step-by-step workflows, ensuring users can easily track their position and progress within the application.
+
+  **Documentation:** https://mishka.tools/chelekom/docs/stepper
   """
 
   use Phoenix.Component
@@ -45,7 +47,7 @@ defmodule CommunityDemoWeb.Components.Stepper do
 
   attr :margin, :string, default: "medium", doc: "Determines the element margin"
   attr :color, :string, default: "natural", doc: "Determines color theme"
-  attr :space, :string, default: "", doc: "Space between items"
+  attr :space, :string, default: "", doc: "Space between stepper items in vertical layout"
   attr :border, :string, default: "extra_small", doc: "Determines border style"
 
   attr :font_weight, :string,
@@ -57,11 +59,11 @@ defmodule CommunityDemoWeb.Components.Stepper do
   attr :variant, :string, default: "base", doc: "Determines the style"
   attr :vertical, :boolean, default: false, doc: "Determines whether element is vertical"
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
-  attr :col_step, :boolean, default: false, doc: "Custom CSS class for additional styling"
+  attr :col_step, :boolean, default: false, doc: "Enables column layout for stepper steps"
 
   attr :col_step_position, :string,
     default: "start",
-    doc: "Custom CSS class for additional styling"
+    doc: "Determines column step position alignment (start, end, center)"
 
   attr :rest, :global,
     doc:
@@ -150,11 +152,11 @@ defmodule CommunityDemoWeb.Components.Stepper do
 
   attr :icon_wrapper_class, :string,
     default: nil,
-    doc: "Custom CSS class for additional styling to separator"
+    doc: "Custom CSS class for additional styling to icon wrapper"
 
   attr :number_wrapper_class, :string,
     default: nil,
-    doc: "Custom CSS class for additional styling to separator"
+    doc: "Custom CSS class for additional styling to number wrapper"
 
   attr :content_class, :string,
     default: nil,
@@ -188,7 +190,7 @@ defmodule CommunityDemoWeb.Components.Stepper do
     doc: "Determines if the element can be activated on click"
 
   attr :reverse, :boolean, default: false, doc: "Switches the order of the element and label"
-  attr :space, :string, default: "small", doc: "Switches the order of the element and label"
+  attr :space, :string, default: "small", doc: "Space between step icon and content"
   attr :border, :string, default: "", doc: "Determines border style"
 
   attr :rest, :global,
@@ -199,14 +201,14 @@ defmodule CommunityDemoWeb.Components.Stepper do
 
   def stepper_section(%{vertical: true} = assigns) do
     ~H"""
-    <button
+    <div
       id={@id}
-      role="listitem"
+      role="button"
       aria-label={gettext("Step %{number}: %{title}", number: @step_number, title: @title)}
       aria-disabled={!@clickable}
       aria-current={@step == "current" && "step"}
       class={[
-        "stepper-#{@step}-step",
+        "stepper-#{@step}-step cursor-pointer",
         "vertical-step overflow-hidden flex flex-row text-start gap-4",
         @class
       ]}
@@ -268,22 +270,21 @@ defmodule CommunityDemoWeb.Components.Stepper do
 
         {render_slot(@inner_block)}
       </span>
-    </button>
+    </div>
     """
   end
 
   def stepper_section(assigns) do
     ~H"""
-    <button
+    <div
       id={@id}
-      role="listitem"
+      role="button"
       aria-label={gettext("Step %{number}: %{title}", number: @step_number, title: @title)}
       aria-disabled={!@clickable}
       aria-current={@step == "current" && "step"}
       class={[
-        "stepper-#{@step}-step",
-        "text-start flex flex-nowrap shrink-0",
-        "group-[:not(.col-step)]:justify-center group-[:not(.col-step)]:items-center",
+        "stepper-#{@step}-step cursor-pointer",
+        "text-start flex flex-nowrap shrink-0 items-center",
         @reverse && "flex-row-reverse text-end",
         "group-[.col-step]:flex-col group-[.col-step]:gap-3",
         content_space(@space, @reverse),
@@ -346,7 +347,7 @@ defmodule CommunityDemoWeb.Components.Stepper do
 
         {render_slot(@inner_block)}
       </span>
-    </button>
+    </div>
 
     <div class="stepper-separator w-full flex-1"></div>
     """
@@ -393,36 +394,31 @@ defmodule CommunityDemoWeb.Components.Stepper do
 
   defp content_space("extra_small", reverse?) do
     [
-      (reverse? && "group-[:not(.col-step)_.stepper-content]:me-1") ||
-        "group-[:not(.col-step)_.stepper-content]:ms-1"
+      (reverse? && "me-1") || "[&_.stepper-content]:ms-1"
     ]
   end
 
   defp content_space("small", reverse?) do
     [
-      (reverse? && "group-[:not(.col-step)_.stepper-content]:me-2") ||
-        "group-[:not(.col-step)_.stepper-content]:ms-2"
+      (reverse? && "[&_.stepper-content]:me-2") || "[&_.stepper-content]:ms-2"
     ]
   end
 
   defp content_space("medium", reverse?) do
     [
-      (reverse? && "group-[:not(.col-step)_.stepper-content]:me-3") ||
-        "group-[:not(.col-step)_.stepper-content]:ms-3"
+      (reverse? && "[&_.stepper-content]:me-3") || "[&_.stepper-content]:ms-3"
     ]
   end
 
   defp content_space("large", reverse?) do
     [
-      (reverse? && "group-[:not(.col-step)_.stepper-content]:me-4") ||
-        "group-[:not(.col-step)_.stepper-content]:ms-4"
+      (reverse? && "[&_.stepper-content]:me-4") || "[&_.stepper-content]:ms-4"
     ]
   end
 
   defp content_space("extra_large", reverse?) do
     [
-      (reverse? && "group-[:not(.col-step)_.stepper-content]:me-5") ||
-        "group-[:not(.col-step)_.stepper-content]:ms-5"
+      (reverse? && "[&_.stepper-content]:me-5") || "[&_.stepper-content]:ms-5"
     ]
   end
 
@@ -537,10 +533,10 @@ defmodule CommunityDemoWeb.Components.Stepper do
   defp space_class(params) when is_binary(params), do: params
 
   defp wrapper_width("extra_small"), do: "max-w-1/4"
-  defp wrapper_width("small"), do: "max-w-2/4"
-  defp wrapper_width("medium"), do: "max-w-3/4"
-  defp wrapper_width("large"), do: "max-w-11/12"
-  defp wrapper_width("extra_large"), do: "max-"
+  defp wrapper_width("small"), do: "max-w-1/3"
+  defp wrapper_width("medium"), do: "max-w-1/2"
+  defp wrapper_width("large"), do: "max-w-8/12"
+  defp wrapper_width("extra_large"), do: "max-w-10/12"
   defp wrapper_width(params) when is_binary(params), do: params
 
   defp size_class("extra_small") do
@@ -597,40 +593,40 @@ defmodule CommunityDemoWeb.Components.Stepper do
 
   defp color_variant("base", _) do
     [
-      "[&_.stepper-step]:bg-white [&_.stepper-step]:text-[#09090b] [&_.stepper-loading-icon]:fill-[#2563EB]",
-      "[&_.stepper-step]:border-[#e4e4e7] [&_.stepper-current-step_.stepper-step]:border-[#2563EB]",
-      "[&_.stepper-current-step_.stepper-step]:text-[#2563EB]",
-      "[&_.stepper-completed-step_.stepper-step]:bg-[#14B8A6] [&_.stepper-completed-step_.stepper-step]:border-[#14B8A6]",
+      "[&_.stepper-step]:bg-white [&_.stepper-step]:text-base-text-light [&_.stepper-loading-icon]:fill-stepper-current-step-text-light",
+      "[&_.stepper-step]:border-base-border-light [&_.stepper-current-step_.stepper-step]:border-stepper-current-step-border-light",
+      "[&_.stepper-current-step_.stepper-step]:text-stepper-current-step-text-light",
+      "[&_.stepper-completed-step_.stepper-step]:bg-stepper-completed-step-bg-light [&_.stepper-completed-step_.stepper-step]:border-stepper-completed-step-border-light",
       "[&_.stepper-completed-step_.stepper-step]:text-white",
-      "dark:[&_.stepper-step]:bg-[#18181B] dark:[&_.stepper-step]:text-[#FAFAFA] dark:[&_.stepper-step]:border-[#27272a]",
-      "dark:[&_.stepper-current-step_.stepper-step]:text-[#1971C2]",
-      "dark:[&_.stepper-current-step_.stepper-step]:border-[#1971C2]",
-      "dark:[&_.stepper-completed-step_.stepper-step]:bg-[#099268] dark:[&_.stepper-completed-step_.stepper-step]:border-[#099268]",
+      "dark:[&_.stepper-step]:bg-base-bg-dark dark:[&_.stepper-step]:text-base-text-dark dark:[&_.stepper-step]:border-base-border-dark",
+      "dark:[&_.stepper-current-step_.stepper-step]:text-stepper-current-step-text-dark",
+      "dark:[&_.stepper-current-step_.stepper-step]:border-stepper-current-step-border-dark",
+      "dark:[&_.stepper-completed-step_.stepper-step]:bg-stepper-completed-step-bg-dark dark:[&_.stepper-completed-step_.stepper-step]:border-stepper-completed-step-border-dark",
       "dark:[&_.stepper-completed-step_.stepper-step]:text-white",
-      "[&_.stepper-canceled-step_.stepper-step]:bg-[#FA5252] [&_.stepper-canceled-step_.stepper-step]:border-[#FA5252]",
+      "[&_.stepper-canceled-step_.stepper-step]:bg-stepper-canceled-step-bg-light [&_.stepper-canceled-step_.stepper-step]:border-stepper-canceled-step-border-light",
       "[&_.stepper-canceled-step_.stepper-step]:text-white",
-      "dark:[&_.stepper-canceled-step_.stepper-step]:bg-[#E03131] dark:[&_.stepper-canceled-step_.stepper-step]:border-[#E03131]",
+      "dark:[&_.stepper-canceled-step_.stepper-step]:bg-stepper-canceled-step-bg-dark dark:[&_.stepper-canceled-step_.stepper-step]:border-stepper-canceled-step-border-dark",
       "dark:[&_.stepper-canceled-step_.stepper-step]:text-white",
-      "[&_.stepper-separator]:border-[#e4e4e7] dark:[&_.stepper-separator]:border-[#27272a]",
-      "[&_.stepper-completed-step+.stepper-separator]:border-[#14B8A6] dark:[&_.stepper-completed-step+.stepper-separator]:border-[#099268]",
-      "[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-[#14B8A6]",
-      "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-[#099268]"
+      "[&_.stepper-separator]:border-base-border-light dark:[&_.stepper-separator]:border-base-border-dark",
+      "[&_.stepper-completed-step+.stepper-separator]:border-stepper-separator-completed-border-light dark:[&_.stepper-completed-step+.stepper-separator]:border-stepper-separator-completed-border-dark",
+      "[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-stepper-separator-completed-border-light",
+      "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-stepper-separator-completed-border-dark"
     ]
   end
 
   defp color_variant("default", "natural") do
     [
-      "[&_.stepper-step]:bg-[#F3F3F3] [&_.stepper-step]:text-[#282828] [&_.stepper-loading-icon]:fill-[#374151]",
-      "[&_.stepper-step]:border-transparent [&_.stepper-current-step_.stepper-step]:border-[#282828]",
-      "[&_.stepper-completed-step_.stepper-step]:bg-[#E8E8E8] [&_.stepper-completed-step_.stepper-step]:border-black",
-      "dark:[&_.stepper-step]:bg-[#4B4B4B] dark:[&_.stepper-step]:text-[#E8E8E8]",
-      "dark:[&_.stepper-current-step_.stepper-step]:border-[#E8E8E8]",
-      "dark:[&_.stepper-completed-step_.stepper-step]:bg-[#5E5E5E] dark:[&_.stepper-completed-step_.stepper-step]:border-white",
-      "[&_.stepper-canceled-step_.stepper-step]:bg-[#950F22] [&_.stepper-canceled-step_.stepper-step]:border-[#950F22]",
+      "[&_.stepper-step]:bg-natural-bordered-bg-light [&_.stepper-step]:text-natural-bordered-text-light [&_.stepper-loading-icon]:fill-stepper-loading-icon-fill",
+      "[&_.stepper-step]:border-transparent [&_.stepper-current-step_.stepper-step]:border-natural-bordered-text-light",
+      "[&_.stepper-completed-step_.stepper-step]:bg-natural-bordered-hover-light [&_.stepper-completed-step_.stepper-step]:border-black",
+      "dark:[&_.stepper-step]:bg-natural-bordered-bg-dark dark:[&_.stepper-step]:text-natural-bordered-text-dark",
+      "dark:[&_.stepper-current-step_.stepper-step]:border-natural-bordered-text-dark",
+      "dark:[&_.stepper-completed-step_.stepper-step]:bg-natural-bordered-hover-dark dark:[&_.stepper-completed-step_.stepper-step]:border-white",
+      "[&_.stepper-canceled-step_.stepper-step]:bg-danger-indicator-alt-light [&_.stepper-canceled-step_.stepper-step]:border-danger-indicator-alt-light",
       "[&_.stepper-canceled-step_.stepper-step]:text-white",
-      "dark:[&_.stepper-canceled-step_.stepper-step]:bg-[#FFD2CD] dark:[&_.stepper-canceled-step_.stepper-step]:border-[#FFD2CD]",
+      "dark:[&_.stepper-canceled-step_.stepper-step]:bg-danger-indicator-dark dark:[&_.stepper-canceled-step_.stepper-step]:border-danger-indicator-dark",
       "dark:[&_.stepper-canceled-step_.stepper-step]:text-black",
-      "[&_.stepper-separator]:border-[#282828] dark:[&_.stepper-separator]:border-[#E8E8E8]",
+      "[&_.stepper-separator]:border-natural-bordered-text-light dark:[&_.stepper-separator]:border-natural-bordered-text-dark",
       "[&_.stepper-completed-step+.stepper-separator]:border-black dark:[&_.stepper-completed-step+.stepper-separator]:border-white",
       "[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-black",
       "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-white"
@@ -639,189 +635,189 @@ defmodule CommunityDemoWeb.Components.Stepper do
 
   defp color_variant("default", "primary") do
     [
-      "[&_.stepper-step]:bg-[#E2F8FB] [&_.stepper-step]:text-[#016974] [&_.stepper-loading-icon]:fill-[#374151]",
-      "[&_.stepper-step]:border-transparent [&_.stepper-current-step_.stepper-step]:border-[#016974]",
-      "[&_.stepper-completed-step_.stepper-step]:bg-[#CDEEF3] [&_.stepper-completed-step_.stepper-step]:border-[#1A535A]",
-      "dark:[&_.stepper-step]:bg-[#002D33] dark:[&_.stepper-step]:text-[#77D5E3]",
-      "dark:[&_.stepper-current-step_.stepper-step]:border-[#77D5E3]",
-      "dark:[&_.stepper-completed-step_.stepper-step]:bg-[#1A535A] dark:[&_.stepper-completed-step_.stepper-step]:border-[#B0E7EF]",
-      "[&_.stepper-canceled-step_.stepper-step]:bg-[#950F22] [&_.stepper-canceled-step_.stepper-step]:border-[#950F22]",
+      "[&_.stepper-step]:bg-primary-bordered-bg-light [&_.stepper-step]:text-primary-bordered-text-light [&_.stepper-loading-icon]:fill-stepper-loading-icon-fill",
+      "[&_.stepper-step]:border-transparent [&_.stepper-current-step_.stepper-step]:border-primary-bordered-text-light",
+      "[&_.stepper-completed-step_.stepper-step]:bg-primary-gradient-indicator-dark [&_.stepper-completed-step_.stepper-step]:border-primary-indicator-light",
+      "dark:[&_.stepper-step]:bg-primary-bordered-bg-dark dark:[&_.stepper-step]:text-primary-bordered-text-dark",
+      "dark:[&_.stepper-current-step_.stepper-step]:border-primary-bordered-text-dark",
+      "dark:[&_.stepper-completed-step_.stepper-step]:bg-primary-indicator-light dark:[&_.stepper-completed-step_.stepper-step]:border-primary-indicator-dark",
+      "[&_.stepper-canceled-step_.stepper-step]:bg-danger-indicator-alt-light [&_.stepper-canceled-step_.stepper-step]:border-danger-indicator-alt-light",
       "[&_.stepper-canceled-step_.stepper-step]:text-white",
-      "dark:[&_.stepper-canceled-step_.stepper-step]:bg-[#FFD2CD] dark:[&_.stepper-canceled-step_.stepper-step]:border-[#FFD2CD]",
+      "dark:[&_.stepper-canceled-step_.stepper-step]:bg-danger-indicator-dark dark:[&_.stepper-canceled-step_.stepper-step]:border-danger-indicator-dark",
       "dark:[&_.stepper-canceled-step_.stepper-step]:text-black",
-      "[&_.stepper-separator]:border-[#016974] dark:[&_.stepper-separator]:border-[#77D5E3]",
-      "[&_.stepper-completed-step+.stepper-separator]:border-[#1A535A] dark:[&_.stepper-completed-step+.stepper-separator]:border-[#B0E7EF]",
-      "[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-[#1A535A]",
-      "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-[#B0E7EF]"
+      "[&_.stepper-separator]:border-primary-bordered-text-light dark:[&_.stepper-separator]:border-primary-bordered-text-dark",
+      "[&_.stepper-completed-step+.stepper-separator]:border-primary-indicator-light dark:[&_.stepper-completed-step+.stepper-separator]:border-primary-indicator-dark",
+      "[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-primary-indicator-light",
+      "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-primary-indicator-dark"
     ]
   end
 
   defp color_variant("default", "secondary") do
     [
-      "[&_.stepper-step]:bg-[#EFF4FE] [&_.stepper-step]:text-[#175BCC] [&_.stepper-loading-icon]:fill-[#374151]",
-      "[&_.stepper-step]:border-transparent [&_.stepper-current-step_.stepper-step]:border-[#175BCC]",
-      "[&_.stepper-completed-step_.stepper-step]:bg-[#DEE9FE] [&_.stepper-completed-step_.stepper-step]:border-[#1948A3]",
-      "dark:[&_.stepper-step]:bg-[#002661] dark:[&_.stepper-step]:text-[#A9C9FF]",
-      "dark:[&_.stepper-current-step_.stepper-step]:border-[#A9C9FF]",
-      "dark:[&_.stepper-completed-step_.stepper-step]:bg-[#1948A3] dark:[&_.stepper-completed-step_.stepper-step]:border-[#CDDEFF]",
-      "[&_.stepper-canceled-step_.stepper-step]:bg-[#950F22] [&_.stepper-canceled-step_.stepper-step]:border-[#950F22]",
+      "[&_.stepper-step]:bg-secondary-bordered-bg-light [&_.stepper-step]:text-secondary-bordered-text-light [&_.stepper-loading-icon]:fill-stepper-loading-icon-fill",
+      "[&_.stepper-step]:border-transparent [&_.stepper-current-step_.stepper-step]:border-secondary-bordered-text-light",
+      "[&_.stepper-completed-step_.stepper-step]:bg-secondary-gradient-indicator-dark [&_.stepper-completed-step_.stepper-step]:border-secondary-indicator-light",
+      "dark:[&_.stepper-step]:bg-secondary-bordered-bg-dark dark:[&_.stepper-step]:text-secondary-bordered-text-dark",
+      "dark:[&_.stepper-current-step_.stepper-step]:border-secondary-bordered-text-dark",
+      "dark:[&_.stepper-completed-step_.stepper-step]:bg-secondary-indicator-light dark:[&_.stepper-completed-step_.stepper-step]:border-secondary-indicator-dark",
+      "[&_.stepper-canceled-step_.stepper-step]:bg-danger-indicator-alt-light [&_.stepper-canceled-step_.stepper-step]:border-danger-indicator-alt-light",
       "[&_.stepper-canceled-step_.stepper-step]:text-white",
-      "dark:[&_.stepper-canceled-step_.stepper-step]:bg-[#FFD2CD] dark:[&_.stepper-canceled-step_.stepper-step]:border-[#FFD2CD]",
+      "dark:[&_.stepper-canceled-step_.stepper-step]:bg-danger-indicator-dark dark:[&_.stepper-canceled-step_.stepper-step]:border-danger-indicator-dark",
       "dark:[&_.stepper-canceled-step_.stepper-step]:text-black",
-      "[&_.stepper-separator]:border-[#175BCC] dark:[&_.stepper-separator]:border-[#A9C9FF]",
-      "[&_.stepper-completed-step+.stepper-separator]:border-[#1948A3] dark:[&_.stepper-completed-step+.stepper-separator]:border-[#CDDEFF]",
-      "[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-[#1948A3]",
-      "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-[#CDDEFF]"
+      "[&_.stepper-separator]:border-secondary-bordered-text-light dark:[&_.stepper-separator]:border-secondary-bordered-text-dark",
+      "[&_.stepper-completed-step+.stepper-separator]:border-secondary-indicator-light dark:[&_.stepper-completed-step+.stepper-separator]:border-secondary-indicator-dark",
+      "[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-secondary-indicator-light",
+      "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-secondary-indicator-dark"
     ]
   end
 
   defp color_variant("default", "success") do
     [
-      "[&_.stepper-step]:bg-[#EAF6ED] [&_.stepper-step]:text-[#166C3B] [&_.stepper-loading-icon]:fill-[#374151]",
-      "[&_.stepper-step]:border-transparent [&_.stepper-current-step_.stepper-step]:border-[#166C3B]",
-      "[&_.stepper-completed-step_.stepper-step]:bg-[#D3EFDA] [&_.stepper-completed-step_.stepper-step]:border-[#0D572D]",
-      "dark:[&_.stepper-step]:bg-[#002F14] dark:[&_.stepper-step]:text-[#7FD99A]",
-      "dark:[&_.stepper-current-step_.stepper-step]:border-[#7FD99A]",
-      "dark:[&_.stepper-completed-step_.stepper-step]:bg-[#0D572D] dark:[&_.stepper-completed-step_.stepper-step]:border-[#B1EAC2]",
-      "[&_.stepper-canceled-step_.stepper-step]:bg-[#950F22] [&_.stepper-canceled-step_.stepper-step]:border-[#950F22]",
+      "[&_.stepper-step]:bg-success-bordered-bg-light [&_.stepper-step]:text-success-bordered-text-light [&_.stepper-loading-icon]:fill-stepper-loading-icon-fill",
+      "[&_.stepper-step]:border-transparent [&_.stepper-current-step_.stepper-step]:border-success-bordered-text-light",
+      "[&_.stepper-completed-step_.stepper-step]:bg-success-gradient-indicator-dark [&_.stepper-completed-step_.stepper-step]:border-success-indicator-alt-light",
+      "dark:[&_.stepper-step]:bg-success-bordered-bg-dark dark:[&_.stepper-step]:text-success-bordered-text-dark",
+      "dark:[&_.stepper-current-step_.stepper-step]:border-success-bordered-text-dark",
+      "dark:[&_.stepper-completed-step_.stepper-step]:bg-success-indicator-alt-light dark:[&_.stepper-completed-step_.stepper-step]:border-success-indicator-dark",
+      "[&_.stepper-canceled-step_.stepper-step]:bg-danger-indicator-alt-light [&_.stepper-canceled-step_.stepper-step]:border-danger-indicator-alt-light",
       "[&_.stepper-canceled-step_.stepper-step]:text-white",
-      "dark:[&_.stepper-canceled-step_.stepper-step]:bg-[#FFD2CD] dark:[&_.stepper-canceled-step_.stepper-step]:border-[#FFD2CD]",
+      "dark:[&_.stepper-canceled-step_.stepper-step]:bg-danger-indicator-dark dark:[&_.stepper-canceled-step_.stepper-step]:border-danger-indicator-dark",
       "dark:[&_.stepper-canceled-step_.stepper-step]:text-black",
-      "[&_.stepper-separator]:border-[#166C3B] dark:[&_.stepper-separator]:border-[#7FD99A]",
-      "[&_.stepper-completed-step+.stepper-separator]:border-[#0D572D] dark:[&_.stepper-completed-step+.stepper-separator]:border-[#B1EAC2]",
-      "[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-[#0D572D]",
-      "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-[#B1EAC2]"
+      "[&_.stepper-separator]:border-success-bordered-text-light dark:[&_.stepper-separator]:border-success-bordered-text-dark",
+      "[&_.stepper-completed-step+.stepper-separator]:border-success-indicator-alt-light dark:[&_.stepper-completed-step+.stepper-separator]:border-success-indicator-dark",
+      "[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-success-indicator-alt-light",
+      "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-success-indicator-dark"
     ]
   end
 
   defp color_variant("default", "warning") do
     [
-      "[&_.stepper-step]:bg-[#FFF7E6] [&_.stepper-step]:text-[#976A01] [&_.stepper-loading-icon]:fill-[#374151]",
-      "[&_.stepper-step]:border-transparent [&_.stepper-current-step_.stepper-step]:border-[#976A01]",
-      "[&_.stepper-completed-step_.stepper-step]:bg-[#FEEFCC] [&_.stepper-completed-step_.stepper-step]:border-[#654600]",
-      "dark:[&_.stepper-step]:bg-[#322300] dark:[&_.stepper-step]:text-[#FDD067]",
-      "dark:[&_.stepper-current-step_.stepper-step]:border-[#FDD067]",
-      "dark:[&_.stepper-completed-step_.stepper-step]:bg-[#654600] dark:[&_.stepper-completed-step_.stepper-step]:border-[#FEDF99]",
-      "[&_.stepper-canceled-step_.stepper-step]:bg-[#950F22] [&_.stepper-canceled-step_.stepper-step]:border-[#950F22]",
+      "[&_.stepper-step]:bg-warning-bordered-bg-light [&_.stepper-step]:text-warning-bordered-text-light [&_.stepper-loading-icon]:fill-stepper-loading-icon-fill",
+      "[&_.stepper-step]:border-transparent [&_.stepper-current-step_.stepper-step]:border-warning-bordered-text-light",
+      "[&_.stepper-completed-step_.stepper-step]:bg-warning-gradient-indicator-dark [&_.stepper-completed-step_.stepper-step]:border-warning-indicator-alt-light",
+      "dark:[&_.stepper-step]:bg-warning-bordered-bg-dark dark:[&_.stepper-step]:text-warning-bordered-text-dark",
+      "dark:[&_.stepper-current-step_.stepper-step]:border-warning-bordered-text-dark",
+      "dark:[&_.stepper-completed-step_.stepper-step]:bg-warning-indicator-alt-light dark:[&_.stepper-completed-step_.stepper-step]:border-warning-indicator-dark",
+      "[&_.stepper-canceled-step_.stepper-step]:bg-danger-indicator-alt-light [&_.stepper-canceled-step_.stepper-step]:border-danger-indicator-alt-light",
       "[&_.stepper-canceled-step_.stepper-step]:text-white",
-      "dark:[&_.stepper-canceled-step_.stepper-step]:bg-[#FFD2CD] dark:[&_.stepper-canceled-step_.stepper-step]:border-[#FFD2CD]",
+      "dark:[&_.stepper-canceled-step_.stepper-step]:bg-danger-indicator-dark dark:[&_.stepper-canceled-step_.stepper-step]:border-danger-indicator-dark",
       "dark:[&_.stepper-canceled-step_.stepper-step]:text-black",
-      "[&_.stepper-separator]:border-[#976A01] dark:[&_.stepper-separator]:border-[#FDD067]",
-      "[&_.stepper-completed-step+.stepper-separator]:border-[#654600] dark:[&_.stepper-completed-step+.stepper-separator]:border-[#FEDF99]",
-      "[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-[#654600]",
-      "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-[#FEDF99]"
+      "[&_.stepper-separator]:border-warning-bordered-text-light dark:[&_.stepper-separator]:border-warning-bordered-text-dark",
+      "[&_.stepper-completed-step+.stepper-separator]:border-warning-indicator-alt-light dark:[&_.stepper-completed-step+.stepper-separator]:border-warning-indicator-dark",
+      "[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-warning-indicator-alt-light",
+      "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-warning-indicator-dark"
     ]
   end
 
   defp color_variant("default", "danger") do
     [
-      "[&_.stepper-step]:bg-[#FFF0EE] [&_.stepper-step]:text-[#BB032A] [&_.stepper-loading-icon]:fill-[#374151]",
-      "[&_.stepper-step]:border-transparent [&_.stepper-current-step_.stepper-step]:border-[#BB032A]",
-      "[&_.stepper-completed-step_.stepper-step]:bg-[#FFE1DE] [&_.stepper-completed-step_.stepper-step]:border-[#950F22]",
-      "dark:[&_.stepper-step]:bg-[#520810] dark:[&_.stepper-step]:text-[#FFB2AB]",
-      "dark:[&_.stepper-current-step_.stepper-step]:border-[#FFB2AB]",
-      "dark:[&_.stepper-completed-step_.stepper-step]:bg-[#950F22] dark:[&_.stepper-completed-step_.stepper-step]:border-[#FFD2CD]",
-      "[&_.stepper-canceled-step_.stepper-step]:bg-[#950F22] [&_.stepper-canceled-step_.stepper-step]:border-[#950F22]",
+      "[&_.stepper-step]:bg-danger-bordered-bg-light [&_.stepper-step]:text-danger-bordered-text-light [&_.stepper-loading-icon]:fill-stepper-loading-icon-fill",
+      "[&_.stepper-step]:border-transparent [&_.stepper-current-step_.stepper-step]:border-danger-bordered-text-light",
+      "[&_.stepper-completed-step_.stepper-step]:bg-danger-gradient-indicator-dark [&_.stepper-completed-step_.stepper-step]:border-danger-indicator-alt-light",
+      "dark:[&_.stepper-step]:bg-danger-bordered-bg-dark dark:[&_.stepper-step]:text-danger-bordered-text-dark",
+      "dark:[&_.stepper-current-step_.stepper-step]:border-danger-bordered-text-dark",
+      "dark:[&_.stepper-completed-step_.stepper-step]:bg-danger-indicator-alt-light dark:[&_.stepper-completed-step_.stepper-step]:border-danger-indicator-dark",
+      "[&_.stepper-canceled-step_.stepper-step]:bg-danger-indicator-alt-light [&_.stepper-canceled-step_.stepper-step]:border-danger-indicator-alt-light",
       "[&_.stepper-canceled-step_.stepper-step]:text-white",
-      "dark:[&_.stepper-canceled-step_.stepper-step]:bg-[#FFD2CD] dark:[&_.stepper-canceled-step_.stepper-step]:border-[#FFD2CD]",
+      "dark:[&_.stepper-canceled-step_.stepper-step]:bg-danger-indicator-dark dark:[&_.stepper-canceled-step_.stepper-step]:border-danger-indicator-dark",
       "dark:[&_.stepper-canceled-step_.stepper-step]:text-black",
-      "[&_.stepper-separator]:border-[#BB032A] dark:[&_.stepper-separator]:border-[#FFB2AB]",
-      "[&_.stepper-completed-step+.stepper-separator]:border-[#950F22] dark:[&_.stepper-completed-step+.stepper-separator]:border-[#FFD2CD]",
-      "[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-[#950F22]",
-      "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-[#FFD2CD]"
+      "[&_.stepper-separator]:border-danger-bordered-text-light dark:[&_.stepper-separator]:border-danger-bordered-text-dark",
+      "[&_.stepper-completed-step+.stepper-separator]:border-danger-indicator-alt-light dark:[&_.stepper-completed-step+.stepper-separator]:border-danger-indicator-dark",
+      "[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-danger-indicator-alt-light",
+      "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-danger-indicator-dark"
     ]
   end
 
   defp color_variant("default", "info") do
     [
-      "[&_.stepper-step]:bg-[#E7F6FD] [&_.stepper-step]:text-[#08638C] [&_.stepper-loading-icon]:fill-[#374151]",
-      "[&_.stepper-step]:border-transparent [&_.stepper-current-step_.stepper-step]:border-[#08638C]",
-      "[&_.stepper-completed-step_.stepper-step]:bg-[#CFEDFB] [&_.stepper-completed-step_.stepper-step]:border-[#06425D]",
-      "dark:[&_.stepper-step]:bg-[#03212F] dark:[&_.stepper-step]:text-[#6EC9F2]",
-      "dark:[&_.stepper-current-step_.stepper-step]:border-[#6EC9F2]",
-      "dark:[&_.stepper-completed-step_.stepper-step]:bg-[#06425D] dark:[&_.stepper-completed-step_.stepper-step]:border-[#9FDBF6]",
-      "[&_.stepper-canceled-step_.stepper-step]:bg-[#950F22] [&_.stepper-canceled-step_.stepper-step]:border-[#950F22]",
+      "[&_.stepper-step]:bg-info-bordered-bg-light [&_.stepper-step]:text-info-bordered-text-light [&_.stepper-loading-icon]:fill-stepper-loading-icon-fill",
+      "[&_.stepper-step]:border-transparent [&_.stepper-current-step_.stepper-step]:border-info-bordered-text-light",
+      "[&_.stepper-completed-step_.stepper-step]:bg-info-gradient-indicator-dark [&_.stepper-completed-step_.stepper-step]:border-info-indicator-alt-light",
+      "dark:[&_.stepper-step]:bg-info-bordered-bg-dark dark:[&_.stepper-step]:text-info-bordered-text-dark",
+      "dark:[&_.stepper-current-step_.stepper-step]:border-info-bordered-text-dark",
+      "dark:[&_.stepper-completed-step_.stepper-step]:bg-info-indicator-alt-light dark:[&_.stepper-completed-step_.stepper-step]:border-info-indicator-dark",
+      "[&_.stepper-canceled-step_.stepper-step]:bg-danger-indicator-alt-light [&_.stepper-canceled-step_.stepper-step]:border-danger-indicator-alt-light",
       "[&_.stepper-canceled-step_.stepper-step]:text-white",
-      "dark:[&_.stepper-canceled-step_.stepper-step]:bg-[#FFD2CD] dark:[&_.stepper-canceled-step_.stepper-step]:border-[#FFD2CD]",
+      "dark:[&_.stepper-canceled-step_.stepper-step]:bg-danger-indicator-dark dark:[&_.stepper-canceled-step_.stepper-step]:border-danger-indicator-dark",
       "dark:[&_.stepper-canceled-step_.stepper-step]:text-black",
-      "[&_.stepper-separator]:border-[#08638C] dark:[&_.stepper-separator]:border-[#6EC9F2]",
-      "[&_.stepper-completed-step+.stepper-separator]:border-[#06425D] dark:[&_.stepper-completed-step+.stepper-separator]:border-[#9FDBF6]",
-      "[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-[#06425D]",
-      "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-[#9FDBF6]"
+      "[&_.stepper-separator]:border-info-bordered-text-light dark:[&_.stepper-separator]:border-info-bordered-text-dark",
+      "[&_.stepper-completed-step+.stepper-separator]:border-info-indicator-alt-light dark:[&_.stepper-completed-step+.stepper-separator]:border-info-indicator-dark",
+      "[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-info-indicator-alt-light",
+      "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-info-indicator-dark"
     ]
   end
 
   defp color_variant("default", "misc") do
     [
-      "[&_.stepper-step]:bg-[#F6F0FE] [&_.stepper-step]:text-[#653C94] [&_.stepper-loading-icon]:fill-[#374151]",
-      "[&_.stepper-step]:border-transparent [&_.stepper-current-step_.stepper-step]:border-[#653C94]",
-      "[&_.stepper-completed-step_.stepper-step]:bg-[#EEE0FD] [&_.stepper-completed-step_.stepper-step]:border-[#442863]",
-      "dark:[&_.stepper-step]:bg-[#221431] dark:[&_.stepper-step]:text-[#CBA2FA]",
-      "dark:[&_.stepper-current-step_.stepper-step]:border-[#CBA2FA]",
-      "dark:[&_.stepper-completed-step_.stepper-step]:bg-[#44286] dark:[&_.stepper-completed-step_.stepper-step]:border-[#DDC1FC]",
-      "[&_.stepper-canceled-step_.stepper-step]:bg-[#950F22] [&_.stepper-canceled-step_.stepper-step]:border-[#950F22]",
+      "[&_.stepper-step]:bg-misc-bordered-bg-light [&_.stepper-step]:text-misc-bordered-text-light [&_.stepper-loading-icon]:fill-stepper-loading-icon-fill",
+      "[&_.stepper-step]:border-transparent [&_.stepper-current-step_.stepper-step]:border-misc-bordered-text-light",
+      "[&_.stepper-completed-step_.stepper-step]:bg-misc-gradient-indicator-dark [&_.stepper-completed-step_.stepper-step]:border-misc-indicator-alt-light",
+      "dark:[&_.stepper-step]:bg-misc-bordered-bg-dark dark:[&_.stepper-step]:text-misc-bordered-text-dark",
+      "dark:[&_.stepper-current-step_.stepper-step]:border-misc-bordered-text-dark",
+      "dark:[&_.stepper-completed-step_.stepper-step]:bg-misc-indicator-alt-light dark:[&_.stepper-completed-step_.stepper-step]:border-misc-indicator-dark",
+      "[&_.stepper-canceled-step_.stepper-step]:bg-danger-indicator-alt-light [&_.stepper-canceled-step_.stepper-step]:border-danger-indicator-alt-light",
       "[&_.stepper-canceled-step_.stepper-step]:text-white",
-      "dark:[&_.stepper-canceled-step_.stepper-step]:bg-[#FFD2CD] dark:[&_.stepper-canceled-step_.stepper-step]:border-[#FFD2CD]",
+      "dark:[&_.stepper-canceled-step_.stepper-step]:bg-danger-indicator-dark dark:[&_.stepper-canceled-step_.stepper-step]:border-danger-indicator-dark",
       "dark:[&_.stepper-canceled-step_.stepper-step]:text-black",
-      "[&_.stepper-separator]:border-[#653C94] dark:[&_.stepper-separator]:border-[#CBA2FA]",
-      "[&_.stepper-completed-step+.stepper-separator]:border-[#442863] dark:[&_.stepper-completed-step+.stepper-separator]:border-[#DDC1FC]",
-      "[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-[#442863]",
-      "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-[#DDC1FC]"
+      "[&_.stepper-separator]:border-misc-bordered-text-light dark:[&_.stepper-separator]:border-misc-bordered-text-dark",
+      "[&_.stepper-completed-step+.stepper-separator]:border-misc-indicator-alt-light dark:[&_.stepper-completed-step+.stepper-separator]:border-misc-indicator-dark",
+      "[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-misc-indicator-alt-light",
+      "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-misc-indicator-dark"
     ]
   end
 
   defp color_variant("default", "dawn") do
     [
-      "[&_.stepper-step]:bg-[#FBF2ED] [&_.stepper-step]:text-[#7E4B2A] [&_.stepper-loading-icon]:fill-[#374151]",
-      "[&_.stepper-step]:border-transparent [&_.stepper-current-step_.stepper-step]:border-[#7E4B2A]",
-      "[&_.stepper-completed-step_.stepper-step]:bg-[#F6E5DA] [&_.stepper-completed-step_.stepper-step]:border-[#54321C]",
-      "dark:[&_.stepper-step]:bg-[#2A190E] dark:[&_.stepper-step]:text-[#E4B190]",
-      "dark:[&_.stepper-current-step_.stepper-step]:border-[#E4B190]",
-      "dark:[&_.stepper-completed-step_.stepper-step]:bg-[#54321C] dark:[&_.stepper-completed-step_.stepper-step]:border-[#EDCBB5]",
-      "[&_.stepper-canceled-step_.stepper-step]:bg-[#950F22] [&_.stepper-canceled-step_.stepper-step]:border-[#950F22]",
+      "[&_.stepper-step]:bg-dawn-bordered-bg-light [&_.stepper-step]:text-dawn-bordered-text-light [&_.stepper-loading-icon]:fill-stepper-loading-icon-fill",
+      "[&_.stepper-step]:border-transparent [&_.stepper-current-step_.stepper-step]:border-dawn-bordered-text-light",
+      "[&_.stepper-completed-step_.stepper-step]:bg-dawn-gradient-indicator-dark [&_.stepper-completed-step_.stepper-step]:border-dawn-indicator-alt-light",
+      "dark:[&_.stepper-step]:bg-dawn-bordered-bg-dark dark:[&_.stepper-step]:text-dawn-bordered-text-dark",
+      "dark:[&_.stepper-current-step_.stepper-step]:border-dawn-bordered-text-dark",
+      "dark:[&_.stepper-completed-step_.stepper-step]:bg-dawn-indicator-alt-light dark:[&_.stepper-completed-step_.stepper-step]:border-dawn-indicator-dark",
+      "[&_.stepper-canceled-step_.stepper-step]:bg-danger-indicator-alt-light [&_.stepper-canceled-step_.stepper-step]:border-danger-indicator-alt-light",
       "[&_.stepper-canceled-step_.stepper-step]:text-white",
-      "dark:[&_.stepper-canceled-step_.stepper-step]:bg-[#FFD2CD] dark:[&_.stepper-canceled-step_.stepper-step]:border-[#FFD2CD]",
+      "dark:[&_.stepper-canceled-step_.stepper-step]:bg-danger-indicator-dark dark:[&_.stepper-canceled-step_.stepper-step]:border-danger-indicator-dark",
       "dark:[&_.stepper-canceled-step_.stepper-step]:text-black",
-      "[&_.stepper-separator]:border-[#7E4B2A] dark:[&_.stepper-separator]:border-[#E4B190]",
-      "[&_.stepper-completed-step+.stepper-separator]:border-[#54321C] dark:[&_.stepper-completed-step+.stepper-separator]:border-[#EDCBB5]",
-      "[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-[#54321C]",
-      "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-[#EDCBB5]"
+      "[&_.stepper-separator]:border-dawn-bordered-text-light dark:[&_.stepper-separator]:border-dawn-bordered-text-dark",
+      "[&_.stepper-completed-step+.stepper-separator]:border-dawn-indicator-alt-light dark:[&_.stepper-completed-step+.stepper-separator]:border-dawn-indicator-dark",
+      "[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-dawn-indicator-alt-light",
+      "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-dawn-indicator-dark"
     ]
   end
 
   defp color_variant("default", "silver") do
     [
-      "[&_.stepper-step]:bg-[#F3F3F3] [&_.stepper-step]:text-[#727272] [&_.stepper-loading-icon]:fill-[#374151]",
-      "[&_.stepper-step]:border-transparent [&_.stepper-current-step_.stepper-step]:border-[#727272]",
-      "[&_.stepper-completed-step_.stepper-step]:bg-[#E8E8E8] [&_.stepper-completed-step_.stepper-step]:border-[#5E5E5E]",
-      "dark:[&_.stepper-step]:bg-[#4B4B4B] dark:[&_.stepper-step]:text-[#BBBBBB]",
-      "dark:[&_.stepper-current-step_.stepper-step]:border-[#BBBBBB]",
-      "dark:[&_.stepper-completed-step_.stepper-step]:bg-[#5E5E5E] dark:[&_.stepper-completed-step_.stepper-step]:border-[#DDDDDD]",
-      "[&_.stepper-canceled-step_.stepper-step]:bg-[#950F22] [&_.stepper-canceled-step_.stepper-step]:border-[#950F22]",
+      "[&_.stepper-step]:bg-silver-bordered-bg-light [&_.stepper-step]:text-silver-bordered-text-light [&_.stepper-loading-icon]:fill-stepper-loading-icon-fill",
+      "[&_.stepper-step]:border-transparent [&_.stepper-current-step_.stepper-step]:border-silver-bordered-text-light",
+      "[&_.stepper-completed-step_.stepper-step]:bg-silver-hover-bordered-light [&_.stepper-completed-step_.stepper-step]:border-silver-indicator-alt-light",
+      "dark:[&_.stepper-step]:bg-silver-bordered-bg-dark dark:[&_.stepper-step]:text-silver-bordered-text-dark",
+      "dark:[&_.stepper-current-step_.stepper-step]:border-silver-bordered-text-dark",
+      "dark:[&_.stepper-completed-step_.stepper-step]:bg-silver-indicator-alt-light dark:[&_.stepper-completed-step_.stepper-step]:border-silver-indicator-dark",
+      "[&_.stepper-canceled-step_.stepper-step]:bg-danger-indicator-alt-light [&_.stepper-canceled-step_.stepper-step]:border-danger-indicator-alt-light",
       "[&_.stepper-canceled-step_.stepper-step]:text-white",
-      "dark:[&_.stepper-canceled-step_.stepper-step]:bg-[#FFD2CD] dark:[&_.stepper-canceled-step_.stepper-step]:border-[#FFD2CD]",
+      "dark:[&_.stepper-canceled-step_.stepper-step]:bg-danger-indicator-dark dark:[&_.stepper-canceled-step_.stepper-step]:border-danger-indicator-dark",
       "dark:[&_.stepper-canceled-step_.stepper-step]:text-black",
-      "[&_.stepper-separator]:border-[#727272] dark:[&_.stepper-separator]:border-[#BBBBBB]",
-      "[&_.stepper-completed-step+.stepper-separator]:border-[#5E5E5E] dark:[&_.stepper-completed-step+.stepper-separator]:border-[#DDDDDD]",
-      "[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-[#5E5E5E]",
-      "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-[#DDDDDD]"
+      "[&_.stepper-separator]:border-silver-bordered-text-light dark:[&_.stepper-separator]:border-silver-bordered-text-dark",
+      "[&_.stepper-completed-step+.stepper-separator]:border-silver-indicator-alt-light dark:[&_.stepper-completed-step+.stepper-separator]:border-silver-indicator-dark",
+      "[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-silver-indicator-alt-light",
+      "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-silver-indicator-dark"
     ]
   end
 
   defp color_variant("gradient", "natural") do
     [
-      "[&_.stepper-step]:bg-gradient-to-br from-[#282828] to-[#727272] [&_.stepper-step]:text-white",
-      "dark:from-[#A6A6A6] dark:to-[#FFFFFF] dark:[&_.stepper-step]:text-black",
-      "[&_.stepper-step]:text-[#282828] [&_.stepper-loading-icon]:fill-[#374151]",
-      "[&_.stepper-step]:border-transparent [&_.stepper-current-step_.stepper-step]:border-[#282828]",
-      "[&_.stepper-completed-step_.stepper-step]:bg-[#E8E8E8] [&_.stepper-completed-step_.stepper-step]:border-black",
-      "dark:[&_.stepper-current-step_.stepper-step]:border-[#E8E8E8]",
-      "dark:[&_.stepper-completed-step_.stepper-step]:bg-[#5E5E5E] dark:[&_.stepper-completed-step_.stepper-step]:border-white",
-      "[&_.stepper-canceled-step_.stepper-step]:bg-[#950F22] [&_.stepper-canceled-step_.stepper-step]:border-[#950F22]",
+      "[&_.stepper-step]:bg-gradient-to-br [&_.stepper-step]:from-gradient-natural-from-light [&_.stepper-step]:to-gradient-natural-to-light [&_.stepper-step]:text-white",
+      "dark:[&_.stepper-step]:from-gradient-natural-from-dark dark:[&_.stepper-step]:to-natural-dark dark:[&_.stepper-step]:text-black",
+      "[&_.stepper-step]:text-natural-bordered-text-light [&_.stepper-loading-icon]:fill-stepper-loading-icon-fill",
+      "[&_.stepper-step]:border-transparent [&_.stepper-current-step_.stepper-step]:border-natural-bordered-text-light",
+      "[&_.stepper-completed-step_.stepper-step]:bg-natural-bordered-hover-light [&_.stepper-completed-step_.stepper-step]:border-black",
+      "dark:[&_.stepper-current-step_.stepper-step]:border-natural-bordered-text-dark",
+      "dark:[&_.stepper-completed-step_.stepper-step]:bg-natural-bordered-hover-dark dark:[&_.stepper-completed-step_.stepper-step]:border-white",
+      "[&_.stepper-canceled-step_.stepper-step]:bg-danger-indicator-alt-light [&_.stepper-canceled-step_.stepper-step]:border-danger-indicator-alt-light",
       "[&_.stepper-canceled-step_.stepper-step]:text-white",
-      "dark:[&_.stepper-canceled-step_.stepper-step]:bg-[#FFD2CD] dark:[&_.stepper-canceled-step_.stepper-step]:border-[#FFD2CD]",
+      "dark:[&_.stepper-canceled-step_.stepper-step]:bg-danger-indicator-dark dark:[&_.stepper-canceled-step_.stepper-step]:border-danger-indicator-dark",
       "dark:[&_.stepper-canceled-step_.stepper-step]:text-black",
-      "[&_.stepper-separator]:border-[#282828] dark:[&_.stepper-separator]:border-[#E8E8E8]",
+      "[&_.stepper-separator]:border-natural-bordered-text-light dark:[&_.stepper-separator]:border-natural-bordered-text-dark",
       "[&_.stepper-completed-step+.stepper-separator]:border-black dark:[&_.stepper-completed-step+.stepper-separator]:border-white",
       "[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-black",
       "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-white"
@@ -830,181 +826,181 @@ defmodule CommunityDemoWeb.Components.Stepper do
 
   defp color_variant("gradient", "primary") do
     [
-      "[&_.stepper-step]:bg-gradient-to-br from-[#016974] to-[#01B8CA] [&_.stepper-step]:text-white",
-      "dark:from-[#01B8CA] dark:to-[#B0E7EF] dark:[&_.stepper-step]:text-black",
-      "[&_.stepper-loading-icon]:fill-[#374151]",
-      "[&_.stepper-step]:border-transparent [&_.stepper-current-step_.stepper-step]:border-[#016974]",
-      "[&_.stepper-completed-step_.stepper-step]:bg-[#CDEEF3] [&_.stepper-completed-step_.stepper-step]:border-[#1A535A]",
-      "dark:[&_.stepper-current-step_.stepper-step]:border-[#77D5E3]",
-      "dark:[&_.stepper-completed-step_.stepper-step]:bg-[#1A535A] dark:[&_.stepper-completed-step_.stepper-step]:border-[#B0E7EF]",
-      "[&_.stepper-canceled-step_.stepper-step]:bg-[#950F22] [&_.stepper-canceled-step_.stepper-step]:border-[#950F22]",
+      "[&_.stepper-step]:bg-gradient-to-br [&_.stepper-step]:from-gradient-primary-from-light [&_.stepper-step]:to-gradient-primary-to-light [&_.stepper-step]:text-white",
+      "dark:[&_.stepper-step]:from-gradient-primary-from-dark dark:[&_.stepper-step]:to-gradient-primary-to-dark dark:[&_.stepper-step]:text-black",
+      "[&_.stepper-loading-icon]:fill-stepper-loading-icon-fill",
+      "[&_.stepper-step]:border-transparent [&_.stepper-current-step_.stepper-step]:border-primary-bordered-text-light",
+      "[&_.stepper-completed-step_.stepper-step]:bg-primary-gradient-indicator-dark [&_.stepper-completed-step_.stepper-step]:border-primary-indicator-light",
+      "dark:[&_.stepper-current-step_.stepper-step]:border-primary-bordered-text-dark",
+      "dark:[&_.stepper-completed-step_.stepper-step]:bg-primary-indicator-light dark:[&_.stepper-completed-step_.stepper-step]:border-primary-indicator-dark",
+      "[&_.stepper-canceled-step_.stepper-step]:bg-danger-indicator-alt-light [&_.stepper-canceled-step_.stepper-step]:border-danger-indicator-alt-light",
       "[&_.stepper-canceled-step_.stepper-step]:text-white",
-      "dark:[&_.stepper-canceled-step_.stepper-step]:bg-[#FFD2CD] dark:[&_.stepper-canceled-step_.stepper-step]:border-[#FFD2CD]",
+      "dark:[&_.stepper-canceled-step_.stepper-step]:bg-danger-indicator-dark dark:[&_.stepper-canceled-step_.stepper-step]:border-danger-indicator-dark",
       "dark:[&_.stepper-canceled-step_.stepper-step]:text-black",
-      "[&_.stepper-separator]:border-[#016974] dark:[&_.stepper-separator]:border-[#77D5E3]",
-      "[&_.stepper-completed-step+.stepper-separator]:border-[#1A535A] dark:[&_.stepper-completed-step+.stepper-separator]:border-[#B0E7EF]",
-      "[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-[#1A535A]",
-      "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-[#B0E7EF]"
+      "[&_.stepper-separator]:border-primary-bordered-text-light dark:[&_.stepper-separator]:border-primary-bordered-text-dark",
+      "[&_.stepper-completed-step+.stepper-separator]:border-primary-indicator-light dark:[&_.stepper-completed-step+.stepper-separator]:border-primary-indicator-dark",
+      "[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-primary-indicator-light",
+      "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-primary-indicator-dark"
     ]
   end
 
   defp color_variant("gradient", "secondary") do
     [
-      "[&_.stepper-step]:bg-gradient-to-br from-[#175BCC] to-[#6DAAFB] [&_.stepper-step]:text-white",
-      "dark:from-[#6DAAFB] dark:to-[#CDDEFF] dark:[&_.stepper-step]:text-black",
-      "[&_.stepper-loading-icon]:fill-[#374151]",
-      "[&_.stepper-step]:border-transparent [&_.stepper-current-step_.stepper-step]:border-[#175BCC]",
-      "[&_.stepper-completed-step_.stepper-step]:bg-[#DEE9FE] [&_.stepper-completed-step_.stepper-step]:border-[#1948A3]",
-      "dark:[&_.stepper-current-step_.stepper-step]:border-[#A9C9FF]",
-      "dark:[&_.stepper-completed-step_.stepper-step]:bg-[#1948A3] dark:[&_.stepper-completed-step_.stepper-step]:border-[#CDDEFF]",
-      "[&_.stepper-canceled-step_.stepper-step]:bg-[#950F22] [&_.stepper-canceled-step_.stepper-step]:border-[#950F22]",
+      "[&_.stepper-step]:bg-gradient-to-br [&_.stepper-step]:from-gradient-secondary-from-light [&_.stepper-step]:to-gradient-secondary-to-light [&_.stepper-step]:text-white",
+      "dark:[&_.stepper-step]:from-gradient-secondary-from-dark dark:[&_.stepper-step]:to-gradient-secondary-to-dark dark:[&_.stepper-step]:text-black",
+      "[&_.stepper-loading-icon]:fill-stepper-loading-icon-fill",
+      "[&_.stepper-step]:border-transparent [&_.stepper-current-step_.stepper-step]:border-secondary-bordered-text-light",
+      "[&_.stepper-completed-step_.stepper-step]:bg-secondary-gradient-indicator-dark [&_.stepper-completed-step_.stepper-step]:border-secondary-indicator-light",
+      "dark:[&_.stepper-current-step_.stepper-step]:border-secondary-bordered-text-dark",
+      "dark:[&_.stepper-completed-step_.stepper-step]:bg-secondary-indicator-light dark:[&_.stepper-completed-step_.stepper-step]:border-secondary-indicator-dark",
+      "[&_.stepper-canceled-step_.stepper-step]:bg-danger-indicator-alt-light [&_.stepper-canceled-step_.stepper-step]:border-danger-indicator-alt-light",
       "[&_.stepper-canceled-step_.stepper-step]:text-white",
-      "dark:[&_.stepper-canceled-step_.stepper-step]:bg-[#FFD2CD] dark:[&_.stepper-canceled-step_.stepper-step]:border-[#FFD2CD]",
+      "dark:[&_.stepper-canceled-step_.stepper-step]:bg-danger-indicator-dark dark:[&_.stepper-canceled-step_.stepper-step]:border-danger-indicator-dark",
       "dark:[&_.stepper-canceled-step_.stepper-step]:text-black",
-      "[&_.stepper-separator]:border-[#175BCC] dark:[&_.stepper-separator]:border-[#A9C9FF]",
-      "[&_.stepper-completed-step+.stepper-separator]:border-[#1948A3] dark:[&_.stepper-completed-step+.stepper-separator]:border-[#CDDEFF]",
-      "[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-[#1948A3]",
-      "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-[#CDDEFF]"
+      "[&_.stepper-separator]:border-secondary-bordered-text-light dark:[&_.stepper-separator]:border-secondary-bordered-text-dark",
+      "[&_.stepper-completed-step+.stepper-separator]:border-secondary-indicator-light dark:[&_.stepper-completed-step+.stepper-separator]:border-secondary-indicator-dark",
+      "[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-secondary-indicator-light",
+      "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-secondary-indicator-dark"
     ]
   end
 
   defp color_variant("gradient", "success") do
     [
-      "[&_.stepper-step]:bg-gradient-to-br from-[#166C3B] to-[#06C167] [&_.stepper-step]:text-white",
-      "dark:from-[#06C167] dark:to-[#B1EAC2] dark:[&_.stepper-step]:text-black",
-      "[&_.stepper-loading-icon]:fill-[#374151]",
-      "[&_.stepper-step]:border-transparent [&_.stepper-current-step_.stepper-step]:border-[#166C3B]",
-      "[&_.stepper-completed-step_.stepper-step]:bg-[#D3EFDA] [&_.stepper-completed-step_.stepper-step]:border-[#0D572D]",
-      "dark:[&_.stepper-current-step_.stepper-step]:border-[#7FD99A]",
-      "dark:[&_.stepper-completed-step_.stepper-step]:bg-[#0D572D] dark:[&_.stepper-completed-step_.stepper-step]:border-[#B1EAC2]",
-      "[&_.stepper-canceled-step_.stepper-step]:bg-[#950F22] [&_.stepper-canceled-step_.stepper-step]:border-[#950F22]",
+      "[&_.stepper-step]:bg-gradient-to-br [&_.stepper-step]:from-gradient-success-from-light [&_.stepper-step]:to-gradient-success-to-light [&_.stepper-step]:text-white",
+      "dark:[&_.stepper-step]:from-gradient-success-from-dark dark:[&_.stepper-step]:to-gradient-success-to-dark dark:[&_.stepper-step]:text-black",
+      "[&_.stepper-loading-icon]:fill-stepper-loading-icon-fill",
+      "[&_.stepper-step]:border-transparent [&_.stepper-current-step_.stepper-step]:border-success-bordered-text-light",
+      "[&_.stepper-completed-step_.stepper-step]:bg-success-gradient-indicator-dark [&_.stepper-completed-step_.stepper-step]:border-success-indicator-alt-light",
+      "dark:[&_.stepper-current-step_.stepper-step]:border-success-bordered-text-dark",
+      "dark:[&_.stepper-completed-step_.stepper-step]:bg-success-indicator-alt-light dark:[&_.stepper-completed-step_.stepper-step]:border-success-indicator-dark",
+      "[&_.stepper-canceled-step_.stepper-step]:bg-danger-indicator-alt-light [&_.stepper-canceled-step_.stepper-step]:border-danger-indicator-alt-light",
       "[&_.stepper-canceled-step_.stepper-step]:text-white",
-      "dark:[&_.stepper-canceled-step_.stepper-step]:bg-[#FFD2CD] dark:[&_.stepper-canceled-step_.stepper-step]:border-[#FFD2CD]",
+      "dark:[&_.stepper-canceled-step_.stepper-step]:bg-danger-indicator-dark dark:[&_.stepper-canceled-step_.stepper-step]:border-danger-indicator-dark",
       "dark:[&_.stepper-canceled-step_.stepper-step]:text-black",
-      "[&_.stepper-separator]:border-[#166C3B] dark:[&_.stepper-separator]:border-[#7FD99A]",
-      "[&_.stepper-completed-step+.stepper-separator]:border-[#0D572D] dark:[&_.stepper-completed-step+.stepper-separator]:border-[#B1EAC2]",
-      "[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-[#0D572D]",
-      "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-[#B1EAC2]"
+      "[&_.stepper-separator]:border-success-bordered-text-light dark:[&_.stepper-separator]:border-success-bordered-text-dark",
+      "[&_.stepper-completed-step+.stepper-separator]:border-success-indicator-alt-light dark:[&_.stepper-completed-step+.stepper-separator]:border-success-indicator-dark",
+      "[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-success-indicator-alt-light",
+      "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-success-indicator-dark"
     ]
   end
 
   defp color_variant("gradient", "warning") do
     [
-      "[&_.stepper-step]:bg-gradient-to-br from-[#976A01] to-[#FDC034] [&_.stepper-step]:text-white",
-      "dark:from-[#FDC034] dark:to-[#FEDF99] dark:[&_.stepper-step]:text-black",
-      "[&_.stepper-loading-icon]:fill-[#374151]",
-      "[&_.stepper-step]:border-transparent [&_.stepper-current-step_.stepper-step]:border-[#976A01]",
-      "[&_.stepper-completed-step_.stepper-step]:bg-[#FEEFCC] [&_.stepper-completed-step_.stepper-step]:border-[#654600]",
-      "dark:[&_.stepper-current-step_.stepper-step]:border-[#FDD067]",
-      "dark:[&_.stepper-completed-step_.stepper-step]:bg-[#654600] dark:[&_.stepper-completed-step_.stepper-step]:border-[#FEDF99]",
-      "[&_.stepper-canceled-step_.stepper-step]:bg-[#950F22] [&_.stepper-canceled-step_.stepper-step]:border-[#950F22]",
+      "[&_.stepper-step]:bg-gradient-to-br [&_.stepper-step]:from-gradient-warning-from-light [&_.stepper-step]:to-gradient-warning-to-light [&_.stepper-step]:text-white",
+      "dark:[&_.stepper-step]:from-gradient-warning-from-dark dark:[&_.stepper-step]:to-gradient-warning-to-dark dark:[&_.stepper-step]:text-black",
+      "[&_.stepper-loading-icon]:fill-stepper-loading-icon-fill",
+      "[&_.stepper-step]:border-transparent [&_.stepper-current-step_.stepper-step]:border-warning-bordered-text-light",
+      "[&_.stepper-completed-step_.stepper-step]:bg-warning-gradient-indicator-dark [&_.stepper-completed-step_.stepper-step]:border-warning-indicator-alt-light",
+      "dark:[&_.stepper-current-step_.stepper-step]:border-warning-bordered-text-dark",
+      "dark:[&_.stepper-completed-step_.stepper-step]:bg-warning-indicator-alt-light dark:[&_.stepper-completed-step_.stepper-step]:border-warning-indicator-dark",
+      "[&_.stepper-canceled-step_.stepper-step]:bg-danger-indicator-alt-light [&_.stepper-canceled-step_.stepper-step]:border-danger-indicator-alt-light",
       "[&_.stepper-canceled-step_.stepper-step]:text-white",
-      "dark:[&_.stepper-canceled-step_.stepper-step]:bg-[#FFD2CD] dark:[&_.stepper-canceled-step_.stepper-step]:border-[#FFD2CD]",
+      "dark:[&_.stepper-canceled-step_.stepper-step]:bg-danger-indicator-dark dark:[&_.stepper-canceled-step_.stepper-step]:border-danger-indicator-dark",
       "dark:[&_.stepper-canceled-step_.stepper-step]:text-black",
-      "[&_.stepper-separator]:border-[#976A01] dark:[&_.stepper-separator]:border-[#FDD067]",
-      "[&_.stepper-completed-step+.stepper-separator]:border-[#654600] dark:[&_.stepper-completed-step+.stepper-separator]:border-[#FEDF99]",
-      "[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-[#654600]",
-      "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-[#FEDF99]"
+      "[&_.stepper-separator]:border-warning-bordered-text-light dark:[&_.stepper-separator]:border-warning-bordered-text-dark",
+      "[&_.stepper-completed-step+.stepper-separator]:border-warning-indicator-alt-light dark:[&_.stepper-completed-step+.stepper-separator]:border-warning-indicator-dark",
+      "[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-warning-indicator-alt-light",
+      "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-warning-indicator-dark"
     ]
   end
 
   defp color_variant("gradient", "danger") do
     [
-      "[&_.stepper-step]:bg-gradient-to-br from-[#BB032A] to-[#FC7F79] [&_.stepper-step]:text-white",
-      "dark:from-[#FC7F79] dark:to-[#FFD2CD] dark:[&_.stepper-step]:text-black",
-      "[&_.stepper-loading-icon]:fill-[#374151]",
-      "[&_.stepper-step]:border-transparent [&_.stepper-current-step_.stepper-step]:border-[#BB032A]",
-      "[&_.stepper-completed-step_.stepper-step]:bg-[#FFE1DE] [&_.stepper-completed-step_.stepper-step]:border-[#950F22]",
-      "dark:[&_.stepper-current-step_.stepper-step]:border-[#FFB2AB]",
-      "dark:[&_.stepper-completed-step_.stepper-step]:bg-[#950F22] dark:[&_.stepper-completed-step_.stepper-step]:border-[#FFD2CD]",
-      "[&_.stepper-canceled-step_.stepper-step]:bg-[#950F22] [&_.stepper-canceled-step_.stepper-step]:border-[#950F22]",
+      "[&_.stepper-step]:bg-gradient-to-br [&_.stepper-step]:from-gradient-danger-from-light [&_.stepper-step]:to-gradient-danger-to-light [&_.stepper-step]:text-white",
+      "dark:[&_.stepper-step]:from-gradient-danger-from-dark dark:[&_.stepper-step]:to-gradient-danger-to-dark dark:[&_.stepper-step]:text-black",
+      "[&_.stepper-loading-icon]:fill-stepper-loading-icon-fill",
+      "[&_.stepper-step]:border-transparent [&_.stepper-current-step_.stepper-step]:border-danger-bordered-text-light",
+      "[&_.stepper-completed-step_.stepper-step]:bg-danger-gradient-indicator-dark [&_.stepper-completed-step_.stepper-step]:border-danger-indicator-alt-light",
+      "dark:[&_.stepper-current-step_.stepper-step]:border-danger-bordered-text-dark",
+      "dark:[&_.stepper-completed-step_.stepper-step]:bg-danger-indicator-alt-light dark:[&_.stepper-completed-step_.stepper-step]:border-danger-indicator-dark",
+      "[&_.stepper-canceled-step_.stepper-step]:bg-danger-indicator-alt-light [&_.stepper-canceled-step_.stepper-step]:border-danger-indicator-alt-light",
       "[&_.stepper-canceled-step_.stepper-step]:text-white",
-      "dark:[&_.stepper-canceled-step_.stepper-step]:bg-[#FFD2CD] dark:[&_.stepper-canceled-step_.stepper-step]:border-[#FFD2CD]",
+      "dark:[&_.stepper-canceled-step_.stepper-step]:bg-danger-indicator-dark dark:[&_.stepper-canceled-step_.stepper-step]:border-danger-indicator-dark",
       "dark:[&_.stepper-canceled-step_.stepper-step]:text-black",
-      "[&_.stepper-separator]:border-[#BB032A] dark:[&_.stepper-separator]:border-[#FFB2AB]",
-      "[&_.stepper-completed-step+.stepper-separator]:border-[#950F22] dark:[&_.stepper-completed-step+.stepper-separator]:border-[#FFD2CD]",
-      "[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-[#950F22]",
-      "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-[#FFD2CD]"
+      "[&_.stepper-separator]:border-danger-bordered-text-light dark:[&_.stepper-separator]:border-danger-bordered-text-dark",
+      "[&_.stepper-completed-step+.stepper-separator]:border-danger-indicator-alt-light dark:[&_.stepper-completed-step+.stepper-separator]:border-danger-indicator-dark",
+      "[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-danger-indicator-alt-light",
+      "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-danger-indicator-dark"
     ]
   end
 
   defp color_variant("gradient", "info") do
     [
-      "[&_.stepper-step]:bg-gradient-to-br from-[#08638C] to-[#3EB7ED] [&_.stepper-step]:text-white",
-      "dark:from-[#3EB7ED] dark:to-[#9FDBF6] dark:[&_.stepper-step]:text-black",
-      "[&_.stepper-loading-icon]:fill-[#374151]",
-      "[&_.stepper-step]:border-transparent [&_.stepper-current-step_.stepper-step]:border-[#08638C]",
-      "[&_.stepper-completed-step_.stepper-step]:bg-[#CFEDFB] [&_.stepper-completed-step_.stepper-step]:border-[#06425D]",
-      "dark:[&_.stepper-current-step_.stepper-step]:border-[#6EC9F2]",
-      "dark:[&_.stepper-completed-step_.stepper-step]:bg-[#06425D] dark:[&_.stepper-completed-step_.stepper-step]:border-[#9FDBF6]",
-      "[&_.stepper-canceled-step_.stepper-step]:bg-[#950F22] [&_.stepper-canceled-step_.stepper-step]:border-[#950F22]",
+      "[&_.stepper-step]:bg-gradient-to-br [&_.stepper-step]:from-gradient-info-from-light [&_.stepper-step]:to-gradient-info-to-light [&_.stepper-step]:text-white",
+      "dark:[&_.stepper-step]:from-gradient-info-from-dark dark:[&_.stepper-step]:to-gradient-info-to-dark dark:[&_.stepper-step]:text-black",
+      "[&_.stepper-loading-icon]:fill-stepper-loading-icon-fill",
+      "[&_.stepper-step]:border-transparent [&_.stepper-current-step_.stepper-step]:border-info-bordered-text-light",
+      "[&_.stepper-completed-step_.stepper-step]:bg-info-gradient-indicator-dark [&_.stepper-completed-step_.stepper-step]:border-info-indicator-alt-light",
+      "dark:[&_.stepper-current-step_.stepper-step]:border-info-bordered-text-dark",
+      "dark:[&_.stepper-completed-step_.stepper-step]:bg-info-indicator-alt-light dark:[&_.stepper-completed-step_.stepper-step]:border-info-indicator-dark",
+      "[&_.stepper-canceled-step_.stepper-step]:bg-danger-indicator-alt-light [&_.stepper-canceled-step_.stepper-step]:border-danger-indicator-alt-light",
       "[&_.stepper-canceled-step_.stepper-step]:text-white",
-      "dark:[&_.stepper-canceled-step_.stepper-step]:bg-[#FFD2CD] dark:[&_.stepper-canceled-step_.stepper-step]:border-[#FFD2CD]",
+      "dark:[&_.stepper-canceled-step_.stepper-step]:bg-danger-indicator-dark dark:[&_.stepper-canceled-step_.stepper-step]:border-danger-indicator-dark",
       "dark:[&_.stepper-canceled-step_.stepper-step]:text-black",
-      "[&_.stepper-separator]:border-[#08638C] dark:[&_.stepper-separator]:border-[#6EC9F2]",
-      "[&_.stepper-completed-step+.stepper-separator]:border-[#06425D] dark:[&_.stepper-completed-step+.stepper-separator]:border-[#9FDBF6]",
-      "[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-[#06425D]",
-      "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-[#9FDBF6]"
+      "[&_.stepper-separator]:border-info-bordered-text-light dark:[&_.stepper-separator]:border-info-bordered-text-dark",
+      "[&_.stepper-completed-step+.stepper-separator]:border-info-indicator-alt-light dark:[&_.stepper-completed-step+.stepper-separator]:border-info-indicator-dark",
+      "[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-info-indicator-alt-light",
+      "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-info-indicator-dark"
     ]
   end
 
   defp color_variant("gradient", "misc") do
     [
-      "[&_.stepper-step]:bg-gradient-to-br from-[#653C94] to-[#BA83F9] [&_.stepper-step]:text-white",
-      "dark:from-[#BA83F9] dark:to-[#DDC1FC] dark:[&_.stepper-step]:text-black",
-      "[&_.stepper-loading-icon]:fill-[#374151]",
-      "[&_.stepper-step]:border-transparent [&_.stepper-current-step_.stepper-step]:border-[#653C94]",
-      "[&_.stepper-completed-step_.stepper-step]:bg-[#EEE0FD] [&_.stepper-completed-step_.stepper-step]:border-[#442863]",
-      "dark:[&_.stepper-current-step_.stepper-step]:border-[#CBA2FA]",
-      "dark:[&_.stepper-completed-step_.stepper-step]:bg-[#44286] dark:[&_.stepper-completed-step_.stepper-step]:border-[#DDC1FC]",
-      "[&_.stepper-canceled-step_.stepper-step]:bg-[#950F22] [&_.stepper-canceled-step_.stepper-step]:border-[#950F22]",
+      "[&_.stepper-step]:bg-gradient-to-br [&_.stepper-step]:from-gradient-misc-from-light [&_.stepper-step]:to-gradient-misc-to-light [&_.stepper-step]:text-white",
+      "dark:[&_.stepper-step]:from-gradient-misc-from-dark dark:[&_.stepper-step]:to-gradient-misc-to-dark dark:[&_.stepper-step]:text-black",
+      "[&_.stepper-loading-icon]:fill-stepper-loading-icon-fill",
+      "[&_.stepper-step]:border-transparent [&_.stepper-current-step_.stepper-step]:border-misc-bordered-text-light",
+      "[&_.stepper-completed-step_.stepper-step]:bg-misc-gradient-indicator-dark [&_.stepper-completed-step_.stepper-step]:border-misc-indicator-alt-light",
+      "dark:[&_.stepper-current-step_.stepper-step]:border-misc-bordered-text-dark",
+      "dark:[&_.stepper-completed-step_.stepper-step]:bg-misc-indicator-alt-light dark:[&_.stepper-completed-step_.stepper-step]:border-misc-indicator-dark",
+      "[&_.stepper-canceled-step_.stepper-step]:bg-danger-indicator-alt-light [&_.stepper-canceled-step_.stepper-step]:border-danger-indicator-alt-light",
       "[&_.stepper-canceled-step_.stepper-step]:text-white",
-      "dark:[&_.stepper-canceled-step_.stepper-step]:bg-[#FFD2CD] dark:[&_.stepper-canceled-step_.stepper-step]:border-[#FFD2CD]",
+      "dark:[&_.stepper-canceled-step_.stepper-step]:bg-danger-indicator-dark dark:[&_.stepper-canceled-step_.stepper-step]:border-danger-indicator-dark",
       "dark:[&_.stepper-canceled-step_.stepper-step]:text-black",
-      "[&_.stepper-separator]:border-[#653C94] dark:[&_.stepper-separator]:border-[#CBA2FA]",
-      "[&_.stepper-completed-step+.stepper-separator]:border-[#442863] dark:[&_.stepper-completed-step+.stepper-separator]:border-[#DDC1FC]",
-      "[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-[#442863]",
-      "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-[#DDC1FC]"
+      "[&_.stepper-separator]:border-misc-bordered-text-light dark:[&_.stepper-separator]:border-misc-bordered-text-dark",
+      "[&_.stepper-completed-step+.stepper-separator]:border-misc-indicator-alt-light dark:[&_.stepper-completed-step+.stepper-separator]:border-misc-indicator-dark",
+      "[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-misc-indicator-alt-light",
+      "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-misc-indicator-dark"
     ]
   end
 
   defp color_variant("gradient", "dawn") do
     [
-      "[&_.stepper-step]:bg-gradient-to-br from-[#7E4B2A] to-[#DB976B] [&_.stepper-step]:text-white",
-      "dark:from-[#DB976B] dark:to-[#EDCBB5] dark:[&_.stepper-step]:text-black",
-      "[&_.stepper-loading-icon]:fill-[#374151]",
-      "[&_.stepper-step]:border-transparent [&_.stepper-current-step_.stepper-step]:border-[#7E4B2A]",
-      "[&_.stepper-completed-step_.stepper-step]:bg-[#F6E5DA] [&_.stepper-completed-step_.stepper-step]:border-[#54321C]",
-      "dark:[&_.stepper-current-step_.stepper-step]:border-[#E4B190]",
-      "dark:[&_.stepper-completed-step_.stepper-step]:bg-[#54321C] dark:[&_.stepper-completed-step_.stepper-step]:border-[#EDCBB5]",
-      "[&_.stepper-canceled-step_.stepper-step]:bg-[#950F22] [&_.stepper-canceled-step_.stepper-step]:border-[#950F22]",
+      "[&_.stepper-step]:bg-gradient-to-br [&_.stepper-step]:from-gradient-dawn-from-light [&_.stepper-step]:to-gradient-dawn-to-light [&_.stepper-step]:text-white",
+      "dark:[&_.stepper-step]:from-gradient-dawn-from-dark dark:[&_.stepper-step]:to-gradient-dawn-to-dark dark:[&_.stepper-step]:text-black",
+      "[&_.stepper-loading-icon]:fill-stepper-loading-icon-fill",
+      "[&_.stepper-step]:border-transparent [&_.stepper-current-step_.stepper-step]:border-dawn-bordered-text-light",
+      "[&_.stepper-completed-step_.stepper-step]:bg-dawn-gradient-indicator-dark [&_.stepper-completed-step_.stepper-step]:border-dawn-indicator-alt-light",
+      "dark:[&_.stepper-current-step_.stepper-step]:border-dawn-bordered-text-dark",
+      "dark:[&_.stepper-completed-step_.stepper-step]:bg-dawn-indicator-alt-light dark:[&_.stepper-completed-step_.stepper-step]:border-dawn-indicator-dark",
+      "[&_.stepper-canceled-step_.stepper-step]:bg-danger-indicator-alt-light [&_.stepper-canceled-step_.stepper-step]:border-danger-indicator-alt-light",
       "[&_.stepper-canceled-step_.stepper-step]:text-white",
-      "dark:[&_.stepper-canceled-step_.stepper-step]:bg-[#FFD2CD] dark:[&_.stepper-canceled-step_.stepper-step]:border-[#FFD2CD]",
+      "dark:[&_.stepper-canceled-step_.stepper-step]:bg-danger-indicator-dark dark:[&_.stepper-canceled-step_.stepper-step]:border-danger-indicator-dark",
       "dark:[&_.stepper-canceled-step_.stepper-step]:text-black",
-      "[&_.stepper-separator]:border-[#7E4B2A] dark:[&_.stepper-separator]:border-[#E4B190]",
-      "[&_.stepper-completed-step+.stepper-separator]:border-[#54321C] dark:[&_.stepper-completed-step+.stepper-separator]:border-[#EDCBB5]",
-      "[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-[#54321C]",
-      "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-[#EDCBB5]"
+      "[&_.stepper-separator]:border-dawn-bordered-text-light dark:[&_.stepper-separator]:border-dawn-bordered-text-dark",
+      "[&_.stepper-completed-step+.stepper-separator]:border-dawn-indicator-alt-light dark:[&_.stepper-completed-step+.stepper-separator]:border-dawn-indicator-dark",
+      "[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-dawn-indicator-alt-light",
+      "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-dawn-indicator-dark"
     ]
   end
 
   defp color_variant("gradient", "silver") do
     [
-      "[&_.stepper-step]:bg-gradient-to-br from-[#5E5E5E] to-[#A6A6A6] [&_.stepper-step]:text-white",
-      "dark:from-[#868686] dark:to-[#BBBBBB] dark:[&_.stepper-step]:text-black",
-      "[&_.stepper-loading-icon]:fill-[#374151]",
-      "[&_.stepper-step]:border-transparent [&_.stepper-current-step_.stepper-step]:border-[#727272]",
-      "[&_.stepper-completed-step_.stepper-step]:bg-[#E8E8E8] [&_.stepper-completed-step_.stepper-step]:border-[#5E5E5E]",
-      "dark:[&_.stepper-current-step_.stepper-step]:border-[#BBBBBB]",
-      "dark:[&_.stepper-completed-step_.stepper-step]:bg-[#5E5E5E] dark:[&_.stepper-completed-step_.stepper-step]:border-[#DDDDDD]",
-      "[&_.stepper-canceled-step_.stepper-step]:bg-[#950F22] [&_.stepper-canceled-step_.stepper-step]:border-[#950F22]",
+      "[&_.stepper-step]:bg-gradient-to-br [&_.stepper-step]:from-gradient-silver-from-light [&_.stepper-step]:to-gradient-silver-to-light [&_.stepper-step]:text-white",
+      "dark:[&_.stepper-step]:from-gradient-silver-from-dark dark:[&_.stepper-step]:to-gradient-silver-to-dark dark:[&_.stepper-step]:text-black",
+      "[&_.stepper-loading-icon]:fill-stepper-loading-icon-fill",
+      "[&_.stepper-step]:border-transparent [&_.stepper-current-step_.stepper-step]:border-silver-bordered-text-light",
+      "[&_.stepper-completed-step_.stepper-step]:bg-silver-hover-bordered-light [&_.stepper-completed-step_.stepper-step]:border-silver-indicator-alt-light",
+      "dark:[&_.stepper-current-step_.stepper-step]:border-silver-bordered-text-dark",
+      "dark:[&_.stepper-completed-step_.stepper-step]:bg-silver-indicator-alt-light dark:[&_.stepper-completed-step_.stepper-step]:border-silver-indicator-dark",
+      "[&_.stepper-canceled-step_.stepper-step]:bg-danger-indicator-alt-light [&_.stepper-canceled-step_.stepper-step]:border-danger-indicator-alt-light",
       "[&_.stepper-canceled-step_.stepper-step]:text-white",
-      "dark:[&_.stepper-canceled-step_.stepper-step]:bg-[#FFD2CD] dark:[&_.stepper-canceled-step_.stepper-step]:border-[#FFD2CD]",
+      "dark:[&_.stepper-canceled-step_.stepper-step]:bg-danger-indicator-dark dark:[&_.stepper-canceled-step_.stepper-step]:border-danger-indicator-dark",
       "dark:[&_.stepper-canceled-step_.stepper-step]:text-black",
-      "[&_.stepper-separator]:border-[#727272] dark:[&_.stepper-separator]:border-[#BBBBBB]",
-      "[&_.stepper-completed-step+.stepper-separator]:border-[#5E5E5E] dark:[&_.stepper-completed-step+.stepper-separator]:border-[#DDDDDD]",
-      "[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-[#5E5E5E]",
-      "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-[#DDDDDD]"
+      "[&_.stepper-separator]:border-silver-bordered-text-light dark:[&_.stepper-separator]:border-silver-bordered-text-dark",
+      "[&_.stepper-completed-step+.stepper-separator]:border-silver-indicator-alt-light dark:[&_.stepper-completed-step+.stepper-separator]:border-silver-indicator-dark",
+      "[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-silver-indicator-alt-light",
+      "dark:[&.vertical-stepper_.stepper-completed-step_.stepper-separator]:border-silver-indicator-dark"
     ]
   end
 

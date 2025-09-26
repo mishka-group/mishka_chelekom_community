@@ -23,6 +23,8 @@ defmodule CommunityDemoWeb.Components.Timeline do
 
   This component integrates seamlessly into Phoenix LiveView applications, providing a rich
   and interactive way to visualize timelines, events, or progressions.
+
+  **Documentation:** https://mishka.tools/chelekom/docs/timeline
   """
 
   use Phoenix.Component
@@ -94,8 +96,12 @@ defmodule CommunityDemoWeb.Components.Timeline do
     doc: "A unique identifier is used to manage state and interaction"
 
   attr :color, :string, default: "base", doc: "Determines color theme"
-  attr :hide_last_line, :boolean, default: false, doc: ""
-  attr :gapped_sections, :boolean, default: false, doc: ""
+
+  attr :hide_last_line, :boolean,
+    default: false,
+    doc: "Hides the line for the last timeline section"
+
+  attr :gapped_sections, :boolean, default: false, doc: "Adds gaps between timeline sections"
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
 
   attr :rest, :global,
@@ -199,20 +205,15 @@ defmodule CommunityDemoWeb.Components.Timeline do
   attr :icon_class, :string, default: nil, doc: "Custom CSS class for additional styling icon"
   attr :line_class, :string, default: nil, doc: "Custom CSS class for additional styling lines"
 
-  attr :bullte_wrapper_class,
-       :string,
-       default: nil,
-       doc: "Custom CSS class for additional styling icon"
-
   attr :bullet_class, :string,
     default: nil,
     doc: "Custom CSS class for additional styling bullets"
 
-  attr :bullet_wrapper_Class, :string,
+  attr :bullet_wrapper_class, :string,
     default: nil,
     doc: "Custom CSS class for additional styling bullet wrapper"
 
-  attr :image_class, :string, default: nil, doc: "Custom CSS class for additional styling icon"
+  attr :image_class, :string, default: nil, doc: "Custom CSS class for additional styling image"
 
   attr :content_class, :string,
     default: nil,
@@ -242,7 +243,7 @@ defmodule CommunityDemoWeb.Components.Timeline do
       ]}
       {@rest}
     >
-      <div :if={!@image} class={["flex items-center", @bullet_wrapper_Class]}>
+      <div :if={!@image} class={["flex items-center", @bullet_wrapper_class]}>
         <div class={[
           "timeline-bullet z-10 flex items-center justify-center rounded-full shrink-0",
           bullet_size(@size),
@@ -264,7 +265,7 @@ defmodule CommunityDemoWeb.Components.Timeline do
         </div>
       </div>
 
-      <div :if={@image} class={["flex items-center", @bullet_wrapper_Class]}>
+      <div :if={@image} class={["flex items-center", @bullet_wrapper_class]}>
         <div class={[
           "timeline-image-wrapper z-10 shrink-0",
           bullet_size(@size),
@@ -317,7 +318,7 @@ defmodule CommunityDemoWeb.Components.Timeline do
       >
         <div class={[
           "timeline-bullet-wrapper relative z-10 size-7 flex justify-center",
-          @bullte_wrapper_class
+          @bullet_wrapper_class
         ]}>
           <div class={[
             "timeline-bullet rounded-full flex justify-center items-center",
@@ -344,7 +345,7 @@ defmodule CommunityDemoWeb.Components.Timeline do
           @line_class
         ]}
       >
-        <div class={["relative z-10", @bullte_wrapper_class]}>
+        <div class={["relative z-10", @bullet_wrapper_class]}>
           <div class={[
             "timeline-image-wrapper",
             bullet_size(@size),
@@ -456,114 +457,114 @@ defmodule CommunityDemoWeb.Components.Timeline do
 
   defp color_class("base") do
     [
-      "[&_.timeline-bullet]:bg-[#e4e4e7] [&_.timeline-bullet]:text-[#e4e4e7] [&_.timeline-vertical-line]:after:border-[#e4e4e7]",
-      "[&_.timeline-horizontal-line]:border-[#e4e4e7]",
-      "dark:[&_.timeline-bullet]:bg-[#27272a] dark:[&_.timeline-bullet]:text-[#FAFAFA] dark:[&_.timeline-vertical-line]:after:border-[#27272a]",
-      "dark:[&_.timeline-horizontal-line]:border-[#27272a]"
+      "[&_.timeline-bullet]:bg-base-border-light [&_.timeline-bullet]:text-base-border-light [&_.timeline-vertical-line]:after:border-base-border-light",
+      "[&_.timeline-horizontal-line]:border-base-border-light",
+      "dark:[&_.timeline-bullet]:bg-base-border-dark dark:[&_.timeline-bullet]:text-base-text-dark dark:[&_.timeline-vertical-line]:after:border-base-border-dark",
+      "dark:[&_.timeline-horizontal-line]:border-base-border-dark"
     ]
   end
 
   defp color_class("white") do
     [
-      "[&_.timeline-bullet]:bg-white [&_.timeline-bullet]:text-[#DADADA] [&_.timeline-vertical-line]:after:border-white",
+      "[&_.timeline-bullet]:bg-white [&_.timeline-bullet]:text-silver-light [&_.timeline-vertical-line]:after:border-white",
       "[&_.timeline-horizontal-line]:border-white"
     ]
   end
 
   defp color_class("natural") do
     [
-      "[&_.timeline-bullet]:bg-[#4B4B4B] [&_.timeline-bullet]:text-white [&_.timeline-vertical-line]:after:border-[#4B4B4B]",
-      "[&_.timeline-horizontal-line]:border-[#4B4B4B]",
-      "dark:[&_.timeline-bullet]:bg-[#DDDDDD] dark:[&_.timeline-bullet]:text-black dark:[&_.timeline-vertical-line]:after:border-[#DDDDDD]",
-      "dark:[&_.timeline-horizontal-line]:border-[#DDDDDD]"
+      "[&_.timeline-bullet]:bg-natural-light [&_.timeline-bullet]:text-white [&_.timeline-vertical-line]:after:border-natural-light",
+      "[&_.timeline-horizontal-line]:border-natural-light",
+      "dark:[&_.timeline-bullet]:bg-natural-dark dark:[&_.timeline-bullet]:text-black dark:[&_.timeline-vertical-line]:after:border-natural-dark",
+      "dark:[&_.timeline-horizontal-line]:border-natural-dark"
     ]
   end
 
   defp color_class("primary") do
     [
-      "[&_.timeline-bullet]:bg-[#007F8C] [&_.timeline-bullet]:text-white [&_.timeline-vertical-line]:after:border-[#007F8C]",
-      "[&_.timeline-horizontal-line]:border-[#007F8C]",
-      "dark:[&_.timeline-bullet]:bg-[#01B8CA] dark:[&_.timeline-bullet]:text-black dark:[&_.timeline-vertical-line]:after:border-[#01B8CA]",
-      "dark:[&_.timeline-horizontal-line]:border-[#01B8CA]"
+      "[&_.timeline-bullet]:bg-primary-light [&_.timeline-bullet]:text-white [&_.timeline-vertical-line]:after:border-primary-light",
+      "[&_.timeline-horizontal-line]:border-primary-light",
+      "dark:[&_.timeline-bullet]:bg-primary-dark dark:[&_.timeline-bullet]:text-black dark:[&_.timeline-vertical-line]:after:border-primary-dark",
+      "dark:[&_.timeline-horizontal-line]:border-primary-dark"
     ]
   end
 
   defp color_class("secondary") do
     [
-      "[&_.timeline-bullet]:bg-[#266EF1] [&_.timeline-bullet]:text-white [&_.timeline-vertical-line]:after:border-[#266EF1]",
-      "[&_.timeline-horizontal-line]:border-[#266EF1]",
-      "dark:[&_.timeline-bullet]:bg-[#6DAAFB] dark:[&_.timeline-bullet]:text-black dark:[&_.timeline-vertical-line]:after:border-[#6DAAFB]",
-      "dark:[&_.timeline-horizontal-line]:border-[#6DAAFB]"
+      "[&_.timeline-bullet]:bg-secondary-light [&_.timeline-bullet]:text-white [&_.timeline-vertical-line]:after:border-secondary-light",
+      "[&_.timeline-horizontal-line]:border-secondary-light",
+      "dark:[&_.timeline-bullet]:bg-secondary-dark dark:[&_.timeline-bullet]:text-black dark:[&_.timeline-vertical-line]:after:border-secondary-dark",
+      "dark:[&_.timeline-horizontal-line]:border-secondary-dark"
     ]
   end
 
   defp color_class("success") do
     [
-      "[&_.timeline-bullet]:bg-[#0E8345] [&_.timeline-bullet]:text-white [&_.timeline-vertical-line]:after:border-[#0E8345]",
-      "[&_.timeline-horizontal-line]:border-[#0E8345]",
-      "[&_.timeline-bullet]:bg-[#06C167] [&_.timeline-bullet]:text-black [&_.timeline-vertical-line]:after:border-[#06C167]",
-      "[&_.timeline-horizontal-line]:border-[#06C167]"
+      "[&_.timeline-bullet]:bg-success-light [&_.timeline-bullet]:text-white [&_.timeline-vertical-line]:after:border-success-light",
+      "[&_.timeline-horizontal-line]:border-success-light",
+      "dark:[&_.timeline-bullet]:bg-success-dark dark:[&_.timeline-bullet]:text-black dark:[&_.timeline-vertical-line]:after:border-success-dark",
+      "dark:[&_.timeline-horizontal-line]:border-success-dark"
     ]
   end
 
   defp color_class("warning") do
     [
-      "[&_.timeline-bullet]:bg-[#CA8D01] [&_.timeline-bullet]:text-white [&_.timeline-vertical-line]:after:border-[#CA8D01]",
-      "[&_.timeline-horizontal-line]:border-[#CA8D01]",
-      "[&_.timeline-bullet]:bg-[#FDC034] [&_.timeline-bullet]:text-black [&_.timeline-vertical-line]:after:border-[#FDC034]",
-      "[&_.timeline-horizontal-line]:border-[#FDC034]"
+      "[&_.timeline-bullet]:bg-warning-light [&_.timeline-bullet]:text-white [&_.timeline-vertical-line]:after:border-warning-light",
+      "[&_.timeline-horizontal-line]:border-warning-light",
+      "dark:[&_.timeline-bullet]:bg-warning-dark dark:[&_.timeline-bullet]:text-black dark:[&_.timeline-vertical-line]:after:border-warning-dark",
+      "dark:[&_.timeline-horizontal-line]:border-warning-dark"
     ]
   end
 
   defp color_class("danger") do
     [
-      "[&_.timeline-bullet]:bg-[#DE1135] [&_.timeline-bullet]:text-white [&_.timeline-vertical-line]:after:border-[#DE1135]",
-      "[&_.timeline-horizontal-line]:border-[#DE1135]",
-      "[&_.timeline-bullet]:bg-[#FC7F79] [&_.timeline-bullet]:text-black [&_.timeline-vertical-line]:after:border-[#FC7F79]",
-      "[&_.timeline-horizontal-line]:border-[#FC7F79]"
+      "[&_.timeline-bullet]:bg-danger-light [&_.timeline-bullet]:text-white [&_.timeline-vertical-line]:after:border-danger-light",
+      "[&_.timeline-horizontal-line]:border-danger-light",
+      "dark:[&_.timeline-bullet]:bg-danger-dark dark:[&_.timeline-bullet]:text-black dark:[&_.timeline-vertical-line]:after:border-danger-dark",
+      "dark:[&_.timeline-horizontal-line]:border-danger-dark"
     ]
   end
 
   defp color_class("info") do
     [
-      "[&_.timeline-bullet]:bg-[#0B84BA] [&_.timeline-bullet]:text-white [&_.timeline-vertical-line]:after:border-[#0B84BA]",
-      "[&_.timeline-horizontal-line]:border-[#0B84BA]",
-      "[&_.timeline-bullet]:bg-[#3EB7ED] [&_.timeline-bullet]:text-black [&_.timeline-vertical-line]:after:border-[#3EB7ED]",
-      "[&_.timeline-horizontal-line]:border-[#3EB7ED]"
+      "[&_.timeline-bullet]:bg-info-light [&_.timeline-bullet]:text-white [&_.timeline-vertical-line]:after:border-info-light",
+      "[&_.timeline-horizontal-line]:border-info-light",
+      "dark:[&_.timeline-bullet]:bg-info-dark dark:[&_.timeline-bullet]:text-black dark:[&_.timeline-vertical-line]:after:border-info-dark",
+      "dark:[&_.timeline-horizontal-line]:border-info-dark"
     ]
   end
 
   defp color_class("misc") do
     [
-      "[&_.timeline-bullet]:bg-[#8750C5] [&_.timeline-bullet]:text-white [&_.timeline-vertical-line]:after:border-[#8750C5]",
-      "[&_.timeline-horizontal-line]:border-[#8750C5]",
-      "[&_.timeline-bullet]:bg-[#BA83F9] [&_.timeline-bullet]:text-black [&_.timeline-vertical-line]:after:border-[#BA83F9]",
-      "[&_.timeline-horizontal-line]:border-[#BA83F9]"
+      "[&_.timeline-bullet]:bg-misc-light [&_.timeline-bullet]:text-white [&_.timeline-vertical-line]:after:border-misc-light",
+      "[&_.timeline-horizontal-line]:border-misc-light",
+      "dark:[&_.timeline-bullet]:bg-misc-dark dark:[&_.timeline-bullet]:text-black dark:[&_.timeline-vertical-line]:after:border-misc-dark",
+      "dark:[&_.timeline-horizontal-line]:border-misc-dark"
     ]
   end
 
   defp color_class("dawn") do
     [
-      "[&_.timeline-bullet]:bg-[#A86438] [&_.timeline-bullet]:text-white [&_.timeline-vertical-line]:after:border-[#A86438]",
-      "[&_.timeline-horizontal-line]:border-[#A86438]",
-      "[&_.timeline-bullet]:bg-[#DB976B] [&_.timeline-bullet]:text-black [&_.timeline-vertical-line]:after:border-[#DB976B]",
-      "[&_.timeline-horizontal-line]:border-[#DB976B]"
+      "[&_.timeline-bullet]:bg-dawn-light [&_.timeline-bullet]:text-white [&_.timeline-vertical-line]:after:border-dawn-light",
+      "[&_.timeline-horizontal-line]:border-dawn-light",
+      "dark:[&_.timeline-bullet]:bg-dawn-dark dark:[&_.timeline-bullet]:text-black dark:[&_.timeline-vertical-line]:after:border-dawn-dark",
+      "dark:[&_.timeline-horizontal-line]:border-dawn-dark"
     ]
   end
 
   defp color_class("silver") do
     [
-      "[&_.timeline-bullet]:bg-[#868686] [&_.timeline-bullet]:text-white [&_.timeline-vertical-line]:after:border-[#868686]",
-      "[&_.timeline-horizontal-line]:border-[#868686]",
-      "[&_.timeline-bullet]:bg-[#A6A6A6] [&_.timeline-bullet]:text-black [&_.timeline-vertical-line]:after:border-[#A6A6A6]",
-      "[&_.timeline-horizontal-line]:border-[#A6A6A6]"
+      "[&_.timeline-bullet]:bg-silver-light [&_.timeline-bullet]:text-white [&_.timeline-vertical-line]:after:border-silver-light",
+      "[&_.timeline-horizontal-line]:border-silver-light",
+      "dark:[&_.timeline-bullet]:bg-silver-dark dark:[&_.timeline-bullet]:text-black dark:[&_.timeline-vertical-line]:after:border-silver-dark",
+      "dark:[&_.timeline-horizontal-line]:border-silver-dark"
     ]
   end
 
   defp color_class("dark") do
     [
-      "[&_.timeline-bullet]:bg-[#282828] [&_.timeline-bullet]:text-white [&_.timeline-vertical-line]:after:border-[#282828]",
-      "[&_.timeline-horizontal-line]:border-[#282828]"
+      "[&_.timeline-bullet]:bg-default-dark-bg [&_.timeline-bullet]:text-white [&_.timeline-vertical-line]:after:border-default-dark-bg",
+      "[&_.timeline-horizontal-line]:border-default-dark-bg"
     ]
   end
 

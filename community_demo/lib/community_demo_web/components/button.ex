@@ -20,6 +20,8 @@ defmodule CommunityDemoWeb.Components.Button do
 
   > This module makes it easy to render buttons with consistent styling and behavior
   > across your application while offering the flexibility needed for various use cases.
+
+  **Documentation:** https://mishka.tools/chelekom/docs/button
   """
 
   use Phoenix.Component
@@ -686,7 +688,6 @@ defmodule CommunityDemoWeb.Components.Button do
 
   defp button_indicator(assigns) do
     ~H"""
-
     """
   end
 
@@ -699,7 +700,8 @@ defmodule CommunityDemoWeb.Components.Button do
               "default_gradient",
               "outline_gradient",
               "inverted_gradient"
-            ], do: nil
+            ],
+       do: nil
 
   defp border_size("none", _), do: nil
   defp border_size("extra_small", _), do: "border"
@@ -711,12 +713,12 @@ defmodule CommunityDemoWeb.Components.Button do
 
   defp color_variant("base", _, indicator) do
     [
-      "bg-white text-[#09090b] border-[#e4e4e7] hover:bg-[#F8F9FA]",
-      "dark:bg-[#18181B] dark:text-[#FAFAFA] dark:border-[#27272a] dark:hover:bg-[#242424]",
-      "disabled:bg-[#f1f3f5] disabled:text-[#adb5bd] dark:disabled:bg-[#2e2e2e] dark:disabled:text-[#696969]",
-      "disabled:border-[#dee2e6] dark:disabled:border-[#424242]",
+      "bg-white text-base-text-light border-base-border-light hover:bg-base-hover-light",
+      "dark:bg-base-bg-dark dark:text-base-text-dark dark:border-base-border-dark dark:hover:bg-base-hover-dark",
+      "disabled:bg-base-disabled-bg-light disabled:text-base-disabled-text-light dark:disabled:bg-base-disabled-bg-dark dark:disabled:text-base-disabled-text-dark",
+      "disabled:border-base-disabled-border-light dark:disabled:border-base-disabled-border-dark",
       "shadow-sm",
-      indicator && "[&>.indicator]:bg-[#e4e4e7] dark:[&>.indicator]:bg-[#27272a]"
+      indicator && "[&>.indicator]:bg-base-border-light dark:[&>.indicator]:bg-base-border-dark"
     ]
   end
 
@@ -725,304 +727,331 @@ defmodule CommunityDemoWeb.Components.Button do
   end
 
   defp color_variant("default", "dark", _) do
-    ["bg-[#282828] text-white"]
+    ["bg-default-dark-bg text-white"]
   end
 
   defp color_variant("default", "natural", indicator) do
     [
-      "bg-[#4B4B4B] text-white hover:bg-[#282828] dark:bg-[#DDDDDD]",
-      "dark:text-black dark:hover:bg-[#E8E8E8]",
-      "disabled:bg-[#F3F3F3] disabled:text-[#BBBBBB]",
-      "dark:disabled:bg-[#4B4B4B] dark:disabled:text-[#868686]",
+      "bg-natural-light text-white hover:bg-natural-hover-light dark:bg-natural-dark",
+      "dark:text-black dark:hover:bg-natural-hover-dark",
+      "disabled:bg-disabled-bg-light disabled:text-disabled-text-light",
+      "dark:disabled:bg-disabled-bg-dark dark:disabled:text-disabled-text-dark",
       indicator && "[&>.indicator]:bg-white dark:[&>.indicator]:bg-black"
     ]
   end
 
   defp color_variant("default", "primary", indicator) do
     [
-      "bg-[#007F8C] text-white hover:bg-[#016974] dark:bg-[#01B8CA] ",
-      "dark:text-black dark:hover:bg-[#77D5E3]",
-      "disabled:bg-[#F3F3F3] disabled:text-[#BBBBBB]",
-      "dark:disabled:bg-[#4B4B4B] dark:disabled:text-[#868686]",
-      indicator && "[&>.indicator]:bg-[#1A535A] dark:[&>.indicator]:bg-[#B0E7EF]"
+      "bg-primary-light text-white hover:bg-primary-hover-light dark:bg-primary-dark",
+      "dark:text-black dark:hover:bg-primary-hover-dark",
+      "disabled:bg-disabled-bg-light disabled:text-disabled-text-light",
+      "dark:disabled:bg-disabled-bg-dark dark:disabled:text-disabled-text-dark",
+      indicator &&
+        "[&>.indicator]:bg-primary-indicator-light dark:[&>.indicator]:bg-primary-indicator-dark"
     ]
   end
 
   defp color_variant("default", "secondary", indicator) do
     [
-      "bg-[#266EF1] text-white hover:bg-[#175BCC] dark:bg-[#6DAAFB]",
-      "dark:text-black dark:hover:bg-[#A9C9FF]",
-      "disabled:bg-[#F3F3F3] disabled:text-[#BBBBBB]",
-      "dark:disabled:bg-[#4B4B4B] dark:disabled:text-[#868686]",
-      indicator && "[&>.indicator]:bg-[#1948A3] dark:[&>.indicator]:bg-[#CDDEFF]"
+      "bg-secondary-light text-white hover:bg-secondary-hover-light dark:bg-secondary-dark",
+      "dark:text-black dark:hover:bg-secondary-hover-dark",
+      "disabled:bg-disabled-bg-light disabled:text-disabled-text-light",
+      "dark:disabled:bg-disabled-bg-dark dark:disabled:text-disabled-text-dark",
+      indicator &&
+        "[&>.indicator]:bg-secondary-indicator-light dark:[&>.indicator]:bg-secondary-indicator-dark"
     ]
   end
 
   defp color_variant("default", "success", indicator) do
     [
-      "bg-[#0E8345] text-white hover:bg-[#166C3B] dark:bg-[#06C167]",
-      "dark:text-black dark:hover:bg-[#7FD99A]",
-      "disabled:bg-[#F3F3F3] disabled:text-[#BBBBBB]",
-      "dark:disabled:bg-[#4B4B4B] dark:disabled:text-[#868686]",
-      indicator && "[&>.indicator]:bg-[#047857] dark:[&>.indicator]:bg-[#B1EAC2]"
+      "bg-success-light text-white hover:bg-success-hover-light dark:bg-success-dark",
+      "dark:text-black dark:hover:bg-success-hover-dark",
+      "disabled:bg-disabled-bg-light disabled:text-disabled-text-light",
+      "dark:disabled:bg-disabled-bg-dark dark:disabled:text-disabled-text-dark",
+      indicator &&
+        "[&>.indicator]:bg-success-indicator-light dark:[&>.indicator]:bg-success-indicator-dark"
     ]
   end
 
   defp color_variant("default", "warning", indicator) do
     [
-      "bg-[#CA8D01] text-white hover:bg-[#976A01] dark:bg-[#FDC034]",
-      "dark:text-black dark:hover:bg-[#FDD067]",
-      "disabled:bg-[#F3F3F3] disabled:text-[#BBBBBB]",
-      "dark:disabled:bg-[#4B4B4B] dark:disabled:text-[#868686]",
-      indicator && "[&>.indicator]:bg-[#FF8B08] dark:[&>.indicator]:bg-[#FEDF99]"
+      "bg-warning-light text-white hover:bg-warning-hover-light dark:bg-warning-dark",
+      "dark:text-black dark:hover:bg-warning-hover-dark",
+      "disabled:bg-disabled-bg-light disabled:text-disabled-text-light",
+      "dark:disabled:bg-disabled-bg-dark dark:disabled:text-disabled-text-dark",
+      indicator &&
+        "[&>.indicator]:bg-warning-indicator-light dark:[&>.indicator]:bg-warning-indicator-dark"
     ]
   end
 
   defp color_variant("default", "danger", indicator) do
     [
-      "bg-[#DE1135] text-white hover:bg-[#BB032A] dark:bg-[#FC7F79]",
-      "dark:text-black dark:hover:bg-[#FFB2AB]",
-      "disabled:bg-[#F3F3F3] disabled:text-[#BBBBBB]",
-      "dark:disabled:bg-[#4B4B4B] dark:disabled:text-[#868686]",
-      indicator && "[&>.indicator]:bg-[#E73B3B] dark:[&>.indicator]:bg-[#FFD2CD]"
+      "bg-danger-light text-white hover:bg-danger-hover-light dark:bg-danger-dark",
+      "dark:text-black dark:hover:bg-danger-hover-dark",
+      "disabled:bg-disabled-bg-light disabled:text-disabled-text-light",
+      "dark:disabled:bg-disabled-bg-dark dark:disabled:text-disabled-text-dark",
+      indicator &&
+        "[&>.indicator]:bg-danger-indicator-light dark:[&>.indicator]:bg-danger-indicator-dark"
     ]
   end
 
   defp color_variant("default", "info", indicator) do
     [
-      "bg-[#0B84BA] text-white hover:bg-[#08638C] dark:bg-[#3EB7ED]",
-      "dark:text-black dark:hover:bg-[#6EC9F2]",
-      "disabled:bg-[#F3F3F3] disabled:text-[#BBBBBB]",
-      "dark:disabled:bg-[#4B4B4B] dark:disabled:text-[#868686]",
-      indicator && "[&>.indicator]:bg-[#004FC4] dark:[&>.indicator]:bg-[#9FDBF6]"
+      "bg-info-light text-white hover:bg-info-hover-light dark:bg-info-dark",
+      "dark:text-black dark:hover:bg-info-hover-dark",
+      "disabled:bg-disabled-bg-light disabled:text-disabled-text-light",
+      "dark:disabled:bg-disabled-bg-dark dark:disabled:text-disabled-text-dark",
+      indicator &&
+        "[&>.indicator]:bg-info-indicator-light dark:[&>.indicator]:bg-info-indicator-dark"
     ]
   end
 
   defp color_variant("default", "misc", indicator) do
     [
-      "bg-[#8750C5] text-white hover:bg-[#653C94] dark:bg-[#BA83F9]",
-      "dark:text-black dark:hover:bg-[#CBA2FA]",
-      "disabled:bg-[#F3F3F3] disabled:text-[#BBBBBB]",
-      "dark:disabled:bg-[#4B4B4B] dark:disabled:text-[#868686]",
-      indicator && "[&>.indicator]:bg-[#52059C] dark:[&>.indicator]:bg-[#DDC1FC]"
+      "bg-misc-light text-white hover:bg-misc-hover-light dark:bg-misc-dark",
+      "dark:text-black dark:hover:bg-misc-hover-dark",
+      "disabled:bg-disabled-bg-light disabled:text-disabled-text-light",
+      "dark:disabled:bg-disabled-bg-dark dark:disabled:text-disabled-text-dark",
+      indicator &&
+        "[&>.indicator]:bg-misc-indicator-light dark:[&>.indicator]:bg-misc-indicator-dark"
     ]
   end
 
   defp color_variant("default", "dawn", indicator) do
     [
-      "bg-[#A86438] text-white hover:bg-[#7E4B2A] dark:bg-[#DB976B]",
-      "dark:text-black dark:hover:bg-[#E4B190]",
-      "disabled:bg-[#F3F3F3] disabled:text-[#BBBBBB]",
-      "dark:disabled:bg-[#4B4B4B] dark:disabled:text-[#868686]",
-      indicator && "[&>.indicator]:bg-[#4D4137] dark:[&>.indicator]:bg-[#EDCBB5]"
+      "bg-dawn-light text-white hover:bg-dawn-hover-light dark:bg-dawn-dark",
+      "dark:text-black dark:hover:bg-dawn-hover-dark",
+      "disabled:bg-disabled-bg-light disabled:text-disabled-text-light",
+      "dark:disabled:bg-disabled-bg-dark dark:disabled:text-disabled-text-dark",
+      indicator &&
+        "[&>.indicator]:bg-dawn-indicator-light dark:[&>.indicator]:bg-dawn-indicator-dark"
     ]
   end
 
   defp color_variant("default", "silver", indicator) do
     [
-      "bg-[#868686] text-white hover:bg-[#727272] dark:bg-[#A6A6A6]",
-      "dark:text-black dark:hover:bg-[#BBBBBB]",
-      "disabled:bg-[#F3F3F3] disabled:text-[#BBBBBB]",
-      "dark:disabled:bg-[#4B4B4B] dark:disabled:text-[#868686]",
-      indicator && "[&>.indicator]:bg-[#707483] dark:[&>.indicator]:bg-[#DDDDDD]"
+      "bg-silver-light text-white hover:bg-silver-hover-light dark:bg-silver-dark",
+      "dark:text-black dark:hover:bg-silver-hover-dark",
+      "disabled:bg-disabled-bg-light disabled:text-disabled-text-light",
+      "dark:disabled:bg-disabled-bg-dark dark:disabled:text-disabled-text-dark",
+      indicator &&
+        "[&>.indicator]:bg-silver-indicator-light dark:[&>.indicator]:bg-silver-indicator-dark"
     ]
   end
 
   defp color_variant("outline", "natural", indicator) do
     [
-      "bg-transparent text-[#4B4B4B] border-[#4B4B4B] hover:text-[#282828]",
-      "hover:border-[#282828] dark:text-[#DDDDDD] dark:border-[#DDDDDD]",
-      "dark:hover:text-[#E8E8E8] dark:hover:border-[#E8E8E8] disabled:text-[#DDDDDD]",
-      "disabled:border-[#DDDDDD] dark:disabled:text-[#727272] dark:disabled:border-[#727272]",
-      indicator && "[&>.indicator]:bg-black dark:[&>.indicator]:bg-white "
+      "bg-transparent text-natural-light border-natural-light hover:text-natural-hover-light",
+      "hover:border-natural-hover-light dark:text-natural-dark dark:border-natural-dark",
+      "dark:hover:text-natural-hover-dark dark:hover:border-natural-hover-dark disabled:text-natural-disabled-light",
+      "disabled:border-natural-disabled-light dark:disabled:text-natural-disabled-dark dark:disabled:border-natural-disabled-dark",
+      indicator && "[&>.indicator]:bg-black dark:[&>.indicator]:bg-white"
     ]
   end
 
   defp color_variant("outline", "primary", indicator) do
     [
-      "bg-transparent text-[#007F8C] border-[#007F8C] hover:text-[#016974]",
-      "hover:border-[#016974] dark:text-[#01B8CA] dark:border-[#01B8CA]",
-      "dark:hover:text-[#77D5E3] dark:hover:border-[#77D5E3] disabled:text-[#DDDDDD]",
-      "disabled:border-[#DDDDDD] dark:disabled:text-[#727272] dark:disabled:border-[#727272]",
-      indicator && "[&>.indicator]:bg-[#1A535A] dark:[&>.indicator]:bg-[#B0E7EF]"
+      "bg-transparent text-primary-light border-primary-light hover:text-primary-hover-light",
+      "hover:border-primary-hover-light dark:text-primary-dark dark:border-primary-dark",
+      "dark:hover:text-primary-hover-dark dark:hover:border-primary-hover-dark disabled:text-natural-disabled-light",
+      "disabled:border-natural-disabled-light dark:disabled:text-natural-disabled-dark dark:disabled:border-natural-disabled-dark",
+      indicator &&
+        "[&>.indicator]:bg-primary-indicator-light dark:[&>.indicator]:bg-primary-indicator-dark"
     ]
   end
 
   defp color_variant("outline", "secondary", indicator) do
     [
-      "bg-transparent text-[#266EF1] border-[#266EF1] hover:text-[#175BCC]",
-      "hover:border-[#175BCC] dark:text-[#6DAAFB] dark:border-[#6DAAFB]",
-      "dark:hover:text-[#A9C9FF] dark:hover:border-[#A9C9FF] disabled:text-[#DDDDDD]",
-      "disabled:border-[#DDDDDD] dark:disabled:text-[#727272] dark:disabled:border-[#727272]",
-      indicator && "[&>.indicator]:bg-[#1948A3] dark:[&>.indicator]:bg-[#CDDEFF]"
+      "bg-transparent text-secondary-light border-secondary-light hover:text-secondary-hover-light",
+      "hover:border-secondary-hover-light dark:text-secondary-dark dark:border-secondary-dark",
+      "dark:hover:text-secondary-hover-dark dark:hover:border-secondary-hover-dark disabled:text-natural-disabled-light",
+      "disabled:border-natural-disabled-light dark:disabled:text-natural-disabled-dark dark:disabled:border-natural-disabled-dark",
+      indicator &&
+        "[&>.indicator]:bg-secondary-indicator-light dark:[&>.indicator]:bg-secondary-indicator-dark"
     ]
   end
 
   defp color_variant("outline", "success", indicator) do
     [
-      "bg-transparent text-[#0E8345] border-[#0E8345] hover:text-[#166C3B]",
-      "hover:border-[#166C3B] dark:text-[#06C167] dark:border-[#06C167]",
-      "dark:hover:text-[#7FD99A] dark:hover:border-[#7FD99A] disabled:text-[#DDDDDD]",
-      "disabled:border-[#DDDDDD] dark:disabled:text-[#727272] dark:disabled:border-[#727272]",
-      indicator && "[&>.indicator]:bg-[#0D572D] dark:[&>.indicator]:bg-[#B1EAC2]"
+      "bg-transparent text-success-light border-success-light hover:text-success-hover-light",
+      "hover:border-success-hover-light dark:text-success-dark dark:border-success-dark",
+      "dark:hover:text-success-hover-dark dark:hover:border-success-hover-dark disabled:text-natural-disabled-light",
+      "disabled:border-natural-disabled-light dark:disabled:text-natural-disabled-dark dark:disabled:border-natural-disabled-dark",
+      indicator &&
+        "[&>.indicator]:bg-success-indicator-alt-light dark:[&>.indicator]:bg-success-indicator-dark"
     ]
   end
 
   defp color_variant("outline", "warning", indicator) do
     [
-      "bg-transparent text-[#CA8D01] border-[#CA8D01] hover:text-[#976A01]",
-      "hover:border-[#976A01] dark:text-[#FDC034] dark:border-[#FDC034]",
-      "dark:hover:text-[#FDD067] dark:hover:border-[#FDD067]  disabled:text-[#DDDDDD]",
-      "disabled:border-[#DDDDDD] dark:disabled:text-[#727272] dark:disabled:border-[#727272]",
-      indicator && "[&>.indicator]:bg-[#654600] dark:[&>.indicator]:bg-[#FEDF99]"
+      "bg-transparent text-warning-light border-warning-light hover:text-warning-hover-light",
+      "hover:border-warning-hover-light dark:text-warning-dark dark:border-warning-dark",
+      "dark:hover:text-warning-hover-dark dark:hover:border-warning-hover-dark disabled:text-natural-disabled-light",
+      "disabled:border-natural-disabled-light dark:disabled:text-natural-disabled-dark dark:disabled:border-natural-disabled-dark",
+      indicator &&
+        "[&>.indicator]:bg-warning-indicator-alt-light dark:[&>.indicator]:bg-warning-indicator-dark"
     ]
   end
 
   defp color_variant("outline", "danger", indicator) do
     [
-      "bg-transparent text-[#DE1135] border-[#DE1135] hover:text-[#BB032A]",
-      "hover:border-[#BB032A] dark:text-[#FC7F79] dark:border-[#FC7F79]",
-      "dark:hover:text-[#FFB2AB] dark:hover:border-[#FFB2AB] disabled:text-[#DDDDDD]",
-      "disabled:border-[#DDDDDD] dark:disabled:text-[#727272] dark:disabled:border-[#727272]",
-      indicator && "[&>.indicator]:bg-[#950F22] dark:[&>.indicator]:bg-[#FFD2CD]"
+      "bg-transparent text-danger-light border-danger-light hover:text-danger-hover-light",
+      "hover:border-danger-hover-light dark:text-danger-dark dark:border-danger-dark",
+      "dark:hover:text-danger-hover-dark dark:hover:border-danger-hover-dark disabled:text-natural-disabled-light",
+      "disabled:border-natural-disabled-light dark:disabled:text-natural-disabled-dark dark:disabled:border-natural-disabled-dark",
+      indicator &&
+        "[&>.indicator]:bg-danger-indicator-alt-light dark:[&>.indicator]:bg-danger-indicator-dark"
     ]
   end
 
   defp color_variant("outline", "info", indicator) do
     [
-      "bg-transparent text-[#0B84BA] border-[#0B84BA] hover:text-[#08638C]",
-      "hover:border-[#08638C] dark:text-[#3EB7ED] dark:border-[#3EB7ED]",
-      "dark:hover:text-[#6EC9F2] dark:hover:border-[#6EC9F2] disabled:text-[#DDDDDD]",
-      "disabled:border-[#DDDDDD] dark:disabled:text-[#727272] dark:disabled:border-[#727272]",
-      indicator && "[&>.indicator]:bg-[#06425D] dark:[&>.indicator]:bg-[#9FDBF6]"
+      "bg-transparent text-info-light border-info-light hover:text-info-hover-light",
+      "hover:border-info-hover-light dark:text-info-dark dark:border-info-dark",
+      "dark:hover:text-info-hover-dark dark:hover:border-info-hover-dark disabled:text-natural-disabled-light",
+      "disabled:border-natural-disabled-light dark:disabled:text-natural-disabled-dark dark:disabled:border-natural-disabled-dark",
+      indicator &&
+        "[&>.indicator]:bg-info-indicator-alt-light dark:[&>.indicator]:bg-info-indicator-dark"
     ]
   end
 
   defp color_variant("outline", "misc", indicator) do
     [
-      "bg-transparent text-[#8750C5] border-[#8750C5] hover:text-[#653C94]",
-      "hover:border-[#653C94] dark:text-[#BA83F9] dark:border-[#BA83F9]",
-      "dark:hover:text-[#CBA2FA] dark:hover:border-[#CBA2FA] disabled:text-[#DDDDDD]",
-      "disabled:border-[#DDDDDD] dark:disabled:text-[#727272] dark:disabled:border-[#727272]",
-      indicator && "[&>.indicator]:bg-[#442863] dark:[&>.indicator]:bg-[#DDC1FC]"
+      "bg-transparent text-misc-light border-misc-light hover:text-misc-hover-light",
+      "hover:border-misc-hover-light dark:text-misc-dark dark:border-misc-dark",
+      "dark:hover:text-misc-hover-dark dark:hover:border-misc-hover-dark disabled:text-natural-disabled-light",
+      "disabled:border-natural-disabled-light dark:disabled:text-natural-disabled-dark dark:disabled:border-natural-disabled-dark",
+      indicator &&
+        "[&>.indicator]:bg-misc-indicator-alt-light dark:[&>.indicator]:bg-misc-indicator-dark"
     ]
   end
 
   defp color_variant("outline", "dawn", indicator) do
     [
-      "bg-transparent text-[#A86438] border-[#A86438] hover:text-[#7E4B2A]",
-      "hover:border-[#7E4B2A] dark:text-[#DB976B] dark:border-[#DB976B]",
-      "dark:hover:text-[#E4B190] dark:hover:border-[#E4B190] disabled:text-[#DDDDDD]",
-      "disabled:border-[#DDDDDD] dark:disabled:text-[#727272] dark:disabled:border-[#727272]",
-      indicator && "[&>.indicator]:bg-[#54321C] dark:[&>.indicator]:bg-[#EDCBB5]"
+      "bg-transparent text-dawn-light border-dawn-light hover:text-dawn-hover-light",
+      "hover:border-dawn-hover-light dark:text-dawn-dark dark:border-dawn-dark",
+      "dark:hover:text-dawn-hover-dark dark:hover:border-dawn-hover-dark disabled:text-natural-disabled-light",
+      "disabled:border-natural-disabled-light dark:disabled:text-natural-disabled-dark dark:disabled:border-natural-disabled-dark",
+      indicator &&
+        "[&>.indicator]:bg-dawn-indicator-alt-light dark:[&>.indicator]:bg-dawn-indicator-dark"
     ]
   end
 
   defp color_variant("outline", "silver", indicator) do
     [
-      "bg-transparent text-[#868686] border-[#868686] hover:text-[#727272]",
-      "hover:border-[#727272] dark:text-[#A6A6A6] dark:border-[#A6A6A6]",
-      "dark:hover:text-[#BBBBBB] dark:hover:border-[#BBBBBB] disabled:text-[#DDDDDD]",
-      "disabled:border-[#DDDDDD] dark:disabled:text-[#727272] dark:disabled:border-[#727272]",
-      indicator && "[&>.indicator]:bg-[#5E5E5E] dark:[&>.indicator]:bg-[#DDDDDD]"
+      "bg-transparent text-silver-light border-silver-light hover:text-silver-hover-light",
+      "hover:border-silver-hover-light dark:text-silver-dark dark:border-silver-dark",
+      "dark:hover:text-silver-hover-dark dark:hover:border-silver-hover-dark disabled:text-natural-disabled-light",
+      "disabled:border-natural-disabled-light dark:disabled:text-natural-disabled-dark dark:disabled:border-natural-disabled-dark",
+      indicator &&
+        "[&>.indicator]:bg-silver-indicator-alt-light dark:[&>.indicator]:bg-silver-indicator-dark"
     ]
   end
 
   defp color_variant("transparent", "natural", indicator) do
     [
-      "bg-transparent text-[#4B4B4B] hover:text-[#282828]",
-      "dark:text-[#DDDDDD] dark:hover:text-[#E8E8E8]",
-      "disabled:text-[#DDDDDD] dark:disabled:text-[#727272]",
+      "bg-transparent text-natural-light hover:text-natural-hover-light",
+      "dark:text-natural-dark dark:hover:text-natural-hover-dark",
+      "disabled:text-natural-disabled-light dark:disabled:text-natural-disabled-dark",
       indicator && "[&>.indicator]:bg-black dark:[&>.indicator]:bg-white"
     ]
   end
 
   defp color_variant("transparent", "primary", indicator) do
     [
-      "bg-transparent text-[#007F8C] hover:text-[#016974]",
-      "dark:text-[#01B8CA] dark:hover:text-[#77D5E3]",
-      "disabled:text-[#DDDDDD] dark:disabled:text-[#727272]",
-      indicator && "[&>.indicator]:bg-[#1A535A] dark:[&>.indicator]:bg-[#B0E7EF]"
+      "bg-transparent text-primary-light hover:text-primary-hover-light",
+      "dark:text-primary-dark dark:hover:text-primary-hover-dark",
+      "disabled:text-natural-disabled-light dark:disabled:text-natural-disabled-dark",
+      indicator &&
+        "[&>.indicator]:bg-primary-indicator-light dark:[&>.indicator]:bg-primary-indicator-dark"
     ]
   end
 
   defp color_variant("transparent", "secondary", indicator) do
     [
-      "bg-transparent text-[#266EF1] hover:text-[#175BCC]",
-      "dark:text-[#6DAAFB] dark:hover:text-[#A9C9FF]",
-      "disabled:text-[#DDDDDD] dark:disabled:text-[#727272]",
-      indicator && "[&>.indicator]:bg-[#1948A3] dark:[&>.indicator]:bg-[#CDDEFF]"
+      "bg-transparent text-secondary-light hover:text-secondary-hover-light",
+      "dark:text-secondary-dark dark:hover:text-secondary-hover-dark",
+      "disabled:text-natural-disabled-light dark:disabled:text-natural-disabled-dark",
+      indicator &&
+        "[&>.indicator]:bg-secondary-indicator-light dark:[&>.indicator]:bg-secondary-indicator-dark"
     ]
   end
 
   defp color_variant("transparent", "success", indicator) do
     [
-      "bg-transparent text-[#0E8345] hover:text-[#166C3B]",
-      "dark:text-[#06C167] dark:hover:text-[#7FD99A]",
-      "disabled:text-[#DDDDDD] dark:disabled:text-[#727272]",
-      indicator && "[&>.indicator]:bg-[#0D572D] dark:[&>.indicator]:bg-[#B1EAC2]"
+      "bg-transparent text-success-light hover:text-success-hover-light",
+      "dark:text-success-dark dark:hover:text-success-hover-dark",
+      "disabled:text-natural-disabled-light dark:disabled:text-natural-disabled-dark",
+      indicator &&
+        "[&>.indicator]:bg-success-indicator-alt-light dark:[&>.indicator]:bg-success-indicator-dark"
     ]
   end
 
   defp color_variant("transparent", "warning", indicator) do
     [
-      "bg-transparent text-[#CA8D01] hover:text-[#CA8D01]",
-      "dark:text-[#FDC034] dark:hover:text-[#FDD067]",
-      "disabled:text-[#DDDDDD] dark:disabled:text-[#727272]",
-      indicator && "[&>.indicator]:bg-[#654600] dark:[&>.indicator]:bg-[#FEDF99]"
+      "bg-transparent text-warning-light hover:text-warning-hover-light",
+      "dark:text-warning-dark dark:hover:text-warning-hover-dark",
+      "disabled:text-natural-disabled-light dark:disabled:text-natural-disabled-dark",
+      indicator &&
+        "[&>.indicator]:bg-warning-indicator-alt-light dark:[&>.indicator]:bg-warning-indicator-dark"
     ]
   end
 
   defp color_variant("transparent", "danger", indicator) do
     [
-      "bg-transparent text-[#DE1135] hover:text-[#BB032A]",
-      "dark:text-[#FC7F79] dark:hover:text-[#FFB2AB]",
-      "disabled:text-[#DDDDDD] dark:disabled:text-[#727272]",
-      indicator && "[&>.indicator]:bg-[#950F22] dark:[&>.indicator]:bg-[#FFD2CD]"
+      "bg-transparent text-danger-light hover:text-danger-hover-light",
+      "dark:text-danger-dark dark:hover:text-danger-hover-dark",
+      "disabled:text-natural-disabled-light dark:disabled:text-natural-disabled-dark",
+      indicator &&
+        "[&>.indicator]:bg-danger-indicator-alt-light dark:[&>.indicator]:bg-danger-indicator-dark"
     ]
   end
 
   defp color_variant("transparent", "info", indicator) do
     [
-      "bg-transparent text-[#0B84BA] hover:text-[#08638C]",
-      "dark:text-[#3EB7ED] dark:hover:text-[#6EC9F2]",
-      "disabled:text-[#DDDDDD] dark:disabled:text-[#727272]",
-      indicator && "[&>.indicator]:bg-[#06425D] dark:[&>.indicator]:bg-[#9FDBF6]"
+      "bg-transparent text-info-light hover:text-info-hover-light",
+      "dark:text-info-dark dark:hover:text-info-hover-dark",
+      "disabled:text-natural-disabled-light dark:disabled:text-natural-disabled-dark",
+      indicator &&
+        "[&>.indicator]:bg-info-indicator-alt-light dark:[&>.indicator]:bg-info-indicator-dark"
     ]
   end
 
   defp color_variant("transparent", "misc", indicator) do
     [
-      "bg-transparent text-[#8750C5] hover:text-[#653C94]",
-      "dark:text-[#BA83F9] dark:hover:text-[#CBA2FA]",
-      "disabled:text-[#DDDDDD] dark:disabled:text-[#727272]",
-      indicator && "[&>.indicator]:bg-[#442863] dark:[&>.indicator]:bg-[#DDC1FC]"
+      "bg-transparent text-misc-light hover:text-misc-hover-light",
+      "dark:text-misc-dark dark:hover:text-misc-hover-dark",
+      "disabled:text-natural-disabled-light dark:disabled:text-natural-disabled-dark",
+      indicator &&
+        "[&>.indicator]:bg-misc-indicator-alt-light dark:[&>.indicator]:bg-misc-indicator-dark"
     ]
   end
 
   defp color_variant("transparent", "dawn", indicator) do
     [
-      "bg-transparent text-[#A86438] hover:text-[#7E4B2A]",
-      "dark:text-[#DB976B] dark:hover:text-[#E4B190]",
-      "disabled:text-[#DDDDDD] dark:disabled:text-[#727272]",
-      indicator && "[&>.indicator]:bg-[#54321C] dark:[&>.indicator]:bg-[#EDCBB5]"
+      "bg-transparent text-dawn-light hover:text-dawn-hover-light",
+      "dark:text-dawn-dark dark:hover:text-dawn-hover-dark",
+      "disabled:text-natural-disabled-light dark:disabled:text-natural-disabled-dark",
+      indicator &&
+        "[&>.indicator]:bg-dawn-indicator-alt-light dark:[&>.indicator]:bg-dawn-indicator-dark"
     ]
   end
 
   defp color_variant("transparent", "silver", indicator) do
     [
-      "bg-transparent text-[#868686] hover:text-[#727272]",
-      "dark:text-[#A6A6A6] dark:hover:text-[#BBBBBB]",
-      "disabled:text-[#DDDDDD] dark:disabled:text-[#727272]",
-      indicator && "[&>.indicator]:bg-[#5E5E5E] dark:[&>.indicator]:bg-[#DDDDDD]"
+      "bg-transparent text-silver-light hover:text-silver-hover-light",
+      "dark:text-silver-dark dark:hover:text-silver-hover-dark",
+      "disabled:text-natural-disabled-light dark:disabled:text-natural-disabled-dark",
+      indicator &&
+        "[&>.indicator]:bg-silver-indicator-alt-light dark:[&>.indicator]:bg-silver-indicator-dark"
     ]
   end
 
   defp color_variant("subtle", "natural", indicator) do
     [
-      "bg-transparent text-[#4B4B4B] hover:text-[#282828] hover:bg-[#F3F3F3]",
-      "dark:text-[#DDDDDD] dark:hover:text-[#E8E8E8] dark:hover:bg-[#4B4B4B]",
-      "disabled:text-[#DDDDDD] dark:disabled:text-[#727272]",
+      "bg-transparent text-natural-light hover:text-natural-hover-light hover:bg-natural-bg-light",
+      "dark:text-natural-dark dark:hover:text-natural-hover-dark dark:hover:bg-natural-bg-dark",
+      "disabled:text-natural-disabled-light dark:disabled:text-natural-disabled-dark",
       "disabled:hover:bg-transparent dark:disabled:hover:bg-transparent",
       indicator && "[&>.indicator]:bg-black dark:[&>.indicator]:bg-white"
     ]
@@ -1030,301 +1059,328 @@ defmodule CommunityDemoWeb.Components.Button do
 
   defp color_variant("subtle", "primary", indicator) do
     [
-      "bg-transparent text-[#007F8C] hover:text-[#016974] hover:bg-[#E2F8FB]",
-      "dark:text-[#01B8CA] dark:hover:text-[#77D5E3] dark:hover:bg-[#002D33]",
-      "disabled:text-[#DDDDDD] dark:disabled:text-[#727272]",
+      "bg-transparent text-primary-light hover:text-primary-hover-light hover:bg-primary-bordered-bg-light",
+      "dark:text-primary-dark dark:hover:text-primary-hover-dark dark:hover:bg-primary-bordered-bg-dark",
+      "disabled:text-natural-disabled-light dark:disabled:text-natural-disabled-dark",
       "disabled:hover:bg-transparent dark:disabled:hover:bg-transparent",
-      indicator && "[&>.indicator]:bg-[#1A535A] dark:[&>.indicator]:bg-[#B0E7EF]"
+      indicator &&
+        "[&>.indicator]:bg-primary-indicator-light dark:[&>.indicator]:bg-primary-indicator-dark"
     ]
   end
 
   defp color_variant("subtle", "secondary", indicator) do
     [
-      "bg-transparent text-[#266EF1] hover:text-[#175BCC] hover:bg-[#EFF4FE]",
-      "dark:text-[#6DAAFB] dark:hover:text-[#A9C9FF] dark:hover:bg-[#002661]",
-      "disabled:text-[#DDDDDD] dark:disabled:text-[#727272]",
+      "bg-transparent text-secondary-light hover:text-secondary-hover-light hover:bg-secondary-bordered-bg-light",
+      "dark:text-secondary-dark dark:hover:text-secondary-hover-dark dark:hover:bg-secondary-bordered-bg-dark",
+      "disabled:text-natural-disabled-light dark:disabled:text-natural-disabled-dark",
       "disabled:hover:bg-transparent dark:disabled:hover:bg-transparent",
-      indicator && "[&>.indicator]:bg-[#1948A3] dark:[&>.indicator]:bg-[#CDDEFF]"
+      indicator &&
+        "[&>.indicator]:bg-secondary-indicator-light dark:[&>.indicator]:bg-secondary-indicator-dark"
     ]
   end
 
   defp color_variant("subtle", "success", indicator) do
     [
-      "bg-transparent text-[#0E8345] hover:text-[#166C3B] hover:bg-[#EAF6ED]",
-      "dark:text-[#06C167] dark:hover:text-[#7FD99A] dark:hover:bg-[#002F14]",
-      "disabled:text-[#DDDDDD] dark:disabled:text-[#727272]",
+      "bg-transparent text-success-light hover:text-success-hover-light hover:bg-success-bordered-bg-light",
+      "dark:text-success-dark dark:hover:text-success-hover-dark dark:hover:bg-success-bordered-bg-dark",
+      "disabled:text-natural-disabled-light dark:disabled:text-natural-disabled-dark",
       "disabled:hover:bg-transparent dark:disabled:hover:bg-transparent",
-      indicator && "[&>.indicator]:bg-[#0D572D] dark:[&>.indicator]:bg-[#B1EAC2]"
+      indicator &&
+        "[&>.indicator]:bg-success-indicator-alt-light dark:[&>.indicator]:bg-success-indicator-dark"
     ]
   end
 
   defp color_variant("subtle", "warning", indicator) do
     [
-      "bg-transparent text-[#CA8D01] hover:text-[#CA8D01] hover:bg-[#FFF7E6]",
-      "dark:text-[#FDC034] dark:hover:text-[#FDD067] dark:hover:bg-[#322300]",
-      "disabled:text-[#DDDDDD] dark:disabled:text-[#727272]",
+      "bg-transparent text-warning-light hover:text-warning-hover-light hover:bg-warning-bordered-bg-light",
+      "dark:text-warning-dark dark:hover:text-warning-hover-dark dark:hover:bg-warning-bordered-bg-dark",
+      "disabled:text-natural-disabled-light dark:disabled:text-natural-disabled-dark",
       "disabled:hover:bg-transparent dark:disabled:hover:bg-transparent",
-      indicator && "[&>.indicator]:bg-[#654600] dark:[&>.indicator]:bg-[#FEDF99]"
+      indicator &&
+        "[&>.indicator]:bg-warning-indicator-alt-light dark:[&>.indicator]:bg-warning-indicator-dark"
     ]
   end
 
   defp color_variant("subtle", "danger", indicator) do
     [
-      "bg-transparent text-[#DE1135] hover:text-[#BB032A] hover:bg-[#FFF0EE]",
-      "dark:text-[#FC7F79] dark:hover:text-[#FFB2AB] dark:hover:bg-[#520810]",
-      "disabled:text-[#DDDDDD] dark:disabled:text-[#727272]",
+      "bg-transparent text-danger-light hover:text-danger-hover-light hover:bg-danger-bordered-bg-light",
+      "dark:text-danger-dark dark:hover:text-danger-hover-dark dark:hover:bg-danger-bordered-bg-dark",
+      "disabled:text-natural-disabled-light dark:disabled:text-natural-disabled-dark",
       "disabled:hover:bg-transparent dark:disabled:hover:bg-transparent",
-      indicator && "[&>.indicator]:bg-[#950F22] dark:[&>.indicator]:bg-[#FFD2CD]"
+      indicator &&
+        "[&>.indicator]:bg-danger-indicator-alt-light dark:[&>.indicator]:bg-danger-indicator-dark"
     ]
   end
 
   defp color_variant("subtle", "info", indicator) do
     [
-      "bg-transparent text-[#0B84BA] hover:text-[#08638C] hover:bg-[#E7F6FD]",
-      "dark:text-[#3EB7ED] dark:hover:text-[#6EC9F2] dark:hover:bg-[#03212F]",
-      "disabled:text-[#DDDDDD] dark:disabled:text-[#727272]",
+      "bg-transparent text-info-light hover:text-info-hover-light hover:bg-info-bordered-bg-light",
+      "dark:text-info-dark dark:hover:text-info-hover-dark dark:hover:bg-info-bordered-bg-dark",
+      "disabled:text-natural-disabled-light dark:disabled:text-natural-disabled-dark",
       "disabled:hover:bg-transparent dark:disabled:hover:bg-transparent",
-      indicator && "[&>.indicator]:bg-[#06425D] dark:[&>.indicator]:bg-[#9FDBF6]"
+      indicator &&
+        "[&>.indicator]:bg-info-indicator-alt-light dark:[&>.indicator]:bg-info-indicator-dark"
     ]
   end
 
   defp color_variant("subtle", "misc", indicator) do
     [
-      "bg-transparent text-[#8750C5] hover:text-[#653C94] hover:bg-[#F6F0FE]",
-      "dark:text-[#BA83F9] dark:hover:text-[#CBA2FA] dark:hover:bg-[#221431]",
-      "disabled:text-[#DDDDDD] dark:disabled:text-[#727272]",
+      "bg-transparent text-misc-light hover:text-misc-hover-light hover:bg-misc-bordered-bg-light",
+      "dark:text-misc-dark dark:hover:text-misc-hover-dark dark:hover:bg-misc-bordered-bg-dark",
+      "disabled:text-natural-disabled-light dark:disabled:text-natural-disabled-dark",
       "disabled:hover:bg-transparent dark:disabled:hover:bg-transparent",
-      indicator && "[&>.indicator]:bg-[#442863] dark:[&>.indicator]:bg-[#DDC1FC]"
+      indicator &&
+        "[&>.indicator]:bg-misc-indicator-alt-light dark:[&>.indicator]:bg-misc-indicator-dark"
     ]
   end
 
   defp color_variant("subtle", "dawn", indicator) do
     [
-      "bg-transparent text-[#A86438] hover:text-[#7E4B2A] hover:bg-[#FBF2ED]",
-      "dark:text-[#DB976B] dark:hover:text-[#E4B190] dark:hover:bg-[#2A190E]",
-      "disabled:text-[#DDDDDD] dark:disabled:text-[#727272]",
+      "bg-transparent text-dawn-light hover:text-dawn-hover-light hover:bg-dawn-bordered-bg-light",
+      "dark:text-dawn-dark dark:hover:text-dawn-hover-dark dark:hover:bg-dawn-bordered-bg-dark",
+      "disabled:text-natural-disabled-light dark:disabled:text-natural-disabled-dark",
       "disabled:hover:bg-transparent dark:disabled:hover:bg-transparent",
-      indicator && "[&>.indicator]:bg-[#54321C] dark:[&>.indicator]:bg-[#EDCBB5]"
+      indicator &&
+        "[&>.indicator]:bg-dawn-indicator-alt-light dark:[&>.indicator]:bg-dawn-indicator-dark"
     ]
   end
 
   defp color_variant("subtle", "silver", indicator) do
     [
-      "bg-transparent text-[#868686] hover:text-[#727272] hover:bg-[#F3F3F3]",
-      "dark:text-[#A6A6A6] dark:hover:text-[#BBBBBB] dark:hover:bg-[#4B4B4B]",
-      "disabled:text-[#DDDDDD] dark:disabled:text-[#727272]",
+      "bg-transparent text-silver-light hover:text-silver-hover-light hover:bg-silver-bordered-bg-light",
+      "dark:text-silver-dark dark:hover:text-silver-hover-dark dark:hover:bg-silver-bordered-bg-dark",
+      "disabled:text-natural-disabled-light dark:disabled:text-natural-disabled-dark",
       "disabled:hover:bg-transparent dark:disabled:hover:bg-transparent",
-      indicator && "[&>.indicator]:bg-[#5E5E5E] dark:[&>.indicator]:bg-[#DDDDDD]"
+      indicator &&
+        "[&>.indicator]:bg-silver-indicator-alt-light dark:[&>.indicator]:bg-silver-indicator-dark"
     ]
   end
 
   defp color_variant("bordered", "natural", indicator) do
     [
-      "bg-white dark:bg-[#282828] text-[#4B4B4B] border-[#4B4B4B] hover:text-[#282828]",
-      "hover:border-[#282828] dark:text-[#DDDDDD] dark:border-[#DDDDDD]",
-      "dark:hover:text-[#E8E8E8] dark:hover:border-[#E8E8E8] disabled:text-[#DDDDDD]",
-      "disabled:border-[#DDDDDD] dark:disabled:text-[#727272] dark:disabled:border-[#727272]",
+      "bg-white dark:bg-bordered-dark-bg text-natural-light border-natural-light hover:text-natural-hover-light",
+      "hover:border-natural-hover-light dark:text-natural-dark dark:border-natural-dark",
+      "dark:hover:text-natural-hover-dark dark:hover:border-natural-hover-dark disabled:text-natural-disabled-light",
+      "disabled:border-natural-disabled-light dark:disabled:text-natural-disabled-dark dark:disabled:border-natural-disabled-dark",
       indicator && "[&>.indicator]:bg-black dark:[&>.indicator]:bg-white"
     ]
   end
 
   defp color_variant("bordered", "primary", indicator) do
     [
-      "bg-white dark:bg-[#282828] text-[#007F8C] border-[#007F8C] hover:text-[#016974]",
-      "hover:border-[#016974] dark:text-[#01B8CA] dark:border-[#01B8CA]",
-      "dark:hover:text-[#77D5E3] dark:hover:border-[#77D5E3] disabled:text-[#DDDDDD]",
-      "disabled:border-[#DDDDDD] dark:disabled:text-[#727272] dark:disabled:border-[#727272]",
-      indicator && "[&>.indicator]:bg-[#1A535A] dark:[&>.indicator]:bg-[#B0E7EF]"
+      "bg-white dark:bg-bordered-dark-bg text-primary-light border-primary-light hover:text-primary-hover-light",
+      "hover:border-primary-hover-light dark:text-primary-dark dark:border-primary-dark",
+      "dark:hover:text-primary-hover-dark dark:hover:border-primary-hover-dark disabled:text-natural-disabled-light",
+      "disabled:border-natural-disabled-light dark:disabled:text-natural-disabled-dark dark:disabled:border-natural-disabled-dark",
+      indicator &&
+        "[&>.indicator]:bg-primary-indicator-light dark:[&>.indicator]:bg-primary-indicator-dark"
     ]
   end
 
   defp color_variant("bordered", "secondary", indicator) do
     [
-      "bg-white dark:bg-[#282828] text-[#266EF1] border-[#266EF1] hover:text-[#175BCC]",
-      "hover:border-[#175BCC] dark:text-[#6DAAFB] dark:border-[#6DAAFB]",
-      "dark:hover:text-[#A9C9FF] dark:hover:border-[#A9C9FF] disabled:text-[#DDDDDD]",
-      " disabled:border-[#DDDDDD] dark:disabled:text-[#727272] dark:disabled:border-[#727272]",
-      indicator && "[&>.indicator]:bg-[#1948A3] dark:[&>.indicator]:bg-[#CDDEFF]"
+      "bg-white dark:bg-bordered-dark-bg text-secondary-light border-secondary-light hover:text-secondary-hover-light",
+      "hover:border-secondary-hover-light dark:text-secondary-dark dark:border-secondary-dark",
+      "dark:hover:text-secondary-hover-dark dark:hover:border-secondary-hover-dark disabled:text-natural-disabled-light",
+      "disabled:border-natural-disabled-light dark:disabled:text-natural-disabled-dark dark:disabled:border-natural-disabled-dark",
+      indicator &&
+        "[&>.indicator]:bg-secondary-indicator-light dark:[&>.indicator]:bg-secondary-indicator-dark"
     ]
   end
 
   defp color_variant("bordered", "success", indicator) do
     [
-      "bg-white dark:bg-[#282828] text-[#0E8345] border-[#0E8345] hover:text-[#166C3B]",
-      "hover:border-[#166C3B] dark:text-[#06C167] dark:border-[#06C167]",
-      "dark:hover:text-[#7FD99A] dark:hover:border-[#7FD99A] disabled:text-[#DDDDDD]",
-      "disabled:border-[#DDDDDD] dark:disabled:text-[#727272] dark:disabled:border-[#727272]",
-      indicator && "[&>.indicator]:bg-[#0D572D] dark:[&>.indicator]:bg-[#B1EAC2]"
+      "bg-white dark:bg-bordered-dark-bg text-success-light border-success-light hover:text-success-hover-light",
+      "hover:border-success-hover-light dark:text-success-dark dark:border-success-dark",
+      "dark:hover:text-success-hover-dark dark:hover:border-success-hover-dark disabled:text-natural-disabled-light",
+      "disabled:border-natural-disabled-light dark:disabled:text-natural-disabled-dark dark:disabled:border-natural-disabled-dark",
+      indicator &&
+        "[&>.indicator]:bg-success-indicator-alt-light dark:[&>.indicator]:bg-success-indicator-dark"
     ]
   end
 
   defp color_variant("bordered", "warning", indicator) do
     [
-      "bg-white dark:bg-[#282828] text-[#CA8D01] border-[#CA8D01] hover:text-[#976A01]",
-      "hover:border-[#976A01] dark:text-[#FDC034] dark:border-[#FDC034]",
-      "dark:hover:text-[#FDD067] dark:hover:border-[#FDD067] disabled:text-[#DDDDDD]",
-      "disabled:border-[#DDDDDD] dark:disabled:text-[#727272] dark:disabled:border-[#727272]",
-      indicator && "[&>.indicator]:bg-[#654600] dark:[&>.indicator]:bg-[#FEDF99]"
+      "bg-white dark:bg-bordered-dark-bg text-warning-light border-warning-light hover:text-warning-hover-light",
+      "hover:border-warning-hover-light dark:text-warning-dark dark:border-warning-dark",
+      "dark:hover:text-warning-hover-dark dark:hover:border-warning-hover-dark disabled:text-natural-disabled-light",
+      "disabled:border-natural-disabled-light dark:disabled:text-natural-disabled-dark dark:disabled:border-natural-disabled-dark",
+      indicator &&
+        "[&>.indicator]:bg-warning-indicator-alt-light dark:[&>.indicator]:bg-warning-indicator-dark"
     ]
   end
 
   defp color_variant("bordered", "danger", indicator) do
     [
-      "bg-white dark:bg-[#282828] text-[#DE1135] border-[#DE1135] hover:text-[#BB032A]",
-      "hover:border-[#BB032A] dark:text-[#FC7F79] dark:border-[#FC7F79]",
-      "dark:hover:text-[#FFB2AB] dark:hover:border-[#FFB2AB] disabled:text-[#DDDDDD]",
-      "disabled:border-[#DDDDDD] dark:disabled:text-[#727272] dark:disabled:border-[#727272]",
-      indicator && "[&>.indicator]:bg-[#950F22] dark:[&>.indicator]:bg-[#FFD2CD]"
+      "bg-white dark:bg-bordered-dark-bg text-danger-light border-danger-light hover:text-danger-hover-light",
+      "hover:border-danger-hover-light dark:text-danger-dark dark:border-danger-dark",
+      "dark:hover:text-danger-hover-dark dark:hover:border-danger-hover-dark disabled:text-natural-disabled-light",
+      "disabled:border-natural-disabled-light dark:disabled:text-natural-disabled-dark dark:disabled:border-natural-disabled-dark",
+      indicator &&
+        "[&>.indicator]:bg-danger-indicator-alt-light dark:[&>.indicator]:bg-danger-indicator-dark"
     ]
   end
 
   defp color_variant("bordered", "info", indicator) do
     [
-      "bg-white dark:bg-[#282828] text-[#0B84BA] border-[#0B84BA] hover:text-[#0B84BA]",
-      "hover:border-[#0B84BA] dark:text-[#3EB7ED] dark:border-[#3EB7ED]",
-      "dark:hover:text-[#6EC9F2] dark:hover:border-[#6EC9F2] disabled:text-[#DDDDDD]",
-      "disabled:border-[#DDDDDD] dark:disabled:text-[#727272] dark:disabled:border-[#727272]",
-      indicator && "[&>.indicator]:bg-[#06425D] dark:[&>.indicator]:bg-[#9FDBF6]"
+      "bg-white dark:bg-bordered-dark-bg text-info-light border-info-light hover:text-info-hover-light",
+      "hover:border-info-light dark:text-info-dark dark:border-info-dark",
+      "dark:hover:text-info-hover-dark dark:hover:border-info-hover-dark disabled:text-natural-disabled-light",
+      "disabled:border-natural-disabled-light dark:disabled:text-natural-disabled-dark dark:disabled:border-natural-disabled-dark",
+      indicator &&
+        "[&>.indicator]:bg-info-indicator-alt-light dark:[&>.indicator]:bg-info-indicator-dark"
     ]
   end
 
   defp color_variant("bordered", "misc", indicator) do
     [
-      "bg-white dark:bg-[#282828] text-[#8750C5] border-[#8750C5] hover:text-[#653C94]",
-      "hover:border-[#653C94] dark:text-[#BA83F9] dark:border-[#BA83F9]",
-      "dark:hover:text-[#CBA2FA] dark:hover:border-[#CBA2FA] disabled:text-[#DDDDDD]",
-      "disabled:border-[#DDDDDD] dark:disabled:text-[#727272] dark:disabled:border-[#727272]",
-      indicator && "[&>.indicator]:bg-[#442863] dark:[&>.indicator]:bg-[#DDC1FC]"
+      "bg-white dark:bg-bordered-dark-bg text-misc-light border-misc-light hover:text-misc-hover-light",
+      "hover:border-misc-hover-light dark:text-misc-dark dark:border-misc-dark",
+      "dark:hover:text-misc-hover-dark dark:hover:border-misc-hover-dark disabled:text-natural-disabled-light",
+      "disabled:border-natural-disabled-light dark:disabled:text-natural-disabled-dark dark:disabled:border-natural-disabled-dark",
+      indicator &&
+        "[&>.indicator]:bg-misc-indicator-alt-light dark:[&>.indicator]:bg-misc-indicator-dark"
     ]
   end
 
   defp color_variant("bordered", "dawn", indicator) do
     [
-      "bg-white dark:bg-[#282828] text-[#A86438] border-[#A86438] hover:text-[#7E4B2A]",
-      "hover:border-[#7E4B2A] dark:text-[#DB976B] dark:border-[#DB976B]",
-      "dark:hover:text-[#E4B190] dark:hover:border-[#E4B190] disabled:text-[#DDDDDD]",
-      "disabled:border-[#DDDDDD] dark:disabled:text-[#727272] dark:disabled:border-[#727272]",
-      indicator && "[&>.indicator]:bg-[#54321C] dark:[&>.indicator]:bg-[#EDCBB5]"
+      "bg-white dark:bg-bordered-dark-bg text-dawn-light border-dawn-light hover:text-dawn-hover-light",
+      "hover:border-dawn-hover-light dark:text-dawn-dark dark:border-dawn-dark",
+      "dark:hover:text-dawn-hover-dark dark:hover:border-dawn-hover-dark disabled:text-natural-disabled-light",
+      "disabled:border-natural-disabled-light dark:disabled:text-natural-disabled-dark dark:disabled:border-natural-disabled-dark",
+      indicator &&
+        "[&>.indicator]:bg-dawn-indicator-alt-light dark:[&>.indicator]:bg-dawn-indicator-dark"
     ]
   end
 
   defp color_variant("bordered", "silver", indicator) do
     [
-      "bg-white dark:bg-[#282828] text-[#868686] border-[#868686] hover:text-[#727272]",
-      "hover:border-[#727272] dark:text-[#A6A6A6] dark:border-[#A6A6A6]",
-      "dark:hover:text-[#BBBBBB] dark:hover:border-[#BBBBBB] disabled:text-[#DDDDDD]",
-      "disabled:border-[#DDDDDD] dark:disabled:text-[#727272] dark:disabled:border-[#727272]",
-      indicator && "[&>.indicator]:bg-[#5E5E5E] dark:[&>.indicator]:bg-[#DDDDDD]"
+      "bg-white dark:bg-bordered-dark-bg text-silver-light border-silver-light hover:text-silver-hover-light",
+      "hover:border-silver-hover-light dark:text-silver-dark dark:border-silver-dark",
+      "dark:hover:text-silver-hover-dark dark:hover:border-silver-hover-dark disabled:text-natural-disabled-light",
+      "disabled:border-natural-disabled-light dark:disabled:text-natural-disabled-dark dark:disabled:border-natural-disabled-dark",
+      indicator &&
+        "[&>.indicator]:bg-silver-indicator-alt-light dark:[&>.indicator]:bg-silver-indicator-dark"
     ]
   end
 
   defp color_variant("shadow", "natural", indicator) do
     [
-      "bg-[#4B4B4B] text-white hover:bg-[#282828] dark:bg-[#DDDDDD]",
-      "dark:text-black dark:hover:bg-[#E8E8E8] disabled:bg-[#F3F3F3] disabled:text-[#BBBBBB]",
-      "dark:disabled:bg-[#4B4B4B] dark:disabled:text-[#868686]",
-      "shadow-[0px_4px_6px_-4px_rgba(134,134,134,0.5)] shadow-[0px_10px_15px_-3px_rgba(134,134,134,0.5)] dark:shadow-none",
+      "bg-natural-light text-white hover:bg-natural-hover-light dark:bg-natural-dark",
+      "dark:text-black dark:hover:bg-natural-hover-dark disabled:bg-disabled-bg-light disabled:text-disabled-text-light",
+      "dark:disabled:bg-disabled-bg-dark dark:disabled:text-disabled-text-dark",
+      "shadow-[0px_4px_6px_-4px_var(--color-shadow-natural)] shadow-[0px_10px_15px_-3px_var(--color-shadow-natural)] dark:shadow-none",
       indicator && "[&>.indicator]:bg-white dark:[&>.indicator]:bg-black"
     ]
   end
 
   defp color_variant("shadow", "primary", indicator) do
     [
-      "bg-[#007F8C] text-white hover:bg-[#016974] dark:bg-[#01B8CA]",
-      "dark:text-black dark:hover:bg-[#77D5E3] disabled:bg-[#F3F3F3] disabled:text-[#BBBBBB]",
-      "dark:disabled:bg-[#4B4B4B] dark:disabled:text-[#868686]",
-      "shadow-[0px_4px_6px_-4px_rgba(0,149,164,0.5)] shadow-[0px_10px_15px_-3px_rgba(0,149,164,0.5)] dark:shadow-none",
-      indicator && "[&>.indicator]:bg-[#1A535A] dark:[&>.indicator]:bg-[#B0E7EF]"
+      "bg-primary-light text-white hover:bg-primary-hover-light dark:bg-primary-dark",
+      "dark:text-black dark:hover:bg-primary-hover-dark disabled:bg-disabled-bg-light disabled:text-disabled-text-light",
+      "dark:disabled:bg-disabled-bg-dark dark:disabled:text-disabled-text-dark",
+      "shadow-[0px_4px_6px_-4px_var(--color-shadow-primary)] shadow-[0px_10px_15px_-3px_var(--color-shadow-primary)] dark:shadow-none",
+      indicator &&
+        "[&>.indicator]:bg-primary-indicator-light dark:[&>.indicator]:bg-primary-indicator-dark"
     ]
   end
 
   defp color_variant("shadow", "secondary", indicator) do
     [
-      "bg-[#266EF1] text-white hover:bg-[#175BCC] dark:bg-[#6DAAFB]",
-      "dark:text-black dark:hover:bg-[#A9C9FF] disabled:bg-[#F3F3F3] disabled:text-[#BBBBBB]",
-      "dark:disabled:bg-[#4B4B4B] dark:disabled:text-[#868686]",
-      "shadow-[0px_4px_6px_-4px_rgba(6,139,238,0.5)] shadow-[0px_10px_15px_-3px_rgba(6,139,238,0.5)] dark:shadow-none",
-      indicator && "[&>.indicator]:bg-[#1948A3] dark:[&>.indicator]:bg-[#CDDEFF]"
+      "bg-secondary-light text-white hover:bg-secondary-hover-light dark:bg-secondary-dark",
+      "dark:text-black dark:hover:bg-secondary-hover-dark disabled:bg-disabled-bg-light disabled:text-disabled-text-light",
+      "dark:disabled:bg-disabled-bg-dark dark:disabled:text-disabled-text-dark",
+      "shadow-[0px_4px_6px_-4px_var(--color-shadow-secondary)] shadow-[0px_10px_15px_-3px_var(--color-shadow-secondary)] dark:shadow-none",
+      indicator &&
+        "[&>.indicator]:bg-secondary-indicator-light dark:[&>.indicator]:bg-secondary-indicator-dark"
     ]
   end
 
   defp color_variant("shadow", "success", indicator) do
     [
-      "bg-[#0E8345] text-white hover:bg-[#166C3B] dark:bg-[#06C167]",
-      "dark:text-black dark:hover:bg-[#7FD99A] disabled:bg-[#F3F3F3] disabled:text-[#BBBBBB]",
-      "dark:disabled:bg-[#4B4B4B] dark:disabled:text-[#868686]",
-      "shadow-[0px_4px_6px_-4px_rgba(0,154,81,0.5)] shadow-[0px_10px_15px_-3px_rgba(0,154,81,0.5)] dark:shadow-none",
-      indicator && "[&>.indicator]:bg-[#047857] dark:[&>.indicator]:bg-[#B1EAC2]"
+      "bg-success-light text-white hover:bg-success-hover-light dark:bg-success-dark",
+      "dark:text-black dark:hover:bg-success-hover-dark disabled:bg-disabled-bg-light disabled:text-disabled-text-light",
+      "dark:disabled:bg-disabled-bg-dark dark:disabled:text-disabled-text-dark",
+      "shadow-[0px_4px_6px_-4px_var(--color-shadow-success)] shadow-[0px_10px_15px_-3px_var(--color-shadow-success)] dark:shadow-none",
+      indicator &&
+        "[&>.indicator]:bg-success-indicator-light dark:[&>.indicator]:bg-success-indicator-dark"
     ]
   end
 
   defp color_variant("shadow", "warning", indicator) do
     [
-      "bg-[#CA8D01] text-white hover:bg-[#976A01] dark:bg-[#FDC034]",
-      "dark:text-black dark:hover:bg-[#FDD067] disabled:bg-[#F3F3F3] disabled:text-[#BBBBBB]",
-      "dark:disabled:bg-[#4B4B4B] dark:disabled:text-[#868686]",
-      "shadow-[0px_4px_6px_-4px_rgba(252,176,1,0.5)] shadow-[0px_10px_15px_-3px_rgba(252,176,1,0.5)] dark:shadow-none",
-      indicator && "[&>.indicator]:bg-[#FF8B08] dark:[&>.indicator]:bg-[#FEDF99]"
+      "bg-warning-light text-white hover:bg-warning-hover-light dark:bg-warning-dark",
+      "dark:text-black dark:hover:bg-warning-hover-dark disabled:bg-disabled-bg-light disabled:text-disabled-text-light",
+      "dark:disabled:bg-disabled-bg-dark dark:disabled:text-disabled-text-dark",
+      "shadow-[0px_4px_6px_-4px_var(--color-shadow-warning)] shadow-[0px_10px_15px_-3px_var(--color-shadow-warning)] dark:shadow-none",
+      indicator &&
+        "[&>.indicator]:bg-warning-indicator-light dark:[&>.indicator]:bg-warning-indicator-dark"
     ]
   end
 
   defp color_variant("shadow", "danger", indicator) do
     [
-      "bg-[#DE1135] text-white hover:bg-[#BB032A] dark:bg-[#FC7F79]",
-      "dark:text-black dark:hover:bg-[#FFB2AB] disabled:bg-[#F3F3F3] disabled:text-[#BBBBBB]",
-      "dark:disabled:bg-[#4B4B4B] dark:disabled:text-[#868686]",
-      "shadow-[0px_4px_6px_-4px_rgba(248,52,70,0.5)] shadow-[0px_10px_15px_-3px_rgba(248,52,70,0.5)] dark:shadow-none",
-      indicator && "[&>.indicator]:bg-[#E73B3B] dark:[&>.indicator]:bg-[#FFD2CD]"
+      "bg-danger-light text-white hover:bg-danger-hover-light dark:bg-danger-dark",
+      "dark:text-black dark:hover:bg-danger-hover-dark disabled:bg-disabled-bg-light disabled:text-disabled-text-light",
+      "dark:disabled:bg-disabled-bg-dark dark:disabled:text-disabled-text-dark",
+      "shadow-[0px_4px_6px_-4px_var(--color-shadow-danger)] shadow-[0px_10px_15px_-3px_var(--color-shadow-danger)] dark:shadow-none",
+      indicator &&
+        "[&>.indicator]:bg-danger-indicator-light dark:[&>.indicator]:bg-danger-indicator-dark"
     ]
   end
 
   defp color_variant("shadow", "info", indicator) do
     [
-      "bg-[#0B84BA] text-white hover:bg-[#08638C] dark:bg-[#3EB7ED]",
-      "dark:text-black dark:hover:bg-[#6EC9F2] disabled:bg-[#F3F3F3] disabled:text-[#BBBBBB]",
-      "dark:disabled:bg-[#4B4B4B] dark:disabled:text-[#868686]",
-      "shadow-[0px_4px_6px_-4px_rgba(14,165,233,0.5)] shadow-[0px_10px_15px_-3px_rgba(14,165,233,0.5)] dark:shadow-none",
-      indicator && "[&>.indicator]:bg-[#004FC4] dark:[&>.indicator]:bg-[#9FDBF6]"
+      "bg-info-light text-white hover:bg-info-hover-light dark:bg-info-dark",
+      "dark:text-black dark:hover:bg-info-hover-dark disabled:bg-disabled-bg-light disabled:text-disabled-text-light",
+      "dark:disabled:bg-disabled-bg-dark dark:disabled:text-disabled-text-dark",
+      "shadow-[0px_4px_6px_-4px_var(--color-shadow-info)] shadow-[0px_10px_15px_-3px_var(--color-shadow-info)] dark:shadow-none",
+      indicator &&
+        "[&>.indicator]:bg-info-indicator-light dark:[&>.indicator]:bg-info-indicator-dark"
     ]
   end
 
   defp color_variant("shadow", "misc", indicator) do
     [
-      "bg-[#8750C5] text-white hover:bg-[#653C94] dark:bg-[#BA83F9]",
-      "dark:text-black dark:hover:bg-[#CBA2FA] disabled:bg-[#F3F3F3] disabled:text-[#BBBBBB]",
-      "dark:disabled:bg-[#4B4B4B] dark:disabled:text-[#868686]",
-      "shadow-[0px_4px_6px_-4px_rgba(169,100,247,0.5)] shadow-[0px_10px_15px_-3px_rgba(169,100,247,0.5)] dark:shadow-none",
-      indicator && "[&>.indicator]:bg-[#52059C] dark:[&>.indicator]:bg-[#DDC1FC]"
+      "bg-misc-light text-white hover:bg-misc-hover-light dark:bg-misc-dark",
+      "dark:text-black dark:hover:bg-misc-hover-dark disabled:bg-disabled-bg-light disabled:text-disabled-text-light",
+      "dark:disabled:bg-disabled-bg-dark dark:disabled:text-disabled-text-dark",
+      "shadow-[0px_4px_6px_-4px_var(--color-shadow-misc)] shadow-[0px_10px_15px_-3px_var(--color-shadow-misc)] dark:shadow-none",
+      indicator &&
+        "[&>.indicator]:bg-misc-indicator-light dark:[&>.indicator]:bg-misc-indicator-dark"
     ]
   end
 
   defp color_variant("shadow", "dawn", indicator) do
     [
-      "bg-[#A86438] text-white hover:bg-[#7E4B2A] dark:bg-[#DB976B]",
-      "dark:text-black dark:hover:bg-[#E4B190] disabled:bg-[#F3F3F3] disabled:text-[#BBBBBB]",
-      "dark:disabled:bg-[#4B4B4B] dark:disabled:text-[#868686]",
-      "shadow-[0px_4px_6px_-4px_rgba(210,125,70,0.5)] shadow-[0px_10px_15px_-3px_rgba(210,125,70,0.5)] dark:shadow-none",
-      indicator && "[&>.indicator]:bg-[#4D4137] dark:[&>.indicator]:bg-[#EDCBB5]"
+      "bg-dawn-light text-white hover:bg-dawn-hover-light dark:bg-dawn-dark",
+      "dark:text-black dark:hover:bg-dawn-hover-dark disabled:bg-disabled-bg-light disabled:text-disabled-text-light",
+      "dark:disabled:bg-disabled-bg-dark dark:disabled:text-disabled-text-dark",
+      "shadow-[0px_4px_6px_-4px_var(--color-shadow-dawn)] shadow-[0px_10px_15px_-3px_var(--color-shadow-dawn)] dark:shadow-none",
+      indicator &&
+        "[&>.indicator]:bg-dawn-indicator-light dark:[&>.indicator]:bg-dawn-indicator-dark"
     ]
   end
 
   defp color_variant("shadow", "silver", indicator) do
     [
-      "bg-[#868686] text-white hover:bg-[#727272] dark:bg-[#A6A6A6]",
-      "dark:text-black dark:hover:bg-[#BBBBBB] disabled:bg-[#F3F3F3] disabled:text-[#BBBBBB]",
-      "dark:disabled:bg-[#4B4B4B] dark:disabled:text-[#868686]",
-      "shadow-[0px_4px_6px_-4px_rgba(134,134,134,0.5)] shadow-[0px_10px_15px_-3px_rgba(134,134,134,0.5)] dark:shadow-none",
-      indicator && "[&>.indicator]:bg-[#707483] dark:[&>.indicator]:bg-[#DDDDDD]"
+      "bg-silver-light text-white hover:bg-silver-hover-light dark:bg-silver-dark",
+      "dark:text-black dark:hover:bg-silver-hover-dark disabled:bg-disabled-bg-light disabled:text-disabled-text-light",
+      "dark:disabled:bg-disabled-bg-dark dark:disabled:text-disabled-text-dark",
+      "shadow-[0px_4px_6px_-4px_var(--color-shadow-silver)] shadow-[0px_10px_15px_-3px_var(--color-shadow-silver)] dark:shadow-none",
+      indicator &&
+        "[&>.indicator]:bg-silver-indicator-light dark:[&>.indicator]:bg-silver-indicator-dark"
     ]
   end
 
   defp color_variant("inverted", "natural", indicator) do
     [
-      "bg-transparent text-[#4B4B4B] border-[#4B4B4B] hover:text-[#282828]",
-      "hover:border-[#282828] hover:bg-[#F3F3F3]",
-      "dark:text-[#DDDDDD] dark:border-[#DDDDDD] dark:hover:text-[#E8E8E8]",
-      "dark:hover:border-[#E8E8E8] dark:hover:bg-[#4B4B4B] disabled:text-[#DDDDDD]",
-      "disabled:border-[#DDDDDD] dark:disabled:text-[#727272] dark:disabled:border-[#727272]",
+      "bg-transparent text-natural-light border-natural-light hover:text-natural-hover-light",
+      "hover:border-natural-hover-light hover:bg-natural-bg-light",
+      "dark:text-natural-dark dark:border-natural-dark dark:hover:text-natural-hover-dark",
+      "dark:hover:border-natural-hover-dark dark:hover:bg-natural-bg-dark disabled:text-natural-disabled-light",
+      "disabled:border-natural-disabled-light dark:disabled:text-natural-disabled-dark dark:disabled:border-natural-disabled-dark",
       "disabled:hover:bg-transparent dark:disabled:hover:bg-transparent",
       indicator && "[&>.indicator]:bg-black dark:[&>.indicator]:bg-white"
     ]
@@ -1332,120 +1388,129 @@ defmodule CommunityDemoWeb.Components.Button do
 
   defp color_variant("inverted", "primary", indicator) do
     [
-      "bg-transparent text-[#007F8C] border-[#007F8C] hover:text-[#016974]",
-      "hover:border-[#016974] hover:bg-[#E2F8FB]",
-      "dark:text-[#01B8CA] dark:border-[#01B8CA] dark:hover:text-[#77D5E3]",
-      "dark:hover:border-[#77D5E3] dark:hover:bg-[#002D33] disabled:text-[#DDDDDD]",
-      "disabled:border-[#DDDDDD] dark:disabled:text-[#727272] dark:disabled:border-[#727272]",
+      "bg-transparent text-primary-light border-primary-light hover:text-primary-hover-light",
+      "hover:border-primary-hover-light hover:bg-primary-bordered-bg-light",
+      "dark:text-primary-dark dark:border-primary-dark dark:hover:text-primary-hover-dark",
+      "dark:hover:border-primary-hover-dark dark:hover:bg-primary-bordered-bg-dark disabled:text-natural-disabled-light",
+      "disabled:border-natural-disabled-light dark:disabled:text-natural-disabled-dark dark:disabled:border-natural-disabled-dark",
       "disabled:hover:bg-transparent dark:disabled:hover:bg-transparent",
-      indicator && "[&>.indicator]:bg-[#1A535A] dark:[&>.indicator]:bg-[#B0E7EF]"
+      indicator &&
+        "[&>.indicator]:bg-primary-indicator-light dark:[&>.indicator]:bg-primary-indicator-dark"
     ]
   end
 
   defp color_variant("inverted", "secondary", indicator) do
     [
-      "bg-transparent text-[#266EF1] border-[#266EF1] hover:text-[#175BCC]",
-      "hover:border-[#175BCC] hover:bg-[#EFF4FE]",
-      "dark:text-[#6DAAFB] dark:border-[#6DAAFB] dark:hover:text-[#A9C9FF]",
-      "dark:hover:border-[#A9C9FF] dark:hover:bg-[#002661] disabled:text-[#DDDDDD]",
-      " disabled:border-[#DDDDDD] dark:disabled:text-[#727272] dark:disabled:border-[#727272]",
+      "bg-transparent text-secondary-light border-secondary-light hover:text-secondary-hover-light",
+      "hover:border-secondary-hover-light hover:bg-secondary-bordered-bg-light",
+      "dark:text-secondary-dark dark:border-secondary-dark dark:hover:text-secondary-hover-dark",
+      "dark:hover:border-secondary-hover-dark dark:hover:bg-secondary-bordered-bg-dark disabled:text-natural-disabled-light",
+      "disabled:border-natural-disabled-light dark:disabled:text-natural-disabled-dark dark:disabled:border-natural-disabled-dark",
       "disabled:hover:bg-transparent dark:disabled:hover:bg-transparent",
-      indicator && "[&>.indicator]:bg-[#1948A3] dark:[&>.indicator]:bg-[#CDDEFF]"
+      indicator &&
+        "[&>.indicator]:bg-secondary-indicator-light dark:[&>.indicator]:bg-secondary-indicator-dark"
     ]
   end
 
   defp color_variant("inverted", "success", indicator) do
     [
-      "bg-transparent text-[#0E8345] border-[#0E8345] hover:text-[#166C3B]",
-      "hover:border-[#166C3B] hover:bg-[#EAF6ED]",
-      "dark:text-[#06C167] dark:border-[#06C167] dark:hover:text-[#7FD99A]",
-      "dark:hover:border-[#7FD99A] dark:hover:bg-[#002F14] disabled:text-[#DDDDDD]",
-      "disabled:border-[#DDDDDD] dark:disabled:text-[#727272] dark:disabled:border-[#727272]",
+      "bg-transparent text-success-light border-success-light hover:text-success-hover-light",
+      "hover:border-success-hover-light hover:bg-success-bordered-bg-light",
+      "dark:text-success-dark dark:border-success-dark dark:hover:text-success-hover-dark",
+      "dark:hover:border-success-hover-dark dark:hover:bg-success-bordered-bg-dark disabled:text-natural-disabled-light",
+      "disabled:border-natural-disabled-light dark:disabled:text-natural-disabled-dark dark:disabled:border-natural-disabled-dark",
       "disabled:hover:bg-transparent dark:disabled:hover:bg-transparent",
-      indicator && "[&>.indicator]:bg-[#0D572D] dark:[&>.indicator]:bg-[#B1EAC2]"
+      indicator &&
+        "[&>.indicator]:bg-success-indicator-alt-light dark:[&>.indicator]:bg-success-indicator-dark"
     ]
   end
 
   defp color_variant("inverted", "warning", indicator) do
     [
-      "bg-transparent text-[#CA8D01] border-[#CA8D01] hover:text-[#976A01]",
-      "hover:border-[#976A01] hover:bg-[#FFF7E6]",
-      "dark:text-[#FDC034] dark:border-[#FDC034] dark:hover:text-[#FDD067]",
-      "dark:hover:border-[#FDD067] dark:hover:bg-[#322300] disabled:text-[#DDDDDD]",
-      "disabled:border-[#DDDDDD] dark:disabled:text-[#727272] dark:disabled:border-[#727272]",
+      "bg-transparent text-warning-light border-warning-light hover:text-warning-hover-light",
+      "hover:border-warning-hover-light hover:bg-warning-bordered-bg-light",
+      "dark:text-warning-dark dark:border-warning-dark dark:hover:text-warning-hover-dark",
+      "dark:hover:border-warning-hover-dark dark:hover:bg-warning-bordered-bg-dark disabled:text-natural-disabled-light",
+      "disabled:border-natural-disabled-light dark:disabled:text-natural-disabled-dark dark:disabled:border-natural-disabled-dark",
       "disabled:hover:bg-transparent dark:disabled:hover:bg-transparent",
-      indicator && "[&>.indicator]:bg-[#654600] dark:[&>.indicator]:bg-[#FEDF99]"
+      indicator &&
+        "[&>.indicator]:bg-warning-indicator-alt-light dark:[&>.indicator]:bg-warning-indicator-dark"
     ]
   end
 
   defp color_variant("inverted", "danger", indicator) do
     [
-      "bg-transparent text-[#DE1135] border-[#DE1135] hover:text-[#BB032A]",
-      "hover:border-[#BB032A] hover:bg-[#FFF0EE]",
-      "dark:text-[#FC7F79] dark:border-[#FC7F79] dark:hover:text-[#FFB2AB]",
-      "dark:hover:border-[#FFB2AB] dark:hover:bg-[#520810] disabled:text-[#DDDDDD]",
-      "disabled:border-[#DDDDDD] dark:disabled:text-[#727272] dark:disabled:border-[#727272]",
+      "bg-transparent text-danger-light border-danger-light hover:text-danger-hover-light",
+      "hover:border-danger-hover-light hover:bg-danger-bordered-bg-light",
+      "dark:text-danger-dark dark:border-danger-dark dark:hover:text-danger-hover-dark",
+      "dark:hover:border-danger-hover-dark dark:hover:bg-danger-bordered-bg-dark disabled:text-natural-disabled-light",
+      "disabled:border-natural-disabled-light dark:disabled:text-natural-disabled-dark dark:disabled:border-natural-disabled-dark",
       "disabled:hover:bg-transparent dark:disabled:hover:bg-transparent",
-      indicator && "[&>.indicator]:bg-[#950F22] dark:[&>.indicator]:bg-[#FFD2CD]"
+      indicator &&
+        "[&>.indicator]:bg-danger-indicator-alt-light dark:[&>.indicator]:bg-danger-indicator-dark"
     ]
   end
 
   defp color_variant("inverted", "info", indicator) do
     [
-      "bg-transparent text-[#0B84BA] border-[#0B84BA] hover:text-[#0B84BA]",
-      "hover:border-[#0B84BA] hover:bg-[#E7F6FD]",
-      "dark:text-[#3EB7ED] dark:border-[#3EB7ED] dark:hover:text-[#6EC9F2]",
-      "dark:hover:border-[#6EC9F2] dark:hover:bg-[#03212F] disabled:text-[#DDDDDD]",
-      "disabled:border-[#DDDDDD] dark:disabled:text-[#727272] dark:disabled:border-[#727272]",
+      "bg-transparent text-info-light border-info-light hover:text-info-hover-light",
+      "hover:border-info-light hover:bg-info-bordered-bg-light",
+      "dark:text-info-dark dark:border-info-dark dark:hover:text-info-hover-dark",
+      "dark:hover:border-info-hover-dark dark:hover:bg-info-bordered-bg-dark disabled:text-natural-disabled-light",
+      "disabled:border-natural-disabled-light dark:disabled:text-natural-disabled-dark dark:disabled:border-natural-disabled-dark",
       "disabled:hover:bg-transparent dark:disabled:hover:bg-transparent",
-      indicator && "[&>.indicator]:bg-[#06425D] dark:[&>.indicator]:bg-[#9FDBF6]"
+      indicator &&
+        "[&>.indicator]:bg-info-indicator-alt-light dark:[&>.indicator]:bg-info-indicator-dark"
     ]
   end
 
   defp color_variant("inverted", "misc", indicator) do
     [
-      "bg-transparent text-[#8750C5] border-[#8750C5] hover:text-[#653C94]",
-      "hover:border-[#653C94] hover:bg-[#F6F0FE]",
-      "dark:text-[#BA83F9] dark:border-[#BA83F9] dark:hover:text-[#CBA2FA]",
-      "dark:hover:border-[#CBA2FA] dark:hover:bg-[#221431] disabled:text-[#DDDDDD]",
-      "disabled:border-[#DDDDDD] dark:disabled:text-[#727272] dark:disabled:border-[#727272]",
+      "bg-transparent text-misc-light border-misc-light hover:text-misc-hover-light",
+      "hover:border-misc-hover-light hover:bg-misc-bordered-bg-light",
+      "dark:text-misc-dark dark:border-misc-dark dark:hover:text-misc-hover-dark",
+      "dark:hover:border-misc-hover-dark dark:hover:bg-misc-bordered-bg-dark disabled:text-natural-disabled-light",
+      "disabled:border-natural-disabled-light dark:disabled:text-natural-disabled-dark dark:disabled:border-natural-disabled-dark",
       "disabled:hover:bg-transparent dark:disabled:hover:bg-transparent",
-      indicator && "[&>.indicator]:bg-[#442863] dark:[&>.indicator]:bg-[#DDC1FC]"
+      indicator &&
+        "[&>.indicator]:bg-misc-indicator-alt-light dark:[&>.indicator]:bg-misc-indicator-dark"
     ]
   end
 
   defp color_variant("inverted", "dawn", indicator) do
     [
-      "bg-transparent text-[#A86438] border-[#A86438] hover:text-[#7E4B2A]",
-      "hover:border-[#7E4B2A] hover:bg-[#FBF2ED]",
-      "dark:text-[#DB976B] dark:border-[#DB976B] dark:hover:text-[#E4B190]",
-      "dark:hover:border-[#E4B190] dark:hover:bg-[#2A190E] disabled:text-[#DDDDDD]",
-      "disabled:border-[#DDDDDD] dark:disabled:text-[#727272] dark:disabled:border-[#727272]",
+      "bg-transparent text-dawn-light border-dawn-light hover:text-dawn-hover-light",
+      "hover:border-dawn-hover-light hover:bg-dawn-bordered-bg-light",
+      "dark:text-dawn-dark dark:border-dawn-dark dark:hover:text-dawn-hover-dark",
+      "dark:hover:border-dawn-hover-dark dark:hover:bg-dawn-bordered-bg-dark disabled:text-natural-disabled-light",
+      "disabled:border-natural-disabled-light dark:disabled:text-natural-disabled-dark dark:disabled:border-natural-disabled-dark",
       "disabled:hover:bg-transparent dark:disabled:hover:bg-transparent",
-      indicator && "[&>.indicator]:bg-[#54321C] dark:[&>.indicator]:bg-[#EDCBB5]"
+      indicator &&
+        "[&>.indicator]:bg-dawn-indicator-alt-light dark:[&>.indicator]:bg-dawn-indicator-dark"
     ]
   end
 
   defp color_variant("inverted", "silver", indicator) do
     [
-      "bg-transparent text-[#868686] border-[#868686] hover:text-[#727272]",
-      "hover:border-[#727272] hover:bg-[#F3F3F3]",
-      "dark:text-[#A6A6A6] dark:border-[#A6A6A6] dark:hover:text-[#BBBBBB]",
-      "dark:hover:border-[#BBBBBB] dark:hover:bg-[#4B4B4B] disabled:text-[#DDDDDD]",
-      "disabled:border-[#DDDDDD] dark:disabled:text-[#727272] dark:disabled:border-[#727272]",
+      "bg-transparent text-silver-light border-silver-light hover:text-silver-hover-light",
+      "hover:border-silver-hover-light hover:bg-silver-bordered-bg-light",
+      "dark:text-silver-dark dark:border-silver-dark dark:hover:text-silver-hover-dark",
+      "dark:hover:border-silver-hover-dark dark:hover:bg-silver-bordered-bg-dark disabled:text-natural-disabled-light",
+      "disabled:border-natural-disabled-light dark:disabled:text-natural-disabled-dark dark:disabled:border-natural-disabled-dark",
       "disabled:hover:bg-transparent dark:disabled:hover:bg-transparent",
-      indicator && "[&>.indicator]:bg-[#5E5E5E] dark:[&>.indicator]:bg-[#DDDDDD]"
+      indicator &&
+        "[&>.indicator]:bg-silver-indicator-alt-light dark:[&>.indicator]:bg-silver-indicator-dark"
     ]
   end
 
   defp color_variant("default_gradient", "natural", indicator) do
     [
       "bg-gradient-to-br hover:bg-gradient-to-bl",
-      "from-[#282828] to-[#727272] text-white",
-      "dark:from-[#A6A6A6] dark:to-[#FFFFFF] dark:text-black",
-      "disabled:text-[#BBBBBB] dark:disabled:bg-[#4B4B4B] dark:disabled:text-[#868686]",
-      "disabled:from-[#F3F3F3] disabled:to-[#F3F3F3]",
-      "dark:disabled:from-[#4B4B4B] dark:disabled:to-[#4B4B4B]",
+      "from-gradient-natural-from-light to-gradient-natural-to-light text-white",
+      "dark:from-gradient-natural-from-dark dark:to-white dark:text-black",
+      "disabled:text-disabled-text-light dark:disabled:bg-disabled-bg-dark dark:disabled:text-disabled-text-dark",
+      "disabled:from-disabled-bg-light disabled:to-disabled-bg-light",
+      "dark:disabled:from-disabled-bg-dark dark:disabled:to-disabled-bg-dark",
       indicator && "[&>.indicator]:bg-white dark:[&>.indicator]:bg-black"
     ]
   end
@@ -1453,119 +1518,127 @@ defmodule CommunityDemoWeb.Components.Button do
   defp color_variant("default_gradient", "primary", indicator) do
     [
       "bg-gradient-to-br hover:bg-gradient-to-bl",
-      "from-[#016974] to-[#01B8CA] text-white",
-      "dark:from-[#01B8CA] dark:to-[#B0E7EF] dark:text-black",
-      "disabled:text-[#BBBBBB] dark:disabled:bg-[#4B4B4B] dark:disabled:text-[#868686]",
-      "disabled:from-[#F3F3F3] disabled:to-[#F3F3F3]",
-      "dark:disabled:from-[#4B4B4B] dark:disabled:to-[#4B4B4B]",
-      indicator && "[&>.indicator]:bg-[#1A535A] dark:[&>.indicator]:bg-[#CDEEF3]"
+      "from-gradient-primary-from-light to-gradient-primary-to-light text-white",
+      "dark:from-gradient-primary-from-dark dark:to-gradient-primary-to-dark dark:text-black",
+      "disabled:text-disabled-text-light dark:disabled:bg-disabled-bg-dark dark:disabled:text-disabled-text-dark",
+      "disabled:from-disabled-bg-light disabled:to-disabled-bg-light",
+      "dark:disabled:from-disabled-bg-dark dark:disabled:to-disabled-bg-dark",
+      indicator &&
+        "[&>.indicator]:bg-primary-indicator-light dark:[&>.indicator]:bg-primary-gradient-indicator-dark"
     ]
   end
 
   defp color_variant("default_gradient", "secondary", indicator) do
     [
       "bg-gradient-to-br hover:bg-gradient-to-bl",
-      "from-[#175BCC] to-[#6DAAFB] text-white",
-      "dark:from-[#6DAAFB] dark:to-[#CDDEFF] dark:text-black",
-      "disabled:text-[#BBBBBB] dark:disabled:bg-[#4B4B4B] dark:disabled:text-[#868686]",
-      "disabled:from-[#F3F3F3] disabled:to-[#F3F3F3]",
-      "dark:disabled:from-[#4B4B4B] dark:disabled:to-[#4B4B4B]",
-      indicator && "[&>.indicator]:bg-[#1948A3] dark:[&>.indicator]:bg-[#DEE9FE]"
+      "from-gradient-secondary-from-light to-gradient-secondary-to-light text-white",
+      "dark:from-gradient-secondary-from-dark dark:to-gradient-secondary-to-dark dark:text-black",
+      "disabled:text-disabled-text-light dark:disabled:bg-disabled-bg-dark dark:disabled:text-disabled-text-dark",
+      "disabled:from-disabled-bg-light disabled:to-disabled-bg-light",
+      "dark:disabled:from-disabled-bg-dark dark:disabled:to-disabled-bg-dark",
+      indicator &&
+        "[&>.indicator]:bg-secondary-indicator-light dark:[&>.indicator]:bg-secondary-gradient-indicator-dark"
     ]
   end
 
   defp color_variant("default_gradient", "success", indicator) do
     [
       "bg-gradient-to-br hover:bg-gradient-to-bl",
-      "from-[#166C3B] to-[#06C167] text-white",
-      "dark:from-[#06C167] dark:to-[#B1EAC2] dark:text-black",
-      "disabled:text-[#BBBBBB] dark:disabled:bg-[#4B4B4B] dark:disabled:text-[#868686]",
-      "disabled:from-[#F3F3F3] disabled:to-[#F3F3F3]",
-      "dark:disabled:from-[#4B4B4B] dark:disabled:to-[#4B4B4B]",
-      indicator && "[&>.indicator]:bg-[#0D572D] dark:[&>.indicator]:bg-[#D3EFDA]"
+      "from-gradient-success-from-light to-gradient-success-to-light text-white",
+      "dark:from-gradient-success-from-dark dark:to-gradient-success-to-dark dark:text-black",
+      "disabled:text-disabled-text-light dark:disabled:bg-disabled-bg-dark dark:disabled:text-disabled-text-dark",
+      "disabled:from-disabled-bg-light disabled:to-disabled-bg-light",
+      "dark:disabled:from-disabled-bg-dark dark:disabled:to-disabled-bg-dark",
+      indicator &&
+        "[&>.indicator]:bg-success-indicator-alt-light dark:[&>.indicator]:bg-success-gradient-indicator-dark"
     ]
   end
 
   defp color_variant("default_gradient", "warning", indicator) do
     [
       "bg-gradient-to-br hover:bg-gradient-to-bl",
-      "from-[#976A01] to-[#FDC034] text-white",
-      "dark:from-[#FDC034] dark:to-[#FEDF99] dark:text-black",
-      "disabled:text-[#BBBBBB] dark:disabled:bg-[#4B4B4B] dark:disabled:text-[#868686]",
-      "disabled:from-[#F3F3F3] disabled:to-[#F3F3F3]",
-      "dark:disabled:from-[#4B4B4B] dark:disabled:to-[#4B4B4B]",
-      indicator && "[&>.indicator]:bg-[#654600] dark:[&>.indicator]:bg-[#FEEFCC]"
+      "from-gradient-warning-from-light to-gradient-warning-to-light text-white",
+      "dark:from-gradient-warning-from-dark dark:to-gradient-warning-to-dark dark:text-black",
+      "disabled:text-disabled-text-light dark:disabled:bg-disabled-bg-dark dark:disabled:text-disabled-text-dark",
+      "disabled:from-disabled-bg-light disabled:to-disabled-bg-light",
+      "dark:disabled:from-disabled-bg-dark dark:disabled:to-disabled-bg-dark",
+      indicator &&
+        "[&>.indicator]:bg-warning-indicator-alt-light dark:[&>.indicator]:bg-warning-gradient-indicator-dark"
     ]
   end
 
   defp color_variant("default_gradient", "danger", indicator) do
     [
       "bg-gradient-to-br hover:bg-gradient-to-bl",
-      "from-[#BB032A] to-[#FC7F79] text-white",
-      "dark:from-[#FC7F79] dark:to-[#FFD2CD] dark:text-black",
-      "disabled:text-[#BBBBBB] dark:disabled:bg-[#4B4B4B] dark:disabled:text-[#868686]",
-      "disabled:from-[#F3F3F3] disabled:to-[#F3F3F3]",
-      "dark:disabled:from-[#4B4B4B] dark:disabled:to-[#4B4B4B]",
-      indicator && "[&>.indicator]:bg-[#950F22] dark:[&>.indicator]:bg-[#FFE1DE]"
+      "from-gradient-danger-from-light to-gradient-danger-to-light text-white",
+      "dark:from-gradient-danger-from-dark dark:to-gradient-danger-to-dark dark:text-black",
+      "disabled:text-disabled-text-light dark:disabled:bg-disabled-bg-dark dark:disabled:text-disabled-text-dark",
+      "disabled:from-disabled-bg-light disabled:to-disabled-bg-light",
+      "dark:disabled:from-disabled-bg-dark dark:disabled:to-disabled-bg-dark",
+      indicator &&
+        "[&>.indicator]:bg-danger-indicator-alt-light dark:[&>.indicator]:bg-danger-gradient-indicator-dark"
     ]
   end
 
   defp color_variant("default_gradient", "info", indicator) do
     [
       "bg-gradient-to-br hover:bg-gradient-to-bl",
-      "from-[#08638C] to-[#3EB7ED] text-white",
-      "dark:from-[#3EB7ED] dark:to-[#9FDBF6] dark:text-black",
-      "disabled:text-[#BBBBBB] dark:disabled:bg-[#4B4B4B] dark:disabled:text-[#868686]",
-      "disabled:from-[#F3F3F3] disabled:to-[#F3F3F3]",
-      "dark:disabled:from-[#4B4B4B] dark:disabled:to-[#4B4B4B]",
-      indicator && "[&>.indicator]:bg-[#06425D] dark:[&>.indicator]:bg-[#CFEDFB]"
+      "from-gradient-info-from-light to-gradient-info-to-light text-white",
+      "dark:from-gradient-info-from-dark dark:to-gradient-info-to-dark dark:text-black",
+      "disabled:text-disabled-text-light dark:disabled:bg-disabled-bg-dark dark:disabled:text-disabled-text-dark",
+      "disabled:from-disabled-bg-light disabled:to-disabled-bg-light",
+      "dark:disabled:from-disabled-bg-dark dark:disabled:to-disabled-bg-dark",
+      indicator &&
+        "[&>.indicator]:bg-info-indicator-alt-light dark:[&>.indicator]:bg-info-gradient-indicator-dark"
     ]
   end
 
   defp color_variant("default_gradient", "misc", indicator) do
     [
       "bg-gradient-to-br hover:bg-gradient-to-bl",
-      "from-[#653C94] to-[#BA83F9] text-white",
-      "dark:from-[#BA83F9] dark:to-[#DDC1FC] dark:text-black",
-      "disabled:text-[#BBBBBB] dark:disabled:bg-[#4B4B4B] dark:disabled:text-[#868686]",
-      "disabled:from-[#F3F3F3] disabled:to-[#F3F3F3]",
-      "dark:disabled:from-[#4B4B4B] dark:disabled:to-[#4B4B4B]",
-      indicator && "[&>.indicator]:bg-[#442863] dark:[&>.indicator]:bg-[#EEE0FD]"
+      "from-gradient-misc-from-light to-gradient-misc-to-light text-white",
+      "dark:from-gradient-misc-from-dark dark:to-gradient-misc-to-dark dark:text-black",
+      "disabled:text-disabled-text-light dark:disabled:bg-disabled-bg-dark dark:disabled:text-disabled-text-dark",
+      "disabled:from-disabled-bg-light disabled:to-disabled-bg-light",
+      "dark:disabled:from-disabled-bg-dark dark:disabled:to-disabled-bg-dark",
+      indicator &&
+        "[&>.indicator]:bg-misc-indicator-alt-light dark:[&>.indicator]:bg-misc-gradient-indicator-dark"
     ]
   end
 
   defp color_variant("default_gradient", "dawn", indicator) do
     [
       "bg-gradient-to-br hover:bg-gradient-to-bl",
-      "from-[#7E4B2A] to-[#DB976B] text-white",
-      "dark:from-[#DB976B] dark:to-[#EDCBB5] dark:text-black",
-      "disabled:text-[#BBBBBB] dark:disabled:bg-[#4B4B4B] dark:disabled:text-[#868686]",
-      "disabled:from-[#F3F3F3] disabled:to-[#F3F3F3]",
-      "dark:disabled:from-[#4B4B4B] dark:disabled:to-[#4B4B4B]",
-      indicator && "[&>.indicator]:bg-[#54321C] dark:[&>.indicator]:bg-[#F6E5DA]"
+      "from-gradient-dawn-from-light to-gradient-dawn-to-light text-white",
+      "dark:from-gradient-dawn-from-dark dark:to-gradient-dawn-to-dark dark:text-black",
+      "disabled:text-disabled-text-light dark:disabled:bg-disabled-bg-dark dark:disabled:text-disabled-text-dark",
+      "disabled:from-disabled-bg-light disabled:to-disabled-bg-light",
+      "dark:disabled:from-disabled-bg-dark dark:disabled:to-disabled-bg-dark",
+      indicator &&
+        "[&>.indicator]:bg-dawn-indicator-alt-light dark:[&>.indicator]:bg-dawn-gradient-indicator-dark"
     ]
   end
 
   defp color_variant("default_gradient", "silver", indicator) do
     [
       "bg-gradient-to-br hover:bg-gradient-to-bl",
-      "from-[#5E5E5E] to-[#A6A6A6] text-white",
-      "dark:from-[#868686] dark:to-[#BBBBBB] dark:text-black",
-      "disabled:text-[#BBBBBB] dark:disabled:bg-[#4B4B4B] dark:disabled:text-[#868686]",
-      "disabled:from-[#F3F3F3] disabled:to-[#F3F3F3]",
-      "dark:disabled:from-[#4B4B4B] dark:disabled:to-[#4B4B4B]",
-      indicator && "[&>.indicator]:bg-[#4B4B4B] dark:[&>.indicator]:bg-[#E8E8E8]"
+      "from-gradient-silver-from-light to-gradient-silver-to-light text-white",
+      "dark:from-gradient-silver-from-dark dark:to-gradient-silver-to-dark dark:text-black",
+      "disabled:text-disabled-text-light dark:disabled:bg-disabled-bg-dark dark:disabled:text-disabled-text-dark",
+      "disabled:from-disabled-bg-light disabled:to-disabled-bg-light",
+      "dark:disabled:from-disabled-bg-dark dark:disabled:to-disabled-bg-dark",
+      indicator && "[&>.indicator]:bg-natural-bg-dark dark:[&>.indicator]:bg-natural-hover-dark"
     ]
   end
 
   defp color_variant("outline_gradient", "natural", indicator) do
     [
       "gradient-button [&>*]:relative [&>*]:z-[1] relative bg-gradient-to-br hover:bg-gradient-to-bl",
-      "from-[#282828] to-[#727272] text-[#4B4B4B] hover:text-[#282828]",
-      "dark:from-[#A6A6A6] dark:to-[#FFFFFF] dark:text-[#DDDDDD] dark:hover:text-[#E8E8E8]",
-      "before:bg-white dark:before:bg-[#282828] before:absolute before:inset-[2px] before:z-0",
-      "disabled:from-[#DDDDDD] disabled:to-[#DDDDDD] disabled:text-[#DDDDDD]",
-      "dark:disabled:from-[#727272] dark:disabled:to-[#727272] dark:disabled:text-[#727272]",
+      "from-gradient-natural-from-light to-gradient-natural-to-light text-natural-light hover:text-natural-hover-light",
+      "dark:from-gradient-natural-from-dark dark:to-white dark:text-natural-dark dark:hover:text-natural-hover-dark",
+      "before:bg-white dark:before:bg-bordered-dark-bg before:absolute before:inset-[2px] before:z-0",
+      "disabled:from-natural-disabled-light disabled:to-natural-disabled-light disabled:text-natural-disabled-light",
+      "dark:disabled:from-natural-disabled-dark dark:disabled:to-natural-disabled-dark dark:disabled:text-natural-disabled-dark",
       indicator && "[&>.indicator]:bg-black dark:[&>.indicator]:bg-white"
     ]
   end
@@ -1573,122 +1646,131 @@ defmodule CommunityDemoWeb.Components.Button do
   defp color_variant("outline_gradient", "primary", indicator) do
     [
       "gradient-button [&>*]:relative [&>*]:z-[1] relative bg-gradient-to-br hover:bg-gradient-to-bl",
-      "from-[#016974] to-[#01B8CA] text-[#007F8C] hover:text-[#016974]",
-      "dark:from-[#01B8CA] dark:to-[#B0E7EF] dark:text-[#01B8CA] dark:hover:text-[#77D5E3]",
-      "before:bg-white dark:before:bg-[#282828] before:absolute before:inset-[2px] before:z-0",
-      "disabled:from-[#DDDDDD] disabled:to-[#DDDDDD] disabled:text-[#DDDDDD]",
-      "dark:disabled:from-[#727272] dark:disabled:to-[#727272] dark:disabled:text-[#727272]",
-      indicator && "[&>.indicator]:bg-[#1A535A] dark:[&>.indicator]:bg-[#B0E7EF]"
+      "from-gradient-primary-from-light to-gradient-primary-to-light text-primary-light hover:text-primary-hover-light",
+      "dark:from-gradient-primary-from-dark dark:to-gradient-primary-to-dark dark:text-primary-dark dark:hover:text-primary-hover-dark",
+      "before:bg-white dark:before:bg-bordered-dark-bg before:absolute before:inset-[2px] before:z-0",
+      "disabled:from-natural-disabled-light disabled:to-natural-disabled-light disabled:text-natural-disabled-light",
+      "dark:disabled:from-natural-disabled-dark dark:disabled:to-natural-disabled-dark dark:disabled:text-natural-disabled-dark",
+      indicator &&
+        "[&>.indicator]:bg-primary-indicator-light dark:[&>.indicator]:bg-primary-indicator-dark"
     ]
   end
 
   defp color_variant("outline_gradient", "secondary", indicator) do
     [
       "gradient-button [&>*]:relative [&>*]:z-[1] relative bg-gradient-to-br hover:bg-gradient-to-bl",
-      "from-[#175BCC] to-[#6DAAFB] text-[#266EF1] hover:text-[#175BCC]",
-      "dark:from-[#6DAAFB] dark:to-[#CDDEFF] dark:text-[#6DAAFB] dark:hover:text-[#A9C9FF]",
-      "before:bg-white dark:before:bg-[#282828] before:absolute before:inset-[2px] before:z-0",
-      "disabled:from-[#DDDDDD] disabled:to-[#DDDDDD] disabled:text-[#DDDDDD]",
-      "dark:disabled:from-[#727272] dark:disabled:to-[#727272] dark:disabled:text-[#727272]",
-      indicator && "[&>.indicator]:bg-[#1948A3] dark:[&>.indicator]:bg-[#CDDEFF]"
+      "from-gradient-secondary-from-light to-gradient-secondary-to-light text-secondary-light hover:text-secondary-hover-light",
+      "dark:from-gradient-secondary-from-dark dark:to-gradient-secondary-to-dark dark:text-secondary-dark dark:hover:text-secondary-hover-dark",
+      "before:bg-white dark:before:bg-bordered-dark-bg before:absolute before:inset-[2px] before:z-0",
+      "disabled:from-natural-disabled-light disabled:to-natural-disabled-light disabled:text-natural-disabled-light",
+      "dark:disabled:from-natural-disabled-dark dark:disabled:to-natural-disabled-dark dark:disabled:text-natural-disabled-dark",
+      indicator &&
+        "[&>.indicator]:bg-secondary-indicator-light dark:[&>.indicator]:bg-secondary-indicator-dark"
     ]
   end
 
   defp color_variant("outline_gradient", "success", indicator) do
     [
       "gradient-button [&>*]:relative [&>*]:z-[1] relative bg-gradient-to-br hover:bg-gradient-to-bl",
-      "from-[#166C3B] to-[#06C167] text-[#0E8345] hover:text-[#166C3B]",
-      "dark:from-[#06C167] dark:to-[#B1EAC2] dark:text-[#06C167] dark:hover:text-[#7FD99A]",
-      "before:bg-white dark:before:bg-[#282828] before:absolute before:inset-[2px] before:z-0",
-      "disabled:from-[#DDDDDD] disabled:to-[#DDDDDD] disabled:text-[#DDDDDD]",
-      "dark:disabled:from-[#727272] dark:disabled:to-[#727272] dark:disabled:text-[#727272]",
-      indicator && "[&>.indicator]:bg-[#0D572D] dark:[&>.indicator]:bg-[#B1EAC2]"
+      "from-gradient-success-from-light to-gradient-success-to-light text-success-light hover:text-success-hover-light",
+      "dark:from-gradient-success-from-dark dark:to-gradient-success-to-dark dark:text-success-dark dark:hover:text-success-hover-dark",
+      "before:bg-white dark:before:bg-bordered-dark-bg before:absolute before:inset-[2px] before:z-0",
+      "disabled:from-natural-disabled-light disabled:to-natural-disabled-light disabled:text-natural-disabled-light",
+      "dark:disabled:from-natural-disabled-dark dark:disabled:to-natural-disabled-dark dark:disabled:text-natural-disabled-dark",
+      indicator &&
+        "[&>.indicator]:bg-success-indicator-alt-light dark:[&>.indicator]:bg-success-indicator-dark"
     ]
   end
 
   defp color_variant("outline_gradient", "warning", indicator) do
     [
       "gradient-button [&>*]:relative [&>*]:z-[1] relative bg-gradient-to-br hover:bg-gradient-to-bl",
-      "from-[#976A01] to-[#FDC034] text-[#CA8D01] hover:text-[#976A01]",
-      "dark:from-[#FDC034] dark:to-[#FEDF99] dark:text-[#FDC034] dark:hover:text-[#FDD067]",
-      "before:bg-white dark:before:bg-[#282828] before:absolute before:inset-[2px] before:z-0",
-      "disabled:from-[#DDDDDD] disabled:to-[#DDDDDD] disabled:text-[#DDDDDD]",
-      "dark:disabled:from-[#727272] dark:disabled:to-[#727272] dark:disabled:text-[#727272]",
-      indicator && "[&>.indicator]:bg-[#654600] dark:[&>.indicator]:bg-[#FEDF99]"
+      "from-gradient-warning-from-light to-gradient-warning-to-light text-warning-light hover:text-warning-hover-light",
+      "dark:from-gradient-warning-from-dark dark:to-gradient-warning-to-dark dark:text-warning-dark dark:hover:text-warning-hover-dark",
+      "before:bg-white dark:before:bg-bordered-dark-bg before:absolute before:inset-[2px] before:z-0",
+      "disabled:from-natural-disabled-light disabled:to-natural-disabled-light disabled:text-natural-disabled-light",
+      "dark:disabled:from-natural-disabled-dark dark:disabled:to-natural-disabled-dark dark:disabled:text-natural-disabled-dark",
+      indicator &&
+        "[&>.indicator]:bg-warning-indicator-alt-light dark:[&>.indicator]:bg-warning-indicator-dark"
     ]
   end
 
   defp color_variant("outline_gradient", "danger", indicator) do
     [
       "gradient-button [&>*]:relative [&>*]:z-[1] relative bg-gradient-to-br hover:bg-gradient-to-bl",
-      "from-[#BB032A] to-[#FC7F79] text-[#DE1135] hover:text-[#BB032A]",
-      "dark:from-[#FC7F79] dark:to-[#FFD2CD] dark:text-[#FC7F79] dark:hover:text-[#FFB2AB]",
-      "before:bg-white dark:before:bg-[#282828] before:absolute before:inset-[2px] before:z-0",
-      "disabled:from-[#DDDDDD] disabled:to-[#DDDDDD] disabled:text-[#DDDDDD]",
-      "dark:disabled:from-[#727272] dark:disabled:to-[#727272] dark:disabled:text-[#727272]",
-      indicator && "[&>.indicator]:bg-[#950F22] dark:[&>.indicator]:bg-[#FFD2CD]"
+      "from-gradient-danger-from-light to-gradient-danger-to-light text-danger-light hover:text-danger-hover-light",
+      "dark:from-gradient-danger-from-dark dark:to-gradient-danger-to-dark dark:text-danger-dark dark:hover:text-danger-hover-dark",
+      "before:bg-white dark:before:bg-bordered-dark-bg before:absolute before:inset-[2px] before:z-0",
+      "disabled:from-natural-disabled-light disabled:to-natural-disabled-light disabled:text-natural-disabled-light",
+      "dark:disabled:from-natural-disabled-dark dark:disabled:to-natural-disabled-dark dark:disabled:text-natural-disabled-dark",
+      indicator &&
+        "[&>.indicator]:bg-danger-indicator-alt-light dark:[&>.indicator]:bg-danger-indicator-dark"
     ]
   end
 
   defp color_variant("outline_gradient", "info", indicator) do
     [
       "gradient-button [&>*]:relative [&>*]:z-[1] relative bg-gradient-to-br hover:bg-gradient-to-bl",
-      "from-[#08638C] to-[#3EB7ED] text-[#0B84BA] hover:text-[#08638C]",
-      "dark:from-[#3EB7ED] dark:to-[#9FDBF6] dark:text-[#3EB7ED] dark:hover:text-[#6EC9F2]",
-      "before:bg-white dark:before:bg-[#282828] before:absolute before:inset-[2px] before:z-0",
-      "disabled:from-[#DDDDDD] disabled:to-[#DDDDDD] disabled:text-[#DDDDDD]",
-      "dark:disabled:from-[#727272] dark:disabled:to-[#727272] dark:disabled:text-[#727272]",
-      indicator && "[&>.indicator]:bg-[#06425D] dark:[&>.indicator]:bg-[#9FDBF6]"
+      "from-gradient-info-from-light to-gradient-info-to-light text-info-light hover:text-info-hover-light",
+      "dark:from-gradient-info-from-dark dark:to-gradient-info-to-dark dark:text-info-dark dark:hover:text-info-hover-dark",
+      "before:bg-white dark:before:bg-bordered-dark-bg before:absolute before:inset-[2px] before:z-0",
+      "disabled:from-natural-disabled-light disabled:to-natural-disabled-light disabled:text-natural-disabled-light",
+      "dark:disabled:from-natural-disabled-dark dark:disabled:to-natural-disabled-dark dark:disabled:text-natural-disabled-dark",
+      indicator &&
+        "[&>.indicator]:bg-info-indicator-alt-light dark:[&>.indicator]:bg-info-indicator-dark"
     ]
   end
 
   defp color_variant("outline_gradient", "misc", indicator) do
     [
       "gradient-button [&>*]:relative [&>*]:z-[1] relative bg-gradient-to-br hover:bg-gradient-to-bl",
-      "from-[#653C94] to-[#BA83F9] text-[#8750C5] hover:text-[#653C94]",
-      "dark:from-[#BA83F9] dark:to-[#DDC1FC] dark:text-[#BA83F9] dark:hover:text-[#CBA2FA]",
-      "before:bg-white dark:before:bg-[#282828] before:absolute before:inset-[2px] before:z-0",
-      "disabled:from-[#DDDDDD] disabled:to-[#DDDDDD] disabled:text-[#DDDDDD]",
-      "dark:disabled:from-[#727272] dark:disabled:to-[#727272] dark:disabled:text-[#727272]",
-      indicator && "[&>.indicator]:bg-[#442863] dark:[&>.indicator]:bg-[#DDC1FC]"
+      "from-gradient-misc-from-light to-gradient-misc-to-light text-misc-light hover:text-misc-hover-light",
+      "dark:from-gradient-misc-from-dark dark:to-gradient-misc-to-dark dark:text-misc-dark dark:hover:text-misc-hover-dark",
+      "before:bg-white dark:before:bg-bordered-dark-bg before:absolute before:inset-[2px] before:z-0",
+      "disabled:from-natural-disabled-light disabled:to-natural-disabled-light disabled:text-natural-disabled-light",
+      "dark:disabled:from-natural-disabled-dark dark:disabled:to-natural-disabled-dark dark:disabled:text-natural-disabled-dark",
+      indicator &&
+        "[&>.indicator]:bg-misc-indicator-alt-light dark:[&>.indicator]:bg-misc-indicator-dark"
     ]
   end
 
   defp color_variant("outline_gradient", "dawn", indicator) do
     [
       "gradient-button [&>*]:relative [&>*]:z-[1] relative bg-gradient-to-br hover:bg-gradient-to-bl",
-      "from-[#7E4B2A] to-[#DB976B] text-[#A86438] hover:text-[#7E4B2A]",
-      "dark:from-[#DB976B] dark:to-[#EDCBB5] dark:text-[#DB976B] dark:hover:text-[#DB976B]",
-      "before:bg-white dark:before:bg-[#282828] before:absolute before:inset-[2px] before:z-0",
-      "disabled:from-[#DDDDDD] disabled:to-[#DDDDDD] disabled:text-[#DDDDDD]",
-      "dark:disabled:from-[#727272] dark:disabled:to-[#727272] dark:disabled:text-[#727272]",
-      indicator && "[&>.indicator]:bg-[#54321C] dark:[&>.indicator]:bg-[#EDCBB5]"
+      "from-gradient-dawn-from-light to-gradient-dawn-to-light text-dawn-light hover:text-dawn-hover-light",
+      "dark:from-gradient-dawn-from-dark dark:to-gradient-dawn-to-dark dark:text-dawn-dark dark:hover:text-dawn-dark",
+      "before:bg-white dark:before:bg-bordered-dark-bg before:absolute before:inset-[2px] before:z-0",
+      "disabled:from-natural-disabled-light disabled:to-natural-disabled-light disabled:text-natural-disabled-light",
+      "dark:disabled:from-natural-disabled-dark dark:disabled:to-natural-disabled-dark dark:disabled:text-natural-disabled-dark",
+      indicator &&
+        "[&>.indicator]:bg-dawn-indicator-alt-light dark:[&>.indicator]:bg-dawn-indicator-dark"
     ]
   end
 
   defp color_variant("outline_gradient", "silver", indicator) do
     [
       "gradient-button [&>*]:relative [&>*]:z-[1] relative bg-gradient-to-br hover:bg-gradient-to-bl",
-      "from-[#5E5E5E] to-[#A6A6A6] text-[#868686] hover:text-[#727272]",
-      "dark:from-[#868686] dark:to-[#BBBBBB] dark:text-[#A6A6A6] dark:hover:text-[#BBBBBB]",
-      "before:bg-white dark:before:bg-[#282828] before:absolute before:inset-[2px] before:z-0",
-      "disabled:from-[#DDDDDD] disabled:to-[#DDDDDD] disabled:text-[#DDDDDD]",
-      "dark:disabled:from-[#727272] dark:disabled:to-[#727272] dark:disabled:text-[#727272]",
-      indicator && "[&>.indicator]:bg-[#5E5E5E] dark:[&>.indicator]:bg-[#DDDDDD]"
+      "from-gradient-silver-from-light to-gradient-silver-to-light text-silver-light hover:text-silver-hover-light",
+      "dark:from-gradient-silver-from-dark dark:to-gradient-silver-to-dark dark:text-silver-dark dark:hover:text-silver-hover-dark",
+      "before:bg-white dark:before:bg-bordered-dark-bg before:absolute before:inset-[2px] before:z-0",
+      "disabled:from-natural-disabled-light disabled:to-natural-disabled-light disabled:text-natural-disabled-light",
+      "dark:disabled:from-natural-disabled-dark dark:disabled:to-natural-disabled-dark dark:disabled:text-natural-disabled-dark",
+      indicator &&
+        "[&>.indicator]:bg-silver-indicator-alt-light dark:[&>.indicator]:bg-silver-indicator-dark"
     ]
   end
 
   defp color_variant("inverted_gradient", "natural", indicator) do
     [
       "gradient-button [&>*]:relative [&>*]:z-[1] relative bg-gradient-to-br hover:bg-gradient-to-bl",
-      "from-[#282828] to-[#727272] text-[#4B4B4B] hover:text-white",
-      "dark:from-[#A6A6A6] dark:to-[#FFFFFF] dark:text-[#DDDDDD] dark:hover:text-black",
-      "before:bg-white dark:before:bg-[#282828] before:transition",
+      "from-gradient-natural-from-light to-gradient-natural-to-light text-natural-light hover:text-white",
+      "dark:from-gradient-natural-from-dark dark:to-white dark:text-natural-dark dark:hover:text-black",
+      "before:bg-white dark:before:bg-bordered-dark-bg before:transition",
       "before:ease-in-out before:duration-100 duration before:absolute before:inset-[2px] before:z-0",
       "hover:before:bg-transparent dark:hover:before:bg-transparent",
-      "disabled:from-[#DDDDDD] disabled:to-[#DDDDDD] disabled:text-[#DDDDDD]",
-      "dark:disabled:from-[#727272] dark:disabled:to-[#727272] dark:disabled:text-[#727272]",
-      "hover:disabled:bg-white dark:hover:disabled:before:bg-[#282828]",
+      "disabled:from-natural-disabled-light disabled:to-natural-disabled-light disabled:text-natural-disabled-light",
+      "dark:disabled:from-natural-disabled-dark dark:disabled:to-natural-disabled-dark dark:disabled:text-natural-disabled-dark",
+      "hover:disabled:bg-white dark:hover:disabled:before:bg-bordered-dark-bg",
       indicator && "[&>.indicator]:bg-black dark:[&>.indicator]:bg-white",
       indicator && "[&:hover>.indicator]:bg-white dark:[&:hover>.indicator]:bg-black"
     ]
@@ -1697,151 +1779,169 @@ defmodule CommunityDemoWeb.Components.Button do
   defp color_variant("inverted_gradient", "primary", indicator) do
     [
       "gradient-button [&>*]:relative [&>*]:z-[1] relative bg-gradient-to-br hover:bg-gradient-to-bl",
-      "from-[#016974] to-[#01B8CA] text-[#007F8C] hover:text-white",
-      "dark:from-[#01B8CA] dark:to-[#B0E7EF] dark:text-[#01B8CA] dark:hover:text-black",
-      "before:bg-white dark:before:bg-[#282828] before:transition",
+      "from-gradient-primary-from-light to-gradient-primary-to-light text-primary-light hover:text-white",
+      "dark:from-gradient-primary-from-dark dark:to-gradient-primary-to-dark dark:text-primary-dark dark:hover:text-black",
+      "before:bg-white dark:before:bg-bordered-dark-bg before:transition",
       "before:ease-in-out before:duration-100 duration before:absolute before:inset-[2px] before:z-0",
       "hover:before:bg-transparent dark:hover:before:bg-transparent",
-      "disabled:from-[#DDDDDD] disabled:to-[#DDDDDD] disabled:text-[#DDDDDD]",
-      "dark:disabled:from-[#727272] dark:disabled:to-[#727272] dark:disabled:text-[#727272]",
-      "hover:disabled:bg-white dark:hover:disabled:before:bg-[#282828]",
-      indicator && "[&>.indicator]:bg-[#1A535A] dark:[&>.indicator]:bg-[#CDEEF3]",
-      indicator && "[&:hover>.indicator]:bg-[#CDEEF3] dark:[&:hover>.indicator]:bg-[#1A535A]"
+      "disabled:from-natural-disabled-light disabled:to-natural-disabled-light disabled:text-natural-disabled-light",
+      "dark:disabled:from-natural-disabled-dark dark:disabled:to-natural-disabled-dark dark:disabled:text-natural-disabled-dark",
+      "hover:disabled:bg-white dark:hover:disabled:before:bg-bordered-dark-bg",
+      indicator &&
+        "[&>.indicator]:bg-primary-indicator-light dark:[&>.indicator]:bg-primary-inverted-gradient-indicator-dark",
+      indicator &&
+        "[&:hover>.indicator]:bg-primary-inverted-gradient-indicator-dark dark:[&:hover>.indicator]:bg-primary-indicator-light"
     ]
   end
 
   defp color_variant("inverted_gradient", "secondary", indicator) do
     [
       "gradient-button [&>*]:relative [&>*]:z-[1] relative bg-gradient-to-br hover:bg-gradient-to-bl",
-      "from-[#175BCC] to-[#6DAAFB] text-[#266EF1] hover:text-white",
-      "dark:from-[#6DAAFB] dark:to-[#CDDEFF] dark:text-[#6DAAFB] dark:hover:text-black",
-      "before:bg-white dark:before:bg-[#282828] before:transition",
+      "from-gradient-secondary-from-light to-gradient-secondary-to-light text-secondary-light hover:text-white",
+      "dark:from-gradient-secondary-from-dark dark:to-gradient-secondary-to-dark dark:text-secondary-dark dark:hover:text-black",
+      "before:bg-white dark:before:bg-bordered-dark-bg before:transition",
       "before:ease-in-out before:duration-100 duration before:absolute before:inset-[2px] before:z-0",
       "hover:before:bg-transparent dark:hover:before:bg-transparent",
-      "disabled:from-[#DDDDDD] disabled:to-[#DDDDDD] disabled:text-[#DDDDDD]",
-      "dark:disabled:from-[#727272] dark:disabled:to-[#727272] dark:disabled:text-[#727272]",
-      "hover:disabled:bg-white dark:hover:disabled:before:bg-[#282828]",
-      indicator && "[&>.indicator]:bg-[#1948A3] dark:[&>.indicator]:bg-[#CDDEFF]",
-      indicator && "[&:hover>.indicator]:bg-[#CDDEFF] dark:[&:hover>.indicator]:bg-[#1948A3]"
+      "disabled:from-natural-disabled-light disabled:to-natural-disabled-light disabled:text-natural-disabled-light",
+      "dark:disabled:from-natural-disabled-dark dark:disabled:to-natural-disabled-dark dark:disabled:text-natural-disabled-dark",
+      "hover:disabled:bg-white dark:hover:disabled:before:bg-bordered-dark-bg",
+      indicator &&
+        "[&>.indicator]:bg-secondary-indicator-light dark:[&>.indicator]:bg-secondary-indicator-dark",
+      indicator &&
+        "[&:hover>.indicator]:bg-secondary-indicator-dark dark:[&:hover>.indicator]:bg-secondary-indicator-light"
     ]
   end
 
   defp color_variant("inverted_gradient", "success", indicator) do
     [
       "gradient-button [&>*]:relative [&>*]:z-[1] relative bg-gradient-to-br hover:bg-gradient-to-bl",
-      "from-[#166C3B] to-[#06C167] text-[#0E8345] hover:text-white",
-      "dark:from-[#06C167] dark:to-[#B1EAC2] dark:text-[#06C167] dark:hover:text-black",
-      "before:bg-white dark:before:bg-[#282828] before:transition",
+      "from-gradient-success-from-light to-gradient-success-to-light text-success-light hover:text-white",
+      "dark:from-gradient-success-from-dark dark:to-gradient-success-to-dark dark:text-success-dark dark:hover:text-black",
+      "before:bg-white dark:before:bg-bordered-dark-bg before:transition",
       "before:ease-in-out before:duration-100 duration before:absolute before:inset-[2px] before:z-0",
       "hover:before:bg-transparent dark:hover:before:bg-transparent",
-      "disabled:from-[#DDDDDD] disabled:to-[#DDDDDD] disabled:text-[#DDDDDD]",
-      "dark:disabled:from-[#727272] dark:disabled:to-[#727272] dark:disabled:text-[#727272]",
-      "hover:disabled:bg-white dark:hover:disabled:before:bg-[#282828]",
-      indicator && "[&>.indicator]:bg-[#0D572D] dark:[&>.indicator]:bg-[#B1EAC2]",
-      indicator && "[&:hover>.indicator]:bg-[#B1EAC2] dark:[&:hover>.indicator]:bg-[#0D572D]"
+      "disabled:from-natural-disabled-light disabled:to-natural-disabled-light disabled:text-natural-disabled-light",
+      "dark:disabled:from-natural-disabled-dark dark:disabled:to-natural-disabled-dark dark:disabled:text-natural-disabled-dark",
+      "hover:disabled:bg-white dark:hover:disabled:before:bg-bordered-dark-bg",
+      indicator &&
+        "[&>.indicator]:bg-success-indicator-alt-light dark:[&>.indicator]:bg-success-indicator-dark",
+      indicator &&
+        "[&:hover>.indicator]:bg-success-indicator-dark dark:[&:hover>.indicator]:bg-success-indicator-alt-light"
     ]
   end
 
   defp color_variant("inverted_gradient", "warning", indicator) do
     [
       "gradient-button [&>*]:relative [&>*]:z-[1] relative bg-gradient-to-br hover:bg-gradient-to-bl",
-      "from-[#976A01] to-[#FDC034] text-[#CA8D01] hover:text-white",
-      "dark:from-[#FDC034] dark:to-[#FEDF99] dark:text-[#FDC034] dark:hover:text-black",
-      "before:bg-white dark:before:bg-[#282828] before:transition",
+      "from-gradient-warning-from-light to-gradient-warning-to-light text-warning-light hover:text-white",
+      "dark:from-gradient-warning-from-dark dark:to-gradient-warning-to-dark dark:text-warning-dark dark:hover:text-black",
+      "before:bg-white dark:before:bg-bordered-dark-bg before:transition",
       "before:ease-in-out before:duration-100 duration before:absolute before:inset-[2px] before:z-0",
       "hover:before:bg-transparent dark:hover:before:bg-transparent",
-      "disabled:from-[#DDDDDD] disabled:to-[#DDDDDD] disabled:text-[#DDDDDD]",
-      "dark:disabled:from-[#727272] dark:disabled:to-[#727272] dark:disabled:text-[#727272]",
-      "hover:disabled:bg-white dark:hover:disabled:before:bg-[#282828]",
-      indicator && "[&>.indicator]:bg-[#654600] dark:[&>.indicator]:bg-[#FEDF99]",
-      indicator && "[&:hover>.indicator]:bg-[#FEDF99] dark:[&:hover>.indicator]:bg-[#654600]"
+      "disabled:from-natural-disabled-light disabled:to-natural-disabled-light disabled:text-natural-disabled-light",
+      "dark:disabled:from-natural-disabled-dark dark:disabled:to-natural-disabled-dark dark:disabled:text-natural-disabled-dark",
+      "hover:disabled:bg-white dark:hover:disabled:before:bg-bordered-dark-bg",
+      indicator &&
+        "[&>.indicator]:bg-warning-indicator-alt-light dark:[&>.indicator]:bg-warning-indicator-dark",
+      indicator &&
+        "[&:hover>.indicator]:bg-warning-indicator-dark dark:[&:hover>.indicator]:bg-warning-indicator-alt-light"
     ]
   end
 
   defp color_variant("inverted_gradient", "danger", indicator) do
     [
       "gradient-button [&>*]:relative [&>*]:z-[1] relative bg-gradient-to-br hover:bg-gradient-to-bl",
-      "from-[#BB032A] to-[#FC7F79] text-[#DE1135] hover:text-white",
-      "dark:from-[#FC7F79] dark:to-[#FFD2CD] dark:text-[#FC7F79] dark:hover:text-black",
-      "before:bg-white dark:before:bg-[#282828] before:transition",
+      "from-gradient-danger-from-light to-gradient-danger-to-light text-danger-light hover:text-white",
+      "dark:from-gradient-danger-from-dark dark:to-gradient-danger-to-dark dark:text-danger-dark dark:hover:text-black",
+      "before:bg-white dark:before:bg-bordered-dark-bg before:transition",
       "before:ease-in-out before:duration-100 duration before:absolute before:inset-[2px] before:z-0",
       "hover:before:bg-transparent dark:hover:before:bg-transparent",
-      "disabled:from-[#DDDDDD] disabled:to-[#DDDDDD] disabled:text-[#DDDDDD]",
-      "dark:disabled:from-[#727272] dark:disabled:to-[#727272] dark:disabled:text-[#727272]",
-      "hover:disabled:bg-white dark:hover:disabled:before:bg-[#282828]",
-      indicator && "[&>.indicator]:bg-[#950F22] dark:[&>.indicator]:bg-[#FFD2CD]",
-      indicator && "[&:hover>.indicator]:bg-[#FFD2CD] dark:[&:hover>.indicator]:bg-[#950F22]"
+      "disabled:from-natural-disabled-light disabled:to-natural-disabled-light disabled:text-natural-disabled-light",
+      "dark:disabled:from-natural-disabled-dark dark:disabled:to-natural-disabled-dark dark:disabled:text-natural-disabled-dark",
+      "hover:disabled:bg-white dark:hover:disabled:before:bg-bordered-dark-bg",
+      indicator &&
+        "[&>.indicator]:bg-danger-indicator-alt-light dark:[&>.indicator]:bg-danger-indicator-dark",
+      indicator &&
+        "[&:hover>.indicator]:bg-danger-indicator-dark dark:[&:hover>.indicator]:bg-danger-indicator-alt-light"
     ]
   end
 
   defp color_variant("inverted_gradient", "info", indicator) do
     [
       "gradient-button [&>*]:relative [&>*]:z-[1] relative bg-gradient-to-br hover:bg-gradient-to-bl",
-      "from-[#08638C] to-[#3EB7ED] text-[#0B84BA] hover:text-white",
-      "dark:from-[#3EB7ED] dark:to-[#9FDBF6] dark:text-[#3EB7ED] dark:hover:text-black",
-      "before:bg-white dark:before:bg-[#282828] before:transition",
+      "from-gradient-info-from-light to-gradient-info-to-light text-info-light hover:text-white",
+      "dark:from-gradient-info-from-dark dark:to-gradient-info-to-dark dark:text-info-dark dark:hover:text-black",
+      "before:bg-white dark:before:bg-bordered-dark-bg before:transition",
       "before:ease-in-out before:duration-100 duration before:absolute before:inset-[2px] before:z-0",
       "hover:before:bg-transparent dark:hover:before:bg-transparent",
-      "disabled:from-[#DDDDDD] disabled:to-[#DDDDDD] disabled:text-[#DDDDDD]",
-      "dark:disabled:from-[#727272] dark:disabled:to-[#727272] dark:disabled:text-[#727272]",
-      "hover:disabled:bg-white dark:hover:disabled:before:bg-[#282828]",
-      indicator && "[&>.indicator]:bg-[#06425D] dark:[&>.indicator]:bg-[#9FDBF6]",
-      indicator && "[&:hover>.indicator]:bg-[#9FDBF6] dark:[&:hover>.indicator]:bg-[#06425D]"
+      "disabled:from-natural-disabled-light disabled:to-natural-disabled-light disabled:text-natural-disabled-light",
+      "dark:disabled:from-natural-disabled-dark dark:disabled:to-natural-disabled-dark dark:disabled:text-natural-disabled-dark",
+      "hover:disabled:bg-white dark:hover:disabled:before:bg-bordered-dark-bg",
+      indicator &&
+        "[&>.indicator]:bg-info-indicator-alt-light dark:[&>.indicator]:bg-info-indicator-dark",
+      indicator &&
+        "[&:hover>.indicator]:bg-info-indicator-dark dark:[&:hover>.indicator]:bg-info-indicator-alt-light"
     ]
   end
 
   defp color_variant("inverted_gradient", "misc", indicator) do
     [
       "gradient-button [&>*]:relative [&>*]:z-[1] relative bg-gradient-to-br hover:bg-gradient-to-bl",
-      "from-[#653C94] to-[#BA83F9] text-[#8750C5] hover:text-white",
-      "dark:from-[#BA83F9] dark:to-[#DDC1FC] dark:text-[#BA83F9] dark:hover:text-black",
-      "before:bg-white dark:before:bg-[#282828] before:transition",
+      "from-gradient-misc-from-light to-gradient-misc-to-light text-misc-light hover:text-white",
+      "dark:from-gradient-misc-from-dark dark:to-gradient-misc-to-dark dark:text-misc-dark dark:hover:text-black",
+      "before:bg-white dark:before:bg-bordered-dark-bg before:transition",
       "before:ease-in-out before:duration-100 duration before:absolute before:inset-[2px] before:z-0",
       "hover:before:bg-transparent dark:hover:before:bg-transparent",
-      "disabled:from-[#DDDDDD] disabled:to-[#DDDDDD] disabled:text-[#DDDDDD]",
-      "dark:disabled:from-[#727272] dark:disabled:to-[#727272] dark:disabled:text-[#727272]",
-      "hover:disabled:bg-white dark:hover:disabled:before:bg-[#282828]",
-      indicator && "[&>.indicator]:bg-[#442863] dark:[&>.indicator]:bg-[#DDC1FC]",
-      indicator && "[&:hover>.indicator]:bg-[#DDC1FC] dark:[&:hover>.indicator]:bg-[#442863]"
+      "disabled:from-natural-disabled-light disabled:to-natural-disabled-light disabled:text-natural-disabled-light",
+      "dark:disabled:from-natural-disabled-dark dark:disabled:to-natural-disabled-dark dark:disabled:text-natural-disabled-dark",
+      "hover:disabled:bg-white dark:hover:disabled:before:bg-bordered-dark-bg",
+      indicator &&
+        "[&>.indicator]:bg-misc-indicator-alt-light dark:[&>.indicator]:bg-misc-indicator-dark",
+      indicator &&
+        "[&:hover>.indicator]:bg-misc-indicator-dark dark:[&:hover>.indicator]:bg-misc-indicator-alt-light"
     ]
   end
 
   defp color_variant("inverted_gradient", "dawn", indicator) do
     [
       "gradient-button [&>*]:relative [&>*]:z-[1] relative bg-gradient-to-br hover:bg-gradient-to-bl",
-      "from-[#7E4B2A] to-[#DB976B] text-[#A86438] hover:text-white",
-      "dark:from-[#DB976B] dark:to-[#EDCBB5] dark:text-[#DB976B] dark:hover:text-black",
-      "before:bg-white dark:before:bg-[#282828] before:transition",
+      "from-gradient-dawn-from-light to-gradient-dawn-to-light text-dawn-light hover:text-white",
+      "dark:from-gradient-dawn-from-dark dark:to-gradient-dawn-to-dark dark:text-dawn-dark dark:hover:text-black",
+      "before:bg-white dark:before:bg-bordered-dark-bg before:transition",
       "before:ease-in-out before:duration-100 duration before:absolute before:inset-[2px] before:z-0",
       "hover:before:bg-transparent dark:hover:before:bg-transparent",
-      "disabled:from-[#DDDDDD] disabled:to-[#DDDDDD] disabled:text-[#DDDDDD]",
-      "dark:disabled:from-[#727272] dark:disabled:to-[#727272] dark:disabled:text-[#727272]",
-      "hover:disabled:bg-white dark:hover:disabled:before:bg-[#282828]",
-      indicator && "[&>.indicator]:bg-[#54321C] dark:[&>.indicator]:bg-[#EDCBB5]",
-      indicator && "[&:hover>.indicator]:bg-[#EDCBB5] dark:[&:hover>.indicator]:bg-[#54321C]"
+      "disabled:from-natural-disabled-light disabled:to-natural-disabled-light disabled:text-natural-disabled-light",
+      "dark:disabled:from-natural-disabled-dark dark:disabled:to-natural-disabled-dark dark:disabled:text-natural-disabled-dark",
+      "hover:disabled:bg-white dark:hover:disabled:before:bg-bordered-dark-bg",
+      indicator &&
+        "[&>.indicator]:bg-dawn-indicator-alt-light dark:[&>.indicator]:bg-dawn-indicator-dark",
+      indicator &&
+        "[&:hover>.indicator]:bg-dawn-indicator-dark dark:[&:hover>.indicator]:bg-dawn-indicator-alt-light"
     ]
   end
 
   defp color_variant("inverted_gradient", "silver", indicator) do
     [
       "gradient-button [&>*]:relative [&>*]:z-[1] relative bg-gradient-to-br hover:bg-gradient-to-bl",
-      "from-[#5E5E5E] to-[#A6A6A6] text-[#868686] hover:text-white",
-      "dark:from-[#868686] dark:to-[#BBBBBB] dark:text-[#A6A6A6] dark:hover:text-black",
-      "before:bg-white dark:before:bg-[#282828] before:transition",
+      "from-gradient-silver-from-light to-gradient-silver-to-light text-silver-light hover:text-white",
+      "dark:from-gradient-silver-from-dark dark:to-gradient-silver-to-dark dark:text-silver-dark dark:hover:text-black",
+      "before:bg-white dark:before:bg-bordered-dark-bg before:transition",
       "before:ease-in-out before:duration-100 duration before:absolute before:inset-[2px] before:z-0",
       "hover:before:bg-transparent dark:hover:before:bg-transparent",
-      "disabled:from-[#DDDDDD] disabled:to-[#DDDDDD] disabled:text-[#DDDDDD]",
-      "dark:disabled:from-[#727272] dark:disabled:to-[#727272] dark:disabled:text-[#727272]",
-      "hover:disabled:bg-white dark:hover:disabled:before:bg-[#282828]",
-      indicator && "[&>.indicator]:bg-[#E8E8E8] dark:[&>.indicator]:bg-[#DDDDDD]",
-      indicator && "[&:hover>.indicator]:bg-[#DDDDDD] dark:[&:hover>.indicator]:bg-[#E8E8E8]"
+      "disabled:from-natural-disabled-light disabled:to-natural-disabled-light disabled:text-natural-disabled-light",
+      "dark:disabled:from-natural-disabled-dark dark:disabled:to-natural-disabled-dark dark:disabled:text-natural-disabled-dark",
+      "hover:disabled:bg-white dark:hover:disabled:before:bg-bordered-dark-bg",
+      indicator &&
+        "[&>.indicator]:bg-natural-hover-dark dark:[&>.indicator]:bg-silver-indicator-dark",
+      indicator &&
+        "[&:hover>.indicator]:bg-silver-indicator-dark dark:[&:hover>.indicator]:bg-natural-hover-dark"
     ]
   end
 
   defp color_variant(params, _, _) when is_binary(params), do: params
 
   defp border_class("base") do
-    "border-[#e4e4e7] dark:border-[#27272a]"
+    "border-base-border-light dark:border-base-border-dark"
   end
 
   defp border_class("natural") do
@@ -1853,39 +1953,39 @@ defmodule CommunityDemoWeb.Components.Button do
   end
 
   defp border_class("primary") do
-    "border-[#000000] dark:border-[#B0E7EF]"
+    "border-primary-border-light dark:border-primary-border-dark"
   end
 
   defp border_class("secondary") do
-    "border-[#1948A3] dark:border-[#CDDEFF]"
+    "border-secondary-border-light dark:border-secondary-border-dark"
   end
 
   defp border_class("success") do
-    "border-[#0D572D] dark:border-[#B1EAC2]"
+    "border-success-border-light dark:border-success-border-dark"
   end
 
   defp border_class("warning") do
-    "border-[#654600] dark:border-[#FEDF99]"
+    "border-warning-border-light dark:border-warning-border-dark"
   end
 
   defp border_class("danger") do
-    "border-[#950F22] dark:border-[#FFD2CD]"
+    "border-danger-border-light dark:border-danger-border-dark"
   end
 
   defp border_class("info") do
-    "border-[#06425D] dark:border-[#9FDBF6]"
+    "border-info-border-light dark:border-info-border-dark"
   end
 
   defp border_class("misc") do
-    "border-[#442863] dark:border-[#DDC1FC]"
+    "border-misc-border-light dark:border-misc-border-dark"
   end
 
   defp border_class("dawn") do
-    "border-[#54321C] dark:border-[#EDCBB5]"
+    "border-dawn-border-light dark:border-dawn-border-dark"
   end
 
   defp border_class("silver") do
-    "border-[#5E5E5E] dark:border-[#DDDDDD]"
+    "border-silver-border-light dark:border-silver-border-dark"
   end
 
   defp border_class(params) when is_binary(params), do: params
@@ -1999,7 +2099,7 @@ defmodule CommunityDemoWeb.Components.Button do
 
   defp default_classes(pinging, indicator) do
     [
-      "phx-submit-loading:opacity-75 relative gap-2 items-center",
+      "phx-submit-loading:opacity-75 cursor-pointer relative gap-2 items-center",
       "transition-all ease-in-ou duration-100 group",
       "disabled:cursor-not-allowed",
       "focus:outline-none",

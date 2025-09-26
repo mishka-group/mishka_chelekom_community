@@ -12,6 +12,8 @@ defmodule CommunityDemoWeb.Components.CheckboxField do
   - Support for form integration using `Phoenix.HTML.FormField`.
   - Customizable properties like color themes, border styles, sizes, and layout variations.
   - Error handling with customizable icons and messages.
+
+  **Documentation:** https://mishka.tools/chelekom/docs/forms/checkbox-field
   """
 
   use Phoenix.Component
@@ -107,7 +109,7 @@ defmodule CommunityDemoWeb.Components.CheckboxField do
       border_class(@border),
       size_class(@size),
       space_class(@space),
-      @ring && "[&_.checkbox-field-wrapper_input]:focus-within:ring-1",
+      @ring && "[&_.checkbox-field-wrapper:focus-within_input]:ring-1",
       @reverse && "[&_.checkbox-field-wrapper]:flex-row-reverse",
       @class
     ]}>
@@ -124,7 +126,7 @@ defmodule CommunityDemoWeb.Components.CheckboxField do
           value={@value}
           id={@id}
           checked={@checked}
-          class={["bg-white dark:bg-[#18181B] checkbox-input", @checkbox_class]}
+          class={["bg-white dark:bg-base-bg-dark checkbox-input", @checkbox_class]}
           {@rest}
         />
         <span :if={@label} class={@label_class}>{@label}</span>
@@ -234,7 +236,7 @@ defmodule CommunityDemoWeb.Components.CheckboxField do
           border_class(@border),
           size_class(@size),
           space_class(checkbox[:space] || "small"),
-          @ring && "[&_.checkbox-field-wrapper_input]:focus-within:ring-1",
+          @ring && "[&_.checkbox-field-wrapper:focus-within_input]:ring-1",
           @reverse && "[&_.checkbox-field-wrapper]:flex-row-reverse",
           @wrapper_class
         ]}
@@ -249,7 +251,7 @@ defmodule CommunityDemoWeb.Components.CheckboxField do
             id={"#{@id}-#{index}"}
             value={checkbox[:value]}
             checked={checkbox[:checked]}
-            class={["bg-white dark:bg-[#18181B] checkbox-input", @checkbox_class]}
+            class={["bg-white dark:bg-base-bg-dark checkbox-input", @checkbox_class]}
             {@rest}
           />
           <span class={@label_class}>{render_slot(checkbox)}</span>
@@ -287,7 +289,7 @@ defmodule CommunityDemoWeb.Components.CheckboxField do
 
   defp label(assigns) do
     ~H"""
-    <label for={@for} class={["block text-sm font-semibold leading-6", @class]}>
+    <label for={@for} class={["text-sm font-semibold leading-6", @class]}>
       {render_slot(@inner_block)}
     </label>
     """
@@ -369,138 +371,140 @@ defmodule CommunityDemoWeb.Components.CheckboxField do
 
   defp color_class("base") do
     [
-      "text-[#09090b] dark:text-[#FAFAFA]",
-      "checked:[&_.checkbox-field-wrapper_.checkbox-input]:text-[#8B8B8D]",
-      "dark:checked:[&_.checkbox-field-wrapper_.checkbox-input]:text-[#818182]",
-      "[&_.checkbox-field-wrapper_.checkbox-input]:border-[#8B8B8D]",
-      "dark:[&_.checkbox-field-wrapper_.checkbox-input]:border-[#818182]",
-      "focus-within:[&_.checkbox-field-wrapper_.checkbox-input]:ring-[#F8F9FA] dark:focus-within:[&_.checkbox-field-wrapper_.checkbox-input]:ring-[#696969]"
+      "text-base-text-light dark:text-base-text-dark",
+      "[&_.checkbox-field-wrapper_.checkbox-input]:checked:accent-base-form-border-light",
+      "dark:[&_.checkbox-field-wrapper_.checkbox-input]:checked:accent-base-form-border-dark",
+      "[&_.checkbox-field-wrapper_.checkbox-input]:border-base-form-border-light",
+      "dark:[&_.checkbox-field-wrapper_.checkbox-input]:border-base-form-border-dark",
+      "[&_.checkbox-field-wrapper:focus-within_.checkbox-input]:ring-base-hover-light dark:[&_.checkbox-field-wrapper:focus-within_.checkbox-input]:ring-base-form-focus-dark"
     ]
   end
 
   defp color_class("white") do
     [
-      "[&_.checkbox-field-wrapper_.checkbox-input]:text-white text-[#DDDDDD]",
-      "[&_.checkbox-field-wrapper_.checkbox-input]:border-[#DDDDDD]",
-      "focus-within:[&_.checkbox-field-wrapper_.checkbox-input_.radio-input]:ring-[#DDDDDD]"
+      "[&_.checkbox-field-wrapper_.checkbox-input]:text-white text-natural-dark",
+      "[&_.checkbox-field-wrapper_.checkbox-input]:border-natural-dark",
+      "[&_.checkbox-field-wrapper_.checkbox-input]:checked:accent-white",
+      "[&_.checkbox-field-wrapper:focus-within_.checkbox-input]:ring-natural-dark"
     ]
   end
 
   defp color_class("natural") do
     [
-      "text-[#282828] dark:text-[#E8E8E8]",
-      "checked:[&_.checkbox-field-wrapper_.checkbox-input]:text-[#282828]",
-      "dark:checked:[&_.checkbox-field-wrapper_.checkbox-input]:text-[#E8E8E8]",
-      "[&_.checkbox-field-wrapper_.checkbox-input]:border-[#282828]",
-      "dark:[&_.checkbox-field-wrapper_.checkbox-input]:border-[#868686]",
-      "focus-within:[&_.checkbox-field-wrapper_.checkbox-input]:ring-[#4B4B4B] dark:focus-within:[&_.checkbox-field-wrapper_.checkbox-input]:ring-[#DDDDDD]"
+      "text-natural-bordered-text-light dark:text-natural-bordered-text-dark",
+      "[&_.checkbox-field-wrapper_.checkbox-input]:checked:accent-natural-bordered-text-light",
+      "dark:[&_.checkbox-field-wrapper_.checkbox-input]:checked:accent-natural-bordered-text-dark",
+      "[&_.checkbox-field-wrapper_.checkbox-input]:border-natural-bordered-text-light",
+      "dark:[&_.checkbox-field-wrapper_.checkbox-input]:border-silver-light",
+      "[&_.checkbox-field-wrapper:focus-within_.checkbox-input]:ring-natural-light dark:[&_.checkbox-field-wrapper:focus-within_.checkbox-input]:ring-natural-dark"
     ]
   end
 
   defp color_class("primary") do
     [
-      "text-[#016974] dark:text-[#77D5E3]",
-      "checked:[&_.checkbox-field-wrapper_.checkbox-input]:text-[#016974]",
-      "dark:checked:[&_.checkbox-field-wrapper_.checkbox-input]:text-[#77D5E3]",
-      "[&_.checkbox-field-wrapper_.checkbox-input]:border-[#016974]",
-      "dark:[&_.checkbox-field-wrapper_.checkbox-input]:border-[#77D5E3]",
-      "focus-within:[&_.checkbox-field-wrapper_.checkbox-input]:ring-[#007F8C] dark:focus-within:[&_.checkbox-field-wrapper_.checkbox-input]:ring-[#01B8CA]"
+      "text-primary-bordered-text-light dark:text-primary-bordered-text-dark",
+      "[&_.checkbox-field-wrapper_.checkbox-input]:checked:accent-primary-bordered-text-light",
+      "dark:[&_.checkbox-field-wrapper_.checkbox-input]:checked:accent-primary-bordered-text-dark",
+      "[&_.checkbox-field-wrapper_.checkbox-input]:border-primary-bordered-text-light",
+      "dark:[&_.checkbox-field-wrapper_.checkbox-input]:border-primary-bordered-text-dark",
+      "[&_.checkbox-field-wrapper:focus-within_.checkbox-input]:ring-primary-light dark:[&_.checkbox-field-wrapper:focus-within_.checkbox-input]:ring-primary-dark"
     ]
   end
 
   defp color_class("secondary") do
     [
-      "text-[#175BCC] dark:text-[#A9C9FF]",
-      "checked:[&_.checkbox-field-wrapper_.checkbox-input]:text-[#175BCC]",
-      "dark:checked:[&_.checkbox-field-wrapper_.checkbox-input]:text-[#A9C9FF]",
-      "[&_.checkbox-field-wrapper_.checkbox-input]:border-[#175BCC]",
-      "dark:[&_.checkbox-field-wrapper_.checkbox-input]:border-[#A9C9FF]",
-      "focus-within:[&_.checkbox-field-wrapper_.checkbox-input]:ring-[#266EF1] dark:focus-within:[&_.checkbox-field-wrapper_.checkbox-input]:ring-[#6DAAFB]"
+      "text-secondary-bordered-text-light dark:text-secondary-bordered-text-dark",
+      "[&_.checkbox-field-wrapper_.checkbox-input]:checked:accent-secondary-bordered-text-light",
+      "dark:[&_.checkbox-field-wrapper_.checkbox-input]:checked:accent-secondary-bordered-text-dark",
+      "[&_.checkbox-field-wrapper_.checkbox-input]:border-secondary-bordered-text-light",
+      "dark:[&_.checkbox-field-wrapper_.checkbox-input]:border-secondary-bordered-text-dark",
+      "[&_.checkbox-field-wrapper:focus-within_.checkbox-input]:ring-secondary-light dark:[&_.checkbox-field-wrapper:focus-within_.checkbox-input]:ring-secondary-dark"
     ]
   end
 
   defp color_class("success") do
     [
-      "text-[#166C3B] dark:text-[#7FD99A]",
-      "checked:[&_.checkbox-field-wrapper_.checkbox-input]:text-[#166C3B]",
-      "dark:checked:[&_.checkbox-field-wrapper_.checkbox-input]:text-[#7FD99A]",
-      "[&_.checkbox-field-wrapper_.checkbox-input]:border-[#166C3B]",
-      "dark:[&_.checkbox-field-wrapper_.checkbox-input]:border-[#7FD99A]",
-      "focus-within:[&_.checkbox-field-wrapper_.checkbox-input]:ring-[#0E8345] dark:focus-within:[&_.checkbox-field-wrapper_.checkbox-input]:ring-[#06C167]"
+      "text-success-bordered-text-light dark:text-success-bordered-text-dark",
+      "[&_.checkbox-field-wrapper_.checkbox-input]:checked:accent-success-bordered-text-light",
+      "dark:[&_.checkbox-field-wrapper_.checkbox-input]:checked:accent-success-bordered-text-dark",
+      "[&_.checkbox-field-wrapper_.checkbox-input]:border-success-bordered-text-light",
+      "dark:[&_.checkbox-field-wrapper_.checkbox-input]:border-success-bordered-text-dark",
+      "[&_.checkbox-field-wrapper:focus-within_.checkbox-input]:ring-success-light dark:[&_.checkbox-field-wrapper:focus-within_.checkbox-input]:ring-success-dark"
     ]
   end
 
   defp color_class("warning") do
     [
-      "text-[#976A01] dark:text-[#FDD067]",
-      "checked:[&_.checkbox-field-wrapper_.checkbox-input]:text-[#976A01]",
-      "dark:checked:[&_.checkbox-field-wrapper_.checkbox-input]:text-[#FDD067]",
-      "[&_.checkbox-field-wrapper_.checkbox-input]:border-[#976A01]",
-      "dark:[&_.checkbox-field-wrapper_.checkbox-input]:border-[#FDD067]",
-      "focus-within:[&_.checkbox-field-wrapper_.checkbox-input]:ring-[#CA8D01] dark:focus-within:[&_.checkbox-field-wrapper_.checkbox-input]:ring-[#FDC034]"
+      "text-warning-bordered-text-light dark:text-warning-bordered-text-dark",
+      "[&_.checkbox-field-wrapper_.checkbox-input]:checked:accent-warning-bordered-text-light",
+      "dark:[&_.checkbox-field-wrapper_.checkbox-input]:checked:accent-warning-bordered-text-dark",
+      "[&_.checkbox-field-wrapper_.checkbox-input]:border-warning-bordered-text-light",
+      "dark:[&_.checkbox-field-wrapper_.checkbox-input]:border-warning-bordered-text-dark",
+      "[&_.checkbox-field-wrapper:focus-within_.checkbox-input]:ring-warning-light dark:[&_.checkbox-field-wrapper:focus-within_.checkbox-input]:ring-warning-dark"
     ]
   end
 
   defp color_class("danger") do
     [
-      "text-[#BB032A] dark:text-[#FFB2AB]",
-      "checked:[&_.checkbox-field-wrapper_.checkbox-input]:text-[#BB032A]",
-      "dark:checked:[&_.checkbox-field-wrapper_.checkbox-input]:text-[#FFB2AB]",
-      "[&_.checkbox-field-wrapper_.checkbox-input]:border-[#BB032A]",
-      "dark:[&_.checkbox-field-wrapper_.checkbox-input]:border-[#FFB2AB]",
-      "focus-within:[&_.checkbox-field-wrapper_.checkbox-input]:ring-[#DE1135] dark:focus-within:[&_.checkbox-field-wrapper_.checkbox-input]:ring-[#FC7F79]"
+      "text-danger-bordered-text-light dark:text-danger-bordered-text-dark",
+      "[&_.checkbox-field-wrapper_.checkbox-input]:checked:accent-danger-bordered-text-light",
+      "dark:[&_.checkbox-field-wrapper_.checkbox-input]:checked:accent-danger-bordered-text-dark",
+      "[&_.checkbox-field-wrapper_.checkbox-input]:border-danger-bordered-text-light",
+      "dark:[&_.checkbox-field-wrapper_.checkbox-input]:border-danger-bordered-text-dark",
+      "[&_.checkbox-field-wrapper:focus-within_.checkbox-input]:ring-danger-light dark:[&_.checkbox-field-wrapper:focus-within_.checkbox-input]:ring-danger-dark"
     ]
   end
 
   defp color_class("info") do
     [
-      "text-[#0B84BA] dark:text-[#6EC9F2]",
-      "checked:[&_.checkbox-field-wrapper_.checkbox-input]:text-[#0B84BA]",
-      "dark:checked:[&_.checkbox-field-wrapper_.checkbox-input]:text-[#6EC9F2]",
-      "[&_.checkbox-field-wrapper_.checkbox-input]:border-[#0B84BA]",
-      "dark:[&_.checkbox-field-wrapper_.checkbox-input]:border-[#6EC9F2]",
-      "focus-within:[&_.checkbox-field-wrapper_.checkbox-input]:ring-[#0B84BA] dark:focus-within:[&_.checkbox-field-wrapper_.checkbox-input]:ring-[#3EB7ED]"
+      "text-info-light dark:text-info-hover-dark",
+      "[&_.checkbox-field-wrapper_.checkbox-input]:checked:accent-info-light",
+      "dark:[&_.checkbox-field-wrapper_.checkbox-input]:checked:accent-info-hover-dark",
+      "[&_.checkbox-field-wrapper_.checkbox-input]:border-info-light",
+      "dark:[&_.checkbox-field-wrapper_.checkbox-input]:border-info-hover-dark",
+      "[&_.checkbox-field-wrapper:focus-within_.checkbox-input]:ring-info-light dark:[&_.checkbox-field-wrapper:focus-within_.checkbox-input]:ring-info-dark"
     ]
   end
 
   defp color_class("misc") do
     [
-      "text-[#653C94] dark:text-[#CBA2FA]",
-      "checked:[&_.checkbox-field-wrapper_.checkbox-input]:text-[#653C94]",
-      "dark:checked:[&_.checkbox-field-wrapper_.checkbox-input]:text-[#CBA2FA]",
-      "[&_.checkbox-field-wrapper_.checkbox-input]:border-[#653C94]",
-      "dark:[&_.checkbox-field-wrapper_.checkbox-input]:border-[#CBA2FA]",
-      "focus-within:[&_.checkbox-field-wrapper_.checkbox-input]:ring-[#8750C5] dark:focus-within:[&_.checkbox-field-wrapper_.checkbox-input]:ring-[#BA83F9]"
+      "text-misc-bordered-text-light dark:text-misc-bordered-text-dark",
+      "[&_.checkbox-field-wrapper_.checkbox-input]:checked:accent-misc-bordered-text-light",
+      "dark:[&_.checkbox-field-wrapper_.checkbox-input]:checked:accent-misc-bordered-text-dark",
+      "[&_.checkbox-field-wrapper_.checkbox-input]:border-misc-bordered-text-light",
+      "dark:[&_.checkbox-field-wrapper_.checkbox-input]:border-misc-bordered-text-dark",
+      "[&_.checkbox-field-wrapper:focus-within_.checkbox-input]:ring-misc-light dark:[&_.checkbox-field-wrapper:focus-within_.checkbox-input]:ring-misc-dark"
     ]
   end
 
   defp color_class("dawn") do
     [
-      "text-[#7E4B2A] dark:text-[#E4B190]",
-      "checked:[&_.checkbox-field-wrapper_.checkbox-input]:text-[#7E4B2A]",
-      "dark:checked:[&_.checkbox-field-wrapper_.checkbox-input]:text-[#E4B190]",
-      "[&_.checkbox-field-wrapper_.checkbox-input]:border-[#7E4B2A]",
-      "dark:[&_.checkbox-field-wrapper_.checkbox-input]:border-[#E4B190]",
-      "focus-within:[&_.checkbox-field-wrapper_.checkbox-input]:ring-[#A86438] dark:focus-within:[&_.checkbox-field-wrapper_.checkbox-input]:ring-[#DB976B]"
+      "text-dawn-bordered-text-light dark:text-dawn-bordered-text-dark",
+      "[&_.checkbox-field-wrapper_.checkbox-input]:checked:accent-dawn-bordered-text-light",
+      "dark:[&_.checkbox-field-wrapper_.checkbox-input]:checked:accent-dawn-bordered-text-dark",
+      "[&_.checkbox-field-wrapper_.checkbox-input]:border-dawn-bordered-text-light",
+      "dark:[&_.checkbox-field-wrapper_.checkbox-input]:border-dawn-bordered-text-dark",
+      "[&_.checkbox-field-wrapper:focus-within_.checkbox-input]:ring-dawn-light dark:[&_.checkbox-field-wrapper:focus-within_.checkbox-input]:ring-dawn-dark"
     ]
   end
 
   defp color_class("silver") do
     [
-      "text-[#727272] dark:text-[#BBBBBB]",
-      "checked:[&_.checkbox-field-wrapper_.checkbox-input]:text-[#727272]",
-      "dark:checked:[&_.checkbox-field-wrapper_.checkbox-input]:text-[#BBBBBB]",
-      "[&_.checkbox-field-wrapper_.checkbox-input]:border-[#727272]",
-      "dark:[&_.checkbox-field-wrapper_.checkbox-input]:border-[#BBBBBB]",
-      "focus-within:[&_.checkbox-field-wrapper_.checkbox-input]:ring-[#868686] dark:focus-within:[&_.checkbox-field-wrapper_.checkbox-input]:ring-[#A6A6A6]"
+      "text-silver-bordered-text-light dark:text-silver-bordered-text-dark",
+      "[&_.checkbox-field-wrapper_.checkbox-input]:checked:accent-silver-bordered-text-light",
+      "dark:[&_.checkbox-field-wrapper_.checkbox-input]:checked:accent-silver-bordered-text-dark",
+      "[&_.checkbox-field-wrapper_.checkbox-input]:border-silver-bordered-text-light",
+      "dark:[&_.checkbox-field-wrapper_.checkbox-input]:border-silver-bordered-text-dark",
+      "[&_.checkbox-field-wrapper:focus-within_.checkbox-input]:ring-silver-light dark:[&_.checkbox-field-wrapper:focus-within_.checkbox-input]:ring-silver-dark"
     ]
   end
 
   defp color_class("dark") do
     [
-      "[&_.checkbox-field-wrapper_.checkbox-input]:text-[#282828] text-[#282828]",
-      "[&_.checkbox-field-wrapper_.checkbox-input]:border-[#727272]",
-      "focus-within:[&_.checkbox-field-wrapper_.checkbox-input]:ring-[#282828]"
+      "[&_.checkbox-field-wrapper_.checkbox-input]:text-default-dark-bg text-default-dark-bg",
+      "[&_.checkbox-field-wrapper_.checkbox-input]:checked:accent-default-dark-bg",
+      "[&_.checkbox-field-wrapper_.checkbox-input]:border-silver-hover-light",
+      "[&_.checkbox-field-wrapper:focus-within_.checkbox-input]:ring-default-dark-bg"
     ]
   end
 

@@ -14,6 +14,8 @@ defmodule CommunityDemoWeb.Components.RangeField do
   such as sliders for adjusting numerical values or settings. It ensures a visually consistent
   and user-friendly experience across different parts of the application, while maintaining a
   high level of customization and control.
+
+  **Documentation:** https://mishka.tools/chelekom/docs/forms/range-field
   """
   use Phoenix.Component
   import CommunityDemoWeb.Components.Icon, only: [icon: 1]
@@ -160,15 +162,15 @@ defmodule CommunityDemoWeb.Components.RangeField do
             "range-field bg-transparent cursor-pointer appearance-none disabled:opacity-50",
             "disabled:pointer-events-none focus:outline-none",
             "[&::-webkit-slider-runnable-track]:w-full [&::-webkit-slider-thumb]:rounded-full",
-            "[&::-webkit-slider-runnable-track]:bg-[#DDDDDD] dark:[&::-webkit-slider-runnable-track]:bg-[#4B4B4B]",
-            "[&::-webkit-slider-thumb]:bg-[#DDDDDD] dark:[&::-webkit-slider-thumb]:bg-[#4B4B4B]",
+            "[&::-webkit-slider-runnable-track]:bg-natural-disabled-light dark:[&::-webkit-slider-runnable-track]:bg-silver-bordered-bg-dark",
+            "[&::-webkit-slider-thumb]:bg-natural-disabled-light dark:[&::-webkit-slider-thumb]:bg-silver-bordered-bg-dark",
             "[&::-webkit-slider-thumb]:-mt-0.5 [&::-webkit-slider-thumb]:appearance-none",
             "[&::-webkit-slider-thumb]:transition-all [&::-webkit-slider-thumb]:duration-200 [&::-webkit-slider-thumb]:ease-in-out",
             "[&::-moz-range-thumb]:appearance-none [&::-moz-range-thumb]:bg-white",
             "[&::-moz-range-thumb]:border-4 [&::-moz-range-thumb]:rounded-full",
             "[&::-moz-range-thumb]:transition-all [&::-moz-range-thumb]:duration-200 [&::-moz-range-thumb]:ease-in-out",
             "[&::-webkit-slider-runnable-track]:rounded-full [&::-moz-range-track]:w-full",
-            "[&::-moz-range-track]:bg-[#e6e6e6] [&::-moz-range-track]:rounded-full"
+            "[&::-moz-range-track]:bg-range-light-gray [&::-moz-range-track]:rounded-full"
           ]}
           {@rest}
         />
@@ -266,7 +268,7 @@ defmodule CommunityDemoWeb.Components.RangeField do
   defp size_class(params) when is_binary(params), do: params
 
   defp color_class("default", "base") do
-    ["accent-[#27272a] dark:accent-[#e4e4e7]"]
+    ["accent-base-border-dark dark:accent-base-border-light"]
   end
 
   defp color_class("default", "white") do
@@ -274,150 +276,150 @@ defmodule CommunityDemoWeb.Components.RangeField do
   end
 
   defp color_class("default", "natural") do
-    ["accent-[#4B4B4B] dark:accent-[#DDDDDD]"]
+    ["accent-natural-light dark:accent-natural-dark"]
   end
 
   defp color_class("default", "primary") do
-    ["accent-[#007F8C] dark:accent-[#01B8CA]"]
+    ["accent-primary-light dark:accent-primary-dark"]
   end
 
   defp color_class("default", "secondary") do
-    ["accent-[#266EF1] dark:accent-[#6DAAFB]"]
+    ["accent-secondary-light dark:accent-secondary-dark"]
   end
 
   defp color_class("default", "success") do
-    ["accent-[#0E8345] dark:accent-[#06C167]"]
+    ["accent-success-light dark:accent-success-dark"]
   end
 
   defp color_class("default", "warning") do
-    ["accent-[#976A01] dark:accent-[#FDC034]"]
+    ["accent-warning-hover-light dark:accent-warning-dark"]
   end
 
   defp color_class("default", "danger") do
-    ["accent-[#DE1135] dark:accent-[#FC7F79]"]
+    ["accent-danger-light dark:accent-danger-dark"]
   end
 
   defp color_class("default", "info") do
-    ["accent-[#0B84BA] dark:accent-[#3EB7ED]"]
+    ["accent-info-light dark:accent-info-dark"]
   end
 
   defp color_class("default", "misc") do
-    ["accent-[#8750C5] dark:accent-[#BA83F9]"]
+    ["accent-misc-light dark:accent-misc-dark"]
   end
 
   defp color_class("default", "dawn") do
-    ["accent-[#A86438] dark:accent-[#DB976B]"]
+    ["accent-dawn-light dark:accent-dawn-dark"]
   end
 
   defp color_class("default", "silver") do
-    ["accent-[#868686] dark:accent-[#A6A6A6]"]
+    ["accent-silver-light dark:accent-silver-dark"]
   end
 
   defp color_class("default", "dark") do
-    ["accent-[#282828]"]
+    ["accent-natural-hover-light"]
   end
 
   defp color_class("custom", "white") do
     [
       "[&_.range-field::-moz-range-thumb]:border-white",
-      "[&_.range-field::-webkit-slider-thumb]:shadow-[0_0_0_4px_rgba(255,255,255,1)]"
+      "[&_.range-field::-webkit-slider-thumb]:shadow-[0_0_0_4px_var(--color-white)]"
     ]
   end
 
   defp color_class("custom", "natural") do
     [
-      "[&_.range-field::-moz-range-thumb]:border-[#4B4B4B]",
-      "[&_.range-field::-webkit-slider-thumb]:shadow-[0_0_0_4px_rgba(75,75,75,1)]",
-      "dark:[&_.range-field::-moz-range-thumb]:border-[#DDDDDD]",
-      "dark:[&_.range-field::-webkit-slider-thumb]:shadow-[0_0_0_4px_rgba(221,221,221,1)]"
+      "[&_.range-field::-moz-range-thumb]:border-natural-light",
+      "[&_.range-field::-webkit-slider-thumb]:shadow-[0_0_0_4px_var(--color-natural-light)]",
+      "dark:[&_.range-field::-moz-range-thumb]:border-natural-dark",
+      "dark:[&_.range-field::-webkit-slider-thumb]:shadow-[0_0_0_4px_var(--color-natural-dark)]"
     ]
   end
 
   defp color_class("custom", "primary") do
     [
-      "[&_.range-field::-moz-range-thumb]:border-[#007f8c]",
-      "[&_.range-field::-webkit-slider-thumb]:shadow-[0_0_0_4px_rgba(0,65,127,140)]",
-      "dark:[&_.range-field::-moz-range-thumb]:border-[#01B8CA]",
-      "dark:[&_.range-field::-webkit-slider-thumb]:shadow-[0_0_0_4px_rgba(1,184,202,140)]"
+      "[&_.range-field::-moz-range-thumb]:border-primary-light",
+      "[&_.range-field::-webkit-slider-thumb]:shadow-[0_0_0_4px_var(--color-primary-light)]",
+      "dark:[&_.range-field::-moz-range-thumb]:border-primary-dark",
+      "dark:[&_.range-field::-webkit-slider-thumb]:shadow-[0_0_0_4px_var(--color-primary-dark)]"
     ]
   end
 
   defp color_class("custom", "secondary") do
     [
-      "[&_.range-field::-moz-range-thumb]:border-[#266EF1]",
-      "[&_.range-field::-webkit-slider-thumb]:shadow-[0_0_0_4px_rgba(38,110,241,1)]",
-      "dark[&_.range-field::-moz-range-thumb]:border-[#6DAAFB]",
-      "dark[&_.range-field::-webkit-slider-thumb]:shadow-[0_0_0_4px_rgba(109,170,251,1)]"
+      "[&_.range-field::-moz-range-thumb]:border-secondary-light",
+      "[&_.range-field::-webkit-slider-thumb]:shadow-[0_0_0_4px_var(--color-secondary-light)]",
+      "dark:[&_.range-field::-moz-range-thumb]:border-secondary-dark",
+      "dark:[&_.range-field::-webkit-slider-thumb]:shadow-[0_0_0_4px_var(--color-secondary-dark)]"
     ]
   end
 
   defp color_class("custom", "success") do
     [
-      "[&_.range-field::-moz-range-thumb]:border-[#0E8345]",
-      "[&_.range-field::-webkit-slider-thumb]:shadow-[0_0_0_4px_rgba(14,131,69,1)]",
-      "dark:[&_.range-field::-moz-range-thumb]:border-[#06C167]",
-      "dark:[&_.range-field::-webkit-slider-thumb]:shadow-[0_0_0_4px_rgba(6,193,103,1)]"
+      "[&_.range-field::-moz-range-thumb]:border-success-light",
+      "[&_.range-field::-webkit-slider-thumb]:shadow-[0_0_0_4px_var(--color-success-light)]",
+      "dark:[&_.range-field::-moz-range-thumb]:border-success-dark",
+      "dark:[&_.range-field::-webkit-slider-thumb]:shadow-[0_0_0_4px_var(--color-success-dark)]"
     ]
   end
 
   defp color_class("custom", "warning") do
     [
-      "[&_.range-field::-moz-range-thumb]:border-[#CA8D01]",
-      "[&_.range-field::-webkit-slider-thumb]:shadow-[0_0_0_4px_rgba(202,141,1,1)]",
-      "dark:[&_.range-field::-moz-range-thumb]:border-[#FDC034]",
-      "dark:[&_.range-field::-webkit-slider-thumb]:shadow-[0_0_0_4px_rgba(253,192,52,1)]"
+      "[&_.range-field::-moz-range-thumb]:border-warning-light",
+      "[&_.range-field::-webkit-slider-thumb]:shadow-[0_0_0_4px_var(--color-warning-light)]",
+      "dark:[&_.range-field::-moz-range-thumb]:border-warning-dark",
+      "dark:[&_.range-field::-webkit-slider-thumb]:shadow-[0_0_0_4px_var(--color-warning-dark)]"
     ]
   end
 
   defp color_class("custom", "danger") do
     [
-      "[&_.range-field::-moz-range-thumb]:border-[#DE1135]",
-      "[&_.range-field::-webkit-slider-thumb]:shadow-[0_0_0_4px_rgba(222,17,53,1)]",
-      "dark:[&_.range-field::-moz-range-thumb]:border-[#FC7F79]",
-      "dark:[&_.range-field::-webkit-slider-thumb]:shadow-[0_0_0_4px_rgba(252,127,121,1)]"
+      "[&_.range-field::-moz-range-thumb]:border-danger-light",
+      "[&_.range-field::-webkit-slider-thumb]:shadow-[0_0_0_4px_var(--color-danger-light)]",
+      "dark:[&_.range-field::-moz-range-thumb]:border-danger-dark",
+      "dark:[&_.range-field::-webkit-slider-thumb]:shadow-[0_0_0_4px_var(--color-danger-dark)]"
     ]
   end
 
   defp color_class("custom", "info") do
     [
-      "[&_.range-field::-moz-range-thumb]:border-[#0B84BA]",
-      "[&_.range-field::-webkit-slider-thumb]:shadow-[0_0_0_4px_rgba(11,132,186,1)]",
-      "dark:[&_.range-field::-moz-range-thumb]:border-[#3EB7ED]",
-      "dark:[&_.range-field::-webkit-slider-thumb]:shadow-[0_0_0_4px_rgba(62,183,237,1)]"
+      "[&_.range-field::-moz-range-thumb]:border-info-light",
+      "[&_.range-field::-webkit-slider-thumb]:shadow-[0_0_0_4px_var(--color-info-light)]",
+      "dark:[&_.range-field::-moz-range-thumb]:border-info-dark",
+      "dark:[&_.range-field::-webkit-slider-thumb]:shadow-[0_0_0_4px_var(--color-info-dark)]"
     ]
   end
 
   defp color_class("custom", "misc") do
     [
-      "[&_.range-field::-moz-range-thumb]:border-[#8750C5]",
-      "[&_.range-field::-webkit-slider-thumb]:shadow-[0_0_0_4px_rgba(135,80,197,1)]",
-      "dark:[&_.range-field::-moz-range-thumb]:border-[#DB976B]",
-      "dark:[&_.range-field::-webkit-slider-thumb]:shadow-[0_0_0_4px_rgba(186,131,249,1)]"
+      "[&_.range-field::-moz-range-thumb]:border-misc-light",
+      "[&_.range-field::-webkit-slider-thumb]:shadow-[0_0_0_4px_var(--color-misc-light)]",
+      "dark:[&_.range-field::-moz-range-thumb]:border-misc-dark",
+      "dark:[&_.range-field::-webkit-slider-thumb]:shadow-[0_0_0_4px_var(--color-misc-dark)]"
     ]
   end
 
   defp color_class("custom", "dawn") do
     [
-      "[&_.range-field::-moz-range-thumb]:border-[#A86438]",
-      "[&_.range-field::-webkit-slider-thumb]:shadow-[0_0_0_4px_rgba(168,100,56,1)]",
-      "dark:[&_.range-field::-moz-range-thumb]:border-[#DB976B]",
-      "dark:[&_.range-field::-webkit-slider-thumb]:shadow-[0_0_0_4px_rgba(219,151,107,1)]"
+      "[&_.range-field::-moz-range-thumb]:border-dawn-light",
+      "[&_.range-field::-webkit-slider-thumb]:shadow-[0_0_0_4px_var(--color-dawn-light)]",
+      "dark:[&_.range-field::-moz-range-thumb]:border-dawn-dark",
+      "dark:[&_.range-field::-webkit-slider-thumb]:shadow-[0_0_0_4px_var(--color-dawn-dark)]"
     ]
   end
 
   defp color_class("custom", "silver") do
     [
-      "[&_.range-field::-moz-range-thumb]:border-[#868686]",
-      "[&_.range-field::-webkit-slider-thumb]:shadow-[0_0_0_4px_rgba(134,134,134,1)]",
-      "[&_.range-field::-moz-range-thumb]:border-[#A6A6A6]",
-      "[&_.range-field::-webkit-slider-thumb]:shadow-[0_0_0_4px_rgba(166,166,166,1)]"
+      "[&_.range-field::-moz-range-thumb]:border-silver-light",
+      "[&_.range-field::-webkit-slider-thumb]:shadow-[0_0_0_4px_var(--color-silver-light)]",
+      "dark:[&_.range-field::-moz-range-thumb]:border-silver-dark",
+      "dark:[&_.range-field::-webkit-slider-thumb]:shadow-[0_0_0_4px_var(--color-silver-dark)]"
     ]
   end
 
   defp color_class("custom", "dark") do
     [
-      "[&_.range-field::-moz-range-thumb]:border-[#282828]",
-      "[&_.range-field::-webkit-slider-thumb]:shadow-[0_0_0_4px_rgba(40,40,40,1)]"
+      "[&_.range-field::-moz-range-thumb]:border-natural-hover-light",
+      "[&_.range-field::-webkit-slider-thumb]:shadow-[0_0_0_4px_var(--color-natural-hover-light)]"
     ]
   end
 

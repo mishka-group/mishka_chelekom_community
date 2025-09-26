@@ -16,6 +16,8 @@ defmodule CommunityDemoWeb.Components.MegaMenu do
   flexibility in interaction.
   - **Customizable Slots:** Utilize the `trigger` and `inner_block` slots to define custom content
   and layout within the mega menu.
+
+  **Documentation:** https://mishka.tools/chelekom/docs/mega-menu
   """
 
   use Phoenix.Component
@@ -170,7 +172,7 @@ defmodule CommunityDemoWeb.Components.MegaMenu do
       class={[
         "[&>.mega-menu-content]:invisible [&>.mega-menu-content]:opacity-0",
         "[&>.mega-menu-content.show-mega-menu]:visible [&>.mega-menu-content.show-mega-menu]:opacity-100",
-        !@clickable && tirgger_mega_menu(),
+        !@clickable && trigger_mega_menu(),
         color_variant(@variant, @color),
         padding_size(@padding),
         rounded_size(@rounded),
@@ -192,7 +194,7 @@ defmodule CommunityDemoWeb.Components.MegaMenu do
         phx-click={@id && JS.exec("phx-open-mega", to: "##{@id}")}
         class={["flex items-center", @title_class]}
       >
-        <.icon :if={!is_nil(@icon)} name={@icon} class={["aler-icon", @icon_class]} />
+        <.icon :if={!is_nil(@icon)} name={@icon} class={["mega-menu-icon", @icon_class]} />
         <span>{@title}</span>
       </button>
 
@@ -214,7 +216,7 @@ defmodule CommunityDemoWeb.Components.MegaMenu do
             )
         }
         class={[
-          "mega-menu-content inset-x-0 top-full absolute z-20 transition-all ease-in-out delay-100 duratio-500 w-full",
+          "mega-menu-content inset-x-0 top-full absolute z-20 transition-all ease-in-out delay-100 duration-500 w-full",
           "invisible opacity-0",
           @content_class
         ]}
@@ -226,7 +228,7 @@ defmodule CommunityDemoWeb.Components.MegaMenu do
     """
   end
 
-  defp tirgger_mega_menu(),
+  defp trigger_mega_menu(),
     do: "[&>.mega-menu-content]:hover:visible [&>.mega-menu-content]:hover:opacity-100"
 
   defp top_gap("none"), do: "[&>.mega-menu-content]:mt-0"
@@ -237,7 +239,7 @@ defmodule CommunityDemoWeb.Components.MegaMenu do
   defp top_gap("extra_large"), do: "[&>.mega-menu-content]:mt-5"
   defp top_gap(params) when is_binary(params), do: params
 
-  defp width_size("full"), do: "[&>.mega-menu-content]:w-ful"
+  defp width_size("full"), do: "[&>.mega-menu-content]:w-full"
 
   defp width_size("half"),
     do:
@@ -251,11 +253,11 @@ defmodule CommunityDemoWeb.Components.MegaMenu do
   defp border_class("none", _), do: "[&>.mega-menu-content]:border-0"
   defp border_class("extra_small", _), do: "[&>.mega-menu-content]:border"
   defp border_class("small", _), do: "[&>.mega-menu-content]:border-2"
-  defp border_class("medium", _), do: "[&>.mega-menu-content]:[&>.mega-menu-content]:border-[3px]"
+  defp border_class("medium", _), do: "[&>.mega-menu-content]:border-[3px]"
   defp border_class("large", _), do: "[&>.mega-menu-content]:border-4"
 
   defp border_class("extra_large", _),
-    do: "[&>.mega-menu-content]:[&>.mega-menu-content]:border-[5px]"
+    do: "[&>.mega-menu-content]:border-[5px]"
 
   defp border_class(params, _) when is_binary(params), do: params
 
@@ -309,8 +311,8 @@ defmodule CommunityDemoWeb.Components.MegaMenu do
 
   defp color_variant("base", _) do
     [
-      "[&>.mega-menu-content]:bg-white text-[#09090b] [&>.mega-menu-content]:border-[#e4e4e7] [&>.mega-menu-content]:shadow-sm",
-      "dark:[&>.mega-menu-content]:bg-[#18181B] dark:text-[#FAFAFA] dark:[&>.mega-menu-content]:border-[#27272a]"
+      "[&>.mega-menu-content]:bg-white text-base-text-light [&>.mega-menu-content]:border-base-border-light [&>.mega-menu-content]:shadow-sm",
+      "dark:[&>.mega-menu-content]:bg-base-bg-dark dark:text-base-text-dark dark:[&>.mega-menu-content]:border-base-border-dark"
     ]
   end
 
@@ -322,349 +324,349 @@ defmodule CommunityDemoWeb.Components.MegaMenu do
 
   defp color_variant("default", "dark") do
     [
-      "[&>.mega-menu-content]:bg-[#282828] text-white"
+      "[&>.mega-menu-content]:bg-default-dark-bg text-white"
     ]
   end
 
   defp color_variant("default", "natural") do
     [
-      "[&>.mega-menu-content]:bg-[#4B4B4B] text-white dark:[&>.mega-menu-content]:bg-[#DDDDDD] dark:text-black"
+      "[&>.mega-menu-content]:bg-natural-bg-dark text-white dark:[&>.mega-menu-content]:bg-natural-dark dark:text-black"
     ]
   end
 
   defp color_variant("default", "primary") do
     [
-      "[&>.mega-menu-content]:bg-[#007F8C] text-white dark:[&>.mega-menu-content]:bg-[#01B8CA] dark:text-black"
+      "[&>.mega-menu-content]:bg-primary-light text-white dark:[&>.mega-menu-content]:bg-primary-dark dark:text-black"
     ]
   end
 
   defp color_variant("default", "secondary") do
     [
-      "[&>.mega-menu-content]:bg-[#266EF1] text-white dark:[&>.mega-menu-content]:bg-[#6DAAFB] dark:text-black"
+      "[&>.mega-menu-content]:bg-secondary-light text-white dark:[&>.mega-menu-content]:bg-secondary-dark dark:text-black"
     ]
   end
 
   defp color_variant("default", "success") do
     [
-      "[&>.mega-menu-content]:bg-[#0E8345] text-white dark:[&>.mega-menu-content]:bg-[#06C167] dark:text-black"
+      "[&>.mega-menu-content]:bg-success-light text-white dark:[&>.mega-menu-content]:bg-success-dark dark:text-black"
     ]
   end
 
   defp color_variant("default", "warning") do
     [
-      "[&>.mega-menu-content]:bg-[#CA8D01] text-white dark:[&>.mega-menu-content]:bg-[#FDC034] dark:text-black"
+      "[&>.mega-menu-content]:bg-warning-light text-white dark:[&>.mega-menu-content]:bg-warning-dark dark:text-black"
     ]
   end
 
   defp color_variant("default", "danger") do
     [
-      "[&>.mega-menu-content]:bg-[#DE1135] text-white dark:[&>.mega-menu-content]:bg-[#FC7F79] dark:text-black"
+      "[&>.mega-menu-content]:bg-danger-light text-white dark:[&>.mega-menu-content]:bg-danger-dark dark:text-black"
     ]
   end
 
   defp color_variant("default", "info") do
     [
-      "[&>.mega-menu-content]:bg-[#0B84BA] text-white dark:[&>.mega-menu-content]:bg-[#3EB7ED] dark:text-black"
+      "[&>.mega-menu-content]:bg-info-light text-white dark:[&>.mega-menu-content]:bg-info-dark dark:text-black"
     ]
   end
 
   defp color_variant("default", "misc") do
     [
-      "[&>.mega-menu-content]:bg-[#8750C5] text-white dark:[&>.mega-menu-content]:bg-[#BA83F9] dark:text-black"
+      "[&>.mega-menu-content]:bg-misc-light text-white dark:[&>.mega-menu-content]:bg-misc-dark dark:text-black"
     ]
   end
 
   defp color_variant("default", "dawn") do
     [
-      "[&>.mega-menu-content]:bg-[#A86438] text-white dark:[&>.mega-menu-content]:bg-[#DB976B] dark:text-black"
+      "[&>.mega-menu-content]:bg-dawn-light text-white dark:[&>.mega-menu-content]:bg-dawn-dark dark:text-black"
     ]
   end
 
   defp color_variant("default", "silver") do
     [
-      "[&>.mega-menu-content]:bg-[#868686] text-white dark:[&>.mega-menu-content]:bg-[#A6A6A6] dark:text-black"
+      "[&>.mega-menu-content]:bg-silver-light text-white dark:[&>.mega-menu-content]:bg-silver-dark dark:text-black"
     ]
   end
 
   defp color_variant("outline", "natural") do
     [
-      "text-[#4B4B4B] [&>.mega-menu-content]:border-[#4B4B4B] dark:text-[#DDDDDD] dark:[&>.mega-menu-content]:border-[#DDDDDD]"
+      "text-natural-light [&>.mega-menu-content]:border-natural-light dark:text-natural-dark dark:[&>.mega-menu-content]:border-natural-dark"
     ]
   end
 
   defp color_variant("outline", "primary") do
     [
-      "text-[#007F8C] [&>.mega-menu-content]:border-[#007F8C]  dark:text-[#01B8CA] dark:[&>.mega-menu-content]:border-[#01B8CA]"
+      "text-primary-light [&>.mega-menu-content]:border-primary-light dark:text-primary-dark dark:[&>.mega-menu-content]:border-primary-dark"
     ]
   end
 
   defp color_variant("outline", "secondary") do
     [
-      "text-[#266EF1] [&>.mega-menu-content]:border-[#266EF1] dark:text-[#6DAAFB] dark:[&>.mega-menu-content]:border-[#6DAAFB]"
+      "text-secondary-light [&>.mega-menu-content]:border-secondary-light dark:text-secondary-dark dark:[&>.mega-menu-content]:border-secondary-dark"
     ]
   end
 
   defp color_variant("outline", "success") do
     [
-      "text-[#0E8345] [&>.mega-menu-content]:border-[#0E8345] dark:text-[#06C167] dark:[&>.mega-menu-content]:border-[#06C167]"
+      "text-success-light [&>.mega-menu-content]:border-success-light dark:text-success-dark dark:[&>.mega-menu-content]:border-success-dark"
     ]
   end
 
   defp color_variant("outline", "warning") do
     [
-      "text-[#CA8D01] [&>.mega-menu-content]:border-[#CA8D01] dark:text-[#FDC034] dark:[&>.mega-menu-content]:border-[#FDC034]"
+      "text-warning-light [&>.mega-menu-content]:border-warning-light dark:text-warning-dark dark:[&>.mega-menu-content]:border-warning-dark"
     ]
   end
 
   defp color_variant("outline", "danger") do
     [
-      "text-[#DE1135] [&>.mega-menu-content]:border-[#DE1135] dark:text-[#FC7F79] dark:[&>.mega-menu-content]:border-[#FC7F79]"
+      "text-danger-light [&>.mega-menu-content]:border-danger-light dark:text-danger-dark dark:[&>.mega-menu-content]:border-danger-dark"
     ]
   end
 
   defp color_variant("outline", "info") do
     [
-      "text-[#0B84BA] [&>.mega-menu-content]:border-[#0B84BA] dark:text-[#3EB7ED] dark:[&>.mega-menu-content]:border-[#3EB7ED]"
+      "text-info-light [&>.mega-menu-content]:border-info-light dark:text-info-dark dark:[&>.mega-menu-content]:border-info-dark"
     ]
   end
 
   defp color_variant("outline", "misc") do
     [
-      "text-[#8750C5] [&>.mega-menu-content]:border-[#8750C5] dark:text-[#BA83F9] dark:[&>.mega-menu-content]:border-[#BA83F9]"
+      "text-misc-light [&>.mega-menu-content]:border-misc-light dark:text-misc-dark dark:[&>.mega-menu-content]:border-misc-dark"
     ]
   end
 
   defp color_variant("outline", "dawn") do
     [
-      "text-[#A86438] [&>.mega-menu-content]:border-[#A86438] dark:text-[#DB976B] dark:[&>.mega-menu-content]:border-[#DB976B]"
+      "text-dawn-light [&>.mega-menu-content]:border-dawn-light dark:text-dawn-dark dark:[&>.mega-menu-content]:border-dawn-dark"
     ]
   end
 
   defp color_variant("outline", "silver") do
     [
-      "text-[#868686] [&>.mega-menu-content]:border-[#868686] dark:text-[#A6A6A6] dark:[&>.mega-menu-content]:border-[#A6A6A6]"
+      "text-silver-light [&>.mega-menu-content]:border-silver-light dark:text-silver-dark dark:[&>.mega-menu-content]:border-silver-dark"
     ]
   end
 
   defp color_variant("shadow", "natural") do
     [
-      "[&>.mega-menu-content]:bg-[#4B4B4B] text-white dark:[&>.mega-menu-content]:bg-[#DDDDDD] dark:text-black",
-      "[&>.mega-menu-content]:shadow-[0px_4px_6px_-4px_rgba(134,134,134,0.5)] [&>.mega-menu-content]:shadow-[0px_10px_15px_-3px_rgba(134,134,134,0.5)] dark:[&>.mega-menu-content]:shadow-none"
+      "[&>.mega-menu-content]:bg-natural-bg-dark text-white dark:[&>.mega-menu-content]:bg-natural-dark dark:text-black",
+      "[&>.mega-menu-content]:shadow-[0px_4px_6px_-4px_var(--color-shadow-natural)] [&>.mega-menu-content]:shadow-[0px_10px_15px_-3px_var(--color-shadow-natural)] dark:[&>.mega-menu-content]:shadow-none"
     ]
   end
 
   defp color_variant("shadow", "primary") do
     [
-      "[&>.mega-menu-content]:bg-[#007F8C] text-white dark:[&>.mega-menu-content]:bg-[#01B8CA] dark:text-black",
-      "[&>.mega-menu-content]:shadow-[0px_4px_6px_-4px_rgba(0,149,164,0.5)] [&>.mega-menu-content]:shadow-[0px_10px_15px_-3px_rgba(0,149,164,0.5)] dark:[&>.mega-menu-content]:shadow-none"
+      "[&>.mega-menu-content]:bg-primary-light text-white dark:[&>.mega-menu-content]:bg-primary-dark dark:text-black",
+      "[&>.mega-menu-content]:shadow-[0px_4px_6px_-4px_var(--color-shadow-primary)] [&>.mega-menu-content]:shadow-[0px_10px_15px_-3px_var(--color-shadow-primary)] dark:[&>.mega-menu-content]:shadow-none"
     ]
   end
 
   defp color_variant("shadow", "secondary") do
     [
-      "[&>.mega-menu-content]:bg-[#266EF1] text-white dark:[&>.mega-menu-content]:bg-[#6DAAFB] dark:text-black",
-      "[&>.mega-menu-content]:shadow-[0px_4px_6px_-4px_rgba(6,139,238,0.5)] [&>.mega-menu-content]:shadow-[0px_10px_15px_-3px_rgba(6,139,238,0.5)] dark:[&>.mega-menu-content]:shadow-none"
+      "[&>.mega-menu-content]:bg-secondary-light text-white dark:[&>.mega-menu-content]:bg-secondary-dark dark:text-black",
+      "[&>.mega-menu-content]:shadow-[0px_4px_6px_-4px_var(--color-shadow-secondary)] [&>.mega-menu-content]:shadow-[0px_10px_15px_-3px_var(--color-shadow-secondary)] dark:[&>.mega-menu-content]:shadow-none"
     ]
   end
 
   defp color_variant("shadow", "success") do
     [
-      "[&>.mega-menu-content]:bg-[#0E8345] text-white hover:[&>.mega-menu-content]:bg-[#166C3B] dark:[&>.mega-menu-content]:bg-[#06C167] dark:text-black",
-      "[&>.mega-menu-content]:shadow-[0px_4px_6px_-4px_rgba(0,154,81,0.5)] [&>.mega-menu-content]:shadow-[0px_10px_15px_-3px_rgba(0,154,81,0.5)] dark:[&>.mega-menu-content]:shadow-none"
+      "[&>.mega-menu-content]:bg-success-light text-white dark:[&>.mega-menu-content]:bg-success-dark dark:text-black",
+      "[&>.mega-menu-content]:shadow-[0px_4px_6px_-4px_var(--color-shadow-success)] [&>.mega-menu-content]:shadow-[0px_10px_15px_-3px_var(--color-shadow-success)] dark:[&>.mega-menu-content]:shadow-none"
     ]
   end
 
   defp color_variant("shadow", "warning") do
     [
-      "[&>.mega-menu-content]:bg-[#CA8D01] text-white dark:[&>.mega-menu-content]:bg-[#FDC034] dark:text-black",
-      "[&>.mega-menu-content]:shadow-[0px_4px_6px_-4px_rgba(252,176,1,0.5)] [&>.mega-menu-content]:shadow-[0px_10px_15px_-3px_rgba(252,176,1,0.5)] dark:[&>.mega-menu-content]:shadow-none"
+      "[&>.mega-menu-content]:bg-warning-light text-white dark:[&>.mega-menu-content]:bg-warning-dark dark:text-black",
+      "[&>.mega-menu-content]:shadow-[0px_4px_6px_-4px_var(--color-shadow-warning)] [&>.mega-menu-content]:shadow-[0px_10px_15px_-3px_var(--color-shadow-warning)] dark:[&>.mega-menu-content]:shadow-none"
     ]
   end
 
   defp color_variant("shadow", "danger") do
     [
-      "[&>.mega-menu-content]:bg-[#DE1135] text-white dark:[&>.mega-menu-content]:bg-[#FC7F79] dark:text-black",
-      "[&>.mega-menu-content]:shadow-[0px_4px_6px_-4px_rgba(248,52,70,0.5)] [&>.mega-menu-content]:shadow-[0px_10px_15px_-3px_rgba(248,52,70,0.5)] dark:[&>.mega-menu-content]:shadow-none"
+      "[&>.mega-menu-content]:bg-danger-light text-white dark:[&>.mega-menu-content]:bg-danger-dark dark:text-black",
+      "[&>.mega-menu-content]:shadow-[0px_4px_6px_-4px_var(--color-shadow-danger)] [&>.mega-menu-content]:shadow-[0px_10px_15px_-3px_var(--color-shadow-danger)] dark:[&>.mega-menu-content]:shadow-none"
     ]
   end
 
   defp color_variant("shadow", "info") do
     [
-      "[&>.mega-menu-content]:bg-[#0B84BA] text-white dark:[&>.mega-menu-content]:bg-[#3EB7ED] dark:text-black",
-      "[&>.mega-menu-content]:shadow-[0px_4px_6px_-4px_rgba(14,165,233,0.5)] [&>.mega-menu-content]:shadow-[0px_10px_15px_-3px_rgba(14,165,233,0.5)] dark:[&>.mega-menu-content]:shadow-none"
+      "[&>.mega-menu-content]:bg-info-light text-white dark:[&>.mega-menu-content]:bg-info-dark dark:text-black",
+      "[&>.mega-menu-content]:shadow-[0px_4px_6px_-4px_var(--color-shadow-info)] [&>.mega-menu-content]:shadow-[0px_10px_15px_-3px_var(--color-shadow-info)] dark:[&>.mega-menu-content]:shadow-none"
     ]
   end
 
   defp color_variant("shadow", "misc") do
     [
-      "[&>.mega-menu-content]:bg-[#8750C5] text-white dark:[&>.mega-menu-content]:bg-[#BA83F9] dark:text-black",
-      "[&>.mega-menu-content]:shadow-[0px_4px_6px_-4px_rgba(169,100,247,0.5)] [&>.mega-menu-content]:shadow-[0px_10px_15px_-3px_rgba(169,100,247,0.5)] dark:[&>.mega-menu-content]:shadow-none"
+      "[&>.mega-menu-content]:bg-misc-light text-white dark:[&>.mega-menu-content]:bg-misc-dark dark:text-black",
+      "[&>.mega-menu-content]:shadow-[0px_4px_6px_-4px_var(--color-shadow-misc)] [&>.mega-menu-content]:shadow-[0px_10px_15px_-3px_var(--color-shadow-misc)] dark:[&>.mega-menu-content]:shadow-none"
     ]
   end
 
   defp color_variant("shadow", "dawn") do
     [
-      "[&>.mega-menu-content]:bg-[#A86438] text-white dark:[&>.mega-menu-content]:bg-[#DB976B] dark:text-black",
-      "[&>.mega-menu-content]:shadow-[0px_4px_6px_-4px_rgba(210,125,70,0.5)] [&>.mega-menu-content]:shadow-[0px_10px_15px_-3px_rgba(210,125,70,0.5)] dark:[&>.mega-menu-content]:shadow-none"
+      "[&>.mega-menu-content]:bg-dawn-light text-white dark:[&>.mega-menu-content]:bg-dawn-dark dark:text-black",
+      "[&>.mega-menu-content]:shadow-[0px_4px_6px_-4px_var(--color-shadow-dawn)] [&>.mega-menu-content]:shadow-[0px_10px_15px_-3px_var(--color-shadow-dawn)] dark:[&>.mega-menu-content]:shadow-none"
     ]
   end
 
   defp color_variant("shadow", "silver") do
     [
-      "[&>.mega-menu-content]:bg-[#868686] text-white dark:[&>.mega-menu-content]:bg-[#A6A6A6] dark:text-black",
-      "[&>.mega-menu-content]:shadow-[0px_4px_6px_-4px_rgba(134,134,134,0.5)] [&>.mega-menu-content]:shadow-[0px_10px_15px_-3px_rgba(134,134,134,0.5)] dark:[&>.mega-menu-content]:shadow-none"
+      "[&>.mega-menu-content]:bg-silver-light text-white dark:[&>.mega-menu-content]:bg-silver-dark dark:text-black",
+      "[&>.mega-menu-content]:shadow-[0px_4px_6px_-4px_var(--color-shadow-silver)] [&>.mega-menu-content]:shadow-[0px_10px_15px_-3px_var(--color-shadow-silver)] dark:[&>.mega-menu-content]:shadow-none"
     ]
   end
 
   defp color_variant("bordered", "white") do
     [
-      "[&>.mega-menu-content]:bg-white text-black [&>.mega-menu-content]:border-[#DDDDDD]"
+      "[&>.mega-menu-content]:bg-white text-black [&>.mega-menu-content]:border-bordered-white-border"
     ]
   end
 
   defp color_variant("bordered", "dark") do
     [
-      "[&>.mega-menu-content]:bg-[#282828] text-white [&>.mega-menu-content]:border-[#727272]"
+      "[&>.mega-menu-content]:bg-bordered-dark-bg text-white [&>.mega-menu-content]:border-bordered-dark-border"
     ]
   end
 
   defp color_variant("bordered", "natural") do
     [
-      "text-[#282828] [&>.mega-menu-content]:border-[#282828] [&>.mega-menu-content]:bg-[#F3F3F3]",
-      "dark:text-[#E8E8E8] dark:[&>.mega-menu-content]:border-[#E8E8E8] dark:[&>.mega-menu-content]:bg-[#4B4B4B]"
+      "text-natural-bordered-text-light [&>.mega-menu-content]:border-natural-bordered-text-light [&>.mega-menu-content]:bg-natural-bordered-bg-light",
+      "dark:text-natural-bordered-text-dark dark:[&>.mega-menu-content]:border-natural-border-dark dark:[&>.mega-menu-content]:bg-natural-bordered-bg-dark"
     ]
   end
 
   defp color_variant("bordered", "primary") do
     [
-      "text-[#016974] [&>.mega-menu-content]:border-[#016974] [&>.mega-menu-content]:bg-[#E2F8FB]",
-      "dark:text-[#77D5E3] dark:[&>.mega-menu-content]:border-[#77D5E3] dark:[&>.mega-menu-content]:bg-[#002D33]"
+      "text-primary-bordered-text-light [&>.mega-menu-content]:border-primary-bordered-text-light [&>.mega-menu-content]:bg-primary-bordered-bg-light",
+      "dark:text-primary-bordered-text-dark dark:[&>.mega-menu-content]:border-primary-bordered-text-dark dark:[&>.mega-menu-content]:bg-primary-bordered-bg-dark"
     ]
   end
 
   defp color_variant("bordered", "secondary") do
     [
-      "text-[#175BCC] [&>.mega-menu-content]:border-[#175BCC] [&>.mega-menu-content]:bg-[#EFF4FE]",
-      "dark:text-[#A9C9FF] dark:[&>.mega-menu-content]:border-[#A9C9FF] dark:[&>.mega-menu-content]:bg-[#002661]"
+      "text-secondary-bordered-text-light [&>.mega-menu-content]:border-secondary-bordered-text-light [&>.mega-menu-content]:bg-secondary-bordered-bg-light",
+      "dark:text-secondary-bordered-text-dark dark:[&>.mega-menu-content]:border-secondary-bordered-text-dark dark:[&>.mega-menu-content]:bg-secondary-bordered-bg-dark"
     ]
   end
 
   defp color_variant("bordered", "success") do
     [
-      "text-[#166C3B] [&>.mega-menu-content]:border-[#166C3B] [&>.mega-menu-content]:bg-[#EAF6ED]",
-      "dark:text-[#7FD99A] dark:[&>.mega-menu-content]:border-[#7FD99A] dark:[&>.mega-menu-content]:bg-[#002F14]"
+      "text-success-bordered-text-light [&>.mega-menu-content]:border-success-bordered-text-light [&>.mega-menu-content]:bg-success-bordered-bg-light",
+      "dark:text-success-bordered-text-dark dark:[&>.mega-menu-content]:border-success-bordered-text-dark dark:[&>.mega-menu-content]:bg-success-bordered-bg-dark"
     ]
   end
 
   defp color_variant("bordered", "warning") do
     [
-      "text-[#976A01] [&>.mega-menu-content]:border-[#976A01] [&>.mega-menu-content]:bg-[#FFF7E6]",
-      "dark:text-[#FDD067] dark:[&>.mega-menu-content]:border-[#FDD067] dark:[&>.mega-menu-content]:bg-[#322300]"
+      "text-warning-bordered-text-light [&>.mega-menu-content]:border-warning-bordered-text-light [&>.mega-menu-content]:bg-warning-bordered-bg-light",
+      "dark:text-warning-bordered-text-dark dark:[&>.mega-menu-content]:border-warning-bordered-text-dark dark:[&>.mega-menu-content]:bg-warning-bordered-bg-dark"
     ]
   end
 
   defp color_variant("bordered", "danger") do
     [
-      "text-[#BB032A] [&>.mega-menu-content]:border-[#BB032A] [&>.mega-menu-content]:bg-[#FFF0EE]",
-      "dark:text-[#FFB2AB] dark:[&>.mega-menu-content]:border-[#FFB2AB] dark:[&>.mega-menu-content]:bg-[#520810]"
+      "text-danger-bordered-text-light [&>.mega-menu-content]:border-danger-bordered-text-light [&>.mega-menu-content]:bg-danger-bordered-bg-light",
+      "dark:text-danger-bordered-text-dark dark:[&>.mega-menu-content]:border-danger-bordered-text-dark dark:[&>.mega-menu-content]:bg-danger-bordered-bg-dark"
     ]
   end
 
   defp color_variant("bordered", "info") do
     [
-      "text-[#0B84BA] [&>.mega-menu-content]:border-[#0B84BA] [&>.mega-menu-content]:bg-[#E7F6FD]",
-      "dark:text-[#6EC9F2] dark:[&>.mega-menu-content]:border-[#6EC9F2] dark:[&>.mega-menu-content]:bg-[#03212F]"
+      "text-info-bordered-text-light [&>.mega-menu-content]:border-info-bordered-text-light [&>.mega-menu-content]:bg-info-bordered-bg-light",
+      "dark:text-info-bordered-text-dark dark:[&>.mega-menu-content]:border-info-bordered-text-dark dark:[&>.mega-menu-content]:bg-info-bordered-bg-dark"
     ]
   end
 
   defp color_variant("bordered", "misc") do
     [
-      "text-[#653C94] [&>.mega-menu-content]:border-[#653C94] [&>.mega-menu-content]:bg-[#F6F0FE]",
-      "dark:text-[#CBA2FA] dark:[&>.mega-menu-content]:border-[#CBA2FA] dark:[&>.mega-menu-content]:bg-[#221431]"
+      "text-misc-bordered-text-light [&>.mega-menu-content]:border-misc-bordered-text-light [&>.mega-menu-content]:bg-misc-bordered-bg-light",
+      "dark:text-misc-bordered-text-dark dark:[&>.mega-menu-content]:border-misc-bordered-text-dark dark:[&>.mega-menu-content]:bg-misc-bordered-bg-dark"
     ]
   end
 
   defp color_variant("bordered", "dawn") do
     [
-      "text-[#7E4B2A] [&>.mega-menu-content]:border-[#7E4B2A] [&>.mega-menu-content]:bg-[#FBF2ED]",
-      "dark:text-[#E4B190] dark:[&>.mega-menu-content]:border-[#E4B190] dark:[&>.mega-menu-content]:bg-[#2A190E]"
+      "text-dawn-bordered-text-light [&>.mega-menu-content]:border-dawn-bordered-text-light [&>.mega-menu-content]:bg-dawn-bordered-bg-light",
+      "dark:text-dawn-bordered-text-dark dark:[&>.mega-menu-content]:border-dawn-bordered-text-dark dark:[&>.mega-menu-content]:bg-dawn-bordered-bg-dark"
     ]
   end
 
   defp color_variant("bordered", "silver") do
     [
-      "text-[#727272] [&>.mega-menu-content]:border-[#727272] [&>.mega-menu-content]:bg-[#F3F3F3]",
-      "dark:text-[#BBBBBB] dark:[&>.mega-menu-content]:border-[#BBBBBB] dark:[&>.mega-menu-content]:bg-[#4B4B4B]"
+      "text-silver-bordered-text-light [&>.mega-menu-content]:border-silver-bordered-text-light [&>.mega-menu-content]:bg-silver-bordered-bg-light",
+      "dark:text-silver-bordered-text-dark dark:[&>.mega-menu-content]:border-silver-bordered-text-dark dark:[&>.mega-menu-content]:bg-silver-bordered-bg-dark"
     ]
   end
 
   defp color_variant("gradient", "natural") do
     [
-      "[&>.mega-menu-content]:bg-gradient-to-br from-[#282828] to-[#727272] text-white",
-      "dark:from-[#A6A6A6] dark:to-[#FFFFFF] dark:text-black"
+      "[&>.mega-menu-content]:bg-gradient-to-br from-gradient-natural-from-light to-gradient-natural-to-light text-white",
+      "dark:from-gradient-natural-from-dark dark:to-white dark:text-black"
     ]
   end
 
   defp color_variant("gradient", "primary") do
     [
-      "[&>.mega-menu-content]:bg-gradient-to-br from-[#016974] to-[#01B8CA] text-white",
-      "dark:from-[#01B8CA] dark:to-[#B0E7EF] dark:text-black"
+      "[&>.mega-menu-content]:bg-gradient-to-br from-gradient-primary-from-light to-gradient-primary-to-light text-white",
+      "dark:from-gradient-primary-from-dark dark:to-gradient-primary-to-dark dark:text-black"
     ]
   end
 
   defp color_variant("gradient", "secondary") do
     [
-      "[&>.mega-menu-content]:bg-gradient-to-br from-[#175BCC] to-[#6DAAFB] text-white",
-      "dark:from-[#6DAAFB] dark:to-[#CDDEFF] dark:text-black"
+      "[&>.mega-menu-content]:bg-gradient-to-br from-gradient-secondary-from-light to-gradient-secondary-to-light text-white",
+      "dark:from-gradient-secondary-from-dark dark:to-gradient-secondary-to-dark dark:text-black"
     ]
   end
 
   defp color_variant("gradient", "success") do
     [
-      "[&>.mega-menu-content]:bg-gradient-to-br from-[#166C3B] to-[#06C167] text-white",
-      "dark:from-[#06C167] dark:to-[#B1EAC2] dark:text-black"
+      "[&>.mega-menu-content]:bg-gradient-to-br from-gradient-success-from-light to-gradient-success-to-light text-white",
+      "dark:from-gradient-success-from-dark dark:to-gradient-success-to-dark dark:text-black"
     ]
   end
 
   defp color_variant("gradient", "warning") do
     [
-      "[&>.mega-menu-content]:bg-gradient-to-br from-[#976A01] to-[#FDC034] text-white",
-      "dark:from-[#FDC034] dark:to-[#FEDF99] dark:text-black"
+      "[&>.mega-menu-content]:bg-gradient-to-br from-gradient-warning-from-light to-gradient-warning-to-light text-white",
+      "dark:from-gradient-warning-from-dark dark:to-gradient-warning-to-dark dark:text-black"
     ]
   end
 
   defp color_variant("gradient", "danger") do
     [
-      "[&>.mega-menu-content]:bg-gradient-to-br from-[#BB032A] to-[#FC7F79] text-white",
-      "dark:from-[#FC7F79] dark:to-[#FFD2CD] dark:text-black"
+      "[&>.mega-menu-content]:bg-gradient-to-br from-gradient-danger-from-light to-gradient-danger-to-light text-white",
+      "dark:from-gradient-danger-from-dark dark:to-gradient-danger-to-dark dark:text-black"
     ]
   end
 
   defp color_variant("gradient", "info") do
     [
-      "[&>.mega-menu-content]:bg-gradient-to-br from-[#08638C] to-[#3EB7ED] text-white",
-      "dark:from-[#3EB7ED] dark:to-[#9FDBF6] dark:text-black"
+      "[&>.mega-menu-content]:bg-gradient-to-br from-gradient-info-from-light to-gradient-info-to-light text-white",
+      "dark:from-gradient-info-from-dark dark:to-gradient-info-to-dark dark:text-black"
     ]
   end
 
   defp color_variant("gradient", "misc") do
     [
-      "[&>.mega-menu-content]:bg-gradient-to-br from-[#653C94] to-[#BA83F9] text-white",
-      "dark:from-[#BA83F9] dark:to-[#DDC1FC] dark:text-black"
+      "[&>.mega-menu-content]:bg-gradient-to-br from-gradient-misc-from-light to-gradient-misc-to-light text-white",
+      "dark:from-gradient-misc-from-dark dark:to-gradient-misc-to-dark dark:text-black"
     ]
   end
 
   defp color_variant("gradient", "dawn") do
     [
-      "[&>.mega-menu-content]:bg-gradient-to-br from-[#7E4B2A] to-[#DB976B] text-white",
-      "dark:from-[#DB976B] dark:to-[#EDCBB5] dark:text-black"
+      "[&>.mega-menu-content]:bg-gradient-to-br from-gradient-dawn-from-light to-gradient-dawn-to-light text-white",
+      "dark:from-gradient-dawn-from-dark dark:to-gradient-dawn-to-dark dark:text-black"
     ]
   end
 
   defp color_variant("gradient", "silver") do
     [
-      "[&>.mega-menu-content]:bg-gradient-to-br from-[#5E5E5E] to-[#A6A6A6] text-white",
-      "dark:from-[#868686] dark:to-[#BBBBBB] dark:text-black"
+      "[&>.mega-menu-content]:bg-gradient-to-br from-gradient-silver-from-light to-gradient-silver-to-light text-white",
+      "dark:from-gradient-silver-from-dark dark:to-gradient-silver-to-dark dark:text-black"
     ]
   end
 

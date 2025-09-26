@@ -10,6 +10,8 @@ defmodule CommunityDemoWeb.Components.Typography do
 
   The components are designed to work seamlessly with HEEx templates, supporting slots for
   rendering dynamic content.
+
+  **Documentation:** https://mishka.tools/chelekom/docs/typography
   """
   use Phoenix.Component
 
@@ -76,7 +78,7 @@ defmodule CommunityDemoWeb.Components.Typography do
   ```elixir
   <.h2>Heading 2</.h2>
   <.h2 color="primary" size="large">Primary Heading 2</.h2>
-  <.h2 class="custom-class" font_weight="font-bold">Bold Heading 2</.h1>
+  <.h2 class="custom-class" font_weight="font-bold">Bold Heading 2</.h2>
   ```
   """
   @doc type: :component
@@ -967,8 +969,8 @@ defmodule CommunityDemoWeb.Components.Typography do
   end
 
   @doc """
-  The `s` component is used to render text with a strikethrough style, r
-  epresenting content that is no longer relevant or accurate.
+  The `s` component is used to render text with a strikethrough style, representing
+  content that is no longer relevant or accurate.
 
   ## Examples
 
@@ -1176,31 +1178,31 @@ defmodule CommunityDemoWeb.Components.Typography do
     """
   end
 
-  defp color("base"), do: "text-[#09090b] dark:text-[#FAFAFA]"
+  defp color("base"), do: "text-base-text-light dark:text-base-text-dark"
 
   defp color("white"), do: "text-white"
 
-  defp color("natural"), do: "text-[#4B4B4B] dark:text-[#DDDDDD]"
+  defp color("natural"), do: "text-natural-light dark:text-natural-dark"
 
-  defp color("primary"), do: "text-[#007F8C] dark:text-[#01B8CA]"
+  defp color("primary"), do: "text-primary-light dark:text-primary-dark"
 
-  defp color("secondary"), do: "text-[#266EF1] dark:text-[#6DAAFB]"
+  defp color("secondary"), do: "text-secondary-light dark:text-secondary-dark"
 
-  defp color("success"), do: "text-[#0E8345] dark:text-[#06C167]"
+  defp color("success"), do: "text-success-light dark:text-success-dark"
 
-  defp color("warning"), do: "text-[#CA8D01] dark:text-[#FDC034]"
+  defp color("warning"), do: "text-warning-light dark:text-warning-dark"
 
-  defp color("danger"), do: "text-[#DE1135] dark:text-[#FC7F79]"
+  defp color("danger"), do: "text-danger-light dark:text-danger-dark"
 
-  defp color("info"), do: "text-[#0B84BA] dark:text-[#3EB7ED]"
+  defp color("info"), do: "text-info-light dark:text-info-dark"
 
-  defp color("misc"), do: "text-[#8750C5] dark:text-[#BA83F9]"
+  defp color("misc"), do: "text-misc-light dark:text-misc-dark"
 
-  defp color("dawn"), do: "text-[#A86438] dark:text-[#DB976B]"
+  defp color("dawn"), do: "text-dawn-light dark:text-dawn-dark"
 
-  defp color("silver"), do: "text-[#868686] dark:text-[#A6A6A6]"
+  defp color("silver"), do: "text-silver-light dark:text-silver-dark"
 
-  defp color("dark"), do: "text-[#282828]"
+  defp color("dark"), do: "text-default-dark-bg"
 
   defp color("inherit"), do: "text-inherit"
 

@@ -6,2151 +6,1139 @@ defmodule CommunityDemoWeb.Components.Accordion do
   It supports a variety of configuration options including size, variant, color, padding,
   and border styles.
 
-  ### Features
-
-  - **Customizable Design**: Supports multiple variants such as `"default"`, `"outline"`,
-  `"bordered"`, `"outline_separated"`, `"bordered_separated"`, `"transparent"`, and `"menu"`.
-  - **Size and Spacing**: Provides control over the size and spacing of accordion items
-  using predefined values such as `"extra_small"`, `"small"`, `"medium"`,
-  `"large"`, and `"extra_large"`.
-  - **Color Themes**: Offers a range of color options including `"primary"`,
-  `"secondary"`, `"success"`, `"warning"`, `"danger"`, `"info"`, `"silver"`, `"dark"`, and more.
-  - **Interactive Animations**: Includes interactive JavaScript-based animations
-  for showing and hiding content with smooth transitions.
-  - **Icon and Media Support**: Allows the inclusion of icons and images within
-  accordion items, enhancing the visual appeal and usability of the component.
+  **Documentation:** https://mishka.tools/chelekom/docs/accordion
   """
-
   use Phoenix.Component
-
-  alias Phoenix.LiveView.JS
-
+  import Phoenix.LiveView.Utils, only: [random_id: 0]
   import CommunityDemoWeb.Components.Icon, only: [icon: 1]
 
-  @doc """
-  The `accordion` component provides a collapsible structure with various styling options,
-  ideal for organizing content into expandable panels. It supports customizable attributes such
-  as `variant`, `color`, and `media_size`.
-
-  ## Examples
-
-  ```elixir
-  <.accordion id="test-108" media_size="medium" color="secondary">
-    <:item
-      title="Accordion Version native"
-      description="Need to be something like this yeehh!?"
-      image="https://img.icons8.com/clouds/256/000000/futurama-bender.png"
-    >
-      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis fugit, voluptas nam quia,
-      sunt sapiente itaque velit illo sed nesciunt molestias commodi, veniam adipisci quo
-      laboriosam in ipsa illum tenetur.
-    </:item>
-    <:item
-      title="Accordion Version native"
-      description="Need to be something like this yeehh!?"
-      image="https://img.icons8.com/clouds/256/000000/futurama-bender.png"
-    >
-      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis fugit, voluptas nam quia,
-      sunt sapiente itaque velit illo sed nesciunt molestias commodi, veniam adipisci quo
-      laboriosam in ipsa illum tenetur.
-    </:item>
-  </.accordion>
-  ```
-  """
   @doc type: :component
   attr :id, :string,
     required: true,
-    doc: "A unique identifier is used to manage state and interaction"
+    doc: "A unique identifier for the accordion"
 
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
-  attr :variant, :string, default: "base", doc: "Determines the style"
-  attr :space, :string, default: "small", doc: "Space between items"
-  attr :color, :string, default: "natural", doc: "Determines color theme"
-  attr :border, :string, default: "extra_small", doc: "Determines border style"
-  attr :padding, :string, default: "small", doc: "Determines padding for items"
-  attr :rounded, :string, default: "none", doc: "Determines the border radius"
+  attr :multiple, :boolean, default: false, doc: "Allow multiple panels open simultaneously"
+  attr :collapsible, :boolean, default: true, doc: "Allow all panels to be closed"
+  attr :duration, :integer, default: 200, doc: "Animation duration in milliseconds"
+  attr :keep_mounted, :boolean, default: false, doc: "Keep content mounted after first open"
+  attr :server_events, :boolean, default: false, doc: "Send open/close events to LiveView"
+  attr :event_handler, :string, default: nil, doc: "Specify event handler for accordion events"
+  attr :initial_open, :list, default: [], doc: "List of initially open item IDs"
 
-  attr :chevron_icon, :string,
-    default: "hero-chevron-right",
-    doc: "Determines the icon for the chevron"
+  attr :variant, :string, default: "base", doc: "Visual style variant"
+  attr :color, :string, default: "natural", doc: "Color theme"
+  attr :size, :string, default: "medium", doc: "Overall size"
+  attr :rounded, :string, default: "medium", doc: "Border radius"
+  attr :border, :string, default: "extra_small", doc: "Border style"
+  attr :space, :string, default: "small", doc: "Space between separated items"
+  attr :media_size, :string, default: "small", doc: "Size of media elements like icons and images"
+  attr :padding, :string, default: "small", doc: "Padding for accordion items"
 
-  attr :chevron_class, :string, default: nil, doc: "Determines the icon for the chevron"
+  attr :chevron_icon, :string, default: "hero-chevron-down", doc: "Chevron icon"
+  attr :chevron_position, :string, default: "right", doc: "Chevron position (left/right)"
+  attr :left_chevron, :boolean, default: false, doc: "Position chevron on the left"
+  attr :right_chevron, :boolean, default: false, doc: "Position chevron on the right"
+  attr :hide_chevron, :boolean, default: false, doc: "Hide the chevron icon"
+  attr :chevron_class, :string, default: nil, doc: "Additional CSS classes for the chevron"
 
-  attr :media_size, :string, default: "small", doc: "Determines size of the media elements"
+  slot :item, required: false, doc: "Accordion items as slots" do
+    attr :id, :string,
+      required: false,
+      doc: "Unique identifier for the item (auto-generated if not provided)"
 
-  attr :size, :string,
-    default: "",
-    doc:
-      "Determines the overall size of the elements, including padding, font size, and other items"
-
-  slot :item, required: true, doc: "Specifies item slot of a accordion" do
-    attr :title, :string,
-      required: true,
-      doc: "Specifies the title of the element",
-      doc: "Specifies the title of the element"
-
-    attr :description, :string, doc: "Determines a short description"
-    attr :icon, :string, doc: "Icon displayed alongside of an item"
-    attr :class, :string, doc: "Custom CSS class for additional styling"
-    attr :image, :string, doc: "Image displayed alongside of an item"
-    attr :icon_wrapper_class, :string, doc: "Image displayed alongside of an item"
-    attr :hover, :string, doc: "Determines custom class for the hover"
-    attr :image_class, :string, doc: "Determines custom class for the image"
-    attr :icon_class, :string, doc: "Determines custom class for the icon"
-    attr :content_class, :string, doc: "Determines custom class for the content"
-    attr :title_class, :string, doc: "Determines custom class for the title"
-    attr :summary_class, :string, doc: "Determines custom class for the summary"
-    attr :font_weight, :string, doc: "Determines custom class for the font weight"
-    attr :open, :boolean, doc: "Whether the accordion item is initially open or closed"
+    attr :title, :string, required: true, doc: "Title of the accordion item"
+    attr :description, :string, doc: "Optional description/subtitle"
+    attr :icon, :string, doc: "Optional icon name"
+    attr :icon_class, :string, doc: "Additional CSS classes for the item icon"
+    attr :icon_wrapper_class, :string, doc: "Additional CSS classes for the item icon wrapper"
+    attr :image, :string, doc: "Optional image source URL"
+    attr :image_class, :string, doc: "Additional CSS classes for the image"
+    attr :trigger_class, :string, doc: "Additional CSS classes for the trigger"
+    attr :content_class, :string, doc: "Additional CSS classes for the content"
+    attr :open, :boolean, doc: "Whether this item should be initially open"
   end
 
-  attr :rest, :global,
-    include: ~w(left_chevron right_chevron chevron hide_chevron),
-    doc:
-      "Global attributes can define defaults which are merged with attributes provided by the caller"
-
   def accordion(assigns) do
+    assigns = assigns |> assign_new(:id, fn -> "accordion-#{random_id()}" end)
+
     ~H"""
     <div
       id={@id}
+      phx-hook="Collapsible"
+      data-multiple={@multiple}
+      data-collapsible={to_string(@collapsible)}
+      data-duration={@duration}
+      data-keep-mounted={to_string(@keep_mounted)}
+      data-server-events={to_string(@server_events)}
+      data-event-handler={@event_handler}
+      data-initial-open={format_initial_open(@initial_open, @item)}
       class={[
         "overflow-hidden w-full h-fit",
-        @variant == "menu" && menu_rounded(@rounded),
-        @variant != "menu" && rounded_size(@rounded, @variant),
         color_variant(@variant, @color),
         space_class(@space, @variant),
+        size_class(@size),
+        rounded_class(@rounded, @variant),
         border_class(@border, @variant),
         media_size(@media_size),
         padding_size(@padding),
-        size_class(@size),
         @class
       ]}
-      {drop_rest(@rest)}
     >
       <div
         :for={{item, index} <- Enum.with_index(@item, 1)}
-        class={["group accordion-item-wrapper", item[:class]]}
+        class={["accordion-item overflow-hidden"]}
       >
-        <div
-          id={"#{@id}-#{index}-role-button"}
-          role="button"
-          tabindex="0"
-          aria-expanded="false"
-          aria-controls={"#{@id}-#{index}"}
+        <button
+          data-collapsible-trigger={item[:id] || "#{@id}-item-#{index + 1}"}
           class={[
-            "accordion-summary block w-full",
-            "transition-all duration-100 ease-in-out [&.active-accordion-button_.accordion-chevron]:rotate-90",
-            item[:summary_class]
+            "accordion-trigger cursor-pointer w-full text-left flex items-center justify-between",
+            "transition-colors duration-200 focus:outline-none overflow-hidden",
+            item[:trigger_class]
           ]}
         >
-          <.native_chevron_position
-            id={"#{@id}-#{index}-open-chevron"}
-            phx-click={
-              show_accordion_content("#{@id}-#{index}")
-              |> JS.hide()
-              |> JS.show(to: "##{@id}-#{index}-close-chevron")
-            }
-            position={chevron_position(@rest)}
-            chevron_icon={@chevron_icon}
-            chevron_class={@chevron_class}
-            item={item}
-            hide_chevron={@rest[:hide_chevron] || false}
+          <.icon
+            :if={chevron_visible?(assigns) && chevron_position(assigns) == "left"}
+            name={@chevron_icon}
+            class={chevron_classes(assigns)}
           />
+          <div class="flex items-center space-x-3">
+            <div :if={item[:icon]} class={["shrink-0", item[:icon_wrapper_class]]}>
+              <.icon name={item[:icon]} class={item[:icon_class] || "accordion-icon"} />
+            </div>
 
-          <.native_chevron_position
-            id={"#{@id}-#{index}-close-chevron"}
-            phx-click={
-              hide_accordion_content("#{@id}-#{index}")
-              |> JS.hide()
-              |> JS.show(to: "##{@id}-#{index}-open-chevron")
-            }
-            position={chevron_position(@rest)}
-            chevron_icon={@chevron_icon}
-            chevron_class={@chevron_class}
-            item={item}
-            class="hidden"
-            hide_chevron={@rest[:hide_chevron] || false}
+            <img
+              :if={!is_nil(item[:image])}
+              class={["accordion-title-media shrink-0", item[:image_class]]}
+              src={item[:image]}
+            />
+
+            <div class="flex-1">
+              <div class="accordion-title">{item[:title]}</div>
+              <div :if={item[:description]} class="accordion-description">
+                {item[:description]}
+              </div>
+            </div>
+          </div>
+
+          <.icon
+            :if={chevron_visible?(assigns) && chevron_position(assigns) == "right"}
+            name={@chevron_icon}
+            class={chevron_classes(assigns)}
           />
-        </div>
-        <.focus_wrap
-          id={"#{@id}-#{index}"}
-          role="region"
-          aria-labelledby={"#{@id}-#{index}-role-button"}
-          class="accordion-content-wrapper relative hidden transition [&:not(.active)_.accordion-content]:grid-rows-[0fr] [&.active_.accordion-content]:grid-rows-[1fr]"
-        >
+        </button>
+
+        <div data-collapsible-panel={item[:id] || "#{@id}-item-#{index + 1}"} class="overflow-hidden">
           <div
-            id={"#{@id}-#{index}-content"}
-            class={[
-              "accordion-content transition-all duration-500 grid",
-              item[:content_class]
-            ]}
+            data-collapsible-content
+            class={["transition-[max-height] max-h-0", "duration-#{@duration}"]}
           >
-            <div class="overflow-hidden">
+            <div class={["accordion-panel-content", item[:content_class]]}>
               {render_slot(item)}
             </div>
           </div>
-        </.focus_wrap>
-      </div>
-    </div>
-    """
-  end
-
-  @doc """
-  The Native Accordion component provides an expandable structure that uses the native `<details>`
-  HTML element.
-
-  It offers various customization options such as `variant`, `color`, and `media_size` for
-  styling and configuration.
-
-  ## Examples
-  ```elixir
-  <.native_accordion name="example-zero" media_size="small">
-    <:item
-      title="Accordion Version native"
-      description="Need to be something like this yeehh!?"
-      image="https://img.icons8.com/clouds/256/000000/futurama-bender.png"
-    >
-      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis fugit, voluptas nam quia,
-      sunt sapiente itaque velit illo sed nesciunt molestias commodi, veniam adipisci quo
-      laboriosam in ipsa illum tenetur.
-    </:item>
-    <:item
-      title="Accordion Version native"
-      description="Need to be something like this yeehh!?"
-      image="https://img.icons8.com/clouds/256/000000/futurama-bender.png"
-    >
-      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis fugit, voluptas nam quia,
-      sunt sapiente itaque velit illo sed nesciunt molestias commodi, veniam adipisci quo
-      laboriosam in ipsa illum tenetur.
-    </:item>
-  </.native_accordion>
-  ```
-  """
-  @doc type: :component
-  attr :id, :string,
-    default: nil,
-    doc: "A unique identifier is used to manage state and interaction"
-
-  attr :name, :string, default: nil, doc: "Specifies the name of the element"
-  attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
-  attr :variant, :string, default: "base", doc: "Determines the style"
-  attr :space, :string, default: "small", doc: "Space between items"
-  attr :color, :string, default: "natural", doc: "Determines color theme"
-  attr :border, :string, default: "extra_small", doc: "Determines border style"
-
-  attr :padding, :string, default: "small", doc: "Determines padding for items"
-
-  attr :rounded, :string, default: "none", doc: "Determines the border radius"
-
-  attr :media_size, :string, default: "small", doc: "Determines size of the media elements"
-
-  attr :chevron_icon, :string,
-    default: "hero-chevron-right",
-    doc: "Determines the icon for the chevron"
-
-  attr :chevron_class, :string, default: nil, doc: "Determines the icon for the chevron"
-
-  slot :item, required: true, doc: "Specifies item slot of a accordion" do
-    attr :title, :string, required: true, doc: "Specifies the title of the element"
-    attr :description, :string, doc: "Determines a short description"
-    attr :icon, :string, doc: "Icon displayed alongside of an item"
-    attr :class, :string, doc: "Custom CSS class for additional styling"
-    attr :image, :string, doc: "Image displayed alongside of an item"
-    attr :image_class, :string, doc: "Determines custom class for the image"
-    attr :icon_class, :string, doc: "Determines custom class for the icon"
-    attr :content_class, :string, doc: "Determines custom class for the content"
-    attr :title_class, :string, doc: "Determines custom class for the title"
-    attr :summary_class, :string, doc: "Determines custom class for the summary"
-    attr :open, :boolean, doc: "Whether the accordion item is initially open or closed"
-  end
-
-  attr :rest, :global,
-    include: ~w(left_chevron right_chevron chevron hide_chevron),
-    doc:
-      "Global attributes can define defaults which are merged with attributes provided by the caller"
-
-  def native_accordion(assigns) do
-    ~H"""
-    <div
-      id={@id}
-      class={[
-        "overflow-hidden",
-        @variant == "menu" && menu_rounded(@rounded),
-        @variant != "menu" && rounded_size(@rounded, @variant),
-        space_class(@space, @variant),
-        padding_size(@padding),
-        border_class(@border, @variant),
-        media_size(@media_size),
-        color_variant(@variant, @color),
-        @class
-      ]}
-      {drop_rest(@rest)}
-    >
-      <details
-        :for={item <- @item}
-        name={@name}
-        class={["group accordion-item-wrapper", item[:class]]}
-        open={item[:open] || false}
-      >
-        <summary class={[
-          "accordion-summary w-full group-open:mb-1",
-          "cursor-pointer transition-[margin,background,text] duration-[250ms] ease-in-out list-none",
-          item_color(@variant, @color),
-          item[:summary_class]
-        ]}>
-          <.native_chevron_position
-            position={chevron_position(@rest)}
-            chevron_icon={@chevron_icon}
-            item={item}
-            hide_chevron={@rest[:hide_chevron] || false}
-          />
-        </summary>
-
-        <div class={[
-          "-mt-1 shrink-0 transition-all duration-1000 ease-in-out opacity-0 group-open:opacity-100",
-          "-translate-y-4	group-open:translate-y-0 custom-accordion-content",
-          item_color(@variant, @color),
-          item[:content_class]
-        ]}>
-          {render_slot(item)}
-        </div>
-      </details>
-    </div>
-    """
-  end
-
-  attr :id, :string,
-    default: nil,
-    doc: "A unique identifier is used to manage state and interaction"
-
-  attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
-  attr :item, :map, doc: "Determines each item"
-  attr :position, :string, values: ["left", "right"], doc: "Determines the element position"
-  attr :chevron_icon, :string, doc: "Determines the icon for the chevron"
-  attr :chevron_class, :string, default: nil, doc: "Determines the icon for the chevron"
-  attr :hide_chevron, :boolean, default: false, doc: "Hide chevron icon"
-
-  attr :rest, :global,
-    doc:
-      "Global attributes can define defaults which are merged with attributes provided by the caller"
-
-  defp native_chevron_position(%{position: "left"} = assigns) do
-    ~H"""
-    <div id={@id} class={[@class]} {@rest}>
-      <div class={[
-        "flex flex-nowrap items-center rtl:justify-start ltr:justify-start gap-2",
-        @item[:hover]
-      ]}>
-        <.icon
-          :if={!@hide_chevron}
-          name={@chevron_icon}
-          class={[
-            "accordion-chevron transition-transform duration-300",
-            "ease-in-out group-open:rotate-90 rotate-180 rtl:rotate-0 shrink-0",
-            @chevron_class
-          ]}
-        />
-
-        <div class="flex items-center gap-2">
-          <img
-            :if={!is_nil(@item[:image])}
-            class={["accordion-title-media shrink-0", @item[:image_class]]}
-            src={@item[:image]}
-          />
-
-          <div class={["shrink-0", @item[:icon_wrapper_class]]}>
-            <.icon
-              :if={!is_nil(@item[:icon])}
-              name={@item[:icon]}
-              class={@item[:icon_class] || "accordion-title-media"}
-            />
-          </div>
-
-          <div class={["space-y-2"]}>
-            <div class={[
-              @item[:title_class],
-              @item[:font_weight]
-            ]}>
-              {@item[:title]}
-            </div>
-
-            <div :if={!is_nil(@item[:description])} class="text-xs font-light">
-              {@item[:description]}
-            </div>
-          </div>
         </div>
       </div>
     </div>
     """
   end
 
-  defp native_chevron_position(%{position: "right"} = assigns) do
-    ~H"""
-    <div id={@id} class={[@class]} {@rest}>
-      <div class={[
-        "flex items-center justify-between gap-2",
-        @item[:hover]
-      ]}>
-        <div class="flex items-center gap-2">
-          <img
-            :if={!is_nil(@item[:image])}
-            class={["accordion-title-media shrink-0", @item[:image_class]]}
-            src={@item[:image]}
-          />
+  defp format_initial_open(initial_open, items) do
+    slot_open_items =
+      items
+      |> Enum.filter(&(&1[:open] == true))
+      |> Enum.map(& &1.id)
 
-          <div class={["shrink-0", @item[:icon_wrapper_class]]}>
-            <.icon
-              :if={!is_nil(@item[:icon])}
-              name={@item[:icon]}
-              class={@item[:icon_class] || "accordion-title-media"}
-            />
-          </div>
-
-          <div class={["space-y-2", @item[:title_class]]}>
-            <div class={[
-              @item[:title_class],
-              @item[:font_weight]
-            ]}>
-              {@item[:title]}
-            </div>
-
-            <div :if={!is_nil(@item[:description])} class="text-xs font-light">
-              {@item[:description]}
-            </div>
-          </div>
-        </div>
-
-        <.icon
-          :if={!@hide_chevron}
-          name={@chevron_icon}
-          class={[
-            "accordion-chevron transition-transform duration-300",
-            "ease-in-out group-open:rotate-90 rtl:rotate-180 shrink-0",
-            @chevron_class
-          ]}
-        />
-      </div>
-    </div>
-    """
+    cond do
+      length(initial_open) > 0 -> Enum.join(initial_open, ",")
+      length(slot_open_items) > 0 -> Enum.join(slot_open_items, ",")
+      true -> ""
+    end
   end
-
-  @doc """
-  Shows the content of an accordion item and applies the necessary CSS classes to indicate
-  its active state.
-
-  ## Parameters
-
-    - `js`: (optional) An existing `Phoenix.LiveView.JS` structure to apply transformations on.
-    Defaults to a new `%JS{}`.
-    - `id`: A string representing the unique identifier of the accordion item. It is used
-    to target the specific DOM elements for showing content and applying classes.
-
-  ## Returns
-
-    - A `Phoenix.LiveView.JS` structure with commands to show the accordion content,
-    add the `active` class to the content, and add the `active-accordion-button`
-    class to the corresponding button.
-
-  ## Example
-  ```elixir
-  show_accordion_content(%JS{}, "accordion-item-1")
-  ```
-
-  This example will show the content of the accordion item with the ID `accordion-item-1`
-  and add the active classes to it.
-  """
-  def show_accordion_content(js \\ %JS{}, id) when is_binary(id) do
-    js
-    |> JS.show(to: "##{id}")
-    |> JS.add_class("active", to: "##{id}")
-    |> JS.add_class("active-accordion-button", to: "##{id}-role-button")
-    |> JS.set_attribute({"aria-expanded", "true"}, to: "##{id}-role-button")
-  end
-
-  @doc """
-  Hides the content of an accordion item and removes the active CSS classes to indicate its
-  inactive state.
-
-  ## Parameters
-
-    - `js`: (optional) An existing `Phoenix.LiveView.JS` structure to apply transformations on.
-    Defaults to a new `%JS{}`.
-    - `id`: A string representing the unique identifier of the accordion item. It is used to
-    target the specific DOM elements for hiding content and removing classes.
-
-  ## Returns
-
-    - A `Phoenix.LiveView.JS` structure with commands to remove the `active` class from
-    the content and the `active-accordion-button` class from the corresponding button.
-
-  ## Example
-  ```elixir
-  hide_accordion_content(%JS{}, "accordion-item-1")
-  ```
-  This example will hide the content of the accordion item with the ID "accordion-item-1" and remove
-  the active classes from it.
-  """
-  def hide_accordion_content(js \\ %JS{}, id) do
-    js
-    |> JS.remove_class("active", to: "##{id}")
-    |> JS.remove_class("active-accordion-button", to: "##{id}-role-button")
-    |> JS.set_attribute({"aria-expanded", "false"}, to: "##{id}-role-button")
-  end
-
-  defp space_class(_, variant)
-       when variant not in ["outline_separated", "bordered_separated", "base_separated"],
-       do: nil
-
-  defp space_class("extra_small", _), do: "accordion-item-gap space-y-2"
-
-  defp space_class("small", _), do: "accordion-item-gap space-y-3"
-
-  defp space_class("medium", _), do: "accordion-item-gap space-y-4"
-
-  defp space_class("large", _), do: "accordion-item-gap space-y-5"
-
-  defp space_class("extra_large", _), do: "accordion-item-gap space-y-6"
-
-  defp space_class("none", _), do: nil
-
-  defp space_class(params, _) when is_binary(params), do: params
-
-  defp menu_rounded("extra_small"), do: "[&_.accordion-summary]:rounded-sm"
-
-  defp menu_rounded("small"), do: "[&_.accordion-summary]:rounded"
-
-  defp menu_rounded("medium"), do: "[&_.accordion-summary]:rounded-md"
-
-  defp menu_rounded("large"), do: "[&_.accordion-summary]:rounded-lg"
-
-  defp menu_rounded("extra_large"), do: "[&_.accordion-summary]:rounded-xl"
-
-  defp menu_rounded("full"), do: "[&_.accordion-summary]:rounded-full"
-
-  defp menu_rounded(params) when is_binary(params), do: params
-
-  defp media_size("extra_small"), do: "[&>.accordion-item-wrapper_.accordion-title-media]:size-12"
-
-  defp media_size("small"), do: "[&>.accordion-item-wrapper_.accordion-title-media]:size-14"
-
-  defp media_size("medium"), do: "[&>.accordion-item-wrapper_.accordion-title-media]:size-16"
-
-  defp media_size("large"), do: "[&>.accordion-item-wrapper_.accordion-title-media]:size-20"
-
-  defp media_size("extra_large"), do: "[&>.accordion-item-wrapper_.accordion-title-media]:size-24"
-
-  defp media_size(params) when is_binary(params), do: params
-
-  defp size_class("extra_small") do
-    [
-      "text-xs [&_.accordion-summary]:py-1 [&_.accordion-summary]:px-2"
-    ]
-  end
-
-  defp size_class("small") do
-    [
-      "text-sm [&_.accordion-summary]:py-1.5 [&_.accordion-summary]:px-3"
-    ]
-  end
-
-  defp size_class("medium") do
-    [
-      "text-base [&_.accordion-summary]:py-2 [&_.accordion-summary]:px-4"
-    ]
-  end
-
-  defp size_class("large") do
-    [
-      "text-lg [&_.accordion-summary]:py-2.5 [&_.accordion-summary]:px-5"
-    ]
-  end
-
-  defp size_class("extra_large") do
-    [
-      "text-xl [&_.accordion-summary]:py-3 [&_.accordion-summary]:px-5"
-    ]
-  end
-
-  defp size_class(params) when is_binary(params), do: params
-
-  defp rounded_size("extra_small", variant)
-       when variant in ["outline_separated", "bordered_separated", "base_separated"] do
-    [
-      "[&_.accordion-item-wrapper_.accordion-summary]:rounded-sm"
-    ]
-  end
-
-  defp rounded_size("small", variant)
-       when variant in ["outline_separated", "bordered_separated", "base_separated"] do
-    [
-      "[&_.accordion-item-wrapper_.accordion-summary]:rounded"
-    ]
-  end
-
-  defp rounded_size("medium", variant)
-       when variant in ["outline_separated", "bordered_separated", "base_separated"] do
-    [
-      "[&_.accordion-item-wrapper_.accordion-summary]:rounded-md"
-    ]
-  end
-
-  defp rounded_size("medium", variant)
-       when variant in ["outline_separated", "bordered_separated", "base_separated"] do
-    [
-      "[&_.accordion-item-wrapper_.accordion-summary]:rounded-md"
-    ]
-  end
-
-  defp rounded_size("large", variant)
-       when variant in ["outline_separated", "bordered_separated", "base_separated"] do
-    [
-      "[&_.accordion-item-wrapper_.accordion-summary]:rounded-lg"
-    ]
-  end
-
-  defp rounded_size("extra_large", variant)
-       when variant in ["outline_separated", "bordered_separated", "base_separated"] do
-    [
-      "[&_.accordion-item-wrapper_.accordion-summary]:rounded-xl"
-    ]
-  end
-
-  defp rounded_size("extra_small", variant)
-       when variant in ["default", "bordered", "outline", "base", "shadow", "gradient"] do
-    [
-      "rounded-sm [&:not(.accordion-item-gap)>.accordion-item-wrapper:first-child>.accordion-summary]:rounded-t-sm",
-      "[&.accordion-item-gap>.accordion-item-wrapper>.accordion-summary]:rounded-t-sm",
-      "[&.accordion-item-gap>.accordion-item-wrapper>:not(.accordion-summary)]:rounded-b-sm"
-    ]
-  end
-
-  defp rounded_size("small", variant)
-       when variant in ["default", "bordered", "outline", "base", "shadow", "gradient"] do
-    [
-      "rounded [&:not(.accordion-item-gap)>.accordion-item-wrapper:first-child>.accordion-summary]:rounded-t",
-      "[&.accordion-item-gap>.accordion-item-wrapper>.accordion-summary]:rounded-t",
-      "[&.accordion-item-gap>.accordion-item-wrapper>:not(.accordion-summary)]:rounded-b"
-    ]
-  end
-
-  defp rounded_size("medium", variant)
-       when variant in ["default", "bordered", "outline", "base", "shadow", "gradient"] do
-    [
-      "rounded-md [&:not(.accordion-item-gap)>.accordion-item-wrapper:first-child>.accordion-summary]:rounded-t-md",
-      "[&.accordion-item-gap>.accordion-item-wrapper>.accordion-summary]:rounded-t-md",
-      "[&.accordion-item-gap>.accordion-item-wrapper>:not(.accordion-summary)]:rounded-b-md"
-    ]
-  end
-
-  defp rounded_size("large", variant)
-       when variant in ["default", "bordered", "outline", "base", "shadow", "gradient"] do
-    [
-      "rounded-lg [&:not(.accordion-item-gap)>.accordion-item-wrapper:first-child>.accordion-summary]:rounded-t-lg",
-      "[&.accordion-item-gap>.accordion-item-wrapper>.accordion-summary]:rounded-t-lg",
-      "[&.accordion-item-gap>.accordion-item-wrapper>:not(.accordion-summary)]:rounded-b-lg"
-    ]
-  end
-
-  defp rounded_size("extra_large", variant)
-       when variant in ["default", "bordered", "outline", "base", "shadow", "gradient"] do
-    [
-      "rounded-xl [&:not(.accordion-item-gap)>.accordion-item-wrapper:first-child>.accordion-summary]:rounded-t-xl",
-      "[&.accordion-item-gap>.accordion-item-wrapper>.accordion-summary]:rounded-t-xl",
-      "[&.accordion-item-gap>.accordion-item-wrapper>:not(.accordion-summary)]:rounded-b-xl"
-    ]
-  end
-
-  defp rounded_size("none", _), do: nil
-
-  defp rounded_size(params, _) when is_binary(params), do: params
-
-  defp padding_size("extra_small") do
-    [
-      "[&>.accordion-item-wrapper>.accordion-summary]:p-1",
-      "[&>.accordion-item-wrapper>.custom-accordion-content]:p-1",
-      "[&>.accordion-item-wrapper>.accordion-content-wrapper>.accordion-content]:px-1",
-      "[&>.accordion-item-wrapper>.accordion-content-wrapper.active>.accordion-content]:py-1"
-    ]
-  end
-
-  defp padding_size("small") do
-    [
-      "[&>.accordion-item-wrapper>.accordion-summary]:p-2",
-      "[&>.accordion-item-wrapper>.custom-accordion-content]:p-2",
-      "[&>.accordion-item-wrapper>.accordion-content-wrapper>.accordion-content]:px-2",
-      "[&>.accordion-item-wrapper>.accordion-content-wrapper.active>.accordion-content]:py-2"
-    ]
-  end
-
-  defp padding_size("medium") do
-    [
-      "[&>.accordion-item-wrapper>.accordion-summary]:p-3",
-      "[&>.accordion-item-wrapper>.custom-accordion-content]:p-3",
-      "[&>.accordion-item-wrapper>.accordion-content-wrapper>.accordion-content]:px-3",
-      "[&>.accordion-item-wrapper>.accordion-content-wrapper.active>.accordion-content]:py-3"
-    ]
-  end
-
-  defp padding_size("large") do
-    [
-      "[&>.accordion-item-wrapper>.accordion-summary]:p-4",
-      "[&>.accordion-item-wrapper>.custom-accordion-content]:p-4",
-      "[&>.accordion-item-wrapper>.accordion-content-wrapper>.accordion-content]:px-4",
-      "[&>.accordion-item-wrapper>.accordion-content-wrapper.active>.accordion-content]:py-4"
-    ]
-  end
-
-  defp padding_size("extra_large") do
-    [
-      "[&>.accordion-item-wrapper>.accordion-summary]:p-5",
-      "[&>.accordion-item-wrapper>.custom-accordion-content]:p-5",
-      "[&>.accordion-item-wrapper>.accordion-content-wrapper>.accordion-content]:px-5",
-      "[&>.accordion-item-wrapper>.accordion-content-wrapper.active>.accordion-content]:py-5"
-    ]
-  end
-
-  defp padding_size("zero"), do: "[&>.accordion-item-wrapper>.accordion-summary]:p-0"
-  defp padding_size(params) when is_binary(params), do: params
-
-  defp border_class(_, variant) when variant in ["default", "shadow", "transparent", "gradient"],
-    do: nil
-
-  defp border_class("none", "outline") do
-    [
-      "border-0",
-      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-summary]:border-b-0",
-      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-content-wrapper.active]:border-b-0"
-    ]
-  end
-
-  defp border_class("extra_small", "outline") do
-    [
-      "border",
-      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-summary]:border-b",
-      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-content-wrapper.active]:border-b"
-    ]
-  end
-
-  defp border_class("small", "outline") do
-    [
-      "border-2",
-      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-summary]:border-b-2",
-      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-content-wrapper.active]:border-b-2"
-    ]
-  end
-
-  defp border_class("medium", "outline") do
-    [
-      "border-[3px]",
-      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-summary]:border-b-[3px]",
-      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-content-wrapper.active]:border-b-[3px]"
-    ]
-  end
-
-  defp border_class("large", "outline") do
-    [
-      "border-4",
-      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-summary]:border-b-4",
-      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-content-wrapper.active]:border-b-4"
-    ]
-  end
-
-  defp border_class("extra_large", "outline") do
-    [
-      "border-[5px]",
-      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-summary]:border-b-[5px]",
-      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-content-wrapper.active]:border-b-[5px]"
-    ]
-  end
-
-  defp border_class("none", "bordered") do
-    [
-      "border-0",
-      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-summary]:border-b-0",
-      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-content-wrapper.active]:border-b-0"
-    ]
-  end
-
-  defp border_class("extra_small", "bordered") do
-    [
-      "border",
-      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-summary]:border-b",
-      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-content-wrapper.active]:border-b"
-    ]
-  end
-
-  defp border_class("small", "bordered") do
-    [
-      "border-2",
-      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-summary]:border-b-2",
-      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-content-wrapper.active]:border-b-2"
-    ]
-  end
-
-  defp border_class("medium", "bordered") do
-    [
-      "border-[3px]",
-      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-summary]:border-b-[3px]",
-      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-content-wrapper.active]:border-b-[3px]"
-    ]
-  end
-
-  defp border_class("large", "bordered") do
-    [
-      "border-4",
-      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-summary]:border-b-4",
-      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-content-wrapper.active]:border-b-4"
-    ]
-  end
-
-  defp border_class("extra_large", "bordered") do
-    [
-      "border-[5px]",
-      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-summary]:border-b-[5px]",
-      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-content-wrapper.active]:border-b-[5px]"
-    ]
-  end
-
-  defp border_class("none", "bordered_separated") do
-    "[&>.accordion-item-wrapper>.accordion-summary]:border-0"
-  end
-
-  defp border_class("extra_small", "bordered_separated") do
-    "[&>.accordion-item-wrapper>.accordion-summary]:border"
-  end
-
-  defp border_class("small", "bordered_separated") do
-    "[&>.accordion-item-wrapper>.accordion-summary]:border-2"
-  end
-
-  defp border_class("medium", "bordered_separated") do
-    "[&>.accordion-item-wrapper>.accordion-summary]:border-[3px]"
-  end
-
-  defp border_class("large", "bordered_separated") do
-    "[&>.accordion-item-wrapper>.accordion-summary]:border-4"
-  end
-
-  defp border_class("extra_large", "bordered_separated") do
-    "[&>.accordion-item-wrapper>.accordion-summary]:border-[5px]"
-  end
-
-  defp border_class("none", "outline_separated") do
-    "[&>.accordion-item-wrapper>.accordion-summary]:border-0"
-  end
-
-  defp border_class("extra_small", "outline_separated") do
-    "[&>.accordion-item-wrapper>.accordion-summary]:border"
-  end
-
-  defp border_class("small", "outline_separated") do
-    "[&>.accordion-item-wrapper>.accordion-summary]:border-2"
-  end
-
-  defp border_class("medium", "outline_separated") do
-    "[&>.accordion-item-wrapper>.accordion-summary]:border-[3px]"
-  end
-
-  defp border_class("large", "outline_separated") do
-    "[&>.accordion-item-wrapper>.accordion-summary]:border-4"
-  end
-
-  defp border_class("extra_large", "outline_separated") do
-    "[&>.accordion-item-wrapper>.accordion-summary]:border-[5px]"
-  end
-
-  defp border_class("none", "base") do
-    [
-      "border-0",
-      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-summary]:border-b-0",
-      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-content-wrapper.active]:border-b-0"
-    ]
-  end
-
-  defp border_class("extra_small", "base") do
-    [
-      "border",
-      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-summary]:border-b",
-      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-content-wrapper.active]:border-b"
-    ]
-  end
-
-  defp border_class("small", "base") do
-    [
-      "border-2",
-      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-summary]:border-b-2",
-      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-content-wrapper.active]:border-b-2"
-    ]
-  end
-
-  defp border_class("medium", "base") do
-    [
-      "border-[3px]",
-      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-summary]:border-b-[3px]",
-      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-content-wrapper.active]:border-b-[3px]"
-    ]
-  end
-
-  defp border_class("large", "base") do
-    [
-      "border-4",
-      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-summary]:border-b-4",
-      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-content-wrapper.active]:border-b-4"
-    ]
-  end
-
-  defp border_class("extra_large", "base") do
-    [
-      "border-[5px]",
-      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-summary]:border-b-[5px]",
-      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-content-wrapper.active]:border-b-[5px]"
-    ]
-  end
-
-  defp border_class("none", "base_separated") do
-    "[&>.accordion-item-wrapper>.accordion-summary]:border-0"
-  end
-
-  defp border_class("extra_small", "base_separated") do
-    "[&>.accordion-item-wrapper>.accordion-summary]:border"
-  end
-
-  defp border_class("small", "base_separated") do
-    "[&>.accordion-item-wrapper>.accordion-summary]:border-2"
-  end
-
-  defp border_class("medium", "base_separated") do
-    "[&>.accordion-item-wrapper>.accordion-summary]:border-[3px]"
-  end
-
-  defp border_class("large", "base_separated") do
-    "[&>.accordion-item-wrapper>.accordion-summary]:border-4"
-  end
-
-  defp border_class("extra_large", "base_separated") do
-    "[&>.accordion-item-wrapper>.accordion-summary]:border-[5px]"
-  end
-
-  defp border_class(params, _) when is_binary(params), do: params
 
   defp color_variant("base", _) do
     [
-      "text-[#09090b] border-[#e4e4e7] bg-white",
-      "dark:text-[#FAFAFA] dark:border-[#27272a] dark:bg-[#18181B]",
-      "hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#F8F9FA] dark:hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#242424]",
-      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-summary]:border-[#e4e4e7]",
-      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-content-wrapper.active]:border-[#e4e4e7]",
-      "dark:[&>.accordion-item-wrapper:not(:last-child)>.accordion-summary]:border-[#27272a]",
-      "dark:[&>.accordion-item-wrapper:not(:last-child)>.accordion-content-wrapper.active]:border-[#27272a]"
+      "text-base-text-light border-base-border-light bg-white",
+      "dark:text-base-text-dark dark:border-base-border-dark dark:bg-base-bg-dark",
+      "[&>.accordion-item>.accordion-trigger]:hover:bg-base-hover-light dark:[&>.accordion-item>.accordion-trigger]:hover:bg-base-hover-dark",
+      "[&>.accordion-item:not(:first-child)]:border-t-base-border-light",
+      "dark:[&>.accordion-item:not(:first-child)]:border-t-base-border-dark"
     ]
   end
 
   defp color_variant("base_separated", _) do
     [
-      "text-[#09090b] [&>.accordion-item-wrapper>.accordion-summary]:border-[#e4e4e7]",
-      "[&>.accordion-item-wrapper]:bg-white",
-      "dark:text-[#FAFAFA] dark:[&>.accordion-item-wrapper>.accordion-summary]:border-[#27272a]",
-      "dark:[&>.accordion-item-wrapper]:bg-[#18181B]",
-      "hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#F8F9FA] dark:hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#242424]"
+      "text-base-text-light [&>.accordion-item]:border-base-border-light",
+      "[&>.accordion-item]:bg-white",
+      "dark:text-base-text-dark dark:[&>.accordion-item]:border-base-border-dark",
+      "dark:[&>.accordion-item]:bg-base-bg-dark",
+      "[&>.accordion-item>.accordion-trigger]:hover:bg-base-hover-light dark:[&>.accordion-item>.accordion-trigger]:hover:bg-base-hover-dark"
     ]
   end
 
-  defp color_variant("transparent", "natural") do
+  defp color_variant("default", "natural") do
     [
-      "text-[#4B4B4B] dark:text-[#DDDDDD]"
+      "bg-natural-light text-white dark:bg-natural-dark dark:text-black",
+      "[&>.accordion-item>.accordion-trigger]:hover:bg-natural-hover-light",
+      "dark:[&>.accordion-item>.accordion-trigger]:hover:bg-natural-hover-dark"
     ]
   end
 
-  defp color_variant("transparent", "primary") do
+  defp color_variant("default", "primary") do
     [
-      "text-[#007F8C] dark:text-[#01B8CA]"
+      "bg-primary-light text-white dark:bg-primary-dark dark:text-black",
+      "[&>.accordion-item>.accordion-trigger]:hover:bg-primary-hover-light",
+      "dark:[&>.accordion-item>.accordion-trigger]:hover:bg-primary-hover-dark"
     ]
   end
 
-  defp color_variant("transparent", "secondary") do
+  defp color_variant("default", "secondary") do
     [
-      "text-[#266EF1] dark:text-[#6DAAFB]"
+      "bg-secondary-light text-white dark:bg-secondary-dark dark:text-black",
+      "[&>.accordion-item>.accordion-trigger]:hover:bg-secondary-hover-light",
+      "dark:[&>.accordion-item>.accordion-trigger]:hover:bg-secondary-hover-dark"
     ]
   end
 
-  defp color_variant("transparent", "success") do
+  defp color_variant("default", "success") do
     [
-      "text-[#0E8345] dark:text-[#06C167]"
+      "bg-success-light text-white dark:bg-success-dark dark:text-black",
+      "[&>.accordion-item>.accordion-trigger]:hover:bg-success-hover-light",
+      "dark:[&>.accordion-item>.accordion-trigger]:hover:bg-success-hover-dark"
     ]
   end
 
-  defp color_variant("transparent", "warning") do
+  defp color_variant("default", "warning") do
     [
-      "text-[#CA8D01] dark:text-[#FDC034]"
+      "bg-warning-light text-white dark:bg-warning-dark dark:text-black",
+      "[&>.accordion-item>.accordion-trigger]:hover:bg-warning-hover-light",
+      "dark:[&>.accordion-item>.accordion-trigger]:hover:bg-warning-hover-dark"
     ]
   end
 
-  defp color_variant("transparent", "danger") do
+  defp color_variant("default", "danger") do
     [
-      "text-[#DE1135] dark:text-[#FC7F79]"
+      "bg-danger-light text-white dark:bg-danger-dark dark:text-black",
+      "[&>.accordion-item>.accordion-trigger]:hover:bg-danger-hover-light",
+      "dark:[&>.accordion-item>.accordion-trigger]:hover:bg-danger-hover-dark"
     ]
   end
 
-  defp color_variant("transparent", "info") do
+  defp color_variant("default", "info") do
     [
-      "text-[#0B84BA] dark:text-[#3EB7ED]"
+      "bg-info-light text-white dark:bg-info-dark dark:text-black",
+      "[&>.accordion-item>.accordion-trigger]:hover:bg-info-hover-light",
+      "dark:[&>.accordion-item>.accordion-trigger]:hover:bg-info-hover-dark"
     ]
   end
 
-  defp color_variant("transparent", "misc") do
+  defp color_variant("default", "misc") do
     [
-      "text-[#8750C5] dark:text-[#BA83F9]"
+      "bg-misc-light text-white dark:bg-misc-dark dark:text-black",
+      "[&>.accordion-item>.accordion-trigger]:hover:bg-misc-hover-light",
+      "dark:[&>.accordion-item>.accordion-trigger]:hover:bg-misc-hover-dark"
     ]
   end
 
-  defp color_variant("transparent", "dawn") do
+  defp color_variant("default", "dawn") do
     [
-      "text-[#A86438] dark:text-[#DB976B]"
+      "bg-dawn-light text-white dark:bg-dawn-dark dark:text-black",
+      "[&>.accordion-item>.accordion-trigger]:hover:bg-dawn-hover-light",
+      "dark:[&>.accordion-item>.accordion-trigger]:hover:bg-dawn-hover-dark"
     ]
   end
 
-  defp color_variant("transparent", "silver") do
+  defp color_variant("default", "silver") do
     [
-      "text-[#868686] dark:text-[#A6A6A6]"
+      "bg-silver-light text-white dark:bg-silver-dark dark:text-black",
+      "[&>.accordion-item>.accordion-trigger]:hover:bg-silver-hover-light",
+      "dark:[&>.accordion-item>.accordion-trigger]:hover:bg-silver-hover-dark"
     ]
   end
 
   defp color_variant("default", "white") do
     [
       "bg-white text-black",
-      "hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#DDDDDD]",
-      "dark:hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#DDDDDD]"
+      "[&>.accordion-item>.accordion-trigger]:hover:bg-natural-disabled-light",
+      "dark:[&>.accordion-item>.accordion-trigger]:hover:bg-natural-disabled-light"
     ]
   end
 
   defp color_variant("default", "dark") do
     [
-      "bg-[#282828] text-white",
-      "hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#4B4B4B]",
-      "dark:hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#4B4B4B]"
+      "bg-default-dark-bg text-white",
+      "[&>.accordion-item>.accordion-trigger]:hover:bg-natural-bg-dark",
+      "dark:[&>.accordion-item>.accordion-trigger]:hover:bg-natural-bg-dark"
     ]
   end
 
-  defp color_variant("default", "natural") do
+  defp color_variant("transparent", "natural") do
     [
-      "bg-[#4B4B4B] text-white dark:bg-[#DDDDDD] dark:text-black",
-      "hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#282828]",
-      "dark:hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#E8E8E8]"
+      "text-natural-light dark:text-natural-dark"
     ]
   end
 
-  defp color_variant("default", "primary") do
+  defp color_variant("transparent", "primary") do
     [
-      "bg-[#007F8C] text-white hover:bg-[#016974] dark:bg-[#01B8CA] dark:text-black",
-      "hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#016974]",
-      "dark:hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#77D5E3]"
+      "text-primary-light dark:text-primary-dark"
     ]
   end
 
-  defp color_variant("default", "secondary") do
+  defp color_variant("transparent", "secondary") do
     [
-      "bg-[#266EF1] text-white dark:bg-[#6DAAFB] dark:text-black",
-      "hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#175BCC]",
-      "dark:hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#A9C9FF]"
+      "text-secondary-light dark:text-secondary-dark"
     ]
   end
 
-  defp color_variant("default", "success") do
+  defp color_variant("transparent", "success") do
     [
-      "bg-[#0E8345] text-white dark:bg-[#06C167] dark:text-black",
-      "hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#166C3B]",
-      "dark:hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#7FD99A]"
+      "text-success-light dark:text-success-dark"
     ]
   end
 
-  defp color_variant("default", "warning") do
+  defp color_variant("transparent", "warning") do
     [
-      "bg-[#CA8D01] text-white dark:bg-[#FDC034] dark:text-black",
-      "hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#976A01]",
-      "dark:hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#FDD067]"
+      "text-warning-light dark:text-warning-dark"
     ]
   end
 
-  defp color_variant("default", "danger") do
+  defp color_variant("transparent", "danger") do
     [
-      "bg-[#DE1135] text-white dark:bg-[#FC7F79] dark:text-black",
-      "hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#BB032A]",
-      "dark:hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#FFB2AB]"
+      "text-danger-light dark:text-danger-dark"
     ]
   end
 
-  defp color_variant("default", "info") do
+  defp color_variant("transparent", "info") do
     [
-      "bg-[#0B84BA] text-white dark:bg-[#3EB7ED] dark:text-black",
-      "hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#08638C]",
-      "dark:hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#6EC9F2]"
+      "text-info-light dark:text-info-dark"
     ]
   end
 
-  defp color_variant("default", "misc") do
+  defp color_variant("transparent", "misc") do
     [
-      "bg-[#8750C5] text-white dark:bg-[#BA83F9] dark:text-black",
-      "hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#653C94]",
-      "dark:hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#CBA2FA]"
+      "text-misc-light dark:text-misc-dark"
     ]
   end
 
-  defp color_variant("default", "dawn") do
+  defp color_variant("transparent", "dawn") do
     [
-      "bg-[#A86438] text-white dark:bg-[#DB976B] dark:text-black",
-      "hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#7E4B2A]",
-      "dark:hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#E4B190]"
+      "text-dawn-light dark:text-dawn-dark"
     ]
   end
 
-  defp color_variant("default", "silver") do
+  defp color_variant("transparent", "silver") do
     [
-      "bg-[#868686] text-white dark:bg-[#A6A6A6] dark:text-black",
-      "hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#727272]",
-      "dark:hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#BBBBBB]"
+      "text-silver-light dark:text-silver-dark"
     ]
   end
 
   defp color_variant("outline", "natural") do
     [
-      "border-[#4B4B4B] dark:border-[#DDDDDD] text-[#4B4B4B] dark:text-[#DDDDDD]",
-      "hover:text-[#282828] dark:hover:text-[#E8E8E8]",
-      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-summary]:border-[#4B4B4B]",
-      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-content-wrapper.active]:border-[#4B4B4B]",
-      "dark:[&>.accordion-item-wrapper:not(:last-child)>.accordion-summary]:border-[#DDDDDD]",
-      "dark:[&>.accordion-item-wrapper:not(:last-child)>.accordion-content-wrapper.active]:border-[#DDDDDD]"
+      "border-natural-light dark:border-natural-dark text-natural-light dark:text-natural-dark",
+      "[&>.accordion-item>.accordion-trigger]:hover:text-natural-hover-light dark:[&>.accordion-item>.accordion-trigger]:hover:text-natural-hover-dark",
+      "[&>.accordion-item:not(:first-child)]:border-t-natural-light",
+      "dark:[&>.accordion-item:not(:first-child)]:border-t-natural-dark"
     ]
   end
 
   defp color_variant("outline", "primary") do
     [
-      "border-[#007F8C] dark:border-[#01B8CA] text-[#007F8C] dark:text-[#01B8CA]",
-      "hover:text-[#016974] dark:hover:text-[#77D5E3]",
-      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-summary]:border-[#007F8C]",
-      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-content-wrapper.active]:border-[#007F8C]",
-      "dark:[&>.accordion-item-wrapper:not(:last-child)>.accordion-summary]:border-[#01B8CA]",
-      "dark:[&>.accordion-item-wrapper:not(:last-child)>.accordion-content-wrapper.active]:border-[#01B8CA]"
+      "border-primary-light dark:border-primary-dark text-primary-light dark:text-primary-dark",
+      "[&>.accordion-item>.accordion-trigger]:hover:text-primary-hover-light dark:[&>.accordion-item>.accordion-trigger]:hover:text-primary-hover-dark",
+      "[&>.accordion-item:not(:first-child)]:border-t-primary-light",
+      "dark:[&>.accordion-item:not(:first-child)]:border-t-primary-dark"
     ]
   end
 
   defp color_variant("outline", "secondary") do
     [
-      "border-[#266EF1] dark:border-[#6DAAFB] text-[#266EF1] dark:text-[#6DAAFB]",
-      "hover:text-[#175BCC] dark:hover:text-[#A9C9FF]",
-      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-summary]:border-[#266EF1]",
-      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-content-wrapper.active]:border-[#266EF1]",
-      "dark:[&>.accordion-item-wrapper:not(:last-child)>.accordion-summary]:border-[#6DAAFB]",
-      "dark:[&>.accordion-item-wrapper:not(:last-child)>.accordion-content-wrapper.active]:border-[#6DAAFB]"
+      "border-secondary-light dark:border-secondary-dark text-secondary-light dark:text-secondary-dark",
+      "[&>.accordion-item>.accordion-trigger]:hover:text-secondary-hover-light dark:[&>.accordion-item>.accordion-trigger]:hover:text-secondary-hover-dark",
+      "[&>.accordion-item:not(:first-child)]:border-t-secondary-light",
+      "dark:[&>.accordion-item:not(:first-child)]:border-t-secondary-dark"
     ]
   end
 
   defp color_variant("outline", "success") do
     [
-      "border-[#0E8345] dark:border-[#06C167] text-[#0E8345] dark:text-[#06C167]",
-      "hover:text-[#166C3B] dark:hover:text-[#7FD99A]",
-      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-summary]:border-[#0E8345]",
-      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-content-wrapper.active]:border-[#0E8345]",
-      "dark:[&>.accordion-item-wrapper:not(:last-child)>.accordion-summary]:border-[#06C167]",
-      "dark:[&>.accordion-item-wrapper:not(:last-child)>.accordion-content-wrapper.active]:border-[#06C167]"
+      "border-success-light dark:border-success-dark text-success-light dark:text-success-dark",
+      "[&>.accordion-item>.accordion-trigger]:hover:text-success-hover-light dark:[&>.accordion-item>.accordion-trigger]:hover:text-success-hover-dark",
+      "[&>.accordion-item:not(:first-child)]:border-t-success-light",
+      "dark:[&>.accordion-item:not(:first-child)]:border-t-success-dark"
     ]
   end
 
   defp color_variant("outline", "warning") do
     [
-      "border-[#CA8D01] dark:border-[#FDC034] text-[#CA8D01] dark:text-[#FDC034]",
-      "hover:text-[#976A01] dark:hover:text-[#FDD067]",
-      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-summary]:border-[#CA8D01]",
-      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-content-wrapper.active]:border-[#CA8D01]",
-      "dark:[&>.accordion-item-wrapper:not(:last-child)>.accordion-summary]:border-[#FDC034]",
-      "dark:[&>.accordion-item-wrapper:not(:last-child)>.accordion-content-wrapper.active]:border-[#FDC034]"
+      "border-warning-light dark:border-warning-dark text-warning-light dark:text-warning-dark",
+      "[&>.accordion-item>.accordion-trigger]:hover:text-warning-hover-light dark:[&>.accordion-item>.accordion-trigger]:hover:text-warning-hover-dark",
+      "[&>.accordion-item:not(:first-child)]:border-t-warning-light",
+      "dark:[&>.accordion-item:not(:first-child)]:border-t-warning-dark"
     ]
   end
 
   defp color_variant("outline", "danger") do
     [
-      "border-[#DE1135] dark:border-[#FC7F79] text-[#DE1135] dark:text-[#FC7F79]",
-      "hover:text-[#BB032A] dark:hover:text-[#FFB2AB]",
-      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-summary]:border-[#DE1135]",
-      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-content-wrapper.active]:border-[#DE1135]",
-      "dark:[&>.accordion-item-wrapper:not(:last-child)>.accordion-summary]:border-[#FC7F79]",
-      "dark:[&>.accordion-item-wrapper:not(:last-child)>.accordion-content-wrapper.active]:border-[#FC7F79]"
+      "border-danger-light dark:border-danger-dark text-danger-light dark:text-danger-dark",
+      "[&>.accordion-item>.accordion-trigger]:hover:text-danger-hover-light dark:[&>.accordion-item>.accordion-trigger]:hover:text-danger-hover-dark",
+      "[&>.accordion-item:not(:first-child)]:border-t-danger-light",
+      "dark:[&>.accordion-item:not(:first-child)]:border-t-danger-dark"
     ]
   end
 
   defp color_variant("outline", "info") do
     [
-      "border-[#0B84BA] dark:border-[#3EB7ED] text-[#0B84BA] dark:text-[#3EB7ED]",
-      "hover:text-[#08638C] dark:hover:text-[#6EC9F2]",
-      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-summary]:border-[#0B84BA]",
-      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-content-wrapper.active]:border-[#0B84BA]",
-      "dark:[&>.accordion-item-wrapper:not(:last-child)>.accordion-summary]:border-[#3EB7ED]",
-      "dark:[&>.accordion-item-wrapper:not(:last-child)>.accordion-content-wrapper.active]:border-[#3EB7ED]"
+      "border-info-light dark:border-info-dark text-info-light dark:text-info-dark",
+      "[&>.accordion-item>.accordion-trigger]:hover:text-info-hover-light dark:[&>.accordion-item>.accordion-trigger]:hover:text-info-hover-dark",
+      "[&>.accordion-item:not(:first-child)]:border-t-info-light",
+      "dark:[&>.accordion-item:not(:first-child)]:border-t-info-dark"
     ]
   end
 
   defp color_variant("outline", "misc") do
     [
-      "border-[#8750C5] dark:border-[#BA83F9] text-[#8750C5] dark:text-[#BA83F9]",
-      "hover:text-[#653C94] dark:hover:text-[#CBA2FA]",
-      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-summary]:border-[#8750C5]",
-      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-content-wrapper.active]:border-[#8750C5]",
-      "dark:[&>.accordion-item-wrapper:not(:last-child)>.accordion-summary]:border-[#BA83F9]",
-      "dark:[&>.accordion-item-wrapper:not(:last-child)>.accordion-content-wrapper.active]:border-[#BA83F9]"
+      "border-misc-light dark:border-misc-dark text-misc-light dark:text-misc-dark",
+      "[&>.accordion-item>.accordion-trigger]:hover:text-misc-hover-light dark:[&>.accordion-item>.accordion-trigger]:hover:text-misc-hover-dark",
+      "[&>.accordion-item:not(:first-child)]:border-t-misc-light",
+      "dark:[&>.accordion-item:not(:first-child)]:border-t-misc-dark"
     ]
   end
 
   defp color_variant("outline", "dawn") do
     [
-      "border-[#A86438] dark:border-[#DB976B] text-[#A86438] dark:text-[#DB976B]",
-      "hover:text-[#7E4B2A] dark:hover:text-[#7E4B2A]",
-      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-summary]:border-[#A86438]",
-      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-content-wrapper.active]:border-[#A86438]",
-      "dark:[&>.accordion-item-wrapper:not(:last-child)>.accordion-summary]:border-[#DB976B]",
-      "dark:[&>.accordion-item-wrapper:not(:last-child)>.accordion-content-wrapper.active]:border-[#DB976B]"
+      "border-dawn-light dark:border-dawn-dark text-dawn-light dark:text-dawn-dark",
+      "[&>.accordion-item>.accordion-trigger]:hover:text-dawn-hover-light dark:[&>.accordion-item>.accordion-trigger]:hover:text-dawn-hover-dark",
+      "[&>.accordion-item:not(:first-child)]:border-t-dawn-light",
+      "dark:[&>.accordion-item:not(:first-child)]:border-t-dawn-dark"
     ]
   end
 
   defp color_variant("outline", "silver") do
     [
-      "border-[#868686] dark:border-[#A6A6A6] text-[#868686] dark:text-[#A6A6A6]",
-      "hover:text-[#727272] dark:hover:text-[#BBBBBB]",
-      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-summary]:border-[#868686]",
-      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-content-wrapper.active]:border-[#868686]",
-      "dark:[&>.accordion-item-wrapper:not(:last-child)>.accordion-summary]:border-[#A6A6A6]",
-      "dark:[&>.accordion-item-wrapper:not(:last-child)>.accordion-content-wrapper.active]:border-[#A6A6A6]"
+      "border-silver-light dark:border-silver-dark text-silver-light dark:text-silver-dark",
+      "[&>.accordion-item>.accordion-trigger]:hover:text-silver-hover-light dark:[&>.accordion-item>.accordion-trigger]:hover:text-silver-hover-dark",
+      "[&>.accordion-item:not(:first-child)]:border-t-silver-light",
+      "dark:[&>.accordion-item:not(:first-child)]:border-t-silver-dark"
     ]
   end
 
   defp color_variant("bordered", "white") do
     [
-      ":bg-white text-black border-[#DDDDDD]",
-      "hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#DDDDDD]",
-      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-summary]:border-[#DDDDDD]",
-      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-content-wrapper.active]:border-[#DDDDDD]"
+      "bg-white text-black border-bordered-white-border",
+      "[&>.accordion-item>.accordion-trigger]:hover:bg-bordered-white-border"
     ]
   end
 
   defp color_variant("bordered", "dark") do
     [
-      ":bg-[#282828] text-white border-[#727272]",
-      "hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#727272]",
-      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-summary]:border-[#727272]",
-      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-content-wrapper.active]:border-[#727272]"
+      "bg-bordered-dark-bg text-white border-bordered-dark-border",
+      "[&>.accordion-item>.accordion-trigger]:hover:bg-bordered-dark-border"
     ]
   end
 
   defp color_variant("bordered", "natural") do
     [
-      "text-[#282828] border-[#282828] bg-[#F3F3F3]",
-      "dark:text-[#E8E8E8] dark:border-[#E8E8E8] dark:bg-[#4B4B4B]",
-      "hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#E8E8E8] dark:hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#5E5E5E]",
-      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-summary]:border-[#282828]",
-      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-content-wrapper.active]:border-[#282828]",
-      "dark:[&>.accordion-item-wrapper:not(:last-child)>.accordion-summary]:border-[#E8E8E8]",
-      "dark:[&>.accordion-item-wrapper:not(:last-child)>.accordion-content-wrapper.active]:border-[#E8E8E8]"
+      "text-natural-bordered-text-light border-natural-border-light bg-natural-bordered-bg-light",
+      "dark:text-natural-bordered-text-dark dark:border-natural-border-dark dark:bg-natural-bordered-bg-dark",
+      "[&>.accordion-item>.accordion-trigger]:hover:bg-natural-bordered-hover-light dark:[&>.accordion-item>.accordion-trigger]:hover:bg-natural-bordered-hover-dark",
+      "[&>.accordion-item:not(:first-child)]:border-t-natural-border-light",
+      "dark:[&>.accordion-item:not(:first-child)]:border-t-natural-border-dark"
     ]
   end
 
   defp color_variant("bordered", "primary") do
     [
-      "text-[#016974] border-[#016974] bg-[#E2F8FB]",
-      "dark:text-[#77D5E3] dark:border-[#77D5E3] dark:bg-[#002D33]",
-      "hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#CDEEF3] dark:hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#1A535A]",
-      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-summary]:border-[#016974]",
-      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-content-wrapper.active]:border-[#016974]",
-      "dark:[&>.accordion-item-wrapper:not(:last-child)>.accordion-summary]:border-[#77D5E3]",
-      "dark:[&>.accordion-item-wrapper:not(:last-child)>.accordion-content-wrapper.active]:border-[#77D5E3]"
+      "text-primary-bordered-text-light border-primary-border-light bg-primary-bordered-bg-light",
+      "dark:text-primary-bordered-text-dark dark:border-primary-border-dark dark:bg-primary-bordered-bg-dark",
+      "[&>.accordion-item>.accordion-trigger]:hover:bg-primary-bordered-hover-light dark:[&>.accordion-item>.accordion-trigger]:hover:bg-primary-bordered-hover-dark",
+      "[&>.accordion-item:not(:first-child)]:border-t-primary-border-light",
+      "dark:[&>.accordion-item:not(:first-child)]:border-t-primary-border-dark"
     ]
   end
 
   defp color_variant("bordered", "secondary") do
     [
-      "text-[#175BCC] border-[#175BCC] bg-[#EFF4FE]",
-      "dark:text-[#A9C9FF] dark:border-[#A9C9FF] dark:bg-[#002661]",
-      "hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#DEE9FE] dark:hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#1948A3]",
-      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-summary]:border-[#175BCC]",
-      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-content-wrapper.active]:border-[#175BCC]",
-      "dark:[&>.accordion-item-wrapper:not(:last-child)>.accordion-summary]:border-[#A9C9FF]",
-      "dark:[&>.accordion-item-wrapper:not(:last-child)>.accordion-content-wrapper.active]:border-[#A9C9FF]"
+      "text-secondary-bordered-text-light border-secondary-border-light bg-secondary-bordered-bg-light",
+      "dark:text-secondary-bordered-text-dark dark:border-secondary-border-dark dark:bg-secondary-bordered-bg-dark",
+      "[&>.accordion-item>.accordion-trigger]:hover:bg-secondary-bordered-hover-light dark:[&>.accordion-item>.accordion-trigger]:hover:bg-secondary-bordered-hover-dark",
+      "[&>.accordion-item:not(:first-child)]:border-t-secondary-border-light",
+      "dark:[&>.accordion-item:not(:first-child)]:border-t-secondary-border-dark"
     ]
   end
 
   defp color_variant("bordered", "success") do
     [
-      "text-[#166C3B] border-[#166C3B] bg-[#EAF6ED]",
-      "dark:text-[#7FD99A] dark:border-[#7FD99A] dark:bg-[#002F14]",
-      "hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#D3EFDA] dark:hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#0D572D]",
-      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-summary]:border-[#166C3B]",
-      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-content-wrapper.active]:border-[#166C3B]",
-      "dark:[&>.accordion-item-wrapper:not(:last-child)>.accordion-summary]:border-[#7FD99A]",
-      "dark:[&>.accordion-item-wrapper:not(:last-child)>.accordion-content-wrapper.active]:border-[#7FD99A]"
+      "text-success-bordered-text-light border-success-border-light bg-success-bordered-bg-light",
+      "dark:text-success-bordered-text-dark dark:border-success-border-dark dark:bg-success-bordered-bg-dark",
+      "[&>.accordion-item>.accordion-trigger]:hover:bg-success-bordered-hover-light dark:[&>.accordion-item>.accordion-trigger]:hover:bg-success-bordered-hover-dark",
+      "[&>.accordion-item:not(:first-child)]:border-t-success-border-light",
+      "dark:[&>.accordion-item:not(:first-child)]:border-t-success-border-dark"
     ]
   end
 
   defp color_variant("bordered", "warning") do
     [
-      "text-[#976A01] border-[#976A01] bg-[#FFF7E6]",
-      "dark:text-[#FDD067] dark:border-[#FDD067] dark:bg-[#322300]",
-      "hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#FEEFCC] dark:hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#654600]",
-      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-summary]:border-[#976A01]",
-      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-content-wrapper.active]:border-[#976A01]",
-      "dark:[&>.accordion-item-wrapper:not(:last-child)>.accordion-summary]:border-[#FDD067]",
-      "dark:[&>.accordion-item-wrapper:not(:last-child)>.accordion-content-wrapper.active]:border-[#FDD067]"
+      "text-warning-bordered-text-light border-warning-border-light bg-warning-bordered-bg-light",
+      "dark:text-warning-bordered-text-dark dark:border-warning-border-dark dark:bg-warning-bordered-bg-dark",
+      "[&>.accordion-item>.accordion-trigger]:hover:bg-warning-bordered-hover-light dark:[&>.accordion-item>.accordion-trigger]:hover:bg-warning-bordered-hover-dark",
+      "[&>.accordion-item:not(:first-child)]:border-t-warning-border-light",
+      "dark:[&>.accordion-item:not(:first-child)]:border-t-warning-border-dark"
     ]
   end
 
   defp color_variant("bordered", "danger") do
     [
-      "text-[#BB032A] border-[#BB032A] bg-[#FFF0EE]",
-      "dark:text-[#FFB2AB] dark:border-[#FFB2AB] dark:bg-[#520810]",
-      "hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#FFE1DE] dark:hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#950F22]",
-      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-summary]:border-[#BB032A]",
-      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-content-wrapper.active]:border-[#BB032A]",
-      "dark:[&>.accordion-item-wrapper:not(:last-child)>.accordion-summary]:border-[#FFB2AB]",
-      "dark:[&>.accordion-item-wrapper:not(:last-child)>.accordion-content-wrapper.active]:border-[#FFB2AB]"
+      "text-danger-bordered-text-light border-danger-border-light bg-danger-bordered-bg-light",
+      "dark:text-danger-bordered-text-dark dark:border-danger-border-dark dark:bg-danger-bordered-bg-dark",
+      "[&>.accordion-item>.accordion-trigger]:hover:bg-danger-bordered-hover-light dark:[&>.accordion-item>.accordion-trigger]:hover:bg-danger-bordered-hover-dark",
+      "[&>.accordion-item:not(:first-child)]:border-t-danger-border-light",
+      "dark:[&>.accordion-item:not(:first-child)]:border-t-danger-border-dark"
     ]
   end
 
   defp color_variant("bordered", "info") do
     [
-      "text-[#0B84BA] border-[#0B84BA] bg-[#E7F6FD]",
-      "dark:text-[#6EC9F2] dark:border-[#6EC9F2] dark:bg-[#03212F]",
-      "hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#CFEDFB] dark:hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#06425D]",
-      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-summary]:border-[#0B84BA]",
-      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-content-wrapper.active]:border-[#0B84BA]",
-      "dark:[&>.accordion-item-wrapper:not(:last-child)>.accordion-summary]:border-[#6EC9F2]",
-      "dark:[&>.accordion-item-wrapper:not(:last-child)>.accordion-content-wrapper.active]:border-[#6EC9F2]"
+      "text-info-bordered-text-light border-info-border-light bg-info-bordered-bg-light",
+      "dark:text-info-bordered-text-dark dark:border-info-border-dark dark:bg-info-bordered-bg-dark",
+      "[&>.accordion-item>.accordion-trigger]:hover:bg-info-bordered-hover-light dark:[&>.accordion-item>.accordion-trigger]:hover:bg-info-bordered-hover-dark",
+      "[&>.accordion-item:not(:first-child)]:border-t-info-border-light",
+      "dark:[&>.accordion-item:not(:first-child)]:border-t-info-border-dark"
     ]
   end
 
   defp color_variant("bordered", "misc") do
     [
-      "text-[#653C94] border-[#653C94] bg-[#F6F0FE]",
-      "dark:text-[#CBA2FA] dark:border-[#CBA2FA] dark:bg-[#221431]",
-      "hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#EEE0FD] dark:hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#442863]",
-      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-summary]:border-[#653C94]",
-      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-content-wrapper.active]:border-[#653C94]",
-      "dark:[&>.accordion-item-wrapper:not(:last-child)>.accordion-summary]:border-[#CBA2FA]",
-      "dark:[&>.accordion-item-wrapper:not(:last-child)>.accordion-content-wrapper.active]:border-[#CBA2FA]"
+      "text-misc-bordered-text-light border-misc-border-light bg-misc-bordered-bg-light",
+      "dark:text-misc-bordered-text-dark dark:border-misc-border-dark dark:bg-misc-bordered-bg-dark",
+      "[&>.accordion-item>.accordion-trigger]:hover:bg-misc-bordered-hover-light dark:[&>.accordion-item>.accordion-trigger]:hover:bg-misc-bordered-hover-dark",
+      "[&>.accordion-item:not(:first-child)]:border-t-misc-border-light",
+      "dark:[&>.accordion-item:not(:first-child)]:border-t-misc-border-dark"
     ]
   end
 
   defp color_variant("bordered", "dawn") do
     [
-      "text-[#7E4B2A] border-[#7E4B2A] bg-[#FBF2ED]",
-      "dark:text-[#E4B190] dark:border-[#E4B190] dark:bg-[#2A190E]",
-      "hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#F6E5DA] dark:hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#54321C]",
-      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-summary]:border-[#7E4B2A]",
-      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-content-wrapper.active]:border-[#7E4B2A]",
-      "dark:[&>.accordion-item-wrapper:not(:last-child)>.accordion-summary]:border-[#E4B190]",
-      "dark:[&>.accordion-item-wrapper:not(:last-child)>.accordion-content-wrapper.active]:border-[#E4B190]"
+      "text-dawn-bordered-text-light border-dawn-border-light bg-dawn-bordered-bg-light",
+      "dark:text-dawn-bordered-text-dark dark:border-dawn-border-dark dark:bg-dawn-bordered-bg-dark",
+      "[&>.accordion-item>.accordion-trigger]:hover:bg-dawn-bordered-hover-light dark:[&>.accordion-item>.accordion-trigger]:hover:bg-dawn-bordered-hover-dark",
+      "[&>.accordion-item:not(:first-child)]:border-t-dawn-border-light",
+      "dark:[&>.accordion-item:not(:first-child)]:border-t-dawn-border-dark"
     ]
   end
 
   defp color_variant("bordered", "silver") do
     [
-      "text-[#727272] border-[#727272] bg-[#F3F3F3]",
-      "dark:text-[#BBBBBB] dark:border-[#BBBBBB] dark:bg-[#4B4B4B]",
-      "hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#E8E8E8] dark:hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#5E5E5E]",
-      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-summary]:border-[#727272]",
-      "[&>.accordion-item-wrapper:not(:last-child)>.accordion-content-wrapper.active]:border-[#727272]",
-      "dark:[&>.accordion-item-wrapper:not(:last-child)>.accordion-summary]:border-[#BBBBBB]",
-      "dark:[&>.accordion-item-wrapper:not(:last-child)>.accordion-content-wrapper.active]:border-[#BBBBBB]"
+      "text-silver-bordered-text-light border-silver-border-light bg-silver-bordered-bg-light",
+      "dark:text-silver-bordered-text-dark dark:border-silver-border-dark dark:bg-silver-bordered-bg-dark",
+      "[&>.accordion-item>.accordion-trigger]:hover:bg-silver-bordered-hover-light dark:[&>.accordion-item>.accordion-trigger]:hover:bg-silver-bordered-hover-dark",
+      "[&>.accordion-item:not(:first-child)]:border-t-silver-border-light",
+      "dark:[&>.accordion-item:not(:first-child)]:border-t-silver-border-dark"
     ]
   end
 
   defp color_variant("bordered_separated", "natural") do
     [
-      "text-[#282828] [&>.accordion-item-wrapper>.accordion-summary]:border-[#282828]",
-      "[&>.accordion-item-wrapper]:bg-[#F3F3F3]",
-      "dark:text-[#E8E8E8] dark:[&>.accordion-item-wrapper>.accordion-summary]:border-[#E8E8E8]",
-      "dark:[&>.accordion-item-wrapper]:bg-[#4B4B4B]",
-      "hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#E8E8E8] dark:hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#5E5E5]"
+      "text-natural-bordered-text-light [&>.accordion-item]:border-natural-border-light",
+      "[&>.accordion-item]:bg-natural-bordered-bg-light",
+      "dark:text-natural-bordered-text-dark dark:[&>.accordion-item]:border-natural-border-dark",
+      "dark:[&>.accordion-item]:bg-natural-bordered-bg-dark",
+      "[&>.accordion-item>.accordion-trigger]:hover:bg-natural-bordered-hover-light dark:[&>.accordion-item>.accordion-trigger]:hover:bg-natural-bordered-hover-dark"
+    ]
+  end
+
+  defp color_variant("bordered_separated", "white") do
+    [
+      "bg-white text-black [&>.accordion-item]:border-bordered-white-border",
+      "[&>.accordion-item>.accordion-trigger]:hover:bg-bordered-white-border"
+    ]
+  end
+
+  defp color_variant("bordered_separated", "dark") do
+    [
+      "[&>.accordion-item]:bg-bordered-dark-bg text-white [&>.accordion-item]:border-bordered-dark-border",
+      "[&>.accordion-item>.accordion-trigger]:hover:bg-bordered-dark-border"
     ]
   end
 
   defp color_variant("bordered_separated", "primary") do
     [
-      "text-[#016974] [&>.accordion-item-wrapper>.accordion-summary]:border-[#016974]",
-      "[&>.accordion-item-wrapper]:bg-[#E2F8FB]",
-      "dark:text-[#77D5E3] dark:[&>.accordion-item-wrapper>.accordion-summary]:border-[#77D5E3]",
-      "dark:[&>.accordion-item-wrapper]:bg-[#002D33]",
-      "hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#CDEEF3] dark:hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#1A535A]"
+      "text-primary-bordered-text-light [&>.accordion-item]:border-primary-border-light",
+      "[&>.accordion-item]:bg-primary-bordered-bg-light",
+      "dark:text-primary-bordered-text-dark dark:[&>.accordion-item]:border-primary-border-dark",
+      "dark:[&>.accordion-item]:bg-primary-bordered-bg-dark",
+      "[&>.accordion-item>.accordion-trigger]:hover:bg-primary-bordered-hover-light dark:[&>.accordion-item>.accordion-trigger]:hover:bg-primary-bordered-hover-dark"
     ]
   end
 
   defp color_variant("bordered_separated", "secondary") do
     [
-      "text-[#175BCC] [&>.accordion-item-wrapper>.accordion-summary]:border-[#175BCC]",
-      "[&>.accordion-item-wrapper]:bg-[#EFF4FE]",
-      "dark:text-[#A9C9FF] dark:[&>.accordion-item-wrapper>.accordion-summary]:border-[#A9C9FF]",
-      "dark:[&>.accordion-item-wrapper]:bg-[#002661]",
-      "hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#DEE9FE] dark:hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#1948A3]"
+      "text-secondary-bordered-text-light [&>.accordion-item]:border-secondary-border-light",
+      "[&>.accordion-item]:bg-secondary-bordered-bg-light",
+      "dark:text-secondary-bordered-text-dark dark:[&>.accordion-item]:border-secondary-border-dark",
+      "dark:[&>.accordion-item]:bg-secondary-bordered-bg-dark",
+      "[&>.accordion-item>.accordion-trigger]:hover:bg-secondary-bordered-hover-light dark:[&>.accordion-item>.accordion-trigger]:hover:bg-secondary-bordered-hover-dark"
     ]
   end
 
   defp color_variant("bordered_separated", "success") do
     [
-      "text-[#166C3B] [&>.accordion-item-wrapper>.accordion-summary]:border-[#166C3B]",
-      "[&>.accordion-item-wrapper]:bg-[#EAF6ED]",
-      "dark:text-[#7FD99A] dark:[&>.accordion-item-wrapper>.accordion-summary]:border-[#7FD99A]",
-      "dark:[&>.accordion-item-wrapper]:bg-[#002F14]",
-      "hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#D3EFDA] dark:hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#0D572D]"
+      "text-success-bordered-text-light [&>.accordion-item]:border-success-border-light",
+      "[&>.accordion-item]:bg-success-bordered-bg-light",
+      "dark:text-success-bordered-text-dark dark:[&>.accordion-item]:border-success-border-dark",
+      "dark:[&>.accordion-item]:bg-success-bordered-bg-dark",
+      "[&>.accordion-item>.accordion-trigger]:hover:bg-success-bordered-hover-light dark:[&>.accordion-item>.accordion-trigger]:hover:bg-success-bordered-hover-dark"
     ]
   end
 
   defp color_variant("bordered_separated", "warning") do
     [
-      "text-[#976A01] [&>.accordion-item-wrapper>.accordion-summary]:border-[#976A01]",
-      "[&>.accordion-item-wrapper]:bg-[#FFF7E6]",
-      "dark:text-[#FDD067] dark:[&>.accordion-item-wrapper>.accordion-summary]:border-[#FDD067]",
-      "dark:[&>.accordion-item-wrapper]:bg-[#322300]",
-      "hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#FEEFCC] dark:hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#654600]"
+      "text-warning-bordered-text-light [&>.accordion-item]:border-warning-border-light",
+      "[&>.accordion-item]:bg-warning-bordered-bg-light",
+      "dark:text-warning-bordered-text-dark dark:[&>.accordion-item]:border-warning-border-dark",
+      "dark:[&>.accordion-item]:bg-warning-bordered-bg-dark",
+      "[&>.accordion-item>.accordion-trigger]:hover:bg-warning-bordered-hover-light dark:[&>.accordion-item>.accordion-trigger]:hover:bg-warning-bordered-hover-dark"
     ]
   end
 
   defp color_variant("bordered_separated", "danger") do
     [
-      "text-[#BB032A] [&>.accordion-item-wrapper>.accordion-summary]:border-[#BB032A]",
-      "[&>.accordion-item-wrapper]:bg-[#FFF0EE]",
-      "dark:text-[#FFB2AB] dark:[&>.accordion-item-wrapper>.accordion-summary]:border-[#FFB2AB]",
-      "dark:[&>.accordion-item-wrapper]:bg-[#520810]",
-      "hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#FFE1DE] dark:hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#950F22]"
+      "text-danger-bordered-text-light [&>.accordion-item]:border-danger-border-light",
+      "[&>.accordion-item]:bg-danger-bordered-bg-light",
+      "dark:text-danger-bordered-text-dark dark:[&>.accordion-item]:border-danger-border-dark",
+      "dark:[&>.accordion-item]:bg-danger-bordered-bg-dark",
+      "[&>.accordion-item>.accordion-trigger]:hover:bg-danger-bordered-hover-light dark:[&>.accordion-item>.accordion-trigger]:hover:bg-danger-bordered-hover-dark"
     ]
   end
 
   defp color_variant("bordered_separated", "info") do
     [
-      "text-[#0B84BA] [&>.accordion-item-wrapper>.accordion-summary]:border-[#0B84BA]",
-      "[&>.accordion-item-wrapper]:bg-[#E7F6FD]",
-      "dark:text-[#6EC9F2] dark:[&>.accordion-item-wrapper>.accordion-summary]:border-[#6EC9F2]",
-      "dark:[&>.accordion-item-wrapper]:bg-[#03212F]",
-      "hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#CFEDFB] dark:hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#06425D]"
+      "text-info-bordered-text-light [&>.accordion-item]:border-info-border-light",
+      "[&>.accordion-item]:bg-info-bordered-bg-light",
+      "dark:text-info-bordered-text-dark dark:[&>.accordion-item]:border-info-border-dark",
+      "dark:[&>.accordion-item]:bg-info-bordered-bg-dark",
+      "[&>.accordion-item>.accordion-trigger]:hover:bg-info-bordered-hover-light dark:[&>.accordion-item>.accordion-trigger]:hover:bg-info-bordered-hover-dark"
     ]
   end
 
   defp color_variant("bordered_separated", "misc") do
     [
-      "text-[#653C94] [&>.accordion-item-wrapper>.accordion-summary]:border-[#653C94]",
-      "[&>.accordion-item-wrapper]:bg-[#F6F0FE]",
-      "dark:text-[#CBA2FA] dark:[&>.accordion-item-wrapper>.accordion-summary]:border-[#CBA2FA]",
-      "dark:[&>.accordion-item-wrapper]:bg-[#221431]",
-      "hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#EEE0FD] dark:hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#442863]"
+      "text-misc-bordered-text-light [&>.accordion-item]:border-misc-border-light",
+      "[&>.accordion-item]:bg-misc-bordered-bg-light",
+      "dark:text-misc-bordered-text-dark dark:[&>.accordion-item]:border-misc-border-dark",
+      "dark:[&>.accordion-item]:bg-misc-bordered-bg-dark",
+      "[&>.accordion-item>.accordion-trigger]:hover:bg-misc-bordered-hover-light dark:[&>.accordion-item>.accordion-trigger]:hover:bg-misc-bordered-hover-dark"
     ]
   end
 
   defp color_variant("bordered_separated", "dawn") do
     [
-      "text-[#7E4B2A] [&>.accordion-item-wrapper>.accordion-summary]:border-[#7E4B2A]",
-      "[&>.accordion-item-wrapper]:bg-[#FBF2ED]",
-      "dark:text-[#E4B190] dark:[&>.accordion-item-wrapper>.accordion-summary]:border-[#E4B190]",
-      "dark:[&>.accordion-item-wrapper]:bg-[#2A190E]",
-      "hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#F6E5DA] dark:hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#54321C]"
+      "text-dawn-bordered-text-light [&>.accordion-item]:border-dawn-border-light",
+      "[&>.accordion-item]:bg-dawn-bordered-bg-light",
+      "dark:text-dawn-bordered-text-dark dark:[&>.accordion-item]:border-dawn-border-dark",
+      "dark:[&>.accordion-item]:bg-dawn-bordered-bg-dark",
+      "[&>.accordion-item>.accordion-trigger]:hover:bg-dawn-bordered-hover-light dark:[&>.accordion-item>.accordion-trigger]:hover:bg-dawn-bordered-hover-dark"
     ]
   end
 
   defp color_variant("bordered_separated", "silver") do
     [
-      "text-[#727272] [&>.accordion-item-wrapper>.accordion-summary]:border-[#727272]",
-      "[&>.accordion-item-wrapper]:bg-[#F3F3F3]",
-      "dark:text-[#BBBBBB] dark:[&>.accordion-item-wrapper>.accordion-summary]:border-[#BBBBBB]",
-      "dark:[&>.accordion-item-wrapper]:bg-[#4B4B4B]",
-      "hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#E8E8E8] dark:hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#5E5E5E]"
+      "text-silver-bordered-text-light [&>.accordion-item]:border-silver-border-light",
+      "[&>.accordion-item]:bg-silver-bordered-bg-light",
+      "dark:text-silver-bordered-text-dark dark:[&>.accordion-item]:border-silver-border-dark",
+      "dark:[&>.accordion-item]:bg-silver-bordered-bg-dark",
+      "[&>.accordion-item>.accordion-trigger]:hover:bg-silver-bordered-hover-light dark:[&>.accordion-item>.accordion-trigger]:hover:bg-silver-bordered-hover-dark"
     ]
   end
 
   defp color_variant("outline_separated", "natural") do
     [
-      "text-[#4B4B4B] [&>.accordion-item-wrapper>.accordion-summary]:border-[#4B4B4B]",
-      "dark:text-[#DDDDDD] dark:[&>.accordion-item-wrapper>.accordion-summary]:border-[#DDDDDD]",
-      "hover:text-[#282828] dark:hover:text-[#E8E8E8]"
+      "text-natural-light [&>.accordion-item]:border-natural-light",
+      "dark:text-natural-dark dark:[&>.accordion-item]:border-natural-dark",
+      "[&>.accordion-item>.accordion-trigger]:hover:text-natural-hover-light dark:[&>.accordion-item>.accordion-trigger]:hover:text-natural-hover-dark"
     ]
   end
 
   defp color_variant("outline_separated", "primary") do
     [
-      "text-[#007F8C] [&>.accordion-item-wrapper>.accordion-summary]:border-[#007F8C] ",
-      "dark:text-[#01B8CA] dark:[&>.accordion-item-wrapper>.accordion-summary]:border-[#01B8CA]",
-      "hover:text-[#016974] dark:hover:text-[#77D5E3]"
+      "text-primary-light [&>.accordion-item]:border-primary-light",
+      "dark:text-primary-dark dark:[&>.accordion-item]:border-primary-dark",
+      "[&>.accordion-item>.accordion-trigger]:hover:text-primary-hover-light dark:[&>.accordion-item>.accordion-trigger]:hover:text-primary-hover-dark"
     ]
   end
 
   defp color_variant("outline_separated", "secondary") do
     [
-      "text-[#266EF1] [&>.accordion-item-wrapper>.accordion-summary]:border-[#266EF1]",
-      "dark:text-[#6DAAFB] dark:[&>.accordion-item-wrapper>.accordion-summary]:border-[#6DAAFB]",
-      "hover:text-[#175BCC] dark:hover:text-[#A9C9FF]"
+      "text-secondary-light [&>.accordion-item]:border-secondary-light",
+      "dark:text-secondary-dark dark:[&>.accordion-item]:border-secondary-dark",
+      "[&>.accordion-item>.accordion-trigger]:hover:text-secondary-hover-light dark:[&>.accordion-item>.accordion-trigger]:hover:text-secondary-hover-dark"
     ]
   end
 
   defp color_variant("outline_separated", "success") do
     [
-      "text-[#0E8345] [&>.accordion-item-wrapper>.accordion-summary]:border-[#0E8345]",
-      "dark:text-[#06C167] dark:[&>.accordion-item-wrapper>.accordion-summary]:border-[#06C167]",
-      "hover:text-[#166C3B] dark:hover:text-[#7FD99A]"
+      "text-success-light [&>.accordion-item]:border-success-light",
+      "dark:text-success-dark dark:[&>.accordion-item]:border-success-dark",
+      "[&>.accordion-item>.accordion-trigger]:hover:text-success-hover-light dark:[&>.accordion-item>.accordion-trigger]:hover:text-success-hover-dark"
     ]
   end
 
   defp color_variant("outline_separated", "warning") do
     [
-      "text-[#CA8D01] [&>.accordion-item-wrapper>.accordion-summary]:border-[#CA8D01]",
-      "dark:text-[#FDC034] dark:[&>.accordion-item-wrapper>.accordion-summary]:border-[#FDC034]",
-      "hover:text-[#976A01] dark:hover:text-[#FDD067]"
+      "text-warning-light [&>.accordion-item]:border-warning-light",
+      "dark:text-warning-dark dark:[&>.accordion-item]:border-warning-dark",
+      "[&>.accordion-item>.accordion-trigger]:hover:text-warning-hover-light dark:[&>.accordion-item>.accordion-trigger]:hover:text-warning-hover-dark"
     ]
   end
 
   defp color_variant("outline_separated", "danger") do
     [
-      "text-[#DE1135] [&>.accordion-item-wrapper>.accordion-summary]:border-[#DE1135]",
-      "dark:text-[#FC7F79] dark:[&>.accordion-item-wrapper>.accordion-summary]:border-[#FC7F79]",
-      "hover:text-[#BB032A] dark:hover:text-[#FFB2AB]"
+      "text-danger-light [&>.accordion-item]:border-danger-light",
+      "dark:text-danger-dark dark:[&>.accordion-item]:border-danger-dark",
+      "[&>.accordion-item>.accordion-trigger]:hover:text-danger-hover-light dark:[&>.accordion-item>.accordion-trigger]:hover:text-danger-hover-dark"
     ]
   end
 
   defp color_variant("outline_separated", "info") do
     [
-      "text-[#0B84BA] [&>.accordion-item-wrapper>.accordion-summary]:border-[#0B84BA]",
-      "dark:text-[#3EB7ED] dark:[&>.accordion-item-wrapper>.accordion-summary]:border-[#3EB7ED]",
-      "hover:text-[#08638C] dark:hover:text-[#6EC9F2]"
+      "text-info-light [&>.accordion-item]:border-info-light",
+      "dark:text-info-dark dark:[&>.accordion-item]:border-info-dark",
+      "[&>.accordion-item>.accordion-trigger]:hover:text-info-hover-light dark:[&>.accordion-item>.accordion-trigger]:hover:text-info-hover-dark"
     ]
   end
 
   defp color_variant("outline_separated", "misc") do
     [
-      "text-[#8750C5] [&>.accordion-item-wrapper>.accordion-summary]:border-[#8750C5]",
-      "dark:text-[#BA83F9] dark:[&>.accordion-item-wrapper>.accordion-summary]:border-[#BA83F9]",
-      "hover:text-[#653C94] dark:hover:text-[#CBA2FA]"
+      "text-misc-light [&>.accordion-item]:border-misc-light",
+      "dark:text-misc-dark dark:[&>.accordion-item]:border-misc-dark",
+      "[&>.accordion-item>.accordion-trigger]:hover:text-misc-hover-light dark:[&>.accordion-item>.accordion-trigger]:hover:text-misc-hover-dark"
     ]
   end
 
   defp color_variant("outline_separated", "dawn") do
     [
-      "text-[#A86438] [&>.accordion-item-wrapper>.accordion-summary]:border-[#A86438]",
-      "dark:text-[#DB976B] dark:[&>.accordion-item-wrapper>.accordion-summary]:border-[#DB976B]",
-      "hover:text-[#7E4B2A] dark:hover:text-[#7E4B2A]"
+      "text-dawn-light [&>.accordion-item]:border-dawn-light",
+      "dark:text-dawn-dark dark:[&>.accordion-item]:border-dawn-dark",
+      "[&>.accordion-item>.accordion-trigger]:hover:text-dawn-hover-light dark:[&>.accordion-item>.accordion-trigger]:hover:text-dawn-hover-dark"
     ]
   end
 
   defp color_variant("outline_separated", "silver") do
     [
-      "text-[#868686] [&>.accordion-item-wrapper>.accordion-summary]:border-[#868686]",
-      "dark:text-[#A6A6A6] dark:[&>.accordion-item-wrapper>.accordion-summary]:border-[#A6A6A6]",
-      "hover:text-[#727272] dark:hover:text-[#BBBBBB]"
-    ]
-  end
-
-  defp color_variant("menu", "white") do
-    [
-      "[&>.accordion-item-wrapper]:bg-white text-black"
-    ]
-  end
-
-  defp color_variant("menu", "dark") do
-    [
-      "[&>.accordion-item-wrapper]:bg-[#282828] text-white"
-    ]
-  end
-
-  defp color_variant("menu", "natural") do
-    [
-      "[&>.accordion-item-wrapper]:bg-[#4B4B4B] text-white",
-      "dark:[&>.accordion-item-wrapper]:bg-[#DDDDDD] dark:text-black"
-    ]
-  end
-
-  defp color_variant("menu", "primary") do
-    [
-      "[&>.accordion-item-wrapper]:bg-[#007F8C] text-white",
-      "dark:[&>.accordion-item-wrapper]:bg-[#01B8CA] dark:text-black"
-    ]
-  end
-
-  defp color_variant("menu", "secondary") do
-    [
-      "[&>.accordion-item-wrapper]:bg-[#266EF1] text-white",
-      "dark:[&>.accordion-item-wrapper]:bg-[#6DAAFB] dark:text-black"
-    ]
-  end
-
-  defp color_variant("menu", "success") do
-    [
-      "[&>.accordion-item-wrapper]:bg-[#0E8345] text-white",
-      "dark:[&>.accordion-item-wrapper]:bg-[#06C167] dark:text-black"
-    ]
-  end
-
-  defp color_variant("menu", "warning") do
-    [
-      "[&>.accordion-item-wrapper]:bg-[#CA8D01] text-white",
-      "dark:[&>.accordion-item-wrapper]:bg-[#FDC034] dark:text-black"
-    ]
-  end
-
-  defp color_variant("menu", "danger") do
-    [
-      "[&>.accordion-item-wrapper]:bg-[#DE1135] text-white",
-      "dark:[&>.accordion-item-wrapper]:bg-[#FC7F79] dark:text-black"
-    ]
-  end
-
-  defp color_variant("menu", "info") do
-    [
-      "[&>.accordion-item-wrapper]:bg-[#0B84BA] text-white",
-      "dark:[&>.accordion-item-wrapper]:bg-[#3EB7ED] dark:text-black"
-    ]
-  end
-
-  defp color_variant("menu", "misc") do
-    [
-      "[&>.accordion-item-wrapper]:bg-[#8750C5] text-white",
-      "dark:[&>.accordion-item-wrapper]:bg-[#BA83F9] dark:text-black"
-    ]
-  end
-
-  defp color_variant("menu", "dawn") do
-    [
-      "[&>.accordion-item-wrapper]:bg-[#A86438] text-white",
-      "dark:[&>.accordion-item-wrapper]:bg-[#DB976B] dark:text-black"
-    ]
-  end
-
-  defp color_variant("menu", "silver") do
-    [
-      "[&>.accordion-item-wrapper]:bg-[#868686] text-white",
-      "dark:[&>.accordion-item-wrapper]:bg-[#A6A6A6] dark:text-black"
+      "text-silver-light [&>.accordion-item]:border-silver-light",
+      "dark:text-silver-dark dark:[&>.accordion-item]:border-silver-dark",
+      "[&>.accordion-item>.accordion-trigger]:hover:text-silver-hover-light dark:[&>.accordion-item>.accordion-trigger]:hover:text-silver-hover-dark"
     ]
   end
 
   defp color_variant("shadow", "natural") do
     [
-      "bg-[#4B4B4B] text-white dark:bg-[#DDDDDD] dark:text-black",
-      "hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#282828]",
-      "dark:hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#E8E8E8]",
-      "shadow-[0px_4px_6px_-4px_rgba(134,134,134,0.5)] shadow-[0px_10px_15px_-3px_rgba(134,134,134,0.5)] dark:shadow-none"
+      "bg-natural-light text-white dark:bg-natural-dark dark:text-black",
+      "[&>.accordion-item>.accordion-trigger]:hover:bg-natural-hover-light",
+      "dark:[&>.accordion-item>.accordion-trigger]:hover:bg-natural-hover-dark",
+      "shadow-[0px_4px_6px_-4px_var(--color-shadow-natural)] shadow-[0px_10px_15px_-3px_var(--color-shadow-natural)] dark:shadow-none"
     ]
   end
 
   defp color_variant("shadow", "primary") do
     [
-      "bg-[#007F8C] text-white dark:bg-[#01B8CA] dark:text-black",
-      "hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#016974]",
-      "dark:hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#77D5E3]",
-      "shadow-[0px_4px_6px_-4px_rgba(0,149,164,0.5)] shadow-[0px_10px_15px_-3px_rgba(0,149,164,0.5)] dark:shadow-none"
+      "bg-primary-light text-white dark:bg-primary-dark dark:text-black",
+      "[&>.accordion-item>.accordion-trigger]:hover:bg-primary-hover-light",
+      "dark:[&>.accordion-item>.accordion-trigger]:hover:bg-primary-hover-dark",
+      "shadow-[0px_4px_6px_-4px_var(--color-shadow-primary)] shadow-[0px_10px_15px_-3px_var(--color-shadow-primary)] dark:shadow-none"
     ]
   end
 
   defp color_variant("shadow", "secondary") do
     [
-      "bg-[#266EF1] text-white dark:bg-[#6DAAFB] dark:text-black",
-      "hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#175BCC]",
-      "dark:hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#A9C9FF]",
-      "shadow-[0px_4px_6px_-4px_rgba(6,139,238,0.5)] shadow-[0px_10px_15px_-3px_rgba(6,139,238,0.5)] dark:shadow-none"
+      "bg-secondary-light text-white dark:bg-secondary-dark dark:text-black",
+      "[&>.accordion-item>.accordion-trigger]:hover:bg-secondary-hover-light",
+      "dark:[&>.accordion-item>.accordion-trigger]:hover:bg-secondary-hover-dark",
+      "shadow-[0px_4px_6px_-4px_var(--color-shadow-secondary)] shadow-[0px_10px_15px_-3px_var(--color-shadow-secondary)] dark:shadow-none"
     ]
   end
 
   defp color_variant("shadow", "success") do
     [
-      "bg-[#0E8345] text-white hover:bg-[#166C3B] dark:bg-[#06C167] dark:text-black",
-      "hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#166C3B]",
-      "dark:hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#7FD99A]",
-      "shadow-[0px_4px_6px_-4px_rgba(0,154,81,0.5)] shadow-[0px_10px_15px_-3px_rgba(0,154,81,0.5)] dark:shadow-none"
+      "bg-success-light text-white dark:bg-success-dark dark:text-black",
+      "[&>.accordion-item>.accordion-trigger]:hover:bg-success-hover-light",
+      "dark:[&>.accordion-item>.accordion-trigger]:hover:bg-success-hover-dark",
+      "shadow-[0px_4px_6px_-4px_var(--color-shadow-success)] shadow-[0px_10px_15px_-3px_var(--color-shadow-success)] dark:shadow-none"
     ]
   end
 
   defp color_variant("shadow", "warning") do
     [
-      "bg-[#CA8D01] text-white dark:bg-[#FDC034] dark:text-black",
-      "hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#976A01]",
-      "dark:hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#FDD067]",
-      "shadow-[0px_4px_6px_-4px_rgba(252,176,1,0.5)] shadow-[0px_10px_15px_-3px_rgba(252,176,1,0.5)] dark:shadow-none"
+      "bg-warning-light text-white dark:bg-warning-dark dark:text-black",
+      "[&>.accordion-item>.accordion-trigger]:hover:bg-warning-hover-light",
+      "dark:[&>.accordion-item>.accordion-trigger]:hover:bg-warning-hover-dark",
+      "shadow-[0px_4px_6px_-4px_var(--color-shadow-warning)] shadow-[0px_10px_15px_-3px_var(--color-shadow-warning)] dark:shadow-none"
     ]
   end
 
   defp color_variant("shadow", "danger") do
     [
-      "bg-[#DE1135] text-white dark:bg-[#FC7F79] dark:text-black",
-      "hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#BB032A]",
-      "dark:hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#FFB2AB]",
-      "shadow-[0px_4px_6px_-4px_rgba(248,52,70,0.5)] shadow-[0px_10px_15px_-3px_rgba(248,52,70,0.5)] dark:shadow-none"
+      "bg-danger-light text-white dark:bg-danger-dark dark:text-black",
+      "[&>.accordion-item>.accordion-trigger]:hover:bg-danger-hover-light",
+      "dark:[&>.accordion-item>.accordion-trigger]:hover:bg-danger-hover-dark",
+      "shadow-[0px_4px_6px_-4px_var(--color-shadow-danger)] shadow-[0px_10px_15px_-3px_var(--color-shadow-danger)] dark:shadow-none"
     ]
   end
 
   defp color_variant("shadow", "info") do
     [
-      "bg-[#0B84BA] text-white dark:bg-[#3EB7ED] dark:text-black",
-      "hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#08638C]",
-      "dark:hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#6EC9F2]",
-      "shadow-[0px_4px_6px_-4px_rgba(14,165,233,0.5)] shadow-[0px_10px_15px_-3px_rgba(14,165,233,0.5)] dark:shadow-none"
+      "bg-info-light text-white dark:bg-info-dark dark:text-black",
+      "[&>.accordion-item>.accordion-trigger]:hover:bg-info-hover-light",
+      "dark:[&>.accordion-item>.accordion-trigger]:hover:bg-info-hover-dark",
+      "shadow-[0px_4px_6px_-4px_var(--color-shadow-info)] shadow-[0px_10px_15px_-3px_var(--color-shadow-info)] dark:shadow-none"
     ]
   end
 
   defp color_variant("shadow", "misc") do
     [
-      "bg-[#8750C5] text-white dark:bg-[#BA83F9] dark:text-black",
-      "hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#653C94]",
-      "dark:hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#CBA2FA]",
-      "shadow-[0px_4px_6px_-4px_rgba(169,100,247,0.5)] shadow-[0px_10px_15px_-3px_rgba(169,100,247,0.5)] dark:shadow-none"
+      "bg-misc-light text-white dark:bg-misc-dark dark:text-black",
+      "[&>.accordion-item>.accordion-trigger]:hover:bg-misc-hover-light",
+      "dark:[&>.accordion-item>.accordion-trigger]:hover:bg-misc-hover-dark",
+      "shadow-[0px_4px_6px_-4px_var(--color-shadow-misc)] shadow-[0px_10px_15px_-3px_var(--color-shadow-misc)] dark:shadow-none"
     ]
   end
 
   defp color_variant("shadow", "dawn") do
     [
-      "bg-[#A86438] text-white dark:bg-[#DB976B] dark:text-black",
-      "hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#7E4B2A]",
-      "dark:hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#E4B190]",
-      "shadow-[0px_4px_6px_-4px_rgba(210,125,70,0.5)] shadow-[0px_10px_15px_-3px_rgba(210,125,70,0.5)] dark:shadow-none"
+      "bg-dawn-light text-white dark:bg-dawn-dark dark:text-black",
+      "[&>.accordion-item>.accordion-trigger]:hover:bg-dawn-hover-light",
+      "dark:[&>.accordion-item>.accordion-trigger]:hover:bg-dawn-hover-dark",
+      "shadow-[0px_4px_6px_-4px_var(--color-shadow-dawn)] shadow-[0px_10px_15px_-3px_var(--color-shadow-dawn)] dark:shadow-none"
     ]
   end
 
   defp color_variant("shadow", "silver") do
     [
-      "bg-[#868686] text-white dark:bg-[#A6A6A6] dark:text-black",
-      "hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#727272]",
-      "dark:hover:[&>.accordion-item-wrapper>.accordion-summary]:bg-[#BBBBBB]",
-      "shadow-[0px_4px_6px_-4px_rgba(134,134,134,0.5)] shadow-[0px_10px_15px_-3px_rgba(134,134,134,0.5)] dark:shadow-none"
+      "bg-silver-light text-white dark:bg-silver-dark dark:text-black",
+      "[&>.accordion-item>.accordion-trigger]:hover:bg-silver-hover-light",
+      "dark:[&>.accordion-item>.accordion-trigger]:hover:bg-silver-hover-dark",
+      "shadow-[0px_4px_6px_-4px_var(--color-shadow-silver)] shadow-[0px_10px_15px_-3px_var(--color-shadow-silver)] dark:shadow-none"
     ]
   end
 
   defp color_variant("gradient", "natural") do
     [
-      "bg-gradient-to-br from-[#282828] to-[#727272] text-white",
-      "dark:from-[#A6A6A6] dark:to-[#FFFFFF] dark:text-black"
+      "bg-gradient-to-br from-gradient-natural-from-light to-gradient-natural-to-light text-white",
+      "dark:from-gradient-natural-from-dark dark:to-white dark:text-black"
     ]
   end
 
   defp color_variant("gradient", "primary") do
     [
-      "bg-gradient-to-br from-[#016974] to-[#01B8CA] text-white",
-      "dark:from-[#01B8CA] dark:to-[#B0E7EF] dark:text-black"
+      "bg-gradient-to-br from-gradient-primary-from-light to-gradient-primary-to-light text-white",
+      "dark:from-gradient-primary-from-dark dark:to-gradient-primary-to-dark dark:text-black"
     ]
   end
 
   defp color_variant("gradient", "secondary") do
     [
-      "bg-gradient-to-br from-[#175BCC] to-[#6DAAFB] text-white",
-      "dark:from-[#6DAAFB] dark:to-[#CDDEFF] dark:text-black"
+      "bg-gradient-to-br from-gradient-secondary-from-light to-gradient-secondary-to-light text-white",
+      "dark:from-gradient-secondary-from-dark dark:to-gradient-secondary-to-dark dark:text-black"
     ]
   end
 
   defp color_variant("gradient", "success") do
     [
-      "bg-gradient-to-br from-[#166C3B] to-[#06C167] text-white",
-      "dark:from-[#06C167] dark:to-[#B1EAC2] dark:text-black"
+      "bg-gradient-to-br from-gradient-success-from-light to-gradient-success-to-light text-white",
+      "dark:from-gradient-success-from-dark dark:to-gradient-success-to-dark dark:text-black"
     ]
   end
 
   defp color_variant("gradient", "warning") do
     [
-      "bg-gradient-to-br from-[#976A01] to-[#FDC034] text-white",
-      "dark:from-[#FDC034] dark:to-[#FEDF99] dark:text-black"
+      "bg-gradient-to-br from-gradient-warning-from-light to-gradient-warning-to-light text-white",
+      "dark:from-gradient-warning-from-dark dark:to-gradient-warning-to-dark dark:text-black"
     ]
   end
 
   defp color_variant("gradient", "danger") do
     [
-      "bg-gradient-to-br from-[#BB032A] to-[#FC7F79] text-white",
-      "dark:from-[#FC7F79] dark:to-[#FFD2CD] dark:text-black"
+      "bg-gradient-to-br from-gradient-danger-from-light to-gradient-danger-to-light text-white",
+      "dark:from-gradient-danger-from-dark dark:to-gradient-danger-to-dark dark:text-black"
     ]
   end
 
   defp color_variant("gradient", "info") do
     [
-      "bg-gradient-to-br from-[#08638C] to-[#3EB7ED] text-white",
-      "dark:from-[#3EB7ED] dark:to-[#9FDBF6] dark:text-black"
+      "bg-gradient-to-br from-gradient-info-from-light to-gradient-info-to-light text-white",
+      "dark:from-gradient-info-from-dark dark:to-gradient-info-to-dark dark:text-black"
     ]
   end
 
   defp color_variant("gradient", "misc") do
     [
-      "bg-gradient-to-br from-[#653C94] to-[#BA83F9] text-white",
-      "dark:from-[#BA83F9] dark:to-[#DDC1FC] dark:text-black"
+      "bg-gradient-to-br from-gradient-misc-from-light to-gradient-misc-to-light text-white",
+      "dark:from-gradient-misc-from-dark dark:to-gradient-misc-to-dark dark:text-black"
     ]
   end
 
   defp color_variant("gradient", "dawn") do
     [
-      "bg-gradient-to-br from-[#7E4B2A] to-[#DB976B] text-white",
-      "dark:from-[#DB976B] dark:to-[#EDCBB5] dark:text-black"
+      "bg-gradient-to-br from-gradient-dawn-from-light to-gradient-dawn-to-light text-white",
+      "dark:from-gradient-dawn-from-dark dark:to-gradient-dawn-to-dark dark:text-black"
     ]
   end
 
   defp color_variant("gradient", "silver") do
     [
-      "bg-gradient-to-br from-[#5E5E5E] to-[#A6A6A6] text-white",
-      "dark:from-[#868686] dark:to-[#BBBBBB] dark:text-black"
+      "bg-gradient-to-br from-gradient-silver-from-light to-gradient-silver-to-light text-white",
+      "dark:from-gradient-silver-from-dark dark:to-gradient-silver-to-dark dark:text-black"
     ]
   end
 
   defp color_variant(params, _) when is_binary(params), do: params
 
-  defp item_color("base", _) do
+  defp space_class(_, variant)
+       when variant not in ["base_separated", "outline_separated", "bordered_separated"],
+       do: nil
+
+  defp space_class("extra_small", _), do: "space-y-1"
+
+  defp space_class("small", _), do: "space-y-2"
+
+  defp space_class("medium", _), do: "space-y-3"
+
+  defp space_class("large", _), do: "space-y-4"
+
+  defp space_class("extra_large", _), do: "space-y-6"
+
+  defp space_class(params, _) when is_binary(params), do: params
+
+  defp border_class("none", _), do: nil
+
+  defp border_class("extra_small", variant)
+       when variant in ["base_separated", "outline_separated", "bordered_separated"] do
+    "[&>.accordion-item]:border"
+  end
+
+  defp border_class("extra_small", variant) when variant in ["base", "outline", "bordered"] do
     [
-      "group-open:bg-white group-open:text-[#09090b] dark:group-open:bg-[#18181B] dark:group-open:text-[#FAFAFA]"
+      "border",
+      "[&>.accordion-item:not(:first-child)]:border-t"
     ]
   end
 
-  defp item_color("base_separated", _) do
+  defp border_class("small", variant)
+       when variant in ["base_separated", "outline_separated", "bordered_separated"] do
+    "[&>.accordion-item]:border-2"
+  end
+
+  defp border_class("small", variant) when variant in ["base", "outline", "bordered"] do
     [
-      "group-open:bg-white group-open:text-[#09090b] dark:group-open:bg-[#18181B] dark:group-open:text-[#FAFAFA]"
+      "border-2",
+      "[&>.accordion-item:not(:first-child)]:border-t-2"
     ]
   end
 
-  defp item_color("default", "white") do
+  defp border_class("medium", variant)
+       when variant in ["base_separated", "outline_separated", "bordered_separated"] do
+    "[&>.accordion-item]:border-[3px]"
+  end
+
+  defp border_class("medium", variant) when variant in ["base", "outline", "bordered"] do
     [
-      "group-open:bg-white text-black",
-      "group-open:hover:[&:is(.accordion-summary)]:bg-[#DDDDDD]"
+      "border-[3px]",
+      "[&>.accordion-item:not(:first-child)]:border-t-[3px]"
     ]
   end
 
-  defp item_color("default", "dark") do
+  defp border_class("large", variant)
+       when variant in ["base_separated", "outline_separated", "bordered_separated"] do
+    "[&>.accordion-item]:border-4"
+  end
+
+  defp border_class("large", variant) when variant in ["base", "outline", "bordered"] do
     [
-      "group-open:bg-[#282828] text-white",
-      "group-open:hover:[&:is(.accordion-summary)]:bg-[#4B4B4B]"
+      "border-4",
+      "[&>.accordion-item:not(:first-child)]:border-t-4"
     ]
   end
 
-  defp item_color("default", "natural") do
+  defp border_class("extra_large", variant)
+       when variant in ["base_separated", "outline_separated", "bordered_separated"] do
+    "[&>.accordion-item]:border-[5px]"
+  end
+
+  defp border_class("extra_large", variant) when variant in ["base", "outline", "bordered"] do
     [
-      "group-open:bg-[#4B4B4B] text-white",
-      "dark:group-open:bg-[#DDDDDD] dark:text-black",
-      "group-open:hover:[&:is(.accordion-summary)]:bg-[#282828] dark:group-open:hover:[&:is(.accordion-summary)]:bg-[#E8E8E8]"
+      "border-[5px]",
+      "[&>.accordion-item:not(:first-child)]:border-t-[5px]"
     ]
   end
 
-  defp item_color("default", "primary") do
+  defp border_class(params, _) when is_binary(params), do: params
+  defp border_class(_, _), do: nil
+
+  defp rounded_class("none", variant)
+       when variant in ["base_separated", "outline_separated", "bordered_separated"],
+       do: nil
+
+  defp rounded_class("extra_small", variant)
+       when variant in ["base_separated", "outline_separated", "bordered_separated"] do
+    "[&>.accordion-item]:rounded-sm"
+  end
+
+  defp rounded_class("small", variant)
+       when variant in ["base_separated", "outline_separated", "bordered_separated"] do
+    "[&>.accordion-item]:rounded"
+  end
+
+  defp rounded_class("medium", variant)
+       when variant in ["base_separated", "outline_separated", "bordered_separated"] do
+    "[&>.accordion-item]:rounded-lg"
+  end
+
+  defp rounded_class("large", variant)
+       when variant in ["base_separated", "outline_separated", "bordered_separated"] do
+    "[&>.accordion-item]:rounded-xl"
+  end
+
+  defp rounded_class("extra_large", variant)
+       when variant in ["base_separated", "outline_separated", "bordered_separated"] do
+    "[&>.accordion-item]:rounded-2xl"
+  end
+
+  defp rounded_class("none", _), do: nil
+
+  defp rounded_class("extra_small", _), do: "rounded-sm"
+
+  defp rounded_class("small", _), do: "rounded"
+
+  defp rounded_class("medium", _), do: "rounded-lg"
+
+  defp rounded_class("large", _), do: "rounded-xl"
+
+  defp rounded_class("extra_large", _), do: "rounded-2xl"
+
+  defp rounded_class(params, _) when is_binary(params), do: params
+
+  defp media_size("extra_small"),
+    do: "[&>.accordion-item>.accordion-trigger_.accordion-title-media]:size-12"
+
+  defp media_size("small"),
+    do: "[&>.accordion-item>.accordion-trigger_.accordion-title-media]:size-14"
+
+  defp media_size("medium"),
+    do: "[&>.accordion-item>.accordion-trigger_.accordion-title-media]:size-16"
+
+  defp media_size("large"),
+    do: "[&>.accordion-item>.accordion-trigger_.accordion-title-media]:size-20"
+
+  defp media_size("extra_large"),
+    do: "[&>.accordion-item>.accordion-trigger_.accordion-title-media]:size-24"
+
+  defp media_size(params) when is_binary(params), do: params
+
+  defp padding_size("extra_small") do
     [
-      "group-open:bg-[#007F8C] text-white",
-      "dark:group-open:bg-[#01B8CA] dark:text-black",
-      "group-open:hover:[&:is(.accordion-summary)]:bg-[#016974] dark:group-open:hover:[&:is(.accordion-summary)]:bg-[#77D5E3]"
+      "[&>.accordion-item>.accordion-trigger]:p-1",
+      "[&>.accordion-item_.accordion-panel-content]:p-1"
     ]
   end
 
-  defp item_color("default", "secondary") do
+  defp padding_size("small") do
     [
-      "group-open:bg-[#266EF1] text-white",
-      "dark:group-open:bg-[#6DAAFB] dark:text-black",
-      "group-open:hover:[&:is(.accordion-summary)]:bg-[#175BCC] dark:group-open:hover:[&:is(.accordion-summary)]:bg-[#A9C9FF]"
+      "[&>.accordion-item>.accordion-trigger]:p-2",
+      "[&>.accordion-item_.accordion-panel-content]:p-2"
     ]
   end
 
-  defp item_color("default", "success") do
+  defp padding_size("medium") do
     [
-      "group-open:bg-[#0E8345] text-white",
-      "dark:group-open:bg-[#06C167] dark:text-black",
-      "group-open:hover:[&:is(.accordion-summary)]:bg-[#282828] dark:group-open:hover:[&:is(.accordion-summary)]:bg-[#7FD99A]"
+      "[&>.accordion-item>.accordion-trigger]:p-3",
+      "[&>.accordion-item_.accordion-panel-content]:p-3"
     ]
   end
 
-  defp item_color("default", "warning") do
+  defp padding_size("large") do
     [
-      "group-open:bg-[#CA8D01] text-white",
-      "dark:group-open:bg-[#FDC034] dark:text-black",
-      "group-open:hover:[&:is(.accordion-summary)]:bg-[#976A01] dark:group-open:hover:[&:is(.accordion-summary)]:bg-[#FDD067]"
+      "[&>.accordion-item>.accordion-trigger]:p-4",
+      "[&>.accordion-item_.accordion-panel-content]:p-4"
     ]
   end
 
-  defp item_color("default", "danger") do
+  defp padding_size("extra_large") do
     [
-      "group-open:bg-[#DE1135] text-white",
-      "dark:group-open:bg-[#FC7F79] dark:text-black",
-      "group-open:hover:[&:is(.accordion-summary)]:bg-[#BB032A] dark:group-open:hover:[&:is(.accordion-summary)]:bg-[#FFB2AB]"
+      "[&>.accordion-item>.accordion-trigger]:p-5",
+      "[&>.accordion-item_.accordion-panel-content]:p-5"
     ]
   end
 
-  defp item_color("default", "info") do
+  defp padding_size(params) when is_binary(params), do: params
+
+  defp size_class("extra_small") do
     [
-      "group-open:bg-[#0B84BA] text-white",
-      "dark:group-open:bg-[#3EB7ED] dark:text-black",
-      "group-open:hover:[&:is(.accordion-summary)]:bg-[#08638C] dark:group-open:hover:[&:is(.accordion-summary)]:bg-[#6EC9F2]"
+      "text-[10px]",
+      "[&>.accordion-item>.accordion-trigger_.accordion-chevron]:size-3",
+      "[&>.accordion-item>.accordion-trigger_.accordion-icon]:size-3",
+      "[&>.accordion-item>.accordion-trigger_.accordion-title]:text-[10px]",
+      "[&>.accordion-item>.accordion-trigger_.accordion-description]:text-[8px]"
     ]
   end
 
-  defp item_color("default", "misc") do
+  defp size_class("small") do
     [
-      "group-open:bg-[#8750C5] text-white",
-      "dark:group-open:bg-[#BA83F9] dark:text-black",
-      "group-open:hover:[&:is(.accordion-summary)]:bg-[#653C94] dark:group-open:hover:[&:is(.accordion-summary)]:bg-[#CBA2FA]"
+      "text-[12px]",
+      "[&>.accordion-item>.accordion-trigger_.accordion-chevron]:size-4",
+      "[&>.accordion-item>.accordion-trigger_.accordion-icon]:size-4",
+      "[&>.accordion-item>.accordion-trigger_.accordion-title]:text-[12px]",
+      "[&>.accordion-item>.accordion-trigger_.accordion-description]:text-[10px]"
     ]
   end
 
-  defp item_color("default", "dawn") do
+  defp size_class("medium") do
     [
-      "group-open:bg-[#A86438] text-white",
-      "dark:group-open:bg-[#DB976B] dark:text-black",
-      "group-open:hover:[&:is(.accordion-summary)]:bg-[#7E4B2A] dark:group-open:hover:[&:is(.accordion-summary)]:bg-[#E4B190]"
+      "text-[14px]",
+      "[&>.accordion-item>.accordion-trigger_.accordion-chevron]:size-5",
+      "[&>.accordion-item>.accordion-trigger_.accordion-icon]:size-5",
+      "[&>.accordion-item>.accordion-trigger_.accordion-title]:text-[14px]",
+      "[&>.accordion-item>.accordion-trigger_.accordion-description]:text-[12px]"
     ]
   end
 
-  defp item_color("default", "silver") do
+  defp size_class("large") do
     [
-      "group-open:bg-[#868686] text-white",
-      "dark:group-open:bg-[#A6A6A6] dark:text-black",
-      "group-open:hover:[&:is(.accordion-summary)]:bg-[#727272] dark:group-open:hover:[&:is(.accordion-summary)]:bg-[#BBBBBB]"
+      "text-[16px]",
+      "[&>.accordion-item>.accordion-trigger_.accordion-chevron]:size-6",
+      "[&>.accordion-item>.accordion-trigger_.accordion-icon]:size-6",
+      "[&>.accordion-item>.accordion-trigger_.accordion-title]:text-[16px]",
+      "[&>.accordion-item>.accordion-trigger_.accordion-description]:text-[14px]"
     ]
   end
 
-  defp item_color("outline", "natural") do
+  defp size_class("extra_large") do
     [
-      "group-open:bg-[#4B4B4B] group-open:text-white dark:group-open:bg-[#DDDDDD] dark:group-open:text-black",
-      "group-open:[&:is(.accordion-summary)]:border-b-0"
+      "text-[18px]",
+      "[&>.accordion-item>.accordion-trigger_.accordion-chevron]:size-7",
+      "[&>.accordion-item>.accordion-trigger_.accordion-icon]:size-7",
+      "[&>.accordion-item>.accordion-trigger_.accordion-title]:text-[18px]",
+      "[&>.accordion-item>.accordion-trigger_.accordion-description]:text-[16px]"
     ]
   end
 
-  defp item_color("outline", "primary") do
-    [
-      "group-open:bg-[#007F8C] group-open:text-white dark:group-open:bg-[#01B8CA] dark:group-open:text-black",
-      "group-open:[&:is(.accordion-summary)]:border-b-0"
-    ]
+  defp size_class(params) when is_binary(params), do: params
+
+  defp chevron_visible?(assigns) do
+    !assigns.hide_chevron
   end
 
-  defp item_color("outline", "secondary") do
-    [
-      "group-open:bg-[#266EF1] group-open:text-white dark:group-open:bg-[#6DAAFB] dark:group-open:text-black",
-      "group-open:[&:is(.accordion-summary)]:border-b-0"
-    ]
+  defp chevron_position(assigns) do
+    cond do
+      assigns.left_chevron -> "left"
+      assigns.right_chevron -> "right"
+      true -> assigns.chevron_position
+    end
   end
 
-  defp item_color("outline", "success") do
+  defp chevron_classes(assigns) do
     [
-      "group-open:bg-[#0E8345] group-open:text-white dark:group-open:bg-[#06C167] dark:group-open:text-black",
-      "group-open:[&:is(.accordion-summary)]:border-b-0"
+      "accordion-chevron transform transition-transform duration-200",
+      "group-aria-expanded:rotate-180",
+      assigns.chevron_class
     ]
-  end
-
-  defp item_color("outline", "warning") do
-    [
-      "group-open:bg-[#CA8D01] group-open:text-white dark:group-open:bg-[#FDC034] dark:group-open:text-black",
-      "group-open:[&:is(.accordion-summary)]:border-b-0"
-    ]
-  end
-
-  defp item_color("outline", "danger") do
-    [
-      "group-open:bg-[#DE1135] group-open:text-white dark:group-open:bg-[#FC7F79] dark:group-open:text-black",
-      "group-open:[&:is(.accordion-summary)]:border-b-0"
-    ]
-  end
-
-  defp item_color("outline", "info") do
-    [
-      "group-open:bg-[#0B84BA] group-open:text-white dark:group-open:bg-[#3EB7ED] dark:group-open:text-black",
-      "group-open:[&:is(.accordion-summary)]:border-b-0"
-    ]
-  end
-
-  defp item_color("outline", "misc") do
-    [
-      "group-open:bg-[#8750C5] group-open:text-white dark:group-open:bg-[#BA83F9] dark:group-open:text-black",
-      "group-open:[&:is(.accordion-summary)]:border-b-0"
-    ]
-  end
-
-  defp item_color("outline", "dawn") do
-    [
-      "group-open:bg-[#A86438] group-open:text-white dark:group-open:bg-[#DB976B] dark:group-open:text-black",
-      "group-open:[&:is(.accordion-summary)]:border-b-0"
-    ]
-  end
-
-  defp item_color("outline", "silver") do
-    [
-      "group-open:bg-[#868686] group-open:text-white dark:group-open:bg-[#A6A6A6] dark:group-open:text-black",
-      "group-open:[&:is(.accordion-summary)]:border-b-0"
-    ]
-  end
-
-  defp item_color("bordered", "natural") do
-    [
-      "group-open:bg-[#4B4B4B] group-open:text-white dark:group-open:bg-[#DDDDDD] dark:group-open:text-black"
-    ]
-  end
-
-  defp item_color("bordered", "primary") do
-    [
-      "group-open:bg-[#007F8C] group-open:text-white dark:group-open:bg-[#01B8CA] dark:group-open:text-black"
-    ]
-  end
-
-  defp item_color("bordered", "secondary") do
-    [
-      "group-open:bg-[#266EF1] group-open:text-white dark:group-open:bg-[#6DAAFB] dark:group-open:text-black"
-    ]
-  end
-
-  defp item_color("bordered", "success") do
-    [
-      "group-open:bg-[#0E8345] group-open:text-white dark:group-open:bg-[#06C167] dark:group-open:text-black"
-    ]
-  end
-
-  defp item_color("bordered", "warning") do
-    [
-      "group-open:bg-[#CA8D01] group-open:text-white dark:group-open:bg-[#FDC034] dark:group-open:text-black"
-    ]
-  end
-
-  defp item_color("bordered", "danger") do
-    [
-      "group-open:bg-[#DE1135] group-open:text-white dark:group-open:bg-[#FC7F79] dark:group-open:text-black"
-    ]
-  end
-
-  defp item_color("bordered", "info") do
-    [
-      "group-open:bg-[#0B84BA] group-open:text-white dark:group-open:bg-[#3EB7ED] dark:group-open:text-black"
-    ]
-  end
-
-  defp item_color("bordered", "misc") do
-    [
-      "group-open:bg-[#8750C5] group-open:text-white dark:group-open:bg-[#BA83F9] dark:group-open:text-black"
-    ]
-  end
-
-  defp item_color("bordered", "dawn") do
-    [
-      "group-open:bg-[#A86438] group-open:text-white dark:group-open:bg-[#DB976B] dark:group-open:text-black"
-    ]
-  end
-
-  defp item_color("bordered", "silver") do
-    [
-      "group-open:bg-[#868686] group-open:text-white dark:group-open:bg-[#A6A6A6] dark:group-open:text-black"
-    ]
-  end
-
-  defp item_color("bordered_separated", "natural") do
-    [
-      "group-open:bg-[#4B4B4B] group-open:text-white dark:group-open:bg-[#DDDDDD] dark:group-open:text-black"
-    ]
-  end
-
-  defp item_color("bordered_separated", "primary") do
-    [
-      "group-open:bg-[#007F8C] group-open:text-white dark:group-open:bg-[#01B8CA] dark:group-open:text-black"
-    ]
-  end
-
-  defp item_color("bordered_separated", "secondary") do
-    [
-      "group-open:bg-[#266EF1] group-open:text-white dark:group-open:bg-[#6DAAFB] dark:group-open:text-black"
-    ]
-  end
-
-  defp item_color("bordered_separated", "success") do
-    [
-      "group-open:bg-[#0E8345] group-open:text-white dark:group-open:bg-[#06C167] dark:group-open:text-black"
-    ]
-  end
-
-  defp item_color("bordered_separated", "warning") do
-    [
-      "group-open:bg-[#CA8D01] group-open:text-white dark:group-open:bg-[#FDC034] dark:group-open:text-black"
-    ]
-  end
-
-  defp item_color("bordered_separated", "danger") do
-    [
-      "group-open:bg-[#DE1135] group-open:text-white dark:group-open:bg-[#FC7F79] dark:group-open:text-black"
-    ]
-  end
-
-  defp item_color("bordered_separated", "info") do
-    [
-      "group-open:bg-[#0B84BA] group-open:text-white dark:group-open:bg-[#3EB7ED] dark:group-open:text-black"
-    ]
-  end
-
-  defp item_color("bordered_separated", "misc") do
-    [
-      "group-open:bg-[#8750C5] group-open:text-white dark:group-open:bg-[#BA83F9] dark:group-open:text-black"
-    ]
-  end
-
-  defp item_color("bordered_separated", "dawn") do
-    [
-      "group-open:bg-[#A86438] group-open:text-white dark:group-open:bg-[#DB976B] dark:group-open:text-black"
-    ]
-  end
-
-  defp item_color("bordered_separated", "silver") do
-    [
-      "group-open:bg-[#868686] group-open:text-white dark:group-open:bg-[#A6A6A6] dark:group-open:text-black"
-    ]
-  end
-
-  defp item_color("outline_separated", "natural") do
-    [
-      "group-open:bg-[#4B4B4B] group-open:text-white dark:group-open:bg-[#DDDDDD] dark:group-open:text-black"
-    ]
-  end
-
-  defp item_color("outline_separated", "primary") do
-    [
-      "group-open:bg-[#007F8C] group-open:text-white dark:group-open:bg-[#01B8CA] dark:group-open:text-black"
-    ]
-  end
-
-  defp item_color("outline_separated", "secondary") do
-    [
-      "group-open:bg-[#266EF1] group-open:text-white dark:group-open:bg-[#6DAAFB] dark:group-open:text-black"
-    ]
-  end
-
-  defp item_color("outline_separated", "success") do
-    [
-      "group-open:bg-[#0E8345] group-open:text-white dark:group-open:bg-[#06C167] dark:group-open:text-black"
-    ]
-  end
-
-  defp item_color("outline_separated", "warning") do
-    [
-      "group-open:bg-[#CA8D01] group-open:text-white dark:group-open:bg-[#FDC034] dark:group-open:text-black"
-    ]
-  end
-
-  defp item_color("outline_separated", "danger") do
-    [
-      "group-open:bg-[#DE1135] group-open:text-white dark:group-open:bg-[#FC7F79] dark:group-open:text-black"
-    ]
-  end
-
-  defp item_color("outline_separated", "info") do
-    [
-      "group-open:bg-[#0B84BA] group-open:text-white dark:group-open:bg-[#3EB7ED] dark:group-open:text-black"
-    ]
-  end
-
-  defp item_color("outline_separated", "misc") do
-    [
-      "group-open:bg-[#8750C5] group-open:text-white dark:group-open:bg-[#BA83F9] dark:group-open:text-black"
-    ]
-  end
-
-  defp item_color("outline_separated", "dawn") do
-    [
-      "group-open:bg-[#A86438] group-open:text-white dark:group-open:bg-[#DB976B] dark:group-open:text-black"
-    ]
-  end
-
-  defp item_color("outline_separated", "silver") do
-    [
-      "group-open:bg-[#868686] group-open:text-white dark:group-open:bg-[#A6A6A6] dark:group-open:text-black"
-    ]
-  end
-
-  defp item_color(params, _) when is_binary(params), do: params
-
-  defp chevron_position(%{left_chevron: true}), do: "left"
-  defp chevron_position(%{right_chevron: true}), do: "right"
-  defp chevron_position(%{chevron: true}), do: "right"
-  defp chevron_position(_), do: "right"
-
-  defp drop_rest(rest) do
-    all_rest =
-      ~w(left_chevron right_chevron chevron hide_chevron)
-      |> Enum.map(&if(is_binary(&1), do: String.to_atom(&1), else: &1))
-
-    Map.drop(rest, all_rest)
   end
 end

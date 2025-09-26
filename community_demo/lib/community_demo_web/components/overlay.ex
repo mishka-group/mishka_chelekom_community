@@ -9,6 +9,8 @@ defmodule CommunityDemoWeb.Components.Overlay do
   opacity variations, and backdrop sizes to match the needs of different interface designs.
   The `CommunityDemoWeb.Components.Overlay` is perfect for creating modal backgrounds, loading screens,
   and other interactive elements that require content layering.
+
+  **Documentation:** https://mishka.tools/chelekom/docs/overlay
   """
 
   use Phoenix.Component
@@ -37,8 +39,8 @@ defmodule CommunityDemoWeb.Components.Overlay do
     doc: "A unique identifier is used to manage state and interaction"
 
   attr :color, :string, default: "base", doc: "Determines color theme"
-  attr :opacity, :string, default: "", doc: ""
-  attr :backdrop, :string, default: "", doc: ""
+  attr :opacity, :string, default: "", doc: "Determines the opacity level of the overlay"
+  attr :backdrop, :string, default: "", doc: "Determines backdrop effects for the overlay"
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
 
   attr :z_index, :string,
@@ -57,13 +59,13 @@ defmodule CommunityDemoWeb.Components.Overlay do
     ~H"""
     <div
       id={@id}
+      data-opacity={@opacity}
       aria-hidden="true"
       role="presentation"
       tabindex="-1"
       class={[
         "overlay absolute inset-0",
         color_class(@color),
-        opacity_class(@opacity),
         backdrop_class(@backdrop),
         @z_index,
         @class
@@ -76,119 +78,79 @@ defmodule CommunityDemoWeb.Components.Overlay do
   end
 
   defp color_class("base") do
-    ["bg-white dark:bg-[#18181B]"]
+    ["bg-white/[var(--overlay-opacity)] dark:bg-base-bg-dark/[var(--overlay-opacity)]"]
   end
 
   defp color_class("white") do
-    ["bg-white text-black"]
+    ["bg-white/[var(--overlay-opacity)] text-black"]
   end
 
   defp color_class("dark") do
-    ["bg-[#282828] text-white"]
+    ["bg-default-dark-bg/[var(--overlay-opacity)] text-white"]
   end
 
   defp color_class("natural") do
-    ["bg-[#4B4B4B] dark:bg-[#DDDDDD]"]
+    ["bg-natural-light[var(--overlay-opacity)]dark:bg-natural-dark/[var(--overlay-opacity)]"]
   end
 
   defp color_class("primary") do
-    ["bg-[#007F8C] dark:bg-[#01B8CA]"]
+    ["bg-primary-light/[var(--overlay-opacity)] dark:bg-primary-dark/[var(--overlay-opacity)]"]
   end
 
   defp color_class("secondary") do
-    ["bg-[#266EF1] dark:bg-[#6DAAFB]"]
+    [
+      "bg-secondary-light/[var(--overlay-opacity)] dark:bg-secondary-dark/[var(--overlay-opacity)]"
+    ]
   end
 
   defp color_class("success") do
-    ["bg-[#0E8345] dark:bg-[#06C167]"]
+    ["bg-success-light/[var(--overlay-opacity)] dark:bg-success-dark/[var(--overlay-opacity)]"]
   end
 
   defp color_class("warning") do
-    ["bg-[#CA8D01] dark:bg-[#FDC034]"]
+    ["bg-warning-light/[var(--overlay-opacity)] dark:bg-warning-dark/[var(--overlay-opacity)]"]
   end
 
   defp color_class("danger") do
-    ["bg-[#DE1135] dark:bg-[#FC7F79]"]
+    ["bg-danger-light/[var(--overlay-opacity)] dark:bg-danger-dark/[var(--overlay-opacity)]"]
   end
 
   defp color_class("info") do
-    ["bg-[#0B84BA] dark:bg-[#3EB7ED]"]
+    ["bg-info-light/[var(--overlay-opacity)] dark:bg-info-dark/[var(--overlay-opacity)]"]
   end
 
   defp color_class("misc") do
-    ["bg-[#8750C5] dark:bg-[#BA83F9]"]
+    ["bg-misc-light/[var(--overlay-opacity)] dark:bg-misc-dark/[var(--overlay-opacity)]"]
   end
 
   defp color_class("dawn") do
-    ["bg-[#A86438] dark:bg-[#DB976B]"]
+    ["bg-dawn-light/[var(--overlay-opacity)] dark:bg-dawn-dark/[var(--overlay-opacity)]"]
   end
 
   defp color_class("silver") do
-    ["bg-[#868686] dark:bg-[#A6A6A6]"]
+    ["bg-silver-light/[var(--overlay-opacity)] dark:bg-silver-dark/[var(--overlay-opacity)]"]
   end
 
   defp color_class(params) when is_binary(params), do: params
 
-  defp opacity_class("transparent") do
-    "bg-opacity-10"
-  end
-
-  defp opacity_class("translucent") do
-    "bg-opacity-20"
-  end
-
-  defp opacity_class("semi_transparent") do
-    "bg-opacity-30"
-  end
-
-  defp opacity_class("lightly_tinted") do
-    "bg-opacity-40"
-  end
-
-  defp opacity_class("tinted") do
-    "bg-opacity-50"
-  end
-
-  defp opacity_class("semi_opaque") do
-    "bg-opacity-60"
-  end
-
-  defp opacity_class("opaque") do
-    "bg-opacity-70"
-  end
-
-  defp opacity_class("heavily_tinted") do
-    "bg-opacity-80"
-  end
-
-  defp opacity_class("almost_solid") do
-    "bg-opacity-90"
-  end
-
-  defp opacity_class("solid") do
-    "bg-opacity-100"
-  end
-
-  defp opacity_class(params) when is_binary(params), do: params
-
   defp backdrop_class("extra_small") do
-    "backdrop-backdrop-[1px]"
+    "backdrop-blur-[1px]"
   end
 
   defp backdrop_class("small") do
-    "backdrop-backdrop-[2px]"
+    "backdrop-blur-[2px]"
   end
 
   defp backdrop_class("medium") do
-    "backdrop-backdrop-[3px]"
+    "backdrop-blur-[3px]"
   end
 
   defp backdrop_class("large") do
-    "backdrop-backdrop-[4px]"
+    "backdrop-blur-[4px]"
   end
 
   defp backdrop_class("extra_large") do
-    "backdrop-backdrop-[5px]"
+    "backdrop-blur-[5px]"
   end
 
   defp backdrop_class(params) when is_binary(params), do: params

@@ -5,6 +5,7 @@ import Clipboard from "./clipboard.js";
 import Floating from "./floating.js";
 import GalleryFilter from "./galleryFilter.js";
 import Sidebar from "./sidebar.js";
+import Collapsible from "./collapsible.js";
 const Components = {
   ScrollArea,
   Combobox,
@@ -13,5 +14,6 @@ const Components = {
   Floating,
   GalleryFilter,
   Sidebar,
+  Collapsible,
 };
 export default Components;

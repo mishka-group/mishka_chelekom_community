@@ -18,6 +18,8 @@ defmodule CommunityDemoWeb.Components.Layout do
   - **Clean Code Integration:** Simplifies your markup while keeping full control of layout logic.
 
   The `Layout` component is designed to give developers complete flexibility with minimal boilerplate.
+
+  **Documentation:** https://mishka.tools/chelekom/docs/layout
   """
 
   use Phoenix.Component

@@ -38,9 +38,7 @@ defmodule CommunityDemoWeb do
 
   def controller do
     quote do
-      use Phoenix.Controller,
-        formats: [:html, :json],
-        layouts: [html: CommunityDemoWeb.Layouts]
+      use Phoenix.Controller, formats: [:html, :json]
 
       use Gettext, backend: CommunityDemoWeb.Gettext
 
@@ -52,10 +50,8 @@ defmodule CommunityDemoWeb do
 
   def live_view do
     quote do
-      use Phoenix.LiveView,
-        layout: {CommunityDemoWeb.Layouts, :app}
+      use Phoenix.LiveView
 
-      use CommunityDemoWeb.Components.MishkaComponents
       unquote(html_helpers())
     end
   end
@@ -91,8 +87,9 @@ defmodule CommunityDemoWeb do
       # Core UI components
       use CommunityDemoWeb.Components.MishkaComponents
 
-      # Shortcut for generating JS commands
+      # Common modules used in templates
       alias Phoenix.LiveView.JS
+      alias CommunityDemoWeb.Layouts
 
       # Routes generation with the ~p sigil
       unquote(verified_routes())

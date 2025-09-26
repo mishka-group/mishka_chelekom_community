@@ -10,6 +10,8 @@ defmodule CommunityDemoWeb.Components.ColorField do
   - Flexible error handling with support for custom error icons and messages.
   - Configurable size and layout options for various use cases.
   - Support for Phoenix form field integration.
+
+  **Documentation:** https://mishka.tools/chelekom/docs/forms/color-field
   """
 
   use Phoenix.Component
@@ -79,16 +81,6 @@ defmodule CommunityDemoWeb.Components.ColorField do
   attr :error_icon, :string, default: nil, doc: "Icon to be displayed alongside error messages"
   attr :label, :string, default: nil, doc: "Specifies text for the label"
 
-  slot :start_section, required: false, doc: "Renders heex content in start of an element" do
-    attr :class, :string, doc: "Custom CSS class for additional styling"
-    attr :icon, :string, doc: "Icon displayed alongside of an item"
-  end
-
-  slot :end_section, required: false, doc: "Renders heex content in end of an element" do
-    attr :class, :string, doc: "Custom CSS class for additional styling"
-    attr :icon, :string, doc: "Icon displayed alongside of an item"
-  end
-
   attr :errors, :list, default: [], doc: "List of error messages to be displayed"
   attr :name, :any, doc: "Name of input"
   attr :value, :any, default: "#000000", doc: "Value of input"
@@ -126,7 +118,7 @@ defmodule CommunityDemoWeb.Components.ColorField do
     ]}>
       <div
         :if={@label || @description}
-        class={["checkbox-card-label-wrapper", @description_wrapper_class]}
+        class={["color-field-label-wrapper", @description_wrapper_class]}
       >
         <.label :if={@label} for={@id} class={@label_class}>{@label}</.label>
         <div :if={@description} class={@description_class}>
@@ -245,90 +237,90 @@ defmodule CommunityDemoWeb.Components.ColorField do
 
   defp color_class("base") do
     [
-      "[&_.color-field-wrapper_.color-input]:border-[#e4e4e7]",
-      "dark:[&_.color-field-wrapper_.color-input]:border-[#27272a]"
+      "[&_.color-field-wrapper_.color-input]:border-base-border-light",
+      "dark:[&_.color-field-wrapper_.color-input]:border-base-border-dark"
     ]
   end
 
   defp color_class("white") do
     [
-      "[&_.color-field-wrapper_.color-input]:border-[#DADADA]"
+      "[&_.color-field-wrapper_.color-input]:border-form-white-focus"
     ]
   end
 
   defp color_class("natural") do
     [
-      "[&_.color-field-wrapper_.color-input]:border-[#4B4B4B]",
-      "dark:[&_.color-field-wrapper_.color-input]:border-[#DDDDDD]"
+      "[&_.color-field-wrapper_.color-input]:border-natural-light",
+      "dark:[&_.color-field-wrapper_.color-input]:border-natural-dark"
     ]
   end
 
   defp color_class("primary") do
     [
-      "[&_.color-field-wrapper_.color-input]:border-[#007F8C]",
-      "dark:[&_.color-field-wrapper_.color-input]:border-[#01B8CA]"
+      "[&_.color-field-wrapper_.color-input]:border-primary-light",
+      "dark:[&_.color-field-wrapper_.color-input]:border-primary-dark"
     ]
   end
 
   defp color_class("secondary") do
     [
-      "[&_.color-field-wrapper_.color-input]:border-[#266EF1]",
-      "dark:[&_.color-field-wrapper_.color-input]:border-[#6DAAFB]"
+      "[&_.color-field-wrapper_.color-input]:border-secondary-light",
+      "dark:[&_.color-field-wrapper_.color-input]:border-secondary-dark"
     ]
   end
 
   defp color_class("success") do
     [
-      "[&_.color-field-wrapper_.color-input]:border-[#0E8345]",
-      "dark:[&_.color-field-wrapper_.color-input]:border-[#06C167]"
+      "[&_.color-field-wrapper_.color-input]:border-success-light",
+      "dark:[&_.color-field-wrapper_.color-input]:border-success-dark"
     ]
   end
 
   defp color_class("warning") do
     [
-      "[&_.color-field-wrapper_.color-input]:border-[#CA8D01]",
-      "dark:[&_.color-field-wrapper_.color-input]:border-[#FDC034]"
+      "[&_.color-field-wrapper_.color-input]:border-warning-light",
+      "dark:[&_.color-field-wrapper_.color-input]:border-warning-dark"
     ]
   end
 
   defp color_class("danger") do
     [
-      "[&_.color-field-wrapper_.color-input]:border-[#DE1135]",
-      "dark:[&_.color-field-wrapper_.color-input]:border-[#FC7F79]"
+      "[&_.color-field-wrapper_.color-input]:border-danger-light",
+      "dark:[&_.color-field-wrapper_.color-input]:border-danger-dark"
     ]
   end
 
   defp color_class("info") do
     [
-      "[&_.color-field-wrapper_.color-input]:border-[#0B84BA]",
-      "dark:[&_.color-field-wrapper_.color-input]:border-[#3EB7ED]"
+      "[&_.color-field-wrapper_.color-input]:border-info-light",
+      "dark:[&_.color-field-wrapper_.color-input]:border-info-dark"
     ]
   end
 
   defp color_class("misc") do
     [
-      "[&_.color-field-wrapper_.color-input]:border-[#8750C5]",
-      "dark:[&_.color-field-wrapper_.color-input]:border-[#BA83F9]"
+      "[&_.color-field-wrapper_.color-input]:border-misc-light",
+      "dark:[&_.color-field-wrapper_.color-input]:border-misc-dark"
     ]
   end
 
   defp color_class("dawn") do
     [
-      "[&_.color-field-wrapper_.color-input]:border-[#A86438]",
-      "dark:[&_.color-field-wrapper_.color-input]:border-[#DB976B]"
+      "[&_.color-field-wrapper_.color-input]:border-dawn-light",
+      "dark:[&_.color-field-wrapper_.color-input]:border-dawn-dark"
     ]
   end
 
   defp color_class("silver") do
     [
-      "[&_.color-field-wrapper_.color-input]:border-[#868686]",
-      "dark:[&_.color-field-wrapper_.color-input]:border-[#A6A6A6]"
+      "[&_.color-field-wrapper_.color-input]:border-silver-light",
+      "dark:[&_.color-field-wrapper_.color-input]:border-silver-dark"
     ]
   end
 
   defp color_class("dark") do
     [
-      "[&_.color-field-wrapper_.color-input]:border-[#282828]"
+      "[&_.color-field-wrapper_.color-input]:border-default-dark-bg"
     ]
   end
 

@@ -5,6 +5,8 @@ defmodule CommunityDemoWeb.Components.Image do
 
   This module simplifies the use of images with various configurations and styling
   options in a Phoenix application.
+
+  **Documentation:** https://mishka.tools/chelekom/docs/image
   """
 
   use Phoenix.Component
@@ -47,7 +49,7 @@ defmodule CommunityDemoWeb.Components.Image do
     doc: "high, low, auto is default"
 
   attr :width, :integer, default: nil, doc: "Determines width style"
-  attr :height, :integer, default: nil, doc: "Determines width height"
+  attr :height, :integer, default: nil, doc: "Determines height style"
 
   attr :sizes, :string,
     default: nil,

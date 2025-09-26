@@ -12,6 +12,8 @@ defmodule CommunityDemoWeb.Components.Spinner do
   With its flexible design, the `CommunityDemoWeb.Components.Spinner` module enables developers to provide
   visual feedback for asynchronous operations, enhancing user experience and maintaining engagement
   during content loading or background processes.
+
+  **Documentation:** https://mishka.tools/chelekom/docs/spinner
   """
 
   use Phoenix.Component
@@ -43,7 +45,11 @@ defmodule CommunityDemoWeb.Components.Spinner do
     default: nil,
     doc: "A unique identifier is used to manage state and interaction"
 
-  attr :type, :string, values: @spinner_types, default: "default", doc: ""
+  attr :type, :string,
+    values: @spinner_types,
+    default: "default",
+    doc: "Determines the spinner animation type (default, dots, bars, pinging)"
+
   attr :class, :string, default: nil, doc: "Custom CSS class for additional styling"
   attr :color, :string, default: "base", doc: "Determines color theme"
 
@@ -262,8 +268,8 @@ defmodule CommunityDemoWeb.Components.Spinner do
 
   defp color_class("base") do
     [
-      "[&>span]:bg-[#e4e4e7] [&>svg]:stroke-[#e4e4e7] text-[#e4e4e7]",
-      "dark:[&>span]:bg-[#27272a] dark:[&>svg]:stroke-[#27272a] dark:text-[#27272a]"
+      "[&>span]:bg-base-border-light [&>svg]:stroke-base-border-light text-base-border-light",
+      "dark:[&>span]:bg-base-border-dark dark:[&>svg]:stroke-base-border-dark dark:text-base-border-dark"
     ]
   end
 
@@ -272,76 +278,76 @@ defmodule CommunityDemoWeb.Components.Spinner do
   end
 
   defp color_class("dark") do
-    ["[&>span]:bg-[#282828] [&>svg]:stroke-[#282828] text-[#282828]"]
+    ["[&>span]:bg-default-dark-bg [&>svg]:stroke-default-dark-bg text-default-dark-bg"]
   end
 
   defp color_class("natural") do
     [
-      "[&>span]:bg-[#4B4B4B] [&>svg]:stroke-[#4B4B4B] text-[#4B4B4B]",
-      "dark:[&>span]:bg-[#DDDDDD] dark:[&>svg]:stroke-[#DDDDDD] dark:text-[#DDDDDD]"
+      "[&>span]:bg-natural-light [&>svg]:stroke-natural-light text-natural-light",
+      "dark:[&>span]:bg-natural-dark dark:[&>svg]:stroke-natural-dark dark:text-natural-dark"
     ]
   end
 
   defp color_class("primary") do
     [
-      "[&>span]:bg-[#007F8C] [&>svg]:stroke-[#007F8C] text-[#007F8C]",
-      "dark:[&>span]:bg-[#01B8CA] dark:[&>svg]:stroke-[#01B8CA] dark:text-[#01B8CA]"
+      "[&>span]:bg-primary-light [&>svg]:stroke-primary-light text-primary-light",
+      "dark:[&>span]:bg-primary-dark dark:[&>svg]:stroke-primary-dark dark:text-primary-dark"
     ]
   end
 
   defp color_class("secondary") do
     [
-      "[&>span]:bg-[#266EF1] [&>svg]:stroke-[#266EF1] text-[#266EF1]",
-      "dark:[&>span]:bg-[#6DAAFB] dark:[&>svg]:stroke-[#6DAAFB] dark:text-[#6DAAFB]"
+      "[&>span]:bg-secondary-light [&>svg]:stroke-secondary-light text-secondary-light",
+      "dark:[&>span]:bg-secondary-dark dark:[&>svg]:stroke-secondary-dark dark:text-secondary-dark"
     ]
   end
 
   defp color_class("success") do
     [
-      "[&>span]:bg-[#0E8345] [&>svg]:stroke-[#0E8345] text-[#0E8345]",
-      "dark:[&>span]:bg-[#06C167] dark:[&>svg]:stroke-[#06C167] dark:text-[#06C167]"
+      "[&>span]:bg-success-light [&>svg]:stroke-success-light text-success-light",
+      "dark:[&>span]:bg-success-dark dark:[&>svg]:stroke-success-dark dark:text-success-dark"
     ]
   end
 
   defp color_class("warning") do
     [
-      "[&>span]:bg-[#CA8D01] [&>svg]:stroke-[#CA8D01] text-[#CA8D01]",
-      "dark:[&>span]:bg-[#FDC034] dark:[&>svg]:stroke-[#FDC034] dark:text-[#FDC034]"
+      "[&>span]:bg-warning-light [&>svg]:stroke-warning-light text-warning-light",
+      "dark:[&>span]:bg-warning-dark dark:[&>svg]:stroke-warning-dark dark:text-warning-dark"
     ]
   end
 
   defp color_class("danger") do
     [
-      "[&>span]:bg-[#DE1135] [&>svg]:stroke-[#DE1135] text-[#DE1135]",
-      "dark:[&>span]:bg-[#FC7F79] dark:[&>svg]:stroke-[#FC7F79] dark:text-[#FC7F79]"
+      "[&>span]:bg-danger-light [&>svg]:stroke-danger-light text-danger-light",
+      "dark:[&>span]:bg-danger-dark dark:[&>svg]:stroke-danger-dark dark:text-danger-dark"
     ]
   end
 
   defp color_class("info") do
     [
-      "[&>span]:bg-[#0B84BA] [&>svg]:stroke-[#0B84BA] text-[#0B84BA]",
-      "dark:[&>span]:bg-[#3EB7ED] dark:[&>svg]:stroke-[#3EB7ED] dark:text-[#3EB7ED]"
+      "[&>span]:bg-info-light [&>svg]:stroke-info-light text-info-light",
+      "dark:[&>span]:bg-info-dark dark:[&>svg]:stroke-info-dark dark:text-info-dark"
     ]
   end
 
   defp color_class("misc") do
     [
-      "[&>span]:bg-[#8750C5] [&>svg]:stroke-[#8750C5] text-[#8750C5]",
-      "dark:[&>span]:bg-[#BA83F9] dark:[&>svg]:stroke-[#BA83F9] dark:text-[#BA83F9]"
+      "[&>span]:bg-misc-light [&>svg]:stroke-misc-light text-misc-light",
+      "dark:[&>span]:bg-misc-dark dark:[&>svg]:stroke-misc-dark dark:text-misc-dark"
     ]
   end
 
   defp color_class("dawn") do
     [
-      "[&>span]:bg-[#A86438] [&>svg]:stroke-[#A86438] text-[#A86438]",
-      "dark:[&>span]:bg-[#DB976B] dark:[&>svg]:stroke-[#DB976B] dark:text-[#DB976B]"
+      "[&>span]:bg-dawn-light [&>svg]:stroke-dawn-light text-dawn-light",
+      "dark:[&>span]:bg-dawn-dark dark:[&>svg]:stroke-dawn-dark dark:text-dawn-dark"
     ]
   end
 
   defp color_class("silver") do
     [
-      "[&>span]:bg-[#868686] [&>svg]:stroke-[#868686] text-[#868686]",
-      "dark:[&>span]:bg-[#A6A6A6] dark:[&>svg]:stroke-[#A6A6A6] dark:text-[#A6A6A6]"
+      "[&>span]:bg-silver-light [&>svg]:stroke-silver-light text-silver-light",
+      "dark:[&>span]:bg-silver-dark dark:[&>svg]:stroke-silver-dark dark:text-silver-dark"
     ]
   end
 

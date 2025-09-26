@@ -12,6 +12,8 @@ defmodule CommunityDemoWeb.Components.Combobox do
   - Custom option rendering
   - Keyboard navigation
   - Accessibility support
+
+  **Documentation:** https://mishka.tools/chelekom/docs/forms/combobox
   """
 
   use Phoenix.Component
@@ -111,11 +113,11 @@ defmodule CommunityDemoWeb.Components.Combobox do
   attr :variant, :string, default: "base", doc: "Determines variant theme"
   attr :border, :string, default: "extra_small", doc: "Determines border style"
   attr :rounded, :string, default: "medium", doc: "Radius size"
-  attr :space, :string, default: "extra_small", doc: "Radius size"
+  attr :space, :string, default: "extra_small", doc: "Space between elements"
   attr :padding, :string, default: "small", doc: "Padding size"
   attr :height, :string, default: "h-fit max-h-40", doc: "Dropdown height"
   attr :description, :string, default: nil, doc: "Determines a short description"
-  attr :searchable, :boolean, default: false, doc: "Determines a short description"
+  attr :searchable, :boolean, default: false, doc: "Enables search functionality in the combobox"
   attr :multiple, :boolean, default: false, doc: "Multiple selections in the combobox"
 
   slot :start_section, required: false, doc: "Renders heex content in start of an element" do
@@ -168,9 +170,13 @@ defmodule CommunityDemoWeb.Components.Combobox do
       rounded_size(@rounded),
       padding_size(@padding),
       size_class(@size),
-      space_class(@space)
+      space_class(@space),
+      @class
     ]}>
-      <div :if={@label || @description} class={["combobox-label-wrapper", @description_wrapper_class]}>
+      <div
+        :if={@label || @description}
+        class={["combobox-label-wrapper", @description_wrapper_class]}
+      >
         <.label :if={@label} for={@id} class={@label_class}>{@label}</.label>
         <div :if={@description} class={@description_class}>
           {@description}
@@ -279,7 +285,10 @@ defmodule CommunityDemoWeb.Components.Combobox do
             role="listbox"
             data-part="listbox"
             aria-multiselectable={@multiple}
-            class="combobox-dropdown z-50 absolute w-full px-[3px] py-2 transition-all ease-out duration-[250ms] top-full mt-2"
+            class={[
+              "combobox-dropdown z-50 absolute w-full px-[3px] py-2 transition-all ease-out duration-[250ms] top-full mt-2",
+              dropdown_styles(@variant, @color, @rounded, @border, @size, @padding)
+            ]}
             hidden
           >
             <div :if={@searchable} class="mt-1 mb-2 mx-1.5">
@@ -290,7 +299,7 @@ defmodule CommunityDemoWeb.Components.Combobox do
                 aria-autocomplete="list"
                 aria-activedescendant=""
                 aria-label={@search_placeholder}
-                class="combobox-search-input appearance-none bg-transparent px-2 py-1 w-full focus:outline-none"
+                class="combobox-search-input border appearance-none bg-transparent px-2 py-1 w-full focus:outline-none"
                 placeholder={@search_placeholder}
               />
             </div>
@@ -366,7 +375,10 @@ defmodule CommunityDemoWeb.Components.Combobox do
       size_class(@size),
       space_class(@space)
     ]}>
-      <div :if={@label || @description} class={["combobox-label-wrapper", @description_wrapper_class]}>
+      <div
+        :if={@label || @description}
+        class={["combobox-label-wrapper", @description_wrapper_class]}
+      >
         <.label :if={@label} for={@id} class={@label_class}>{@label}</.label>
         <div :if={@description} class={@description_class}>
           {@description}
@@ -466,7 +478,10 @@ defmodule CommunityDemoWeb.Components.Combobox do
             id={"#{@id}-listbox"}
             role="listbox"
             data-part="listbox"
-            class="combobox-dropdown z-50 absolute w-full px-[3px] py-2 transition-all ease-out duration-[250ms] top-full mt-2"
+            class={[
+              "combobox-dropdown text-[13px] z-50 absolute w-full px-[3px] py-2 transition-all ease-out duration-[250ms] top-full mt-2",
+              dropdown_styles(@variant, @color, @rounded, @border, @size, @padding)
+            ]}
             hidden
           >
             <div :if={@searchable} class="mt-1 mb-2 mx-1.5">
@@ -477,7 +492,7 @@ defmodule CommunityDemoWeb.Components.Combobox do
                 aria-autocomplete="list"
                 aria-activedescendant=""
                 aria-label={@search_placeholder}
-                class="combobox-search-input appearance-none bg-transparent px-2 py-1 w-full focus:outline-none"
+                class="combobox-search-input border appearance-none bg-transparent px-2 py-1 w-full focus:outline-none"
                 data-part="search"
                 placeholder={@search_placeholder}
               />
@@ -548,7 +563,6 @@ defmodule CommunityDemoWeb.Components.Combobox do
       role="option"
       class={[
         "combobox-option cursor-pointer rounded flex justify-between items-center",
-        "[&[data-combobox-navigate]]:bg-blue-500 [&[data-combobox-navigate]]:text-white",
         @class
       ]}
       data-combobox-value={@value}
@@ -572,7 +586,7 @@ defmodule CommunityDemoWeb.Components.Combobox do
     """
   end
 
-  attr :id, :string, default: nil, doc: "Unique identifire"
+  attr :id, :string, default: nil, doc: "Unique identifier"
   attr :for, :string, default: nil, doc: "Specifies the form which is associated with"
   attr :class, :any, default: nil, doc: "Custom CSS class for additional styling"
   slot :inner_block, required: true, doc: "Inner block that renders HEEx content"
@@ -599,35 +613,35 @@ defmodule CommunityDemoWeb.Components.Combobox do
   defp size_class("extra_small") do
     [
       "[&_.combobox-trigger]:min-h-7 [&_.combobox-icon]:size-3 text-[12px]",
-      "[&_.combobox-search-input]:h-6 [&_.combobox-search-input]:text-[12px]"
+      "[&_.combobox-option]:text-[12px]"
     ]
   end
 
   defp size_class("small") do
     [
       "[&_.combobox-trigger]:min-h-8 [&_.combobox-icon]:size-3.5 text-[13px]",
-      "[&_.combobox-search-input]:h-7 [&_.combobox-search-input]:text-[13px]"
+      "[&_.combobox-option]:text-[13px]"
     ]
   end
 
   defp size_class("medium") do
     [
       "[&_.combobox-trigger]:min-h-9 [&_.combobox-icon]:size-4 text-[14px]",
-      "[&_.combobox-search-input]:h-8 [&_.combobox-search-input]:text-[14px]"
+      "[&_.combobox-option]:text-[14px]"
     ]
   end
 
   defp size_class("large") do
     [
       "[&_.combobox-trigger]:min-h-10 [&_.combobox-icon]:size-[18px] text-[15px]",
-      "[&_.combobox-search-input]:h-9 [&_.combobox-search-input]:text-[15px]"
+      "[&_.combobox-option]:text-[15px]"
     ]
   end
 
   defp size_class("extra_large") do
     [
       "[&_.combobox-trigger]:min-h-11 [&_.combobox-icon]:size-5 text-[16px]",
-      "[&_.combobox-search-input]:h-10 [&_.combobox-search-input]:text-[16px]"
+      "[&_.combobox-option]:text-[16px]"
     ]
   end
 
@@ -635,43 +649,43 @@ defmodule CommunityDemoWeb.Components.Combobox do
 
   defp rounded_size("extra_small") do
     [
-      "[&_.combobox-trigger]:rounded-sm [&_.combobox-dropdown]:rounded-sm",
-      "[&_.combobox-pill]:rounded-[0.0625rem] [&_.combobox-search-input]:rounded-sm"
+      "[&_.combobox-trigger]:rounded-sm",
+      "[&_.combobox-pill]:rounded-[0.0625rem]"
     ]
   end
 
   defp rounded_size("small") do
     [
-      "[&_.combobox-trigger]:rounded [&_.combobox-dropdown]:rounded",
-      "[&_.combobox-pill]:rounded-[0.13rem] [&_.combobox-search-input]:rounded"
+      "[&_.combobox-trigger]:rounded",
+      "[&_.combobox-pill]:rounded-[0.13rem]"
     ]
   end
 
   defp rounded_size("medium") do
     [
-      "[&_.combobox-trigger]:rounded-md [&_.combobox-dropdown]:rounded-md",
-      "[&_.combobox-pill]:rounded-[0.19rem] [&_.combobox-search-input]:rounded-md"
+      "[&_.combobox-trigger]:rounded-md",
+      "[&_.combobox-pill]:rounded-[0.19rem]"
     ]
   end
 
   defp rounded_size("large") do
     [
-      "[&_.combobox-trigger]:rounded-lg [&_.combobox-dropdown]:rounded-lg",
-      "[&_.combobox-pill]:rounded-[0.3rem] [&_.combobox-search-input]:rounded-lg"
+      "[&_.combobox-trigger]:rounded-lg",
+      "[&_.combobox-pill]:rounded-[0.3rem]"
     ]
   end
 
   defp rounded_size("extra_large") do
     [
-      "[&_.combobox-trigger]:rounded-xl [&_.combobox-dropdown]:rounded-xl",
-      "[&_.combobox-pill]:rounded-[0.313rem] [&_.combobox-search-input]:rounded-xl"
+      "[&_.combobox-trigger]:rounded-xl",
+      "[&_.combobox-pill]:rounded-[0.313rem]"
     ]
   end
 
   defp rounded_size("full") do
     [
-      "[&_.combobox-trigger]:rounded-full [&_.combobox-dropdown]:rounded-full",
-      "[&_.combobox-pill]:rounded-full [&_.combobox-search-input]:rounded-full"
+      "[&_.combobox-trigger]:rounded-full",
+      "[&_.combobox-pill]:rounded-full"
     ]
   end
 
@@ -685,40 +699,40 @@ defmodule CommunityDemoWeb.Components.Combobox do
   defp border_class("none", _), do: nil
 
   defp border_class("extra_small", _),
-    do: "[&_.combobox-trigger]:border [&_.combobox-dropdown]:border"
+    do: "[&_.combobox-trigger]:border"
 
   defp border_class("small", _),
-    do: "[&_.combobox-trigger]:border-2 [&_.combobox-dropdown]:border-2"
+    do: "[&_.combobox-trigger]:border-2"
 
   defp border_class("medium", _),
-    do: "[&_.combobox-trigger]:border-[3px] [&_.combobox-dropdown]:border-[3px]"
+    do: "[&_.combobox-trigger]:border-[3px]"
 
   defp border_class("large", _),
-    do: "[&_.combobox-trigger]:border-4 [&_.combobox-dropdown]:border-4"
+    do: "[&_.combobox-trigger]:border-4"
 
   defp border_class("extra_large", _),
-    do: "[&_.combobox-trigger]:border-[5px] [&_.combobox-dropdown]:border-[5px]"
+    do: "[&_.combobox-trigger]:border-[5px]"
 
   defp border_class(params, _) when is_binary(params), do: params
 
   defp padding_size("extra_small") do
-    ["[&_.combobox-trigger]:px-2 [&_.combobox-option]:px-2", "[&_.combobox-option]:py-0.5"]
+    ["[&_.combobox-trigger]:px-2"]
   end
 
   defp padding_size("small") do
-    ["[&_.combobox-trigger]:px-3 [&_.combobox-option]:px-3", "[&_.combobox-option]:py-1"]
+    ["[&_.combobox-trigger]:px-3"]
   end
 
   defp padding_size("medium") do
-    ["[&_.combobox-trigger]:px-4 [&_.combobox-option]:px-4", "[&_.combobox-option]:py-1.5"]
+    ["[&_.combobox-trigger]:px-4"]
   end
 
   defp padding_size("large") do
-    ["[&_.combobox-trigger]:px-5 [&_.combobox-option]:px-5", "[&_.combobox-option]:py-2"]
+    ["[&_.combobox-trigger]:px-5"]
   end
 
   defp padding_size("extra_large") do
-    ["[&_.combobox-trigger]:px-6 [&_.combobox-option]:px-6", "[&_.combobox-option]:py-2.5"]
+    ["[&_.combobox-trigger]:px-6"]
   end
 
   defp padding_size(params) when is_binary(params), do: params
@@ -733,299 +747,524 @@ defmodule CommunityDemoWeb.Components.Combobox do
 
   defp color_variant("base", _) do
     [
-      "[&_.combobox-trigger]:bg-white text-[#09090b] [&_.combobox-trigger]:border-[#e4e4e7] [&_.combobox-trigger]:shadow-sm",
-      "dark:[&_.combobox-trigger]:bg-[#18181B] dark:text-[#FAFAFA] dark:[&_.combobox-trigger]:border-[#27272a]",
-      "[&_.combobox-dropdown]:bg-white [&_.combobox-dropdown]:border-[#e4e4e7]",
-      "dark:[&_.combobox-dropdown]:bg-[#18181B] dark:[&_.combobox-dropdown]:border-[#27272a]",
-      "hover:[&_.combobox-option:not([data-combobox-navigate])]:bg-[#e4e4e7] hover:[&_.combobox-option:not([data-combobox-navigate])]:text-[#09090b]",
-      "dark:hover:[&_.combobox-option:not([data-combobox-navigate])]:bg-[#27272a] dark:hover:[&_.combobox-option:not([data-combobox-navigate])]:text-[#FAFAFA]",
-      "[&_.combobox-search-input]:border-[#e4e4e7] dark:[&_.combobox-search-input]:border-[#27272a]",
-      "[&_.combobox-pill]:text-[#09090b] [&_.combobox-pill]:bg-[#e4e4e7]",
-      "[&_.combobox-dropdown]:shadow"
+      "[&_.combobox-trigger]:bg-white text-black [&_.combobox-trigger]:border-base-border-light [&_.combobox-trigger]:shadow-sm",
+      "dark:[&_.combobox-trigger]:bg-base-bg-dark dark:text-base-text-dark dark:[&_.combobox-trigger]:border-base-border-dark",
+      "[&_.combobox-pill]:text-black [&_.combobox-pill]:bg-base-border-light"
     ]
   end
 
   defp color_variant("default", "natural") do
     [
-      "[&_.combobox-trigger]:bg-[#4B4B4B] text-white dark:[&_.combobox-trigger]:bg-[#DDDDDD] dark:text-black",
-      "[&_.combobox-dropdown]:bg-[#4B4B4B] dark:[&_.combobox-dropdown]:bg-[#E8E8E8]",
-      "hover:[&_.combobox-option]:bg-[#282828] dark:hover:[&_.combobox-option]:bg-[#E8E8E8]",
-      "[&_.combobox-search-input]:border-white dark:[&_.combobox-search-input]:border-black",
-      "[&_.combobox-search-input]:text-white dark:[&_.combobox-search-input]:text-black",
-      "[&_.combobox-search-input]:placeholder-white dark:[&_.combobox-search-input]:placeholder-black",
-      "[&_.combobox-pill]:bg-[#282828] dark:[&_.combobox-pill]:bg-[#E8E8E8]"
+      "[&_.combobox-trigger]:bg-natural-bg-dark text-white dark:[&_.combobox-trigger]:bg-natural-dark dark:text-black",
+      "[&_.combobox-option]:hover:bg-natural-hover-light dark:[&_.combobox-option]:hover:bg-natural-hover-dark",
+      "[&_.combobox-pill]:bg-natural-hover-light dark:[&_.combobox-pill]:bg-natural-hover-dark"
     ]
   end
 
   defp color_variant("default", "primary") do
     [
-      "[&_.combobox-trigger]:bg-[#007F8C] text-white dark:[&_.combobox-trigger]:bg-[#01B8CA] dark:text-black",
-      "[&_.combobox-dropdown]:bg-[#007F8C] dark:[&_.combobox-dropdown]:bg-[#01B8CA]",
-      "hover:[&_.combobox-option]:bg-[#016974] dark:hover:[&_.combobox-option]:bg-[#77D5E3]",
-      "[&_.combobox-search-input]:border-white dark:[&_.combobox-search-input]:border-black",
-      "[&_.combobox-search-input]:text-white dark:[&_.combobox-search-input]:text-black",
-      "[&_.combobox-search-input]:placeholder-white dark:[&_.combobox-search-input]:placeholder-black",
-      "[&_.combobox-pill]:bg-[#016974] dark:[&_.combobox-pill]:bg-[#77D5E3]"
+      "[&_.combobox-trigger]:bg-primary-light text-white dark:[&_.combobox-trigger]:bg-primary-dark dark:text-black",
+      "[&_.combobox-option]:hover:bg-primary-hover-light dark:[&_.combobox-option]:hover:bg-primary-hover-dark",
+      "[&_.combobox-pill]:bg-primary-hover-light dark:[&_.combobox-pill]:bg-primary-hover-dark"
     ]
   end
 
   defp color_variant("default", "secondary") do
     [
-      "[&_.combobox-trigger]:bg-[#266EF1] text-white dark:[&_.combobox-trigger]:bg-[#6DAAFB] dark:text-black",
-      "[&_.combobox-dropdown]:bg-[#266EF1] dark:[&_.combobox-dropdown]:bg-[#6DAAFB]",
-      "hover:[&_.combobox-option]:bg-[#175BCC] dark:hover:[&_.combobox-option]:bg-[#A9C9FF]",
-      "[&_.combobox-search-input]:border-white dark:[&_.combobox-search-input]:border-black",
-      "[&_.combobox-search-input]:text-white dark:[&_.combobox-search-input]:text-black",
-      "[&_.combobox-search-input]:placeholder-white dark:[&_.combobox-search-input]:placeholder-black",
-      "[&_.combobox-pill]:bg-[#175BCC] dark:[&_.combobox-pill]:bg-[#A9C9FF]"
+      "[&_.combobox-trigger]:bg-secondary-light text-white dark:[&_.combobox-trigger]:bg-secondary-dark dark:text-black",
+      "[&_.combobox-option]:hover:bg-secondary-hover-light dark:[&_.combobox-option]:hover:bg-secondary-hover-dark",
+      "[&_.combobox-pill]:bg-secondary-hover-light dark:[&_.combobox-pill]:bg-secondary-hover-dark"
     ]
   end
 
   defp color_variant("default", "success") do
     [
-      "[&_.combobox-trigger]:bg-[#0E8345] text-white dark:[&_.combobox-trigger]:bg-[#06C167] dark:text-black",
-      "[&_.combobox-dropdown]:bg-[#0E8345] dark:[&_.combobox-dropdown]:bg-[#06C167]",
-      "hover:[&_.combobox-option]:bg-[#166C3B] dark:hover:[&_.combobox-option]:bg-[#7FD99A]",
-      "[&_.combobox-search-input]:border-white dark:[&_.combobox-search-input]:border-black",
-      "[&_.combobox-search-input]:text-white dark:[&_.combobox-search-input]:text-black",
-      "[&_.combobox-search-input]:placeholder-white dark:[&_.combobox-search-input]:placeholder-black",
-      "[&_.combobox-pill]:bg-[#166C3B] dark:[&_.combobox-pill]:bg-[#7FD99A]"
+      "[&_.combobox-trigger]:bg-success-light text-white dark:[&_.combobox-trigger]:bg-success-dark dark:text-black",
+      "[&_.combobox-option]:hover:bg-success-hover-light dark:[&_.combobox-option]:hover:bg-success-hover-dark",
+      "[&_.combobox-pill]:bg-success-hover-light dark:[&_.combobox-pill]:bg-success-hover-dark"
     ]
   end
 
   defp color_variant("default", "warning") do
     [
-      "[&_.combobox-trigger]:bg-[#CA8D01] text-white dark:[&_.combobox-trigger]:bg-[#FDC034] dark:text-black",
-      "[&_.combobox-dropdown]:bg-[#CA8D01] dark:[&_.combobox-dropdown]:bg-[#FDC034]",
-      "hover:[&_.combobox-option]:bg-[#976A01] dark:hover:[&_.combobox-option]:bg-[#FDD067]",
-      "[&_.combobox-search-input]:border-white dark:[&_.combobox-search-input]:border-black",
-      "[&_.combobox-search-input]:text-white dark:[&_.combobox-search-input]:text-black",
-      "[&_.combobox-search-input]:placeholder-white dark:[&_.combobox-search-input]:placeholder-black",
-      "[&_.combobox-pill]:bg-[#976A01] dark:[&_.combobox-pill]:bg-[#FDD067]"
+      "[&_.combobox-trigger]:bg-warning-light text-white dark:[&_.combobox-trigger]:bg-warning-dark dark:text-black",
+      "[&_.combobox-option]:hover:bg-warning-hover-light dark:[&_.combobox-option]:hover:bg-warning-hover-dark",
+      "[&_.combobox-pill]:bg-warning-hover-light dark:[&_.combobox-pill]:bg-warning-hover-dark"
     ]
   end
 
   defp color_variant("default", "danger") do
     [
-      "[&_.combobox-trigger]:bg-[#DE1135] text-white dark:[&_.combobox-trigger]:bg-[#FC7F79] dark:text-black",
-      "[&_.combobox-dropdown]:bg-[#DE1135] dark:[&_.combobox-dropdown]:bg-[#FC7F79]",
-      "hover:[&_.combobox-option]:bg-[#BB032A] dark:hover:[&_.combobox-option]:bg-[#FFB2AB]",
-      "[&_.combobox-search-input]:border-white dark:[&_.combobox-search-input]:border-black",
-      "[&_.combobox-search-input]:text-white dark:[&_.combobox-search-input]:text-black",
-      "[&_.combobox-search-input]:placeholder-white dark:[&_.combobox-search-input]:placeholder-black",
-      "[&_.combobox-pill]:bg-[#BB032A] dark:[&_.combobox-pill]:bg-[#FFB2AB]"
+      "[&_.combobox-trigger]:bg-danger-light text-white dark:[&_.combobox-trigger]:bg-danger-dark dark:text-black",
+      "[&_.combobox-option]:hover:bg-danger-hover-light dark:[&_.combobox-option]:hover:bg-danger-hover-dark",
+      "[&_.combobox-pill]:bg-danger-hover-light dark:[&_.combobox-pill]:bg-danger-hover-dark"
     ]
   end
 
   defp color_variant("default", "info") do
     [
-      "[&_.combobox-trigger]:bg-[#0B84BA] text-white dark:[&_.combobox-trigger]:bg-[#3EB7ED] dark:text-black",
-      "[&_.combobox-dropdown]:bg-[#0B84BA] dark:[&_.combobox-dropdown]:bg-[#3EB7ED]",
-      "hover:[&_.combobox-option]:bg-[#08638C] dark:hover:[&_.combobox-option]:bg-[#6EC9F2]",
-      "[&_.combobox-search-input]:border-white dark:[&_.combobox-search-input]:border-black",
-      "[&_.combobox-search-input]:text-white dark:[&_.combobox-search-input]:text-black",
-      "[&_.combobox-search-input]:placeholder-white dark:[&_.combobox-search-input]:placeholder-black",
-      "[&_.combobox-pill]:bg-[#08638C] dark:[&_.combobox-pill]:bg-[#6EC9F2]"
+      "[&_.combobox-trigger]:bg-info-light text-white dark:[&_.combobox-trigger]:bg-info-dark dark:text-black",
+      "[&_.combobox-option]:hover:bg-info-hover-light dark:[&_.combobox-option]:hover:bg-info-hover-dark",
+      "[&_.combobox-pill]:bg-info-hover-light dark:[&_.combobox-pill]:bg-info-hover-dark"
     ]
   end
 
   defp color_variant("default", "misc") do
     [
-      "[&_.combobox-trigger]:bg-[#8750C5] text-white dark:[&_.combobox-trigger]:bg-[#BA83F9] dark:text-black",
-      "[&_.combobox-dropdown]:bg-[#8750C5] dark:[&_.combobox-dropdown]:bg-[#BA83F9]",
-      "hover:[&_.combobox-option]:bg-[#653C94] dark:hover:[&_.combobox-option]:bg-[#CBA2FA]",
-      "[&_.combobox-search-input]:border-white dark:[&_.combobox-search-input]:border-black",
-      "[&_.combobox-search-input]:text-white dark:[&_.combobox-search-input]:text-black",
-      "[&_.combobox-search-input]:placeholder-white dark:[&_.combobox-search-input]:placeholder-black",
-      "[&_.combobox-pill]:bg-[#653C94] dark:[&_.combobox-pill]:bg-[#CBA2FA]"
+      "[&_.combobox-trigger]:bg-misc-light text-white dark:[&_.combobox-trigger]:bg-misc-dark dark:text-black",
+      "[&_.combobox-option]:hover:bg-misc-hover-light dark:[&_.combobox-option]:hover:bg-misc-hover-dark",
+      "[&_.combobox-pill]:bg-misc-hover-light dark:[&_.combobox-pill]:bg-misc-hover-dark"
     ]
   end
 
   defp color_variant("default", "dawn") do
     [
-      "[&_.combobox-trigger]:bg-[#A86438] text-white dark:[&_.combobox-trigger]:bg-[#DB976B] dark:text-black",
-      "[&_.combobox-dropdown]:bg-[#A86438] dark:[&_.combobox-dropdown]:bg-[#DB976B]",
-      "hover:[&_.combobox-option]:bg-[#7E4B2A] dark:hover:[&_.combobox-option]:bg-[#E4B190]",
-      "[&_.combobox-search-input]:border-white dark:[&_.combobox-search-input]:border-black",
-      "[&_.combobox-search-input]:text-white dark:[&_.combobox-search-input]:text-black",
-      "[&_.combobox-search-input]:placeholder-white dark:[&_.combobox-search-input]:placeholder-black",
-      "[&_.combobox-pill]:bg-[#7E4B2A] dark:[&_.combobox-pill]:bg-[#E4B190]"
+      "[&_.combobox-trigger]:bg-dawn-light text-white dark:[&_.combobox-trigger]:bg-dawn-dark dark:text-black",
+      "[&_.combobox-option]:hover:bg-dawn-hover-light dark:[&_.combobox-option]:hover:bg-dawn-hover-dark",
+      "[&_.combobox-pill]:bg-dawn-hover-light dark:[&_.combobox-pill]:bg-dawn-hover-dark"
     ]
   end
 
   defp color_variant("default", "silver") do
     [
-      "[&_.combobox-trigger]:bg-[#868686] text-white dark:[&_.combobox-trigger]:bg-[#A6A6A6] dark:text-black",
-      "[&_.combobox-dropdown]:bg-[#868686] dark:[&_.combobox-dropdown]:bg-[#A6A6A6]",
-      "hover:[&_.combobox-option]:bg-[#727272] dark:hover:[&_.combobox-option]:bg-[#BBBBBB]",
-      "[&_.combobox-search-input]:border-white dark:[&_.combobox-search-input]:border-black",
-      "[&_.combobox-search-input]:text-white dark:[&_.combobox-search-input]:text-black",
-      "[&_.combobox-search-input]:placeholder-white dark:[&_.combobox-search-input]:placeholder-black",
-      "[&_.combobox-pill]:bg-[#727272] dark:[&_.combobox-pill]:bg-[#BBBBBB]"
+      "[&_.combobox-trigger]:bg-silver-light text-white dark:[&_.combobox-trigger]:bg-silver-dark dark:text-black",
+      "[&_.combobox-option]:hover:bg-silver-hover-light dark:[&_.combobox-option]:hover:bg-silver-hover-dark",
+      "[&_.combobox-pill]:bg-silver-hover-light dark:[&_.combobox-pill]:bg-silver-hover-dark"
     ]
   end
 
   defp color_variant("bordered", "natural") do
     [
-      "text-[#282828] [&_.combobox-trigger]:border-[#282828] [&_.combobox-trigger]:bg-[#F3F3F3]",
-      "dark:text-[#E8E8E8] dark:[&_.combobox-trigger]:border-[#E8E8E8] dark:[&_.combobox-trigger]:bg-[#4B4B4B]",
-      "[&_.combobox-dropdown]:bg-[#F3F3F3] [&_.combobox-dropdown]:border-[#282828]",
-      "dark:[&_.combobox-dropdown]:bg-[#4B4B4B] dark:[&_.combobox-dropdown]:border-[#E8E8E8]",
-      "hover:[&_.combobox-option]:bg-[#282828] hover:[&_.combobox-option]:text-white",
-      "dark:hover:[&_.combobox-option]:bg-[#E8E8E8] dark:hover:[&_.combobox-option]:text-black",
-      "[&_.combobox-search-input]:border-[#282828] dark:[&_.combobox-search-input]:border-[#E8E8E8]",
-      "[&_.combobox-search-input]:text-[#282828] dark:[&_.combobox-search-input]:text-[#E8E8E8]",
-      "[&_.combobox-search-input]:placeholder-[#282828] dark:[&_.combobox-search-input]:placeholder-[#E8E8E8]",
-      "[&_.combobox-pill]:bg-[#282828] [&_.combobox-pill]:text-white",
-      "dark:[&_.combobox-pill]:bg-[#E8E8E8] dark:[&_.combobox-pill]:text-black"
+      "text-natural-bordered-text-light [&_.combobox-trigger]:border-natural-border-light [&_.combobox-trigger]:bg-natural-bordered-bg-light",
+      "dark:text-natural-bordered-text-dark dark:[&_.combobox-trigger]:border-natural-border-dark dark:[&_.combobox-trigger]:bg-natural-bordered-bg-dark",
+      "[&_.combobox-option]:hover:bg-natural-hover-light [&_.combobox-option]:hover:text-white",
+      "dark:[&_.combobox-option]:hover:bg-natural-hover-dark dark:[&_.combobox-option]:hover:text-black",
+      "[&_.combobox-pill]:bg-natural-hover-light [&_.combobox-pill]:text-white",
+      "dark:[&_.combobox-pill]:bg-natural-hover-dark dark:[&_.combobox-pill]:text-black"
     ]
   end
 
   defp color_variant("bordered", "primary") do
     [
-      "text-[#016974] [&_.combobox-trigger]:border-[#016974] [&_.combobox-trigger]:bg-[#E2F8FB]",
-      "dark:text-[#77D5E3] dark:[&_.combobox-trigger]:border-[#77D5E3] dark:[&_.combobox-trigger]:bg-[#002D33]",
-      "[&_.combobox-dropdown]:bg-[#E2F8FB] [&_.combobox-dropdown]:border-[#016974]",
-      "dark:[&_.combobox-dropdown]:bg-[#002D33] dark:[&_.combobox-dropdown]:border-[#77D5E3]",
-      "hover:[&_.combobox-option]:bg-[#016974] hover:[&_.combobox-option]:text-white",
-      "dark:hover:[&_.combobox-option]:bg-[#77D5E3] dark:hover:[&_.combobox-option]:text-black",
-      "[&_.combobox-search-input]:border-[#016974] dark:[&_.combobox-search-input]:border-[#77D5E3]",
-      "[&_.combobox-search-input]:text-[#016974] dark:[&_.combobox-search-input]:text-[#77D5E3]",
-      "[&_.combobox-search-input]:placeholder-[#016974] dark:[&_.combobox-search-input]:placeholder-[#77D5E3]",
-      "[&_.combobox-pill]:bg-[#016974] [&_.combobox-pill]:text-white",
-      "dark:[&_.combobox-pill]:bg-[#77D5E3] dark:[&_.combobox-pill]:text-black"
+      "text-primary-bordered-text-light [&_.combobox-trigger]:border-primary-bordered-text-light [&_.combobox-trigger]:bg-primary-bordered-bg-light",
+      "dark:text-primary-bordered-text-dark dark:[&_.combobox-trigger]:border-primary-bordered-text-dark dark:[&_.combobox-trigger]:bg-primary-bordered-bg-dark",
+      "[&_.combobox-option]:hover:bg-primary-hover-light [&_.combobox-option]:hover:text-white",
+      "dark:[&_.combobox-option]:hover:bg-primary-hover-dark dark:[&_.combobox-option]:hover:text-black",
+      "[&_.combobox-pill]:bg-primary-hover-light [&_.combobox-pill]:text-white",
+      "dark:[&_.combobox-pill]:bg-primary-hover-dark dark:[&_.combobox-pill]:text-black"
     ]
   end
 
   defp color_variant("bordered", "secondary") do
     [
-      "text-[#175BCC] [&_.combobox-trigger]:border-[#175BCC] [&_.combobox-trigger]:bg-[#EFF4FE]",
-      "dark:text-[#A9C9FF] dark:[&_.combobox-trigger]:border-[#A9C9FF] dark:[&_.combobox-trigger]:bg-[#002661]",
-      "[&_.combobox-dropdown]:bg-[#EFF4FE] [&_.combobox-dropdown]:border-[#175BCC]",
-      "dark:[&_.combobox-dropdown]:bg-[#002661] dark:[&_.combobox-dropdown]:border-[#A9C9FF]",
-      "hover:[&_.combobox-option]:bg-[#175BCC] hover:[&_.combobox-option]:text-white",
-      "dark:hover:[&_.combobox-option]:bg-[#A9C9FF] dark:hover:[&_.combobox-option]:text-black",
-      "[&_.combobox-search-input]:border-[#175BCC] dark:[&_.combobox-search-input]:border-[#A9C9FF]",
-      "[&_.combobox-search-input]:text-[#175BCC] dark:[&_.combobox-search-input]:text-[#A9C9FF]",
-      "[&_.combobox-search-input]:placeholder-[#175BCC] dark:[&_.combobox-search-input]:placeholder-[#A9C9FF]",
-      "[&_.combobox-pill]:bg-[#175BCC] [&_.combobox-pill]:text-white",
-      "dark:[&_.combobox-pill]:bg-[#A9C9FF] dark:[&_.combobox-pill]:text-black"
+      "text-secondary-bordered-text-light [&_.combobox-trigger]:border-secondary-bordered-text-light [&_.combobox-trigger]:bg-secondary-bordered-bg-light",
+      "dark:text-secondary-bordered-text-dark dark:[&_.combobox-trigger]:border-secondary-bordered-text-dark dark:[&_.combobox-trigger]:bg-secondary-bordered-bg-dark",
+      "[&_.combobox-option]:hover:bg-secondary-hover-light [&_.combobox-option]:hover:text-white",
+      "dark:[&_.combobox-option]:hover:bg-secondary-hover-dark dark:[&_.combobox-option]:hover:text-black",
+      "[&_.combobox-pill]:bg-secondary-hover-light [&_.combobox-pill]:text-white",
+      "dark:[&_.combobox-pill]:bg-secondary-hover-dark dark:[&_.combobox-pill]:text-black"
     ]
   end
 
   defp color_variant("bordered", "success") do
     [
-      "text-[#166C3B] [&_.combobox-trigger]:border-[#166C3B] [&_.combobox-trigger]:bg-[#EAF6ED]",
-      "dark:text-[#7FD99A] dark:[&_.combobox-trigger]:border-[#7FD99A] dark:[&_.combobox-trigger]:bg-[#002F14]",
-      "[&_.combobox-dropdown]:bg-[#EAF6ED] [&_.combobox-dropdown]:border-[#166C3B]",
-      "dark:[&_.combobox-dropdown]:bg-[#002F14] dark:[&_.combobox-dropdown]:border-[#7FD99A]",
-      "hover:[&_.combobox-option]:bg-[#175BCC] hover:[&_.combobox-option]:text-white",
-      "dark:hover:[&_.combobox-option]:bg-[#A9C9FF] dark:hover:[&_.combobox-option]:text-black",
-      "[&_.combobox-search-input]:border-[#166C3B] dark:[&_.combobox-search-input]:border-[#7FD99A]",
-      "[&_.combobox-search-input]:text-[#166C3B] dark:[&_.combobox-search-input]:text-[#7FD99A]",
-      "[&_.combobox-search-input]:placeholder-[#166C3B] dark:[&_.combobox-search-input]:placeholder-[#7FD99A]",
-      "[&_.combobox-pill]:bg-[#175BCC] [&_.combobox-pill]:text-white",
-      "dark:[&_.combobox-pill]:bg-[#A9C9FF] dark:[&_.combobox-pill]:text-black"
+      "text-success-bordered-text-light [&_.combobox-trigger]:border-success-bordered-text-light [&_.combobox-trigger]:bg-success-bordered-bg-light",
+      "dark:text-success-bordered-text-dark dark:[&_.combobox-trigger]:border-success-bordered-text-dark dark:[&_.combobox-trigger]:bg-success-bordered-bg-dark",
+      "[&_.combobox-option]:hover:bg-success-hover-light [&_.combobox-option]:hover:text-white",
+      "dark:[&_.combobox-option]:hover:bg-success-hover-dark dark:[&_.combobox-option]:hover:text-black",
+      "[&_.combobox-pill]:bg-success-hover-light [&_.combobox-pill]:text-white",
+      "dark:[&_.combobox-pill]:bg-success-hover-dark dark:[&_.combobox-pill]:text-black"
     ]
   end
 
   defp color_variant("bordered", "warning") do
     [
-      "text-[#976A01] [&_.combobox-trigger]:border-[#976A01] [&_.combobox-trigger]:bg-[#FFF7E6]",
-      "dark:text-[#FDD067] dark:[&_.combobox-trigger]:border-[#FDD067] dark:[&_.combobox-trigger]:bg-[#322300]",
-      "[&_.combobox-dropdown]:bg-[#FFF7E6] [&_.combobox-dropdown]:border-[#976A01]",
-      "dark:[&_.combobox-dropdown]:bg-[#322300] dark:[&_.combobox-dropdown]:border-[#FDD067]",
-      "hover:[&_.combobox-option]:bg-[#976A01] hover:[&_.combobox-option]:text-white",
-      "dark:hover:[&_.combobox-option]:bg-[#FDD067] dark:hover:[&_.combobox-option]:text-black",
-      "[&_.combobox-search-input]:border-[#976A01] dark:[&_.combobox-search-input]:border-[#FDD067]",
-      "[&_.combobox-search-input]:text-[#976A01] dark:[&_.combobox-search-input]:text-[#FDD067]",
-      "[&_.combobox-search-input]:placeholder-[#976A01] dark:[&_.combobox-search-input]:placeholder-[#FDD067]",
-      "[&_.combobox-pill]:bg-[#976A01] [&_.combobox-pill]:text-white",
-      "dark:[&_.combobox-pill]:bg-[#FDD067] dark:[&_.combobox-pill]:text-black"
+      "text-warning-bordered-text-light [&_.combobox-trigger]:border-warning-bordered-text-light [&_.combobox-trigger]:bg-warning-bordered-bg-light",
+      "dark:text-warning-bordered-text-dark dark:[&_.combobox-trigger]:border-warning-bordered-text-dark dark:[&_.combobox-trigger]:bg-warning-bordered-bg-dark",
+      "[&_.combobox-option]:hover:bg-warning-hover-light [&_.combobox-option]:hover:text-white",
+      "dark:[&_.combobox-option]:hover:bg-warning-hover-dark dark:[&_.combobox-option]:hover:text-black",
+      "[&_.combobox-pill]:bg-warning-hover-light [&_.combobox-pill]:text-white",
+      "dark:[&_.combobox-pill]:bg-warning-hover-dark dark:[&_.combobox-pill]:text-black"
     ]
   end
 
   defp color_variant("bordered", "danger") do
     [
-      "text-[#BB032A] [&_.combobox-trigger]:border-[#BB032A] [&_.combobox-trigger]:bg-[#FFF0EE]",
-      "dark:text-[#FFB2AB] dark:[&_.combobox-trigger]:border-[#FFB2AB] dark:[&_.combobox-trigger]:bg-[#520810]",
-      "[&_.combobox-dropdown]:bg-[#FFF0EE] [&_.combobox-dropdown]:border-[#BB032A]",
-      "dark:[&_.combobox-dropdown]:bg-[#520810] dark:[&_.combobox-dropdown]:border-[#FFB2AB]",
-      "hover:[&_.combobox-option]:bg-[#BB032A] hover:[&_.combobox-option]:text-white",
-      "dark:hover:[&_.combobox-option]:bg-[#FFB2AB] dark:hover:[&_.combobox-option]:text-black",
-      "[&_.combobox-search-input]:border-[#BB032A] dark:[&_.combobox-search-input]:border-[#FFB2AB]",
-      "[&_.combobox-search-input]:text-[#BB032A] dark:[&_.combobox-search-input]:text-[#FFB2AB]",
-      "[&_.combobox-search-input]:placeholder-[#BB032A] dark:[&_.combobox-search-input]:placeholder-[#FFB2AB]",
-      "[&_.combobox-pill]:bg-[#BB032A] [&_.combobox-pill]:text-white",
-      "dark:[&_.combobox-pill]:bg-[#FFB2AB] dark:[&_.combobox-pill]:text-black"
+      "text-danger-bordered-text-light [&_.combobox-trigger]:border-danger-bordered-text-light [&_.combobox-trigger]:bg-danger-bordered-bg-light",
+      "dark:text-danger-bordered-text-dark dark:[&_.combobox-trigger]:border-danger-bordered-text-dark dark:[&_.combobox-trigger]:bg-danger-bordered-bg-dark",
+      "[&_.combobox-option]:hover:bg-danger-hover-light [&_.combobox-option]:hover:text-white",
+      "dark:[&_.combobox-option]:hover:bg-danger-hover-dark dark:[&_.combobox-option]:hover:text-black",
+      "[&_.combobox-pill]:bg-danger-hover-light [&_.combobox-pill]:text-white",
+      "dark:[&_.combobox-pill]:bg-danger-hover-dark dark:[&_.combobox-pill]:text-black"
     ]
   end
 
   defp color_variant("bordered", "info") do
     [
-      "text-[#0B84BA] [&_.combobox-trigger]:border-[#0B84BA] [&_.combobox-trigger]:bg-[#E7F6FD]",
-      "dark:text-[#6EC9F2] dark:[&_.combobox-trigger]:border-[#6EC9F2] dark:[&_.combobox-trigger]:bg-[#03212F]",
-      "[&_.combobox-dropdown]:bg-[#E7F6FD] [&_.combobox-dropdown]:border-[#0B84BA]",
-      "dark:[&_.combobox-dropdown]:bg-[#03212F] dark:[&_.combobox-dropdown]:border-[#6EC9F2]",
-      "hover:[&_.combobox-option]:bg-[#0B84BA] hover:[&_.combobox-option]:text-white",
-      "dark:hover:[&_.combobox-option]:bg-[#6EC9F2] dark:hover:[&_.combobox-option]:text-black",
-      "[&_.combobox-search-input]:border-[#0B84BA] dark:[&_.combobox-search-input]:border-[#6EC9F2]",
-      "[&_.combobox-search-input]:text-[#0B84BA] dark:[&_.combobox-search-input]:text-[#6EC9F2]",
-      "[&_.combobox-search-input]:placeholder-[#0B84BA] dark:[&_.combobox-search-input]:placeholder-[#6EC9F2]",
-      "[&_.combobox-pill]:bg-[#0B84BA] [&_.combobox-pill]:text-white",
-      "dark:[&_.combobox-pill]:bg-[#6EC9F2] dark:[&_.combobox-pill]:text-black"
+      "text-info-bordered-text-light [&_.combobox-trigger]:border-info-bordered-text-light [&_.combobox-trigger]:bg-info-bordered-bg-light",
+      "dark:text-info-bordered-text-dark dark:[&_.combobox-trigger]:border-info-bordered-text-dark dark:[&_.combobox-trigger]:bg-info-bordered-bg-dark",
+      "[&_.combobox-option]:hover:bg-info-hover-light [&_.combobox-option]:hover:text-white",
+      "dark:[&_.combobox-option]:hover:bg-info-hover-dark dark:[&_.combobox-option]:hover:text-black",
+      "[&_.combobox-pill]:bg-info-hover-light [&_.combobox-pill]:text-white",
+      "dark:[&_.combobox-pill]:bg-info-hover-dark dark:[&_.combobox-pill]:text-black"
     ]
   end
 
   defp color_variant("bordered", "misc") do
     [
-      "text-[#653C94] [&_.combobox-trigger]:border-[#653C94] [&_.combobox-trigger]:bg-[#F6F0FE]",
-      "dark:text-[#CBA2FA] dark:[&_.combobox-trigger]:border-[#CBA2FA] dark:[&_.combobox-trigger]:bg-[#221431]",
-      "[&_.combobox-dropdown]:bg-[#F6F0FE] [&_.combobox-dropdown]:border-[#653C94]",
-      "dark:[&_.combobox-dropdown]:bg-[#03212F] dark:[&_.combobox-dropdown]:border-[#CBA2FA]",
-      "hover:[&_.combobox-option]:bg-[#221431] hover:[&_.combobox-option]:text-white",
-      "dark:hover:[&_.combobox-option]:bg-[#CBA2FA] dark:hover:[&_.combobox-option]:text-black",
-      "[&_.combobox-search-input]:border-[#653C94] dark:[&_.combobox-search-input]:border-[#CBA2FA]",
-      "[&_.combobox-search-input]:text-[#653C94] dark:[&_.combobox-search-input]:text-[#CBA2FA]",
-      "[&_.combobox-search-input]:placeholder-[#653C94] dark:[&_.combobox-search-input]:placeholder-[#CBA2FA]",
-      "[&_.combobox-pill]:bg-[#221431] [&_.combobox-pill]:text-white",
-      "dark:[&_.combobox-pill]:bg-[#CBA2FA] dark:[&_.combobox-pill]:text-black"
+      "text-misc-bordered-text-light [&_.combobox-trigger]:border-misc-bordered-text-light [&_.combobox-trigger]:bg-misc-bordered-bg-light",
+      "dark:text-misc-bordered-text-dark dark:[&_.combobox-trigger]:border-misc-bordered-text-dark dark:[&_.combobox-trigger]:bg-misc-bordered-bg-dark",
+      "[&_.combobox-option]:hover:bg-misc-hover-light [&_.combobox-option]:hover:text-white",
+      "dark:[&_.combobox-option]:hover:bg-misc-hover-dark dark:[&_.combobox-option]:hover:text-black",
+      "[&_.combobox-pill]:bg-misc-hover-light [&_.combobox-pill]:text-white",
+      "dark:[&_.combobox-pill]:bg-misc-hover-dark dark:[&_.combobox-pill]:text-black"
     ]
   end
 
   defp color_variant("bordered", "dawn") do
     [
-      "text-[#7E4B2A] [&_.combobox-trigger]:border-[#7E4B2A] [&_.combobox-trigger]:bg-[#FBF2ED]",
-      "dark:text-[#E4B190] dark:[&_.combobox-trigger]:border-[#E4B190] dark:[&_.combobox-trigger]:bg-[#2A190E]",
-      "[&_.combobox-dropdown]:bg-[#FBF2ED] [&_.combobox-dropdown]:border-[#7E4B2A]",
-      "dark:[&_.combobox-dropdown]:bg-[#2A190E] dark:[&_.combobox-dropdown]:border-[#E4B190]",
-      "hover:[&_.combobox-option]:bg-[#7E4B2A] hover:[&_.combobox-option]:text-white",
-      "dark:hover:[&_.combobox-option]:bg-[#E4B190] dark:hover:[&_.combobox-option]:text-black",
-      "[&_.combobox-search-input]:border-[#7E4B2A] dark:[&_.combobox-search-input]:border-[#E4B190]",
-      "[&_.combobox-search-input]:text-[#7E4B2A] dark:[&_.combobox-search-input]:text-[#E4B190]",
-      "[&_.combobox-search-input]:placeholder-[#7E4B2A] dark:[&_.combobox-search-input]:placeholder-[#E4B190]",
-      "[&_.combobox-pill]:bg-[#7E4B2A] [&_.combobox-pill]:text-white",
-      "dark:[&_.combobox-pill]:bg-[#E4B190] dark:[&_.combobox-pill]:text-black"
+      "text-dawn-bordered-text-light [&_.combobox-trigger]:border-dawn-bordered-text-light [&_.combobox-trigger]:bg-dawn-bordered-bg-light",
+      "dark:text-dawn-bordered-text-dark dark:[&_.combobox-trigger]:border-dawn-bordered-text-dark dark:[&_.combobox-trigger]:bg-dawn-bordered-bg-dark",
+      "[&_.combobox-option]:hover:bg-dawn-hover-light [&_.combobox-option]:hover:text-white",
+      "dark:[&_.combobox-option]:hover:bg-dawn-hover-dark dark:[&_.combobox-option]:hover:text-black",
+      "[&_.combobox-pill]:bg-dawn-hover-light [&_.combobox-pill]:text-white",
+      "dark:[&_.combobox-pill]:bg-dawn-hover-dark dark:[&_.combobox-pill]:text-black"
     ]
   end
 
   defp color_variant("bordered", "silver") do
     [
-      "text-[#727272] [&_.combobox-trigger]:border-[#727272] [&_.combobox-trigger]:bg-[#F3F3F3]",
-      "dark:text-[#BBBBBB] dark:[&_.combobox-trigger]:border-[#BBBBBB] dark:[&_.combobox-trigger]:bg-[#4B4B4B]",
-      "[&_.combobox-dropdown]:bg-[#F3F3F3] [&_.combobox-dropdown]:border-[#727272]",
-      "dark:[&_.combobox-dropdown]:bg-[#4B4B4B] dark:[&_.combobox-dropdown]:border-[#BBBBBB]",
-      "hover:[&_.combobox-option]:bg-[#727272] hover:[&_.combobox-option]:text-white",
-      "dark:hover:[&_.combobox-option]:bg-[#BBBBBB] dark:hover:[&_.combobox-option]:text-black",
-      "[&_.combobox-search-input]:border-[#727272] dark:[&_.combobox-search-input]:border-[#BBBBBB]",
-      "[&_.combobox-search-input]:text-[#727272] dark:[&_.combobox-search-input]:text-[#BBBBBB]",
-      "[&_.combobox-search-input]:placeholder-[#727272] dark:[&_.combobox-search-input]:placeholder-[#BBBBBB]",
-      "[&_.combobox-pill]:bg-[#727272] [&_.combobox-pill]:text-white",
-      "dark:[&_.combobox-pill]:bg-[#BBBBBB] dark:[&_.combobox-pill]:text-black"
+      "text-silver-bordered-text-light [&_.combobox-trigger]:border-silver-bordered-text-light [&_.combobox-trigger]:bg-silver-bordered-bg-light",
+      "dark:text-silver-bordered-text-dark dark:[&_.combobox-trigger]:border-silver-bordered-text-dark dark:[&_.combobox-trigger]:bg-silver-bordered-bg-dark",
+      "[&_.combobox-option]:hover:bg-silver-hover-light [&_.combobox-option]:hover:text-white",
+      "dark:[&_.combobox-option]:hover:bg-silver-hover-dark dark:[&_.combobox-option]:hover:text-black",
+      "[&_.combobox-pill]:bg-silver-hover-light [&_.combobox-pill]:text-white",
+      "dark:[&_.combobox-pill]:bg-silver-hover-dark dark:[&_.combobox-pill]:text-black"
     ]
   end
 
   defp color_variant(params, _) when is_binary(params), do: params
+
+  defp dropdown_color_variant("base", _) do
+    [
+      "bg-white border-base-border-light shadow text-base-text-light dark:text-base-text-dark",
+      "dark:bg-base-bg-dark dark:border-base-border-dark",
+      "[&_.combobox-search-input]:border-base-border-light dark:[&_.combobox-search-input]:border-base-border-dark",
+      "[&_.combobox-option[data-combobox-navigate]]:bg-blue-500 [&_.combobox-option[data-combobox-navigate]]:text-white",
+      "[&_.combobox-option:not([data-combobox-navigate])]:hover:bg-base-border-light [&_.combobox-option:not([data-combobox-navigate])]:hover:text-black",
+      "dark:[&_.combobox-option:not([data-combobox-navigate])]:hover:bg-base-border-dark dark:[&_.combobox-option:not([data-combobox-navigate])]:hover:text-base-text-dark"
+    ]
+  end
+
+  defp dropdown_color_variant("default", "natural") do
+    [
+      "bg-natural-bg-dark dark:bg-natural-hover-dark",
+      "[&_.combobox-search-input]:border-white dark:[&_.combobox-search-input]:border-black",
+      "[&_.combobox-search-input]:text-white dark:[&_.combobox-search-input]:text-black",
+      "[&_.combobox-search-input]:placeholder-white dark:[&_.combobox-search-input]:placeholder-black",
+      "[&_.combobox-option[data-combobox-navigate]]:bg-blue-500 [&_.combobox-option[data-combobox-navigate]]:text-white",
+      "[&_.combobox-option:not([data-combobox-navigate])]:hover:bg-natural-hover-light dark:[&_.combobox-option:not([data-combobox-navigate])]:hover:bg-natural-hover-dark",
+      "[&_.combobox-option:not([data-combobox-navigate])]:hover:text-white dark:[&_.combobox-option:not([data-combobox-navigate])]:hover:text-black"
+    ]
+  end
+
+  defp dropdown_color_variant("default", "primary") do
+    [
+      "bg-primary-light dark:bg-primary-dark",
+      "[&_.combobox-search-input]:border-white dark:[&_.combobox-search-input]:border-black",
+      "[&_.combobox-search-input]:text-white dark:[&_.combobox-search-input]:text-black",
+      "[&_.combobox-search-input]:placeholder-white dark:[&_.combobox-search-input]:placeholder-black",
+      "[&_.combobox-option[data-combobox-navigate]]:bg-blue-500 [&_.combobox-option[data-combobox-navigate]]:text-white",
+      "[&_.combobox-option:not([data-combobox-navigate])]:hover:bg-primary-hover-light dark:[&_.combobox-option:not([data-combobox-navigate])]:hover:bg-primary-hover-dark",
+      "[&_.combobox-option:not([data-combobox-navigate])]:hover:text-white dark:[&_.combobox-option:not([data-combobox-navigate])]:hover:text-black"
+    ]
+  end
+
+  defp dropdown_color_variant("default", "secondary") do
+    [
+      "bg-secondary-light dark:bg-secondary-dark",
+      "[&_.combobox-search-input]:border-white dark:[&_.combobox-search-input]:border-black",
+      "[&_.combobox-search-input]:text-white dark:[&_.combobox-search-input]:text-black",
+      "[&_.combobox-search-input]:placeholder-white dark:[&_.combobox-search-input]:placeholder-black",
+      "[&_.combobox-option[data-combobox-navigate]]:bg-blue-500 [&_.combobox-option[data-combobox-navigate]]:text-white",
+      "[&_.combobox-option:not([data-combobox-navigate])]:hover:bg-secondary-hover-light dark:[&_.combobox-option:not([data-combobox-navigate])]:hover:bg-secondary-hover-dark",
+      "[&_.combobox-option:not([data-combobox-navigate])]:hover:text-white dark:[&_.combobox-option:not([data-combobox-navigate])]:hover:text-black"
+    ]
+  end
+
+  defp dropdown_color_variant("default", "success") do
+    [
+      "bg-success-light dark:bg-success-dark",
+      "[&_.combobox-search-input]:border-white dark:[&_.combobox-search-input]:border-black",
+      "[&_.combobox-search-input]:text-white dark:[&_.combobox-search-input]:text-black",
+      "[&_.combobox-search-input]:placeholder-white dark:[&_.combobox-search-input]:placeholder-black",
+      "[&_.combobox-option[data-combobox-navigate]]:bg-blue-500 [&_.combobox-option[data-combobox-navigate]]:text-white",
+      "[&_.combobox-option:not([data-combobox-navigate])]:hover:bg-success-hover-light dark:[&_.combobox-option:not([data-combobox-navigate])]:hover:bg-success-hover-dark",
+      "[&_.combobox-option:not([data-combobox-navigate])]:hover:text-white dark:[&_.combobox-option:not([data-combobox-navigate])]:hover:text-black"
+    ]
+  end
+
+  defp dropdown_color_variant("default", "warning") do
+    [
+      "bg-warning-light dark:bg-warning-dark",
+      "[&_.combobox-search-input]:border-white dark:[&_.combobox-search-input]:border-black",
+      "[&_.combobox-search-input]:text-white dark:[&_.combobox-search-input]:text-black",
+      "[&_.combobox-search-input]:placeholder-white dark:[&_.combobox-search-input]:placeholder-black",
+      "[&_.combobox-option[data-combobox-navigate]]:bg-blue-500 [&_.combobox-option[data-combobox-navigate]]:text-white",
+      "[&_.combobox-option:not([data-combobox-navigate])]:hover:bg-warning-hover-light dark:[&_.combobox-option:not([data-combobox-navigate])]:hover:bg-warning-hover-dark",
+      "[&_.combobox-option:not([data-combobox-navigate])]:hover:text-white dark:[&_.combobox-option:not([data-combobox-navigate])]:hover:text-black"
+    ]
+  end
+
+  defp dropdown_color_variant("default", "danger") do
+    [
+      "bg-danger-light dark:bg-danger-dark",
+      "[&_.combobox-search-input]:border-white dark:[&_.combobox-search-input]:border-black",
+      "[&_.combobox-search-input]:text-white dark:[&_.combobox-search-input]:text-black",
+      "[&_.combobox-search-input]:placeholder-white dark:[&_.combobox-search-input]:placeholder-black",
+      "[&_.combobox-option[data-combobox-navigate]]:bg-blue-500 [&_.combobox-option[data-combobox-navigate]]:text-white",
+      "[&_.combobox-option:not([data-combobox-navigate])]:hover:bg-danger-hover-light dark:[&_.combobox-option:not([data-combobox-navigate])]:hover:bg-danger-hover-dark",
+      "[&_.combobox-option:not([data-combobox-navigate])]:hover:text-white dark:[&_.combobox-option:not([data-combobox-navigate])]:hover:text-black"
+    ]
+  end
+
+  defp dropdown_color_variant("default", "info") do
+    [
+      "bg-info-light dark:bg-info-dark",
+      "[&_.combobox-search-input]:border-white dark:[&_.combobox-search-input]:border-black",
+      "[&_.combobox-search-input]:text-white dark:[&_.combobox-search-input]:text-black",
+      "[&_.combobox-search-input]:placeholder-white dark:[&_.combobox-search-input]:placeholder-black",
+      "[&_.combobox-option[data-combobox-navigate]]:bg-blue-500 [&_.combobox-option[data-combobox-navigate]]:text-white",
+      "[&_.combobox-option:not([data-combobox-navigate])]:hover:bg-info-hover-light dark:[&_.combobox-option:not([data-combobox-navigate])]:hover:bg-info-hover-dark",
+      "[&_.combobox-option:not([data-combobox-navigate])]:hover:text-white dark:[&_.combobox-option:not([data-combobox-navigate])]:hover:text-black"
+    ]
+  end
+
+  defp dropdown_color_variant("default", "misc") do
+    [
+      "bg-misc-light dark:bg-misc-dark",
+      "[&_.combobox-search-input]:border-white dark:[&_.combobox-search-input]:border-black",
+      "[&_.combobox-search-input]:text-white dark:[&_.combobox-search-input]:text-black",
+      "[&_.combobox-search-input]:placeholder-white dark:[&_.combobox-search-input]:placeholder-black",
+      "[&_.combobox-option[data-combobox-navigate]]:bg-blue-500 [&_.combobox-option[data-combobox-navigate]]:text-white",
+      "[&_.combobox-option:not([data-combobox-navigate])]:hover:bg-misc-hover-light dark:[&_.combobox-option:not([data-combobox-navigate])]:hover:bg-misc-hover-dark",
+      "[&_.combobox-option:not([data-combobox-navigate])]:hover:text-white dark:[&_.combobox-option:not([data-combobox-navigate])]:hover:text-black"
+    ]
+  end
+
+  defp dropdown_color_variant("default", "dawn") do
+    [
+      "bg-dawn-light dark:bg-dawn-dark",
+      "[&_.combobox-search-input]:border-white dark:[&_.combobox-search-input]:border-black",
+      "[&_.combobox-search-input]:text-white dark:[&_.combobox-search-input]:text-black",
+      "[&_.combobox-search-input]:placeholder-white dark:[&_.combobox-search-input]:placeholder-black",
+      "[&_.combobox-option[data-combobox-navigate]]:bg-blue-500 [&_.combobox-option[data-combobox-navigate]]:text-white",
+      "[&_.combobox-option:not([data-combobox-navigate])]:hover:bg-dawn-hover-light dark:[&_.combobox-option:not([data-combobox-navigate])]:hover:bg-dawn-hover-dark",
+      "[&_.combobox-option:not([data-combobox-navigate])]:hover:text-white dark:[&_.combobox-option:not([data-combobox-navigate])]:hover:text-black"
+    ]
+  end
+
+  defp dropdown_color_variant("default", "silver") do
+    [
+      "bg-silver-light dark:bg-silver-dark",
+      "[&_.combobox-search-input]:border-white dark:[&_.combobox-search-input]:border-black",
+      "[&_.combobox-search-input]:text-white dark:[&_.combobox-search-input]:text-black",
+      "[&_.combobox-search-input]:placeholder-white dark:[&_.combobox-search-input]:placeholder-black",
+      "[&_.combobox-option[data-combobox-navigate]]:bg-blue-500 [&_.combobox-option[data-combobox-navigate]]:text-white",
+      "[&_.combobox-option:not([data-combobox-navigate])]:hover:bg-silver-hover-light dark:[&_.combobox-option:not([data-combobox-navigate])]:hover:bg-silver-hover-dark",
+      "[&_.combobox-option:not([data-combobox-navigate])]:hover:text-white dark:[&_.combobox-option:not([data-combobox-navigate])]:hover:text-black"
+    ]
+  end
+
+  defp dropdown_color_variant("bordered", "natural") do
+    [
+      "bg-natural-bordered-bg-light border-natural-border-light",
+      "dark:bg-natural-bordered-bg-dark dark:border-natural-border-dark",
+      "[&_.combobox-search-input]:border-natural-border-light dark:[&_.combobox-search-input]:border-natural-border-dark",
+      "[&_.combobox-search-input]:text-natural-bordered-text-light dark:[&_.combobox-search-input]:text-natural-bordered-text-dark",
+      "[&_.combobox-search-input]:placeholder-natural-bordered-text-light dark:[&_.combobox-search-input]:placeholder-natural-bordered-text-dark",
+      "[&_.combobox-option[data-combobox-navigate]]:bg-blue-500 [&_.combobox-option[data-combobox-navigate]]:text-white",
+      "[&_.combobox-option:not([data-combobox-navigate])]:hover:bg-natural-hover-light [&_.combobox-option:not([data-combobox-navigate])]:hover:text-white",
+      "dark:[&_.combobox-option:not([data-combobox-navigate])]:hover:bg-natural-hover-dark dark:[&_.combobox-option:not([data-combobox-navigate])]:hover:text-black"
+    ]
+  end
+
+  defp dropdown_color_variant("bordered", "primary") do
+    [
+      "bg-primary-bordered-bg-light border-primary-bordered-text-light",
+      "dark:bg-primary-bordered-bg-dark dark:border-primary-bordered-text-dark",
+      "[&_.combobox-search-input]:border-primary-bordered-text-light dark:[&_.combobox-search-input]:border-primary-bordered-text-dark",
+      "[&_.combobox-search-input]:text-primary-bordered-text-light dark:[&_.combobox-search-input]:text-primary-bordered-text-dark",
+      "[&_.combobox-search-input]:placeholder-primary-bordered-text-light dark:[&_.combobox-search-input]:placeholder-primary-bordered-text-dark",
+      "[&_.combobox-option[data-combobox-navigate]]:bg-blue-500 [&_.combobox-option[data-combobox-navigate]]:text-white",
+      "[&_.combobox-option:not([data-combobox-navigate])]:hover:bg-primary-hover-light [&_.combobox-option:not([data-combobox-navigate])]:hover:text-white",
+      "dark:[&_.combobox-option:not([data-combobox-navigate])]:hover:bg-primary-hover-dark dark:[&_.combobox-option:not([data-combobox-navigate])]:hover:text-black"
+    ]
+  end
+
+  defp dropdown_color_variant("bordered", "secondary") do
+    [
+      "bg-secondary-bordered-bg-light border-secondary-bordered-text-light",
+      "dark:bg-secondary-bordered-bg-dark dark:border-secondary-bordered-text-dark",
+      "[&_.combobox-option[data-combobox-navigate]]:bg-blue-500 [&_.combobox-option[data-combobox-navigate]]:text-white",
+      "[&_.combobox-option:not([data-combobox-navigate])]:hover:bg-secondary-hover-light [&_.combobox-option:not([data-combobox-navigate])]:hover:text-white",
+      "dark:[&_.combobox-option:not([data-combobox-navigate])]:hover:bg-secondary-hover-dark dark:[&_.combobox-option:not([data-combobox-navigate])]:hover:text-black"
+    ]
+  end
+
+  defp dropdown_color_variant("bordered", "success") do
+    [
+      "bg-success-bordered-bg-light border-success-bordered-text-light",
+      "dark:bg-success-bordered-bg-dark dark:border-success-bordered-text-dark",
+      "[&_.combobox-option[data-combobox-navigate]]:bg-blue-500 [&_.combobox-option[data-combobox-navigate]]:text-white",
+      "[&_.combobox-option:not([data-combobox-navigate])]:hover:bg-success-hover-light [&_.combobox-option:not([data-combobox-navigate])]:hover:text-white",
+      "dark:[&_.combobox-option:not([data-combobox-navigate])]:hover:bg-success-hover-dark dark:[&_.combobox-option:not([data-combobox-navigate])]:hover:text-black"
+    ]
+  end
+
+  defp dropdown_color_variant("bordered", "warning") do
+    [
+      "bg-warning-bordered-bg-light border-warning-bordered-text-light",
+      "dark:bg-warning-bordered-bg-dark dark:border-warning-bordered-text-dark",
+      "[&_.combobox-option[data-combobox-navigate]]:bg-blue-500 [&_.combobox-option[data-combobox-navigate]]:text-white",
+      "[&_.combobox-option:not([data-combobox-navigate])]:hover:bg-warning-hover-light [&_.combobox-option:not([data-combobox-navigate])]:hover:text-white",
+      "dark:[&_.combobox-option:not([data-combobox-navigate])]:hover:bg-warning-hover-dark dark:[&_.combobox-option:not([data-combobox-navigate])]:hover:text-black"
+    ]
+  end
+
+  defp dropdown_color_variant("bordered", "danger") do
+    [
+      "bg-danger-bordered-bg-light border-danger-bordered-text-light",
+      "dark:bg-danger-bordered-bg-dark dark:border-danger-bordered-text-dark",
+      "[&_.combobox-option[data-combobox-navigate]]:bg-blue-500 [&_.combobox-option[data-combobox-navigate]]:text-white",
+      "[&_.combobox-option:not([data-combobox-navigate])]:hover:bg-danger-hover-light [&_.combobox-option:not([data-combobox-navigate])]:hover:text-white",
+      "dark:[&_.combobox-option:not([data-combobox-navigate])]:hover:bg-danger-hover-dark dark:[&_.combobox-option:not([data-combobox-navigate])]:hover:text-black"
+    ]
+  end
+
+  defp dropdown_color_variant("bordered", "info") do
+    [
+      "bg-info-bordered-bg-light border-info-bordered-text-light",
+      "dark:bg-info-bordered-bg-dark dark:border-info-bordered-text-dark",
+      "[&_.combobox-option[data-combobox-navigate]]:bg-blue-500 [&_.combobox-option[data-combobox-navigate]]:text-white",
+      "[&_.combobox-option:not([data-combobox-navigate])]:hover:bg-info-hover-light [&_.combobox-option:not([data-combobox-navigate])]:hover:text-white",
+      "dark:[&_.combobox-option:not([data-combobox-navigate])]:hover:bg-info-hover-dark dark:[&_.combobox-option:not([data-combobox-navigate])]:hover:text-black"
+    ]
+  end
+
+  defp dropdown_color_variant("bordered", "misc") do
+    [
+      "bg-misc-bordered-bg-light border-misc-bordered-text-light",
+      "dark:bg-misc-bordered-bg-dark dark:border-misc-bordered-text-dark",
+      "[&_.combobox-option[data-combobox-navigate]]:bg-blue-500 [&_.combobox-option[data-combobox-navigate]]:text-white",
+      "[&_.combobox-option:not([data-combobox-navigate])]:hover:bg-misc-hover-light [&_.combobox-option:not([data-combobox-navigate])]:hover:text-white",
+      "dark:[&_.combobox-option:not([data-combobox-navigate])]:hover:bg-misc-hover-dark dark:[&_.combobox-option:not([data-combobox-navigate])]:hover:text-black"
+    ]
+  end
+
+  defp dropdown_color_variant("bordered", "dawn") do
+    [
+      "bg-dawn-bordered-bg-light border-dawn-bordered-text-light",
+      "dark:bg-dawn-bordered-bg-dark dark:border-dawn-bordered-text-dark",
+      "[&_.combobox-option[data-combobox-navigate]]:bg-blue-500 [&_.combobox-option[data-combobox-navigate]]:text-white",
+      "[&_.combobox-option:not([data-combobox-navigate])]:hover:bg-dawn-hover-light [&_.combobox-option:not([data-combobox-navigate])]:hover:text-white",
+      "dark:[&_.combobox-option:not([data-combobox-navigate])]:hover:bg-dawn-hover-dark dark:[&_.combobox-option:not([data-combobox-navigate])]:hover:text-black"
+    ]
+  end
+
+  defp dropdown_color_variant("bordered", "silver") do
+    [
+      "bg-silver-bordered-bg-light border-silver-bordered-text-light",
+      "dark:bg-silver-bordered-bg-dark dark:border-silver-bordered-text-dark",
+      "[&_.combobox-option[data-combobox-navigate]]:bg-blue-500 [&_.combobox-option[data-combobox-navigate]]:text-white",
+      "[&_.combobox-option:not([data-combobox-navigate])]:hover:bg-silver-hover-light [&_.combobox-option:not([data-combobox-navigate])]:hover:text-white",
+      "dark:[&_.combobox-option:not([data-combobox-navigate])]:hover:bg-silver-hover-dark dark:[&_.combobox-option:not([data-combobox-navigate])]:hover:text-black"
+    ]
+  end
+
+  defp dropdown_color_variant(params, _) when is_binary(params), do: params
+
+  defp dropdown_styles(variant, color, rounded, border, size, padding) do
+    [
+      dropdown_color_variant(variant, color),
+      dropdown_rounded_size(rounded),
+      dropdown_border_size(border, variant),
+      dropdown_search_input_rounded(rounded),
+      dropdown_size(size),
+      dropdown_padding_size(padding)
+    ]
+  end
+
+  defp dropdown_rounded_size("extra_small"), do: "rounded-sm"
+  defp dropdown_rounded_size("small"), do: "rounded"
+  defp dropdown_rounded_size("medium"), do: "rounded-md"
+  defp dropdown_rounded_size("large"), do: "rounded-lg"
+  defp dropdown_rounded_size("extra_large"), do: "rounded-xl"
+  defp dropdown_rounded_size("full"), do: "rounded-full"
+  defp dropdown_rounded_size("none"), do: nil
+  defp dropdown_rounded_size(params) when is_binary(params), do: params
+
+  defp dropdown_border_size(_, variant) when variant in ["default"], do: nil
+  defp dropdown_border_size("none", _), do: nil
+  defp dropdown_border_size("extra_small", _), do: "border"
+  defp dropdown_border_size("small", _), do: "border-2"
+  defp dropdown_border_size("medium", _), do: "border-[3px]"
+  defp dropdown_border_size("large", _), do: "border-4"
+  defp dropdown_border_size("extra_large", _), do: "border-[5px]"
+  defp dropdown_border_size(params, _) when is_binary(params), do: params
+
+  defp dropdown_search_input_rounded("extra_small"), do: "[&_.combobox-search-input]:rounded-sm"
+  defp dropdown_search_input_rounded("small"), do: "[&_.combobox-search-input]:rounded"
+  defp dropdown_search_input_rounded("medium"), do: "[&_.combobox-search-input]:rounded-md"
+  defp dropdown_search_input_rounded("large"), do: "[&_.combobox-search-input]:rounded-lg"
+  defp dropdown_search_input_rounded("extra_large"), do: "[&_.combobox-search-input]:rounded-xl"
+  defp dropdown_search_input_rounded("full"), do: "[&_.combobox-search-input]:rounded-full"
+  defp dropdown_search_input_rounded("none"), do: nil
+  defp dropdown_search_input_rounded(params) when is_binary(params), do: params
+
+  defp dropdown_size("extra_small"),
+    do:
+      "[&_.combobox-search-input]:h-6 [&_.combobox-search-input]:text-[12px] [&_.combobox-option]:text-[12px]"
+
+  defp dropdown_size("small"),
+    do:
+      "[&_.combobox-search-input]:h-7 [&_.combobox-search-input]:text-[13px] [&_.combobox-option]:text-[13px]"
+
+  defp dropdown_size("medium"),
+    do:
+      "[&_.combobox-search-input]:h-8 [&_.combobox-search-input]:text-[14px] [&_.combobox-option]:text-[14px]"
+
+  defp dropdown_size("large"),
+    do:
+      "[&_.combobox-search-input]:h-9 [&_.combobox-search-input]:text-[15px] [&_.combobox-option]:text-[15px]"
+
+  defp dropdown_size("extra_large"),
+    do:
+      "[&_.combobox-search-input]:h-10 [&_.combobox-search-input]:text-[16px] [&_.combobox-option]:text-[16px]"
+
+  defp dropdown_size(params) when is_binary(params), do: params
+
+  defp dropdown_padding_size("extra_small") do
+    ["[&_.combobox-option]:px-2 [&_.combobox-option]:py-0.5"]
+  end
+
+  defp dropdown_padding_size("small") do
+    ["[&_.combobox-option]:px-3 [&_.combobox-option]:py-1"]
+  end
+
+  defp dropdown_padding_size("medium") do
+    ["[&_.combobox-option]:px-4 [&_.combobox-option]:py-1.5"]
+  end
+
+  defp dropdown_padding_size("large") do
+    ["[&_.combobox-option]:px-5 [&_.combobox-option]:py-2"]
+  end
+
+  defp dropdown_padding_size("extra_large") do
+    ["[&_.combobox-option]:px-6 [&_.combobox-option]:py-2.5"]
+  end
+
+  defp dropdown_padding_size(params) when is_binary(params), do: params
 
   defp translate_error({msg, opts}) do
     # When using gettext, we typically pass the strings we want

@@ -23,6 +23,8 @@ defmodule CommunityDemoWeb.Components.Card do
 
   This module offers a powerful and easy-to-use way to create cards with consistent
   styling and behavior while providing the flexibility to adapt to various use cases.
+
+  **Documentation:** https://mishka.tools/chelekom/docs/card
   """
 
   use Phoenix.Component
@@ -445,422 +447,418 @@ defmodule CommunityDemoWeb.Components.Card do
 
   defp color_variant("base", _) do
     [
-      "[&:not(:has(.overlay))]:bg-white text-[#09090b] border-[#e4e4e7] shadow-sm",
-      "dark:[&:not(:has(.overlay))]:bg-[#18181B] dark:text-[#FAFAFA] dark:border-[#27272a]"
+      "[&:not(:has(.overlay))]:bg-white text-base-text-light border-base-border-light shadow-sm",
+      "dark:[&:not(:has(.overlay))]:bg-base-bg-dark dark:text-base-text-dark dark:border-base-border-dark"
     ]
   end
 
   defp color_variant("default", "white") do
-    [
-      "[&:not(:has(.overlay))]:bg-white text-black"
-    ]
+    ["[&:not(:has(.overlay))]:bg-default-white-bg text-black"]
   end
 
   defp color_variant("default", "dark") do
-    [
-      "[&:not(:has(.overlay))]:bg-[#282828] text-white"
-    ]
+    ["[&:not(:has(.overlay))]:bg-default-dark-bg text-white"]
   end
 
   defp color_variant("default", "natural") do
     [
-      "[&:not(:has(.overlay))]:bg-[#4B4B4B] text-white dark:[&:not(:has(.overlay))]:bg-[#DDDDDD] dark:text-black"
+      "[&:not(:has(.overlay))]:bg-natural-light text-white dark:[&:not(:has(.overlay))]:bg-natural-dark dark:text-black"
     ]
   end
 
   defp color_variant("default", "primary") do
     [
-      "[&:not(:has(.overlay))]:bg-[#007F8C] text-white dark:[&:not(:has(.overlay))]:bg-[#01B8CA] dark:text-black"
+      "[&:not(:has(.overlay))]:bg-primary-light text-white dark:[&:not(:has(.overlay))]:bg-primary-dark dark:text-black"
     ]
   end
 
   defp color_variant("default", "secondary") do
     [
-      "[&:not(:has(.overlay))]:bg-[#266EF1] text-white dark:[&:not(:has(.overlay))]:bg-[#6DAAFB] dark:text-black"
+      "[&:not(:has(.overlay))]:bg-secondary-light text-white dark:[&:not(:has(.overlay))]:bg-secondary-dark dark:text-black"
     ]
   end
 
   defp color_variant("default", "success") do
     [
-      "[&:not(:has(.overlay))]:bg-[#0E8345] text-white dark:[&:not(:has(.overlay))]:bg-[#06C167] dark:text-black"
+      "[&:not(:has(.overlay))]:bg-success-light text-white dark:[&:not(:has(.overlay))]:bg-success-dark dark:text-black"
     ]
   end
 
   defp color_variant("default", "warning") do
     [
-      "[&:not(:has(.overlay))]:bg-[#CA8D01] text-white dark:[&:not(:has(.overlay))]:bg-[#FDC034] dark:text-black"
+      "[&:not(:has(.overlay))]:bg-warning-light text-white dark:[&:not(:has(.overlay))]:bg-warning-dark dark:text-black"
     ]
   end
 
   defp color_variant("default", "danger") do
     [
-      "[&:not(:has(.overlay))]:bg-[#DE1135] text-white dark:[&:not(:has(.overlay))]:bg-[#FC7F79] dark:text-black"
+      "[&:not(:has(.overlay))]:bg-danger-light text-white dark:[&:not(:has(.overlay))]:bg-danger-dark dark:text-black"
     ]
   end
 
   defp color_variant("default", "info") do
     [
-      "[&:not(:has(.overlay))]:bg-[#0B84BA] text-white dark:[&:not(:has(.overlay))]:bg-[#3EB7ED] dark:text-black"
+      "[&:not(:has(.overlay))]:bg-info-light text-white dark:[&:not(:has(.overlay))]:bg-info-dark dark:text-black"
     ]
   end
 
   defp color_variant("default", "misc") do
     [
-      "[&:not(:has(.overlay))]:bg-[#8750C5] text-white dark:[&:not(:has(.overlay))]:bg-[#BA83F9] dark:text-black"
+      "[&:not(:has(.overlay))]:bg-misc-light text-white dark:[&:not(:has(.overlay))]:bg-misc-dark dark:text-black"
     ]
   end
 
   defp color_variant("default", "dawn") do
     [
-      "[&:not(:has(.overlay))]:bg-[#A86438] text-white dark:[&:not(:has(.overlay))]:bg-[#DB976B] dark:text-black"
+      "[&:not(:has(.overlay))]:bg-dawn-light text-white dark:[&:not(:has(.overlay))]:bg-dawn-dark dark:text-black"
     ]
   end
 
   defp color_variant("default", "silver") do
     [
-      "[&:not(:has(.overlay))]:bg-[#868686] text-white dark:[&:not(:has(.overlay))]:bg-[#A6A6A6] dark:text-black"
+      "[&:not(:has(.overlay))]:bg-silver-light text-white dark:[&:not(:has(.overlay))]:bg-silver-dark dark:text-black"
     ]
   end
 
   defp color_variant("outline", "natural") do
     [
-      "text-[#4B4B4B] border-[#4B4B4B] dark:text-[#DDDDDD] dark:border-[#DDDDDD]"
+      "text-natural-light border-natural-light dark:text-natural-dark dark:border-natural-dark"
     ]
   end
 
   defp color_variant("outline", "primary") do
     [
-      "text-[#007F8C] border-[#007F8C]  dark:text-[#01B8CA] dark:border-[#01B8CA]"
+      "text-primary-light border-primary-light dark:text-primary-dark dark:border-primary-dark"
     ]
   end
 
   defp color_variant("outline", "secondary") do
     [
-      "text-[#266EF1] border-[#266EF1] dark:text-[#6DAAFB] dark:border-[#6DAAFB]"
+      "text-secondary-light border-secondary-light dark:text-secondary-dark dark:border-secondary-dark"
     ]
   end
 
   defp color_variant("outline", "success") do
     [
-      "text-[#0E8345] border-[#0E8345] dark:text-[#06C167] dark:border-[#06C167]"
+      "text-success-light border-success-light dark:text-success-dark dark:border-success-dark"
     ]
   end
 
   defp color_variant("outline", "warning") do
     [
-      "text-[#CA8D01] border-[#CA8D01] dark:text-[#FDC034] dark:border-[#FDC034]"
+      "text-warning-light border-warning-light dark:text-warning-dark dark:border-warning-dark"
     ]
   end
 
   defp color_variant("outline", "danger") do
     [
-      "text-[#DE1135] border-[#DE1135] dark:text-[#FC7F79] dark:border-[#FC7F79]"
+      "text-danger-light border-danger-light dark:text-danger-dark dark:border-danger-dark"
     ]
   end
 
   defp color_variant("outline", "info") do
     [
-      "text-[#0B84BA] border-[#0B84BA] dark:text-[#3EB7ED] dark:border-[#3EB7ED]"
+      "text-info-light border-info-light dark:text-info-dark dark:border-info-dark"
     ]
   end
 
   defp color_variant("outline", "misc") do
     [
-      "text-[#8750C5] border-[#8750C5] dark:text-[#BA83F9] dark:border-[#BA83F9]"
+      "text-misc-light border-misc-light dark:text-misc-dark dark:border-misc-dark"
     ]
   end
 
   defp color_variant("outline", "dawn") do
     [
-      "text-[#A86438] border-[#A86438] dark:text-[#DB976B] dark:border-[#DB976B]"
+      "text-dawn-light border-dawn-light dark:text-dawn-dark dark:border-dawn-dark"
     ]
   end
 
   defp color_variant("outline", "silver") do
     [
-      "text-[#868686] border-[#868686] dark:text-[#A6A6A6] dark:border-[#A6A6A6]"
+      "text-silver-light border-silver-light dark:text-silver-dark dark:border-silver-dark"
     ]
   end
 
   defp color_variant("shadow", "natural") do
     [
-      "[&:not(:has(.overlay))]:bg-[#4B4B4B] text-white dark:[&:not(:has(.overlay))]:bg-[#DDDDDD] dark:text-black",
-      "shadow-[0px_4px_6px_-4px_rgba(134,134,134,0.5)] shadow-[0px_10px_15px_-3px_rgba(134,134,134,0.5)] dark:shadow-none"
+      "[&:not(:has(.overlay))]:bg-natural-light text-white dark:[&:not(:has(.overlay))]:bg-natural-dark dark:text-black",
+      "shadow-[0px_4px_6px_-4px_var(--color-shadow-natural)] shadow-[0px_10px_15px_-3px_var(--color-shadow-natural)] dark:shadow-none"
     ]
   end
 
   defp color_variant("shadow", "primary") do
     [
-      "[&:not(:has(.overlay))]:bg-[#007F8C] text-white dark:[&:not(:has(.overlay))]:bg-[#01B8CA] dark:text-black",
-      "shadow-[0px_4px_6px_-4px_rgba(0,149,164,0.5)] shadow-[0px_10px_15px_-3px_rgba(0,149,164,0.5)] dark:shadow-none"
+      "[&:not(:has(.overlay))]:bg-primary-light text-white dark:[&:not(:has(.overlay))]:bg-primary-dark dark:text-black",
+      "shadow-[0px_4px_6px_-4px_var(--color-shadow-primary)] shadow-[0px_10px_15px_-3px_var(--color-shadow-primary)] dark:shadow-none"
     ]
   end
 
   defp color_variant("shadow", "secondary") do
     [
-      "[&:not(:has(.overlay))]:bg-[#266EF1] text-white dark:[&:not(:has(.overlay))]:bg-[#6DAAFB] dark:text-black",
-      "shadow-[0px_4px_6px_-4px_rgba(6,139,238,0.5)] shadow-[0px_10px_15px_-3px_rgba(6,139,238,0.5)] dark:shadow-none"
+      "[&:not(:has(.overlay))]:bg-secondary-light text-white dark:[&:not(:has(.overlay))]:bg-secondary-dark dark:text-black",
+      "shadow-[0px_4px_6px_-4px_var(--color-shadow-secondary)] shadow-[0px_10px_15px_-3px_var(--color-shadow-secondary)] dark:shadow-none"
     ]
   end
 
   defp color_variant("shadow", "success") do
     [
-      "[&:not(:has(.overlay))]:bg-[#0E8345] text-white hover:[&:not(:has(.overlay))]:bg-[#166C3B] dark:[&:not(:has(.overlay))]:bg-[#06C167] dark:text-black",
-      "shadow-[0px_4px_6px_-4px_rgba(0,154,81,0.5)] shadow-[0px_10px_15px_-3px_rgba(0,154,81,0.5)] dark:shadow-none"
+      "[&:not(:has(.overlay))]:bg-success-light text-white dark:[&:not(:has(.overlay))]:bg-success-dark dark:text-black",
+      "shadow-[0px_4px_6px_-4px_var(--color-shadow-success)] shadow-[0px_10px_15px_-3px_var(--color-shadow-success)] dark:shadow-none"
     ]
   end
 
   defp color_variant("shadow", "warning") do
     [
-      "[&:not(:has(.overlay))]:bg-[#CA8D01] text-white dark:[&:not(:has(.overlay))]:bg-[#FDC034] dark:text-black",
-      "shadow-[0px_4px_6px_-4px_rgba(252,176,1,0.5)] shadow-[0px_10px_15px_-3px_rgba(252,176,1,0.5)] dark:shadow-none"
+      "[&:not(:has(.overlay))]:bg-warning-light text-white dark:[&:not(:has(.overlay))]:bg-warning-dark dark:text-black",
+      "shadow-[0px_4px_6px_-4px_var(--color-shadow-warning)] shadow-[0px_10px_15px_-3px_var(--color-shadow-warning)] dark:shadow-none"
     ]
   end
 
   defp color_variant("shadow", "danger") do
     [
-      "[&:not(:has(.overlay))]:bg-[#DE1135] text-white dark:[&:not(:has(.overlay))]:bg-[#FC7F79] dark:text-black",
-      "shadow-[0px_4px_6px_-4px_rgba(248,52,70,0.5)] shadow-[0px_10px_15px_-3px_rgba(248,52,70,0.5)] dark:shadow-none"
+      "[&:not(:has(.overlay))]:bg-danger-light text-white dark:[&:not(:has(.overlay))]:bg-danger-dark dark:text-black",
+      "shadow-[0px_4px_6px_-4px_var(--color-shadow-danger)] shadow-[0px_10px_15px_-3px_var(--color-shadow-danger)] dark:shadow-none"
     ]
   end
 
   defp color_variant("shadow", "info") do
     [
-      "[&:not(:has(.overlay))]:bg-[#0B84BA] text-white dark:[&:not(:has(.overlay))]:bg-[#3EB7ED] dark:text-black",
-      "shadow-[0px_4px_6px_-4px_rgba(14,165,233,0.5)] shadow-[0px_10px_15px_-3px_rgba(14,165,233,0.5)] dark:shadow-none"
+      "[&:not(:has(.overlay))]:bg-info-light text-white dark:[&:not(:has(.overlay))]:bg-info-dark dark:text-black",
+      "shadow-[0px_4px_6px_-4px_var(--color-shadow-info)] shadow-[0px_10px_15px_-3px_var(--color-shadow-info)] dark:shadow-none"
     ]
   end
 
   defp color_variant("shadow", "misc") do
     [
-      "[&:not(:has(.overlay))]:bg-[#8750C5] text-white dark:[&:not(:has(.overlay))]:bg-[#BA83F9] dark:text-black",
-      "shadow-[0px_4px_6px_-4px_rgba(169,100,247,0.5)] shadow-[0px_10px_15px_-3px_rgba(169,100,247,0.5)] dark:shadow-none"
+      "[&:not(:has(.overlay))]:bg-misc-light text-white dark:[&:not(:has(.overlay))]:bg-misc-dark dark:text-black",
+      "shadow-[0px_4px_6px_-4px_var(--color-shadow-misc)] shadow-[0px_10px_15px_-3px_var(--color-shadow-misc)] dark:shadow-none"
     ]
   end
 
   defp color_variant("shadow", "dawn") do
     [
-      "[&:not(:has(.overlay))]:bg-[#A86438] text-white dark:[&:not(:has(.overlay))]:bg-[#DB976B] dark:text-black",
-      "shadow-[0px_4px_6px_-4px_rgba(210,125,70,0.5)] shadow-[0px_10px_15px_-3px_rgba(210,125,70,0.5)] dark:shadow-none"
+      "[&:not(:has(.overlay))]:bg-dawn-light text-white dark:[&:not(:has(.overlay))]:bg-dawn-dark dark:text-black",
+      "shadow-[0px_4px_6px_-4px_var(--color-shadow-dawn)] shadow-[0px_10px_15px_-3px_var(--color-shadow-dawn)] dark:shadow-none"
     ]
   end
 
   defp color_variant("shadow", "silver") do
     [
-      "[&:not(:has(.overlay))]:bg-[#868686] text-white dark:[&:not(:has(.overlay))]:bg-[#A6A6A6] dark:text-black",
-      "shadow-[0px_4px_6px_-4px_rgba(134,134,134,0.5)] shadow-[0px_10px_15px_-3px_rgba(134,134,134,0.5)] dark:shadow-none"
+      "[&:not(:has(.overlay))]:bg-silver-light text-white dark:[&:not(:has(.overlay))]:bg-silver-dark dark:text-black",
+      "shadow-[0px_4px_6px_-4px_var(--color-shadow-silver)] shadow-[0px_10px_15px_-3px_var(--color-shadow-silver)] dark:shadow-none"
     ]
   end
 
   defp color_variant("bordered", "white") do
     [
-      "[&:not(:has(.overlay))]:bg-white text-black border-[#DDDDDD]"
+      "[&:not(:has(.overlay))]:bg-white text-black border-bordered-white-border"
     ]
   end
 
   defp color_variant("bordered", "dark") do
     [
-      "[&:not(:has(.overlay))]:bg-[#282828] text-white border-[#727272]"
+      "[&:not(:has(.overlay))]:bg-bordered-dark-bg text-white border-bordered-dark-border"
     ]
   end
 
   defp color_variant("bordered", "natural") do
     [
-      "text-[#282828] border-[#282828] [&:not(:has(.overlay))]:bg-[#F3F3F3]",
-      "dark:text-[#E8E8E8] dark:border-[#E8E8E8] dark:[&:not(:has(.overlay))]:bg-[#4B4B4B]"
+      "text-natural-bordered-text-light border-natural-border-light [&:not(:has(.overlay))]:bg-natural-bordered-bg-light",
+      "dark:text-natural-bordered-text-dark dark:border-natural-border-dark dark:[&:not(:has(.overlay))]:bg-natural-bordered-bg-dark"
     ]
   end
 
   defp color_variant("bordered", "primary") do
     [
-      "text-[#016974] border-[#016974] [&:not(:has(.overlay))]:bg-[#E2F8FB]",
-      "dark:text-[#77D5E3] dark:border-[#77D5E3] dark:[&:not(:has(.overlay))]:bg-[#002D33]"
+      "text-primary-bordered-text-light border-primary-bordered-text-light [&:not(:has(.overlay))]:bg-primary-bordered-bg-light",
+      "dark:text-primary-bordered-text-dark dark:border-primary-bordered-text-dark dark:[&:not(:has(.overlay))]:bg-primary-bordered-bg-dark"
     ]
   end
 
   defp color_variant("bordered", "secondary") do
     [
-      "text-[#175BCC] border-[#175BCC] [&:not(:has(.overlay))]:bg-[#EFF4FE]",
-      "dark:text-[#A9C9FF] dark:border-[#A9C9FF] dark:[&:not(:has(.overlay))]:bg-[#002661]"
+      "text-secondary-bordered-text-light border-secondary-bordered-text-light [&:not(:has(.overlay))]:bg-secondary-bordered-bg-light",
+      "dark:text-secondary-bordered-text-dark dark:border-secondary-bordered-text-dark dark:[&:not(:has(.overlay))]:bg-secondary-bordered-bg-dark"
     ]
   end
 
   defp color_variant("bordered", "success") do
     [
-      "text-[#166C3B] border-[#166C3B] [&:not(:has(.overlay))]:bg-[#EAF6ED]",
-      "dark:text-[#7FD99A] dark:border-[#7FD99A] dark:[&:not(:has(.overlay))]:bg-[#002F14]"
+      "text-success-bordered-text-light border-success-bordered-text-light [&:not(:has(.overlay))]:bg-success-bordered-bg-light",
+      "dark:text-success-bordered-text-dark dark:border-success-bordered-text-dark dark:[&:not(:has(.overlay))]:bg-success-bordered-bg-dark"
     ]
   end
 
   defp color_variant("bordered", "warning") do
     [
-      "text-[#976A01] border-[#976A01] [&:not(:has(.overlay))]:bg-[#FFF7E6]",
-      "dark:text-[#FDD067] dark:border-[#FDD067] dark:[&:not(:has(.overlay))]:bg-[#322300]"
+      "text-warning-bordered-text-light border-warning-bordered-text-light [&:not(:has(.overlay))]:bg-warning-bordered-bg-light",
+      "dark:text-warning-bordered-text-dark dark:border-warning-bordered-text-dark dark:[&:not(:has(.overlay))]:bg-warning-bordered-bg-dark"
     ]
   end
 
   defp color_variant("bordered", "danger") do
     [
-      "text-[#BB032A] border-[#BB032A] [&:not(:has(.overlay))]:bg-[#FFF0EE]",
-      "dark:text-[#FFB2AB] dark:border-[#FFB2AB] dark:[&:not(:has(.overlay))]:bg-[#520810]"
+      "text-danger-bordered-text-light border-danger-bordered-text-light [&:not(:has(.overlay))]:bg-danger-bordered-bg-light",
+      "dark:text-danger-bordered-text-dark dark:border-danger-bordered-text-dark dark:[&:not(:has(.overlay))]:bg-danger-bordered-bg-dark"
     ]
   end
 
   defp color_variant("bordered", "info") do
     [
-      "text-[#0B84BA] border-[#0B84BA] [&:not(:has(.overlay))]:bg-[#E7F6FD]",
-      "dark:text-[#6EC9F2] dark:border-[#6EC9F2] dark:[&:not(:has(.overlay))]:bg-[#03212F]"
+      "text-info-bordered-text-light border-info-bordered-text-light [&:not(:has(.overlay))]:bg-info-bordered-bg-light",
+      "dark:text-info-bordered-text-dark dark:border-info-bordered-text-dark dark:[&:not(:has(.overlay))]:bg-info-bordered-bg-dark"
     ]
   end
 
   defp color_variant("bordered", "misc") do
     [
-      "text-[#653C94] border-[#653C94] [&:not(:has(.overlay))]:bg-[#F6F0FE]",
-      "dark:text-[#CBA2FA] dark:border-[#CBA2FA] dark:[&:not(:has(.overlay))]:bg-[#221431]"
+      "text-misc-bordered-text-light border-misc-bordered-text-light [&:not(:has(.overlay))]:bg-misc-bordered-bg-light",
+      "dark:text-misc-bordered-text-dark dark:border-misc-bordered-text-dark dark:[&:not(:has(.overlay))]:bg-misc-bordered-bg-dark"
     ]
   end
 
   defp color_variant("bordered", "dawn") do
     [
-      "text-[#7E4B2A] border-[#7E4B2A] [&:not(:has(.overlay))]:bg-[#FBF2ED]",
-      "dark:text-[#E4B190] dark:border-[#E4B190] dark:[&:not(:has(.overlay))]:bg-[#2A190E]"
+      "text-dawn-bordered-text-light border-dawn-bordered-text-light [&:not(:has(.overlay))]:bg-dawn-bordered-bg-light",
+      "dark:text-dawn-bordered-text-dark dark:border-dawn-bordered-text-dark dark:[&:not(:has(.overlay))]:bg-dawn-bordered-bg-dark"
     ]
   end
 
   defp color_variant("bordered", "silver") do
     [
-      "text-[#727272] border-[#727272] [&:not(:has(.overlay))]:bg-[#F3F3F3]",
-      "dark:text-[#BBBBBB] dark:border-[#BBBBBB] dark:[&:not(:has(.overlay))]:bg-[#4B4B4B]"
+      "text-silver-bordered-text-light border-silver-bordered-text-light [&:not(:has(.overlay))]:bg-silver-bordered-bg-light",
+      "dark:text-silver-bordered-text-dark dark:border-silver-bordered-text-dark dark:[&:not(:has(.overlay))]:bg-silver-bordered-bg-dark"
     ]
   end
 
   defp color_variant("transparent", "natural") do
     [
-      "text-[#4B4B4B] dark:text-[#DDDDDD]"
+      "text-natural-light dark:text-natural-dark"
     ]
   end
 
   defp color_variant("transparent", "primary") do
     [
-      "text-[#007F8C] dark:text-[#01B8CA]"
+      "text-primary-light dark:text-primary-dark"
     ]
   end
 
   defp color_variant("transparent", "secondary") do
     [
-      "text-[#266EF1] dark:text-[#6DAAFB]"
+      "text-secondary-light dark:text-secondary-dark"
     ]
   end
 
   defp color_variant("transparent", "success") do
     [
-      "text-[#0E8345] dark:text-[#06C167]"
+      "text-success-light dark:text-success-dark"
     ]
   end
 
   defp color_variant("transparent", "warning") do
     [
-      "text-[#CA8D01] dark:text-[#FDC034]"
+      "text-warning-light dark:text-warning-dark"
     ]
   end
 
   defp color_variant("transparent", "danger") do
     [
-      "text-[#DE1135] dark:text-[#FC7F79]"
+      "text-danger-light dark:text-danger-dark"
     ]
   end
 
   defp color_variant("transparent", "info") do
     [
-      "text-[#0B84BA] dark:text-[#3EB7ED]"
+      "text-info-light dark:text-info-dark"
     ]
   end
 
   defp color_variant("transparent", "misc") do
     [
-      "text-[#8750C5] dark:text-[#BA83F9]"
+      "text-misc-light dark:text-misc-dark"
     ]
   end
 
   defp color_variant("transparent", "dawn") do
     [
-      "text-[#A86438] dark:text-[#DB976B]"
+      "text-dawn-light dark:text-dawn-dark"
     ]
   end
 
   defp color_variant("transparent", "silver") do
     [
-      "text-[#868686] dark:text-[#A6A6A6]"
+      "text-silver-light dark:text-silver-dark"
     ]
   end
 
   defp color_variant("gradient", "natural") do
     [
-      "[&:not(:has(.overlay))]:bg-gradient-to-br from-[#282828] to-[#727272] text-white",
-      "dark:from-[#A6A6A6] dark:to-[#FFFFFF] dark:text-black"
+      "[&:not(:has(.overlay))]:bg-gradient-to-br from-gradient-natural-from-light to-gradient-natural-to-light text-white",
+      "dark:from-gradient-natural-from-dark dark:to-white dark:text-black"
     ]
   end
 
   defp color_variant("gradient", "primary") do
     [
-      "[&:not(:has(.overlay))]:bg-gradient-to-br from-[#016974] to-[#01B8CA] text-white",
-      "dark:from-[#01B8CA] dark:to-[#B0E7EF] dark:text-black"
+      "[&:not(:has(.overlay))]:bg-gradient-to-br from-gradient-primary-from-light to-gradient-primary-to-light text-white",
+      "dark:from-gradient-primary-from-dark dark:to-gradient-primary-to-dark dark:text-black"
     ]
   end
 
   defp color_variant("gradient", "secondary") do
     [
-      "[&:not(:has(.overlay))]:bg-gradient-to-br from-[#175BCC] to-[#6DAAFB] text-white",
-      "dark:from-[#6DAAFB] dark:to-[#CDDEFF] dark:text-black"
+      "[&:not(:has(.overlay))]:bg-gradient-to-br from-gradient-secondary-from-light to-gradient-secondary-to-light text-white",
+      "dark:from-gradient-secondary-from-dark dark:to-gradient-secondary-to-dark dark:text-black"
     ]
   end
 
   defp color_variant("gradient", "success") do
     [
-      "[&:not(:has(.overlay))]:bg-gradient-to-br from-[#166C3B] to-[#06C167] text-white",
-      "dark:from-[#06C167] dark:to-[#B1EAC2] dark:text-black"
+      "[&:not(:has(.overlay))]:bg-gradient-to-br from-gradient-success-from-light to-gradient-success-to-light text-white",
+      "dark:from-gradient-success-from-dark dark:to-gradient-success-to-dark dark:text-black"
     ]
   end
 
   defp color_variant("gradient", "warning") do
     [
-      "[&:not(:has(.overlay))]:bg-gradient-to-br from-[#976A01] to-[#FDC034] text-white",
-      "dark:from-[#FDC034] dark:to-[#FEDF99] dark:text-black"
+      "[&:not(:has(.overlay))]:bg-gradient-to-br from-gradient-warning-from-light to-gradient-warning-to-light text-white",
+      "dark:from-gradient-warning-from-dark dark:to-gradient-warning-to-dark dark:text-black"
     ]
   end
 
   defp color_variant("gradient", "danger") do
     [
-      "[&:not(:has(.overlay))]:bg-gradient-to-br from-[#BB032A] to-[#FC7F79] text-white",
-      "dark:from-[#FC7F79] dark:to-[#FFD2CD] dark:text-black"
+      "[&:not(:has(.overlay))]:bg-gradient-to-br from-gradient-danger-from-light to-gradient-danger-to-light text-white",
+      "dark:from-gradient-danger-from-dark dark:to-gradient-danger-to-dark dark:text-black"
     ]
   end
 
   defp color_variant("gradient", "info") do
     [
-      "[&:not(:has(.overlay))]:bg-gradient-to-br from-[#08638C] to-[#3EB7ED] text-white",
-      "dark:from-[#3EB7ED] dark:to-[#9FDBF6] dark:text-black"
+      "[&:not(:has(.overlay))]:bg-gradient-to-br from-gradient-info-from-light to-gradient-info-to-light text-white",
+      "dark:from-gradient-info-from-dark dark:to-gradient-info-to-dark dark:text-black"
     ]
   end
 
   defp color_variant("gradient", "misc") do
     [
-      "[&:not(:has(.overlay))]:bg-gradient-to-br from-[#653C94] to-[#BA83F9] text-white",
-      "dark:from-[#BA83F9] dark:to-[#DDC1FC] dark:text-black"
+      "[&:not(:has(.overlay))]:bg-gradient-to-br from-gradient-misc-from-light to-gradient-misc-to-light text-white",
+      "dark:from-gradient-misc-from-dark dark:to-gradient-misc-to-dark dark:text-black"
     ]
   end
 
   defp color_variant("gradient", "dawn") do
     [
-      "[&:not(:has(.overlay))]:bg-gradient-to-br from-[#7E4B2A] to-[#DB976B] text-white",
-      "dark:from-[#DB976B] dark:to-[#EDCBB5] dark:text-black"
+      "[&:not(:has(.overlay))]:bg-gradient-to-br from-gradient-dawn-from-light to-gradient-dawn-to-light text-white",
+      "dark:from-gradient-dawn-from-dark dark:to-gradient-dawn-to-dark dark:text-black"
     ]
   end
 
   defp color_variant("gradient", "silver") do
     [
-      "[&:not(:has(.overlay))]:bg-gradient-to-br from-[#5E5E5E] to-[#A6A6A6] text-white",
-      "dark:from-[#868686] dark:to-[#BBBBBB] dark:text-black"
+      "[&:not(:has(.overlay))]:bg-gradient-to-br from-gradient-silver-from-light to-gradient-silver-to-light text-white",
+      "dark:from-gradient-silver-from-dark dark:to-gradient-silver-to-dark dark:text-black"
     ]
   end
 

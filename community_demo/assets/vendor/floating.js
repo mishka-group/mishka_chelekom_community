@@ -2,7 +2,6 @@ const Floating = {
   mounted() {
     this.initElements();
 
-    // Flag to track if we moved the content to body
     this.movedToBody = false;
 
     this.boundHandleOutsideClick = this.handleOutsideClick.bind(this);
@@ -18,31 +17,177 @@ const Floating = {
     this.clickable = this.el.getAttribute("data-clickable") === "true";
     this.position = this.el.getAttribute("data-position") || "bottom";
 
+    this.showDelay = parseInt(this.el.getAttribute("data-show-delay")) || 0;
+    this.hideDelay = parseInt(this.el.getAttribute("data-hide-delay")) || 400;
+
+    this.showTimeout = null;
+    this.hideTimeout = null;
+
     this.floatingType = this.getFloatingType();
 
+    this.isRTL = getComputedStyle(document.documentElement).direction === "rtl";
+
+    this.cleanupDuplicateIds();
+
+    this.setupFloatingContent();
+    this.setupEventListeners();
+
+    this.forcedWidth = null;
+    this.updatePosition();
+  },
+
+  cleanupDuplicateIds() {
+    if (this.floatingContent && this.floatingContent.id) {
+      const duplicates = document.body.querySelectorAll(
+        `#${this.floatingContent.id}`,
+      );
+      duplicates.forEach((duplicate) => {
+        if (
+          duplicate !== this.floatingContent &&
+          duplicate.parentNode === document.body
+        ) {
+          try {
+            document.body.removeChild(duplicate);
+          } catch (e) {}
+        }
+      });
+    }
+  },
+
+  setVisibility(element, visible) {
+    if (!element) return;
+
+    if (visible) {
+      element.removeAttribute("hidden");
+      element.classList.remove("invisible", "opacity-0");
+      element.classList.add("visible", "opacity-100", "show-dropdown");
+    } else {
+      element.classList.remove("visible", "opacity-100", "show-dropdown");
+      element.classList.add("invisible", "opacity-0");
+      element.setAttribute("hidden", "");
+    }
+  },
+
+  debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+      const later = () => {
+        clearTimeout(timeout);
+        func(...args);
+      };
+      clearTimeout(timeout);
+      timeout = setTimeout(later, wait);
+    };
+  },
+
+  beforeUpdate() {
+    if (this.showTimeout) {
+      clearTimeout(this.showTimeout);
+      this.showTimeout = null;
+    }
+    if (this.hideTimeout) {
+      clearTimeout(this.hideTimeout);
+      this.hideTimeout = null;
+    }
+
+    if (
+      this.floatingContent &&
+      this.movedToBody &&
+      document.body.contains(this.floatingContent)
+    ) {
+      if (!this.clickable) {
+        this.floatingContent.removeEventListener(
+          "mouseenter",
+          this.boundHandleMouseEnter,
+        );
+        this.floatingContent.removeEventListener(
+          "mouseleave",
+          this.boundHandleMouseLeave,
+        );
+      }
+
+      document.body.removeChild(this.floatingContent);
+      this.movedToBody = false;
+      this.floatingContent = null;
+    }
+  },
+
+  updated() {
+    this.initElements();
+
     if (this.floatingContent) {
-      // Store original parent for restoration on destroy
+      this.floatingType = this.getFloatingType();
+      this.setupFloatingContent();
+
+      if (!this.clickable) {
+        this.floatingContent.addEventListener(
+          "mouseenter",
+          this.boundHandleMouseEnter,
+        );
+        this.floatingContent.addEventListener(
+          "mouseleave",
+          this.boundHandleMouseLeave,
+        );
+      }
+
+      this.updatePosition();
+    }
+  },
+
+  initElements() {
+    this.floatingContent =
+      this.el.querySelector("[data-floating-content]") ||
+      this.el.querySelector(".dropdown-content");
+
+    this.trigger =
+      this.el.querySelector("[data-floating-trigger]") ||
+      this.el.querySelector(".dropdown-trigger");
+  },
+
+  setupFloatingContent() {
+    if (this.floatingContent) {
       this.originalParent = this.floatingContent.parentElement;
       this.originalIndex = Array.from(this.originalParent.children).indexOf(
         this.floatingContent,
       );
 
-      // Move to body
       document.body.appendChild(this.floatingContent);
       this.movedToBody = true;
 
       this.setupAria();
-      if (this.enableAria && this.floatingContent.hasAttribute("aria-hidden")) {
-        this.floatingContent.setAttribute("aria-hidden", "true");
+
+      this.floatingContent.setAttribute("hidden", "");
+    }
+  },
+
+  cleanupFloatingContent() {
+    if (this.floatingContent) {
+      if (!this.clickable) {
+        this.floatingContent.removeEventListener(
+          "mouseenter",
+          this.boundHandleMouseEnter,
+        );
+        this.floatingContent.removeEventListener(
+          "mouseleave",
+          this.boundHandleMouseLeave,
+        );
+      }
+
+      if (document.body.contains(this.floatingContent)) {
+        document.body.removeChild(this.floatingContent);
       }
     }
+  },
 
+  setupEventListeners() {
     if (this.trigger) {
       if (this.clickable) {
         this.trigger.addEventListener("click", this.boundHandleClick);
       } else {
         this.trigger.addEventListener("mouseenter", this.boundHandleMouseEnter);
         this.trigger.addEventListener("mouseleave", this.boundHandleMouseLeave);
+        this.trigger.addEventListener("focusin", this.boundHandleMouseEnter);
+        this.trigger.addEventListener("focusout", this.boundHandleMouseLeave);
         this.floatingContent?.addEventListener(
           "mouseenter",
           this.boundHandleMouseEnter,
@@ -59,38 +204,27 @@ const Floating = {
       }
     }
 
+    this.updatePositionDebounced = this.debounce(this.boundUpdatePosition, 16);
+
     document.addEventListener("click", this.boundHandleOutsideClick);
     document.addEventListener("keydown", this.boundHandleKeydown);
-    window.addEventListener("resize", this.boundUpdatePosition);
-    window.addEventListener("scroll", this.boundUpdatePosition, true);
-
-    this.forcedWidth = null;
-    this.updatePosition();
-  },
-
-  initElements() {
-    this.floatingContent =
-      this.el.querySelector("[data-floating-content]") ||
-      this.el.querySelector(".dropdown-content");
-
-    this.trigger =
-      this.el.querySelector("[data-floating-trigger]") ||
-      this.el.querySelector(".dropdown-trigger");
+    window.addEventListener("resize", this.updatePositionDebounced);
+    window.addEventListener("scroll", this.updatePositionDebounced, true);
   },
 
   getFloatingType() {
     const role = this.floatingContent?.getAttribute("role");
     if (role === "tooltip") return "tooltip";
-    if (role === "dialog" || role === "menu") return "dropdown"; // treat dialog/popover/menu as dropdown-like
+    if (role === "dialog" || role === "menu") return "dropdown";
     return "generic";
   },
 
   setupAria() {
     if (!this.trigger || !this.floatingContent) return;
 
-    const id =
-      this.floatingContent.id ||
-      `floating-${Math.random().toString(36).substr(2, 9)}`;
+    const timestamp = Date.now();
+    const random = Math.random().toString(36).slice(2, 8);
+    const id = this.floatingContent.id || `floating-${timestamp}-${random}`;
     this.floatingContent.id = id;
 
     if (this.floatingType === "tooltip") {
@@ -120,13 +254,8 @@ const Floating = {
     );
 
     allContents.forEach((content) => {
-      if (content !== this.floatingContent) {
-        content.classList.remove("visible", "opacity-100", "show-dropdown");
-        content.classList.add("invisible", "opacity-0");
-
-        if (this.enableAria && content.hasAttribute("aria-hidden")) {
-          content.setAttribute("aria-hidden", "true");
-        }
+      if (content && content !== this.floatingContent) {
+        this.setVisibility(content, false);
 
         const triggerId = content.getAttribute("aria-labelledby");
         if (triggerId) {
@@ -144,11 +273,45 @@ const Floating = {
   },
 
   handleMouseEnter() {
-    this.show();
+    if (this.hideTimeout) {
+      clearTimeout(this.hideTimeout);
+      this.hideTimeout = null;
+    }
+
+    if (this.showTimeout) {
+      clearTimeout(this.showTimeout);
+      this.showTimeout = null;
+    }
+
+    if (this.showDelay > 0) {
+      this.showTimeout = setTimeout(() => {
+        this.show();
+        this.showTimeout = null;
+      }, this.showDelay);
+    } else {
+      this.show();
+    }
   },
 
   handleMouseLeave() {
-    this.hide();
+    if (this.showTimeout) {
+      clearTimeout(this.showTimeout);
+      this.showTimeout = null;
+    }
+
+    if (this.hideTimeout) {
+      clearTimeout(this.hideTimeout);
+      this.hideTimeout = null;
+    }
+
+    if (this.hideDelay > 0) {
+      this.hideTimeout = setTimeout(() => {
+        this.hide();
+        this.hideTimeout = null;
+      }, this.hideDelay);
+    } else {
+      this.hide();
+    }
   },
 
   handleOutsideClick(e) {
@@ -204,11 +367,16 @@ const Floating = {
   updatePosition() {
     if (!this.trigger || !this.floatingContent) return;
 
+    const originalDisplay = this.trigger.style.display;
+    const isSpan = this.trigger.tagName.toLowerCase() === "span";
+
+    if (isSpan && (!originalDisplay || originalDisplay === "inline")) {
+      this.trigger.style.display = "inline-block";
+    }
+
     const rect = this.trigger.getBoundingClientRect();
     const content = this.floatingContent;
-    const gap = 4;
-    const isRTL =
-      getComputedStyle(document.documentElement).direction === "rtl";
+    const gap = 5;
     let pos = this.position;
 
     if (this.smartPositioning && content.offsetHeight) {
@@ -245,14 +413,14 @@ const Floating = {
     } else if (pos === "left") {
       top =
         rect.top + window.scrollY + (rect.height - content.offsetHeight) / 2;
-      left = isRTL
+      left = this.isRTL
         ? rect.right + window.scrollX + gap
         : rect.left + window.scrollX - content.offsetWidth - gap;
       content.style.transform = "none";
     } else if (pos === "right") {
       top =
         rect.top + window.scrollY + (rect.height - content.offsetHeight) / 2;
-      left = isRTL
+      left = this.isRTL
         ? rect.left + window.scrollX - content.offsetWidth - gap
         : rect.right + window.scrollX + gap;
       content.style.transform = "none";
@@ -261,19 +429,21 @@ const Floating = {
     content.style.position = "absolute";
     content.style.top = `${top}px`;
     content.style.left = `${left}px`;
+
+    if (isSpan && originalDisplay !== "inline-block") {
+      this.trigger.style.display = originalDisplay || "";
+    }
   },
 
   show() {
     if (!this.floatingContent) return;
 
     const content = this.floatingContent;
+
     const transition = content.style.transition;
     content.style.transition = "none";
 
-    content.removeAttribute("hidden");
-    content.classList.remove("invisible", "opacity-0");
-    content.classList.add("visible", "opacity-100", "show-dropdown");
-
+    this.setVisibility(content, true);
     this.updatePosition();
 
     const triggerWidth = this.trigger.offsetWidth;
@@ -286,14 +456,14 @@ const Floating = {
 
     content.style.width = this.forcedWidth ? `${this.forcedWidth}px` : "auto";
 
-    content.offsetHeight; // force reflow
+    content.offsetHeight;
     content.style.transition = transition;
 
-    if (this.enableAria && this.trigger && this.floatingType === "dropdown") {
-      this.trigger.setAttribute("aria-expanded", "true");
-    }
-    if (this.enableAria && content.hasAttribute("aria-hidden")) {
-      content.setAttribute("aria-hidden", "false");
+    if (this.enableAria) {
+      content.removeAttribute("aria-hidden");
+      if (this.trigger && this.floatingType === "dropdown") {
+        this.trigger.setAttribute("aria-expanded", "true");
+      }
     }
 
     if (this.floatingType === "dropdown") {
@@ -305,18 +475,20 @@ const Floating = {
   hide() {
     if (!this.floatingContent) return;
 
-    this.floatingContent.classList.remove(
-      "visible",
-      "opacity-100",
-      "show-dropdown",
-    );
-    this.floatingContent.classList.add("invisible", "opacity-0");
+    const isCurrentlyVisible =
+      this.floatingContent.classList.contains("show-dropdown");
 
-    if (this.enableAria && this.trigger && this.floatingType === "dropdown") {
-      this.trigger.setAttribute("aria-expanded", "false");
-    }
-    if (this.enableAria && this.floatingContent.hasAttribute("aria-hidden")) {
-      this.floatingContent.setAttribute("aria-hidden", "true");
+    this.setVisibility(this.floatingContent, false);
+
+    if (this.enableAria && isCurrentlyVisible) {
+      setTimeout(() => {
+        if (
+          this.floatingContent &&
+          !this.floatingContent.classList.contains("show-dropdown")
+        ) {
+          this.floatingContent.setAttribute("aria-hidden", "true");
+        }
+      }, 0);
     }
   },
 
@@ -336,11 +508,30 @@ const Floating = {
   },
 
   destroyed() {
-    // Remove event listeners
+    if (this.showTimeout) {
+      clearTimeout(this.showTimeout);
+      this.showTimeout = null;
+    }
+    if (this.hideTimeout) {
+      clearTimeout(this.hideTimeout);
+      this.hideTimeout = null;
+    }
+
+    if (this.updatePositionDebounced) {
+      this.updatePositionDebounced.cancel?.();
+    }
+
     document.removeEventListener("click", this.boundHandleOutsideClick);
     document.removeEventListener("keydown", this.boundHandleKeydown);
-    window.removeEventListener("resize", this.boundUpdatePosition);
-    window.removeEventListener("scroll", this.boundUpdatePosition, true);
+    window.removeEventListener(
+      "resize",
+      this.updatePositionDebounced || this.boundUpdatePosition,
+    );
+    window.removeEventListener(
+      "scroll",
+      this.updatePositionDebounced || this.boundUpdatePosition,
+      true,
+    );
 
     if (this.trigger && this.clickable) {
       this.trigger.removeEventListener("click", this.boundHandleClick);
@@ -354,6 +545,8 @@ const Floating = {
         "mouseleave",
         this.boundHandleMouseLeave,
       );
+      this.trigger.removeEventListener("focusin", this.boundHandleMouseEnter);
+      this.trigger.removeEventListener("focusout", this.boundHandleMouseLeave);
     }
 
     if (!this.clickable && this.floatingContent) {
@@ -367,19 +560,15 @@ const Floating = {
       );
     }
 
-    // Clean up ARIA attributes
     this.cleanupAria();
 
-    // Only restore floating content if it was moved to body
     if (
       this.floatingContent &&
       this.movedToBody &&
       document.body.contains(this.floatingContent)
     ) {
-      // Remove from body
       document.body.removeChild(this.floatingContent);
 
-      // Restore to original parent if available
       if (this.originalParent) {
         if (
           this.originalIndex >= 0 &&
@@ -395,7 +584,6 @@ const Floating = {
       }
     }
 
-    // Clear references
     this.floatingContent = null;
     this.trigger = null;
     this.originalParent = null;

@@ -16,6 +16,8 @@ defmodule CommunityDemoWeb.Components.ScrollArea do
   - Fixed-height panels
   - Overflow management
   - Mobile-friendly interfaces
+
+  **Documentation:** https://mishka.tools/chelekom/docs/scroll-area
   """
 
   use Phoenix.Component
