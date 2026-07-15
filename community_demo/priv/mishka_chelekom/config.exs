@@ -7,6 +7,10 @@
 import Config
 
 config :mishka_chelekom,
+    module_prefix: "mishka_",
+
+    component_prefix: "mishka_",
+
   # Override specific CSS variables (uncomment and modify as needed)
   css_overrides: %{
     # === Base Colors ===

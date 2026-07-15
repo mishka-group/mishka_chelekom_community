@@ -85,10 +85,10 @@ defmodule CommunityDemoWeb.Layouts do
   def flash_group(assigns) do
     ~H"""
     <div id={@id} aria-live="polite">
-      <.flash kind={:info} flash={@flash} />
-      <.flash kind={:error} flash={@flash} />
+      <.mishka_flash kind={:info} flash={@flash} />
+      <.mishka_flash kind={:error} flash={@flash} />
 
-      <.flash
+      <.mishka_flash
         id="client-error"
         kind={:error}
         title={gettext("We can't find the internet")}
@@ -97,10 +97,10 @@ defmodule CommunityDemoWeb.Layouts do
         hidden
       >
         {gettext("Attempting to reconnect")}
-        <.icon name="hero-arrow-path" class="ml-1 size-3 motion-safe:animate-spin" />
-      </.flash>
+        <.mishka_icon name="hero-arrow-path" class="ml-1 size-3 motion-safe:animate-spin" />
+      </.mishka_flash>
 
-      <.flash
+      <.mishka_flash
         id="server-error"
         kind={:error}
         title={gettext("Something went wrong!")}
@@ -109,8 +109,8 @@ defmodule CommunityDemoWeb.Layouts do
         hidden
       >
         {gettext("Attempting to reconnect")}
-        <.icon name="hero-arrow-path" class="ml-1 size-3 motion-safe:animate-spin" />
-      </.flash>
+        <.mishka_icon name="hero-arrow-path" class="ml-1 size-3 motion-safe:animate-spin" />
+      </.mishka_flash>
     </div>
     """
   end
@@ -130,7 +130,7 @@ defmodule CommunityDemoWeb.Layouts do
         phx-click={JS.dispatch("phx:set-theme")}
         data-phx-theme="system"
       >
-        <.icon name="hero-computer-desktop-micro" class="size-4 opacity-75 hover:opacity-100" />
+        <.mishka_icon name="hero-computer-desktop-micro" class="size-4 opacity-75 hover:opacity-100" />
       </button>
 
       <button
@@ -138,7 +138,7 @@ defmodule CommunityDemoWeb.Layouts do
         phx-click={JS.dispatch("phx:set-theme")}
         data-phx-theme="light"
       >
-        <.icon name="hero-sun-micro" class="size-4 opacity-75 hover:opacity-100" />
+        <.mishka_icon name="hero-sun-micro" class="size-4 opacity-75 hover:opacity-100" />
       </button>
 
       <button
@@ -146,7 +146,7 @@ defmodule CommunityDemoWeb.Layouts do
         phx-click={JS.dispatch("phx:set-theme")}
         data-phx-theme="dark"
       >
-        <.icon name="hero-moon-micro" class="size-4 opacity-75 hover:opacity-100" />
+        <.mishka_icon name="hero-moon-micro" class="size-4 opacity-75 hover:opacity-100" />
       </button>
     </div>
     """

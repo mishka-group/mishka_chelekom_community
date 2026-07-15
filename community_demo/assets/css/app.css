@@ -3,6 +3,8 @@
 
 @import "tailwindcss" source(none);
 @import "../vendor/mishka_chelekom.css";
+@import "../vendor/mishka_chelekom_headless.css";
+
 @source "../css";
 @source "../js";
 @source "../../lib/community_demo_web";

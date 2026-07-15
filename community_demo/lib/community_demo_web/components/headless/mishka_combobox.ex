@@ -1,0 +1,313 @@
+defmodule CommunityDemoWeb.Components.Headless.MishkaCombobox do
+  @moduledoc """
+  Headless **combobox** — a text input that filters and selects from a listbox (Base UI parity).
+
+  Behaviour via the shared `HeadlessCombobox` engine: typing filters the options (non-matching get
+  `data-hidden`), ArrowDown opens and moves a roving highlight over the **navigable** options (it skips
+  `data-hidden` *and* `data-disabled`), Enter/click selects, Escape closes. A selected option carries
+  `data-selected` + `aria-selected` (style a checkmark via the `indicator` part).
+
+  Options: `multiple` (multi-select with removable **chips**) · disabled `<:option>` · grouped options
+  (give `<:option>` a `group`) · `auto_highlight` · `filter` (`contains`/`starts_with`) · a `clear`
+  button · a `trigger` button (open without typing) · a `<:empty>` state · `creatable` (offer to create
+  the typed query, pushing `on_create`) · `on_change`.
+
+  ARIA: input `role="combobox"` + `aria-controls`/`aria-expanded`/`aria-autocomplete`/
+  `aria-activedescendant`; listbox `role="listbox"`; options `role="option"` + `aria-selected`/
+  `aria-disabled`. Style via `chelekom-combobox*` and the `data-open`/`data-closed`/`data-highlighted`/
+  `data-hidden`/`data-selected`/`data-disabled` state attributes.
+
+  WAI-ARIA APG: https://www.w3.org/WAI/ARIA/apg/patterns/combobox/
+
+  **Documentation:** https://mishka.tools/chelekom/docs/headless/combobox
+  """
+  use Phoenix.Component
+
+  @doc type: :component
+  attr :id, :string, required: true, doc: "Unique id (anchors the popup and option ids)"
+  attr :name, :string, default: nil, doc: "Form name (multiple submits as `name[]`)"
+  attr :value, :any, default: nil, doc: "Selected value (a string, or a list when `multiple`)"
+  attr :placeholder, :string, default: nil, doc: "Input placeholder text"
+  attr :multiple, :boolean, default: false, doc: "Allow selecting several options (renders chips)"
+  attr :auto_highlight, :boolean, default: false, doc: "Highlight the first match as you type"
+
+  attr :filter, :string,
+    default: "contains",
+    values: ~w(contains starts_with),
+    doc: "Match mode for the typed query"
+
+  attr :clear, :boolean, default: false, doc: "Render a clear button"
+  attr :trigger, :boolean, default: false, doc: "Render a button that opens/closes the popup"
+
+  attr :creatable, :boolean,
+    default: false,
+    doc: "Offer to create the typed query as a new option"
+
+  attr :on_create, :string, default: nil, doc: "LiveView event pushed to create ({value})"
+  attr :on_change, :string, default: nil, doc: "LiveView event pushed on selection ({value})"
+  attr :class, :any, default: nil
+
+  # Optional per-part class props (backward-compatible).
+  attr :control_class, :any, default: nil, doc: "Class for the `control` part"
+  attr :input_class, :any, default: nil, doc: "Class for the `input` part"
+  attr :clear_class, :any, default: nil, doc: "Class for the `clear` button part"
+  attr :trigger_class, :any, default: nil, doc: "Class for the `trigger` button part"
+  attr :chips_class, :any, default: nil, doc: "Class for the `chips` part"
+  attr :chip_class, :any, default: nil, doc: "Class for each `chip` part"
+  attr :chip_remove_class, :any, default: nil, doc: "Class for each `chip-remove` part"
+  attr :popup_class, :any, default: nil, doc: "Class for the `popup` (listbox) part"
+  attr :group_class, :any, default: nil, doc: "Class for each `group` part"
+  attr :group_label_class, :any, default: nil, doc: "Class for each `group-label` part"
+  attr :item_class, :any, default: nil, doc: "Class for each `item` part"
+  attr :indicator_class, :any, default: nil, doc: "Class for each `indicator` part"
+  attr :empty_class, :any, default: nil, doc: "Class for the `empty` part"
+  attr :create_class, :any, default: nil, doc: "Class for the `create` part"
+
+  attr :create_label_class, :any,
+    default: nil,
+    doc: "Class for the `create-label` text wrapper (only used when a `create_icon` is given)"
+
+  attr :rest, :global
+
+  slot :option, required: true do
+    attr :value, :string, required: true
+    attr :disabled, :boolean
+    attr :group, :string, doc: "Optional group label (consecutive same-group options are grouped)"
+    attr :class, :any, doc: "Per-option class merged onto the `item` part"
+  end
+
+  slot :empty, doc: "Shown when the query matches no options"
+  slot :clear_icon, doc: "Icon rendered inside the `clear` button (defaults to ×)"
+  slot :trigger_icon, doc: "Icon rendered inside the `trigger` button (defaults to ▾)"
+  slot :chip_remove_icon, doc: "Icon rendered inside each `chip-remove` button (defaults to ×)"
+  slot :create_icon, doc: "Icon rendered before the `create` label"
+
+  slot :item_indicator,
+    doc: "Icon (e.g. a checkmark) rendered inside each option's `indicator` part"
+
+  def mishka_combobox(assigns) do
+    values = if assigns.multiple, do: List.wrap(assigns.value), else: []
+    assigns = assign(assigns, groups: group_options(assigns.option), values: values)
+
+    ~H"""
+    <div
+      id={@id}
+      phx-hook="HeadlessCombobox"
+      data-multiple={@multiple}
+      data-creatable={@creatable}
+      data-autohighlight={@auto_highlight}
+      data-filter={@filter}
+      data-name={@name}
+      data-on-change={@on_change}
+      data-on-create={@on_create}
+      class={["chelekom-combobox", @class]}
+      {@rest}
+    >
+      <div data-part="control" class={["chelekom-combobox__control", @control_class]}>
+        <div :if={@multiple} data-part="chips" class={["chelekom-combobox__chips", @chips_class]}>
+          <span
+            :for={opt <- selected_options(@option, @values)}
+            data-part="chip"
+            data-chip-value={opt.value}
+            class={["chelekom-combobox__chip", @chip_class]}
+          >
+            <span data-chip-label>{render_slot(opt)}</span>
+            <button
+              type="button"
+              data-part="chip-remove"
+              aria-label="Remove"
+              class={["chelekom-combobox__chip-remove", @chip_remove_class]}
+            >
+              {if @chip_remove_icon != [], do: render_slot(@chip_remove_icon), else: "×"}
+            </button>
+            <input :if={@name} type="hidden" name={"#{@name}[]"} value={opt.value} data-chip-input />
+          </span>
+        </div>
+
+        <input
+          type="text"
+          data-part="input"
+          aria-controls={"#{@id}-popup"}
+          aria-expanded="false"
+          placeholder={@placeholder}
+          autocomplete="off"
+          class={["chelekom-combobox__input", @input_class]}
+        />
+        <button
+          :if={@clear}
+          type="button"
+          data-part="clear"
+          data-hidden
+          aria-label="Clear"
+          class={["chelekom-combobox__clear", @clear_class]}
+        >
+          {if @clear_icon != [], do: render_slot(@clear_icon), else: "×"}
+        </button>
+        <button
+          :if={@trigger}
+          type="button"
+          data-part="trigger"
+          aria-label="Toggle options"
+          tabindex="-1"
+          class={["chelekom-combobox__trigger", @trigger_class]}
+        >
+          {if @trigger_icon != [], do: render_slot(@trigger_icon), else: "▾"}
+        </button>
+      </div>
+
+      <input
+        :if={@name && !@multiple}
+        type="hidden"
+        data-part="value"
+        name={@name}
+        value={@value}
+      />
+
+      <template :if={@multiple} data-part="chip-template">
+        <span data-part="chip" class={["chelekom-combobox__chip", @chip_class]}>
+          <span data-chip-label></span>
+          <button
+            type="button"
+            data-part="chip-remove"
+            aria-label="Remove"
+            class={["chelekom-combobox__chip-remove", @chip_remove_class]}
+          >
+            {if @chip_remove_icon != [], do: render_slot(@chip_remove_icon), else: "×"}
+          </button>
+          <input type="hidden" data-chip-input />
+        </span>
+      </template>
+
+      <ul
+        id={"#{@id}-popup"}
+        data-part="popup"
+        role="listbox"
+        aria-multiselectable={@multiple && "true"}
+        data-closed
+        class={["chelekom-combobox__popup", @popup_class]}
+      >
+        <%= for {grp, gi} <- Enum.with_index(@groups) do %>
+          <%= if grp.label do %>
+            <li
+              role="group"
+              aria-labelledby={"#{@id}-grp-#{gi}"}
+              data-part="group"
+              class={["chelekom-combobox__group", @group_class]}
+            >
+              <span
+                id={"#{@id}-grp-#{gi}"}
+                data-part="group-label"
+                class={["chelekom-combobox__group-label", @group_label_class]}
+              >
+                {grp.label}
+              </span>
+              <ul role="presentation" class="chelekom-combobox__group-list">
+                <.option
+                  :for={opt <- grp.options}
+                  opt={opt}
+                  id={@id}
+                  value={@value}
+                  multiple={@multiple}
+                  item_class={@item_class}
+                  indicator_class={@indicator_class}
+                  item_indicator={@item_indicator}
+                />
+              </ul>
+            </li>
+          <% else %>
+            <.option
+              :for={opt <- grp.options}
+              opt={opt}
+              id={@id}
+              value={@value}
+              multiple={@multiple}
+              item_class={@item_class}
+              indicator_class={@indicator_class}
+              item_indicator={@item_indicator}
+            />
+          <% end %>
+        <% end %>
+
+        <li
+          :if={@empty != []}
+          data-part="empty"
+          data-hidden
+          role="presentation"
+          class={["chelekom-combobox__empty", @empty_class]}
+        >
+          {render_slot(@empty)}
+        </li>
+        <li
+          :if={@creatable}
+          data-part="create"
+          data-hidden
+          class={["chelekom-combobox__create", @create_class]}
+        >
+          {render_slot(@create_icon)}<span
+            :if={@create_icon != []}
+            data-part="create-label"
+            class={["chelekom-combobox__create-label", @create_label_class]}
+          >Create “<span data-create-label></span>”</span><span :if={@create_icon == []}>Create “</span><span
+            :if={@create_icon == []}
+            data-create-label
+          ></span><span :if={@create_icon == []}>”</span>
+        </li>
+      </ul>
+    </div>
+    """
+  end
+
+  attr :opt, :map, required: true
+  attr :id, :string, required: true
+  attr :value, :any, required: true
+  attr :multiple, :boolean, required: true
+  attr :item_class, :any, default: nil
+  attr :indicator_class, :any, default: nil
+  attr :item_indicator, :any, default: []
+
+  defp option(assigns) do
+    selected =
+      if assigns.multiple,
+        do: assigns.opt.value in List.wrap(assigns.value),
+        else: assigns.opt.value == assigns.value
+
+    assigns = assign(assigns, :selected, selected)
+
+    ~H"""
+    <li
+      id={"#{@id}-opt-#{@opt.__i__}"}
+      role="option"
+      data-part="item"
+      data-value={@opt.value}
+      data-disabled={@opt[:disabled] || false}
+      data-selected={@selected}
+      aria-selected={to_string(@selected)}
+      aria-disabled={(@opt[:disabled] && "true") || nil}
+      class={["chelekom-combobox__item", @item_class, @opt[:class]]}
+    >
+      <span
+        data-part="indicator"
+        aria-hidden="true"
+        class={["chelekom-combobox__indicator", @indicator_class]}
+      >{render_slot(@item_indicator)}</span>
+      {render_slot(@opt)}
+    </li>
+    """
+  end
+
+  defp group_options(options) do
+    options
+    |> Enum.with_index()
+    |> Enum.chunk_by(fn {opt, _i} -> opt[:group] end)
+    |> Enum.map(fn [{first, _} | _] = chunk ->
+      %{
+        label: first[:group],
+        options: Enum.map(chunk, fn {opt, i} -> Map.put(opt, :__i__, i) end)
+      }
+    end)
+  end
+
+  defp selected_options(options, values) do
+    Enum.filter(options, &(&1.value in values))
+  end
+end

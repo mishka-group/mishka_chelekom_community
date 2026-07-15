@@ -1,0 +1,158 @@
+defmodule CommunityDemoWeb.Components.Headless.MishkaNavigationMenu do
+  @moduledoc """
+  Headless **navigation menu** — a site nav whose dropdowns share one **morphing** popup (Base UI parity).
+
+  Every `<:item>` with body content gets a `trigger` + a (hidden) stored `content`; a single shared
+  `positioner` → `popup` → `viewport` is rendered once. The `NavigationMenu` engine moves the active
+  item's content into the viewport and **morphs the popup's size** (`--popup-width/height`) from the old
+  to the new content, sliding it via `data-activation-direction` (computed from the prev-vs-next trigger).
+  Hover opens after `delay` and closes after `close_delay`; switching between already-open items is
+  instant. Label-only / `href` items render a plain `link`.
+
+  Options mirror Base UI Root: `value`/`default_value` (the open item's id), `delay`, `close_delay`,
+  `orientation` (horizontal | vertical), plus `side`/`align`/`arrow`. State attributes: positioner/popup
+  `data-open`/`data-closed` + `data-side`/`data-align`; active trigger `data-popup-open` + `aria-expanded`
+  (and its icon `data-open`); active content `data-activation-direction`. CSS vars: popup
+  `--popup-width/height`, positioner `--positioner-width/height`. Style via `chelekom-navigation_menu*`.
+
+  Simplified for LiveView (vs Base UI): inline positioning (no Portal/Backdrop), single-level (no nested
+  submenus), no transition-status state machine, and a "pointer over the list or popup" close-grace.
+
+  WAI-ARIA APG: https://www.w3.org/WAI/ARIA/apg/patterns/menubar/ (navigation-menu has no dedicated pattern)
+
+  **Documentation:** https://mishka.tools/chelekom/docs/headless/navigation-menu
+  """
+  use Phoenix.Component
+
+  @doc type: :component
+  attr :id, :string, required: true
+  attr :value, :string, default: nil, doc: "The open item's value (controlled/initial)"
+  attr :default_value, :string, default: nil, doc: "Initial open item when `open` (uncontrolled)"
+  attr :open, :boolean, default: false, doc: "Force the default_value open on mount"
+  attr :delay, :integer, default: 50, doc: "ms to wait before opening on hover"
+  attr :close_delay, :integer, default: 50, doc: "ms to wait before closing on leave"
+  attr :orientation, :string, default: "horizontal", values: ~w(horizontal vertical)
+  attr :side, :string, default: "bottom", values: ~w(top right bottom left)
+  attr :align, :string, default: "center", values: ~w(start center end)
+  attr :arrow, :boolean, default: true, doc: "Render an arrow that points at the active trigger"
+  attr :class, :any, default: nil
+  attr :content_class, :any, default: nil, doc: "Extra classes for each panel content"
+  attr :list_class, :any, default: nil, doc: "Extra classes for the list part"
+  attr :item_class, :any, default: nil, doc: "Extra classes for each item part"
+  attr :trigger_class, :any, default: nil, doc: "Extra classes for each trigger part"
+  attr :link_class, :any, default: nil, doc: "Extra classes for each plain-link part"
+  attr :icon_class, :any, default: nil, doc: "Extra classes for the trigger icon part"
+  attr :positioner_class, :any, default: nil, doc: "Extra classes for the positioner part"
+  attr :popup_class, :any, default: nil, doc: "Extra classes for the popup part"
+  attr :viewport_class, :any, default: nil, doc: "Extra classes for the viewport part"
+  attr :arrow_class, :any, default: nil, doc: "Extra classes for the arrow part"
+  attr :rest, :global
+
+  slot :icon, doc: "Custom icon rendered inside every dropdown trigger (e.g. a caret svg)"
+
+  slot :item,
+    required: true,
+    doc: "A nav item: a plain link, or a dropdown if it has body content" do
+    attr :label, :string, required: true
+    attr :href, :string
+    attr :value, :string, doc: "Stable id for this item (defaults to a generated one)"
+    attr :active, :boolean, doc: "Mark a link as the current page (aria-current + data-active)"
+    attr :content_class, :any, doc: "Extra classes for this item's panel content (overrides root)"
+  end
+
+  def mishka_navigation_menu(assigns) do
+    first_trigger = Enum.find_index(assigns.item, &(&1.inner_block != nil)) || 0
+    open_value = assigns.value || (assigns.open && assigns.default_value) || nil
+    assigns = assign(assigns, first_trigger: first_trigger, open_value: open_value)
+
+    ~H"""
+    <nav
+      id={@id}
+      phx-hook="NavigationMenu"
+      data-part="root"
+      data-orientation={@orientation}
+      data-side={@side}
+      data-align={@align}
+      data-delay={@delay}
+      data-close-delay={@close_delay}
+      data-value={@open_value}
+      class={["chelekom-navigation_menu", @class]}
+      {@rest}
+    >
+      <ul data-part="list" class={["chelekom-navigation_menu__list", @list_class]}>
+        <li
+          :for={{item, i} <- Enum.with_index(@item)}
+          data-part="item"
+          data-value={item[:value] || "#{@id}-item-#{i}"}
+          class={["chelekom-navigation_menu__item", @item_class]}
+        >
+          <a
+            :if={item.inner_block == nil}
+            data-part="link"
+            href={item[:href] || "#"}
+            data-active={item[:active]}
+            aria-current={item[:active] && "page"}
+            class={["chelekom-navigation_menu__link", @link_class]}
+          >
+            {item.label}
+          </a>
+
+          <button
+            :if={item.inner_block != nil}
+            type="button"
+            data-part="trigger"
+            data-value={item[:value] || "#{@id}-item-#{i}"}
+            data-base-ui-navigation-menu-trigger
+            aria-haspopup="menu"
+            aria-controls={"#{@id}-popup"}
+            aria-expanded="false"
+            tabindex={if i == @first_trigger, do: "0", else: "-1"}
+            class={["chelekom-navigation_menu__trigger", @trigger_class]}
+          >
+            {item.label}
+            <span
+              data-part="icon"
+              aria-hidden="true"
+              class={["chelekom-navigation_menu__icon", @icon_class]}
+            >{if @icon != [], do: render_slot(@icon), else: "▾"}</span>
+          </button>
+
+          <div
+            :if={item.inner_block != nil}
+            data-part="content"
+            data-value={item[:value] || "#{@id}-item-#{i}"}
+            hidden
+            class={["chelekom-navigation_menu__content", item[:content_class] || @content_class]}
+          >
+            {render_slot(item)}
+          </div>
+        </li>
+      </ul>
+
+      <div
+        data-part="positioner"
+        data-closed
+        class={["chelekom-navigation_menu__positioner", @positioner_class]}
+      >
+        <nav
+          data-part="popup"
+          id={"#{@id}-popup"}
+          tabindex="-1"
+          data-closed
+          class={["chelekom-navigation_menu__popup", @popup_class]}
+        >
+          <div data-part="viewport" class={["chelekom-navigation_menu__viewport", @viewport_class]}>
+          </div>
+          <div
+            :if={@arrow}
+            data-part="arrow"
+            aria-hidden="true"
+            class={["chelekom-navigation_menu__arrow", @arrow_class]}
+          >
+          </div>
+        </nav>
+      </div>
+    </nav>
+    """
+  end
+end

@@ -68,6 +68,30 @@ const Floating = {
     }
   },
 
+  returnToOriginalParent() {
+    if (
+      this.floatingContent &&
+      this.movedToBody &&
+      document.body.contains(this.floatingContent)
+    ) {
+      document.body.removeChild(this.floatingContent);
+
+      if (this.originalParent) {
+        if (
+          this.originalIndex >= 0 &&
+          this.originalIndex < this.originalParent.children.length
+        ) {
+          this.originalParent.insertBefore(
+            this.floatingContent,
+            this.originalParent.children[this.originalIndex],
+          );
+        } else {
+          this.originalParent.appendChild(this.floatingContent);
+        }
+      }
+    }
+  },
+
   debounce(func, wait) {
     let timeout;
     return function executedFunction(...args) {
@@ -90,11 +114,7 @@ const Floating = {
       this.hideTimeout = null;
     }
 
-    if (
-      this.floatingContent &&
-      this.movedToBody &&
-      document.body.contains(this.floatingContent)
-    ) {
+    if (this.floatingContent && this.movedToBody) {
       if (!this.clickable) {
         this.floatingContent.removeEventListener(
           "mouseenter",
@@ -106,7 +126,7 @@ const Floating = {
         );
       }
 
-      document.body.removeChild(this.floatingContent);
+      this.returnToOriginalParent();
       this.movedToBody = false;
       this.floatingContent = null;
     }
@@ -248,7 +268,6 @@ const Floating = {
   },
 
   handleClick(e) {
-    e.stopPropagation();
     const allContents = document.querySelectorAll(
       ".dropdown-content.show-dropdown",
     );
@@ -426,6 +445,51 @@ const Floating = {
       content.style.transform = "none";
     }
 
+    // Clamp to viewport to prevent content from overflowing screen edges.
+    // This runs regardless of smartPositioning to always keep content visible.
+    const contentWidth = content.offsetWidth;
+    const contentHeight = content.offsetHeight;
+    const viewportLeft = window.scrollX;
+    const viewportRight = window.scrollX + window.innerWidth;
+    const viewportTop = window.scrollY;
+    const viewportBottom = window.scrollY + window.innerHeight;
+
+    if (pos === "top" || pos === "bottom") {
+      // left is the center point (CSS translateX(-50%) shifts it), so actual edges are:
+      const actualLeft = left - contentWidth / 2;
+      const actualRight = left + contentWidth / 2;
+
+      if (actualRight > viewportRight) {
+        left = viewportRight - contentWidth - gap;
+        content.style.transform = "none";
+      } else if (actualLeft < viewportLeft) {
+        left = viewportLeft + gap;
+        content.style.transform = "none";
+      }
+
+      // When content is wider than viewport, the right-edge clamp pushes left off-screen.
+      // Always anchor to left edge so the start of content stays visible (LTR).
+      if (left < viewportLeft + gap) {
+        left = viewportLeft + gap;
+        content.style.transform = "none";
+      }
+    } else if (pos === "left" || pos === "right") {
+      if (top + contentHeight > viewportBottom) {
+        top = viewportBottom - contentHeight - gap;
+      }
+      if (top < viewportTop) {
+        top = viewportTop + gap;
+      }
+
+      // Horizontal clamping for left/right positions
+      if (left + contentWidth > viewportRight) {
+        left = viewportRight - contentWidth - gap;
+      }
+      if (left < viewportLeft + gap) {
+        left = viewportLeft + gap;
+      }
+    }
+
     content.style.position = "absolute";
     content.style.top = `${top}px`;
     content.style.left = `${left}px`;
@@ -562,27 +626,7 @@ const Floating = {
 
     this.cleanupAria();
 
-    if (
-      this.floatingContent &&
-      this.movedToBody &&
-      document.body.contains(this.floatingContent)
-    ) {
-      document.body.removeChild(this.floatingContent);
-
-      if (this.originalParent) {
-        if (
-          this.originalIndex >= 0 &&
-          this.originalIndex < this.originalParent.children.length
-        ) {
-          this.originalParent.insertBefore(
-            this.floatingContent,
-            this.originalParent.children[this.originalIndex],
-          );
-        } else {
-          this.originalParent.appendChild(this.floatingContent);
-        }
-      }
-    }
+    this.returnToOriginalParent();
 
     this.floatingContent = null;
     this.trigger = null;
